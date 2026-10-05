@@ -10,6 +10,8 @@ import 'player_state.dart';
 import 'player_streams.dart';
 import 'platform/player_linux.dart';
 import 'platform/player_windows.dart';
+import 'platform/player_webos.dart';
+import '../../utils/platform_detector.dart';
 
 export 'player_base.dart';
 
@@ -401,6 +403,9 @@ abstract class Player {
     }
     if (Platform.isWindows) {
       return PlayerWindows();
+    }
+    if (PlatformDetector.isWebOS()) {
+      return PlayerWebOS();
     }
     if (Platform.isLinux) {
       return PlayerLinux();
