@@ -1,0 +1,15 @@
+﻿{
+  "id": "org.plezy.app",
+  "version": "1.0.0",
+  "vendor": "Plezy",
+  "type": "native",
+  "main": "plezy",
+  "title": "Plezy",
+  "icon": "icon.png",
+  "largeIcon": "largeIcon.png",
+  "resolution": "1920x1080",
+  "uiRevision": "2",
+  "requiredPermissions": [
+    "network"
+  ]
+}
