@@ -40,17 +40,19 @@ class CodecUtils {
   static bool isTextSubtitleCodec(String? codec) {
     if (codec == null) return false;
     return switch (codec.toLowerCase()) {
-      'srt' || 'subrip' || 'ass' || 'ssa' || 'webvtt' || 'vtt' || 'mov_text' => true,
+      'srt' || 'subrip' || 'webvtt' || 'vtt' || 'mov_text' => true,
       _ => false,
     };
   }
 
-  /// Image-based (bitmap) subtitle codecs. Plex burns these into the video
-  /// when the selected output transport cannot carry a bitmap subtitle
-  /// rendition.
+  /// Image-based (bitmap) or complex subtitle codecs. Plex burns these into the
+  /// video when the selected output transport cannot carry a bitmap subtitle
+  /// rendition or when native text rendering is unsupported (e.g. ASS/SSA on LG TV).
   static bool isImageSubtitleCodec(String? codec) {
     if (codec == null) return false;
     return switch (codec.toLowerCase()) {
+      'ass' ||
+      'ssa' ||
       'pgs' ||
       'pgssub' ||
       'hdmv_pgs_subtitle' ||

@@ -3726,9 +3726,11 @@ class PlexClient
       final isTrack = options.metadata.kind == MediaKind.track;
       final audioPreset = options.audioQualityPreset ?? AudioQualityPreset.original;
       final sourceCodecRefused = !isTrack && _sourceCodecRefused(data);
+      final requestedSubtitleTrack = isTrack ? null : _resolveTranscodeSubtitleTrack(data.mediaInfo, options.preferredSubtitleTrack);
+      final subtitleRequiresBurn = requestedSubtitleTrack != null && _selectedInternalSubtitleForHls(requestedSubtitleTrack) != null;
       final wantTranscode = isTrack
           ? !audioPreset.isOriginal
-          : sourceCodecRefused || _presetNeedsTranscode(options.qualityPreset, data);
+          : sourceCodecRefused || subtitleRequiresBurn || _presetNeedsTranscode(options.qualityPreset, data);
       if (wantTranscode && options.sessionIdentifier != null && options.transcodeSessionId != null) {
         if (isTrack) {
           final result = await buildMusicTranscodeStartPath(
@@ -3760,7 +3762,6 @@ class PlexClient
         final resolvedAudioId = carriedAudioTrack == null
             ? _resolveAudioStreamId(options.selectedAudioStreamId, data.mediaInfo)
             : carriedAudioStreamId;
-        final requestedSubtitleTrack = _resolveTranscodeSubtitleTrack(data.mediaInfo, options.preferredSubtitleTrack);
         final result = await buildTranscodeStartPath(
           ratingKey: options.metadata.id,
           mediaIndex: data.selectedMediaIndex,
