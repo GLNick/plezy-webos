@@ -44,7 +44,7 @@ class DevicePerformance {
       _singleton.getInstance(() => DevicePerformance._().._override = override, (instance) => instance._detect());
 
   Future<void> _detect() async {
-    if (!Platform.isAndroid) return; // tvOS/iOS/desktop: always full tier
+    if (!(!kIsWeb && Platform.isAndroid)) return; // tvOS/iOS/desktop: always full tier
     try {
       final result = await deviceChannel.invokeMapMethod<dynamic, dynamic>('getPerformanceSignals');
       if (result == null) return;

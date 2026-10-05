@@ -1,4 +1,4 @@
-import 'dart:async';
+﻿import 'dart:async';
 import '../media/ids.dart';
 import 'package:flutter/foundation.dart';
 import '../i18n/strings.g.dart';
@@ -391,6 +391,7 @@ class DownloadProvider extends ChangeNotifier with DisposableChangeNotifierMixin
 
   /// Load all persisted downloads and metadata from the database/cache
   Future<void> _loadPersistedDownloads() async {
+    if (kIsWeb) return;
     try {
       // Wait for recovery to finish before loading state so that
       // interrupted "downloading" rows have been transitioned to "queued"

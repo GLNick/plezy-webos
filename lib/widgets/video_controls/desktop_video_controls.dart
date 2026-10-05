@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'dart:async';
 import 'dart:io' show Platform;
 
@@ -663,7 +664,7 @@ class DesktopVideoControlsState extends State<DesktopVideoControls> {
       listenable: FullscreenStateManager(),
       builder: (context, _) {
         // On macOS the traffic lights need clearing in normal mode; they auto-hide in fullscreen.
-        final leftPadding = Platform.isMacOS ? DesktopWindowPadding.macOSLeftCurrent : 0.0;
+        final leftPadding = (!kIsWeb && Platform.isMacOS) ? DesktopWindowPadding.macOSLeftCurrent : 0.0;
 
         return _buildTopBarContent(context, leftPadding);
       },
@@ -678,7 +679,7 @@ class DesktopVideoControlsState extends State<DesktopVideoControls> {
           Expanded(
             child: VideoControlsHeader(
               metadata: widget.metadata,
-              style: Platform.isMacOS ? VideoHeaderStyle.singleLine : VideoHeaderStyle.multiLine,
+              style: (!kIsWeb && Platform.isMacOS) ? VideoHeaderStyle.singleLine : VideoHeaderStyle.multiLine,
               onBack: widget.onBack,
               onCancelAutoHide: widget.onCancelAutoHide,
               onStartAutoHide: widget.onStartAutoHide,

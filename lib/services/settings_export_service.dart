@@ -205,7 +205,7 @@ class SettingsExportService {
       'formatVersion': formatVersion,
       'appVersion': appVersion,
       'exportedAt': DateTime.now().toUtc().toIso8601String(),
-      'platform': Platform.operatingSystem,
+      'platform': (kIsWeb ? "web" : Platform.operatingSystem),
       'prefs': prefsOut,
     };
   }
@@ -460,7 +460,7 @@ class SettingsExportService {
 
     // Android TV has no document picker — write to the app docs dir and let
     // the caller surface the path.
-    if (Platform.isAndroid && PlatformDetector.isTV()) {
+    if ((!kIsWeb && Platform.isAndroid) && PlatformDetector.isTV()) {
       return _writeToAppDocuments(fileName, bytes);
     }
 

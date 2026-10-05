@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'dart:async';
 import 'dart:io';
 
@@ -131,7 +132,7 @@ class _LogsScreenState extends State<LogsScreen> with MountedSetStateMixin {
     final commitSuffix = gitCommit.isNotEmpty ? ' ${gitCommit.substring(0, 7)}' : '';
     buffer.writeln('${t.app.title} v${packageInfo.version} (${packageInfo.buildNumber})$commitSuffix');
 
-    if (Platform.isAndroid) {
+    if ((!kIsWeb && Platform.isAndroid)) {
       final info = await deviceInfo.androidInfo;
       buffer.writeln('Android ${info.version.release} (API ${info.version.sdkInt})');
       buffer.writeln('${info.manufacturer} ${info.model}');
@@ -155,15 +156,15 @@ class _LogsScreenState extends State<LogsScreen> with MountedSetStateMixin {
       final backgroundWork = BackgroundWorkDiagnosticsService.instance;
       await backgroundWork.refresh();
       buffer.writeln('Background: ${backgroundWork.describeSync()}');
-    } else if (Platform.isIOS) {
+    } else if ((!kIsWeb && Platform.isIOS)) {
       final info = await deviceInfo.iosInfo;
       buffer.writeln('iOS ${info.systemVersion}');
       buffer.writeln(info.utsname.machine);
-    } else if (Platform.isMacOS) {
+    } else if ((!kIsWeb && Platform.isMacOS)) {
       final info = await deviceInfo.macOsInfo;
       buffer.writeln('macOS ${info.osRelease}');
       buffer.writeln(info.model);
-    } else if (Platform.isLinux) {
+    } else if ((!kIsWeb && Platform.isLinux)) {
       final info = await deviceInfo.linuxInfo;
       buffer.writeln('Linux ${info.versionId ?? info.id}');
     }

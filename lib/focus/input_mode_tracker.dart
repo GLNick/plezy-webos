@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
@@ -64,7 +65,7 @@ class InputModeTracker extends StatefulWidget {
   /// back navigation: on Android in keyboard mode (TV/gamepad), letting the
   /// system back through as well double-pops the route.
   static bool shouldBlockSystemBack(BuildContext context) {
-    return Platform.isAndroid && isKeyboardMode(context);
+    return (!kIsWeb && Platform.isAndroid) && isKeyboardMode(context);
   }
 
   /// Report input from a device that cannot point — gamepad, companion remote,

@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'dart:async';
 import 'dart:io';
 import 'dart:ui' as ui;
@@ -233,7 +234,7 @@ class GamepadService with WindowListener {
   /// Steam Input emulates keyboard keys alongside the physical controller on
   /// these platforms; macOS reads gamepads through GameController and is not
   /// affected.
-  static bool _steamInputInjectsKeys() => Platform.isWindows || Platform.isLinux;
+  static bool _steamInputInjectsKeys() => (!kIsWeb && Platform.isWindows) || (!kIsWeb && Platform.isLinux);
 
   /// Standalone instance for tests; never wired to the platform stream.
   @visibleForTesting
@@ -265,7 +266,8 @@ class GamepadService with WindowListener {
   static bool get _isDesktop => PlatformDetector.isDesktopOS();
 
   void start() async {
-    appLogger.i('GamepadService: Starting on ${Platform.operatingSystem}');
+    if (kIsWeb) return;
+    appLogger.i('GamepadService: Starting on ${(kIsWeb ? "web" : Platform.operatingSystem)}');
 
     try {
       final gamepads = await Gamepad.instance.listGamepads();

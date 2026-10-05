@@ -1,0 +1,15 @@
+﻿{
+  "id": "org.plezy.webos",
+  "version": "2.22.0",
+  "vendor": "Plezy",
+  "type": "web",
+  "main": "index.html",
+  "title": "Plezy",
+  "icon": "icon.png",
+  "largeIcon": "largeIcon.png",
+  "resolution": "1920x1080",
+  "disableBackHistoryFilter": true,
+  "disableWebSecurity": true,
+  "inspectable": true,
+  "supportTouchMode": false
+}

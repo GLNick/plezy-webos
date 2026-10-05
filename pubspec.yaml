@@ -4,8 +4,6 @@ publish_to: "none"
 version: 2.22.0+152
 
 environment:
-  # Dart floor stays 3.12: freezed 3.x emits `final` constructor parameters,
-  # which language 3.13 removed. Raise together with a freezed 4 migration.
   sdk: ">=3.12.0 <4.0.0"
   flutter: ">=3.47.0"
 
@@ -20,7 +18,8 @@ dependencies:
   http: ^1.2.0
   url_launcher: ^6.3.0
   uuid: ^4.4.0
-  window_manager: ^0.5.1
+  window_manager:
+    path: packages/window_manager_mock
   logger: ^2.7.0
   package_info_plus: ^9.0.0
   device_info_plus: ^12.3.0
@@ -40,8 +39,7 @@ dependencies:
       url: https://github.com/edde746/media_controls
       ref: a27208e641790029ac54d825b97508575caee1a7
   rate_limiter: ^1.0.0
-  wakelock_plus:
-    path: packages/wakelock_plus
+  wakelock_plus: ^1.2.8
   path_provider: ^2.1.0
   path: ^1.9.0
   universal_gamepad: ^1.5.7
@@ -50,92 +48,51 @@ dependencies:
   cryptography: ^2.9.0
   file_picker: ^11.0.2
   saf_util:
-    # Vendored 3.1.0: fixes upstream's duplicate MethodChannel result.
     path: packages/saf_util
   saf_stream: ^3.1.0
   material_symbols_icons: ^4.2951.0
   web_socket_channel: ^3.0.1
-  dart_discord_presence: ^1.2.0
   flutter_svg: ^2.2.3
-  # Fork 54a34a0 fixes upstream #649's missing desktop temp parent; 7ee4588
-  # survives a host with no documents directory (Linux without xdg-user-dirs);
-  # 7f500a1 reads real macOS volume capacity and skips unknown capacity on
-  # desktop; 06e385c counts each Android byte once, so progress and the resume
-  # offset match the file. Keep the same-filesystem move/resume cleanup; no
-  # per-host TLS bypass.
   background_downloader:
     git:
       url: https://github.com/edde746/background_downloader
       ref: 06e385cb8d69893a8c5c9ceaa369ebdd22ce88a3
   sentry_flutter: ^9.30.0
-  auto_updater:
-    git:
-      url: https://github.com/edde746/auto_updater
-      path: packages/auto_updater
-      ref: 9e150f7
-  win_http: ^0.2.2
   collection: ^1.18.0
   freezed_annotation: ^3.1.0
   xml: ^7.0.1
   string_similarity: ^2.2.0
   unorm_dart: ^0.3.2
+  web: ^1.1.1
 
 dev_dependencies:
   archive: ^4.0.9
   flutter_test:
     sdk: flutter
   flutter_lints: ^6.0.0
-  # Root analysis includes packages/saf_util.
   mgenware_dart_lints: ^8.0.0
   fake_async: ^1.3.3
   stream_channel: ^2.1.4
   build_runner: ^2.13.0
   json_serializable: ^6.7.1
   slang_build_runner: ^4.14.0
-  # Used by explicit check-unused CI steps; analyzer plugin disabled.
-  dart_code_linter: ^4.1.8
   drift_dev: ^2.28.3
   shared_preferences_platform_interface: ^2.4.0
   path_provider_platform_interface: ^2.1.0
   connectivity_plus_platform_interface: ^2.1.0
-  # Exercise vendored desktop preference stores against real file I/O,
-  # including #1732 repair and atomic writes.
-  shared_preferences_linux: ^2.4.1
-  shared_preferences_windows: ^2.4.1
-  path_provider_linux: ^2.2.1
-  path_provider_windows: ^2.3.0
   plugin_platform_interface: ^2.1.0
   freezed: ^3.2.5
   analyzer: 10.2.0
 
 dependency_overrides:
-  # background_downloader 9.6.2 requires hosted connectivity_plus; keep the
-  # pinned git source for every consumer.
+  sqlite3:
+    path: packages/sqlite3_mock
   connectivity_plus:
     git:
       url: https://github.com/fluttercommunity/plus_plugins
       ref: bf04cdf66598dc3fca274b8b1db2b92b0bf6b73e
       path: packages/connectivity_plus/connectivity_plus
-  auto_updater_platform_interface:
-    git:
-      url: https://github.com/edde746/auto_updater
-      ref: 9e150f7
-      path: packages/auto_updater_platform_interface
-  auto_updater_macos:
-    git:
-      url: https://github.com/edde746/auto_updater
-      ref: 9e150f7
-      path: packages/auto_updater_macos
-  auto_updater_windows:
-    git:
-      url: https://github.com/edde746/auto_updater
-      ref: 9e150f7
-      path: packages/auto_updater_windows
-  # Vendored 2.4.1: atomic replacement prevents upstream #1732 corruption.
-  shared_preferences_windows:
-    path: packages/shared_preferences_windows
-  shared_preferences_linux:
-    path: packages/shared_preferences_linux
+
 flutter:
   uses-material-design: true
   assets:
@@ -157,8 +114,6 @@ flutter:
     - assets/shaders/anime4k/
     - assets/player_icons/
     - assets/rating_icons/
-  # Registered as UI font families so the Linux build, whose fontconfig may
-  # lack CJK fonts, can fall back to the bundled subtitle fonts (mono_theme).
   fonts:
     - family: Go Noto Current
       fonts:

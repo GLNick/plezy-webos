@@ -377,18 +377,18 @@ class _VideoSettingsSheetState extends State<VideoSettingsSheet> {
   // compositor, the output and the plane's bit depth, so it has to be asked for.
   bool get _supportsHdrControl =>
       widget.supportsHdrControl ??
-      (_probesHdrSupport ? _linuxHdrSupported : Platform.isIOS || Platform.isMacOS || Platform.isWindows);
+      (_probesHdrSupport ? _linuxHdrSupported : (!kIsWeb && Platform.isIOS) || (!kIsWeb && Platform.isMacOS) || (!kIsWeb && Platform.isWindows));
 
   // The Linux plane is the only path whose answer moves, and an explicit value
   // from the caller replaces the question altogether. Asked through
-  // PlayerNative.usesLinuxVideoPlane, not Platform.isLinux, so the probe and the
+  // PlayerNative.usesLinuxVideoPlane, not (!kIsWeb && Platform.isLinux), so the probe and the
   // tone-mapping row it gates resolve the same way under the test override.
   bool get _probesHdrSupport => PlayerNative.usesLinuxVideoPlane && widget.supportsHdrControl == null;
 
   bool get _showDebugDvConversionMode {
     if (!kDebugMode) return false;
-    if (Platform.isAndroid) return widget.player.playerType == 'exoplayer';
-    return (Platform.isIOS || Platform.isMacOS) && widget.player.playerType == 'mpv';
+    if ((!kIsWeb && Platform.isAndroid)) return widget.player.playerType == 'exoplayer';
+    return ((!kIsWeb && Platform.isIOS) || (!kIsWeb && Platform.isMacOS)) && widget.player.playerType == 'mpv';
   }
 
   @override
@@ -506,7 +506,7 @@ class _VideoSettingsSheetState extends State<VideoSettingsSheet> {
   }
 
   /// ExoPlayer only has the stereo fold; see [AudioChannelLimit.onExoPlayer].
-  bool get _isExoPlayer => Platform.isAndroid && widget.player.playerType == 'exoplayer';
+  bool get _isExoPlayer => (!kIsWeb && Platform.isAndroid) && widget.player.playerType == 'exoplayer';
 
   AudioChannelLimit get _displayedAudioChannelLimit =>
       _isExoPlayer ? _audioChannelLimit.onExoPlayer : _audioChannelLimit;
@@ -904,7 +904,7 @@ class _VideoSettingsSheetState extends State<VideoSettingsSheet> {
           // (PlayerBase._loudnormFilter), which a surround owner must hear
           // about before flipping it.
           subtitle: PlatformDetector.supportsAudioPassthrough()
-              ? Platform.isAndroid
+              ? (!kIsWeb && Platform.isAndroid)
                     ? t.videoSettings.audioNormalizationStereoMix
                     : t.videoSettings.audioNormalizationDisablesPassthrough
               : null,
@@ -969,7 +969,7 @@ class _VideoSettingsSheetState extends State<VideoSettingsSheet> {
           ),
 
         // Debug: Trigger MPV Fallback (Android ExoPlayer only)
-        if (kDebugMode && Platform.isAndroid && widget.player.playerType == 'exoplayer')
+        if (kDebugMode && (!kIsWeb && Platform.isAndroid) && widget.player.playerType == 'exoplayer')
           FocusableListTile(
             leading: AppIcon(Symbols.swap_horiz_rounded, fill: 1, color: tokens(context).textMuted),
             title: const Text('Trigger MPV Fallback'),

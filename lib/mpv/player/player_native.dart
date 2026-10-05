@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'dart:async' show unawaited;
 import 'dart:convert';
 import 'dart:io' show Platform;
@@ -79,11 +80,11 @@ class PlayerNative extends PlayerBase {
   static bool? debugUseLinuxVideoPlane;
 
   /// Whether this process drives video through the Linux Wayland plane, which
-  /// is `Platform.isLinux` and nothing finer — Linux has no other render path.
+  /// is `(!kIsWeb && Platform.isLinux)` and nothing finer — Linux has no other render path.
   ///
   /// The one place the test override is resolved, so production code and host
   /// tests agree on which path is live without reading a test-only field.
-  static bool get usesLinuxVideoPlane => debugUseLinuxVideoPlane ?? Platform.isLinux;
+  static bool get usesLinuxVideoPlane => debugUseLinuxVideoPlane ?? (!kIsWeb && Platform.isLinux);
 
   /// First successful (positive) [getHeapSize] result; the device heap is
   /// immutable per process, so one channel round trip serves every caller.
@@ -132,16 +133,16 @@ class PlayerNative extends PlayerBase {
   String get playerType => 'mpv';
 
   @override
-  bool get providesNativeStats => Platform.isAndroid;
+  bool get providesNativeStats => (!kIsWeb && Platform.isAndroid);
 
   // The Android plugin no-ops a dispose whose instanceId is not the core's
   // creator; other platforms' handlers do not read the token yet.
   @override
-  bool get nativeDisposeIsStaleGuarded => Platform.isAndroid;
+  bool get nativeDisposeIsStaleGuarded => (!kIsWeb && Platform.isAndroid);
 
   /// Node properties are returned as structured maps on desktop and Apple
   /// platforms, but as JSON strings on Android.
-  static final String _nodeFormat = Platform.isAndroid ? 'string' : 'node';
+  static final String _nodeFormat = (!kIsWeb && Platform.isAndroid) ? 'string' : 'node';
 
   static String _normalizeDvConversionMode(String value) {
     return switch (value.toLowerCase()) {
@@ -177,7 +178,7 @@ class PlayerNative extends PlayerBase {
   static String _escapePathListEntry(String value, String separator) => value.replaceAll(separator, '\\$separator');
 
   static String? _externalSubtitlesLoadfileOption(List<SubtitleTrack>? externalSubtitles) {
-    final separator = Platform.isWindows ? ';' : ':';
+    final separator = (!kIsWeb && Platform.isWindows) ? ';' : ':';
     final escapedUris = externalSubtitles
         ?.map((subtitle) => subtitle.uri)
         .whereType<String>()
@@ -253,11 +254,11 @@ class PlayerNative extends PlayerBase {
       // ignore them.
       final result = await invoke<Object>('initialize', {
         if (!audioOnly) 'hardwareDecoding': _hardwareDecoding,
-        if (!audioOnly && Platform.isAndroid)
+        if (!audioOnly && (!kIsWeb && Platform.isAndroid))
           'subtitleRenderScale': SettingsService.instance
               .read(SettingsService.subtitleRenderResolution)
               .androidRenderScale,
-        if (Platform.isAndroid) 'logLevel': _requestedLogLevel,
+        if ((!kIsWeb && Platform.isAndroid)) 'logLevel': _requestedLogLevel,
         'instanceId': nativeInstanceId,
       });
       if (result != true) {
@@ -291,7 +292,7 @@ class PlayerNative extends PlayerBase {
         // CoreAudio on macOS, exclusive WASAPI on Windows). Direct invoke —
         // setProperty() would await _ensureInitialized and deadlock on the
         // memoized future of this very _doInitialize call.
-        if (Platform.isIOS) {
+        if ((!kIsWeb && Platform.isIOS)) {
           await invoke('setProperty', {'name': 'audio-exclusive', 'value': 'yes'});
         }
       } else {
@@ -343,7 +344,7 @@ class PlayerNative extends PlayerBase {
   /// boundary — setNext must fail loudly so the music service falls back to
   /// an explicit open.
   Future<(String, int?)> _toPlayableUri(String uri, {bool strict = false}) async {
-    final convert = (Platform.isAndroid || debugForceContentFdConversion) && uri.startsWith('content://');
+    final convert = ((!kIsWeb && Platform.isAndroid) || debugForceContentFdConversion) && uri.startsWith('content://');
     if (!convert) return (uri, null);
     final fd = await _openContentFd(uri);
     if (fd == null) {
@@ -836,7 +837,7 @@ class PlayerNative extends PlayerBase {
   /// Returns null on platforms without the native method.
   @override
   Future<AudioRenderingMode?> getAudioRenderingMode() async {
-    if (!Platform.isIOS || _nativeCoreUnavailable) return null;
+    if (!(!kIsWeb && Platform.isIOS) || _nativeCoreUnavailable) return null;
     try {
       final raw = await invoke<Map<Object?, Object?>>('getAudioRenderingMode', const {});
       if (raw == null) return null;
@@ -859,8 +860,8 @@ class PlayerNative extends PlayerBase {
 
   Future<void> _setProperty(String name, String value, {required bool synchronizeRate}) async {
     if (_nativeCoreUnavailable) return;
-    final updatesDvMode = (Platform.isIOS || Platform.isMacOS) && name == 'dv-conversion-mode';
-    final updatesDvLog = (Platform.isIOS || Platform.isMacOS) && name == 'dv-conversion-log';
+    final updatesDvMode = ((!kIsWeb && Platform.isIOS) || (!kIsWeb && Platform.isMacOS)) && name == 'dv-conversion-mode';
+    final updatesDvLog = ((!kIsWeb && Platform.isIOS) || (!kIsWeb && Platform.isMacOS)) && name == 'dv-conversion-log';
     if (updatesDvMode) value = _normalizeDvConversionMode(value);
     if (updatesDvLog) value = _normalizeBoolProperty(value);
 
@@ -894,10 +895,10 @@ class PlayerNative extends PlayerBase {
   @override
   Future<String?> getProperty(String name) async {
     if (_nativeCoreUnavailable) return null;
-    if ((Platform.isIOS || Platform.isMacOS) && name == 'dv-conversion-mode') {
+    if (((!kIsWeb && Platform.isIOS) || (!kIsWeb && Platform.isMacOS)) && name == 'dv-conversion-mode') {
       return _dvConversionMode;
     }
-    if ((Platform.isIOS || Platform.isMacOS) && name == 'dv-conversion-log') {
+    if (((!kIsWeb && Platform.isIOS) || (!kIsWeb && Platform.isMacOS)) && name == 'dv-conversion-log') {
       return _dvConversionLog;
     }
     await _ensureInitialized();
@@ -906,7 +907,7 @@ class PlayerNative extends PlayerBase {
 
   @override
   Future<Map<String, dynamic>> getStats() async {
-    if (_nativeCoreUnavailable || !Platform.isAndroid) return super.getStats();
+    if (_nativeCoreUnavailable || !(!kIsWeb && Platform.isAndroid)) return super.getStats();
     await _ensureInitialized();
     final result = await invoke<Map>('getStats');
     return Map<String, dynamic>.from(result ?? const {});
@@ -957,11 +958,11 @@ class PlayerNative extends PlayerBase {
   }
 
   @override
-  bool get needsDecoderRefreshAfterDisplaySwitch => Platform.isAndroid;
+  bool get needsDecoderRefreshAfterDisplaySwitch => (!kIsWeb && Platform.isAndroid);
 
   @override
   Future<void> awaitDisplayModeSwitch({int extraDelayMs = 0}) async {
-    if (_nativeCoreUnavailable || audioOnly || !Platform.isIOS) return;
+    if (_nativeCoreUnavailable || audioOnly || !(!kIsWeb && Platform.isIOS)) return;
     await _ensureInitialized();
     await invoke('awaitDisplayModeSwitch', {'extraDelayMs': extraDelayMs});
   }
@@ -969,7 +970,7 @@ class PlayerNative extends PlayerBase {
   @override
   Future<void> setLogLevel(String level) async {
     if (_nativeCoreUnavailable) return;
-    if (Platform.isAndroid) {
+    if ((!kIsWeb && Platform.isAndroid)) {
       // Carry the preference into native creation, even if another operation
       // starts initialization before this ordered runtime write gets its turn.
       _requestedLogLevel = level;
@@ -1033,10 +1034,10 @@ class PlayerNative extends PlayerBase {
   /// IEC 61937 tracks at the 48kHz mixer rate, so naming a codec the route
   /// cannot carry that way strands playback on a dead audio output (#1991).
   /// The plugin derives the value from the current audio route instead.
-  static final String _passthroughCodecs = Platform.isIOS ? 'ac3,eac3' : 'ac3,eac3,dts,dts-hd,truehd';
+  static final String _passthroughCodecs = (!kIsWeb && Platform.isIOS) ? 'ac3,eac3' : 'ac3,eac3,dts,dts-hd,truehd';
 
   Future<String> _resolvePassthroughCodecs() async {
-    if (!Platform.isAndroid) return _passthroughCodecs;
+    if (!(!kIsWeb && Platform.isAndroid)) return _passthroughCodecs;
     try {
       return await invoke<String>('getAudioSpdifCodecs') ?? '';
     } catch (error, stackTrace) {
@@ -1201,7 +1202,7 @@ class PlayerNative extends PlayerBase {
     // audio-exclusive claims the device for bitstreaming (exclusive WASAPI on
     // Windows); on iOS/tvOS it is set once at
     // playback start and must not be clobbered here.
-    if (!Platform.isIOS) {
+    if (!(!kIsWeb && Platform.isIOS)) {
       try {
         await setProperty('audio-exclusive', enabled ? 'yes' : 'no');
       } catch (error, stackTrace) {
@@ -1229,7 +1230,7 @@ class PlayerNative extends PlayerBase {
   @override
   Future<void> updateFrame() async {
     if (_nativeCoreUnavailable || !initialized) return;
-    if (Platform.isAndroid || Platform.isIOS || Platform.isMacOS || Platform.isLinux) {
+    if ((!kIsWeb && Platform.isAndroid) || (!kIsWeb && Platform.isIOS) || (!kIsWeb && Platform.isMacOS) || (!kIsWeb && Platform.isLinux)) {
       await invoke('updateFrame');
     }
   }
@@ -1241,7 +1242,7 @@ class PlayerNative extends PlayerBase {
   /// losslessly in-shader.
   @override
   Future<void> setVideoZoom(double scale) async {
-    if (_nativeCoreUnavailable || audioOnly || !Platform.isIOS || !initialized) return;
+    if (_nativeCoreUnavailable || audioOnly || !(!kIsWeb && Platform.isIOS) || !initialized) return;
     await invoke('setVideoZoom', {'scale': scale});
   }
 
@@ -1254,7 +1255,7 @@ class PlayerNative extends PlayerBase {
     int videoHeight = 0,
     bool matchResolution = false,
   }) async {
-    if (_nativeCoreUnavailable || !Platform.isAndroid || !initialized) return false;
+    if (_nativeCoreUnavailable || !(!kIsWeb && Platform.isAndroid) || !initialized) return false;
     final result = await invoke<bool>('setVideoFrameRate', {
       'fps': fps,
       'duration': durationMs,
@@ -1268,21 +1269,21 @@ class PlayerNative extends PlayerBase {
 
   @override
   Future<void> clearVideoFrameRate() async {
-    if (_nativeCoreUnavailable || !Platform.isAndroid || !initialized) return;
+    if (_nativeCoreUnavailable || !(!kIsWeb && Platform.isAndroid) || !initialized) return;
     await invoke('clearVideoFrameRate');
   }
 
   @override
   Future<bool> requestAudioFocus() async {
     if (_nativeCoreUnavailable) return false;
-    if (!Platform.isAndroid) return true;
+    if (!(!kIsWeb && Platform.isAndroid)) return true;
     await _ensureInitialized();
     return await invoke<bool>('requestAudioFocus') ?? false;
   }
 
   @override
   Future<void> abandonAudioFocus() async {
-    if (_nativeCoreUnavailable || !Platform.isAndroid || !initialized) return;
+    if (_nativeCoreUnavailable || !(!kIsWeb && Platform.isAndroid) || !initialized) return;
     await invoke('abandonAudioFocus');
   }
 
@@ -1299,10 +1300,10 @@ class PlayerNative extends PlayerBase {
     // No video plane without video, on any platform, so this precedes the
     // platform question rather than sitting inside one branch of it.
     if (_nativeCoreUnavailable || audioOnly) return false;
-    // Asked through usesLinuxVideoPlane, not Platform.isLinux, so this and the
+    // Asked through usesLinuxVideoPlane, not (!kIsWeb && Platform.isLinux), so this and the
     // settings sheet's _probesHdrSupport resolve the same way under the test
     // override; on a real Linux host the two are the same answer.
     if (usesLinuxVideoPlane) return await invoke<bool>('isHDRSupported') ?? false;
-    return Platform.isIOS || Platform.isMacOS || Platform.isWindows;
+    return (!kIsWeb && Platform.isIOS) || (!kIsWeb && Platform.isMacOS) || (!kIsWeb && Platform.isWindows);
   }
 }

@@ -232,7 +232,7 @@ extension _VideoPlayerBuildMethods on VideoPlayerScreenState {
             children: [
               // macOS PiP placeholder — video is in PiP window, show background with icon
               // Placed before Video so controls render on top
-              if (Platform.isMacOS) const VideoPlayerMacPipPlaceholder(),
+              if ((!kIsWeb && Platform.isMacOS)) const VideoPlayerMacPipPlaceholder(),
               Center(
                 child: LayoutBuilder(
                   builder: (context, constraints) {

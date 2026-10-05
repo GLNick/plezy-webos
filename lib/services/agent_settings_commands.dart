@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'dart:convert';
 import 'dart:io';
 import 'dart:typed_data';
@@ -181,7 +182,7 @@ class AgentSettingsCommands {
   static String? unsupportedReason(String key, BuildContext context) {
     final tv = PlatformDetector.isTV();
     final desktop = PlatformDetector.isDesktopOS();
-    final mobile = (Platform.isAndroid || Platform.isIOS) && !tv;
+    final mobile = ((!kIsWeb && Platform.isAndroid) || (!kIsWeb && Platform.isIOS)) && !tv;
     final exo = _exoActive;
     switch (key) {
       case 'keyboard_hotkeys':
@@ -193,9 +194,9 @@ class AgentSettingsCommands {
       case 'auto_check_updates_on_startup':
         if (!UpdateService.isUpdateCheckAvailable) return 'Updates are managed externally on this platform.';
       case 'force_tv_mode':
-        if (!desktop && !Platform.isAndroid) return 'Forced TV mode requires Android or a desktop platform.';
+        if (!desktop && !(!kIsWeb && Platform.isAndroid)) return 'Forced TV mode requires Android or a desktop platform.';
       case 'visual_effects':
-        if (!Platform.isAndroid) return 'Visual-effects tier selection is Android-only.';
+        if (!(!kIsWeb && Platform.isAndroid)) return 'Visual-effects tier selection is Android-only.';
       case 'automotive_ui_scale':
         if (!PlatformDetector.isAutomotive()) return 'Display scale customization is for automotive displays.';
       case 'tv_full_card_layout' || 'tv_corner_spotlight_backdrop' || 'focus_glow':
@@ -219,23 +220,23 @@ class AgentSettingsCommands {
       case 'audio_passthrough':
         if (!PlatformDetector.supportsAudioPassthrough()) return 'Audio passthrough is unavailable on this device.';
       case 'android_use_exoplayer' || 'match_content_frame_rate' || 'dv_conversion_mode':
-        if (!Platform.isAndroid) return 'This setting is Android-only.';
+        if (!(!kIsWeb && Platform.isAndroid)) return 'This setting is Android-only.';
       case 'match_content_resolution':
-        if (!Platform.isAndroid || !tv) return 'Content resolution matching requires Android TV.';
+        if (!(!kIsWeb && Platform.isAndroid) || !tv) return 'Content resolution matching requires Android TV.';
       case 'match_refresh_rate' || 'match_dynamic_range':
-        if (!Platform.isWindows) return 'This display matching setting is Windows-only.';
+        if (!(!kIsWeb && Platform.isWindows)) return 'This display matching setting is Windows-only.';
       case 'display_switch_delay':
-        if (!PlatformDetector.isAppleTV() && !Platform.isWindows && !Platform.isAndroid) {
+        if (!PlatformDetector.isAppleTV() && !(!kIsWeb && Platform.isWindows) && !(!kIsWeb && Platform.isAndroid)) {
           return 'Display switching delay is unavailable on this platform.';
         }
       case 'enable_hdr':
-        if (Platform.isAndroid) return 'Android HDR output is controlled by the platform, not this setting.';
+        if ((!kIsWeb && Platform.isAndroid)) return 'Android HDR output is controlled by the platform, not this setting.';
       case 'ambient_lighting':
-        if (exo || Platform.isIOS) return 'Ambient lighting requires mpv on a non-Apple-mobile platform.';
+        if (exo || (!kIsWeb && Platform.isIOS)) return 'Ambient lighting requires mpv on a non-Apple-mobile platform.';
       case 'hdr_tone_mapping':
-        if (!Platform.isLinux) return 'HDR tone mapping selection requires the Linux native video plane.';
+        if (!(!kIsWeb && Platform.isLinux)) return 'HDR tone mapping selection requires the Linux native video plane.';
       case 'hdr_sdr_conversion':
-        if (!Platform.isAndroid || exo) return 'HDR-to-SDR conversion selection requires the Android mpv backend.';
+        if (!(!kIsWeb && Platform.isAndroid) || exo) return 'HDR-to-SDR conversion selection requires the Android mpv backend.';
       case 'tunneled_playback' || 'playback_buffer_tier' || 'subtitle_anchor_to_screen':
         if (!exo) return 'This setting requires the existing Android ExoPlayer backend.';
       case 'custom_shaders' || 'global_shader_preset':
@@ -245,7 +246,7 @@ class AgentSettingsCommands {
       case 'mpv_config_text' || 'mpv_config_presets' || 'deinterlace' || 'subtitle_use_margins':
         if (exo) return 'This setting requires the mpv backend.';
       case 'subtitle_render_resolution':
-        if (!Platform.isAndroid && !Platform.isIOS) return 'Subtitle render resolution is Android/Apple-only.';
+        if (!(!kIsWeb && Platform.isAndroid) && !(!kIsWeb && Platform.isIOS)) return 'Subtitle render resolution is Android/Apple-only.';
       case 'gesture_brightness_swipe' ||
           'gesture_volume_swipe' ||
           'gesture_pinch_to_zoom' ||
@@ -257,18 +258,18 @@ class AgentSettingsCommands {
       case 'click_video_toggles_playback':
         if (mobile) return 'Mobile playback uses touch gestures instead.';
       case 'download_location':
-        if (Platform.isIOS) return 'Apple sandbox download location selection is not supported by the current app.';
+        if ((!kIsWeb && Platform.isIOS)) return 'Apple sandbox download location selection is not supported by the current app.';
       case 'download_on_wifi_only' || 'auto_remove_watched_downloads' || 'download_include_specials':
         if (PlatformDetector.isAppleTV()) return 'Downloads are unavailable on Apple TV.';
     }
     return null;
   }
 
-  static bool get _exoActive => Platform.isAndroid && SettingsService.instance.read(SettingsService.useExoPlayer);
+  static bool get _exoActive => (!kIsWeb && Platform.isAndroid) && SettingsService.instance.read(SettingsService.useExoPlayer);
 
   static void _validatePlatformValue(String key, Object? value) {
     if (key == 'subtitle_render_resolution') {
-      final choices = Platform.isIOS
+      final choices = (!kIsWeb && Platform.isIOS)
           ? [SubtitleRenderResolution.screen, SubtitleRenderResolution.video]
           : [
               SubtitleRenderResolution.screen,
@@ -375,9 +376,9 @@ class AgentSettingsCommands {
         NavigationTabId.search.name,
       ];
     }
-    if (pref == SettingsService.subtitleRenderResolution && (Platform.isIOS || Platform.isAndroid)) {
+    if (pref == SettingsService.subtitleRenderResolution && ((!kIsWeb && Platform.isIOS) || (!kIsWeb && Platform.isAndroid))) {
       choices =
-          (Platform.isIOS
+          ((!kIsWeb && Platform.isIOS)
                   ? [SubtitleRenderResolution.screen, SubtitleRenderResolution.video]
                   : [
                       SubtitleRenderResolution.screen,
@@ -814,7 +815,7 @@ class AgentSettingsCommands {
           location = agentString(map, 'path');
           type = agentString(map, 'type');
           if (type == 'saf') {
-            if (!Platform.isAndroid || Uri.tryParse(location)?.scheme != 'content') {
+            if (!(!kIsWeb && Platform.isAndroid) || Uri.tryParse(location)?.scheme != 'content') {
               throw const FormatException('Invalid SAF location');
             }
             final grant = await SafStorageService.instance.resolvePersistedPermissionUri(location);
@@ -826,7 +827,7 @@ class AgentSettingsCommands {
               );
             }
           } else if (type == 'file') {
-            if (Platform.isAndroid) {
+            if ((!kIsWeb && Platform.isAndroid)) {
               throw const AgentControlException(
                 'permissionRequired',
                 'Android download locations require an existing SAF grant from the native folder picker.',

@@ -84,13 +84,13 @@ class SystemShelfService {
   bool get _isTvosTarget {
     final override = _tvosTargetOverride;
     if (override != null) return override();
-    return Platform.isIOS && (_tvosBuild || PlatformDetector.isAppleTV());
+    return (!kIsWeb && Platform.isIOS) && (_tvosBuild || PlatformDetector.isAppleTV());
   }
 
   MethodChannel? get _channel {
     final override = _channelOverride;
     if (override != null) return override;
-    if (Platform.isAndroid) return _androidChannel;
+    if ((!kIsWeb && Platform.isAndroid)) return _androidChannel;
     if (_isTvosTarget) return _tvosChannel;
     return null;
   }

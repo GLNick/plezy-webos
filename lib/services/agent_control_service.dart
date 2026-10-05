@@ -207,7 +207,7 @@ class AgentControlService {
   Map<String, dynamic> _status() => {
     'protocolVersion': protocolVersion,
     'buildMode': kProfileMode ? 'profile' : 'debug',
-    'platform': Platform.operatingSystem,
+    'platform': (kIsWeb ? "web" : Platform.operatingSystem),
     'isTV': PlatformDetector.isTV(),
     'ready': _root?.context()?.mounted == true,
     'profileReady': _profileReady,

@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'dart:io' show Platform;
 
 import 'package:flutter/material.dart';
@@ -43,7 +44,7 @@ class GeneralSettingsScreen extends StatelessWidget {
                 title: t.settings.requireProfileSelectionOnOpen,
                 subtitle: t.settings.requireProfileSelectionOnOpenDescription,
               ),
-            if (Platform.isAndroid || PlatformDetector.isDesktopOS())
+            if ((!kIsWeb && Platform.isAndroid) || PlatformDetector.isDesktopOS())
               SettingSwitchTile(
                 pref: SettingsService.forceTvMode,
                 icon: Symbols.tv_rounded,

@@ -405,7 +405,7 @@ class _SettingsScreenState extends State<SettingsScreen> with FocusableTab, Moun
     return SettingsGroup(
       title: t.settings.downloads,
       children: [
-        if (!Platform.isIOS)
+        if (!(!kIsWeb && Platform.isIOS))
           FutureBuilder<String>(
             future: storageService.getCurrentDownloadPathDisplay(),
             builder: (context, snapshot) {
@@ -742,7 +742,7 @@ class _SettingsScreenState extends State<SettingsScreen> with FocusableTab, Moun
         String? selectedPath;
         String pathType = 'file';
 
-        if (Platform.isAndroid) {
+        if ((!kIsWeb && Platform.isAndroid)) {
           final safStorage = SafStorageService.instance;
           if (!safStorage.supportsDirectoryPicker) {
             showErrorSnackBar(context, t.settings.downloadLocationPickerUnavailable);

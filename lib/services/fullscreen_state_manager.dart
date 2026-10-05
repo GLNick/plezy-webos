@@ -97,19 +97,19 @@ class FullscreenStateManager extends ChangeNotifier with WindowListener {
   }
 
   Future<bool> _platformIsFullscreen() {
-    if (Platform.isMacOS) return MacOSWindowService.isFullscreen();
-    if (Platform.isWindows) return NativeWindowService.isFullScreen();
+    if ((!kIsWeb && Platform.isMacOS)) return MacOSWindowService.isFullscreen();
+    if ((!kIsWeb && Platform.isWindows)) return NativeWindowService.isFullScreen();
     return windowManager.isFullScreen();
   }
 
   Future<void> _platformSetFullscreen(bool value) async {
-    if (Platform.isMacOS) {
+    if ((!kIsWeb && Platform.isMacOS)) {
       if (value) {
         await MacOSWindowService.enterFullscreen();
       } else {
         await MacOSWindowService.exitFullscreen();
       }
-    } else if (Platform.isWindows) {
+    } else if ((!kIsWeb && Platform.isWindows)) {
       // Route through the native Win32 runner, which restores to the monitor
       // the window is currently on (window_manager 0.5.1 picks the wrong one
       // on multi-monitor setups — see issue #880). The native code also
@@ -135,7 +135,7 @@ class FullscreenStateManager extends ChangeNotifier with WindowListener {
 
     // Use window_manager listener for Windows/Linux
     // macOS uses NSWindowDelegate callbacks instead (see FullscreenWindowDelegate)
-    if (!Platform.isMacOS) {
+    if (!(!kIsWeb && Platform.isMacOS)) {
       windowManager.addListener(this);
       _isListening = true;
     }

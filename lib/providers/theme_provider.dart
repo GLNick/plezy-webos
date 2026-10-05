@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'dart:async' show unawaited;
 import 'dart:io' show Platform;
 import 'package:flutter/material.dart';
@@ -103,7 +104,7 @@ class ThemeProvider extends ChangeNotifier with DisposableChangeNotifierMixin, W
   }
 
   void _updateSplashTheme(settings.ThemeMode mode) {
-    if (!Platform.isAndroid) return;
+    if (kIsWeb || !(!kIsWeb && Platform.isAndroid)) return;
     final name = switch (mode) {
       settings.ThemeMode.dark => 'dark',
       settings.ThemeMode.oled => 'oled',

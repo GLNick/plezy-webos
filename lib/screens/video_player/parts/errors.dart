@@ -241,7 +241,7 @@ extension _VideoPlayerErrorMethods on VideoPlayerScreenState {
       level: log.level,
       prefix: log.prefix,
       text: log.text,
-      isAndroid: Platform.isAndroid,
+      isAndroid: (!kIsWeb && Platform.isAndroid),
     );
     if (cause == null) return;
     appLogger.w('mpv gave up on a stream while opening — giving up on this open');

@@ -29,6 +29,7 @@ import '../models/livetv_capture_buffer.dart';
 import '../models/livetv_channel.dart';
 import '../services/live_seek_accumulator.dart';
 import '../services/plex_client.dart';
+import '../utils/codec_utils.dart';
 import '../services/jellyfin_client.dart';
 import '../media/account_preferences.dart';
 import '../media/account_ref.dart';
@@ -924,8 +925,8 @@ class VideoPlayerScreenState extends State<VideoPlayerScreen>
   /// onPipChanged fires.
   bool get _shouldSkipForPip =>
       PipService().isPipActive.value ||
-      ((Platform.isIOS || Platform.isMacOS) && _autoPipEnabled) ||
-      (Platform.isAndroid && _androidAutoPipTransitionInFlight);
+      (((!kIsWeb && Platform.isIOS) || (!kIsWeb && Platform.isMacOS)) && _autoPipEnabled) ||
+      ((!kIsWeb && Platform.isAndroid) && _androidAutoPipTransitionInFlight);
 
   MediaControlsManager? _mediaControlsManager;
 
@@ -1350,7 +1351,7 @@ class VideoPlayerScreenState extends State<VideoPlayerScreen>
       // the app's (start-in-fullscreen, or a toggle from the browse UI) and
       // Escape is plain Back (#1624).
       physicalEscapeExitsFullscreen: () => shouldPhysicalEscapeExitFullscreen(
-        isMacOS: Platform.isMacOS,
+        isMacOS: (!kIsWeb && Platform.isMacOS),
         videoPlayerNavigationEnabled: videoPlayerNavigationPreference(),
         playerEnteredFullscreen: FullscreenStateManager().scopeOwnsFullscreen,
       ),
@@ -1759,7 +1760,7 @@ class VideoPlayerScreenState extends State<VideoPlayerScreen>
             );
       }
 
-      if (Platform.isWindows) {
+      if ((!kIsWeb && Platform.isWindows)) {
         initPhase = 'syncing display mode';
         _displayModeService = DisplayModeService(settingsService, FullscreenStateManager());
         await _displayModeService!.syncWithNative();
@@ -1783,7 +1784,7 @@ class VideoPlayerScreenState extends State<VideoPlayerScreen>
       final currentPlayer = Player(useExoPlayer: useExoPlayer, hardwareDecoding: enableHardwareDecoding);
       attemptPlayer = currentPlayer;
       if (!mounted || generation != _playerInitializationGeneration) return;
-      if (Platform.isAndroid) {
+      if ((!kIsWeb && Platform.isAndroid)) {
         await currentPlayer.setLogLevel(debugLoggingEnabled ? 'v' : 'warn');
         if (!mounted || generation != _playerInitializationGeneration) return;
       }
@@ -1792,22 +1793,22 @@ class VideoPlayerScreenState extends State<VideoPlayerScreen>
       initPhase = 'configuring player';
       await currentPlayer.configureSubtitleFonts();
       await currentPlayer.setProperty('sub-ass', 'yes'); // Enable libass
-      if (Platform.isAndroid && useExoPlayer) {
+      if ((!kIsWeb && Platform.isAndroid) && useExoPlayer) {
         final tunneledPlayback = settingsService.read(SettingsService.tunneledPlayback);
         await currentPlayer.setProperty('tunneled-playback', tunneledPlayback ? 'yes' : 'no');
         await currentPlayer.setProperty('exo-buffer-tier', playbackBufferTier.nativeValue);
       }
-      if (Platform.isAndroid || Platform.isIOS || Platform.isMacOS) {
+      if ((!kIsWeb && Platform.isAndroid) || (!kIsWeb && Platform.isIOS) || (!kIsWeb && Platform.isMacOS)) {
         final dvConversionMode = settingsService.read(SettingsService.dvConversionMode);
         await currentPlayer.setProperty('dv-conversion-mode', dvConversionMode.nativeValue);
       }
       // Before the first file, so its opening route is already decided: a
       // later write would start it on one renderer and move it to the other.
-      if (Platform.isAndroid && !useExoPlayer) {
+      if ((!kIsWeb && Platform.isAndroid) && !useExoPlayer) {
         final hdrSdrConversion = settingsService.read(SettingsService.hdrSdrConversion);
         await currentPlayer.setProperty('hdr-sdr-conversion', hdrSdrConversion.nativeValue);
       }
-      if (Platform.isIOS || Platform.isMacOS) {
+      if ((!kIsWeb && Platform.isIOS) || (!kIsWeb && Platform.isMacOS)) {
         await currentPlayer.setProperty('dv-conversion-log', debugLoggingEnabled ? 'yes' : 'no');
       }
       // Android demuxer memory is owned natively: MpvPlayerCore caps its
@@ -1815,12 +1816,12 @@ class VideoPlayerScreenState extends State<VideoPlayerScreen>
       // ExoPlayer's LoadControlPolicy derives its own target the same way.
       // requestAudioFocus initializes Android players, so start it only after
       // init-time ExoPlayer options above have been cached.
-      if (Platform.isAndroid && !widget.isLive) {
+      if ((!kIsWeb && Platform.isAndroid) && !widget.isLive) {
         _audioFocusFuture = currentPlayer.requestAudioFocus();
         _audioFocusFuture!.ignore();
       }
       await currentPlayer.setProperty('msg-level', debugLoggingEnabled ? 'all=debug,ffmpeg/video=warn' : 'all=error');
-      if (!Platform.isAndroid) {
+      if (!(!kIsWeb && Platform.isAndroid)) {
         await currentPlayer.setLogLevel(debugLoggingEnabled ? 'v' : 'warn');
       }
       await currentPlayer.setProperty('hwdec', _getHwdecValue(enableHardwareDecoding));
@@ -1829,7 +1830,7 @@ class VideoPlayerScreenState extends State<VideoPlayerScreen>
       // chain. `auto` deinterlaces only content flagged interlaced. Wrapped:
       // a preference must never abort player initialization (an older core
       // that rejects `auto` just keeps its default).
-      if (!(Platform.isAndroid && useExoPlayer) && settingsService.read(SettingsService.deinterlace)) {
+      if (!((!kIsWeb && Platform.isAndroid) && useExoPlayer) && settingsService.read(SettingsService.deinterlace)) {
         try {
           await currentPlayer.setProperty('deinterlace', 'auto');
         } catch (e) {
@@ -1907,7 +1908,7 @@ class VideoPlayerScreenState extends State<VideoPlayerScreen>
 
       // Placement policy is MPV-only and independent of ASS styling. Keep the
       // last accepted/default value on refusal; custom mpv.conf still wins below.
-      if (!(Platform.isAndroid && useExoPlayer)) {
+      if (!((!kIsWeb && Platform.isAndroid) && useExoPlayer)) {
         try {
           await currentPlayer.setProperty(
             'sub-use-margins',
@@ -1918,7 +1919,7 @@ class VideoPlayerScreenState extends State<VideoPlayerScreen>
         }
       }
 
-      if (Platform.isIOS) {
+      if ((!kIsWeb && Platform.isIOS)) {
         await currentPlayer.setProperty('audio-exclusive', 'yes');
 
         // Rasterize subtitles at the video's resolution instead of the
@@ -1994,7 +1995,7 @@ class VideoPlayerScreenState extends State<VideoPlayerScreen>
       // else, so tolerating it elsewhere would be an inert branch no test on any
       // runner can reach, and a silent change to what the other platforms did
       // before this feature existed.
-      if (Platform.isIOS || Platform.isMacOS || Platform.isWindows || Platform.isLinux) {
+      if ((!kIsWeb && Platform.isIOS) || (!kIsWeb && Platform.isMacOS) || (!kIsWeb && Platform.isWindows) || (!kIsWeb && Platform.isLinux)) {
         final enableHDR = settingsService.read(SettingsService.enableHDR);
         try {
           await currentPlayer.setProperty('hdr-enabled', enableHDR ? 'yes' : 'no');
@@ -2470,7 +2471,7 @@ class VideoPlayerScreenState extends State<VideoPlayerScreen>
     // the HDR hint before restoring, which dispose() cannot do. Fire the hint
     // clear at the still-live player and restore immediately.
     if (!isReplacingWithVideo &&
-        Platform.isWindows &&
+        (!kIsWeb && Platform.isWindows) &&
         _displayModeService != null &&
         _displayModeService!.anyChangeApplied) {
       if (_displayModeService!.hdrStateChanged && player != null) {
@@ -2491,7 +2492,7 @@ class VideoPlayerScreenState extends State<VideoPlayerScreen>
     }
 
     // Clear frame rate matching and abandon audio focus before disposing player (Android only)
-    if (Platform.isAndroid && player != null) {
+    if ((!kIsWeb && Platform.isAndroid) && player != null) {
       // ExoPlayerCore.releasePending leaves the display mode for this call;
       // MpvPlayerCore restores it natively on dispose and the call is
       // idempotent there. Skip it during a player→player replacement, the
@@ -3079,9 +3080,9 @@ String _sanitizedSubtitleColor(String value, String fallback) {
 String _getHwdecValue(bool enabled) {
   if (!enabled) return 'no';
 
-  if (Platform.isMacOS || Platform.isIOS) {
+  if ((!kIsWeb && Platform.isMacOS) || (!kIsWeb && Platform.isIOS)) {
     return 'videotoolbox';
-  } else if (Platform.isAndroid) {
+  } else if ((!kIsWeb && Platform.isAndroid)) {
     // The fork vo=mediacodec takes MediaCodec decoder buffers straight to the
     // video plane; its query_format accepts IMGFMT_MEDIACODEC and nothing
     // else, so -copy can never draw there and the entry is only ever reached

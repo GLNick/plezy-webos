@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'dart:io' show Platform;
 
 import 'package:flutter/services.dart';
@@ -31,7 +32,7 @@ class HotKey {
 }
 
 /// Whether to use macOS keyboard symbols.
-final bool _isMacOS = Platform.isMacOS;
+final bool _isMacOS = (!kIsWeb && Platform.isMacOS);
 
 /// Human-readable label for a [PhysicalKeyboardKey].
 ///

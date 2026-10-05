@@ -71,7 +71,7 @@ extension _PlexVideoControlsVisibilityMethods on _PlexVideoControlsState {
     if (const bool.fromEnvironment('PLEZY_MAESTRO_E2E')) {
       return const Duration(seconds: 30);
     }
-    final isMobile = (Platform.isIOS || Platform.isAndroid) && !PlatformDetector.isTV();
+    final isMobile = ((!kIsWeb && Platform.isIOS) || (!kIsWeb && Platform.isAndroid)) && !PlatformDetector.isTV();
     if (isMobile || playerDirectionalNavigationEnabled()) {
       return const Duration(seconds: 5);
     }
@@ -320,7 +320,7 @@ extension _PlexVideoControlsVisibilityMethods on _PlexVideoControlsState {
       });
     }
 
-    if (visibilityChanged && Platform.isMacOS) {
+    if (visibilityChanged && (!kIsWeb && Platform.isMacOS)) {
       _updateTrafficLightVisibility();
     }
 

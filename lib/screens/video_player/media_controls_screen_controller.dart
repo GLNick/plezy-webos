@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'dart:async';
 import 'dart:io';
 
@@ -82,7 +83,7 @@ class MediaControlsScreenController {
   /// backgrounded on Android TV.
   bool get suspendedForTvBackground => _suspendedForTvBackground;
 
-  bool get shouldSuspendForTvBackground => Platform.isAndroid && PlatformDetector.isTV() && !_shouldSkipForPip();
+  bool get shouldSuspendForTvBackground => (!kIsWeb && Platform.isAndroid) && PlatformDetector.isTV() && !_shouldSkipForPip();
 
   Future<void> suspendForTvBackground(String reason) async {
     if (!shouldSuspendForTvBackground) return;

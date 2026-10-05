@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'dart:io' show Platform;
 
 import '../../models/audio_channel_limit.dart';
@@ -10,6 +11,7 @@ import 'player_state.dart';
 import 'player_streams.dart';
 import 'platform/player_linux.dart';
 import 'platform/player_windows.dart';
+import 'platform/player_web_stub.dart' if (dart.library.js_interop) 'platform/player_web.dart';
 
 export 'player_base.dart';
 
@@ -387,7 +389,10 @@ abstract class Player {
   /// software ones, where DV reshaping can actually happen (see
   /// MpvPlayerCore.initialVideoOutput; #2010).
   factory Player({bool? useExoPlayer, bool hardwareDecoding = true}) {
-    if (Platform.isAndroid) {
+    if (kIsWeb) {
+      return createPlayerWeb();
+    }
+    if ((!kIsWeb && Platform.isAndroid)) {
       // Default to MPV on Android, with ExoPlayer as the opt-in alternative.
       // The caller should pass useExoPlayer based on SettingsService.useExoPlayer.
       final useExo = useExoPlayer ?? false;
@@ -396,13 +401,13 @@ abstract class Player {
       }
       return PlayerNative(hardwareDecoding: hardwareDecoding); // MPV (default)
     }
-    if (Platform.isMacOS || Platform.isIOS) {
+    if ((!kIsWeb && Platform.isMacOS) || (!kIsWeb && Platform.isIOS)) {
       return PlayerNative();
     }
-    if (Platform.isWindows) {
+    if ((!kIsWeb && Platform.isWindows)) {
       return PlayerWindows();
     }
-    if (Platform.isLinux) {
+    if ((!kIsWeb && Platform.isLinux)) {
       return PlayerLinux();
     }
     throw UnsupportedError('Player is not supported on this platform');
@@ -420,7 +425,10 @@ abstract class Player {
   /// `PlaybackCoordinator`), and the video core only exists while the video
   /// player screen is open.
   factory Player.audio() {
-    if (Platform.isAndroid || Platform.isMacOS || Platform.isIOS || Platform.isWindows || Platform.isLinux) {
+    if (kIsWeb) {
+      return createPlayerWeb(audioOnly: true);
+    }
+    if ((!kIsWeb && Platform.isAndroid) || (!kIsWeb && Platform.isMacOS) || (!kIsWeb && Platform.isIOS) || (!kIsWeb && Platform.isWindows) || (!kIsWeb && Platform.isLinux)) {
       return PlayerNative.audio();
     }
     throw UnsupportedError('Player is not supported on this platform');

@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'dart:async';
 import '../media/ids.dart';
 import 'dart:io' show Platform;
@@ -473,7 +474,7 @@ class _DiscoverScreenState extends State<DiscoverScreen>
       final startedFullPass = _discover.refreshIfStale();
       // Refresh continue watching on mobile only
       // (on desktop, "resumed" fires on every window focus gain)
-      if (!startedFullPass && (Platform.isIOS || Platform.isAndroid)) {
+      if (!startedFullPass && ((!kIsWeb && (!kIsWeb && Platform.isIOS)) || (!kIsWeb && (!kIsWeb && Platform.isAndroid)))) {
         unawaited(_discover.refreshContinueWatching());
       }
     } else if (state == AppLifecycleState.inactive || state == AppLifecycleState.hidden) {

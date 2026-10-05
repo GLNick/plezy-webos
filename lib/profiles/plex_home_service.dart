@@ -367,6 +367,10 @@ class PlexHomeService {
         }
       }
     } catch (e, st) {
+            print('================ PLEX HOME REFRESH ERROR ================');
+      print('ERROR: $e');
+      print('STACKTRACE: $st');
+      print('=========================================================');
       appLogger.w('PlexHomeService: refresh failed for ${conn.accountLabel}', error: e, stackTrace: st);
       return false;
     }

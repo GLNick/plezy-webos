@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'dart:async';
 import 'dart:io' show Platform;
 
@@ -250,7 +251,7 @@ class _MpvConfigScreenState extends State<MpvConfigScreen> with ListenableBindin
                 sliver: SliverList(
                   delegate: SliverChildListDelegate([
                     _buildConfigEditor(),
-                    if (Platform.isLinux) ...[
+                    if ((!kIsWeb && Platform.isLinux)) ...[
                       const SizedBox(height: 8),
                       Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 4),

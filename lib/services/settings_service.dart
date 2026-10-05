@@ -375,7 +375,7 @@ class _AppLocalePref extends Pref<AppLocale> {
 class _AutoPipPref extends Pref<bool> {
   const _AutoPipPref() : super('auto_pip');
   @override
-  bool get resolvedDefault => PlatformDetector.supportsPictureInPicture() && !Platform.isMacOS;
+  bool get resolvedDefault => PlatformDetector.supportsPictureInPicture() && (kIsWeb || !(!kIsWeb && Platform.isMacOS));
 
   @override
   bool readFrom(BaseSharedPreferencesService svc) {
@@ -408,7 +408,7 @@ class _UseExternalPlayerPref extends Pref<bool> {
 class _AudioPassthroughPref extends Pref<bool> {
   const _AudioPassthroughPref() : super('audio_passthrough');
   @override
-  bool get resolvedDefault => PlatformDetector.isAppleTV() || (Platform.isAndroid && PlatformDetector.isTV());
+  bool get resolvedDefault => PlatformDetector.isAppleTV() || ((!kIsWeb && Platform.isAndroid) && PlatformDetector.isTV());
 
   @override
   bool readFrom(BaseSharedPreferencesService svc) {

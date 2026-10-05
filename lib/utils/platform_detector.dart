@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'dart:io';
 import 'dart:math';
 
@@ -95,14 +96,14 @@ class TvDetectionService {
     if (_initialized) return;
 
     final deviceInfo = DeviceInfoPlugin();
-    if (Platform.isAndroid) {
+    if ((!kIsWeb && (!kIsWeb && Platform.isAndroid))) {
       final nativeDetection = await _getNativeAndroidTvDetection();
       final detection =
           nativeDetection ?? detectAndroidTvFromSystemFeatures((await deviceInfo.androidInfo).systemFeatures);
       _detected = detection.isTv;
       _isAutomotive = detection.isAutomotive;
       _detectionReasons = detection.reasons;
-    } else if (Platform.isIOS) {
+    } else if ((!kIsWeb && (!kIsWeb && Platform.isIOS))) {
       if (_tvosBuild) {
         _isAppleTV = true;
         _detected = true;
@@ -159,7 +160,7 @@ class TvDetectionService {
   /// User-assigned Android device name (Settings > About > Device name), or
   /// null if unavailable. Android only.
   static Future<String?> getAndroidDeviceName() async {
-    if (!Platform.isAndroid) return null;
+    if (!(!kIsWeb && (!kIsWeb && Platform.isAndroid))) return null;
     try {
       final name = (await deviceChannel.invokeMethod<String>('getDeviceName'))?.trim();
       return (name == null || name.isEmpty) ? null : name;
@@ -270,7 +271,7 @@ class PlatformDetector {
   /// BuildContext. Use for OS-level capability checks (window state, native
   /// keyboard, etc.); use [isDesktop] for layout decisions.
   static bool isDesktopOS() {
-    return _debugIsDesktopOSOverride ?? (Platform.isWindows || Platform.isMacOS || Platform.isLinux);
+    return _debugIsDesktopOSOverride ?? ((!kIsWeb && (!kIsWeb && Platform.isWindows)) || (!kIsWeb && (!kIsWeb && Platform.isMacOS)) || (!kIsWeb && (!kIsWeb && Platform.isLinux)));
   }
 
   static bool? _debugIsDesktopOSOverride;
@@ -297,8 +298,8 @@ class PlatformDetector {
   /// affordances are suppressed there.
   static bool isPackagedInstall() {
     try {
-      if (!Platform.isWindows) return false;
-      return isPackagedExecutablePath(Platform.resolvedExecutable);
+      if (!(!kIsWeb && (!kIsWeb && Platform.isWindows))) return false;
+      return isPackagedExecutablePath((kIsWeb ? "" : Platform.resolvedExecutable));
     } catch (error, stackTrace) {
       appLogger.e('Failed to determine packaged install status', error: error, stackTrace: stackTrace);
       return false;
@@ -306,7 +307,7 @@ class PlatformDetector {
   }
 
   static bool supportsExternalPlayers() {
-    return Platform.isAndroid || Platform.isIOS || Platform.isMacOS || Platform.isLinux || Platform.isWindows;
+    return (!kIsWeb && (!kIsWeb && Platform.isAndroid)) || (!kIsWeb && (!kIsWeb && Platform.isIOS)) || (!kIsWeb && (!kIsWeb && Platform.isMacOS)) || (!kIsWeb && (!kIsWeb && Platform.isLinux)) || (!kIsWeb && (!kIsWeb && Platform.isWindows));
   }
 
   static bool supportsAudioPassthrough() {
@@ -319,11 +320,11 @@ class PlatformDetector {
     // bitstream substreams — which Mac setups essentially never have — and with a
     // restricted ao list mpv has no PCM fallback, so a failed AO init stalls
     // playback with no audio at all (#1964).
-    return isAppleTV() || Platform.isWindows || Platform.isLinux || (Platform.isAndroid && isTV());
+    return isAppleTV() || (!kIsWeb && (!kIsWeb && Platform.isWindows)) || (!kIsWeb && (!kIsWeb && Platform.isLinux)) || ((!kIsWeb && (!kIsWeb && Platform.isAndroid)) && isTV());
   }
 
   static bool supportsPictureInPicture() => pictureInPictureAllowed(
-    hostSupportsPictureInPicture: Platform.isAndroid || Platform.isIOS || Platform.isMacOS,
+    hostSupportsPictureInPicture: (!kIsWeb && (!kIsWeb && Platform.isAndroid)) || (!kIsWeb && (!kIsWeb && Platform.isIOS)) || (!kIsWeb && (!kIsWeb && Platform.isMacOS)),
     isAppleTv: isAppleTV(),
     isTv: isTV(),
     isAutomotive: isAutomotive(),
@@ -346,3 +347,4 @@ class PlatformDetector {
     return isMobile(context) && !isTablet(context);
   }
 }
+

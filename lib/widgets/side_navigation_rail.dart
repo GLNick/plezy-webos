@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'dart:async';
 import 'dart:ui' show lerpDouble;
 import '../media/ids.dart';
@@ -501,7 +502,7 @@ class SideNavigationRailState extends State<SideNavigationRail> with MountedSetS
   bool get _showDownloads => !PlatformDetector.isAppleTV();
 
   /// macOS has the system green button; mobile/TV have no OS fullscreen toggle.
-  bool get _showFullscreenToggle => Platform.isWindows || Platform.isLinux;
+  bool get _showFullscreenToggle => (!kIsWeb && Platform.isWindows) || (!kIsWeb && Platform.isLinux);
 
   @override
   void initState() {
@@ -846,7 +847,7 @@ class SideNavigationRailState extends State<SideNavigationRail> with MountedSetS
     double basePadding = MediaQuery.paddingOf(context).top + 16;
 
     // On macOS, add extra padding for traffic lights (when not fullscreen)
-    if (Platform.isMacOS) {
+    if ((!kIsWeb && Platform.isMacOS)) {
       final isFullscreen = FullscreenStateManager().isFullscreen;
       if (!isFullscreen) {
         // Traffic lights area is approximately 52 pixels high

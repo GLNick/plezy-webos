@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
@@ -43,7 +44,7 @@ class SubtitleStylingScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // Each backend exposes its own text-subtitle placement preference.
-    final exoActive = Platform.isAndroid && SettingsService.instance.read(SettingsService.useExoPlayer);
+    final exoActive = (!kIsWeb && Platform.isAndroid) && SettingsService.instance.read(SettingsService.useExoPlayer);
     return SettingsPage(
       title: Text(t.screens.subtitleStyling),
       children: [
@@ -58,7 +59,7 @@ class SubtitleStylingScreen extends StatelessWidget {
               options: SubAssOverride.values.map((v) => DialogOption(value: v, title: _assOverrideLabel(v))).toList(),
             ),
             // iOS/tvOS avfoundation VO: screen vs video-resolution basis.
-            if (Platform.isIOS)
+            if ((!kIsWeb && Platform.isIOS))
               SettingSelectionTile<SubtitleRenderResolution>(
                 pref: SettingsService.subtitleRenderResolution,
                 icon: Symbols.aspect_ratio_rounded,
@@ -71,7 +72,7 @@ class SubtitleStylingScreen extends StatelessWidget {
               ),
             // Android libass overlay: full or a fractional render scale (perf knob for
             // render-bound low-end TVs; heavy/animated signs raster faster at < 1).
-            if (Platform.isAndroid)
+            if ((!kIsWeb && Platform.isAndroid))
               SettingSelectionTile<SubtitleRenderResolution>(
                 pref: SettingsService.subtitleRenderResolution,
                 icon: Symbols.aspect_ratio_rounded,

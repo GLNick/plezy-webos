@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'dart:async' show Timer;
 import 'dart:io' show Platform;
 
@@ -21,9 +22,9 @@ class LinuxKeepAlive extends StatefulWidget {
   static bool? debugIsLinuxOverride;
 
   /// Whether this widget repaints on the current platform. Exposed so the
-  /// quiescence test can pin the policy to exactly [Platform.isLinux].
+  /// quiescence test can pin the policy to exactly [(!kIsWeb && Platform.isLinux)].
   @visibleForTesting
-  static bool get ticksOnThisPlatform => debugIsLinuxOverride ?? Platform.isLinux;
+  static bool get ticksOnThisPlatform => debugIsLinuxOverride ?? (!kIsWeb && Platform.isLinux);
 
   @override
   State<LinuxKeepAlive> createState() => _LinuxKeepAliveState();

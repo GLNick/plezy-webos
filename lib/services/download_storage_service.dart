@@ -54,7 +54,7 @@ class DownloadStorageService {
   String _customPathType = 'file';
 
   bool get isUsingSaf =>
-      (Platform.isAndroid || _safAvailableOverride) && _customPathType == 'saf' && _customDownloadPath != null;
+      ((!kIsWeb && Platform.isAndroid) || _safAvailableOverride) && _customPathType == 'saf' && _customDownloadPath != null;
 
   String? get safBaseUri => isUsingSaf ? _customDownloadPath : null;
 
@@ -83,7 +83,7 @@ class DownloadStorageService {
   /// Whether [_getBaseAppDir] resolves to the documents directory (mobile) or the
   /// support directory (desktop). Single source of truth for that split, shared
   /// with [resolveTaskDirectory] so the two can never disagree.
-  static bool get _baseAppDirIsDocuments => Platform.isAndroid || Platform.isIOS;
+  static bool get _baseAppDirIsDocuments => (!kIsWeb && Platform.isAndroid) || (!kIsWeb && Platform.isIOS);
 
   /// Get the base app directory for storing data.
   /// Uses ApplicationDocumentsDirectory on mobile, ApplicationSupportDirectory on desktop.

@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'dart:io';
 
 import '../models/shader_preset.dart';
@@ -30,7 +31,7 @@ class ShaderService {
   /// The preset applied to the chain — none while NVScaler is auto-skipped.
   ShaderPreset get currentPreset => _currentPreset;
 
-  static bool get isPlatformSupported => !Platform.isIOS;
+  static bool get isPlatformSupported => !(!kIsWeb && Platform.isIOS);
 
   /// Check if the player is MPV (shaders are MPV-only)
   bool get isSupported => _player.playerType == 'mpv' && isPlatformSupported;

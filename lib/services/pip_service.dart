@@ -8,7 +8,7 @@ class PipService {
   static const MethodChannel _channel = MethodChannel('com.plezy/pip');
 
   /// PiP is only implemented natively on Android, iOS, and macOS.
-  static bool get _isAvailable => Platform.isAndroid || Platform.isIOS || Platform.isMacOS;
+  static bool get _isAvailable => (!kIsWeb && Platform.isAndroid) || (!kIsWeb && Platform.isIOS) || (!kIsWeb && Platform.isMacOS);
 
   static final PipService _instance = PipService._internal();
   factory PipService() => _instance;

@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'dart:io' show Platform;
 import 'package:flutter/services.dart';
 import 'fullscreen_state_manager.dart';
@@ -17,7 +18,7 @@ class MacOSWindowService {
   static bool _delegateEnabled = false;
 
   static Future<void> _invoke(String method, [Map<String, dynamic>? args]) async {
-    if (!Platform.isMacOS) return;
+    if (!(!kIsWeb && Platform.isMacOS)) return;
     await _channel.invokeMethod(method, args);
   }
 
@@ -41,7 +42,7 @@ class MacOSWindowService {
   ///
   /// This method sets up the Dart-side callbacks for fullscreen state tracking.
   static Future<void> setupCustomTitlebar() async {
-    if (!Platform.isMacOS) return;
+    if (!(!kIsWeb && Platform.isMacOS)) return;
 
     if (_initialized && _delegateEnabled) {
       await syncWindowChrome();
@@ -58,7 +59,7 @@ class MacOSWindowService {
   /// Must be called before using other methods.
   /// Set [enableWindowDelegate] to true to receive fullscreen callbacks.
   static Future<void> initialize({bool enableWindowDelegate = false}) async {
-    if (!Platform.isMacOS) return;
+    if (!(!kIsWeb && Platform.isMacOS)) return;
 
     if (!_initialized || (enableWindowDelegate && !_delegateEnabled)) {
       await _channel.invokeMethod('initialize', {'enableWindowDelegate': enableWindowDelegate});
@@ -81,7 +82,7 @@ class MacOSWindowService {
   static Future<void> exitFullscreen() => _invoke('exitFullscreen');
 
   static Future<bool> isFullscreen() async {
-    if (!Platform.isMacOS) return false;
+    if (!(!kIsWeb && Platform.isMacOS)) return false;
     return await _channel.invokeMethod<bool>('isFullscreen') ?? false;
   }
 }

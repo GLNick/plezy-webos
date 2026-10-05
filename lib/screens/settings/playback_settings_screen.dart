@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
@@ -44,16 +45,16 @@ class PlaybackSettingsScreen extends StatelessWidget {
       ],
       builder: (context) {
         final svc = SettingsService.instance;
-        final exoActive = Platform.isAndroid && svc.read(SettingsService.useExoPlayer);
+        final exoActive = (!kIsWeb && Platform.isAndroid) && svc.read(SettingsService.useExoPlayer);
         // ExoPlayer only has the stereo fold, so a 5.1 limit set on mpv plays
         // (and shows) as Original there.
         final storedChannelLimit = svc.read(SettingsService.audioChannelLimit);
         final channelLimit = exoActive ? storedChannelLimit.onExoPlayer : storedChannelLimit;
         final showDisplaySwitchDelay =
             PlatformDetector.isAppleTV() ||
-            (Platform.isWindows &&
+            ((!kIsWeb && Platform.isWindows) &&
                 (svc.read(SettingsService.matchRefreshRate) || svc.read(SettingsService.matchDynamicRange))) ||
-            (Platform.isAndroid &&
+            ((!kIsWeb && Platform.isAndroid) &&
                 (svc.read(SettingsService.matchContentFrameRate) || svc.read(SettingsService.matchContentResolution)));
 
         return SettingsPage(
@@ -62,7 +63,7 @@ class PlaybackSettingsScreen extends StatelessWidget {
             SettingsGroup(
               title: t.settings.player,
               children: [
-                if (Platform.isAndroid) _playerBackendSelector(),
+                if ((!kIsWeb && Platform.isAndroid)) _playerBackendSelector(),
                 if (PlatformDetector.supportsExternalPlayers()) _externalPlayerTile(),
                 if (!exoActive) _mpvConfigTile(),
                 _hardwareDecodingTile(),
@@ -75,14 +76,14 @@ class PlaybackSettingsScreen extends StatelessWidget {
             SettingsGroup(
               title: t.settings.videoAndDisplay,
               children: [
-                if (Platform.isAndroid) _matchContentFrameRateTile(),
-                if (Platform.isAndroid && PlatformDetector.isTV()) _matchContentResolutionTile(),
-                if (Platform.isWindows) _matchRefreshRateTile(),
-                if (Platform.isWindows) _matchDynamicRangeTile(),
+                if ((!kIsWeb && Platform.isAndroid)) _matchContentFrameRateTile(),
+                if ((!kIsWeb && Platform.isAndroid) && PlatformDetector.isTV()) _matchContentResolutionTile(),
+                if ((!kIsWeb && Platform.isWindows)) _matchRefreshRateTile(),
+                if ((!kIsWeb && Platform.isWindows)) _matchDynamicRangeTile(),
                 if (showDisplaySwitchDelay) _displaySwitchDelayTile(),
-                if (Platform.isAndroid) _dvConversionModeTile(),
+                if ((!kIsWeb && Platform.isAndroid)) _dvConversionModeTile(),
                 // mpv-only: ExoPlayer always leaves the conversion to the device.
-                if (Platform.isAndroid && !exoActive) _hdrSdrConversionTile(),
+                if ((!kIsWeb && Platform.isAndroid) && !exoActive) _hdrSdrConversionTile(),
                 // mpv-only (#2149): ExoPlayer has no filter chain, so the
                 // tile disappears while the ExoPlayer backend is active.
                 if (!exoActive) _deinterlaceTile(),

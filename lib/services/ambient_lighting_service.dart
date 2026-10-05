@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'dart:io';
 
 import 'package:path_provider/path_provider.dart';
@@ -35,7 +36,7 @@ class AmbientLightingService {
   AmbientLightingService(this._player);
 
   bool get isEnabled => _enabled;
-  bool get isSupported => _player.playerType == 'mpv' && !Platform.isIOS;
+  bool get isSupported => _player.playerType == 'mpv' && !(!kIsWeb && Platform.isIOS);
 
   /// Enable ambient lighting effect.
   ///

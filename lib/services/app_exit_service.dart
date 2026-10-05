@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'dart:io' show Platform;
 import 'dart:ui' as ui;
 
@@ -19,7 +20,7 @@ class AppExitService {
   static Future<bool> requestExit({AppExitApplication? exitApplicationForTesting}) async {
     if (_tvosBuild || PlatformDetector.isAppleTV()) return false;
 
-    if (Platform.isAndroid) {
+    if ((!kIsWeb && Platform.isAndroid)) {
       try {
         return await _channel.invokeMethod<bool>('requestExit') ?? true;
       } on MissingPluginException {

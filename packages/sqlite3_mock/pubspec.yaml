@@ -1,0 +1,6 @@
+name: sqlite3
+description: A mock stub for web compatibility
+version: 3.5.2
+environment:
+  sdk: '>=3.0.0 <4.0.0'
+dependencies:

@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'dart:async';
 import 'dart:io' show Platform;
 import 'dart:math';
@@ -742,7 +743,7 @@ class MusicPlaybackServiceImpl extends MusicPlaybackService with WidgetsBindingO
       _player = player;
       _wirePlayerStreams(player);
     }
-    if (Platform.isAndroid) {
+    if ((!kIsWeb && Platform.isAndroid)) {
       // Configure logging before volume/focus/open can create the native core,
       // and refresh it on later opens if the debug preference changed.
       final debugLogging = SettingsService.instanceOrNull?.read(SettingsService.enableDebugLogging) ?? false;

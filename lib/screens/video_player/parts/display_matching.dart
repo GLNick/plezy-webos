@@ -64,7 +64,7 @@ extension _VideoPlayerDisplayMatchingMethods on VideoPlayerScreenState {
   /// [_FrameRateStartupPlan.needsFirstFrameSwitch] instead, which marks the
   /// item applied before open so this stays a no-op for it.
   Future<void> _applyFrameRateMatching() async {
-    if (player == null || !Platform.isAndroid) return;
+    if (player == null || !(!kIsWeb && Platform.isAndroid)) return;
     if (_frameRate.applied) return;
 
     try {

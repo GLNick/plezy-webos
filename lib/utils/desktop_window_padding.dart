@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'dart:io' show Platform;
 import 'package:flutter/material.dart';
 import '../services/fullscreen_state_manager.dart';
@@ -34,7 +35,7 @@ class DesktopWindowPadding {
 
 /// Whether the widget tree at [context] must reserve space for the macOS traffic
 /// lights. A side navigation already occupies that area, so nothing under it pads.
-bool _trafficLightPaddingApplies(BuildContext context) => Platform.isMacOS && !SideNavigationScope.isPresent(context);
+bool _trafficLightPaddingApplies(BuildContext context) => (!kIsWeb && Platform.isMacOS) && !SideNavigationScope.isPresent(context);
 
 /// Helper class for adjusting app bar widgets to account for desktop window controls
 class DesktopAppBarHelper {
@@ -42,9 +43,9 @@ class DesktopAppBarHelper {
   static List<Widget>? buildAdjustedActions(List<Widget>? actions) {
     double? rightPadding;
 
-    if (Platform.isMacOS) {
+    if ((!kIsWeb && Platform.isMacOS)) {
       rightPadding = DesktopWindowPadding.macOSRight;
-    } else if (Platform.isIOS || Platform.isAndroid) {
+    } else if ((!kIsWeb && Platform.isIOS) || (!kIsWeb && Platform.isAndroid)) {
       rightPadding = DesktopWindowPadding.mobileRight;
     }
 
@@ -87,7 +88,7 @@ class DesktopAppBarHelper {
 
   /// Builds flexible space with gesture detector on macOS to prevent window dragging
   static Widget? buildAdjustedFlexibleSpace(Widget? flexibleSpace) {
-    if (!Platform.isMacOS || flexibleSpace == null) {
+    if (!(!kIsWeb && Platform.isMacOS) || flexibleSpace == null) {
       return flexibleSpace;
     }
 
@@ -109,7 +110,7 @@ class DesktopAppBarHelper {
   /// [opaque] - If true, uses HitTestBehavior.opaque to fully consume gestures.
   ///            If false (default), uses HitTestBehavior.translucent.
   static Widget wrapWithGestureDetector(Widget child, {bool opaque = false}) {
-    if (!Platform.isMacOS) {
+    if (!(!kIsWeb && Platform.isMacOS)) {
       return child;
     }
 
@@ -135,7 +136,7 @@ class DesktopTitleBarPadding extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    if (!Platform.isMacOS) {
+    if (!(!kIsWeb && Platform.isMacOS)) {
       return child;
     }
 

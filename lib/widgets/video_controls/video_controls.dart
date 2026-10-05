@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'dart:async' show StreamSubscription, Timer, unawaited;
 import 'dart:io' show Platform;
 
@@ -1124,7 +1125,7 @@ class _PlexVideoControlsState extends State<PlexVideoControls>
         windowManager.setAlwaysOnTop(false);
       }
     }
-    if (Platform.isMacOS) {
+    if ((!kIsWeb && Platform.isMacOS)) {
       _trafficLightVisibilityGeneration++;
       unawaited(MacOSWindowService.setTrafficLightsVisible(true));
     }
@@ -1138,7 +1139,7 @@ class _PlexVideoControlsState extends State<PlexVideoControls>
   void _onFullscreenStateChanged() {
     if (!mounted) return;
     _setControlsState(() {});
-    if (Platform.isMacOS) _updateTrafficLightVisibility();
+    if ((!kIsWeb && Platform.isMacOS)) _updateTrafficLightVisibility();
   }
 
   void _onEdgeAdjustmentPipChanged() {
@@ -1189,7 +1190,7 @@ class _PlexVideoControlsState extends State<PlexVideoControls>
     return ValueListenableBuilder<bool>(
       valueListenable: _pipService.isPipActive,
       builder: (context, isInPip, _) {
-        if (isInPip && !Platform.isMacOS) return const SizedBox.shrink();
+        if (isInPip && !(!kIsWeb && Platform.isMacOS)) return const SizedBox.shrink();
         return Focus(
           focusNode: _focusNode,
           autofocus: true,

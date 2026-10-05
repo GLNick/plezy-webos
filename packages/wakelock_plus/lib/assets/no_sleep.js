@@ -1,6 +1,6 @@
 /*! Based On NoSleep.js v0.12.0 - git.io/vfn01 - Rich Tibbett - MIT license */
 
-class PromiseCompleter {
+var PromiseCompleter = window.PromiseCompleter || class PromiseCompleter {
   _promise;
   _resolve;
   _reject;

@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'dart:io' show HttpClient, Platform;
 
 import 'package:http/http.dart' as http;
@@ -48,7 +49,7 @@ ManagedHttpClient _createIoClient(String debugLabel) {
 /// issues — Cronet by ~10x on LAN body throughput — so neither survived; see
 /// issue #2140.
 http.Client createPlatformClient() {
-  if (Platform.isWindows) {
+  if ((!kIsWeb && Platform.isWindows)) {
     try {
       final client = WinHttpClient.defaultConfiguration();
       _logPlatformClient('windows', 'WinHttpClient');
@@ -59,6 +60,6 @@ http.Client createPlatformClient() {
       return _createIoClient('IOClient (fallback)');
     }
   }
-  _logPlatformClient(Platform.operatingSystem, 'IOClient');
+  _logPlatformClient((kIsWeb ? "web" : Platform.operatingSystem), 'IOClient');
   return _createIoClient('IOClient');
 }

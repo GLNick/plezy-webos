@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 /// Memoizes a `static Future<T> getInstance()` singleton whose construction is
 /// cheap but whose initialization is async.
 ///

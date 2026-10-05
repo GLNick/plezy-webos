@@ -89,7 +89,14 @@ class _PlexPinAuthFlowState extends State<PlexPinAuthFlow> {
   }
 
   Future<void> _initService() async {
-    final svc = await (widget.serviceFactory?.call() ?? PlexAuthService.create());
+    PlexAuthService? svc;
+    try {
+      svc = await (widget.serviceFactory?.call() ?? PlexAuthService.create());
+    } catch (e, st) {
+      print('Fehler bei PlexAuthService.create: $e');
+      print(st);
+    }
+    if (svc == null) return;
     if (!mounted) {
       svc.dispose();
       return;

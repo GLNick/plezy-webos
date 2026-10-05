@@ -1,3 +1,4 @@
+﻿import 'package:flutter/foundation.dart' show kIsWeb;
 import 'dart:async';
 
 import '../exceptions/media_server_exceptions.dart';
@@ -71,7 +72,7 @@ class TrackManager {
   /// local re-apply would move the player underneath the room's agreed rate.
   final bool Function()? playbackRateOwnedExternally;
 
-  // ── Mutable configuration (updated on episode navigation) ──────────
+  // â”€â”€ Mutable configuration (updated on episode navigation) â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
   MediaItem metadata;
   MediaSourceInfo? mediaInfo;
@@ -91,7 +92,7 @@ class TrackManager {
   /// gated.
   bool persistAutomaticSubtitleSelection = true;
 
-  // ── Internal state ─────────────────────────────────────────────────
+  // â”€â”€ Internal state â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
   bool _isApplyingTrackSelection = false;
   Completer<void>? _selectionIdleCompleter;
@@ -160,7 +161,7 @@ class TrackManager {
     return activePlayerMutationDrain ?? Future<void>.value();
   }
 
-  // ── Track selection ────────────────────────────────────────────────
+  // â”€â”€ Track selection â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
   /// Apply track selection once tracks are available.
   ///
@@ -230,6 +231,7 @@ class TrackManager {
   }
 
   bool _tracksReadyForSelection(Tracks tracks) {
+    if (kIsWeb) return true;
     final realSubtitleTracks = tracks.subtitle
         .where((track) => track.id != SubtitleTrack.auto.id && track.id != SubtitleTrack.off.id)
         .toList(growable: false);
@@ -361,9 +363,9 @@ class TrackManager {
     }
   }
 
-  // ── Backend fallback ───────────────────────────────────────────────
+  // â”€â”€ Backend fallback â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
-  /// Handle ExoPlayer → MPV backend switch: reapply selection.
+  /// Handle ExoPlayer â†’ MPV backend switch: reapply selection.
   Future<void> onBackendSwitched() async {
     final pendingSelection = _selectionIdleCompleter?.future;
     final playerMutationDrain = invalidatePendingSelection();
@@ -375,7 +377,7 @@ class TrackManager {
     applyTrackSelectionWhenReady();
   }
 
-  // ── Track cycling (remote/keyboard shortcuts) ──────────────────────
+  // â”€â”€ Track cycling (remote/keyboard shortcuts) â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
   /// Cycle to the next subtitle track, save the preference, and return the
   /// track now playing so the caller can record it as the committed choice.
@@ -442,7 +444,7 @@ class TrackManager {
     }
   }
 
-  // ── Explicit user selection ────────────────────────────────────────
+  // â”€â”€ Explicit user selection â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
   /// Records an explicit user audio choice.
   ///
@@ -470,9 +472,9 @@ class TrackManager {
     await onSubtitleTrackChanged(track, sourceStreamId: sourceStreamId);
   }
 
-  // ── Server preference sync ─────────────────────────────────────────
+  // â”€â”€ Server preference sync â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
-  /// Handle audio track changes — save stream selection and language preference.
+  /// Handle audio track changes â€” save stream selection and language preference.
   Future<void> onAudioTrackChanged(AudioTrack track) async {
     final info = mediaInfo;
     final partId = await _guardTrackChange(info, 'audio');
@@ -489,7 +491,7 @@ class TrackManager {
     await _saveTrackPreferences(partId: partId, trackType: 'audio', streamID: streamID);
   }
 
-  /// Handle subtitle track changes — save stream selection and language preference.
+  /// Handle subtitle track changes â€” save stream selection and language preference.
   Future<void> onSubtitleTrackChanged(SubtitleTrack track, {int? sourceStreamId}) async {
     final info = mediaInfo;
     final partId = await _guardTrackChange(info, 'subtitle');
@@ -520,7 +522,7 @@ class TrackManager {
     await _saveTrackPreferences(partId: partId, trackType: 'subtitle', streamID: streamID);
   }
 
-  /// Handle secondary subtitle track changes — no server save needed.
+  /// Handle secondary subtitle track changes â€” no server save needed.
   void onSecondarySubtitleTrackChanged(SubtitleTrack track) {
     // Secondary subtitle preference is carried via player.state.track.secondarySubtitle
     // which is automatically read during episode navigation. No additional state needed.
@@ -535,10 +537,10 @@ class TrackManager {
     return settings.read(SettingsService.rememberTrackSelections);
   }
 
-  // ── Private helpers ────────────────────────────────────────────────
+  // â”€â”€ Private helpers â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
   /// Common guard for the track change handlers: the part id to write against,
-  /// or null when nothing is written per part — the user opted out, the
+  /// or null when nothing is written per part â€” the user opted out, the
   /// backend remembers picks through its account instead (settled here), or
   /// the source cannot be addressed.
   Future<int?> _guardTrackChange(MediaSourceInfo? info, String trackType) async {
@@ -566,7 +568,7 @@ class TrackManager {
   ///
   /// A null [streamID] means no server stream could be identified for the
   /// chosen track. There is no local fallback store, so the choice is simply
-  /// lost — say so instead of reporting a save that never happened. The same
+  /// lost â€” say so instead of reporting a save that never happened. The same
   /// goes for a server that answers without storing the choice.
   Future<void> _saveTrackPreferences({required int partId, required String trackType, int? streamID}) async {
     if (streamID == null) {
@@ -610,8 +612,8 @@ class TrackManager {
 
   /// A request that never reached a verdict (network, timeout, client-side
   /// abort) says nothing about whether the server would store the pick, so it
-  /// stays in the log. Anything else — a refusal carrying a status code, or a
-  /// failure inside the client — means the pick is session-only.
+  /// stays in the log. Anything else â€” a refusal carrying a status code, or a
+  /// failure inside the client â€” means the pick is session-only.
   void _handleServerSyncFailure(String action, Object error, StackTrace stackTrace) {
     if (error is MediaServerHttpException && (error.isTransient || error.isCancellation)) {
       appLogger.w('Could not $action: no server verdict', error: error, stackTrace: stackTrace);
@@ -622,9 +624,9 @@ class TrackManager {
   }
 
   /// The pick took effect in the engine but will not be recorded against the
-  /// server — the source carries no part id to write against, no server
+  /// server â€” the source carries no part id to write against, no server
   /// stream matched the chosen track, or the server refused or cannot store
-  /// it — and there is no local store to fall back to. Tell the user the
+  /// it â€” and there is no local store to fall back to. Tell the user the
   /// choice is session-only rather than dropping it silently, once per item.
   /// The message names that outcome, not the cause, because every call site
   /// produces the same one.
@@ -641,3 +643,9 @@ class TrackManager {
     invalidatePendingSelection();
   }
 }
+
+
+
+
+
+

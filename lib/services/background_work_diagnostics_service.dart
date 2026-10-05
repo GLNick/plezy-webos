@@ -322,7 +322,7 @@ class BackgroundWorkDiagnosticsService extends ChangeNotifier
 
   /// Android phone/tablet only. TV boxes are mains-powered, and surfacing
   /// mobile battery/data restrictions there is noise.
-  bool get isSupported => _supportedOverride ?? (Platform.isAndroid && !PlatformDetector.isTV());
+  bool get isSupported => _supportedOverride ?? ((!kIsWeb && Platform.isAndroid) && !PlatformDetector.isTV());
 
   BackgroundWorkStatus get status => _status;
 

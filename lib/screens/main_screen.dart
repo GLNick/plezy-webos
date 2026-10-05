@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'dart:async';
 import '../media/ids.dart';
 import '../media/media_server_client.dart';
@@ -893,7 +894,7 @@ class _MainScreenState extends State<MainScreen>
 
   /// Set up launcher shelf deep link handling for Android TV and tvOS taps.
   void _setupSystemShelfDeepLink() {
-    if (!Platform.isAndroid && !PlatformDetector.isAppleTV()) return;
+    if (!(!kIsWeb && (!kIsWeb && Platform.isAndroid)) && !PlatformDetector.isAppleTV()) return;
 
     final systemShelf = SystemShelfService();
 
@@ -1180,7 +1181,7 @@ class _MainScreenState extends State<MainScreen>
       resumedFromBackground: resumedFromBackground,
       isOffline: _isOffline,
       alreadyShowingProfileSelection: _isShowingProfileSelection,
-      isMobilePlatform: Platform.isAndroid || Platform.isIOS,
+      isMobilePlatform: (!kIsWeb && (!kIsWeb && Platform.isAndroid)) || (!kIsWeb && (!kIsWeb && Platform.isIOS)),
       hasActiveVideoPlayback: VideoPlayerScreenState.activeGlobalKey != null,
       // Short-circuit on resumedFromBackground: the provider is lazy and
       // otherwise unused on phones, so an unconditional read would create it
@@ -1678,8 +1679,8 @@ class _MainScreenState extends State<MainScreen>
     final isMetaPressed = HardwareKeyboard.instance.isMetaPressed;
     final isControlPressed = HardwareKeyboard.instance.isControlPressed;
 
-    final isMacShortcut = Platform.isMacOS && isMetaPressed && !isControlPressed;
-    final isOtherShortcut = !Platform.isMacOS && isControlPressed && !isMetaPressed;
+    final isMacShortcut = (!kIsWeb && Platform.isMacOS) && isMetaPressed && !isControlPressed;
+    final isOtherShortcut = !(!kIsWeb && Platform.isMacOS) && isControlPressed && !isMetaPressed;
 
     if (!isMacShortcut && !isOtherShortcut) return KeyEventResult.ignored;
     if (_isOffline) return KeyEventResult.handled;

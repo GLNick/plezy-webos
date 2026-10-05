@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'dart:async';
 import 'dart:io' show Platform;
 import 'dart:math' as math;
@@ -197,7 +198,7 @@ abstract class PlayerBase with PlayerStreamControllersMixin implements Player {
   static int _nativeInstanceCounter = 0;
   final int nativeInstanceId = ++_nativeInstanceCounter;
 
-  static const _maximumDurationMilliseconds = 9223372036854775;
+  static const _maximumDurationMilliseconds = 9007199254740991;
 
   static double? _finiteDouble(Object? value) {
     if (value is! num) return null;
@@ -1341,7 +1342,7 @@ abstract class PlayerBase with PlayerStreamControllersMixin implements Player {
   /// swresample, so the downmix options (`audio-swresample-o`,
   /// `audio-normalize-downmix`) apply to it as well.
   static final String _loudnormFilter =
-      '${Platform.isAndroid ? 'format=channels=stereo,' : ''}'
+      '${(!kIsWeb && Platform.isAndroid) ? 'format=channels=stereo,' : ''}'
       'loudnorm=I=-14:TP=-3:LRA=4,format=srate=48000:format=floatp';
 
   @override

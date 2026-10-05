@@ -148,7 +148,7 @@ abstract class ApiCache {
     await _db
         .into(_db.apiCache)
         .insertOnConflictUpdate(
-          ApiCacheCompanion(cacheKey: Value(key), data: Value(encoded), cachedAt: Value(DateTime.now())),
+          ApiCacheCompanion(cacheKey: Value(key), data: Value(encoded), cachedAt: Value(DateTime.now()), pinned: const Value(false)),
         );
   }
 

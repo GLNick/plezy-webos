@@ -157,7 +157,9 @@ class PlaybackInitializationService {
     PlaybackInitializationResult result;
     try {
       result = await client!.getPlaybackInitialization(options);
-    } catch (e) {
+    } catch (e, stack) {
+      print("=== PLAYBACK INIT ERROR ===: $e");
+      print("=== STACK TRACE ===:\n$stack");
       rethrow;
     }
 

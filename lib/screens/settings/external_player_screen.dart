@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
@@ -183,7 +184,7 @@ class _AddCustomPlayerDialogState extends State<_AddCustomPlayerDialog> {
   final _saveFocusNode = FocusNode(debugLabel: 'CustomExternalPlayerSave');
   // iOS and tvOS apps can only be reached through their URL scheme; there is
   // no process to spawn and no package to target.
-  final _urlSchemeOnly = Platform.isIOS;
+  final _urlSchemeOnly = (!kIsWeb && (!kIsWeb && Platform.isIOS));
   late CustomPlayerType _selectedType = _urlSchemeOnly ? CustomPlayerType.urlScheme : CustomPlayerType.command;
 
   @override
@@ -206,10 +207,10 @@ class _AddCustomPlayerDialogState extends State<_AddCustomPlayerDialog> {
     if (_selectedType == CustomPlayerType.urlScheme) {
       return (label: t.externalPlayer.playerUrlScheme, hint: 'myplayer://play?url=');
     }
-    if (Platform.isAndroid) {
+    if ((!kIsWeb && (!kIsWeb && Platform.isAndroid))) {
       return (label: t.externalPlayer.playerPackage, hint: 'com.example.player');
     }
-    return (label: t.externalPlayer.playerCommand, hint: Platform.isMacOS ? 'mpv' : '/usr/bin/player');
+    return (label: t.externalPlayer.playerCommand, hint: (!kIsWeb && (!kIsWeb && Platform.isMacOS)) ? 'mpv' : '/usr/bin/player');
   }
 
   @override
@@ -238,7 +239,7 @@ class _AddCustomPlayerDialogState extends State<_AddCustomPlayerDialog> {
                 segments: [
                   ButtonSegment(
                     value: CustomPlayerType.command,
-                    label: Text(Platform.isAndroid ? t.externalPlayer.playerPackage : t.externalPlayer.playerCommand),
+                    label: Text((!kIsWeb && (!kIsWeb && Platform.isAndroid)) ? t.externalPlayer.playerPackage : t.externalPlayer.playerCommand),
                   ),
                   ButtonSegment(value: CustomPlayerType.urlScheme, label: Text(t.externalPlayer.playerUrlScheme)),
                 ],

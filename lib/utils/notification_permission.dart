@@ -42,7 +42,7 @@ abstract final class NotificationPermission {
         await override();
         return;
       }
-      if (!Platform.isAndroid) return;
+      if (!(!kIsWeb && Platform.isAndroid)) return;
 
       final permissions = FileDownloader().permissions;
       final status = await permissions.status(PermissionType.notifications);

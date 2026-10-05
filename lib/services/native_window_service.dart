@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'dart:io' show Platform;
 import 'package:flutter/services.dart';
 import 'fullscreen_state_manager.dart';
@@ -16,7 +17,7 @@ class NativeWindowService {
   /// Hook the native → Dart callback that keeps [FullscreenStateManager] in
   /// sync with OS-driven fullscreen transitions. Safe to call more than once.
   static void initialize() {
-    if (!Platform.isWindows || _initialized) return;
+    if (!(!kIsWeb && Platform.isWindows) || _initialized) return;
     _channel.setMethodCallHandler(_handleMethodCall);
     _initialized = true;
   }
@@ -32,13 +33,13 @@ class NativeWindowService {
 
   /// Enter or exit native fullscreen on the current monitor.
   static Future<void> setFullScreen(bool isFullScreen) async {
-    if (!Platform.isWindows) return;
+    if (!(!kIsWeb && Platform.isWindows)) return;
     await _channel.invokeMethod('setFullScreen', {'isFullScreen': isFullScreen});
   }
 
   /// Query the native fullscreen state. Returns false off-Windows.
   static Future<bool> isFullScreen() async {
-    if (!Platform.isWindows) return false;
+    if (!(!kIsWeb && Platform.isWindows)) return false;
     return await _channel.invokeMethod<bool>('isFullScreen') ?? false;
   }
 }

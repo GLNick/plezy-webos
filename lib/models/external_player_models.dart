@@ -15,10 +15,10 @@ enum CustomPlayerType { command, urlScheme }
 class PlayerInstallProbe {
   const PlayerInstallProbe();
 
-  /// Drives which detectors run. Values match [Platform.operatingSystem].
-  String get operatingSystem => Platform.operatingSystem;
+  /// Drives which detectors run. Values match [(kIsWeb ? "web" : Platform.operatingSystem)].
+  String get operatingSystem => (kIsWeb ? "web" : Platform.operatingSystem);
 
-  Map<String, String> get environment => Platform.environment;
+  Map<String, String> get environment => (kIsWeb ? const <String, String>{} : Platform.environment);
 
   Future<ProcessResult> run(String executable, List<String> arguments) => Process.run(executable, arguments);
 
@@ -215,7 +215,7 @@ List<String> _windowsVlcCommandCandidates(Map<String, String> environment) {
 }
 
 Future<bool> _launchWindowsVlc(String url) {
-  return _launchCommandCandidates(_windowsVlcCommandCandidates(Platform.environment), url);
+  return _launchCommandCandidates(_windowsVlcCommandCandidates((kIsWeb ? const <String, String>{} : Platform.environment)), url);
 }
 
 Future<bool> _launchCustom(String value, String url, CustomPlayerType type) async {
@@ -223,9 +223,9 @@ Future<bool> _launchCustom(String value, String url, CustomPlayerType type) asyn
     return _launchUrlScheme(value, url);
   }
   // Command type
-  if (Platform.isAndroid) {
+  if ((!kIsWeb && Platform.isAndroid)) {
     return _launchAndroidIntent(url, package: value);
-  } else if (Platform.isMacOS) {
+  } else if ((!kIsWeb && Platform.isMacOS)) {
     // Try PATH first (e.g. mpv), fall back to open -a (e.g. VLC)
     if (await _launchCommand(value, url)) return true;
     return _launchMacApp(value, url);
@@ -271,12 +271,12 @@ class KnownPlayers {
       id: 'vlc',
       name: 'VLC',
       iconAsset: 'assets/player_icons/vlc.svg',
-      isAvailable: Platform.isAndroid || Platform.isIOS || Platform.isMacOS || Platform.isLinux || Platform.isWindows,
+      isAvailable: (!kIsWeb && Platform.isAndroid) || (!kIsWeb && Platform.isIOS) || (!kIsWeb && Platform.isMacOS) || (!kIsWeb && Platform.isLinux) || (!kIsWeb && Platform.isWindows),
       launch: (url) {
-        if (Platform.isAndroid) return _launchAndroidIntentCandidates(url, _androidPackageCandidatesForId('vlc'));
-        if (Platform.isIOS) return _launchUrlScheme('vlc://', url);
-        if (Platform.isMacOS) return _launchMacApp('VLC', url);
-        if (Platform.isWindows) return _launchWindowsVlc(url);
+        if ((!kIsWeb && Platform.isAndroid)) return _launchAndroidIntentCandidates(url, _androidPackageCandidatesForId('vlc'));
+        if ((!kIsWeb && Platform.isIOS)) return _launchUrlScheme('vlc://', url);
+        if ((!kIsWeb && Platform.isMacOS)) return _launchMacApp('VLC', url);
+        if ((!kIsWeb && Platform.isWindows)) return _launchWindowsVlc(url);
         return _launchCommand('vlc', url);
       },
     ),
@@ -284,9 +284,9 @@ class KnownPlayers {
       id: 'mpv',
       name: 'mpv',
       iconAsset: 'assets/player_icons/mpv.svg',
-      isAvailable: Platform.isAndroid || Platform.isMacOS || Platform.isLinux || Platform.isWindows,
+      isAvailable: (!kIsWeb && Platform.isAndroid) || (!kIsWeb && Platform.isMacOS) || (!kIsWeb && Platform.isLinux) || (!kIsWeb && Platform.isWindows),
       launch: (url) {
-        if (Platform.isAndroid) return _launchAndroidIntentCandidates(url, _androidPackageCandidatesForId('mpv'));
+        if ((!kIsWeb && Platform.isAndroid)) return _launchAndroidIntentCandidates(url, _androidPackageCandidatesForId('mpv'));
         return _launchCommand('mpv', url);
       },
     ),
@@ -294,35 +294,35 @@ class KnownPlayers {
       id: 'iina',
       name: 'IINA',
       iconAsset: 'assets/player_icons/iina.png',
-      isAvailable: Platform.isMacOS,
+      isAvailable: (!kIsWeb && Platform.isMacOS),
       launch: (url) => _launchUrlScheme('iina://weblink?url=', url),
     ),
     ExternalPlayer(
       id: 'mx_player',
       name: 'MX Player',
       iconAsset: 'assets/player_icons/mx_player.svg',
-      isAvailable: Platform.isAndroid,
+      isAvailable: (!kIsWeb && Platform.isAndroid),
       launch: (url) => _launchAndroidIntentCandidates(url, _androidPackageCandidatesForId('mx_player')),
     ),
     ExternalPlayer(
       id: 'just_player',
       name: 'Just Player',
       iconAsset: 'assets/player_icons/just_player.png',
-      isAvailable: Platform.isAndroid,
+      isAvailable: (!kIsWeb && Platform.isAndroid),
       launch: (url) => _launchAndroidIntentCandidates(url, _androidPackageCandidatesForId('just_player')),
     ),
     ExternalPlayer(
       id: 'infuse',
       name: 'Infuse',
       iconAsset: 'assets/player_icons/infuse.png',
-      isAvailable: Platform.isIOS,
+      isAvailable: (!kIsWeb && Platform.isIOS),
       launch: (url) => _launchUrlScheme('infuse://x-callback-url/play?url=', url),
     ),
     ExternalPlayer(
       id: 'potplayer',
       name: 'PotPlayer',
       iconAsset: 'assets/player_icons/potplayer.png',
-      isAvailable: Platform.isWindows,
+      isAvailable: (!kIsWeb && Platform.isWindows),
       launch: (url) async {
         if (await _launchUrlScheme('potplayer://', url)) return true;
         return _launchCommand('PotPlayerMini64', url);
@@ -332,7 +332,7 @@ class KnownPlayers {
       id: 'celluloid',
       name: 'Celluloid',
       iconAsset: 'assets/player_icons/celluloid.svg',
-      isAvailable: Platform.isLinux,
+      isAvailable: (!kIsWeb && Platform.isLinux),
       launch: (url) => _launchCommand('celluloid', url),
     ),
   ];

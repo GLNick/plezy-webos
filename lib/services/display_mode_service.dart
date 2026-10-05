@@ -34,7 +34,7 @@ class DisplayModeService {
 
   DisplayModeService._(this._settings, this._fullscreen, this._channel, this._isWindowsOverride);
 
-  bool get _isWindows => _isWindowsOverride ?? Platform.isWindows;
+  bool get _isWindows => _isWindowsOverride ?? (!kIsWeb && Platform.isWindows);
 
   /// Apply display matching from what mpv presents: [fps] is the derived
   /// output rate (container rate, doubled under deinterlacing) and [sigPeak]

@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 // Measurement harness entrypoint. NOT part of the app.
 //
 // Drives the real PlayerLinux/mpv/Video rendering path with a local file so
@@ -58,7 +59,7 @@ class _HarnessAppState extends State<_HarnessApp> {
     _reportTimer = Timer.periodic(const Duration(seconds: 2), (_) => _report());
     _probeTimer = Timer.periodic(const Duration(seconds: 2), (_) => _probe());
 
-    final seconds = int.tryParse(Platform.environment['PLEZY_HARNESS_SECONDS'] ?? '');
+    final seconds = int.tryParse((kIsWeb ? const <String, String>{} : Platform.environment)['PLEZY_HARNESS_SECONDS'] ?? '');
     if (seconds != null && seconds > 0) {
       _quitTimer = Timer(Duration(seconds: seconds), () {
         _report();
@@ -66,7 +67,7 @@ class _HarnessAppState extends State<_HarnessApp> {
         exit(0);
       });
     }
-    final inset = double.tryParse(Platform.environment['PLEZY_HARNESS_INSET'] ?? '');
+    final inset = double.tryParse((kIsWeb ? const <String, String>{} : Platform.environment)['PLEZY_HARNESS_INSET'] ?? '');
     if (inset != null && inset > 0) {
       _insetTimer = Timer.periodic(const Duration(seconds: 6), (_) {
         setState(() => _inset = _inset == 0 ? inset : 0);
@@ -165,7 +166,7 @@ class _HarnessAppState extends State<_HarnessApp> {
   }
 
   Future<void> _start() async {
-    final media = Platform.environment['PLEZY_HARNESS_MEDIA'];
+    final media = (kIsWeb ? const <String, String>{} : Platform.environment)['PLEZY_HARNESS_MEDIA'];
     if (media == null || media.isEmpty) {
       setState(() => _status = 'set PLEZY_HARNESS_MEDIA');
       return;
@@ -174,7 +175,7 @@ class _HarnessAppState extends State<_HarnessApp> {
     try {
       final player = Player();
       setState(() => _player = player);
-      final level = Platform.environment['PLEZY_HARNESS_MPV_LOG'];
+      final level = (kIsWeb ? const <String, String>{} : Platform.environment)['PLEZY_HARNESS_MPV_LOG'];
       if (level != null && level.isNotEmpty) {
         await player.setLogLevel(level);
         stdout.writeln('HARNESS_MPV_LOG $level');
@@ -200,7 +201,7 @@ class _HarnessAppState extends State<_HarnessApp> {
       // PLEZY_HARNESS_TONEMAP does: these captures get labelled with the value
       // that was asked for, and carrying on would file the default curve under
       // whatever was requested. A silently wrong label is worse than no capture.
-      final props = Platform.environment['PLEZY_HARNESS_MPV_PROPS'];
+      final props = (kIsWeb ? const <String, String>{} : Platform.environment)['PLEZY_HARNESS_MPV_PROPS'];
       if (props != null && props.isNotEmpty) {
         for (final pair in props.split(',')) {
           final split = pair.indexOf('=');
@@ -230,7 +231,7 @@ class _HarnessAppState extends State<_HarnessApp> {
       // A rejected value aborts instead of carrying on. This harness exists to
       // produce A/B photographs, and continuing in whatever mode happened to be
       // active would label the result with a leg that was never shown.
-      final toneMapping = Platform.environment['PLEZY_HARNESS_TONEMAP'];
+      final toneMapping = (kIsWeb ? const <String, String>{} : Platform.environment)['PLEZY_HARNESS_TONEMAP'];
       if (toneMapping != null && toneMapping.isNotEmpty) {
         try {
           await player.setProperty('hdr-tone-mapping', toneMapping);
@@ -241,7 +242,7 @@ class _HarnessAppState extends State<_HarnessApp> {
           return;
         }
       }
-      if (Platform.environment['PLEZY_HARNESS_HDR'] == '1') {
+      if ((kIsWeb ? const <String, String>{} : Platform.environment)['PLEZY_HARNESS_HDR'] == '1') {
         try {
           await player.setProperty('hdr-enabled', 'yes');
           stdout.writeln('HARNESS_HDR requested');

@@ -300,7 +300,7 @@ extension _VideoPlayerReloadMethods on VideoPlayerScreenState {
     final nativeTracks = currentPlayer.state.tracks.subtitle;
     final session = _playbackSession;
     final sourceSidecar = session == null ? null : _sidecarForSourceStreamId(session, sourceStreamId);
-    final nativeTrack = PlaybackSubtitleResolver.nativeTrackForSource(
+    var nativeTrack = PlaybackSubtitleResolver.nativeTrackForSource(
       sourceTrack: sourceTrack,
       nativeTracks: nativeTracks,
       allSourceTracks: info.subtitleTracks,
@@ -309,6 +309,35 @@ extension _VideoPlayerReloadMethods on VideoPlayerScreenState {
       currentSourceStreamId: session?.subtitleSelection.primarySourceStreamId,
       selectedNativeTrack: currentPlayer.state.track.subtitle,
     );
+    if (nativeTrack == null && kIsWeb) {
+      if (sourceSidecar != null) {
+        nativeTrack = sourceSidecar.track;
+      } else {
+        final ext = CodecUtils.getSubtitleExtension(sourceTrack.codec);
+        final serverClient = _getMediaServerClient(context);
+        String? url;
+        if (serverClient is PlexClient) {
+          final subKey = (sourceTrack.key != null && sourceTrack.key!.isNotEmpty)
+              ? sourceTrack.key!
+              : '/library/streams/${sourceTrack.id}';
+          final baseUrl = serverClient.config.baseUrl;
+          final token = serverClient.config.token;
+          final baseUri = '$baseUrl$subKey.$ext?encoding=utf-8';
+          url = token != null ? '$baseUri&X-Plex-Token=$token' : baseUri;
+        }
+
+        if (url != null) {
+          nativeTrack = SubtitleTrack(
+            id: 'web_sub_${sourceTrack.id}',
+            title: sourceTrack.displayTitle ?? sourceTrack.title ?? sourceTrack.language,
+            language: sourceTrack.languageCode,
+            codec: sourceTrack.codec,
+            isExternal: true,
+            uri: url,
+          );
+        }
+      }
+    }
     if (nativeTrack == null) {
       final trackManager = _trackManager;
       if (!_isTranscoding || sourceSidecar == null || trackManager == null) return false;

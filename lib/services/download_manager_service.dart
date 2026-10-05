@@ -1,3 +1,4 @@
+﻿import 'package:flutter/foundation.dart';
 // ignore_for_file: prefer_initializing_formals
 
 import 'dart:async';
@@ -221,7 +222,7 @@ class DownloadManagerService {
   static bool get platformDownloadsSupported => downloadsSupportedFor(tvosBuild: _tvosBuild);
 
   @visibleForTesting
-  static bool downloadsSupportedFor({required bool tvosBuild}) => !tvosBuild;
+  static bool downloadsSupportedFor({required bool tvosBuild}) => !tvosBuild && !kIsWeb;
 
   /// Cancels native work and discards resumable partial files so startup can
   /// recover enough space to reopen the application database.

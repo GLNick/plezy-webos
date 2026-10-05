@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart' show kIsWeb;
 import 'dart:async';
 
 import '../mpv/mpv.dart';
@@ -28,7 +29,7 @@ class MpvSidecarOpenGuard {
     Duration discoveryTimeout = const Duration(seconds: 10),
     Duration fileLoadedTimeout = const Duration(seconds: 10),
   }) {
-    if (!_hasRemoteSidecar(subtitles)) return null;
+    if (kIsWeb || !_hasRemoteSidecar(subtitles)) return null;
     return MpvSidecarOpenGuard._(outcome, discoveryTimeout, fileLoadedTimeout);
   }
 

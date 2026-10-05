@@ -1,0 +1,65 @@
+﻿<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <title>SubtitlesOctopus MKV Range Test</title>
+  <style>
+    body { background: #111; color: #eee; display: flex; flex-direction: column; justify-content: center; align-items: center; height: 100vh; margin: 0; font-family: sans-serif; }
+    .video-container { position: relative; width: 960px; height: 540px; background: black; box-shadow: 0 0 20px rgba(0,0,0,0.8); }
+    .video-container:fullscreen { width: 100vw; height: 100vh; }
+    video { width: 100%; height: 100%; }
+    #status { margin-top: 12px; font-size: 14px; color: #aaa; }
+  </style>
+</head>
+<body>
+  <div class="video-container" id="container">
+    <video id="video" src="https://26373-6707.josisa.org/library/parts/853604/1789566551/file.mkv?X-Plex-Token=CV-yuuLr-cKu3eA3mVs7" controls playsinline></video>
+  </div>
+  <div id="status">Lade MKV-Untertitel via HTTP-Range...</div>
+
+  <script src="subtitles-octopus/subtitles-octopus.js"></script>
+  <script src="mkv-sub-extractor.js"></script>
+  <script>
+    const video = document.getElementById('video');
+    const container = document.getElementById('container');
+    const status = document.getElementById('status');
+
+    container.addEventListener('dblclick', () => {
+      if (!document.fullscreenElement) container.requestFullscreen();
+      else document.exitFullscreen();
+    });
+
+    async function init() {
+      try {
+        const mkvUrl = video.src;
+        status.innerText = 'Lese Header & Cues aus MKV...';
+
+        // Extrahiere deutsche Untertitel (Track 3)
+        const assContent = await window.MkvSubExtractor.extractSubtitle(mkvUrl, 3);
+        status.innerText = `Untertitel extrahiert (${assContent.length} Bytes). Initialisiere Renderer...`;
+
+        window.subInstance = new SubtitlesOctopus({
+          video: video,
+          subContent: assContent,
+          workerUrl: 'subtitles-octopus/subtitles-octopus-worker.js',
+          fallbackFont: 'default.woff2',
+          canvasParent: container,
+          pixelRatio: 1,
+          lossyRender: true,
+          targetFps: 30,
+          debug: true,
+          onReady: () => {
+            status.innerText = 'Bereit! Untertitel werden clientseitig auf Canvas gerendert.';
+            status.style.color = '#4CAF50';
+          }
+        });
+      } catch (err) {
+        status.innerText = 'Fehler: ' + err.message;
+        status.style.color = '#f44336';
+        console.error(err);
+      }
+    }
+    init();
+  </script>
+</body>
+</html>

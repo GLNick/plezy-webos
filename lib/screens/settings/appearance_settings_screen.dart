@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'dart:io' show Platform;
 
 import 'package:flutter/material.dart';
@@ -35,7 +36,7 @@ class AppearanceSettingsScreen extends StatelessWidget {
           children: [
             _themeSelector(),
             if (PlatformDetector.isAutomotive()) _displayScaleSelector(),
-            if (Platform.isAndroid) _visualEffectsSelector(context),
+            if ((!kIsWeb && Platform.isAndroid)) _visualEffectsSelector(context),
           ],
         ),
 

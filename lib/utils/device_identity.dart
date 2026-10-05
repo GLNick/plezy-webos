@@ -13,7 +13,7 @@ import 'platform_detector.dart';
 /// Jellyfin as the "Device").
 class DeviceIdentity {
   /// 'Android' | 'iOS' | 'tvOS' | 'macOS' | 'Windows' | 'Linux', falling back
-  /// to [Platform.operatingSystem] when detection fails.
+  /// to [(kIsWeb ? "web" : Platform.operatingSystem)] when detection fails.
   final String platform;
 
   /// Hardware model for `X-Plex-Device`, e.g. 'AFTKM' (Fire TV), 'iPhone',
@@ -33,7 +33,7 @@ class DeviceIdentity {
 
 /// Resolves the device identity once per process and memoizes it. Never
 /// throws — platform-channel failures (tests, exotic platforms) degrade to
-/// [Platform.operatingSystem] with null name/model.
+/// [(kIsWeb ? "web" : Platform.operatingSystem)] with null name/model.
 class DeviceIdentityService {
   DeviceIdentityService._();
 
@@ -49,9 +49,10 @@ class DeviceIdentityService {
   static Future<DeviceIdentity> _resolve() async {
     final deviceInfo = DeviceInfoPlugin();
     final isTv = PlatformDetector.isTV();
+    if (kIsWeb) return DeviceIdentity(platform: 'Web', deviceModel: 'Browser', deviceName: 'Web Browser', isTv: isTv);
 
     try {
-      if (Platform.isAndroid) {
+      if ((!kIsWeb && Platform.isAndroid)) {
         final androidInfo = await deviceInfo.androidInfo;
         final assignedName = await TvDetectionService.getAndroidDeviceName();
         return DeviceIdentity(
@@ -61,14 +62,14 @@ class DeviceIdentityService {
           isTv: isTv,
         );
       }
-      if (Platform.isIOS) {
+      if ((!kIsWeb && Platform.isIOS)) {
         final iosInfo = await deviceInfo.iosInfo;
         if (PlatformDetector.isAppleTV()) {
           return DeviceIdentity(platform: 'tvOS', deviceModel: 'Apple TV', deviceName: iosInfo.name, isTv: true);
         }
         return DeviceIdentity(platform: 'iOS', deviceModel: iosInfo.model, deviceName: iosInfo.name, isTv: isTv);
       }
-      if (Platform.isMacOS) {
+      if ((!kIsWeb && Platform.isMacOS)) {
         final macInfo = await deviceInfo.macOsInfo;
         return DeviceIdentity(
           platform: 'macOS',
@@ -77,7 +78,7 @@ class DeviceIdentityService {
           isTv: isTv,
         );
       }
-      if (Platform.isWindows) {
+      if ((!kIsWeb && Platform.isWindows)) {
         final windowsInfo = await deviceInfo.windowsInfo;
         return DeviceIdentity(
           platform: 'Windows',
@@ -86,7 +87,7 @@ class DeviceIdentityService {
           isTv: isTv,
         );
       }
-      if (Platform.isLinux) {
+      if ((!kIsWeb && Platform.isLinux)) {
         final host = Platform.localHostname.trim();
         final name = (host.isNotEmpty && host != 'localhost') ? host : (await deviceInfo.linuxInfo).name;
         return DeviceIdentity(platform: 'Linux', deviceModel: 'Linux', deviceName: name, isTv: isTv);
@@ -95,7 +96,7 @@ class DeviceIdentityService {
       appLogger.w('DeviceIdentity: failed to resolve device info', error: e);
     }
 
-    return DeviceIdentity(platform: Platform.operatingSystem, isTv: isTv);
+    return DeviceIdentity(platform: (kIsWeb ? "web" : Platform.operatingSystem), isTv: isTv);
   }
 }
 

@@ -1,4 +1,4 @@
-part of '../../video_player_screen.dart';
+﻿part of '../../video_player_screen.dart';
 
 /// Outcome of the pre-open display negotiation for one open: which
 /// pre-switch ran (ExoPlayer only), whether playback must open paused behind
@@ -33,7 +33,7 @@ class _FrameRateStartupPlan {
   /// The first-frame signal, taken from the attempt's open outcome *before*
   /// open() so the gate can't miss a synchronously-fast restart event.
   /// Non-null exactly while [needsFirstFrameSwitch] is set, which is final
-  /// before [armFirstFrameGate] runs. Resolves false — never throws — when
+  /// before [armFirstFrameGate] runs. Resolves false â€” never throws â€” when
   /// the open fails, is aborted, or hits the outcome's deadline.
   Future<bool> _startupFrameReady = Future<bool>.value(false);
 
@@ -45,7 +45,7 @@ class _FrameRateStartupPlan {
   /// [_releaseFrameRateStartupGate] resumes.
   bool get holdPlaybackStart => needsPostOpenSwitch || needsFirstFrameSwitch;
 
-  /// Whether the plan already owns the per-item switch — keeps the
+  /// Whether the plan already owns the per-item switch â€” keeps the
   /// post-first-frame fallback from double-switching while a planned
   /// follow-up is still pending.
   bool get countsAsApplied => needsFirstFrameSwitch || preOpenExoHandled;
@@ -88,8 +88,8 @@ Duration? resolveOpenResumePosition({
 /// Shared building blocks for opening media on the live player.
 ///
 /// The initial start flow ([_startPlayback]) and in-place reload flow
-/// ([_reloadMediaInPlace]) both route through these helpers — and through
-/// the shared [_openResolvedMedia] orchestration — so per-open behavior
+/// ([_reloadMediaInPlace]) both route through these helpers â€” and through
+/// the shared [_openResolvedMedia] orchestration â€” so per-open behavior
 /// (the GL color-transfer hint, frame-rate suppression windows, native
 /// subtitle styling, and the open sequence) cannot drift between paths.
 /// This is also the only place that reads
@@ -128,7 +128,7 @@ extension _VideoPlayerOpenMethods on VideoPlayerScreenState {
   /// if it ever renders through GL (software fallback, hardware decoding
   /// off). Transcoded streams stay unannounced: the server may tone-map, so
   /// the default SDR surface is the safe target. This is a surface-format
-  /// hint set before the decoder exists, not display matching — the display
+  /// hint set before the decoder exists, not display matching â€” the display
   /// mode itself is negotiated from mpv's decoded stream on every platform.
   Future<void> _announceContentColorTransfer({
     required Player player,
@@ -137,7 +137,7 @@ extension _VideoPlayerOpenMethods on VideoPlayerScreenState {
   }) async {
     // needsDecoderRefreshAfterDisplaySwitch is how this file distinguishes
     // the two Android backends (true = the mpv core).
-    if (!Platform.isAndroid || !player.needsDecoderRefreshAfterDisplaySwitch) return;
+    if (!(!kIsWeb && Platform.isAndroid) || !player.needsDecoderRefreshAfterDisplaySwitch) return;
     final transfer = isTranscoding ? null : displayCriteria?.transfer;
     await player.setProperty('content-color-transfer', transfer ?? 'unknown');
   }
@@ -178,14 +178,14 @@ extension _VideoPlayerOpenMethods on VideoPlayerScreenState {
     int width = 0,
     int height = 0,
   }) {
-    if (!Platform.isAndroid) return false;
+    if (!(!kIsWeb && Platform.isAndroid)) return false;
     final rateEligible = settingsService.read(SettingsService.matchContentFrameRate) && fps != null && fps > 0;
     final resolutionEligible = settingsService.read(SettingsService.matchContentResolution) && width > 0 && height > 0;
     return rateEligible || resolutionEligible;
   }
 
-  /// Resolve where a fresh open should start: explicit request → shuffle
-  /// override → locally tracked offline progress → server view offset.
+  /// Resolve where a fresh open should start: explicit request â†’ shuffle
+  /// override â†’ locally tracked offline progress â†’ server view offset.
   Future<Duration?> _resolveOpenResumePosition({
     required MediaItem metadata,
     required bool isOffline,
@@ -269,7 +269,7 @@ extension _VideoPlayerOpenMethods on VideoPlayerScreenState {
     // Source-side only: a transcode's metadata rate describes the original
     // file, not what the server is about to send. "0" clears a stale rate
     // carried over from the previous item.
-    if (Platform.isAndroid) {
+    if ((!kIsWeb && Platform.isAndroid)) {
       final directPlayFps = isTranscoding ? null : preKnownFps;
       await currentPlayer.setProperty('content-frame-rate', (directPlayFps ?? 0).toString());
     }
@@ -310,7 +310,7 @@ extension _VideoPlayerOpenMethods on VideoPlayerScreenState {
   /// behind: run the ExoPlayer post-open fallback switch, or wait for the
   /// first rendered frame and negotiate the display from what the player
   /// presents, then resume via [resumeAfterStartupGate]. A gate that settles
-  /// without a frame resumes only while [isCurrent] still holds — a failed,
+  /// without a frame resumes only while [isCurrent] still holds â€” a failed,
   /// aborted, or superseded open has nothing to resume.
   Future<void> _releaseFrameRateStartupGate({
     required Player currentPlayer,
@@ -344,7 +344,7 @@ extension _VideoPlayerOpenMethods on VideoPlayerScreenState {
         appLogger.w('Failed to apply pre-playback frame rate matching', error: e);
       }
 
-      // Always resume — either the switch completed and we want to play,
+      // Always resume â€” either the switch completed and we want to play,
       // or no switch was needed and we need to start playback now that the
       // preparation gate has been cleared.
       await resumeAfterStartupGate('post-open frame rate switch');
@@ -452,9 +452,9 @@ extension _VideoPlayerOpenMethods on VideoPlayerScreenState {
   /// frame carries no cadence: Tegra has no output interval yet and
   /// MediaTek's first field pair shares a timestamp. So, still behind the
   /// loading UI, mpv steps ten frames with the audio gain at zero
-  /// (`frame-step … mute`) and re-pauses. The presented rate is then read
+  /// (`frame-step â€¦ mute`) and re-pauses. The presented rate is then read
   /// two ways: mpv's `estimated-vf-fps`, and the media time those ten frames
-  /// advanced `time-pos` by — the decoder's own output timestamps, which on
+  /// advanced `time-pos` by â€” the decoder's own output timestamps, which on
   /// the video plane are honest long before mpv's average converges. Ten
   /// frames cost ~170 ms at field rate, ~420 ms at 24p; [windowStart] is
   /// where the window began, for the seek that follows.
@@ -483,8 +483,8 @@ extension _VideoPlayerOpenMethods on VideoPlayerScreenState {
   }
 
   /// The open outcome's first-frame signal is mpv's playback-restart, which
-  /// a video chain that failed to initialize also emits — audio playing,
-  /// video at EOF — before the Android core moves the session to a GL vo and
+  /// a video chain that failed to initialize also emits â€” audio playing,
+  /// video at EOF â€” before the Android core moves the session to a GL vo and
   /// re-selects the track; that re-selection is not a restart, so no second
   /// event follows. Readiness is `video-dec-params`, which mpv fills only
   /// once *this* chain's decoder emitted a frame: `video-out-params` and
@@ -516,8 +516,8 @@ extension _VideoPlayerOpenMethods on VideoPlayerScreenState {
   /// step in mpv (an internal pause zeroes `step_frames`) and leaves
   /// playback free-running once the cache refills, so a stalled or
   /// overrunning window is paused explicitly, its frame count discarded,
-  /// and — since a startup stall is what the viewer would wait through
-  /// anyway — retried once after the refill.
+  /// and â€” since a startup stall is what the viewer would wait through
+  /// anyway â€” retried once after the refill.
   Future<({Duration start, Duration end})?> _stepFramesForCadence(Player currentPlayer) async {
     for (var attempt = 1; attempt <= 2; attempt++) {
       final window = await _runFrameStepWindow(currentPlayer);
@@ -561,7 +561,7 @@ extension _VideoPlayerOpenMethods on VideoPlayerScreenState {
       await currentPlayer.command(['frame-step', '$_cadenceStepFrames', 'mute']);
       var completed = await settled.future.timeout(const Duration(milliseconds: 1500), onTimeout: () => false);
       if (!completed) {
-        // A fast step can flip pause false→true between two observer
+        // A fast step can flip pause falseâ†’true between two observer
         // deliveries, which mpv then coalesces into no event at all.
         completed = !currentPlayer.state.buffering && await currentPlayer.getProperty('pause') == 'yes';
       }
@@ -584,9 +584,9 @@ extension _VideoPlayerOpenMethods on VideoPlayerScreenState {
     }
   }
 
-  /// `frame-step … mute` zeroes the AO gain and restores it only when the
-  /// step's last frame is written. A step cut short — by a cache stall, an
-  /// explicit pause, or end of file inside the window — leaves the gain at
+  /// `frame-step â€¦ mute` zeroes the AO gain and restores it only when the
+  /// step's last frame is written. A step cut short â€” by a cache stall, an
+  /// explicit pause, or end of file inside the window â€” leaves the gain at
   /// zero for the rest of the item. mpv reapplies the gain on a mute
   /// change, so a round trip through `mute` restores it whatever the step
   /// did; a viewer's own mute is put back as it was.
@@ -652,8 +652,8 @@ extension _VideoPlayerOpenMethods on VideoPlayerScreenState {
 
   /// Push the user's subtitle style to the native rendering layer. Must run
   /// after open() since that's when ExoPlayer initializes its subtitle views.
-  /// Only the ExoPlayer backend consumes it — [Player.setSubtitleStyle] is a
-  /// no-op on every mpv backend, which styles via `sub-*` properties — so the
+  /// Only the ExoPlayer backend consumes it â€” [Player.setSubtitleStyle] is a
+  /// no-op on every mpv backend, which styles via `sub-*` properties â€” so the
   /// style settings reads are skipped there. Gated on the same
   /// configured-backend signal as track_controls/video_settings_sheet; the
   /// Android mpv fallback keeps playerType 'exoplayer' and still receives the
@@ -728,12 +728,12 @@ extension _VideoPlayerOpenMethods on VideoPlayerScreenState {
 
   /// Per-open network stream tunings: ffmpeg auto-reconnect plus an enlarged
   /// mpv stream ring buffer for poorly interleaved MP4/MOV direct play (the
-  /// ring absorbs the demuxer's audio↔video byte ping-pong so HTTP reads stay
-  /// linear instead of dropping the connection on every byte seek — see
+  /// ring absorbs the demuxer's audioâ†”video byte ping-pong so HTTP reads stay
+  /// linear instead of dropping the connection on every byte seek â€” see
   /// [networkStreamRingBytes]). Every property is always written, set or
   /// reset, so a reused player never carries one item's tuning into the next
   /// open. On Android with ExoPlayer active they are stashed natively and
-  /// replayed on the exo→mpv fallback, so keep them unconditional.
+  /// replayed on the exoâ†’mpv fallback, so keep them unconditional.
   Future<void> _applyNetworkStreamTuning({
     required Player player,
     required bool isNetworkVod,
@@ -745,7 +745,7 @@ extension _VideoPlayerOpenMethods on VideoPlayerScreenState {
       //
       // reconnect_on_http_error=503: without it, ffmpeg abandons a reconnect
       // that gets an HTTP error and the truncated body surfaces as a clean
-      // mid-file EOF (#1520 — PMS answers 503 while restarting/maintenance).
+      // mid-file EOF (#1520 â€” PMS answers 503 while restarting/maintenance).
       // Deliberately 503 only: a persistent 500 must keep failing fast so the
       // server-limit dialog (_httpStatusPattern) appears promptly, and a
       // multi-code list would need mpv's %len% quoting to survive the
@@ -764,8 +764,8 @@ extension _VideoPlayerOpenMethods on VideoPlayerScreenState {
     // Transcode (HLS) segment fetches happen inside ffmpeg's hls demuxer, not
     // mpv's stream layer, so the reconnect options above never reach them and
     // mpv's default network-timeout is inert there: a segment response PMS
-    // leaves open without data or error — observed when the request races a
-    // transcoder seek/restart — buffers forever (#1859). An explicit
+    // leaves open without data or error â€” observed when the request races a
+    // transcoder seek/restart â€” buffers forever (#1859). An explicit
     // network-timeout bounds each stalled read and the demuxer-level
     // reconnect options re-request the same segment instead of skipping its
     // content. 20s sits above the segment-serve latency of a struggling
@@ -784,7 +784,7 @@ extension _VideoPlayerOpenMethods on VideoPlayerScreenState {
     if (isNetworkVod && !isTranscoding) {
       // Transcode (HLS) playback only uses the mpv stream layer for the
       // playlist file; segment fetches happen inside ffmpeg's hls demuxer.
-      final maxBytes = Platform.isAndroid
+      final maxBytes = (!kIsWeb && Platform.isAndroid)
           ? androidStreamRingCapBytes(await PlayerNative.getHeapSize())
           : maxStreamRingBytes;
       ringBytes = networkStreamRingBytes(
@@ -807,7 +807,7 @@ extension _VideoPlayerOpenMethods on VideoPlayerScreenState {
     await player.setProperty('stream-buffer-size', '${ringBytes ?? mpvDefaultStreamBufferBytes}');
   }
 
-  /// Open [videoUrl] on [player]: stream tuning → open → native subtitle style.
+  /// Open [videoUrl] on [player]: stream tuning â†’ open â†’ native subtitle style.
   ///
   /// [shouldContinue] is re-checked between the awaits so stale generations
   /// stop without touching the player further. [onOpened] fires immediately
@@ -907,17 +907,17 @@ extension _VideoPlayerOpenMethods on VideoPlayerScreenState {
   }
 
   /// Shared orchestration for opening a resolved source on the live player:
-  /// pre-open frame-rate negotiation → per-item frame-rate reset → GL
-  /// color-transfer hint → startup-gate arming → external-subtitle planning →
-  /// open → sidecar-fallback session recompute → track-manager build →
-  /// post-open track application → frame-rate startup-gate release.
+  /// pre-open frame-rate negotiation â†’ per-item frame-rate reset â†’ GL
+  /// color-transfer hint â†’ startup-gate arming â†’ external-subtitle planning â†’
+  /// open â†’ sidecar-fallback session recompute â†’ track-manager build â†’
+  /// post-open track application â†’ frame-rate startup-gate release.
   ///
   /// The initial start flow ([_startPlayback]) and the in-place reload flow
   /// ([_reloadMediaInPlace]) both run this sequence; caller-specific
   /// choreography (session commit boundary, Watch Together attach/detach,
   /// progress-tracker teardown, per-screen service setup) stays in the
   /// callers and runs through the hooks below at its original position in
-  /// the sequence. Deliberate per-flow differences are explicit parameters —
+  /// the sequence. Deliberate per-flow differences are explicit parameters â€”
   /// nothing here may silently unify them.
   ///
   /// Returns false when a staleness guard or hook aborted the flow (the start
@@ -978,11 +978,11 @@ extension _VideoPlayerOpenMethods on VideoPlayerScreenState {
     // Audio-focus hook for the pre-open ExoPlayer switch. start memoizes the
     // in-flight _audioFocusFuture; reload requests focus directly.
     required Future<void> Function() ensureAudioFocus,
-    // start: true — the flag is dropped here, right before the frame-rate
+    // start: true â€” the flag is dropped here, right before the frame-rate
     // reset; reload dropped it earlier, at its eager-identity boundary.
     required bool clearFirstFrameForOpen,
-    // start: true — open never auto-plays on automotive and [afterMediaOpened]
-    // re-issues the play intent instead; reload: false — the vehicle verdict
+    // start: true â€” open never auto-plays on automotive and [afterMediaOpened]
+    // re-issues the play intent instead; reload: false â€” the vehicle verdict
     // is read inside [_openMediaOnPlayer] at the player.open itself, which is
     // after this call and its own awaited tuning work.
     required bool deferAutomotiveStart,
@@ -1067,6 +1067,17 @@ extension _VideoPlayerOpenMethods on VideoPlayerScreenState {
         durationMs: metadata.durationMs,
       );
       if (!isCurrent()) return false;
+      debugPrint('[PlaybackOpen] Web Subtitle Debug:');
+      debugPrint('  isWeb: true');
+      debugPrint('  videoUrl: ${result.videoUrl}');
+      debugPrint('  subtitleSidecars: ${result.subtitleSidecars.length}');
+      debugPrint('  sidecarsAtOpen: ${openSubtitleSelection.sidecarsAtOpen.length}');
+      final tracks = result.mediaInfo?.subtitleTracks ?? [];
+      debugPrint('  mediaInfo.subtitleTracks (${tracks.length}):');
+      for (final t in tracks) {
+        debugPrint('    - id=${t.id}, codec=${t.codec}, lang=${t.languageCode}, key=${t.key}, isExternal=${t.isExternal}, selected=${t.selected}');
+      }
+
       final openResult = await _openMediaOnPlayer(
         player: currentPlayer,
         settingsService: settingsService,
@@ -1078,7 +1089,7 @@ extension _VideoPlayerOpenMethods on VideoPlayerScreenState {
         outcome: outcome,
         headers: headers,
         play: deferAutomotiveStart ? shouldAutoPlay && !PlatformDetector.isAutomotive() : shouldAutoPlay,
-        externalSubtitlesAtOpen: openSubtitleSelection.sidecarsAtOpen,
+                  externalSubtitlesAtOpen: openSubtitleSelection.sidecarsAtOpen,
         shouldContinue: isCurrent,
         onOpening: onOpening,
         onOpened: onOpened,
@@ -1152,3 +1163,7 @@ extension _VideoPlayerOpenMethods on VideoPlayerScreenState {
     return true;
   }
 }
+
+
+
+

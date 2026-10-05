@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 
 import '../../../media/media_item.dart';
@@ -147,7 +148,7 @@ class TrackControlsState {
   /// live stream that exposes none keeps the native list (in-band CEA
   /// captions, issue #1590).
   bool get canUseSourceSubtitles =>
-      (isTranscoding || isLive) && sourceSubtitleTracks.isNotEmpty && onSwitchSubtitle != null;
+      (kIsWeb || isTranscoding || isLive) && sourceSubtitleTracks.isNotEmpty && onSwitchSubtitle != null;
 
   /// Whether the selected source subtitle reaches the screen as burned-in
   /// pixels rather than as a native track. Rationale, including why live

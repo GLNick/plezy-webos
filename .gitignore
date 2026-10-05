@@ -75,3 +75,11 @@ maestro/**/*.png
 
 server/deploy.sh
 server/Caddyfile
+*.ipk
+build_errors*.txt
+*.ps1
+*.bak
+*.backup*
+*.zip
+*_old_*/
+find_abstracts.dart

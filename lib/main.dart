@@ -1,4 +1,4 @@
-import 'dart:async';
+﻿import 'dart:async';
 import 'dart:io' show Directory, Platform, ProcessInfo;
 import 'dart:ui' show AppExitResponse;
 import 'package:flutter/foundation.dart';
@@ -117,7 +117,7 @@ const String _sentryDist = String.fromEnvironment('SENTRY_DIST');
 bool _zeroOffsetPointerGuardInstalled = false;
 
 void _installZeroOffsetPointerGuard() {
-  if (_zeroOffsetPointerGuardInstalled || !Platform.isIOS) return;
+  if (kIsWeb || _zeroOffsetPointerGuardInstalled || !(!kIsWeb && Platform.isIOS)) return;
   GestureBinding.instance.pointerRouter.addGlobalRoute(_absorbZeroOffsetPointerEvent);
   _zeroOffsetPointerGuardInstalled = true;
 }
@@ -135,7 +135,7 @@ void _absorbZeroOffsetPointerEvent(PointerEvent event) {
 /// also needs to call the plugin's Swift register(with:) to attach its
 /// message channels.
 void _registerTvosPlatformPlugins() {
-  if (!Platform.isIOS) return; // tvOS reports as iOS via dart:io.
+  if (kIsWeb || !(!kIsWeb && Platform.isIOS)) return; // tvOS reports as iOS via dart:io.
   SharedPreferencesFoundation.registerWith();
 }
 
@@ -188,7 +188,7 @@ void _bootstrapApp() {
       // whose background MainActivity already restored, so the loading frame
       // can leave the launch screen on display. Every other platform composites
       // opaquely and has nothing behind Flutter worth showing.
-      transparentWhileLoading: Platform.isAndroid,
+      transparentWhileLoading: (!kIsWeb && Platform.isAndroid),
     ),
   );
 }
@@ -315,7 +315,7 @@ String _sentryRelease() {
 }
 
 Future<String?> _sentryNativeDatabasePath() async {
-  if (kIsWeb || !(Platform.isWindows || Platform.isLinux)) return null;
+  if (kIsWeb || !((!kIsWeb && Platform.isWindows) || (!kIsWeb && Platform.isLinux))) return null;
   try {
     final directory = await getApplicationSupportDirectory();
     return p.join(directory.path, 'sentry-native');
@@ -349,7 +349,7 @@ Future<void> _primeDiagnosticsVersion() async {
 
 /// Platform label for a failure record. Deliberately coarse — enough to
 /// triage a report, never enough to identify a machine.
-String _diagnosticsPlatform() => '${Platform.operatingSystem} ${Platform.operatingSystemVersion}';
+String _diagnosticsPlatform() => kIsWeb ? 'web' : 'desktop';
 
 /// Whether an in-app repair can address [error].
 ///
@@ -920,7 +920,7 @@ Future<_StartupDependencies> _initializeStartup(SettingsService settings) async 
   // Started first so the store walk overlaps the phases below. Every request
   // to a user-entered server verifies against the result, so it is awaited
   // before any client can exist (#2339); the load itself never throws.
-  final userAuthorities = Platform.isAndroid ? CertificateTrust.loadUserAuthorities() : null;
+  final userAuthorities = (!kIsWeb && Platform.isAndroid) ? CertificateTrust.loadUserAuthorities() : null;
   try {
     // Slang builds the base locale eagerly, so `t` already resolves before
     // this runs; a failure here degrades to English rather than no app.
@@ -937,7 +937,7 @@ Future<_StartupDependencies> _initializeStartup(SettingsService settings) async 
     if (PlatformDetector.isDesktopOS()) {
       await _optionalGatePhase(StartupPhase.windowManager, () async {
         await windowManager.ensureInitialized();
-        if (Platform.isMacOS) await MacOSWindowService.setupCustomTitlebar();
+        if ((!kIsWeb && Platform.isMacOS)) await MacOSWindowService.setupCustomTitlebar();
       });
     }
 
@@ -1005,10 +1005,10 @@ void _startNonessentialInitialization(SettingsService settings) {
     'Date formatting',
     () => initializeDateFormatting(settings.read(SettingsService.appLocale).intlLocaleName, null),
   );
-  bestEffort('Download storage', () => DownloadStorageService.instance.initialize(settings));
+  if (!kIsWeb) bestEffort('Download storage', () => DownloadStorageService.instance.initialize(settings));
   bestEffort('Trackers', TrackerCoordinator.instance.initialize);
 
-  bestEffort('Legacy image cache cleanup', () async {
+  if (!kIsWeb) bestEffort('Legacy image cache cleanup', () async {
     if (settings.read(SettingsService.cleanedOldImageCache)) return;
     try {
       final tempDir = await getTemporaryDirectory();
@@ -1020,7 +1020,7 @@ void _startNonessentialInitialization(SettingsService settings) {
   });
 
   bestEffort('Native window', () {
-    if (Platform.isAndroid) PipService();
+    if ((!kIsWeb && Platform.isAndroid)) PipService();
     NativeWindowService.initialize();
   });
 
@@ -1059,7 +1059,7 @@ Future<void> _logEnvironmentDiagnostics() async {
   final packageInfo = await PackageInfo.fromPlatform();
   final commitSuffix = gitCommit.isNotEmpty ? ' (${gitCommit.substring(0, 7)})' : '';
   String renderer = '';
-  if (Platform.isAndroid) {
+  if ((!kIsWeb && Platform.isAndroid)) {
     final rendererName = await const MethodChannel('com.plezy/theme').invokeMethod<String>('getRenderer');
     renderer = ' [$rendererName]';
     await Future.sync(() => Sentry.configureScope((scope) => scope.setTag('renderer', rendererName ?? 'unknown')));
@@ -1070,7 +1070,7 @@ Future<void> _logEnvironmentDiagnostics() async {
   );
   appLogger.i('Display: ${DevicePerformance.describeDisplay()}');
   appLogger.i('Video decoders: ${VideoDecodeCapabilities.describeSync()}');
-  if (Platform.isAndroid) {
+  if ((!kIsWeb && Platform.isAndroid)) {
     appLogger.i('Startup RSS: ${ProcessInfo.currentRss >> 20}MB');
   }
 }
@@ -1432,7 +1432,7 @@ class _MainAppState extends State<MainApp> with WidgetsBindingObserver {
     if (PlatformDetector.isDesktopOS()) {
       threshold = 1536 << 20; // 1.5GB
       period = const Duration(seconds: 30);
-    } else if (Platform.isAndroid) {
+    } else if ((!kIsWeb && Platform.isAndroid)) {
       final totalMem = DevicePerformance.totalMemBytes;
       threshold = totalMem != null ? (totalMem * 0.45).round().clamp(512 << 20, 1536 << 20) : 1 << 30;
       // Decode bursts can spike RSS in seconds on low-end boxes; the read
@@ -1580,7 +1580,7 @@ class _MainAppState extends State<MainApp> with WidgetsBindingObserver {
         // On desktop, resumed fires on every window focus (alt-tab), so apply a cooldown
         // to avoid piling up network probes from rapid alt-tabbing.
         final now = DateTime.now();
-        final cooldown = (Platform.isIOS || Platform.isAndroid)
+        final cooldown = ((!kIsWeb && Platform.isIOS) || (!kIsWeb && Platform.isAndroid))
             ? const Duration(seconds: 10)
             : const Duration(minutes: 2);
         if (now.difference(_lastResumeProbe) >= cooldown) {
@@ -1610,7 +1610,7 @@ class _MainAppState extends State<MainApp> with WidgetsBindingObserver {
             // 1GB
             _evictImageCaches();
           }
-        } else if (Platform.isAndroid) {
+        } else if ((!kIsWeb && Platform.isAndroid)) {
           // A backgrounded app is LMK's first candidate; shed the image
           // caches at a lower bar than the foreground watchdog to survive
           // the HOME press on low-RAM boxes.

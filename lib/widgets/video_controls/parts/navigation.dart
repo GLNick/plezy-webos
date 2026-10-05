@@ -5,7 +5,7 @@ extension _PlexVideoControlsNavigationMethods on _PlexVideoControlsState {
     final playbackState = context.watch<PlaybackStateProvider>();
     final trackControlsState = _buildTrackControlsState(
       playbackState: playbackState,
-      onToggleAlwaysOnTop: Platform.isMacOS ? null : _toggleAlwaysOnTop,
+      onToggleAlwaysOnTop: (!kIsWeb && Platform.isMacOS) ? null : _toggleAlwaysOnTop,
     );
     final useDpad = playerDirectionalNavigationEnabled();
 

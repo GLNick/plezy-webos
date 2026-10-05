@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'dart:async' show unawaited;
 import 'dart:io';
 
@@ -215,7 +216,7 @@ class KeyboardShortcutsService extends ChangeNotifier {
   String formatHotkey(HotKey? hotKey) {
     if (hotKey == null) return t.hotkeys.noShortcutSet;
 
-    final isMac = Platform.isMacOS;
+    final isMac = (!kIsWeb && Platform.isMacOS);
 
     // macOS standard modifier order: ⌃ ⌥ ⇧ ⌘
     const macModifierLabels = <HotKeyModifier, String>{

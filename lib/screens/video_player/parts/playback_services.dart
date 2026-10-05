@@ -85,13 +85,13 @@ extension _VideoPlayerPlaybackServiceMethods on VideoPlayerScreenState {
       unawaited(progressTracker.sendProgress('playing'));
     }
 
-    if (Platform.isAndroid &&
+    if ((!kIsWeb && Platform.isAndroid) &&
         (settingsService.read(SettingsService.matchContentFrameRate) ||
             settingsService.read(SettingsService.matchContentResolution))) {
       await _applyFrameRateMatching();
     }
 
-    if (Platform.isWindows && _displayModeService != null) {
+    if ((!kIsWeb && Platform.isWindows) && _displayModeService != null) {
       await _applyWindowsDisplayMatching();
     }
   }
@@ -167,7 +167,7 @@ extension _VideoPlayerPlaybackServiceMethods on VideoPlayerScreenState {
           .listen(_onPlayerLog),
     );
 
-    if (Platform.isAndroid && useExoPlayer) {
+    if ((!kIsWeb && Platform.isAndroid) && useExoPlayer) {
       _playerStreamSubscriptions.add(currentPlayer.streams.backendSwitched.listen((_) => _onBackendSwitched()));
     }
 
@@ -241,7 +241,7 @@ extension _VideoPlayerPlaybackServiceMethods on VideoPlayerScreenState {
         // Android ExoPlayer position can advance on its standalone clock without
         // a renderer, so it may infer readiness only after switching to MPV.
         final canInferRenderedFrameFromPosition =
-            !(Platform.isAndroid && useExoPlayer) || (currentPlayer is PlayerAndroid && currentPlayer.usingMpvFallback);
+            !((!kIsWeb && Platform.isAndroid) && useExoPlayer) || (currentPlayer is PlayerAndroid && currentPlayer.usingMpvFallback);
         if (canInferRenderedFrameFromPosition && !_firstFrame.rendered) {
           if (lastObservedPositionMs != null && position.inMilliseconds != lastObservedPositionMs) {
             unawaited(_markFirstFrameReady(currentPlayer, settingsService));
@@ -790,7 +790,7 @@ extension _VideoPlayerPlaybackServiceMethods on VideoPlayerScreenState {
       event is PlayEvent || event is PauseEvent || event is TogglePlayPauseEvent;
 
   Future<void> _handleAppleAudioSessionEvent(Object event) async {
-    if (!Platform.isIOS || PlatformDetector.isTV()) return;
+    if (!(!kIsWeb && Platform.isIOS) || PlatformDetector.isTV()) return;
 
     final currentPlayer = player;
     if (!mounted || currentPlayer == null || !_isPlayerInitialized) return;

@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'dart:async';
 import 'dart:convert';
 import 'dart:io' show Platform, ProcessInfo;
@@ -275,7 +276,7 @@ class PerformanceStatsService {
     // that we cannot suppress.
     List<String?>? videoResults;
     if (hasVideo) {
-      final isAndroid = Platform.isAndroid;
+      final isAndroid = (!kIsWeb && Platform.isAndroid);
       videoResults = await Future.wait([
         isAndroid ? Future.value(null) : player.getProperty('display-fps'), // 0
         player.getProperty('video-params/pixelformat'), // 1

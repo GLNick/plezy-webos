@@ -23,7 +23,7 @@ MaterialPageRoute<void> buildSettingsRoute() {
 /// True when [event] is the desktop "open settings" chord — Cmd+, on macOS
 /// (per the HIG, #1909) or Ctrl+, on Windows/Linux. Never matches on
 /// non-desktop form factors: TVs and phones have no settings-shortcut
-/// convention. Uses [defaultTargetPlatform] rather than `Platform.isMacOS`
+/// convention. Uses [defaultTargetPlatform] rather than `(!kIsWeb && Platform.isMacOS)`
 /// so tests can exercise both chords from one host.
 bool isSettingsShortcut(KeyEvent event) {
   if (event is! KeyDownEvent) return false;

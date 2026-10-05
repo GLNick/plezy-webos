@@ -88,11 +88,31 @@ class AppDatabase extends _$AppDatabase {
     TvosDatabaseRecoveryStore? recoveryStore,
     TvosDatabaseRecoveryPriorInstallEvidence? priorInstallEvidence,
   }) async {
+    if (kIsWeb) {
+      final prefs = preferences ?? await BaseSharedPreferencesService.sharedCache();
+      // On Web, mirror SQLite identity rows into SharedPreferences so logins survive reloads
+      final store = recoveryStore ?? TvosDatabaseRecoveryStore(prefs, isTvos: true);
+      final database = AppDatabase._(NativeDatabase.memory(), recoveryStore: store);
+      final outcome = await _tvosRecoveryQueue.run(
+        () => store.reconcile(
+          databaseExisted: false,
+          readIdentity: database._readProtectedIdentityRecoveryRows,
+          readPending: database._readPendingRecoveryRows,
+          restore: database._restoreRecoverySnapshot,
+          hasPriorInstallEvidence: () async {
+            return (prefs.getString('active_app_profile_id')?.isNotEmpty ?? false) ||
+                (prefs.getString('tvos_db_recovery_identity_v1')?.isNotEmpty ?? false) ||
+                (prefs.getString('credential_vault_key_v1')?.isNotEmpty ?? false);
+          },
+        ),
+      );
+      return AppDatabaseBootstrap(database: database, recoveryOutcome: outcome);
+    }
     final file = databaseFile ?? await _resolveProductionDatabaseFile();
     if (!await file.parent.exists()) {
       await file.parent.create(recursive: true);
     }
-    if (databaseFile == null && !Platform.isAndroid && !Platform.isIOS && !await file.exists()) {
+    if (databaseFile == null && (!kIsWeb && !(!kIsWeb && Platform.isAndroid) && !(!kIsWeb && Platform.isIOS)) && !await file.exists()) {
       await migrateLegacyDesktopDatabase(target: file);
     }
 
@@ -1414,7 +1434,7 @@ String _rescopePinnedPlexMetadataStatement({
 ''';
 
 Future<File> _resolveProductionDatabaseFile() async {
-  final dbFolder = (Platform.isAndroid || Platform.isIOS)
+  final dbFolder = (!kIsWeb && ((!kIsWeb && Platform.isAndroid) || (!kIsWeb && Platform.isIOS)))
       ? await getApplicationDocumentsDirectory()
       : await getApplicationSupportDirectory();
   return File(p.join(dbFolder.path, 'plezy_downloads.db'));

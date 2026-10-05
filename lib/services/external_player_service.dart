@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'dart:async';
 import '../media/ids.dart';
 import 'dart:io';
@@ -117,7 +118,7 @@ class ExternalPlayerService {
       }
 
       // On Android, always use native intent to avoid url_launcher opening in browser
-      if (Platform.isAndroid && context.mounted) {
+      if ((!kIsWeb && Platform.isAndroid) && context.mounted) {
         // A downloaded copy's subtitles are the sidecar files saved with it.
         if (videoUrl != null && metadata != null) {
           subtitles = await _downloadedSubtitles(

@@ -1,6 +1,6 @@
-import 'dart:async';
-import 'dart:io' show InternetAddress, InternetAddressType, Platform;
 import 'package:flutter/foundation.dart';
+import 'dart:async';
+import 'dart:io' show Platform;
 import 'package:package_info_plus/package_info_plus.dart';
 import 'storage_service.dart';
 import 'plex_client.dart';
@@ -98,7 +98,7 @@ class PlexAuthService {
       http,
       clientIdentifier,
       packageInfo.version,
-      Platform.operatingSystemVersion,
+      (kIsWeb ? 'Browser' : (kIsWeb ? "Web" : Platform.operatingSystemVersion)),
       identity.platform,
       sanitizeHeaderValue(identity.deviceName),
     );
@@ -232,17 +232,32 @@ class PlexAuthService {
     _checkStatus(response);
 
     final List<dynamic> resources = response.data as List<dynamic>;
+    print('DEBUG PLEX RESOURCES COUNT: ${resources.length}');
+    for (final r in resources) {
+      print('DEBUG RESOURCE: name=${r['name']}, provides=${r['provides']}');
+    }
 
     // Filter for server resources and map to PlexServer objects
     final servers = <PlexServer>[];
     final invalidServers = <Map<String, dynamic>>[];
 
     for (final resource in resources.where((r) => r['provides'] == 'server')) {
-      try {
+      print('DEBUG RAW SERVER JSON: $resource');
+            try {
         final server = PlexServer.fromJson(resource as Map<String, dynamic>);
         servers.add(server);
-      } catch (e) {
-        // Collect invalid servers for debugging
+            } catch (e, st) {
+        print('================ PLEX SERVER PARSE ERROR ================');
+        print('FEHLER: $e');
+        print('STACKTRACE: $st');
+        if (resource is Map) {
+          print('SERVER RESOURCE KEYS: ${resource.keys.toList()}');
+          print('name: ${resource['name']}');
+          print('clientIdentifier: ${resource['clientIdentifier']}');
+          print('accessToken vorhanden: ${resource['accessToken'] != null}');
+          print('connections: ${resource['connections']}');
+        }
+        print('========================================================');
         invalidServers.add(resource as Map<String, dynamic>);
         continue;
       }
@@ -897,7 +912,7 @@ class PlexServer {
   /// fallback on an HTTPS port is safe to try).
   static bool _isIpLiteral(String address) {
     final bare = address.startsWith('[') && address.endsWith(']') ? address.substring(1, address.length - 1) : address;
-    return InternetAddress.tryParse(bare) != null;
+    return _tryParseIpBytes(bare) != null;
   }
 
   /// Every probe and request carries X-Plex-Token from the first byte, so a
@@ -953,8 +968,8 @@ class PlexServer {
   }
 
   static bool _isLocalOrPrivateHost(String host) {
-    final address = InternetAddress.tryParse(host);
-    if (address != null) return _isPrivateOrLocalAddress(address);
+    final ip = _tryParseIpBytes(host);
+    if (ip != null) return _isPrivateOrLocalIp(ip);
 
     if (host == 'localhost' || !host.contains('.')) return true;
     if (host.endsWith('.local') ||
@@ -968,9 +983,9 @@ class PlexServer {
     return false;
   }
 
-  static bool _isPrivateOrLocalAddress(InternetAddress address) {
-    final bytes = address.rawAddress;
-    if (address.type == InternetAddressType.IPv4 && bytes.length == 4) {
+    static bool _isPrivateOrLocalIp(({bool isIpv6, List<int> bytes}) ip) {
+    final bytes = ip.bytes;
+    if (!ip.isIpv6 && bytes.length == 4) {
       final a = bytes.first;
       final b = bytes[1];
       return a == 0 ||
@@ -982,7 +997,7 @@ class PlexServer {
           (a == 192 && b == 168);
     }
 
-    if (address.type == InternetAddressType.IPv6 && bytes.length == 16) {
+    if (ip.isIpv6 && bytes.length == 16) {
       final first = bytes.first;
       final second = bytes[1];
       final isLoopback = bytes.take(15).every((b) => b == 0) && bytes[15] == 1;
@@ -1113,7 +1128,7 @@ class PlexConnection {
   /// `UnknownHostException`. Preferring IPv4 keeps every stack on an endpoint
   /// they all resolve while still using IPv6 when nothing else answers.
   bool get isIPv6 =>
-      ipv6 || InternetAddress.tryParse(PlexServer._normalizedHost(address))?.type == InternetAddressType.IPv6;
+      ipv6 || (_tryParseIpBytes(PlexServer._normalizedHost(address))?.isIpv6 == true);
 
   PlexNetworkClass get networkClass {
     if (relay) return PlexNetworkClass.relay;
@@ -1172,4 +1187,33 @@ class ServerParsingException implements Exception {
 
   @override
   String toString() => display;
+}
+
+/// Plattformunabhaengiger IP-Parser fuer Web und Native
+({bool isIpv6, List<int> bytes})? _tryParseIpBytes(String host) {
+  final bare = host.startsWith('[') && host.endsWith(']') ? host.substring(1, host.length - 1) : host;
+  final ipv4Parts = bare.split('.');
+  if (ipv4Parts.length == 4) {
+    final bytes = <int>[];
+    for (final part in ipv4Parts) {
+      final n = int.tryParse(part);
+      if (n == null || n < 0 || n > 255) {
+        bytes.clear();
+        break;
+      }
+      bytes.add(n);
+    }
+    if (bytes.length == 4) {
+      return (isIpv6: false, bytes: bytes);
+    }
+  }
+
+  try {
+    final bytes = Uri.parseIPv6Address(bare);
+    if (bytes.length == 16) {
+      return (isIpv6: true, bytes: bytes);
+    }
+  } catch (_) {}
+
+  return null;
 }
