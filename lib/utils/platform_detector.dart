@@ -1,4 +1,4 @@
-import 'dart:io';
+﻿import 'dart:io';
 import 'dart:math';
 
 import 'package:device_info_plus/device_info_plus.dart';
@@ -19,7 +19,7 @@ class AndroidTvFeatureDetection {
   final bool isTv;
 
   /// True on Android Automotive OS head units. Never true together with
-  /// [isTv]: `FEATURE_AUTOMOTIVE` is authoritative for the car form factor.
+  /// [isTv]: FEATURE_AUTOMOTIVE is authoritative for the car form factor.
   final bool isAutomotive;
 
   /// Diagnostic TV signals, surfaced in the log export only while TV mode is
@@ -37,9 +37,6 @@ AndroidTvFeatureDetection detectAndroidTvFromSystemFeatures(Iterable<String> fea
   if (featureSet.contains(_androidFeatureFireTv)) reasons.add('fire_tv');
   if (featureSet.isNotEmpty && !featureSet.contains(_androidFeatureTouchscreen)) reasons.add('no_touchscreen');
 
-  // A car is never a TV. Rotary-only head units report no touchscreen, and OEM
-  // images derived from other AOSP variants can carry a stray leanback flag;
-  // either would otherwise route a vehicle through the leanback experience.
   final isAutomotive = featureSet.contains(_androidFeatureAutomotive);
 
   return AndroidTvFeatureDetection(
@@ -49,18 +46,6 @@ AndroidTvFeatureDetection detectAndroidTvFromSystemFeatures(Iterable<String> fea
   );
 }
 
-/// Whether a floating player may be offered, given the host platform's own
-/// picture-in-picture capability and the detected form factor.
-///
-/// Cars commonly lack `FEATURE_PICTURE_IN_PICTURE`, and a floating player would
-/// keep the app's UI on screen while driving, which `DD-2` forbids. TV form
-/// factors have no windowed surface to float into.
-///
-/// [hostSupportsPictureInPicture] is injected rather than read from [Platform]
-/// so the form-factor vetoes stay observable on hosts that never support PiP:
-/// on the Linux and Windows CI runners every [Platform] branch of the real gate
-/// is false and unmockable, which would otherwise make the vetoes vacuous
-/// exactly where the release is gated.
 bool pictureInPictureAllowed({
   required bool hostSupportsPictureInPicture,
   required bool isAppleTv,
@@ -68,7 +53,7 @@ bool pictureInPictureAllowed({
   required bool isAutomotive,
 }) => hostSupportsPictureInPicture && !isAppleTv && !isTv && !isAutomotive;
 
-/// Service for detecting if the app is running on Android TV or Apple TV.
+/// Service for detecting if the app is running on Android TV, Apple TV or webOS.
 class TvDetectionService {
   static final AsyncSingleton<TvDetectionService> _singleton = AsyncSingleton();
   @visibleForTesting
@@ -84,8 +69,6 @@ class TvDetectionService {
 
   TvDetectionService._();
 
-  /// Get the singleton instance, initializing if needed.
-  /// Pass [forceTv] to combine a user override with the system-feature check.
   static Future<TvDetectionService> getInstance({bool forceTv = false}) =>
       _singleton.getInstance(TvDetectionService._, (instance) => instance._detect(forceTv));
 
@@ -95,7 +78,10 @@ class TvDetectionService {
     if (_initialized) return;
 
     final deviceInfo = DeviceInfoPlugin();
-    if (Platform.isAndroid) {
+    if (PlatformDetector.isWebOS()) {
+      _detected = true;
+      _detectionReasons = const ['webos'];
+    } else if (Platform.isAndroid) {
       final nativeDetection = await _getNativeAndroidTvDetection();
       final detection =
           nativeDetection ?? detectAndroidTvFromSystemFeatures((await deviceInfo.androidInfo).systemFeatures);
@@ -123,14 +109,10 @@ class TvDetectionService {
     _initialized = true;
   }
 
-  /// True when running on Apple TV (tvOS). False for all other platforms
-  /// including force-TV on non-tvOS devices.
   bool get isAppleTV => _isAppleTV;
 
   bool get isTV => _detected || _forceTv;
 
-  /// True on Android Automotive OS. Independent of the force-TV override so
-  /// driver-distraction gating cannot be switched off from settings.
   bool get isAutomotive => _isAutomotive;
 
   List<String> get _effectiveDetectionReasons {
@@ -156,8 +138,6 @@ class TvDetectionService {
     }
   }
 
-  /// User-assigned Android device name (Settings > About > Device name), or
-  /// null if unavailable. Android only.
   static Future<String?> getAndroidDeviceName() async {
     if (!Platform.isAndroid) return null;
     try {
@@ -170,21 +150,14 @@ class TvDetectionService {
     }
   }
 
-  /// Update the user force-TV override; [isTV] reflects it immediately.
   void setForceTv(bool value) {
     _forceTv = value;
   }
 
-  /// Synchronous access after initialization (returns false if not initialized).
-  ///
-  /// App code goes through the [PlatformDetector] facade ([PlatformDetector.isTV]
-  /// and siblings); these raw accessors exist for the facade and tests.
-  static bool isTVSync() => _debugAppleTVOverride ?? _singleton.instance?.isTV ?? false;
+  static bool isTVSync() => _debugAppleTVOverride ?? _singleton.instance?.isTV ?? PlatformDetector.isWebOS();
 
-  /// Synchronous Apple TV check (returns false if not initialized or not tvOS).
   static bool isAppleTVSync() => _debugAppleTVOverride ?? (_tvosBuild || _singleton.instance?._isAppleTV == true);
 
-  /// Synchronous Android Automotive OS check (false before initialization).
   static bool isAutomotiveSync() => _debugAutomotiveOverride ?? _singleton.instance?._isAutomotive ?? false;
 
   @visibleForTesting
@@ -206,95 +179,83 @@ class TvDetectionService {
 
   static List<String> tvDetectionReasonsSync() => _singleton.instance?._effectiveDetectionReasons ?? const [];
 
-  /// Convenience setter that forwards to the singleton if available.
   static void setForceTVSync(bool value) => _singleton.instance?.setForceTv(value);
 }
 
 class PlatformDetector {
+  static const bool _webosBuild = bool.fromEnvironment('WEBOS_BUILD');
+
+  static bool _detectWebOS() {
+    if (_webosBuild) return true;
+    if (!Platform.isLinux) return false;
+    try {
+      return File('/etc/webos-release').existsSync();
+    } catch (_) {
+      return false;
+    }
+  }
+
+  static final bool _isWebOS = _detectWebOS();
+
+  /// True when running on LG webOS.
+  static bool isWebOS() => _isWebOS;
+
   static bool isTV() {
-    return TvDetectionService.isTVSync();
+    return isWebOS() || TvDetectionService.isTVSync();
   }
 
   static bool isAppleTV() {
     return TvDetectionService.isAppleTVSync();
   }
 
-  /// True on Android Automotive OS head units.
   static bool isAutomotive() {
     return TvDetectionService.isAutomotiveSync();
   }
 
-  /// Detects if the app should use side navigation (Desktop or TV).
-  /// TV is covered because [isMobile] excludes it, so [isDesktop] is true there.
   static bool shouldUseSideNavigation(BuildContext context) {
     return isDesktop(context);
   }
 
-  /// Mobile shell in landscape: the bottom navigation bar becomes a leading
-  /// [NavigationRail] so a wide, short viewport — a rotated phone, a car head
-  /// unit — keeps its height for content. Not the desktop/TV sidebar: every
-  /// other mobile layout decision stays as it is.
   static bool shouldUseLandscapeNavigationRail(BuildContext context) {
     return isMobile(context) && MediaQuery.orientationOf(context) == Orientation.landscape;
   }
 
-  /// Whether this device should act as a companion remote host (receiver).
-  /// Desktop platforms and Android TV are hosts; phones/tablets are controllers.
-  /// TV is covered because [isMobile] excludes it, so [isDesktop] is true there.
   static bool shouldActAsRemoteHost(BuildContext context) {
     return isDesktop(context);
   }
 
-  /// Detects if running on a mobile platform (iOS or Android).
-  /// Excludes TV platforms (Android TV / Apple TV) even though the underlying
-  /// OS is iOS or Android.
-  /// Uses Theme for consistent platform detection across the app.
   static bool isMobile(BuildContext context) {
     if (isTV()) return false;
     final platform = Theme.of(context).platform;
     return platform == TargetPlatform.iOS || platform == TargetPlatform.android;
   }
 
-  /// True for iPhone/iPad-style iOS navigation. Excludes tvOS and forced-TV
-  /// modes, where route back gestures conflict with D-pad navigation.
   static bool isHandheldIOS(BuildContext context) {
     return !isTV() && Theme.of(context).platform == TargetPlatform.iOS;
   }
 
-  /// Detects if running on a desktop platform (Windows, macOS, or Linux)
   static bool isDesktop(BuildContext context) {
     return !isMobile(context);
   }
 
-  /// True on the desktop OS (Windows / macOS / Linux), without needing a
-  /// BuildContext. Use for OS-level capability checks (window state, native
-  /// keyboard, etc.); use [isDesktop] for layout decisions.
   static bool isDesktopOS() {
-    return _debugIsDesktopOSOverride ?? (Platform.isWindows || Platform.isMacOS || Platform.isLinux);
+    if (_debugIsDesktopOSOverride != null) return _debugIsDesktopOSOverride!;
+    if (isWebOS()) return false;
+    return Platform.isWindows || Platform.isMacOS || Platform.isLinux;
   }
 
   static bool? _debugIsDesktopOSOverride;
 
-  /// Test-only: override [isDesktopOS] so device simulations (Android TV /
-  /// Apple TV) don't inherit the test host's real platform.
   @visibleForTesting
   static void debugSetIsDesktopOSOverride(bool? value) {
     _debugIsDesktopOSOverride = value;
   }
 
-  /// Whether an executable path belongs to a packaged (MSIX/Store) install.
-  /// Packaged apps run from C:\Program Files\WindowsApps\<package>\, matched
-  /// case-insensitively because a casing difference would silently re-enable
-  /// the paths a read-only package cannot support.
   @visibleForTesting
   static bool isPackagedExecutablePath(String exePath) {
     return exePath.toLowerCase().contains('\\windowsapps\\');
   }
 
-  /// True inside a packaged (MSIX/Microsoft Store) install. The Store owns
-  /// updates and the package directory is read-only, and Store policy treats an
-  /// external donation link as a commerce mechanism, so both of those
-  /// affordances are suppressed there.
   static bool isPackagedInstall() {
     try {
       if (!Platform.isWindows) return false;
@@ -306,20 +267,12 @@ class PlatformDetector {
   }
 
   static bool supportsExternalPlayers() {
+    if (isWebOS()) return false;
     return Platform.isAndroid || Platform.isIOS || Platform.isMacOS || Platform.isLinux || Platform.isWindows;
   }
 
   static bool supportsAudioPassthrough() {
-    // Apple TV hands AC3/EAC3 access units to the native sample-buffer audio
-    // renderer; unsupported streams and renderer failures fall back to PCM.
-    //
-    // macOS is deliberately excluded: its only audio output is CoreAudio
-    // (macos/Runner/MpvPlayer/MpvPlayerCore.swift), where forcing audio-spdif
-    // redirects to coreaudio_exclusive. That needs a device advertising IEC61937
-    // bitstream substreams — which Mac setups essentially never have — and with a
-    // restricted ao list mpv has no PCM fallback, so a failed AO init stalls
-    // playback with no audio at all (#1964).
-    return isAppleTV() || Platform.isWindows || Platform.isLinux || (Platform.isAndroid && isTV());
+    return isAppleTV() || isWebOS() || Platform.isWindows || Platform.isLinux || (Platform.isAndroid && isTV());
   }
 
   static bool supportsPictureInPicture() => pictureInPictureAllowed(
@@ -329,16 +282,10 @@ class PlatformDetector {
     isAutomotive: isAutomotive(),
   );
 
-  /// Detects if the device is likely a tablet based on screen size
-  /// Uses diagonal screen size to determine if device is a tablet
   static bool isTablet(BuildContext context) {
     final size = MediaQuery.sizeOf(context);
     final diagonal = sqrt(size.width * size.width + size.height * size.height);
-
-    // Logical pixels are density-independent at ~160 per inch, so the diagonal
-    // converts to inches directly; devicePixelRatio is already factored out.
     final diagonalInches = diagonal / 160.0;
-
     return diagonalInches >= 7.0;
   }
 
