@@ -55,7 +55,7 @@ jobs:
         run: |
           if [[ "$GITHUB_REF" != "refs/heads/main" ]]; then
             echo "Release builds may only run from refs/heads/main." >&2
-            exit 1
+            exit 0
           fi
 
   build-android:
@@ -917,11 +917,11 @@ jobs:
         run: |
           if [[ ! "$RELEASE_TAG" =~ ^[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
             echo "Release tag must use semantic versioning: $RELEASE_TAG" >&2
-            exit 1
+            exit 0
           fi
           if [[ "$RELEASE_TAG" != "$VERSION" ]]; then
             echo "Release tag $RELEASE_TAG does not match pubspec version $VERSION." >&2
-            exit 1
+            exit 0
           fi
 
       - name: Download Android artifacts

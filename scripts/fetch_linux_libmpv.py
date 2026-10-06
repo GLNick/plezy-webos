@@ -34,6 +34,11 @@ def main() -> int:
         help="path to mpv-build.lock.json (default: the repository lock)",
     )
     parser.add_argument(
+        "--arch",
+        default=platform.machine(),
+        help="target architecture (default: platform.machine())",
+    )
+    parser.add_argument(
         "--dest",
         type=Path,
         default=Path("libmpv-prefix"),
@@ -51,7 +56,7 @@ def main() -> int:
 
     lock = json.loads(args.lock.read_text(encoding="utf-8"))
     group = lock["artifacts"]["linux"]
-    machine = platform.machine()
+    machine = args.arch
     entry = group["assets"].get(machine)
     if entry is None:
         print(
@@ -80,7 +85,7 @@ def main() -> int:
 
         args.dest.mkdir(parents=True, exist_ok=True)
         subprocess.run(
-            ["tar", "--zstd", "-xf", archive.name, "-C", str(args.dest)],
+            ["tar", "--zstd", "-xf", archive.name, "-m", "--no-same-owner", "-C", str(args.dest)],
             check=True,
         )
     return 0
