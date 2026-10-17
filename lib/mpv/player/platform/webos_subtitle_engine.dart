@@ -95,7 +95,7 @@ class WebosAssStyle {
     this.marginV = 25,
   });
 
-  /// Parses ASS `&HAABBGGRR`, `&HBBGGRR&` or decimal color in `[V4+ Styles]`.
+  /// Parses ASS `&HAABBGGRR`, `&HBBGGRR&` or signed/unsigned decimal color in `[V4+ Styles]`.
   /// In ASS, alpha 00 is opaque (255) and FF is transparent (0).
   static Color? parseAssStyleColor(String raw) {
     var s = raw.trim().toUpperCase();
@@ -105,11 +105,7 @@ class WebosAssStyle {
     bool isHex = false;
     if (s.startsWith('&H') || s.startsWith('H')) {
       isHex = true;
-      if (s.startsWith('&H')) {
-        s = s.substring(2);
-      } else {
-        s = s.substring(1);
-      }
+      s = s.startsWith('&H') ? s.substring(2) : s.substring(1);
       if (s.endsWith('&')) s = s.substring(0, s.length - 1);
       s = s.trim();
       val = int.tryParse(s, radix: 16);
@@ -130,14 +126,10 @@ class WebosAssStyle {
     return Color.fromARGB(a, r, g, b);
   }
 
-  /// Parses inline override color `\c&HBBGGRR&`, `\1c`, `\3c`, `\4c` (extracts RGB only,
-  /// so existing alpha from style or `\1a`/`\3a`/`\alpha` is never overwritten!).
+  /// Parses inline override color `\c&HBBGGRR&`, `\1c`, `\3c`, `\4c` (extracts RGB only).
   static Color? parseAssOverrideRgb(String raw) {
     var s = raw.trim().toUpperCase();
-    if (s.startsWith('&H')) s = s.substring(2);
-    if (s.startsWith('H')) s = s.substring(1);
-    if (s.endsWith('&')) s = s.substring(0, s.length - 1);
-    s = s.trim();
+    s = s.replaceAll('&', '').replaceAll('H', '').trim();
     if (s.isEmpty) return null;
     final val = int.tryParse(s, radix: 16);
     if (val == null) return null;
@@ -147,15 +139,45 @@ class WebosAssStyle {
     return Color.fromARGB(255, r, g, b);
   }
 
+  /// Parses ASS alpha `&H00&`..`&HFF&` and returns Flutter alpha `255` (opaque)..`0` (transparent).
   static int? parseAssAlpha(String raw) {
     var s = raw.trim().toUpperCase();
-    if (s.startsWith('&H')) s = s.substring(2);
-    if (s.startsWith('H')) s = s.substring(1);
-    if (s.endsWith('&')) s = s.substring(0, s.length - 1);
-    final val = int.tryParse(s.trim(), radix: 16);
+    s = s.replaceAll('&', '').replaceAll('H', '').trim();
+    if (s.isEmpty) return null;
+    final val = int.tryParse(s, radix: 16);
     if (val == null) return null;
     return (255 - (val & 0xFF)).clamp(0, 255);
   }
+}
+
+class WebosAssTransform {
+  final int? t1;
+  final int? t2;
+  final double accel;
+  final Color? primaryRgb;
+  final Color? outlineRgb;
+  final Color? shadowRgb;
+  final int? alpha1;
+  final int? alpha3;
+  final int? alpha4;
+  final double? scaleX;
+  final double? scaleY;
+  final double? rotationZ;
+
+  const WebosAssTransform({
+    this.t1,
+    this.t2,
+    this.accel = 1.0,
+    this.primaryRgb,
+    this.outlineRgb,
+    this.shadowRgb,
+    this.alpha1,
+    this.alpha3,
+    this.alpha4,
+    this.scaleX,
+    this.scaleY,
+    this.rotationZ,
+  });
 }
 
 class WebosAssSpan {
@@ -172,7 +194,8 @@ class WebosAssSpan {
   final bool? italic;
   final bool? underline;
   final bool? strikeOut;
-  final int drawingScale; // > 0 when this span is an ASS \p1..\p4 vector shape
+  final int drawingScale;
+  final List<WebosAssTransform> transforms;
 
   const WebosAssSpan({
     required this.text,
@@ -189,6 +212,7 @@ class WebosAssSpan {
     this.underline,
     this.strikeOut,
     this.drawingScale = 0,
+    this.transforms = const [],
   });
 }
 
@@ -210,6 +234,8 @@ class WebosSubtitleCue {
   final int? moveT2;
   final int fadeInMs;
   final int fadeOutMs;
+  // Complex 7-argument \fade(a1, a2, a3, t1, t2, t3, t4)
+  final List<int>? complexFade;
   final double scaleX;
   final double scaleY;
   final double rotationZ;
@@ -239,6 +265,7 @@ class WebosSubtitleCue {
     this.moveT2,
     this.fadeInMs = 0,
     this.fadeOutMs = 0,
+    this.complexFade,
     this.scaleX = 1.0,
     this.scaleY = 1.0,
     this.rotationZ = 0.0,
@@ -252,6 +279,13 @@ class WebosSubtitleCue {
   });
 
   bool get hasVectorDrawing => spans.any((s) => s.drawingScale > 0);
+
+  bool get isAnimated =>
+      fadeInMs > 0 ||
+      fadeOutMs > 0 ||
+      complexFade != null ||
+      moveX1 != null ||
+      spans.any((s) => s.transforms.isNotEmpty);
 }
 
 class WebosAssDocument {
@@ -274,6 +308,11 @@ class WebosSubtitleParser {
   );
   static final _assTimeRe = RegExp(r'^(\d+):(\d{2}):(\d{2})\.(\d{1,3})$');
   static final _htmlTagRe = RegExp(r'<[^>]*>');
+
+  // Exact ASS tag prefix matcher so arguments right after tag names (e.g. \rDefault, \fnArial, \1aH00&) are never swallowed
+  static final _assTagRe = RegExp(
+    r'\\(1c|2c|3c|4c|1a|2a|3a|4a|alpha|an|fad|fade|fscx|fscy|fsp|frx|fry|frz|fr|fax|fay|fn|fs|xbord|ybord|bord|xshad|yshad|shad|blur|be|pos|move|org|clip|iclip|pbo|p|q|r|b|i|u|s|c|a)\s*([^\\}]*)',
+  );
 
   static String _stripBom(String s) {
     if (s.startsWith('\uFEFF')) return s.substring(1);
@@ -591,6 +630,94 @@ class WebosSubtitleParser {
     return result;
   }
 
+  static WebosAssTransform? _parseTransformBlock(String inner) {
+    // Format: \t([t1,t2,][accel,]<style tags>)
+    final slashIdx = inner.indexOf(r'\');
+    if (slashIdx == -1) return null;
+    final headerPart = inner.substring(0, slashIdx).trim();
+    final tagsPart = inner.substring(slashIdx);
+
+    int? t1;
+    int? t2;
+    double accel = 1.0;
+
+    if (headerPart.isNotEmpty) {
+      final nums = headerPart
+          .split(',')
+          .map((s) => s.trim())
+          .where((s) => s.isNotEmpty)
+          .toList();
+      if (nums.length >= 2) {
+        t1 = int.tryParse(nums[0]);
+        t2 = int.tryParse(nums[1]);
+        if (nums.length >= 3) {
+          accel = double.tryParse(nums[2]) ?? 1.0;
+        }
+      } else if (nums.length == 1) {
+        accel = double.tryParse(nums[0]) ?? 1.0;
+      }
+    }
+
+    Color? pRgb;
+    Color? oRgb;
+    Color? sRgb;
+    int? a1;
+    int? a3;
+    int? a4;
+    double? scX;
+    double? scY;
+    double? rotZ;
+
+    for (final tm in _assTagRe.allMatches(tagsPart)) {
+      final tagName = tm.group(1)!;
+      final tagArg = tm.group(2)!.trim();
+      if (tagName == 'c' || tagName == '1c') {
+        pRgb = WebosAssStyle.parseAssOverrideRgb(tagArg) ?? pRgb;
+      } else if (tagName == '3c') {
+        oRgb = WebosAssStyle.parseAssOverrideRgb(tagArg) ?? oRgb;
+      } else if (tagName == '4c') {
+        sRgb = WebosAssStyle.parseAssOverrideRgb(tagArg) ?? sRgb;
+      } else if (tagName == 'alpha') {
+        final a = WebosAssStyle.parseAssAlpha(tagArg);
+        if (a != null) {
+          a1 = a;
+          a3 = a;
+          a4 = a;
+        }
+      } else if (tagName == '1a') {
+        a1 = WebosAssStyle.parseAssAlpha(tagArg) ?? a1;
+      } else if (tagName == '3a') {
+        a3 = WebosAssStyle.parseAssAlpha(tagArg) ?? a3;
+      } else if (tagName == '4a') {
+        a4 = WebosAssStyle.parseAssAlpha(tagArg) ?? a4;
+      } else if (tagName == 'fscx') {
+        final v = double.tryParse(tagArg);
+        if (v != null) scX = v / 100.0;
+      } else if (tagName == 'fscy') {
+        final v = double.tryParse(tagArg);
+        if (v != null) scY = v / 100.0;
+      } else if (tagName == 'frz' || tagName == 'fr') {
+        final v = double.tryParse(tagArg);
+        if (v != null) rotZ = v;
+      }
+    }
+
+    return WebosAssTransform(
+      t1: t1,
+      t2: t2,
+      accel: accel,
+      primaryRgb: pRgb,
+      outlineRgb: oRgb,
+      shadowRgb: sRgb,
+      alpha1: a1,
+      alpha3: a3,
+      alpha4: a4,
+      scaleX: scX,
+      scaleY: scY,
+      rotationZ: rotZ,
+    );
+  }
+
   static WebosSubtitleCue? createCueFromRawText({
     required int startMs,
     required int endMs,
@@ -613,11 +740,11 @@ class WebosSubtitleParser {
     int? moveT1, moveT2;
     int fadeInMs = 0;
     int fadeOutMs = 0;
+    List<int>? complexFade;
     double scaleX = style?.scaleX ?? 1.0;
     double scaleY = style?.scaleY ?? 1.0;
     double rotationZ = style?.angleZ ?? 0.0;
 
-    // Separate RGB and Alpha state so \c never resets \1a or style alpha!
     String? curFont = style?.fontName;
     double? curSize = style?.fontSize;
     Color curPrimaryRgb = (style?.primaryColor ?? Colors.white).withAlpha(255);
@@ -634,6 +761,7 @@ class WebosSubtitleParser {
     bool? curUnderline = style?.underline;
     bool? curStrikeOut = style?.strikeOut;
     int curDrawingScale = 0;
+    final curTransforms = <WebosAssTransform>[];
 
     void resetToStyle(WebosAssStyle? target) {
       final s = target ?? style;
@@ -652,33 +780,40 @@ class WebosSubtitleParser {
       curItalic = s?.italic;
       curUnderline = s?.underline;
       curStrikeOut = s?.strikeOut;
+      curTransforms.clear();
     }
 
     final spans = <WebosAssSpan>[];
     final tokenRe = RegExp(r'\{([^}]*)\}|([^{]+)');
-    final individualTagRe = RegExp(r'\\([a-zA-Z0-9]+)\s*([^\\}]*)');
+    final transformRe = RegExp(r'\\t\(([^)]*)\)');
 
     for (final match in tokenRe.allMatches(rawText)) {
-      final tagBlock = match.group(1);
+      final rawTagBlock = match.group(1);
       final textSegment = match.group(2);
 
-      if (tagBlock != null) {
-        // Parse tags sequentially inside {...} so order like \alpha&H80&\1a&H00& is respected
-        for (final tm in individualTagRe.allMatches(tagBlock)) {
+      if (rawTagBlock != null) {
+        // 1. Extract all \t(...) animation blocks FIRST so their target values (e.g. fade-out \alpha&HFF&)
+        //    do not overwrite the static initial opacity of the sign!
+        for (final tm in transformRe.allMatches(rawTagBlock)) {
+          final tr = _parseTransformBlock(tm.group(1)!);
+          if (tr != null) curTransforms.add(tr);
+        }
+        final tagBlock = rawTagBlock.replaceAll(transformRe, '');
+
+        // 2. Parse static override tags sequentially
+        for (final tm in _assTagRe.allMatches(tagBlock)) {
           final tagName = tm.group(1)!;
           final tagArg = tm.group(2)!.trim();
 
           if (tagName == 'r') {
-            final targetStyle = (tagArg.isNotEmpty && stylesMap != null) ? stylesMap[tagArg] : style;
+            final targetName = tagArg.replaceFirst('*', '').trim();
+            final targetStyle = (targetName.isNotEmpty && stylesMap != null) ? stylesMap[targetName] : style;
             resetToStyle(targetStyle);
-          } else if (tagName.startsWith('an') && tagName.length == 3) {
-            final an = int.tryParse(tagName.substring(2));
-            if (an != null && an >= 1 && an <= 9) alignment = an;
           } else if (tagName == 'an') {
             final an = int.tryParse(tagArg);
             if (an != null && an >= 1 && an <= 9) alignment = an;
-          } else if (tagName == 'p' || (tagName.startsWith('p') && RegExp(r'^p\d+$').hasMatch(tagName))) {
-            final pVal = tagName == 'p' ? int.tryParse(tagArg) : int.tryParse(tagName.substring(1));
+          } else if (tagName == 'p') {
+            final pVal = int.tryParse(tagArg);
             if (pVal != null) curDrawingScale = pVal;
           } else if (tagName == 'c' || tagName == '1c') {
             final rgb = WebosAssStyle.parseAssOverrideRgb(tagArg);
@@ -707,46 +842,39 @@ class WebosSubtitleParser {
             if (a != null) curAlpha4 = a;
           } else if (tagName == 'fn') {
             if (tagArg.isNotEmpty) curFont = tagArg;
-          } else if (tagName.startsWith('fs') && !tagName.startsWith('fsc')) {
-            final numStr = tagName.length > 2 ? tagName.substring(2) : tagArg;
-            final fs = double.tryParse(numStr);
+          } else if (tagName == 'fs') {
+            final fs = double.tryParse(tagArg);
             if (fs != null && fs > 0) curSize = fs;
-          } else if (tagName.startsWith('fscx')) {
-            final numStr = tagName.length > 4 ? tagName.substring(4) : tagArg;
-            final v = double.tryParse(numStr);
+          } else if (tagName == 'fscx') {
+            final v = double.tryParse(tagArg);
             if (v != null) scaleX = v / 100.0;
-          } else if (tagName.startsWith('fscy')) {
-            final numStr = tagName.length > 4 ? tagName.substring(4) : tagArg;
-            final v = double.tryParse(numStr);
+          } else if (tagName == 'fscy') {
+            final v = double.tryParse(tagArg);
             if (v != null) scaleY = v / 100.0;
-          } else if (tagName.startsWith('frz') || tagName.startsWith('fr')) {
-            final numStr = tagName.replaceFirst(RegExp(r'^frz?'), '') + tagArg;
-            final v = double.tryParse(numStr.trim());
+          } else if (tagName == 'frz' || tagName == 'fr') {
+            final v = double.tryParse(tagArg);
             if (v != null) rotationZ = v;
-          } else if (tagName.startsWith('bord')) {
-            final numStr = (tagName.length > 4 ? tagName.substring(4) : '') + tagArg;
-            final v = double.tryParse(numStr.trim());
+          } else if (tagName == 'bord' || tagName == 'xbord' || tagName == 'ybord') {
+            final v = double.tryParse(tagArg);
             if (v != null && v >= 0) curBord = v;
-          } else if (tagName.startsWith('shad')) {
-            final numStr = (tagName.length > 4 ? tagName.substring(4) : '') + tagArg;
-            final v = double.tryParse(numStr.trim());
-            if (v != null && v >= 0) curShad = v;
-          } else if (tagName == 'b1' || (tagName == 'b' && tagArg == '1')) {
-            curBold = true;
-          } else if (tagName == 'b0' || (tagName == 'b' && tagArg == '0')) {
-            curBold = false;
-          } else if (tagName == 'i1' || (tagName == 'i' && tagArg == '1')) {
-            curItalic = true;
-          } else if (tagName == 'i0' || (tagName == 'i' && tagArg == '0')) {
-            curItalic = false;
-          } else if (tagName == 'u1') {
-            curUnderline = true;
-          } else if (tagName == 'u0') {
-            curUnderline = false;
-          } else if (tagName == 's1') {
-            curStrikeOut = true;
-          } else if (tagName == 's0') {
-            curStrikeOut = false;
+          } else if (tagName == 'shad' || tagName == 'xshad' || tagName == 'yshad') {
+            final v = double.tryParse(tagArg);
+            if (v != null) curShad = v.abs();
+          } else if (tagName == 'b') {
+            if (tagArg == '0') {
+              curBold = false;
+            } else if (tagArg == '1' || (int.tryParse(tagArg) ?? 0) >= 600) {
+              curBold = true;
+            }
+          } else if (tagName == 'i') {
+            if (tagArg == '1') curItalic = true;
+            if (tagArg == '0') curItalic = false;
+          } else if (tagName == 'u') {
+            if (tagArg == '1') curUnderline = true;
+            if (tagArg == '0') curUnderline = false;
+          } else if (tagName == 's') {
+            if (tagArg == '1') curStrikeOut = true;
+            if (tagArg == '0') curStrikeOut = false;
           }
         }
 
@@ -773,6 +901,15 @@ class WebosSubtitleParser {
           fadeInMs = int.tryParse(fadMatch.group(1)!) ?? 0;
           fadeOutMs = int.tryParse(fadMatch.group(2)!) ?? 0;
         }
+
+        final fadeComplexMatch = RegExp(
+          r'\\fade\(\s*(\d+)\s*,\s*(\d+)\s*,\s*(\d+)\s*,\s*(\d+)\s*,\s*(\d+)\s*,\s*(\d+)\s*,\s*(\d+)\s*\)',
+        ).firstMatch(tagBlock);
+        if (fadeComplexMatch != null) {
+          complexFade = [
+            for (int g = 1; g <= 7; g++) int.tryParse(fadeComplexMatch.group(g)!) ?? 0,
+          ];
+        }
       } else if (textSegment != null) {
         if (curDrawingScale > 0) {
           final drawClean = textSegment.trim();
@@ -787,6 +924,7 @@ class WebosSubtitleParser {
                 shadow: curShad,
                 borderStyle: curBorderStyle,
                 drawingScale: curDrawingScale,
+                transforms: List<WebosAssTransform>.of(curTransforms),
               ),
             );
           }
@@ -819,6 +957,7 @@ class WebosSubtitleParser {
               underline: curUnderline,
               strikeOut: curStrikeOut,
               drawingScale: 0,
+              transforms: List<WebosAssTransform>.of(curTransforms),
             ),
           );
         }
@@ -847,6 +986,7 @@ class WebosSubtitleParser {
       moveT2: moveT2,
       fadeInMs: fadeInMs,
       fadeOutMs: fadeOutMs,
+      complexFade: complexFade,
       scaleX: scaleX,
       scaleY: scaleY,
       rotationZ: rotationZ,
@@ -1541,8 +1681,6 @@ class WebosMkvSubtitleExtractor {
   }
 }
 
-/// CustomPainter for ASS `\p1`..`\p4` vector drawings (used by anime subtitles to draw
-/// solid/colored background plates covering Japanese signs).
 class _AssVectorDrawingPainter extends CustomPainter {
   final Path path;
   final Color fillColor;
@@ -1586,7 +1724,7 @@ class _AssVectorDrawingPainter extends CustomPainter {
   }
 }
 
-class WebosSubtitleOverlay extends StatelessWidget {
+class WebosSubtitleOverlay extends StatefulWidget {
   final ValueListenable<List<WebosSubtitleCue>> activeCues;
   final ValueListenable<WebosSubtitleStyleConfig> styleConfig;
   final int Function()? getCurrentPositionMs;
@@ -1599,6 +1737,76 @@ class WebosSubtitleOverlay extends StatelessWidget {
   });
 
   @override
+  State<WebosSubtitleOverlay> createState() => _WebosSubtitleOverlayState();
+}
+
+class _WebosSubtitleOverlayState extends State<WebosSubtitleOverlay> {
+  Timer? _animTimer;
+  final Map<WebosSubtitleCue, DateTime> _cueFirstSeenAt = {};
+
+  @override
+  void initState() {
+    super.initState();
+    widget.activeCues.addListener(_onActiveCuesChanged);
+    _onActiveCuesChanged();
+  }
+
+  @override
+  void didUpdateWidget(covariant WebosSubtitleOverlay oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (oldWidget.activeCues != widget.activeCues) {
+      oldWidget.activeCues.removeListener(_onActiveCuesChanged);
+      widget.activeCues.addListener(_onActiveCuesChanged);
+      _onActiveCuesChanged();
+    }
+  }
+
+  @override
+  void dispose() {
+    widget.activeCues.removeListener(_onActiveCuesChanged);
+    _animTimer?.cancel();
+    super.dispose();
+  }
+
+  void _onActiveCuesChanged() {
+    final cues = widget.activeCues.value;
+    final now = DateTime.now();
+    _cueFirstSeenAt.removeWhere((k, _) => !cues.contains(k));
+    for (final c in cues) {
+      _cueFirstSeenAt.putIfAbsent(c, () => now);
+    }
+
+    final needsAnimationLoop = cues.any((c) => c.isAnimated);
+    if (needsAnimationLoop) {
+      // Run a 30fps timer whenever animated cues (\fad, \fade, \move, \t) are on screen
+      // so fade-ins never stay stuck at their initial 10% frame!
+      _animTimer ??= Timer.periodic(const Duration(milliseconds: 33), (_) {
+        if (mounted && widget.activeCues.value.any((c) => c.isAnimated)) {
+          setState(() {});
+        } else {
+          _animTimer?.cancel();
+          _animTimer = null;
+        }
+      });
+    } else {
+      _animTimer?.cancel();
+      _animTimer = null;
+    }
+  }
+
+  int _resolveElapsedMsForCue(WebosSubtitleCue cue, int? playerNowMs) {
+    final dur = (cue.endMs - cue.startMs).clamp(1, 3600000);
+    final seenAt = _cueFirstSeenAt[cue];
+    final wallElapsed = seenAt != null ? DateTime.now().difference(seenAt).inMilliseconds : 0;
+    if (playerNowMs != null && playerNowMs >= cue.startMs) {
+      final playerElapsed = playerNowMs - cue.startMs;
+      // Use the larger of playerElapsed and wallElapsed so 50ms poll intervals never freeze short fades
+      return math.max(playerElapsed, wallElapsed).clamp(0, dur);
+    }
+    return wallElapsed.clamp(0, dur);
+  }
+
+  @override
   Widget build(BuildContext context) {
     return IgnorePointer(
       child: LayoutBuilder(
@@ -1607,15 +1815,13 @@ class WebosSubtitleOverlay extends StatelessWidget {
           final screenH = constraints.maxHeight > 0 ? constraints.maxHeight : 1080.0;
 
           return ValueListenableBuilder<WebosSubtitleStyleConfig>(
-            valueListenable: styleConfig,
+            valueListenable: widget.styleConfig,
             builder: (context, cfg, _) {
               return ValueListenableBuilder<List<WebosSubtitleCue>>(
-                valueListenable: activeCues,
+                valueListenable: widget.activeCues,
                 builder: (context, rawCues, _) {
                   if (rawCues.isEmpty) return const SizedBox.shrink();
 
-                  // Sort cues by ASS layer ascending (so Layer 0 sign background plates
-                  // are always drawn underneath Layer 1 translated text!)
                   final cues = List<WebosSubtitleCue>.of(rawCues)
                     ..sort((a, b) {
                       final lCmp = a.layer.compareTo(b.layer);
@@ -1625,7 +1831,7 @@ class WebosSubtitleOverlay extends StatelessWidget {
                       return a.readOrder.compareTo(b.readOrder);
                     });
 
-                  final nowMs = getCurrentPositionMs?.call();
+                  final playerNowMs = widget.getCurrentPositionMs?.call();
                   final positionedWidgets = <Widget>[];
                   final alignedGroups = <int, List<WebosSubtitleCue>>{};
 
@@ -1639,9 +1845,9 @@ class WebosSubtitleOverlay extends StatelessWidget {
                       final ry = cue.playResY > 0 ? cue.playResY : 1080;
                       double px = cue.posX ?? cue.moveX1 ?? 0.0;
                       double py = cue.posY ?? cue.moveY1 ?? 0.0;
+                      final elapsed = _resolveElapsedMsForCue(cue, playerNowMs);
 
-                      if (hasMove && nowMs != null) {
-                        final elapsed = (nowMs - cue.startMs).clamp(0, cue.endMs - cue.startMs);
+                      if (hasMove) {
                         final t1 = cue.moveT1 ?? 0;
                         final t2 = (cue.moveT2 != null && cue.moveT2! > t1)
                             ? cue.moveT2!
@@ -1663,7 +1869,7 @@ class WebosSubtitleOverlay extends StatelessWidget {
                             translation: anchorOffset,
                             child: ConstrainedBox(
                               constraints: BoxConstraints(maxWidth: screenW * 0.95),
-                              child: _buildCueWidget(cue, cfg, screenW, screenH, nowMs),
+                              child: _buildCueWidget(cue, cfg, screenW, screenH, elapsed),
                             ),
                           ),
                         ),
@@ -1708,7 +1914,13 @@ class WebosSubtitleOverlay extends StatelessWidget {
                                 for (final c in groupCues)
                                   Padding(
                                     padding: const EdgeInsets.symmetric(vertical: 2.0),
-                                    child: _buildCueWidget(c, cfg, screenW, screenH, nowMs),
+                                    child: _buildCueWidget(
+                                      c,
+                                      cfg,
+                                      screenW,
+                                      screenH,
+                                      _resolveElapsedMsForCue(c, playerNowMs),
+                                    ),
                                   ),
                               ],
                             ),
@@ -1775,12 +1987,49 @@ class WebosSubtitleOverlay extends StatelessWidget {
     return TextAlign.center;
   }
 
-  /// Parses ASS `\p1` vector drawing commands (`m`, `n`, `l`, `b`, `c`) into a scaled Flutter Path.
+  static Color _evalTransformedColor(
+    Color baseColor,
+    List<WebosAssTransform> transforms,
+    int elapsedMs,
+    int totalDurMs,
+    Color? Function(WebosAssTransform) pickRgb,
+    int? Function(WebosAssTransform) pickAlpha,
+  ) {
+    Color rgb = baseColor.withAlpha(255);
+    double alpha = baseColor.alpha.toDouble();
+
+    for (final tr in transforms) {
+      final tStart = tr.t1 ?? 0;
+      final tEnd = (tr.t2 != null && tr.t2! > tStart) ? tr.t2! : totalDurMs;
+      double progress;
+      if (elapsedMs <= tStart) {
+        progress = 0.0;
+      } else if (elapsedMs >= tEnd || tEnd <= tStart) {
+        progress = 1.0;
+      } else {
+        final linear = (elapsedMs - tStart) / (tEnd - tStart);
+        progress = tr.accel == 1.0 ? linear : math.pow(linear, tr.accel).toDouble();
+      }
+      if (progress <= 0.0) continue;
+
+      final targetRgb = pickRgb(tr);
+      if (targetRgb != null) {
+        rgb = Color.lerp(rgb, targetRgb, progress) ?? targetRgb;
+      }
+      final targetA = pickAlpha(tr);
+      if (targetA != null) {
+        alpha = alpha + (targetA - alpha) * progress;
+      }
+    }
+    return rgb.withAlpha(alpha.round().clamp(0, 255));
+  }
+
   Widget? _buildVectorDrawingWidget(
     WebosSubtitleCue cue,
     WebosAssSpan drawSpan,
     double screenW,
     double screenH,
+    int elapsedMs,
   ) {
     final rx = cue.playResX > 0 ? cue.playResX : 1920;
     final ry = cue.playResY > 0 ? cue.playResY : 1080;
@@ -1873,8 +2122,17 @@ class WebosSubtitleOverlay extends StatelessWidget {
     final width = (maxX - math.min(0.0, minX)).clamp(1.0, screenW);
     final height = (maxY - math.min(0.0, minY)).clamp(1.0, screenH);
 
-    final fillColor = drawSpan.primaryColor ?? cue.style?.primaryColor ?? Colors.white;
-    final outlineColor = drawSpan.outlineColor ?? cue.style?.outlineColor ?? Colors.black;
+    final totalDur = (cue.endMs - cue.startMs).clamp(1, 3600000);
+    final baseFill = drawSpan.primaryColor ?? cue.style?.primaryColor ?? Colors.white;
+    final baseOut = drawSpan.outlineColor ?? cue.style?.outlineColor ?? Colors.black;
+
+    final fillColor = drawSpan.transforms.isEmpty
+        ? baseFill
+        : _evalTransformedColor(baseFill, drawSpan.transforms, elapsedMs, totalDur, (t) => t.primaryRgb, (t) => t.alpha1);
+    final outlineColor = drawSpan.transforms.isEmpty
+        ? baseOut
+        : _evalTransformedColor(baseOut, drawSpan.transforms, elapsedMs, totalDur, (t) => t.outlineRgb, (t) => t.alpha3);
+
     final rawBord = drawSpan.outline ?? cue.style?.outline ?? 0.0;
     final strokeW = (rawBord * (screenH / ry) * 1.6).clamp(0.0, 24.0);
 
@@ -1894,12 +2152,40 @@ class WebosSubtitleOverlay extends StatelessWidget {
     WebosSubtitleStyleConfig cfg,
     double screenW,
     double screenH,
-    int? nowMs,
+    int elapsedMs,
   ) {
-    // Check if this cue is an ASS \p1 vector shape (sign background plate)
+    final totalDur = (cue.endMs - cue.startMs).clamp(1, 3600000);
+    final remainingMs = (totalDur - elapsedMs).clamp(0, totalDur);
+
+    double fadeMultiplier = 1.0;
+    if (cue.complexFade != null && cue.complexFade!.length == 7) {
+      final cf = cue.complexFade!;
+      final a1 = (255 - (cf[0] & 0xFF)).clamp(0, 255) / 255.0;
+      final a2 = (255 - (cf[1] & 0xFF)).clamp(0, 255) / 255.0;
+      final a3 = (255 - (cf[2] & 0xFF)).clamp(0, 255) / 255.0;
+      final t1 = cf[3], t2 = cf[4], t3 = cf[5], t4 = cf[6];
+      if (elapsedMs < t1) {
+        fadeMultiplier = a1;
+      } else if (elapsedMs < t2 && t2 > t1) {
+        fadeMultiplier = a1 + (a2 - a1) * ((elapsedMs - t1) / (t2 - t1));
+      } else if (elapsedMs < t3) {
+        fadeMultiplier = a2;
+      } else if (elapsedMs < t4 && t4 > t3) {
+        fadeMultiplier = a2 + (a3 - a2) * ((elapsedMs - t3) / (t4 - t3));
+      } else {
+        fadeMultiplier = a3;
+      }
+    } else if (cue.fadeInMs > 0 || cue.fadeOutMs > 0) {
+      if (cue.fadeInMs > 0 && elapsedMs < cue.fadeInMs) {
+        fadeMultiplier = (elapsedMs / cue.fadeInMs).clamp(0.0, 1.0);
+      } else if (cue.fadeOutMs > 0 && remainingMs < cue.fadeOutMs) {
+        fadeMultiplier = (remainingMs / cue.fadeOutMs).clamp(0.0, 1.0);
+      }
+    }
+
     final drawSpan = cue.spans.where((s) => s.drawingScale > 0).firstOrNull;
     if (drawSpan != null) {
-      final vecWidget = _buildVectorDrawingWidget(cue, drawSpan, screenW, screenH);
+      final vecWidget = _buildVectorDrawingWidget(cue, drawSpan, screenW, screenH, elapsedMs);
       if (vecWidget != null) {
         Widget res = vecWidget;
         if (cue.rotationZ != 0.0) {
@@ -1908,6 +2194,9 @@ class WebosSubtitleOverlay extends StatelessWidget {
             alignment: _flutterAlignmentFor(cue.alignment),
             child: res,
           );
+        }
+        if (fadeMultiplier < 0.999) {
+          res = Opacity(opacity: fadeMultiplier.clamp(0.0, 1.0), child: res);
         }
         return res;
       }
@@ -1939,32 +2228,36 @@ class WebosSubtitleOverlay extends StatelessWidget {
           ? (rawFs * resScale * assFontCalibration).clamp(14.0, 160.0)
           : (rawFs * (screenH / 1080.0) * 0.72).clamp(18.0, 80.0);
 
-      final fillColor = cue.isAss ? (sp.primaryColor ?? cue.style?.primaryColor ?? Colors.white) : cfg.textColor;
-      final outlineColor = cue.isAss ? (sp.outlineColor ?? cue.style?.outlineColor ?? Colors.black) : cfg.borderColor;
-      final shadowColor = cue.isAss
+      final baseFill = cue.isAss ? (sp.primaryColor ?? cue.style?.primaryColor ?? Colors.white) : cfg.textColor;
+      final baseOutline = cue.isAss ? (sp.outlineColor ?? cue.style?.outlineColor ?? Colors.black) : cfg.borderColor;
+      final baseShadow = cue.isAss
           ? (sp.shadowColor ?? cue.style?.shadowColor ?? const Color(0xAA000000))
           : const Color(0xCC000000);
+
+      final fillColor = (cue.isAss && sp.transforms.isNotEmpty)
+          ? _evalTransformedColor(baseFill, sp.transforms, elapsedMs, totalDur, (t) => t.primaryRgb, (t) => t.alpha1)
+          : baseFill;
+      final outlineColor = (cue.isAss && sp.transforms.isNotEmpty)
+          ? _evalTransformedColor(baseOutline, sp.transforms, elapsedMs, totalDur, (t) => t.outlineRgb, (t) => t.alpha3)
+          : baseOutline;
+      final shadowColor = (cue.isAss && sp.transforms.isNotEmpty)
+          ? _evalTransformedColor(baseShadow, sp.transforms, elapsedMs, totalDur, (t) => t.shadowRgb, (t) => t.alpha4)
+          : baseShadow;
 
       final rawBord = cue.isAss ? (sp.outline ?? cue.style?.outline ?? 2.0) : cfg.borderSize;
       final rawShad = cue.isAss ? (sp.shadow ?? cue.style?.shadow ?? 1.5) : 1.5;
 
       if (isOpaqueBoxStyle && cue.isAss) {
-        // In ASS BorderStyle=3, OutlineColour (or BackColour when Outline==0) forms a solid/translucent box behind text
         opaqueBoxColor ??= (rawBord > 0 && outlineColor.alpha > 0)
             ? outlineColor
             : (shadowColor.alpha > 0 ? shadowColor : outlineColor);
         opaqueBoxPad = (rawBord > 0 ? rawBord * resScale : 8.0).clamp(4.0, 36.0);
       }
 
-      // If fillColor is semi-transparent, scale back inner stroke opacity so dark stroke doesn't muddy translucent text
-      final effectiveOutlineColor = (fillColor.alpha < 245 && outlineColor.alpha > fillColor.alpha)
-          ? outlineColor.withAlpha(((outlineColor.alpha * fillColor.alpha) ~/ 255).clamp(0, 255))
-          : outlineColor;
-
       final strokeWidth = isOpaqueBoxStyle
           ? 0.0
           : (rawBord * resScale * 1.75).clamp(0.0, 36.0);
-      if (strokeWidth > 0.1 && effectiveOutlineColor.alpha > 0) {
+      if (strokeWidth > 0.1 && outlineColor.alpha > 0) {
         hasAnyStroke = true;
       }
 
@@ -1996,7 +2289,7 @@ class WebosSubtitleOverlay extends StatelessWidget {
               ..strokeWidth = strokeWidth > 0.1 ? strokeWidth : 0.0
               ..strokeJoin = StrokeJoin.round
               ..strokeCap = StrokeCap.round
-              ..color = strokeWidth > 0.1 ? effectiveOutlineColor : Colors.transparent,
+              ..color = strokeWidth > 0.1 ? outlineColor : Colors.transparent,
           ),
         ),
       );
@@ -2080,16 +2373,8 @@ class WebosSubtitleOverlay extends StatelessWidget {
       );
     }
 
-    if ((cue.fadeInMs > 0 || cue.fadeOutMs > 0) && nowMs != null) {
-      double opacity = 1.0;
-      final elapsed = nowMs - cue.startMs;
-      final remaining = cue.endMs - nowMs;
-      if (cue.fadeInMs > 0 && elapsed < cue.fadeInMs) {
-        opacity = (elapsed / cue.fadeInMs).clamp(0.0, 1.0);
-      } else if (cue.fadeOutMs > 0 && remaining < cue.fadeOutMs) {
-        opacity = (remaining / cue.fadeOutMs).clamp(0.0, 1.0);
-      }
-      result = Opacity(opacity: opacity, child: result);
+    if (fadeMultiplier < 0.999) {
+      result = Opacity(opacity: fadeMultiplier.clamp(0.0, 1.0), child: result);
     }
 
     return result;
