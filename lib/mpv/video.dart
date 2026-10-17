@@ -1,3 +1,4 @@
+import 'dart:io';
 import 'dart:async';
 
 import 'package:flutter/foundation.dart';
@@ -6,6 +7,8 @@ import 'package:flutter/material.dart';
 import 'models.dart';
 import 'player/player.dart';
 import 'player/video_rect_support.dart';
+import 'player/platform/player_webos.dart';
+import 'player/platform/webos_subtitle_engine.dart';
 
 /// Video widget for displaying player output.
 ///
@@ -83,6 +86,25 @@ class _VideoState extends State<Video> {
 
   @override
   void dispose() {
+    if (Platform.isLinux) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        final root = WidgetsBinding.instance.rootElement;
+        if (root == null) return;
+        void visit(Element el) {
+          final wName = el.widget.runtimeType.toString();
+          if (el is RenderObjectElement &&
+              (wName == 'RawImage' ||
+                  wName == 'Image' ||
+                  wName.contains('PlexOptimizedImage') ||
+                  wName.contains('CachedNetworkImage'))) {
+            el.markNeedsBuild();
+            el.renderObject.markNeedsPaint();
+          }
+          el.visitChildren(visit);
+        }
+        visit(root);
+      });
+    }
     widget.hasFirstFrame?.removeListener(_syncExternalFirstFrame);
     _playbackRestartSubscription?.cancel();
     super.dispose();
@@ -131,6 +153,42 @@ class _VideoState extends State<Video> {
   }
 
   Widget _buildVideoSurface() {
+    if (widget.player is PlayerWebos) {
+      final webosPlayer = widget.player as PlayerWebos;
+      return LayoutBuilder(
+        builder: (context, constraints) {
+          WidgetsBinding.instance.addPostFrameCallback((_) {
+            final renderBox = context.findRenderObject() as RenderBox?;
+                                                if (renderBox != null && renderBox.hasSize) {
+              final view = View.of(context);
+              final double physW = view.physicalSize.width;
+              final double effectiveDpr = physW >= 1800 ? (physW / 1280.0) : view.devicePixelRatio;
+              final pos = renderBox.localToGlobal(Offset.zero);
+              final size = renderBox.size;
+              webosPlayer.updateVideoViewRect(
+                pos.dx * effectiveDpr,
+                pos.dy * effectiveDpr,
+                size.width * effectiveDpr,
+                size.height * effectiveDpr,
+              );
+            }
+          });
+          return _hasFirstFrame
+              ? Stack(
+                  fit: StackFit.expand,
+                  children: [
+                    const WebosVideoHole(),
+                    WebosSubtitleOverlay(
+                      activeCues: webosPlayer.activeSubtitleCues,
+                      styleConfig: webosPlayer.subtitleStyleNotifier,
+                      getCurrentPositionMs: () => webosPlayer.currentSourcePositionMs,
+                    ),
+                  ],
+                )
+              : const SizedBox.expand();
+        },
+      );
+    }
     if (widget.player is VideoRectSupport) {
       return LayoutBuilder(
         builder: (context, constraints) {

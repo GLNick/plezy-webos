@@ -9,6 +9,7 @@ import 'player_native.dart';
 import 'player_state.dart';
 import 'player_streams.dart';
 import 'platform/player_linux.dart';
+import 'platform/player_webos.dart';
 import 'platform/player_windows.dart';
 
 export 'player_base.dart';
@@ -416,7 +417,7 @@ abstract class Player {
       return PlayerWindows();
     }
     if (Platform.isLinux) {
-      return PlayerLinux();
+      return PlayerWebos();
     }
     throw UnsupportedError('Player is not supported on this platform');
   }
@@ -433,7 +434,10 @@ abstract class Player {
   /// `PlaybackCoordinator`), and the video core only exists while the video
   /// player screen is open.
   factory Player.audio() {
-    if (Platform.isAndroid || Platform.isMacOS || Platform.isIOS || Platform.isWindows || Platform.isLinux) {
+    if (Platform.isLinux) {
+      return PlayerWebos.audio();
+    }
+    if (Platform.isAndroid || Platform.isMacOS || Platform.isIOS || Platform.isWindows) {
       return PlayerNative.audio();
     }
     throw UnsupportedError('Player is not supported on this platform');

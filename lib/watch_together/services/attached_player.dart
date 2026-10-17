@@ -38,8 +38,8 @@ class _Expectation {
 /// swaps and source-open gaps. Source observations are reset by [observeBinding],
 /// while late play/pause acknowledgements still reach the current role engine.
 class AttachedPlayer {
-  AttachedPlayer({required Player player, required this._onLost, this._remoteSeek, int Function()? nowMs})
-    : _player = player,
+  AttachedPlayer({required Player player, required dynamic onLost, Future<void> Function(Duration target)? remoteSeek, int Function()? nowMs})
+    : _onLost = onLost, _remoteSeek = remoteSeek, _player = player,
       _nowMs = nowMs ?? watchTogetherSystemNowMs {
     _lastPlaying = player.state.playing;
     _lastBuffering = player.state.buffering;

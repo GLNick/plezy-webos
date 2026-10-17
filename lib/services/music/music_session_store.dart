@@ -26,7 +26,7 @@ class MusicSessionSnapshot {
 /// the throttled position tick. Decoding is best-effort: any malformed row is
 /// discarded as a whole — restore must never produce a half-valid session.
 class MusicSessionStore {
-  MusicSessionStore({required this._database, required this._profileId});
+  MusicSessionStore({required AppDatabase database, required String profileId}) : _database = database, _profileId = profileId;
 
   final AppDatabase _database;
   final String _profileId;

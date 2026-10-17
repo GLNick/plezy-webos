@@ -53,9 +53,9 @@ class JellyfinConnectionAuthService {
     required this.clientVersion,
     required this.deviceName,
     MediaBrowserDialect dialect = MediaBrowserDialect.jellyfin,
-    @visibleForTesting this._testHttpClientFactory,
-  }) : dialect = dialect,
-       _endpointDiscovery = JellyfinEndpointDiscovery(dialect: dialect, testHttpClientFactory: _testHttpClientFactory);
+    @visibleForTesting http.Client Function()? testHttpClientFactory,
+  }) : _testHttpClientFactory = testHttpClientFactory, dialect = dialect,
+       _endpointDiscovery = JellyfinEndpointDiscovery(dialect: dialect, testHttpClientFactory: testHttpClientFactory);
 
   /// App identity sent in the `MediaBrowser` Authorization header. Jellyfin
   /// and Emby use `Client`/`Device`/`DeviceId`/`Version` to populate the

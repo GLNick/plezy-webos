@@ -88,8 +88,6 @@ class _FocusableListTileState extends State<FocusableListTile> with FocusableTil
         visualDensity: automotive ? VisualDensity.standard : widget.visualDensity,
         focusNode: effectiveFocusNode,
         autofocus: widget.autofocus,
-        horizontalTitleGap: widget.horizontalTitleGap,
-        minLeadingWidth: widget.minLeadingWidth,
       ),
     );
   }
@@ -177,8 +175,6 @@ class _FocusableSwitchListTileState extends State<FocusableSwitchListTile>
         contentPadding: widget.contentPadding,
         focusNode: effectiveFocusNode,
         autofocus: widget.autofocus,
-        horizontalTitleGap: widget.horizontalTitleGap,
-        minLeadingWidth: widget.minLeadingWidth,
       ),
     );
   }

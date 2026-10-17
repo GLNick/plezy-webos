@@ -21,7 +21,7 @@ import 'clock_sync.dart';
 class GuestPlaybackReconciler {
   GuestPlaybackReconciler({
     required this.myPeerId,
-    required this._sendToHost,
+    required dynamic sendToHost,
     required ClockSync clockSync,
     this.onMediaSwitchNeeded,
     this.onControlModeChanged,
@@ -30,7 +30,7 @@ class GuestPlaybackReconciler {
     this.onCorrectingChanged,
     this.onRemoteAction,
     int Function()? nowMs,
-  }) : _clock = clockSync,
+  }) : _sendToHost = sendToHost, _clock = clockSync,
        _nowMs = nowMs ?? watchTogetherSystemNowMs;
 
   /// The host's state names media we don't have loaded — navigate/reload.

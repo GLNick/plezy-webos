@@ -1184,7 +1184,7 @@ class _FocusableTextInputHostState extends State<_FocusableTextInputHost> with W
 
   bool get _canShowTvKeyboard {
     final route = ModalRoute.of(context);
-    return TickerMode.valuesOf(context).enabled && (route?.isCurrent ?? true);
+    return TickerMode.of(context) && (route?.isCurrent ?? true);
   }
 
   bool _shouldAutoOpenTvKeyboardForCurrentFocus() {

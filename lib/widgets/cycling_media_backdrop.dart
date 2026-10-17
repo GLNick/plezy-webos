@@ -88,7 +88,7 @@ class _CyclingMediaBackdropState extends State<CyclingMediaBackdrop> with Widget
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    _tickerEnabled = TickerMode.valuesOf(context).enabled;
+    _tickerEnabled = TickerMode.of(context);
     final disableAnimations = MediaQuery.maybeOf(context)?.disableAnimations ?? false;
     if (_disableAnimations != disableAnimations) {
       _disableAnimations = disableAnimations;

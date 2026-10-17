@@ -195,7 +195,8 @@ class _QueueListState extends State<QueueList> {
       padding: const EdgeInsets.all(12),
       itemCount: queue.length,
       // onReorderItem already adjusts newIndex for the removal.
-      onReorderItem: (oldIndex, newIndex) {
+      onReorder: (oldIndex, newIndex) {
+          if (newIndex > oldIndex) newIndex -= 1;
         if (oldIndex == newIndex) return;
         service.reorder(oldIndex, newIndex);
       },

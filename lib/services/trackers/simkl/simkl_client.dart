@@ -78,10 +78,10 @@ class SimklClient implements DisposableTrackerClient {
     required this.onSessionInvalidated,
     this.onSessionUpdated,
     http.Client? httpClient,
-    this._authService,
-    this._writeSpacing = SimklConstants.writeSpacing,
+    SimklAuthService? authService,
+    Duration writeSpacing = SimklConstants.writeSpacing,
     DateTime Function()? clock,
-  }) : _session = session,
+  }) : _authService = authService, _writeSpacing = writeSpacing, _session = session,
        _http = TrackerHttpClient(logLabel: 'Simkl', httpClient: httpClient),
        _now = clock ?? _systemNow;
 

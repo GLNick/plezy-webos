@@ -35,7 +35,7 @@ WatchTogetherPeerService _createWatchTogetherPeerService({WatchTogetherRelayEndp
 /// - Participant list
 /// - Media switching across the session
 class WatchTogetherProvider with ChangeNotifier {
-  WatchTogetherProvider({this._peerServiceFactory = _createWatchTogetherPeerService});
+  WatchTogetherProvider({WatchTogetherPeerServiceFactory peerServiceFactory = _createWatchTogetherPeerService}) : _peerServiceFactory = peerServiceFactory;
 
   final WatchTogetherPeerServiceFactory _peerServiceFactory;
 

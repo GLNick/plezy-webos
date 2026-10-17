@@ -66,9 +66,9 @@ class GamepadDuplicateInputGuard {
 
   GamepadDuplicateInputGuard({
     DateTime Function()? now,
-    this._enabled,
+    bool Function()? enabled,
     this.suppressionWindow = defaultSuppressionWindow,
-  }) : _now = now ?? DateTime.now;
+  }) : _enabled = enabled, _now = now ?? DateTime.now;
 
   bool get _isEnabled => _enabled?.call() ?? true;
 

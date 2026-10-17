@@ -24,7 +24,7 @@ class OfflineWatchProvider extends ChangeNotifier with DisposableChangeNotifierM
   final OfflineWatchSyncService _syncService;
   final DownloadProvider _downloadProvider;
 
-  OfflineWatchProvider({required this._syncService, required this._downloadProvider});
+  OfflineWatchProvider({required OfflineWatchSyncService syncService, required DownloadProvider downloadProvider}) : _syncService = syncService, _downloadProvider = downloadProvider;
 
   /// Get episodes for a show in the shared [sortEpisodesByWatchOrder] order,
   /// so the offline watch order matches what "download next N" selects

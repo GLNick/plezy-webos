@@ -26,13 +26,13 @@ import 'profile_registry.dart';
 /// back to the first profile in the merged list.
 class ActiveProfileProvider extends ChangeNotifier with DisposableChangeNotifierMixin {
   ActiveProfileProvider({
-    required this._registry,
-    required this._plexHome,
-    required this._connections,
-    required this._profileConnections,
-    this._storage,
-    this._activeProfileIdWriter,
-  });
+    required ProfileRegistry registry,
+    required PlexHomeService plexHome,
+    required ConnectionRegistry connections,
+    required ProfileConnectionRegistry profileConnections,
+    StorageService? storage,
+    Future<void> Function(String profileId)? activeProfileIdWriter,
+  }) : _registry = registry, _plexHome = plexHome, _connections = connections, _profileConnections = profileConnections, _storage = storage, _activeProfileIdWriter = activeProfileIdWriter;
 
   final ProfileRegistry _registry;
   final PlexHomeService _plexHome;

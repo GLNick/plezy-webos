@@ -1044,6 +1044,9 @@ extension _VideoPlayerOpenMethods on VideoPlayerScreenState {
     void Function()? onOpened,
     void Function(bool available)? onMediaAvailabilityChanged,
   }) async {
+    if (currentPlayer is PlayerWebos) {
+      currentPlayer.setPendingMediaSourceInfo(result.mediaInfo);
+    }
     final displayCriteria = result.mediaInfo?.displayCriteria;
 
     final frameRatePlan = await _prepareFrameRateForOpen(

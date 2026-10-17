@@ -21,12 +21,12 @@ import 'plex_home_cache_codec.dart';
 /// background refreshes happen on connection add and via the periodic ticker.
 class PlexHomeService {
   PlexHomeService({
-    required this._connections,
-    required this._profileConnections,
-    this._storage,
+    required ConnectionRegistry connections,
+    required ProfileConnectionRegistry profileConnections,
+    StorageService? storage,
     Future<List<PlexHomeUser>> Function(String accountToken)? plexHomeUserFetcher,
-    this._refreshInterval = const Duration(hours: 1),
-  }) : _fetchHomeUsers = plexHomeUserFetcher ?? fetchPlexHomeUsers;
+    Duration refreshInterval = const Duration(hours: 1),
+  }) : _connections = connections, _profileConnections = profileConnections, _storage = storage, _refreshInterval = refreshInterval, _fetchHomeUsers = plexHomeUserFetcher ?? fetchPlexHomeUsers;
 
   final ConnectionRegistry _connections;
   final ProfileConnectionRegistry _profileConnections;

@@ -51,7 +51,7 @@ double _desktopSnackBarWidth(BuildContext context) {
   final windowWidth = MediaQuery.maybeSizeOf(context)?.width;
   if (windowWidth == null) return _kDesktopSnackBarMaxWidth;
 
-  final insetPadding = SnackBarTheme.of(context).insetPadding;
+  final insetPadding = Theme.of(context).snackBarTheme.insetPadding;
   final horizontalInset = insetPadding == null
       ? _kDesktopSnackBarHorizontalInset * 2
       : insetPadding.left + insetPadding.right;

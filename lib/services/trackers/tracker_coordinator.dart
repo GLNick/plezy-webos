@@ -1178,7 +1178,7 @@ class _ManualSeriesProgress {
   int _count = 0;
   int? _maxMappedProgress;
 
-  _ManualSeriesProgress(this._base, {required this._fallbackToCount});
+  _ManualSeriesProgress(this._base, {required bool fallbackToCount}) : _fallbackToCount = fallbackToCount;
 
   void add(TrackerContext ctx) {
     _count++;

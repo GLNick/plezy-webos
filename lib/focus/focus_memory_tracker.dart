@@ -9,7 +9,7 @@ class FocusMemoryTracker {
   final String _debugLabelPrefix;
   String? _lastFocusedKey;
 
-  FocusMemoryTracker({this._onFocusChanged, this._debugLabelPrefix = 'focus'});
+  FocusMemoryTracker({VoidCallback? onFocusChanged, String debugLabelPrefix = 'focus'}) : _onFocusChanged = onFocusChanged, _debugLabelPrefix = debugLabelPrefix;
 
   FocusNode get(String key, {String? debugLabel}) {
     return _nodes.putIfAbsent(key, () {

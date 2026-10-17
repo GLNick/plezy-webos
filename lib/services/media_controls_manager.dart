@@ -1,3 +1,4 @@
+import 'dart:io';
 import 'dart:async';
 
 import 'package:cached_network_image_ce/cached_network_image.dart' show FileInfo;
@@ -142,6 +143,7 @@ class MediaControlsManager {
   }
 
   Future<void> _doUpdatePlaybackState(_PlaybackStateParams params) async {
+    if (Platform.isLinux) return;
     try {
       await OsMediaControls.setPlaybackState(
         MediaPlaybackState(
@@ -272,6 +274,7 @@ class MediaControlsManager {
   ///
   /// Should be called when playback stops or screen is disposed.
   Future<void> clear() async {
+    if (Platform.isLinux) return;
     _metadataGeneration++;
     try {
       await OsMediaControls.clear();

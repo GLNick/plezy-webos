@@ -23,8 +23,8 @@ enum LibrariesLoadState { initial, loading, loaded, error }
 /// Both SideNavigationRail and LibrariesScreen consume this provider
 /// instead of independently fetching library data.
 class LibrariesProvider extends ChangeNotifier with DisposableChangeNotifierMixin {
-  LibrariesProvider({this._storageService, this._multiServer, bool Function()? isProfileBinding})
-    : _isProfileBinding = isProfileBinding ?? _neverBinding {
+  LibrariesProvider({StorageService? storageService, MultiServerProvider? multiServer, bool Function()? isProfileBinding})
+    : _storageService = storageService, _multiServer = multiServer, _isProfileBinding = isProfileBinding ?? _neverBinding {
     _loadCoordinator = CoalescedLoadCoordinator<String>(onFull: _loadLibrariesInternal, onDelta: _loadDelta);
     // Reload libraries when a new server comes online. Servers bind in waves
     // on sign-in / profile switch and slow ones reconnect after the initial

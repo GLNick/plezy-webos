@@ -59,7 +59,7 @@ mixin LiveTvRefreshMixin<T extends StatefulWidget> on State<T>, WidgetsBindingOb
     super.didChangeDependencies();
     // Subscribes to TickerMode, so this fires whenever the tab is shown or
     // hidden (main-screen IndexedStack section switch, opaque route push/pop).
-    final enabled = TickerMode.valuesOf(context).enabled;
+    final enabled = TickerMode.of(context);
     if (enabled == _tickerEnabled) return;
     _tickerEnabled = enabled;
     _syncRefreshTimer();

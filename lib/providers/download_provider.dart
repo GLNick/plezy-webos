@@ -131,8 +131,8 @@ class DownloadProvider extends ChangeNotifier with DisposableChangeNotifierMixin
   OfflineModeSource? _offlineSource;
   int _networkStateGeneration = 0;
 
-  DownloadProvider({required this._downloadManager, required this._database})
-    : _syncRuleExecutor = SyncRuleExecutor(database: _database) {
+  DownloadProvider({required DownloadManagerService downloadManager, required AppDatabase database})
+    : _downloadManager = downloadManager, _database = database, _syncRuleExecutor = SyncRuleExecutor(database: database) {
     _metadataStore = _DownloadMetadataStore(_downloadManager, _database)..addListener(_onMetadataStoreChanged);
     _progressSubscription = _downloadManager.progressStream.listen(_onProgressUpdate);
 
@@ -152,10 +152,10 @@ class DownloadProvider extends ChangeNotifier with DisposableChangeNotifierMixin
   /// or path_provider.
   @visibleForTesting
   DownloadProvider.forTesting({
-    required this._downloadManager,
-    required this._database,
-    this._activeProfileId = 'test-profile',
-  }) : _syncRuleExecutor = SyncRuleExecutor(database: _database) {
+    required DownloadManagerService downloadManager,
+    required AppDatabase database,
+    String? activeProfileId = 'test-profile',
+  }) : _downloadManager = downloadManager, _database = database, _activeProfileId = activeProfileId, _syncRuleExecutor = SyncRuleExecutor(database: database) {
     _metadataStore = _DownloadMetadataStore(_downloadManager, _database, activeProfileId: _activeProfileId)
       ..addListener(_onMetadataStoreChanged);
     _progressSubscription = _downloadManager.progressStream.listen(_onProgressUpdate);

@@ -666,7 +666,7 @@ class HubSectionState extends State<HubSection> with MountedSetStateMixin, Skele
                           // spike. Cards inflate as they scroll in instead (a few ms
                           // each). TV keeps the default: d-pad animateTo benefits from
                           // the prefetch and TV rows inflate via the focus path anyway.
-                          scrollCacheExtent: isTv ? null : const ScrollCacheExtent.pixels(0),
+                          cacheExtent: isTv ? null : 0.0,
                           padding: widget.inset
                               ? EdgeInsets.symmetric(vertical: isTv ? 6 : 2)
                               : EdgeInsets.symmetric(horizontal: isTv ? leadingPadding : 8, vertical: isTv ? 6 : 2),

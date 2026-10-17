@@ -22,20 +22,20 @@ import '../../utils/platform_detector.dart';
 /// and volume/seek dispatch must bind to the player at command receipt.
 class CompanionRemoteBinding {
   CompanionRemoteBinding({
-    required this._player,
-    required this._isMounted,
-    required this._canControlPlayback,
-    required this._volumeController,
-    required this._hasNextItem,
-    required this._onStop,
-    required this._onNavigateToNextItem,
-    required this._onNavigateToPreviousItem,
-    required this._skipByConfiguredStep,
-    required this._onCycleSubtitles,
-    required this._onCycleAudio,
-    required this._onHome,
-    required this._readProvider,
-  });
+    required Player? Function() player,
+    required bool Function() isMounted,
+    required bool Function() canControlPlayback,
+    required VideoVolumeController? Function() volumeController,
+    required bool Function() hasNextItem,
+    required dynamic onStop,
+    required Future<void> Function() onNavigateToNextItem,
+    required Future<void> Function() onNavigateToPreviousItem,
+    required dynamic skipByConfiguredStep,
+    required dynamic onCycleSubtitles,
+    required dynamic onCycleAudio,
+    required dynamic onHome,
+    required CompanionRemoteProvider Function() readProvider,
+  }) : _player = player, _isMounted = isMounted, _canControlPlayback = canControlPlayback, _volumeController = volumeController, _hasNextItem = hasNextItem, _onStop = onStop, _onNavigateToNextItem = onNavigateToNextItem, _onNavigateToPreviousItem = onNavigateToPreviousItem, _skipByConfiguredStep = skipByConfiguredStep, _onCycleSubtitles = onCycleSubtitles, _onCycleAudio = onCycleAudio, _onHome = onHome, _readProvider = readProvider;
 
   final Player? Function() _player;
   final bool Function() _isMounted;

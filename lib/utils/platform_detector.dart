@@ -119,6 +119,10 @@ class TvDetectionService {
         _detectionReasons = _isAppleTV ? const ['apple_tv'] : const [];
       }
     }
+    if (Platform.isLinux) {
+      _detected = true;
+      _detectionReasons = const ['webos_tv'];
+    }
     _forceTv = forceTv;
     _initialized = true;
   }
@@ -179,7 +183,7 @@ class TvDetectionService {
   ///
   /// App code goes through the [PlatformDetector] facade ([PlatformDetector.isTV]
   /// and siblings); these raw accessors exist for the facade and tests.
-  static bool isTVSync() => _debugAppleTVOverride ?? _singleton.instance?.isTV ?? false;
+  static bool isTVSync() => _debugAppleTVOverride ?? _singleton.instance?.isTV ?? Platform.isLinux;
 
   /// Synchronous Apple TV check (returns false if not initialized or not tvOS).
   static bool isAppleTVSync() => _debugAppleTVOverride ?? (_tvosBuild || _singleton.instance?._isAppleTV == true);
@@ -270,7 +274,7 @@ class PlatformDetector {
   /// BuildContext. Use for OS-level capability checks (window state, native
   /// keyboard, etc.); use [isDesktop] for layout decisions.
   static bool isDesktopOS() {
-    return _debugIsDesktopOSOverride ?? (Platform.isWindows || Platform.isMacOS || Platform.isLinux);
+    return _debugIsDesktopOSOverride ?? (Platform.isWindows || Platform.isMacOS);
   }
 
   static bool? _debugIsDesktopOSOverride;

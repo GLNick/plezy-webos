@@ -2,7 +2,7 @@
 /// player, queue, timer, or persisted state. UI navigation still completes on
 /// route close; the command adapter reads the attached owner's native snapshot.
 class PlaybackLaunchObserver {
-  PlaybackLaunchObserver({required this._isCurrent});
+  PlaybackLaunchObserver({required bool Function() isCurrent}) : _isCurrent = isCurrent;
 
   final bool Function() _isCurrent;
   bool _cancelled = false;

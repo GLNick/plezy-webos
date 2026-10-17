@@ -1,0 +1,22 @@
+{
+    "id": "com.edde746.plezy",
+    "version": "2.23.0",
+    "vendor": "Plezy",
+    "type": "native",
+    "main": "plezy",
+    "title": "Plezy",
+    "icon": "icon.png",
+    "iconColor": "#000000",
+    "largeIcon": "icon.png",
+    "handlesRelaunch": true,
+    "visible": true,
+    "defaultWindowType": "card",
+    "trustLevel": "default",
+    "locationHint": "none",
+    "noSplashOnLaunch": true,
+    "spinnerOnLaunch": false,
+    "transparent": true,
+    "enablePigScreenSaver": false,
+    "uiRevision": 2,
+    "requiredACG": []
+}

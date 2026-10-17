@@ -51,7 +51,7 @@ class SyncRuleExecutor {
   static const Duration _cooldownWifi = Duration(minutes: 30);
   static const Duration _cooldownCellular = Duration(hours: 3);
 
-  SyncRuleExecutor({required this._database});
+  SyncRuleExecutor({required AppDatabase database}) : _database = database;
 
   bool get isExecuting => _isExecuting;
 

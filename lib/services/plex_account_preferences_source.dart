@@ -12,8 +12,8 @@ class PlexAccountPreferencesSource implements AccountPreferencesSource {
   final String _authToken;
   final Future<PlexAuthService> Function() _serviceFactory;
 
-  PlexAccountPreferencesSource({required this._authToken, Future<PlexAuthService> Function()? serviceFactory})
-    : _serviceFactory = serviceFactory ?? PlexAuthService.create;
+  PlexAccountPreferencesSource({required String authToken, Future<PlexAuthService> Function()? serviceFactory})
+    : _authToken = authToken, _serviceFactory = serviceFactory ?? PlexAuthService.create;
 
   @override
   AccountPreferencesCapabilities get capabilities => AccountPreferencesCapabilities.plex;

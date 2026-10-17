@@ -840,12 +840,8 @@ abstract class PlayerBase with PlayerStreamControllersMixin implements Player {
             // source filename. Source-catalog metadata is both safer and more
             // accurate there, including on builds that drop disposition flags.
             // Ordinary sidecars still fall back to metadata reported by mpv.
-            title: isContainer
-                ? matchedMetadata?.title
-                : matchedMetadata?.title ?? cleanSubtitleTitle(rawTitle is String ? rawTitle : null, codec: codec),
-            language: isContainer
-                ? matchedMetadata?.language
-                : matchedMetadata?.language ?? cleanTrackMetadataValue(rawLanguage is String ? rawLanguage : null),
+            title: matchedMetadata?.title ?? cleanSubtitleTitle(rawTitle is String ? rawTitle : null, codec: codec),
+            language: matchedMetadata?.language ?? cleanTrackMetadataValue(rawLanguage is String ? rawLanguage : null),
             codec: matchedMetadata?.codec ?? codec,
             isDefault: matchedMetadata?.isDefault ?? (track['default'] == true),
             isForced: matchedMetadata?.isForced ?? (track['forced'] == true),
@@ -1685,7 +1681,7 @@ abstract class PlayerBase with PlayerStreamControllersMixin implements Player {
     await _logSubscription?.cancel();
     final sendNativeDispose = await _waitForNativeOwnershipForDispose();
     try {
-      if (sendNativeDispose) {
+      if (sendNativeDispose && methodChannel.name != 'com.plezy/webos_player_noop') {
         // Sent even when the ownership wait timed out on a guarded backend:
         // the token makes a stale dispose provable, so the native side no-ops
         // it rather than tearing down a successor's core. Skipping instead

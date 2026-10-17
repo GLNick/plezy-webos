@@ -47,7 +47,7 @@ mixin TabNavigationMixin<T extends StatefulWidget> on State<T>, TickerProviderSt
   /// the input: a dialog route or an overlay sheet on top keeps TickerMode
   /// enabled for the screen underneath, which must not change tab behind it.
   bool _acceptsTabNavigation() {
-    if (!mounted || !TickerMode.getValuesNotifier(context).value.enabled) return false;
+    if (!mounted || !TickerMode.getNotifier(context).value) return false;
     if (!(ModalRoute.isCurrentOf(context) ?? true)) return false;
     return OverlaySheetController.openSheetCount.value == 0;
   }

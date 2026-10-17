@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'dart:typed_data';
 
 import 'package:flutter/foundation.dart' show visibleForTesting;
-import 'package:http/http.dart' as http;
+import 'package:http/http.dart' as pkg_http;
 import 'package:package_info_plus/package_info_plus.dart';
 
 import '../connection/connection.dart';
@@ -283,9 +283,11 @@ class JellyfinClient
         MediaDeletionPermissionClient,
         ScopedMediaServerClient,
         GracefullyCloseable {
-  JellyfinClient._({required this._connection, required this._http, FavoriteChannelsRepository? favoritesRepository})
-    : _favoritesRepository = favoritesRepository ?? const SharedPreferencesFavoriteChannelsRepository(),
-      _paths = MediaBrowserPaths(dialect: _connection.dialect, userId: _connection.userId);
+  JellyfinClient._({required JellyfinConnection connection, required FailoverHttpClient http, FavoriteChannelsRepository? favoritesRepository})
+    : _connection = connection,
+      _http = http,
+      _favoritesRepository = favoritesRepository ?? const SharedPreferencesFavoriteChannelsRepository(),
+      _paths = MediaBrowserPaths(dialect: connection.dialect, userId: connection.userId);
 
   /// Build a fully-initialised [JellyfinClient]. Endpoint reachability is
   /// raced before construction by onboarding/profile binding; this factory
@@ -357,8 +359,8 @@ class JellyfinClient
   @visibleForTesting
   static JellyfinClient forTesting({
     required JellyfinConnection connection,
-    required http.Client httpClient,
-    http.Client Function()? endpointProbeHttpClientFactory,
+    required pkg_http.Client httpClient,
+    pkg_http.Client Function()? endpointProbeHttpClientFactory,
     FavoriteChannelsRepository? favoritesRepository,
     void Function()? onAllEndpointsExhausted,
   }) {

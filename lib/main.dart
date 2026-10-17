@@ -1,3 +1,15 @@
+import 'dart:ui' as ui;
+import 'package:flutter/rendering.dart';
+import 'package:flutter/gestures.dart';
+import 'focus/dpad_navigator.dart';
+import 'widgets/overlay_sheet.dart';
+import 'package:shared_preferences_webos/shared_preferences_webos.dart';
+import 'package:path_provider_webos/path_provider_webos.dart';
+import 'package:connectivity_plus_webos/connectivity_plus_webos.dart';
+import 'package:device_info_plus_webos/device_info_plus_webos.dart';
+import 'package:package_info_plus_webos/package_info_plus_webos.dart';
+import 'package:url_launcher_webos/url_launcher_webos.dart';
+import 'package:video_player_webos/video_player_webos.dart';
 import 'dart:async';
 import 'dart:io' show Directory, Platform, ProcessInfo;
 import 'dart:ui' show AppExitResponse;
@@ -7,7 +19,6 @@ import 'package:shared_preferences_foundation/shared_preferences_foundation.dart
 import 'package:flutter/material.dart';
 import 'package:flutter/material.dart' as material show ThemeMode;
 import 'package:material_symbols_icons/symbols.dart';
-import 'package:flutter/gestures.dart';
 import 'package:flutter/services.dart';
 import 'package:window_manager/window_manager.dart';
 import 'package:provider/provider.dart';
@@ -134,7 +145,371 @@ void _absorbZeroOffsetPointerEvent(PointerEvent event) {
 /// wired here; the Swift side (GeneratedPluginRegistrant.m / AppDelegate)
 /// also needs to call the plugin's Swift register(with:) to attach its
 /// message channels.
+
+bool _isWebosBackKeyCode(int? keyCode, int? scanCode, int? logicalKey) {
+  const backCodes = <int>{
+    1,           // evdev KEY_ESC
+    9,           // XKB ESC scanCode
+    27,          // ASCII Escape
+    158,         // Linux KEY_BACK (evdev)
+    166,         // X11 XF86Back scanCode
+    404,         // webOS evdev KEY_BACK / IR_KEY_BACK
+    412,         // webOS XKB IR_KEY_BACK (0x19C)
+    461,         // webOS / HDMI-CEC Back (0x1CD)
+    469,         // XKB 461 + 8
+    10009,       // Smart TV Back
+    0xff1b,      // XKB_KEY_Escape
+    0x1008ff26,  // XKB_KEY_XF86Back
+    0x1008ff27,
+    0x1000001cd, // Flutter webOS Back logical
+    0x10000001b, // Flutter Escape logical
+  };
+  if (keyCode != null && backCodes.contains(keyCode)) return true;
+  if (scanCode != null && backCodes.contains(scanCode)) return true;
+  if (logicalKey != null && backCodes.contains(logicalKey)) return true;
+  return false;
+}
+
+/// Findet alle aktiven NavigatorStates im gesamten Widget-Baum (vom innersten bis zum Root-Navigator).
+List<NavigatorState> _collectAllActiveNavigators() {
+  final navStates = <NavigatorState>[];
+  void visit(Element element) {
+    if (element is StatefulElement && element.state is NavigatorState) {
+      final nav = element.state as NavigatorState;
+      if (nav.mounted) navStates.add(nav);
+    }
+    element.visitChildren(visit);
+  }
+  final root = WidgetsBinding.instance.rootElement;
+  if (root != null) visit(root);
+  return navStates;
+}
+
+/// Prüft, ob die App intern zurücknavigieren kann (OverlaySheet offen oder irgendein Navigator hat canPop() == true).
+NavigatorState? _findDeepestPoppableNavigator() {
+  final navs = _collectAllActiveNavigators();
+  for (final nav in navs.reversed) {
+    if (nav.canPop()) return nav;
+  }
+  return null;
+}
+
+bool _canAppHandleBackInternally() {
+  if (isTextEditingFocused()) return true;
+  if (OverlaySheetController.openSheetCount.value > 0) return true;
+  if (rootNavigatorKey.currentState?.canPop() ?? false) return true;
+  if (_findDeepestPoppableNavigator() != null) return true;
+  return false;
+}
+
+DateTime _lastWebosBackHandledAt = DateTime.fromMillisecondsSinceEpoch(0);
+
+Future<bool> _triggerInternalWebosBack() async {
+  final now = DateTime.now();
+  if (now.difference(_lastWebosBackHandledAt).inMilliseconds < 180) return true;
+  _lastWebosBackHandledAt = now;
+
+  if (BackKeyCoordinator.consumeIfHandled()) return true;
+
+  // 1. Falls der Root-Navigator (z.B. VideoPlayerScreen, Dialoge, Sheets) poppen kann:
+  final rootNavigator = rootNavigatorKey.currentState;
+  if (rootNavigator != null && rootNavigator.canPop()) {
+    BackKeyCoordinator.markHandled();
+    await rootNavigator.maybePop();
+    _refreshVisibleImagesAfterPlayerExit();
+    return true;
+  }
+
+  // 2. Frage Plezys eigene profileNavigationRegistry (Serien, Staffeln, Bibliotheken, Tabs):
+  final poppedProfile = await profileNavigationRegistry.maybePopProfileRoute();
+  if (poppedProfile) {
+    BackKeyCoordinator.markHandled();
+    return true;
+  }
+
+  // 3. Fallback: Tiefster poppable Navigator im Widget-Baum
+  final poppable = _findDeepestPoppableNavigator();
+  if (poppable != null) {
+    BackKeyCoordinator.markHandled();
+    await poppable.maybePop();
+    return true;
+  }
+
+  return false;
+}
+
+class _WebosBackNavigationObserver with WidgetsBindingObserver {
+  @override
+  Future<bool> didPopRoute() async {
+    if (!Platform.isLinux) return false;
+    if (_canAppHandleBackInternally()) {
+      _triggerInternalWebosBack();
+      return true; // Verhindert SystemNavigator.pop()!
+    }
+    return false;
+  }
+}
+
+
+final Set<int> _activeWebosMouseDevices = <int>{};
+bool _mousePointerCurrentlyActive = false;
+
+void _handleWebosPointerRoute(PointerEvent event) {
+  if (event.kind == PointerDeviceKind.mouse) {
+    if (event is PointerHoverEvent || event is PointerMoveEvent || event is PointerDownEvent || event is PointerAddedEvent) {
+      _activeWebosMouseDevices.add(event.device);
+      _mousePointerCurrentlyActive = true;
+    }
+  }
+}
+
+/// Löscht die letzte Mausposition aus Flutters MouseTracker, sobald eine Taste
+/// auf der Fernbedienung (Steuerkreuz/OK/Back) gedrückt wird.
+void _clearFrozenWebosMouseHover() {
+  if (!_mousePointerCurrentlyActive && _activeWebosMouseDevices.isEmpty) return;
+  _mousePointerCurrentlyActive = false;
+  final devices = _activeWebosMouseDevices.toList();
+  _activeWebosMouseDevices.clear();
+  for (final devId in devices) {
+    try {
+      WidgetsBinding.instance.handlePointerEvent(
+        PointerRemovedEvent(
+          device: devId,
+          kind: PointerDeviceKind.mouse,
+          position: const Offset(-100000, -100000),
+        ),
+      );
+    } catch (_) {}
+  }
+}
+
+/// Sorgt dafür, dass nach dem Verlassen des VideoPlayerScreens (Hardware-Video-Overlay)
+/// alle bereits gemounteten Episoden-Thumbnails auf der Startseite sofort neu gezeichnet werden,
+/// ohne dass man erst nach rechts und wieder zurück scrollen muss.
+void _refreshVisibleImagesAfterPlayerExit() {
+  void refreshNow() {
+    final root = WidgetsBinding.instance.rootElement;
+    if (root == null) return;
+    void visit(Element el) {
+      final wName = el.widget.runtimeType.toString();
+      if (el is RenderObjectElement &&
+          (wName == 'RawImage' ||
+              wName == 'Image' ||
+              wName.contains('PlexOptimizedImage') ||
+              wName.contains('CachedNetworkImage') ||
+              wName.contains('MediaCard'))) {
+        el.markNeedsBuild();
+        el.renderObject.markNeedsPaint();
+      }
+      el.visitChildren(visit);
+    }
+    visit(root);
+  }
+
+  WidgetsBinding.instance.addPostFrameCallback((_) => refreshNow());
+  Future<void>.delayed(const Duration(milliseconds: 120), refreshNow);
+  Future<void>.delayed(const Duration(milliseconds: 350), refreshNow);
+}
+
+bool _webosBackHooksInstalled = false;
+const MethodChannel _webosAuxChannel = MethodChannel('videoplayer_webos');
+bool? _lastSentBackIntercept;
+
+int _syncTickCounter = 0;
+
+void _syncWebosBackPolicy({bool force = false}) {
+  final shouldIntercept = _canAppHandleBackInternally();
+  _syncTickCounter++;
+  if (force || _lastSentBackIntercept != shouldIntercept || (_syncTickCounter % 10 == 0)) {
+    if (_lastSentBackIntercept != shouldIntercept) {
+      appLogger.i('[WebOS-Back] Updating _WEBOS_ACCESS_POLICY_KEYS_BACK intercept=$shouldIntercept');
+    }
+    _lastSentBackIntercept = shouldIntercept;
+    unawaited(
+      _webosAuxChannel.invokeMethod<void>('setBackPolicy', {
+        'intercept': shouldIntercept,
+      }).catchError((Object _) {}),
+    );
+  }
+}
+
+void _installWebosBackAndNavigationHooks() {
+  if (!Platform.isLinux || _webosBackHooksInstalled) return;
+  _webosBackHooksInstalled = true;
+
+  PaintingBinding.instance.imageCache.maximumSize = 2500;
+  PaintingBinding.instance.imageCache.maximumSizeBytes = 250 * 1024 * 1024;
+  WidgetsBinding.instance.addObserver(_WebosBackNavigationObserver());
+  GestureBinding.instance.pointerRouter.addGlobalRoute(_handleWebosPointerRoute);
+  FocusManager.instance.rootScope.onKeyEvent = _handleWebosRootBackKey;
+
+  WidgetsBinding.instance.addPersistentFrameCallback((_) {
+    _syncWebosBackPolicy();
+  });
+  Timer.periodic(const Duration(milliseconds: 200), (_) {
+    _syncWebosBackPolicy();
+  });
+
+  // 1. Roher PlatformDispatcher.onKeyData Hook (fängt Events von FlutterEngineSendKeyEvent ab,
+  //    selbst wenn XKB für Keycode 412 / 0x19c logical=0 oder physical=0 liefert!)
+  final prevOnKeyData = ui.PlatformDispatcher.instance.onKeyData;
+  ui.PlatformDispatcher.instance.onKeyData = (ui.KeyData data) {
+    if (data.type == ui.KeyEventType.down) {
+      _clearFrozenWebosMouseHover();
+    }
+    final int phys = data.physical;
+    final int logi = data.logical;
+    final bool isBackData = _isWebosBackKeyCode(logi, phys, logi) ||
+        phys == 0x70029 || // USB HID Escape
+        phys == 0xc0224 || // USB HID AC Back
+        phys == 0x194 ||
+        phys == 0x19c ||
+        (phys == 0 && logi == 0); // Ungemappter webOS Remote Back-Key in XKB!
+
+    appLogger.i(
+      '[WebOS-KeyData] type=${data.type} phys=0x${phys.toRadixString(16)} '
+      'logi=0x${logi.toRadixString(16)} isBack=$isBackData',
+    );
+
+    if (isBackData && !isTextEditingFocused() && _canAppHandleBackInternally()) {
+      if (data.type == ui.KeyEventType.up) {
+        unawaited(_triggerInternalWebosBack());
+      }
+      return true;
+    }
+
+    if (prevOnKeyData != null) {
+      return prevOnKeyData(data);
+    }
+    return false;
+  };
+
+  // 2. HardwareKeyboard Hook
+  HardwareKeyboard.instance.addHandler((KeyEvent event) {
+    if (event is KeyDownEvent) {
+      _clearFrozenWebosMouseHover();
+    }
+    final keyId = event.logicalKey.keyId;
+    final usbHid = event.physicalKey.usbHidUsage;
+    if (event.logicalKey.isBackKey || _isWebosBackKeyCode(keyId, usbHid, keyId)) {
+      appLogger.i('[WebOS-HWKey] event=${event.runtimeType} keyId=0x${keyId.toRadixString(16)}');
+      if (!isTextEditingFocused() && _canAppHandleBackInternally()) {
+        if (event is KeyUpEvent) {
+          unawaited(_triggerInternalWebosBack());
+        }
+        return true;
+      }
+    }
+    return false;
+  });
+
+  // 3. SystemChannels.navigation (popRoute)
+  SystemChannels.navigation.setMethodCallHandler((MethodCall call) async {
+    appLogger.i('[WebOS-NavChannel] method=${call.method}');
+    if (call.method == 'popRoute') {
+      if (_canAppHandleBackInternally()) {
+        await _triggerInternalWebosBack();
+        return true;
+      }
+    }
+    return null;
+  });
+
+  // 4. SystemChannels.keyEvent (flutter/keyevent)
+  final originalKeyMessageHandler = ServicesBinding.instance.keyEventManager.handleRawKeyMessage;
+  SystemChannels.keyEvent.setMessageHandler((dynamic message) async {
+    bool isBack = false;
+    bool isKeyUp = false;
+    if (message is Map) {
+      final keyCode = message['keyCode'] is int ? message['keyCode'] as int : null;
+      final scanCode = message['scanCode'] is int ? message['scanCode'] as int : null;
+      final logical = message['specifiedLogicalKey'] is int ? message['specifiedLogicalKey'] as int : null;
+      final type = message['type']?.toString().toLowerCase() ?? '';
+      isKeyUp = type.contains('up');
+      isBack = _isWebosBackKeyCode(keyCode, scanCode, logical);
+      appLogger.i('[WebOS-KeyChannel] msg=$message isBack=$isBack');
+    }
+
+    if (!isBack) {
+      return originalKeyMessageHandler(message);
+    }
+
+    final canPopBefore = _canAppHandleBackInternally();
+    final res = await originalKeyMessageHandler(message);
+    final flutterHandled = (res is Map && res['handled'] == true);
+
+    if (canPopBefore) {
+      if (isKeyUp && !flutterHandled) {
+        await _triggerInternalWebosBack();
+      }
+      return <String, dynamic>{'handled': true};
+    }
+
+    return <String, dynamic>{'handled': false};
+  });
+}
+
+KeyEventResult _handleWebosRootBackKey(FocusNode node, KeyEvent event) {
+  if (!Platform.isLinux) return KeyEventResult.ignored;
+  if (!event.logicalKey.isBackKey) return KeyEventResult.ignored;
+  if (isTextEditingFocused()) return KeyEventResult.ignored;
+
+  if (BackKeyCoordinator.consumeIfHandled()) {
+    return KeyEventResult.handled;
+  }
+  if (_canAppHandleBackInternally()) {
+    if (event is KeyUpEvent) {
+      _triggerInternalWebosBack();
+    }
+    return KeyEventResult.handled;
+  }
+  return KeyEventResult.ignored;
+}
+
+
+
+class PlezyWebosFlutterBinding extends WidgetsFlutterBinding {
+  static WidgetsBinding ensureInitialized() {
+    if (_instance == null) {
+      PlezyWebosFlutterBinding();
+    }
+    return WidgetsBinding.instance;
+  }
+
+  static PlezyWebosFlutterBinding? _instance;
+
+  @override
+  void initInstances() {
+    super.initInstances();
+    _instance = this;
+  }
+
+  @override
+  ViewConfiguration createViewConfigurationFor(RenderView renderView) {
+    final view = renderView.flutterView;
+    final physicalConstraints = BoxConstraints.fromViewConstraints(view.physicalConstraints);
+    final double physWidth = view.physicalSize.width;
+    final double effectiveDpr = physWidth >= 1800 ? (physWidth / 1280.0) : view.devicePixelRatio;
+    return ViewConfiguration(
+      physicalConstraints: physicalConstraints,
+      logicalConstraints: physicalConstraints / effectiveDpr,
+      devicePixelRatio: effectiveDpr,
+    );
+  }
+}
+
 void _registerTvosPlatformPlugins() {
+  if (Platform.isLinux) {
+    SharedPreferencesWebos.registerWith();
+    PathProviderWebOS.registerWith();
+    ConnectivityPlusWebos.registerWith();
+    DeviceInfoWebOSPlugin.registerWith();
+    PackageInfoPlusWebOSPlugin.registerWith();
+    UrlLauncherWebOSPlugin.registerWith();
+    VideoPlayerWebOs.registerWith();
+    _installWebosBackAndNavigationHooks();
+    return;
+  }
   if (!Platform.isIOS) return; // tvOS reports as iOS via dart:io.
   SharedPreferencesFoundation.registerWith();
 }
@@ -277,14 +652,14 @@ Future<_StartupDependencies> _initializeApplication() async {
       await SentryFlutter.init((options) {
         options.dsn = _sentryDsn;
         options.release = _sentryRelease();
-        if (nativeDatabasePath != null) options.nativeDatabasePath = nativeDatabasePath;
+        // nativeDatabasePath not in Sentry 8
         if (_sentryEnvironment.isNotEmpty) options.environment = _sentryEnvironment;
         if (_sentryDist.isNotEmpty) options.dist = _sentryDist;
         options.tracesSampleRate = 0;
         options.attachStacktrace = true;
         options.enableAutoSessionTracking = false;
         options.recordHttpBreadcrumbs = false;
-        options.captureNativeFailedRequests = false;
+        // captureNativeFailedRequests not in Sentry 8
         options.enableAppHangTracking = !kDebugMode;
         options.appHangTimeoutInterval = const Duration(seconds: 3);
         options.beforeSend = _beforeSend;
@@ -1088,9 +1463,10 @@ Breadcrumb? _beforeBreadcrumb(Breadcrumb? breadcrumb, Hint _) {
   final data = breadcrumb.data;
   if (message == null && (data == null || data.isEmpty)) return breadcrumb;
 
-  if (message != null) breadcrumb.message = LogRedactionManager.redact(message);
-  if (data != null) breadcrumb.data = data.map((k, v) => MapEntry(k, v is String ? LogRedactionManager.redact(v) : v));
-  return breadcrumb;
+  return breadcrumb.copyWith(
+    message: message != null ? LogRedactionManager.redact(message) : breadcrumb.message,
+    data: data != null ? data.map((k, v) => MapEntry(k, v is String ? LogRedactionManager.redact(v) : v)) : breadcrumb.data,
+  );
 }
 
 FutureOr<SentryEvent?> _beforeSend(SentryEvent event, Hint _) {
@@ -1132,47 +1508,7 @@ FutureOr<SentryEvent?> _beforeSend(SentryEvent event, Hint _) {
     }
 
     if (exceptions.any(shouldDrop)) return null;
-
-    // Scrub Plex tokens and server URLs from exception messages
-    for (final e in exceptions) {
-      final value = e.value;
-      if (value != null) {
-        e.value = LogRedactionManager.redact(value);
-      }
-    }
   }
-
-  // Enrich TimeoutException with operation name + duration as tags/fingerprint.
-  // value format: "TimeoutException after 0:00:05.000000: <operation> timed out"
-  if (exceptions != null) {
-    final timeoutException = exceptions.where((e) => e.type == 'TimeoutException').firstOrNull;
-    if (timeoutException != null) {
-      final value = timeoutException.value ?? '';
-      final colonIdx = value.indexOf(': ');
-      final message = colonIdx >= 0 ? value.substring(colonIdx + 2) : value;
-      final operation = message.endsWith(' timed out')
-          ? message.substring(0, message.length - ' timed out'.length)
-          : null;
-      final durationMatch = RegExp(r'after (\d+:\d{2}:\d{2}\.\d+)').firstMatch(value);
-
-      final tags = event.tags ??= {};
-      if (operation != null) tags['timeout.operation'] = operation;
-      if (durationMatch != null) tags['timeout.duration'] = durationMatch.group(1)!;
-      event.fingerprint = ['TimeoutException', ?operation];
-    }
-  }
-
-  // Scrub breadcrumb messages and data
-  final breadcrumbs = event.breadcrumbs;
-  if (breadcrumbs != null) {
-    for (final b in breadcrumbs) {
-      final message = b.message;
-      final data = b.data;
-      if (message != null) b.message = LogRedactionManager.redact(message);
-      if (data != null) b.data = data.map((k, v) => MapEntry(k, v is String ? LogRedactionManager.redact(v) : v));
-    }
-  }
-
   return event;
 }
 
@@ -1881,7 +2217,32 @@ class _AppShell extends StatelessWidget {
                       const SingleActivator(LogicalKeyboardKey.gameButtonB): const DismissIntent(),
                     },
                     builder: (context, child) {
-                      final shell = rootShell(child);
+                      final rawShell = rootShell(child);
+                          final mq = MediaQuery.of(context);
+                          Widget shell = rawShell;
+                          if (Platform.isLinux && mq.size.width >= 1800) {
+                            final double uiScale = mq.size.width / 1280.0;
+                            final Size logicalSize = Size(
+                              mq.size.width / uiScale,
+                              mq.size.height / uiScale,
+                            );
+                            shell = FractionallySizedBox(
+                              widthFactor: 1.0 / uiScale,
+                              heightFactor: 1.0 / uiScale,
+                              alignment: Alignment.topLeft,
+                              child: Transform.scale(
+                                scale: uiScale,
+                                alignment: Alignment.topLeft,
+                                child: MediaQuery(
+                                  data: mq.copyWith(
+                                    size: logicalSize,
+                                    devicePixelRatio: mq.devicePixelRatio * uiScale,
+                                  ),
+                                  child: rawShell,
+                                ),
+                              ),
+                            );
+                          }
                       if (!agentControlEnabled) return shell;
                       return AgentControlScope(
                         commandContext: () => rootNavigatorKey.currentState?.overlay?.context,

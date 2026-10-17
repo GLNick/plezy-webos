@@ -28,16 +28,16 @@ import '../../focus/transport_keys.dart';
 /// player screen's own transport handling stays the sole consumer there.
 class MusicHardwareTransportHandler {
   MusicHardwareTransportHandler({
-    required this._hasActiveSession,
-    required this._onPlay,
-    required this._onPause,
-    required this._onTogglePlayPause,
-    required this._onNext,
-    required this._onPrevious,
-    required this._onStop,
-    required this._onSkipForward,
-    required this._onSkipBackward,
-  });
+    required bool Function() hasActiveSession,
+    required VoidCallback onPlay,
+    required VoidCallback onPause,
+    required VoidCallback onTogglePlayPause,
+    required VoidCallback onNext,
+    required VoidCallback onPrevious,
+    required VoidCallback onStop,
+    required VoidCallback onSkipForward,
+    required VoidCallback onSkipBackward,
+  }) : _hasActiveSession = hasActiveSession, _onPlay = onPlay, _onPause = onPause, _onTogglePlayPause = onTogglePlayPause, _onNext = onNext, _onPrevious = onPrevious, _onStop = onStop, _onSkipForward = onSkipForward, _onSkipBackward = onSkipBackward;
 
   final bool Function() _hasActiveSession;
   final VoidCallback _onPlay;

@@ -26,16 +26,16 @@ import '../../widgets/video_controls/widgets/player_toast_indicator.dart';
 /// each call is already a full-screen setState).
 class VisualEffectsController {
   VisualEffectsController({
-    required this._player,
-    required this._shaderService,
-    required this._ambientLighting,
-    required this._filterManager,
-    required this._metadata,
-    required this._shaderProvider,
-    required this._isMounted,
-    required this._requestRebuild,
-    required this._toast,
-  });
+    required Player? Function() player,
+    required ShaderService? Function() shaderService,
+    required AmbientLightingService? Function() ambientLighting,
+    required VideoFilterManager? Function() filterManager,
+    required MediaItem Function() metadata,
+    required ShaderProvider Function() shaderProvider,
+    required bool Function() isMounted,
+    required dynamic requestRebuild,
+    required PlayerToastController toast,
+  }) : _player = player, _shaderService = shaderService, _ambientLighting = ambientLighting, _filterManager = filterManager, _metadata = metadata, _shaderProvider = shaderProvider, _isMounted = isMounted, _requestRebuild = requestRebuild, _toast = toast;
 
   final Player? Function() _player;
   final ShaderService? Function() _shaderService;

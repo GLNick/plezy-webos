@@ -57,13 +57,13 @@ class CompanionRemotePeerService with KeepaliveMixin {
     int maxPreAuthMessageBytes = _productionMaxPreAuthMessageBytes,
     Duration authTimeout = _productionAuthTimeout,
     int maxFailedAuthAttempts = _productionMaxFailedAuthAttempts,
-    this._authLockoutDuration = _productionAuthLockoutDuration,
+    Duration authLockoutDuration = _productionAuthLockoutDuration,
     Duration remoteConnectTimeout = _productionRemoteConnectTimeout,
     Future<List<int>> Function(List<int> homeSecret, List<int> hostNonce, List<int> clientNonce)? deriveSessionEncKey,
     ({Future<void> Function() close, Future<void> ready, Stream<dynamic> stream}) Function(Uri uri)? raceProbeFactory,
-    this._afterHostUpgrade,
+    dynamic afterHostUpgrade,
     Future<List<NetworkInterface>> Function()? listNetworkInterfaces,
-  }) : assert(maxTotalHostConnections > 0),
+  }) : _authLockoutDuration = authLockoutDuration, _afterHostUpgrade = afterHostUpgrade, assert(maxTotalHostConnections > 0),
        assert(maxHostConnectionsPerSource > 0),
        assert(maxPreAuthMessageBytes > 0),
        assert(authTimeout > Duration.zero),
@@ -1506,11 +1506,11 @@ class CompanionRemotePeerService with KeepaliveMixin {
 
 class _RemoteAddressProbe {
   _RemoteAddressProbe({
-    required this._requestClose,
-    required this._isConnected,
+    required Future<void> Function() requestClose,
+    required bool Function() isConnected,
     required Stream<dynamic> stream,
     required void Function(dynamic data) onData,
-  }) {
+  }) : _requestClose = requestClose, _isConnected = isConnected {
     _subscription = stream.listen(
       onData,
       onError: (Object _, StackTrace _) => _completeTerminal(),

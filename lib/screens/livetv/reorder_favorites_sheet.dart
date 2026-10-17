@@ -112,7 +112,7 @@ class _ReorderFavoritesSheetState extends State<ReorderFavoritesSheet>
         child: ReorderableListView.builder(
           shrinkWrap: true,
           scrollController: _scrollController,
-          onReorderItem: _onReorder,
+          onReorder: (oldIndex, newIndex) => _onReorder(oldIndex, newIndex > oldIndex ? newIndex - 1 : newIndex),
           itemCount: _tempFavorites.length,
           padding: const EdgeInsets.symmetric(vertical: 8),
           buildDefaultDragHandles: false,

@@ -96,7 +96,7 @@ class DiscordRPCService {
   /// Standalone instance for tests; [rpcFactory] supplies fake clients so no
   /// IPC connection is attempted.
   @visibleForTesting
-  DiscordRPCService.forTesting({required this._rpcFactory});
+  DiscordRPCService.forTesting({required DiscordRPC Function() rpcFactory}) : _rpcFactory = rpcFactory;
 
   final DiscordRPC Function() _rpcFactory;
 

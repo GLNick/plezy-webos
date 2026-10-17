@@ -54,7 +54,7 @@ class OfflineModeProvider extends ChangeNotifier with DisposableChangeNotifierMi
   /// trust the real flag.
   bool _hasReceivedServerStatus = false;
 
-  OfflineModeProvider(this._serverManager, {this._multiServerProvider}) {
+  OfflineModeProvider(this._serverManager, {MultiServerProvider? multiServerProvider}) : _multiServerProvider = multiServerProvider {
     // Pre-seed the "received status" flag if there are already online
     // servers (e.g. provider rebuilt mid-session) or the active profile's
     // visibility filter has already settled.

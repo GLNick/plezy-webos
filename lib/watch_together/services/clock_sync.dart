@@ -19,7 +19,7 @@ import '../primitives.dart';
 /// All time reads go through the injected [nowMs] so tests can virtualize
 /// time alongside `fakeAsync`.
 class ClockSync {
-  ClockSync({required this._sendPing, int Function()? nowMs}) : _nowMs = nowMs ?? watchTogetherSystemNowMs;
+  ClockSync({required dynamic sendPing, int Function()? nowMs}) : _sendPing = sendPing, _nowMs = nowMs ?? watchTogetherSystemNowMs;
 
   static const int _windowSize = 8;
   static const int _maxAcceptedRttMs = 1000;

@@ -41,7 +41,7 @@ import '../utils/app_logger.dart';
 class AccountPreferencesController extends ChangeNotifier with DisposableChangeNotifierMixin {
   /// [_plexServiceFactory] is a test seam for the plex.tv transport;
   /// production uses [PlexAuthService.create].
-  AccountPreferencesController({this._plexServiceFactory}) {
+  AccountPreferencesController({Future<PlexAuthService> Function()? plexServiceFactory}) : _plexServiceFactory = plexServiceFactory {
     repository = AccountPreferencesRepository(sourceFor: _sourceFor);
     // A write in the Account preferences screen must reach playback without
     // an app restart: the repository is the one cache, so a change to the

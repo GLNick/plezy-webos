@@ -96,9 +96,9 @@ class AddJellyfinScreen extends StatefulWidget {
     super.key,
     this.targetProfile,
     this.dialect = MediaBrowserDialect.jellyfin,
-    @visibleForTesting this._authServiceFactory,
-    @visibleForTesting this._localDiscoveryFactory,
-  });
+    @visibleForTesting FutureOr<JellyfinConnectionAuthService> Function()? authServiceFactory,
+    @visibleForTesting FutureOr<List<DiscoveredJellyfinServer>> Function()? localDiscoveryFactory,
+  }) : _authServiceFactory = authServiceFactory, _localDiscoveryFactory = localDiscoveryFactory;
 
   @override
   State<AddJellyfinScreen> createState() => _AddJellyfinScreenState();

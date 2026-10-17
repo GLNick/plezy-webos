@@ -24,17 +24,17 @@ import 'wakelock_controller.dart';
 class SpuriousEofRecovery {
   SpuriousEofRecovery({
     required this.isLive,
-    required this._isOffline,
-    required this._isTranscoding,
-    required this._transitionGate,
-    required this._player,
-    required this._metadata,
-    required this._transportFaultSeen,
-    required this._serverStoppedSession,
-    required this._reload,
-    required this._wakelock,
-    this._partTimeline,
-  });
+    required bool Function() isOffline,
+    required bool Function() isTranscoding,
+    required PlaybackTransitionGate transitionGate,
+    required Player? Function() player,
+    required MediaItem Function() metadata,
+    required bool Function() transportFaultSeen,
+    required bool Function() serverStoppedSession,
+    required Future<MediaReloadOutcome> Function({required Duration resumePosition, required String reason}) reload,
+    required WakelockController wakelock,
+    MediaPartTimeline? Function()? partTimeline,
+  }) : _isOffline = isOffline, _isTranscoding = isTranscoding, _transitionGate = transitionGate, _player = player, _metadata = metadata, _transportFaultSeen = transportFaultSeen, _serverStoppedSession = serverStoppedSession, _reload = reload, _wakelock = wakelock, _partTimeline = partTimeline;
 
   static const int maxAttempts = 2;
   static const int progressResetMs = 30000;

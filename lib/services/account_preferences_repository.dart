@@ -35,7 +35,7 @@ class AccountPreferencesUnavailableException implements Exception {
 /// is online, so a snapshot taken at construction would strand the first read
 /// after launch.
 class AccountPreferencesRepository {
-  AccountPreferencesRepository({required this._sourceFor});
+  AccountPreferencesRepository({required Future<AccountPreferencesSource?> Function(AccountRef ref) sourceFor}) : _sourceFor = sourceFor;
 
   final Future<AccountPreferencesSource?> Function(AccountRef ref) _sourceFor;
 

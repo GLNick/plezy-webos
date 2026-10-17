@@ -106,7 +106,7 @@ class OfflineWatchSyncService extends ChangeNotifier with DisposableChangeNotifi
 
   StreamSubscription<WatchStateEvent>? _watchStateSubscription;
 
-  OfflineWatchSyncService({required this._database, required this._serverManager}) {
+  OfflineWatchSyncService({required AppDatabase database, required MultiServerManager serverManager}) : _database = database, _serverManager = serverManager {
     _watchStateSubscription = WatchStateNotifier().stream.listen(_onWatchStateChanged);
   }
 

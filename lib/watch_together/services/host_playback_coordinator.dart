@@ -21,15 +21,15 @@ import 'attached_player.dart';
 class HostPlaybackCoordinator {
   HostPlaybackCoordinator({
     required this.myPeerId,
-    required this._controlMode,
-    required this._sendState,
+    required ControlMode controlMode,
+    required dynamic sendState,
     this.onPhaseChanged,
     this.onWaitingOnChanged,
     this.onResumedWithout,
     this.onRemoteAction,
     this.onMediaSwitchNeeded,
     int Function()? nowMs,
-  }) : _nowMs = nowMs ?? watchTogetherSystemNowMs;
+  }) : _controlMode = controlMode, _sendState = sendState, _nowMs = nowMs ?? watchTogetherSystemNowMs;
 
   /// Phase transitions (drives the waiting pill and chrome).
   final void Function(PlaybackPhase phase)? onPhaseChanged;

@@ -14,6 +14,7 @@ import 'package:sentry_flutter/sentry_flutter.dart';
 
 import '../mpv/mpv.dart';
 import '../mpv/player/platform/player_android.dart';
+import '../mpv/player/platform/player_webos.dart';
 import '../mpv/player/player_native.dart';
 
 import '../services/scrub_preview_source.dart';

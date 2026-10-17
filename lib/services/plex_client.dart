@@ -552,11 +552,11 @@ class PlexClient
     required this.profileScopeId,
     this.serverName,
     List<String>? prioritizedEndpoints,
-    this._onEndpointChanged,
-    this._onAllEndpointsExhausted,
+    Future<void> Function(String newBaseUrl)? onEndpointChanged,
+    VoidCallback? onAllEndpointsExhausted,
     http.Client? httpClient,
-    this._endpointProbeHttpClientFactory,
-  }) {
+    http.Client Function()? endpointProbeHttpClientFactory,
+  }) : _onEndpointChanged = onEndpointChanged, _onAllEndpointsExhausted = onAllEndpointsExhausted, _endpointProbeHttpClientFactory = endpointProbeHttpClientFactory {
     LogRedactionManager.registerServer(config.baseUrl, config.token);
 
     _http = FailoverHttpClient(

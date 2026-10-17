@@ -1,3 +1,4 @@
+import 'dart:io';
 import 'dart:collection';
 
 import 'package:logger/logger.dart';
@@ -41,7 +42,13 @@ class MemoryLogOutput {
 
   /// Append [entry], evicting the oldest entries once the buffer exceeds
   /// [maxLogSizeBytes] — O(1) with ListQueue.
+  static final File _webosLogFile = File('/media/developer/apps/usr/palm/applications/com.edde746.plezy/appdata/plezy_runtime.log');
+
   static void add(LogEntry entry) {
+    try {
+      final line = '[${entry.timestamp.toIso8601String()}] [${entry.level.name}] ${entry.message}${entry.error != null ? " | err=${entry.error}" : ""}\n';
+      _webosLogFile.writeAsStringSync(line, mode: FileMode.append);
+    } catch (_) {}
     _logs.add(entry);
     _currentSize += entry.estimatedSize;
     while (_currentSize > maxLogSizeBytes && _logs.isNotEmpty) {

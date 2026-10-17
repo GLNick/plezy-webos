@@ -208,7 +208,7 @@ abstract final class PrefsRecovery {
   /// Whether a repair can be attempted on this platform. Only the desktop
   /// implementations use a single JSON file we can salvage and quarantine;
   /// Android, iOS and macOS delegate to platform-native stores.
-  static bool get isSupportedPlatform => _supportedPlatformOverride ?? (Platform.isWindows || Platform.isLinux);
+  static bool get isSupportedPlatform => _supportedPlatformOverride ?? Platform.isWindows;
 
   static bool? _supportedPlatformOverride;
 

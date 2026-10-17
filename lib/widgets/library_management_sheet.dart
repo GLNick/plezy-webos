@@ -482,7 +482,7 @@ class _LibraryManagementSheetState extends State<_LibraryManagementSheet>
     return ReorderableListView.builder(
       scrollController: scrollController,
       shrinkWrap: shrinkWrap,
-      onReorderItem: _reorderLibraries,
+      onReorder: (oldIndex, newIndex) => _reorderLibraries(oldIndex, newIndex > oldIndex ? newIndex - 1 : newIndex),
       itemCount: _tempLibraries.length,
       padding: const EdgeInsets.symmetric(vertical: 8),
       buildDefaultDragHandles: false,

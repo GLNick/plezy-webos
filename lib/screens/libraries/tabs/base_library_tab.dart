@@ -97,7 +97,7 @@ abstract class BaseLibraryTabState<T, W extends BaseLibraryTab<T>> extends State
   /// The effective [TickerMode] notifier this tab listens to for
   /// hidden→visible transitions (a pushed opaque route popping). Rebound
   /// when the ancestor changes; `null` until first bound.
-  ValueListenable<TickerModeData>? _tickerModeNotifier;
+  ValueListenable<bool>? _tickerModeNotifier;
 
   /// The library content epoch (see [LibrariesProvider.libraryContentEpoch])
   /// this tab's data was committed under.
@@ -208,7 +208,7 @@ abstract class BaseLibraryTabState<T, W extends BaseLibraryTab<T>> extends State
   /// the ancestor without registering a dependency, so rebind on the
   /// lifecycle hooks where the ancestor can change.
   void _updateTickerModeNotifier() {
-    final notifier = TickerMode.getValuesNotifier(context);
+    final notifier = TickerMode.getNotifier(context);
     if (identical(notifier, _tickerModeNotifier)) return;
     _tickerModeNotifier?.removeListener(_onSurfaceVisibilityChanged);
     _tickerModeNotifier = notifier..addListener(_onSurfaceVisibilityChanged);
@@ -367,7 +367,7 @@ abstract class BaseLibraryTabState<T, W extends BaseLibraryTab<T>> extends State
   /// subtrees, so a grid behind Discover neither fetches nor jumps its
   /// scroll offset invisibly. No ancestor (tests, other hosts) means
   /// visible.
-  bool get _isLiveSurfaceVisible => widget.isActive && TickerMode.getValuesNotifier(context).value.enabled;
+  bool get _isLiveSurfaceVisible => widget.isActive && TickerMode.getNotifier(context).value;
 
   bool _runLiveRefresh() {
     if (!mounted || !_isLiveSurfaceVisible) return false;

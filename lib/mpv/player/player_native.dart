@@ -32,8 +32,8 @@ class PlayerNative extends PlayerBase {
   /// initializes: the fork's vo=mediacodec (with gpu behind it) for hardware
   /// sessions, gpu-next for software ones (see
   /// MpvPlayerCore.initialVideoOutput; #2010). Other platforms ignore it.
-  PlayerNative({this._hardwareDecoding = true})
-    : methodChannel = const MethodChannel('com.plezy/mpv_player'),
+  PlayerNative({bool hardwareDecoding = true})
+    : _hardwareDecoding = hardwareDecoding, methodChannel = const MethodChannel('com.plezy/mpv_player'),
       eventChannel = const EventChannel('com.plezy/mpv_player/events'),
       audioOnly = false;
 

@@ -789,7 +789,7 @@ class _PlaylistDetailScreenState extends BaseMediaListDetailScreen<PlaylistDetai
   /// Build a reorderable list for regular playlists with focus support
   Widget _buildReorderableList() {
     return SliverReorderableList(
-      onReorderItem: _onReorder,
+      onReorder: (oldIndex, newIndex) => _onReorder(oldIndex, newIndex > oldIndex ? newIndex - 1 : newIndex),
       itemCount: items.length,
       itemBuilder: (context, index) {
         final item = items[index];
