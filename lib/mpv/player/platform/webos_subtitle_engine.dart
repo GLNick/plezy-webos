@@ -78,6 +78,200 @@ class WebosSubtitleClock {
   int get currentPositionMs => _extrapolatedRawMs + kSceneCutLeadMs;
 }
 
+/// Persistent subtitle preference store so new episodes automatically activate the
+/// user's preferred subtitle language & track type (Full vs. Signs/Songs) as soon as
+/// asynchronous MKV track headers finish loading.
+class WebosSubtitlePreferenceStore {
+  static final WebosSubtitlePreferenceStore instance = WebosSubtitlePreferenceStore._();
+  WebosSubtitlePreferenceStore._() {
+    _loadFromDisk();
+  }
+
+  String? preferredLanguage;
+  String? preferredTitle;
+  String? preferredId;
+  bool explicitlyDisabled = false;
+
+  DateTime _lastMediaOpenTime = DateTime.fromMillisecondsSinceEpoch(0);
+  bool _autoSelectDoneForCurrentMedia = false;
+  int _lastEvaluatedTrackCount = 0;
+
+  static final File _prefFile = File('/media/developer/apps/usr/palm/applications/com.edde746.plezy/appdata/webos_sub_pref.json');
+
+  void _loadFromDisk() {
+    try {
+      if (_prefFile.existsSync()) {
+        final raw = jsonDecode(_prefFile.readAsStringSync());
+        if (raw is Map) {
+          preferredLanguage = raw['lang'] as String?;
+          preferredTitle = raw['title'] as String?;
+          preferredId = raw['id'] as String?;
+          explicitlyDisabled = (raw['disabled'] as bool?) ?? false;
+        }
+      }
+    } catch (_) {}
+  }
+
+  void _saveToDisk() {
+    try {
+      _prefFile.parent.createSync(recursive: true);
+      _prefFile.writeAsStringSync(jsonEncode({
+        'lang': preferredLanguage,
+        'title': preferredTitle,
+        'id': preferredId,
+        'disabled': explicitlyDisabled,
+      }));
+    } catch (_) {}
+  }
+
+  static String? normalizeLang(String? raw) {
+    if (raw == null) return null;
+    final s = raw.trim().toLowerCase();
+    if (s.isEmpty || s == 'und' || s == 'unk') return null;
+    return switch (s) {
+      'de' || 'deu' || 'ger' || 'german' || 'deutsch' => 'de',
+      'en' || 'eng' || 'english' || 'englisch' => 'en',
+      'ja' || 'jpn' || 'jap' || 'japanese' => 'ja',
+      'fr' || 'fra' || 'fre' || 'french' => 'fr',
+      'es' || 'spa' || 'spanish' => 'es',
+      'it' || 'ita' || 'italian' => 'it',
+      'pt' || 'por' || 'portuguese' => 'pt',
+      'ru' || 'rus' || 'russian' => 'ru',
+      'zh' || 'zho' || 'chi' || 'chinese' => 'zh',
+      'ko' || 'kor' || 'korean' => 'ko',
+      _ => s,
+    };
+  }
+
+  static bool _isSignsOrForced(String? title) {
+    if (title == null) return false;
+    final t = title.toLowerCase();
+    return t.contains('sign') ||
+        t.contains('song') ||
+        t.contains('forced') ||
+        t.contains('schild') ||
+        t.contains('karaoke');
+  }
+
+  static bool isOffId(String? id) {
+    if (id == null) return true;
+    final s = id.trim().toLowerCase();
+    return s.isEmpty || s == 'off' || s == 'no' || s == 'none' || s == '-1';
+  }
+
+  void notifyMediaOpened() {
+    _lastMediaOpenTime = DateTime.now();
+    _autoSelectDoneForCurrentMedia = false;
+    _lastEvaluatedTrackCount = 0;
+  }
+
+  void onSelectSubtitleTrack({
+    required String id,
+    String? language,
+    String? title,
+  }) {
+    if (isOffId(id)) {
+      // Only treat 'off' as an explicit user action if it happens after initial media startup (>2.5s)
+      final sinceOpenMs = DateTime.now().difference(_lastMediaOpenTime).inMilliseconds;
+      if (sinceOpenMs > 2500) {
+        explicitlyDisabled = true;
+        _autoSelectDoneForCurrentMedia = true;
+        _saveToDisk();
+      }
+      return;
+    }
+
+    explicitlyDisabled = false;
+    preferredId = id;
+    final normLang = normalizeLang(language) ?? normalizeLang(title);
+    if (normLang != null) {
+      preferredLanguage = normLang;
+    }
+    if (title != null && title.trim().isNotEmpty) {
+      preferredTitle = title.trim();
+    }
+    _autoSelectDoneForCurrentMedia = true;
+    _saveToDisk();
+  }
+
+  T? checkAutoSelect<T>({
+    required T? currentTrack,
+    required List<T> availableTracks,
+    required String Function(T) getId,
+    required String? Function(T) getLanguage,
+    required String? Function(T) getTitle,
+  }) {
+    final realTracks = availableTracks.where((t) => !isOffId(getId(t))).toList();
+    if (realTracks.isEmpty) return null;
+
+    if (currentTrack != null && !isOffId(getId(currentTrack))) {
+      // A real subtitle track is already active; remember it and mark done
+      if (!_autoSelectDoneForCurrentMedia) {
+        onSelectSubtitleTrack(
+          id: getId(currentTrack),
+          language: getLanguage(currentTrack),
+          title: getTitle(currentTrack),
+        );
+      }
+      return null;
+    }
+
+    if (explicitlyDisabled) return null;
+    if (preferredLanguage == null && preferredTitle == null && preferredId == null) {
+      return null;
+    }
+
+    if (_autoSelectDoneForCurrentMedia && realTracks.length == _lastEvaluatedTrackCount) {
+      return null;
+    }
+    _lastEvaluatedTrackCount = realTracks.length;
+    _autoSelectDoneForCurrentMedia = true;
+
+    final prefSigns = _isSignsOrForced(preferredTitle);
+    T? bestTrack;
+    int bestScore = -1;
+
+    for (final cand in realTracks) {
+      final cid = getId(cand);
+      final cLang = normalizeLang(getLanguage(cand)) ?? normalizeLang(getTitle(cand));
+      final cTitle = getTitle(cand);
+      int score = 0;
+
+      if (preferredLanguage != null) {
+        if (cLang == preferredLanguage) {
+          score += 100;
+        } else if (cTitle != null && normalizeLang(cTitle) == preferredLanguage) {
+          score += 80;
+        } else {
+          continue;
+        }
+      }
+
+      final candSigns = _isSignsOrForced(cTitle);
+      if (prefSigns == candSigns) {
+        score += 50;
+      } else {
+        score -= 30;
+      }
+
+      if (preferredTitle != null && cTitle != null && cTitle.trim().toLowerCase() == preferredTitle!.toLowerCase()) {
+        score += 30;
+      }
+      if (preferredId != null && cid == preferredId) {
+        score += 15;
+      }
+
+      if (score > bestScore) {
+        bestScore = score;
+        bestTrack = cand;
+      }
+    }
+
+    return bestTrack;
+  }
+}
+
+
 /// Pre-compiled ASS vector drawing (\p1..\pN) so 60fps playback never runs RegExp or String parsing.
 class WebosCompiledVectorPath {
   final Path normalizedPath;
@@ -1296,6 +1490,7 @@ class WebosMkvSubtitleExtractor {
     try {
       await _initializeMkvHeaders();
       if (_disposed || subtitleTracksInOrder.isEmpty) return;
+      onCuesUpdated();
       unawaited(_runExtractionLoop());
     } catch (e, st) {
       appLogger.w('[WebOS-MKV-Sub] Header init error: $e', error: e, stackTrace: st);

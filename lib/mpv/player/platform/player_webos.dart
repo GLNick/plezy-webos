@@ -540,6 +540,23 @@ class PlayerWebos extends PlayerBase {
   }
 
   void _refreshActiveSubtitleCues() {
+    WebosSubtitleClock.instance.reportPlayerPosition(
+      state.position.inMilliseconds,
+      isPlaying: state.playing,
+      rate: state.rate,
+    );
+    final autoSub = WebosSubtitlePreferenceStore.instance.checkAutoSelect<SubtitleTrack>(
+      currentTrack: state.track.subtitle,
+      availableTracks: state.tracks.subtitle,
+      getId: (t) => t.id,
+      getLanguage: (t) => t.language,
+      getTitle: (t) => t.title,
+    );
+    if (autoSub != null) {
+      unawaited(selectSubtitleTrack(autoSub));
+      return;
+    }
+
     if (disposed || !_videoReadyForSubtitles || _subtitlesHidden || _selectedSubTrackId == null || _selectedSubTrackId == 'no') {
       if (activeSubtitleCues.value.isNotEmpty) {
         activeSubtitleCues.value = const [];
@@ -715,6 +732,7 @@ class PlayerWebos extends PlayerBase {
 
   @override
   Future<void> selectSubtitleTrack(SubtitleTrack track) async {
+    WebosSubtitlePreferenceStore.instance.onSelectSubtitleTrack(id: track.id, language: track.language, title: track.title);
     if (track.id == SubtitleTrack.off.id || track.id == 'no') {
       _selectedSubTrackId = null;
       updateSelectedSubtitleTrack('no');
