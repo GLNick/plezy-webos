@@ -11,56 +11,82 @@ import 'package:flutter/scheduler.dart';
 
 import '../../../utils/app_logger.dart';
 
-/// High-precision monotonic subtitle clock that interpolates between coarse NDL_media
-/// position updates at 60fps and compensates for the hardware video pipeline latency (~60ms).
+/// Strictly monotonic, drift-corrected PLL subtitle clock.
+/// Never steps backwards during normal playback so transitions never flicker
+/// and \move animations glide with linear velocity.
 class WebosSubtitleClock {
   static final WebosSubtitleClock instance = WebosSubtitleClock._();
   WebosSubtitleClock._();
 
-  /// Compensates for NDL hardware decoder reporting lag so subtitles vanish on the exact scene cut.
-  static const int kSceneCutLeadMs = 60;
+  static const int kSceneCutLeadMs = 45;
 
   final Stopwatch _watch = Stopwatch();
-  int _anchorPosMs = 0;
+  double _anchorSmoothMs = 0.0;
   int _lastRawPosMs = -1;
+  int _maxEmittedMs = 0;
   bool _isPlaying = true;
   double _playbackRate = 1.0;
+  double _pllRateFactor = 1.0;
   bool _hasReported = false;
 
   bool get hasReportedPosition => _hasReported;
 
+  void resetForNewMedia() {
+    _watch.reset();
+    _anchorSmoothMs = 0.0;
+    _lastRawPosMs = -1;
+    _maxEmittedMs = 0;
+    _pllRateFactor = 1.0;
+    _hasReported = false;
+  }
+
   void reportPlayerPosition(int rawPosMs, {bool? isPlaying, double? rate}) {
     if (rawPosMs < 0) return;
-    _hasReported = true;
-    if (isPlaying != null) _isPlaying = isPlaying;
     if (rate != null && rate > 0) _playbackRate = rate;
 
-    if (rawPosMs != _lastRawPosMs) {
-      final currentExtrapNoLead = _extrapolatedRawMs;
-      final diff = rawPosMs - currentExtrapNoLead;
+    final playingChanged = isPlaying != null && isPlaying != _isPlaying;
+    if (isPlaying != null) _isPlaying = isPlaying;
 
-      if (!_watch.isRunning || diff.abs() > 220 || rawPosMs < _lastRawPosMs) {
-        _anchorPosMs = rawPosMs;
-      } else {
-        // Smoothly blend to prevent micro-jitter from asynchronous NDL callbacks
-        _anchorPosMs = (rawPosMs * 0.75 + currentExtrapNoLead * 0.25).round();
-      }
+    final targetMs = (rawPosMs + kSceneCutLeadMs).toDouble();
+
+    if (!_hasReported) {
+      _hasReported = true;
+      _anchorSmoothMs = targetMs;
       _lastRawPosMs = rawPosMs;
+      _maxEmittedMs = targetMs.round();
+      _pllRateFactor = 1.0;
       if (_isPlaying) {
         _watch
           ..reset()
           ..start();
-      } else {
-        _watch.reset();
       }
+      return;
     }
-  }
 
-  void setPlaying(bool playing) {
-    if (_isPlaying == playing) return;
-    _anchorPosMs = _extrapolatedRawMs;
-    _isPlaying = playing;
-    if (playing) {
+    if (rawPosMs == _lastRawPosMs && !playingChanged) {
+      return;
+    }
+
+    final currentPred = _predictUnclampedMs();
+    final rawDelta = rawPosMs - _lastRawPosMs;
+    _lastRawPosMs = rawPosMs;
+
+    final errorMs = targetMs - currentPred;
+
+    // Detect actual user seek (backward jump > 450ms or forward jump > 1200ms)
+    final isSeek = rawDelta < -450 || errorMs.abs() > 900;
+
+    if (isSeek) {
+      _anchorSmoothMs = targetMs;
+      _maxEmittedMs = targetMs.round();
+      _pllRateFactor = 1.0;
+    } else {
+      // C0-continuous PLL: keep current position without any jump and gently adjust rate
+      _anchorSmoothMs = currentPred;
+      _pllRateFactor = (1.0 + (errorMs / 1000.0)).clamp(0.90, 1.10);
+    }
+
+    if (_isPlaying) {
       _watch
         ..reset()
         ..start();
@@ -69,13 +95,21 @@ class WebosSubtitleClock {
     }
   }
 
-  int get _extrapolatedRawMs {
-    if (!_isPlaying || !_watch.isRunning) return _anchorPosMs;
-    final elapsed = _watch.elapsedMilliseconds.clamp(0, 750);
-    return _anchorPosMs + (elapsed * _playbackRate).round();
+  double _predictUnclampedMs() {
+    if (!_isPlaying || !_watch.isRunning) return _anchorSmoothMs;
+    final elapsedUs = _watch.elapsedMicroseconds.clamp(0, 600000);
+    final elapsedMs = elapsedUs / 1000.0;
+    return _anchorSmoothMs + elapsedMs * _playbackRate * _pllRateFactor;
   }
 
-  int get currentPositionMs => _extrapolatedRawMs + kSceneCutLeadMs;
+  int get currentPositionMs {
+    final raw = _predictUnclampedMs().round();
+    if (_isPlaying && raw < _maxEmittedMs && (_maxEmittedMs - raw) < 500) {
+      return _maxEmittedMs;
+    }
+    _maxEmittedMs = raw;
+    return raw;
+  }
 }
 
 /// Persistent subtitle preference store so new episodes automatically activate the
@@ -96,7 +130,9 @@ class WebosSubtitlePreferenceStore {
   bool _autoSelectDoneForCurrentMedia = false;
   int _lastEvaluatedTrackCount = 0;
 
-  static final File _prefFile = File('/media/developer/apps/usr/palm/applications/com.edde746.plezy/appdata/webos_sub_pref.json');
+  static final File _prefFile = File(
+    '/media/developer/apps/usr/palm/applications/com.edde746.plezy/appdata/webos_sub_pref.json',
+  );
 
   void _loadFromDisk() {
     try {
@@ -115,12 +151,14 @@ class WebosSubtitlePreferenceStore {
   void _saveToDisk() {
     try {
       _prefFile.parent.createSync(recursive: true);
-      _prefFile.writeAsStringSync(jsonEncode({
-        'lang': preferredLanguage,
-        'title': preferredTitle,
-        'id': preferredId,
-        'disabled': explicitlyDisabled,
-      }));
+      _prefFile.writeAsStringSync(
+        jsonEncode({
+          'lang': preferredLanguage,
+          'title': preferredTitle,
+          'id': preferredId,
+          'disabled': explicitlyDisabled,
+        }),
+      );
     } catch (_) {}
   }
 
@@ -163,6 +201,7 @@ class WebosSubtitlePreferenceStore {
     _lastMediaOpenTime = DateTime.now();
     _autoSelectDoneForCurrentMedia = false;
     _lastEvaluatedTrackCount = 0;
+    WebosSubtitleClock.instance.resetForNewMedia();
   }
 
   void onSelectSubtitleTrack({
@@ -171,7 +210,6 @@ class WebosSubtitlePreferenceStore {
     String? title,
   }) {
     if (isOffId(id)) {
-      // Only treat 'off' as an explicit user action if it happens after initial media startup (>2.5s)
       final sinceOpenMs = DateTime.now().difference(_lastMediaOpenTime).inMilliseconds;
       if (sinceOpenMs > 2500) {
         explicitlyDisabled = true;
@@ -205,7 +243,6 @@ class WebosSubtitlePreferenceStore {
     if (realTracks.isEmpty) return null;
 
     if (currentTrack != null && !isOffId(getId(currentTrack))) {
-      // A real subtitle track is already active; remember it and mark done
       if (!_autoSelectDoneForCurrentMedia) {
         onSelectSubtitleTrack(
           id: getId(currentTrack),
@@ -254,7 +291,9 @@ class WebosSubtitlePreferenceStore {
         score -= 30;
       }
 
-      if (preferredTitle != null && cTitle != null && cTitle.trim().toLowerCase() == preferredTitle!.toLowerCase()) {
+      if (preferredTitle != null &&
+          cTitle != null &&
+          cTitle.trim().toLowerCase() == preferredTitle!.toLowerCase()) {
         score += 30;
       }
       if (preferredId != null && cid == preferredId) {
@@ -271,8 +310,7 @@ class WebosSubtitlePreferenceStore {
   }
 }
 
-
-/// Pre-compiled ASS vector drawing (\p1..\pN) so 60fps playback never runs RegExp or String parsing.
+/// Pre-compiled ASS vector drawing (\p1..\pN).
 class WebosCompiledVectorPath {
   final Path normalizedPath;
   final double minX;
@@ -311,7 +349,12 @@ class WebosCompiledVectorPath {
 
     for (final tok in tokens) {
       final lower = tok.toLowerCase();
-      if (lower == 'm' || lower == 'n' || lower == 'l' || lower == 'b' || lower == 's' || lower == 'c') {
+      if (lower == 'm' ||
+          lower == 'n' ||
+          lower == 'l' ||
+          lower == 'b' ||
+          lower == 's' ||
+          lower == 'c') {
         flushCmd();
         currentCmd = lower;
         if (currentCmd == 'c') flushCmd();
@@ -371,8 +414,6 @@ class WebosCompiledVectorPath {
 
     if (!minX.isFinite || !minY.isFinite) return null;
 
-    // Exact libass (ass_drawing.c) normalization: unconditionally shift all vertices by (-minX, -minY)
-    // so both positive and negative minX origins align accurately without clipping the left edge.
     final normPath = (minX != 0.0 || minY != 0.0)
         ? rawPath.shift(Offset(-minX, -minY))
         : rawPath;
@@ -441,7 +482,7 @@ class WebosAssStyle {
   final double scaleY;
   final double spacing;
   final double angleZ;
-  final int borderStyle; // 1 = Outline + Shadow, 3 = Opaque Box
+  final int borderStyle;
   final double outline;
   final double shadow;
   final int alignment;
@@ -605,12 +646,13 @@ class WebosAssSpan {
 
 class WebosSubtitleCue {
   final int startMs;
-  final int endMs;
+  final int originalEndMs;
+  int endMs;
   final String text;
   final List<WebosAssSpan> spans;
   final bool isAss;
   final WebosAssStyle? style;
-  final int alignment; // numpad 1..9
+  final int alignment;
   final double? posX;
   final double? posY;
   final double? moveX1;
@@ -633,7 +675,7 @@ class WebosSubtitleCue {
   final int layer;
   final int readOrder;
 
-  const WebosSubtitleCue({
+  WebosSubtitleCue({
     required this.startMs,
     required this.endMs,
     required this.text,
@@ -662,16 +704,18 @@ class WebosSubtitleCue {
     this.marginV = 25,
     this.layer = 0,
     this.readOrder = 0,
-  });
+  }) : originalEndMs = endMs;
 
   bool get hasVectorDrawing => spans.any((s) => s.drawingScale > 0 && s.compiledVectorPath != null);
+
+  bool get hasTransforms => spans.any((s) => s.transforms.isNotEmpty);
 
   bool get isAnimated =>
       fadeInMs > 0 ||
       fadeOutMs > 0 ||
       complexFade != null ||
       moveX1 != null ||
-      spans.any((s) => s.transforms.isNotEmpty);
+      hasTransforms;
 }
 
 class WebosAssDocument {
@@ -718,6 +762,34 @@ class WebosSubtitleParser {
       int.parse(m.group(3)!),
       m.group(4)!,
     );
+  }
+
+  /// Eliminates 1..45ms MKV/ASS rounding gaps and micro-overlaps between sequential cues
+  /// on the same layer/alignment so transitions and 24fps slide shots never flash or double-stack.
+  static void stitchSequentialCues(List<WebosSubtitleCue> cues) {
+    if (cues.length < 2) return;
+    final groups = <(int, int, String?, bool), List<WebosSubtitleCue>>{};
+    for (final c in cues) {
+      final key = (c.layer, c.alignment, c.style?.name, c.hasVectorDrawing);
+      (groups[key] ??= <WebosSubtitleCue>[]).add(c);
+    }
+
+    for (final list in groups.values) {
+      if (list.length < 2) continue;
+      for (int i = 0; i < list.length - 1; i++) {
+        final cur = list[i];
+        for (int j = i + 1; j < list.length; j++) {
+          final nxt = list[j];
+          if (nxt.startMs <= cur.startMs + 12) continue;
+          final gap = nxt.startMs - cur.originalEndMs;
+          if (gap > 45) break;
+          if (gap >= -45 && nxt.originalEndMs > cur.originalEndMs + 12) {
+            cur.endMs = nxt.startMs;
+          }
+          break;
+        }
+      }
+    }
   }
 
   static List<WebosSubtitleCue> parseAuto(String rawContent) {
@@ -774,6 +846,7 @@ class WebosSubtitleParser {
       }
     }
     cues.sort((a, b) => a.startMs.compareTo(b.startMs));
+    stitchSequentialCues(cues);
     return cues;
   }
 
@@ -935,6 +1008,7 @@ class WebosSubtitleParser {
       if (lCmp != 0) return lCmp;
       return a.readOrder.compareTo(b.readOrder);
     });
+    stitchSequentialCues(cues);
     return WebosAssDocument(
       playResX: playResX,
       playResY: playResY,
@@ -1414,7 +1488,6 @@ class WebosSubtitleParser {
       fadeInMs: fadeInMs,
       fadeOutMs: fadeOutMs,
       complexFade: complexFade,
-      // Preserve the active span's scale rather than letting a trailing {\p0\fscx100} overwrite it
       scaleX: firstSpanScaleX ?? curScaleX,
       scaleY: firstSpanScaleY ?? curScaleY,
       rotationZ: rotationZ,
@@ -1469,6 +1542,7 @@ class WebosMkvSubtitleExtractor {
   final Map<int, Set<String>> _dedupByTrackNumber = {};
   final List<({int timeMs, int clusterFileOffset})> _cuePoints = [];
   static final Set<String> _loadedFontFamilies = {};
+  static int fontRevision = 0;
 
   int _streamCursorOffset = 0;
   int _maxBufferedTimeMs = 0;
@@ -1595,6 +1669,7 @@ class WebosMkvSubtitleExtractor {
 
   Future<void> _parseAndLoadAttachments(Uint8List data, int start, int end) async {
     int p = start;
+    bool loadedAnyFont = false;
     while (p < end) {
       final id = _readVint(data, p, keepMarkerBit: true);
       if (id == null) break;
@@ -1644,6 +1719,7 @@ class WebosMkvSubtitleExtractor {
             if (_loadedFontFamilies.add(fam)) {
               try {
                 await ui.loadFontFromList(fileBytes, fontFamily: fam);
+                loadedAnyFont = true;
                 appLogger.i('[WebOS-MKV-Font] Loaded embedded font family: "$fam" ($fileName)');
               } catch (_) {}
             }
@@ -1651,6 +1727,9 @@ class WebosMkvSubtitleExtractor {
         }
       }
       p = bEnd;
+    }
+    if (loadedAnyFont) {
+      fontRevision++;
     }
   }
 
@@ -1978,20 +2057,33 @@ class WebosMkvSubtitleExtractor {
         continue;
       }
 
-      final consumed = _parseClustersInBuffer(buf);
+      final consumed = _parseClustersInBuffer(buf, nowPosMs);
       if (consumed > 0) {
         _streamCursorOffset += consumed;
       } else {
         _streamCursorOffset += buf.length;
       }
-      await Future<void>.delayed(const Duration(milliseconds: 60));
+      await Future<void>.delayed(const Duration(milliseconds: 80));
     }
   }
 
-  int _parseClustersInBuffer(Uint8List buf) {
+  void _finalizeBufferTracks(Set<int> touchedTracks, bool notifyNearPlayhead) {
+    for (final tNum in touchedTracks) {
+      final list = cuesByTrackNumber[tNum];
+      if (list != null && list.length > 1) {
+        WebosSubtitleParser.stitchSequentialCues(list);
+      }
+    }
+    if (notifyNearPlayhead) {
+      onCuesUpdated();
+    }
+  }
+
+  int _parseClustersInBuffer(Uint8List buf, int nowPosMs) {
     int pos = 0;
     int lastClusterStart = 0;
-    bool addedAny = false;
+    final touchedTracks = <int>{};
+    bool addedNearPlayhead = false;
 
     while (pos < buf.length - 12) {
       if (buf[pos] != 0x1F ||
@@ -2021,7 +2113,9 @@ class WebosMkvSubtitleExtractor {
         final bEnd = bStart + elSz.value;
 
         if (bEnd > buf.length) {
-          if (addedAny) onCuesUpdated();
+          if (touchedTracks.isNotEmpty) {
+            _finalizeBufferTracks(touchedTracks, addedNearPlayhead);
+          }
           return lastClusterStart > 0 ? lastClusterStart : cp;
         }
 
@@ -2032,8 +2126,10 @@ class WebosMkvSubtitleExtractor {
             _maxBufferedTimeMs = clusterTimeMs;
           }
         } else if (elId.value == 0xA3) {
-          if (_extractFromBlock(buf, bStart, bEnd, clusterTimeMs, 0)) {
-            addedAny = true;
+          final res = _extractFromBlock(buf, bStart, bEnd, clusterTimeMs, 0, nowPosMs);
+          if (res != null) {
+            touchedTracks.add(res.trackNum);
+            if (res.nearPlayhead) addedNearPlayhead = true;
           }
         } else if (elId.value == 0xA0) {
           int? blockStart;
@@ -2058,8 +2154,10 @@ class WebosMkvSubtitleExtractor {
           }
           if (blockStart != null && blockEnd != null) {
             final durMs = (blockDurTicks * _timestampScaleNs) ~/ 1000000;
-            if (_extractFromBlock(buf, blockStart, blockEnd, clusterTimeMs, durMs)) {
-              addedAny = true;
+            final res = _extractFromBlock(buf, blockStart, blockEnd, clusterTimeMs, durMs, nowPosMs);
+            if (res != null) {
+              touchedTracks.add(res.trackNum);
+              if (res.nearPlayhead) addedNearPlayhead = true;
             }
           }
         }
@@ -2067,25 +2165,36 @@ class WebosMkvSubtitleExtractor {
       }
 
       if (clusterEnd > buf.length) {
-        if (addedAny) onCuesUpdated();
+        if (touchedTracks.isNotEmpty) {
+          _finalizeBufferTracks(touchedTracks, addedNearPlayhead);
+        }
         return lastClusterStart > 0 ? lastClusterStart : pos;
       }
       pos = clusterEnd;
     }
 
-    if (addedAny) onCuesUpdated();
+    if (touchedTracks.isNotEmpty) {
+      _finalizeBufferTracks(touchedTracks, addedNearPlayhead);
+    }
     return buf.length;
   }
 
-  bool _extractFromBlock(Uint8List buf, int start, int end, int clusterTimeMs, int durationMs) {
-    if (start + 4 >= end) return false;
+  ({int trackNum, bool nearPlayhead})? _extractFromBlock(
+    Uint8List buf,
+    int start,
+    int end,
+    int clusterTimeMs,
+    int durationMs,
+    int nowPosMs,
+  ) {
+    if (start + 4 >= end) return null;
     final tNumVint = _readVint(buf, start, keepMarkerBit: false);
-    if (tNumVint == null) return false;
+    if (tNumVint == null) return null;
     final trackInfo = _subTrackByNumber[tNumVint.value];
-    if (trackInfo == null) return false;
+    if (trackInfo == null) return null;
 
     final headerEnd = start + tNumVint.length + 3;
-    if (headerEnd >= end) return false;
+    if (headerEnd >= end) return null;
     int relTime = (buf[start + tNumVint.length] << 8) | buf[start + tNumVint.length + 1];
     if (relTime & 0x8000 != 0) relTime -= 0x10000;
     final relTimeMs = (relTime * _timestampScaleNs) ~/ 1000000;
@@ -2094,7 +2203,7 @@ class WebosMkvSubtitleExtractor {
     final payloadStr = utf8.decode(buf.sublist(headerEnd, end), allowMalformed: true);
     final dedupKey = '$cueStartMs:$durationMs:$payloadStr';
     final dedupSet = _dedupByTrackNumber[trackInfo.trackNumber]!;
-    if (!dedupSet.add(dedupKey)) return false;
+    if (!dedupSet.add(dedupKey)) return null;
 
     final cue = WebosSubtitleParser.parseMkvBlock(
       startMs: cueStartMs,
@@ -2103,10 +2212,14 @@ class WebosMkvSubtitleExtractor {
       blockText: payloadStr,
       assHeader: trackInfo.assHeader,
     );
-    if (cue == null) return false;
+    if (cue == null) return null;
     final list = cuesByTrackNumber[trackInfo.trackNumber]!;
     list.add(cue);
-    return true;
+
+    final isFirstBatch = list.length <= 5;
+    final nearPlayhead = isFirstBatch ||
+        (cue.startMs <= nowPosMs + 6000 && cue.endMs >= nowPosMs - 2000);
+    return (trackNum: trackInfo.trackNumber, nearPlayhead: nearPlayhead);
   }
 }
 
@@ -2196,7 +2309,16 @@ class WebosSubtitleOverlay extends StatefulWidget {
 class _WebosSubtitleOverlayState extends State<WebosSubtitleOverlay>
     with SingleTickerProviderStateMixin {
   Ticker? _vsyncTicker;
+  Timer? _edgeWakeTimer;
   final Map<WebosSubtitleCue, DateTime> _cueFirstSeenAt = {};
+
+  /// Caches the static inner Widget (stroked RichText or vector CustomPaint wrapped in RepaintBoundary)
+  /// per cue so 60fps \move and \fad animations never re-layout text or re-transform paths on the CPU.
+  Expando<Widget> _staticBodyCache = Expando<Widget>();
+  double _cachedScreenW = 0.0;
+  double _cachedScreenH = 0.0;
+  WebosSubtitleStyleConfig? _cachedStyleCfg;
+  int _cachedFontRev = -1;
 
   @override
   void initState() {
@@ -2219,17 +2341,14 @@ class _WebosSubtitleOverlayState extends State<WebosSubtitleOverlay>
   @override
   void dispose() {
     widget.activeCues.removeListener(_onActiveCuesChanged);
+    _edgeWakeTimer?.cancel();
     _vsyncTicker?.dispose();
     super.dispose();
   }
 
   void _onVsyncTick(Duration _) {
     if (!mounted) return;
-    if (widget.activeCues.value.isEmpty) {
-      _vsyncTicker?.stop();
-      return;
-    }
-    setState(() {});
+    _updateSchedulingAndRebuild(fromTicker: true);
   }
 
   void _onActiveCuesChanged() {
@@ -2239,15 +2358,76 @@ class _WebosSubtitleOverlayState extends State<WebosSubtitleOverlay>
     for (final c in cues) {
       _cueFirstSeenAt.putIfAbsent(c, () => now);
     }
+    _updateSchedulingAndRebuild(fromTicker: false);
+  }
 
-    // Keep the 60Hz VSync ticker active whenever subtitle cues are in the window
-    // so frame-by-frame Slide Shots, \move, \fad, and scene-cut endMs cutoffs happen at 60fps!
-    if (cues.isNotEmpty) {
+  void _updateSchedulingAndRebuild({required bool fromTicker}) {
+    _edgeWakeTimer?.cancel();
+    final cues = widget.activeCues.value;
+    if (cues.isEmpty) {
+      _vsyncTicker?.stop();
+      if (fromTicker && mounted) setState(() {});
+      return;
+    }
+
+    final nowMs = _resolveSmoothPlayheadMs();
+    if (nowMs == null) {
+      final anyAnim = cues.any((c) => c.isAnimated);
+      if (anyAnim) {
+        if (_vsyncTicker != null && !_vsyncTicker!.isActive) _vsyncTicker!.start();
+      } else {
+        _vsyncTicker?.stop();
+      }
+      if (fromTicker && mounted) setState(() {});
+      return;
+    }
+
+    bool needHighFreqTicker = false;
+    int? nextEventInMs;
+
+    for (final c in cues) {
+      final isVisible = nowMs >= c.startMs && nowMs < c.endMs;
+      if (isVisible && c.isAnimated) {
+        needHighFreqTicker = true;
+        break;
+      }
+      final toStart = c.startMs - nowMs;
+      final toEnd = c.endMs - nowMs;
+
+      // Wake up VSync ticker 65ms before any cue start or end boundary for exact frame cuts
+      if ((toStart >= -16 && toStart <= 65) || (toEnd >= -16 && toEnd <= 65)) {
+        needHighFreqTicker = true;
+        break;
+      }
+
+      if (toStart > 65) {
+        final wakeIn = toStart - 50;
+        if (nextEventInMs == null || wakeIn < nextEventInMs) nextEventInMs = wakeIn;
+      }
+      if (toEnd > 65) {
+        final wakeIn = toEnd - 50;
+        if (nextEventInMs == null || wakeIn < nextEventInMs) nextEventInMs = wakeIn;
+      }
+    }
+
+    if (needHighFreqTicker) {
       if (_vsyncTicker != null && !_vsyncTicker!.isActive) {
         _vsyncTicker!.start();
       }
     } else {
       _vsyncTicker?.stop();
+      if (nextEventInMs != null && nextEventInMs > 0) {
+        _edgeWakeTimer = Timer(Duration(milliseconds: nextEventInMs.clamp(16, 2000)), () {
+          if (mounted) {
+            setState(() {});
+            _updateSchedulingAndRebuild(fromTicker: false);
+          }
+        });
+      }
+    }
+
+    if (fromTicker && mounted) {
+      setState(() {});
     }
   }
 
@@ -2272,6 +2452,19 @@ class _WebosSubtitleOverlayState extends State<WebosSubtitleOverlay>
     return wallElapsed.clamp(0, dur);
   }
 
+  void _checkCacheValidity(double screenW, double screenH, WebosSubtitleStyleConfig cfg) {
+    if (_cachedScreenW != screenW ||
+        _cachedScreenH != screenH ||
+        _cachedStyleCfg != cfg ||
+        _cachedFontRev != WebosMkvSubtitleExtractor.fontRevision) {
+      _staticBodyCache = Expando<Widget>();
+      _cachedScreenW = screenW;
+      _cachedScreenH = screenH;
+      _cachedStyleCfg = cfg;
+      _cachedFontRev = WebosMkvSubtitleExtractor.fontRevision;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return RepaintBoundary(
@@ -2284,6 +2477,8 @@ class _WebosSubtitleOverlayState extends State<WebosSubtitleOverlay>
             return ValueListenableBuilder<WebosSubtitleStyleConfig>(
               valueListenable: widget.styleConfig,
               builder: (context, cfg, _) {
+                _checkCacheValidity(screenW, screenH, cfg);
+
                 return ValueListenableBuilder<List<WebosSubtitleCue>>(
                   valueListenable: widget.activeCues,
                   builder: (context, rawCues, _) {
@@ -2291,8 +2486,6 @@ class _WebosSubtitleOverlayState extends State<WebosSubtitleOverlay>
 
                     final smoothNowMs = _resolveSmoothPlayheadMs();
 
-                    // Filter on the exact 60fps VSync timestamp so scene cuts vanish immediately (<16ms)
-                    // and 24fps frame-by-frame Slide Shots switch frames without any stutter.
                     final visibleCues = <WebosSubtitleCue>[];
                     for (final c in rawCues) {
                       if (smoothNowMs != null) {
@@ -2342,13 +2535,18 @@ class _WebosSubtitleOverlayState extends State<WebosSubtitleOverlay>
                         final screenY = (py / ry) * screenH;
                         final anchorOffset = _anchorTranslationFor(cue.alignment);
 
+                        // Use fixed Positioned(0,0) + GPU Transform.translate so \move animations
+                        // never trigger RenderStack.performLayout() on the CPU!
                         positionedWidgets.add(
                           Positioned(
-                            left: screenX,
-                            top: screenY,
-                            child: FractionalTranslation(
-                              translation: anchorOffset,
-                              child: _buildCueWidget(cue, cfg, screenW, screenH, elapsed),
+                            left: 0.0,
+                            top: 0.0,
+                            child: Transform.translate(
+                              offset: Offset(screenX, screenY),
+                              child: FractionalTranslation(
+                                translation: anchorOffset,
+                                child: _buildCueWidget(cue, cfg, screenW, screenH, elapsed),
+                              ),
                             ),
                           ),
                         );
@@ -2533,35 +2731,91 @@ class _WebosSubtitleOverlayState extends State<WebosSubtitleOverlay>
     return cur;
   }
 
+  double _computeFadeMultiplier(WebosSubtitleCue cue, int elapsedMs, int totalDur) {
+    final remainingMs = (totalDur - elapsedMs).clamp(0, totalDur);
+    double fadeMultiplier = 1.0;
+    if (cue.complexFade != null && cue.complexFade!.length == 7) {
+      final cf = cue.complexFade!;
+      final a1 = (255 - (cf[0] & 0xFF)).clamp(0, 255) / 255.0;
+      final a2 = (255 - (cf[1] & 0xFF)).clamp(0, 255) / 255.0;
+      final a3 = (255 - (cf[2] & 0xFF)).clamp(0, 255) / 255.0;
+      final t1 = cf[3], t2 = cf[4], t3 = cf[5], t4 = cf[6];
+      if (elapsedMs < t1) {
+        fadeMultiplier = a1;
+      } else if (elapsedMs < t2 && t2 > t1) {
+        fadeMultiplier = a1 + (a2 - a1) * ((elapsedMs - t1) / (t2 - t1));
+      } else if (elapsedMs < t3) {
+        fadeMultiplier = a2;
+      } else if (elapsedMs < t4 && t4 > t3) {
+        fadeMultiplier = a2 + (a3 - a2) * ((elapsedMs - t3) / (t4 - t3));
+      } else {
+        fadeMultiplier = a3;
+      }
+    } else if (cue.fadeInMs > 0 || cue.fadeOutMs > 0) {
+      if (cue.fadeInMs > 0 && elapsedMs < cue.fadeInMs) {
+        fadeMultiplier = (elapsedMs / cue.fadeInMs).clamp(0.0, 1.0);
+      } else if (cue.fadeOutMs > 0 && remainingMs < cue.fadeOutMs) {
+        fadeMultiplier = (remainingMs / cue.fadeOutMs).clamp(0.0, 1.0);
+      }
+    }
+    return fadeMultiplier;
+  }
+
+  Widget _buildCueWidget(
+    WebosSubtitleCue cue,
+    WebosSubtitleStyleConfig cfg,
+    double screenW,
+    double screenH,
+    int elapsedMs,
+  ) {
+    final totalDur = (cue.endMs - cue.startMs).clamp(1, 3600000);
+    final fadeMultiplier = _computeFadeMultiplier(cue, elapsedMs, totalDur);
+
+    // Fast path (99.9% of all cues, including \move and \fad):
+    // Cache the rasterized RepaintBoundary body so moving/fading subtitles never rebuild RichText or Paths!
+    if (!cue.hasTransforms) {
+      Widget? body = _staticBodyCache[cue];
+      if (body == null) {
+        body = RepaintBoundary(
+          child: _buildCueBodyUnwrapped(cue, cfg, screenW, screenH, 0, totalDur),
+        );
+        _staticBodyCache[cue] = body;
+      }
+      if (fadeMultiplier < 0.999) {
+        return Opacity(opacity: fadeMultiplier.clamp(0.0, 1.0), child: body);
+      }
+      return body;
+    }
+
+    // Dynamic \t(...) transform path
+    Widget body = _buildCueBodyUnwrapped(cue, cfg, screenW, screenH, elapsedMs, totalDur);
+    if (fadeMultiplier < 0.999) {
+      body = Opacity(opacity: fadeMultiplier.clamp(0.0, 1.0), child: body);
+    }
+    return body;
+  }
+
   Widget? _buildVectorDrawingWidget(
     WebosSubtitleCue cue,
     WebosAssSpan drawSpan,
     double screenW,
     double screenH,
     int elapsedMs,
+    int totalDur,
   ) {
     final compiled = drawSpan.compiledVectorPath;
     if (compiled == null) return null;
 
-    final totalDur = (cue.endMs - cue.startMs).clamp(1, 3600000);
     final rx = cue.playResX > 0 ? cue.playResX : 1920;
     final ry = cue.playResY > 0 ? cue.playResY : 1080;
     final scaleShift = 1 << (drawSpan.drawingScale - 1).clamp(0, 6);
 
-    final spanScaleX = _evalTransformedDouble(
-      drawSpan.scaleX ?? cue.scaleX,
-      drawSpan.transforms,
-      elapsedMs,
-      totalDur,
-      (t) => t.scaleX,
-    );
-    final spanScaleY = _evalTransformedDouble(
-      drawSpan.scaleY ?? cue.scaleY,
-      drawSpan.transforms,
-      elapsedMs,
-      totalDur,
-      (t) => t.scaleY,
-    );
+    final spanScaleX = drawSpan.transforms.isEmpty
+        ? (drawSpan.scaleX ?? cue.scaleX)
+        : _evalTransformedDouble(drawSpan.scaleX ?? cue.scaleX, drawSpan.transforms, elapsedMs, totalDur, (t) => t.scaleX);
+    final spanScaleY = drawSpan.transforms.isEmpty
+        ? (drawSpan.scaleY ?? cue.scaleY)
+        : _evalTransformedDouble(drawSpan.scaleY ?? cue.scaleY, drawSpan.transforms, elapsedMs, totalDur, (t) => t.scaleY);
 
     final sx = (screenW / rx) * spanScaleX / scaleShift;
     final sy = (screenH / ry) * spanScaleY / scaleShift;
@@ -2609,57 +2863,28 @@ class _WebosSubtitleOverlayState extends State<WebosSubtitleOverlay>
     );
   }
 
-  Widget _buildCueWidget(
+  Widget _buildCueBodyUnwrapped(
     WebosSubtitleCue cue,
     WebosSubtitleStyleConfig cfg,
     double screenW,
     double screenH,
     int elapsedMs,
+    int totalDur,
   ) {
-    final totalDur = (cue.endMs - cue.startMs).clamp(1, 3600000);
-    final remainingMs = (totalDur - elapsedMs).clamp(0, totalDur);
-
-    double fadeMultiplier = 1.0;
-    if (cue.complexFade != null && cue.complexFade!.length == 7) {
-      final cf = cue.complexFade!;
-      final a1 = (255 - (cf[0] & 0xFF)).clamp(0, 255) / 255.0;
-      final a2 = (255 - (cf[1] & 0xFF)).clamp(0, 255) / 255.0;
-      final a3 = (255 - (cf[2] & 0xFF)).clamp(0, 255) / 255.0;
-      final t1 = cf[3], t2 = cf[4], t3 = cf[5], t4 = cf[6];
-      if (elapsedMs < t1) {
-        fadeMultiplier = a1;
-      } else if (elapsedMs < t2 && t2 > t1) {
-        fadeMultiplier = a1 + (a2 - a1) * ((elapsedMs - t1) / (t2 - t1));
-      } else if (elapsedMs < t3) {
-        fadeMultiplier = a2;
-      } else if (elapsedMs < t4 && t4 > t3) {
-        fadeMultiplier = a2 + (a3 - a2) * ((elapsedMs - t3) / (t4 - t3));
-      } else {
-        fadeMultiplier = a3;
-      }
-    } else if (cue.fadeInMs > 0 || cue.fadeOutMs > 0) {
-      if (cue.fadeInMs > 0 && elapsedMs < cue.fadeInMs) {
-        fadeMultiplier = (elapsedMs / cue.fadeInMs).clamp(0.0, 1.0);
-      } else if (cue.fadeOutMs > 0 && remainingMs < cue.fadeOutMs) {
-        fadeMultiplier = (remainingMs / cue.fadeOutMs).clamp(0.0, 1.0);
-      }
-    }
-
     final drawSpan = cue.spans.where((s) => s.drawingScale > 0 && s.compiledVectorPath != null).firstOrNull;
     if (drawSpan != null) {
-      final vecWidget = _buildVectorDrawingWidget(cue, drawSpan, screenW, screenH, elapsedMs);
+      final vecWidget = _buildVectorDrawingWidget(cue, drawSpan, screenW, screenH, elapsedMs, totalDur);
       if (vecWidget != null) {
         Widget res = vecWidget;
-        final rotZ = _evalTransformedDouble(cue.rotationZ, drawSpan.transforms, elapsedMs, totalDur, (t) => t.rotationZ);
+        final rotZ = drawSpan.transforms.isEmpty
+            ? cue.rotationZ
+            : _evalTransformedDouble(cue.rotationZ, drawSpan.transforms, elapsedMs, totalDur, (t) => t.rotationZ);
         if (rotZ != 0.0) {
           res = Transform.rotate(
             angle: -rotZ * (math.pi / 180.0),
             alignment: _flutterAlignmentFor(cue.alignment),
             child: res,
           );
-        }
-        if (fadeMultiplier < 0.999) {
-          res = Opacity(opacity: fadeMultiplier.clamp(0.0, 1.0), child: res);
         }
         return res;
       }
@@ -2715,7 +2940,6 @@ class _WebosSubtitleOverlayState extends State<WebosSubtitleOverlay>
       final rawXShad = cue.isAss ? (sp.shadowX ?? cue.style?.shadow ?? 1.5) : 1.5;
       final rawYShad = cue.isAss ? (sp.shadowY ?? cue.style?.shadow ?? 1.5) : 1.5;
 
-      // Also treat very asymmetric \xbord / \ybord masks on single-line signs as background boxes
       if (cue.isAss && (isOpaqueBoxStyle || (rawXBord >= 6.0 && (rawXBord - rawYBord).abs() >= 3.0))) {
         isOpaqueBoxStyle = true;
         opaqueBoxColor ??= (outlineColor.alpha > 0)
@@ -2834,9 +3058,15 @@ class _WebosSubtitleOverlayState extends State<WebosSubtitleOverlay>
     }
 
     final firstTransforms = effectiveSpans.first.transforms;
-    final dynScaleX = _evalTransformedDouble(cue.scaleX, firstTransforms, elapsedMs, totalDur, (t) => t.scaleX);
-    final dynScaleY = _evalTransformedDouble(cue.scaleY, firstTransforms, elapsedMs, totalDur, (t) => t.scaleY);
-    final dynRotZ = _evalTransformedDouble(cue.rotationZ, firstTransforms, elapsedMs, totalDur, (t) => t.rotationZ);
+    final dynScaleX = firstTransforms.isEmpty
+        ? cue.scaleX
+        : _evalTransformedDouble(cue.scaleX, firstTransforms, elapsedMs, totalDur, (t) => t.scaleX);
+    final dynScaleY = firstTransforms.isEmpty
+        ? cue.scaleY
+        : _evalTransformedDouble(cue.scaleY, firstTransforms, elapsedMs, totalDur, (t) => t.scaleY);
+    final dynRotZ = firstTransforms.isEmpty
+        ? cue.rotationZ
+        : _evalTransformedDouble(cue.rotationZ, firstTransforms, elapsedMs, totalDur, (t) => t.rotationZ);
 
     if (dynScaleX != 1.0 || dynScaleY != 1.0) {
       result = Transform(
@@ -2852,10 +3082,6 @@ class _WebosSubtitleOverlayState extends State<WebosSubtitleOverlay>
         alignment: _flutterAlignmentFor(cue.alignment),
         child: result,
       );
-    }
-
-    if (fadeMultiplier < 0.999) {
-      result = Opacity(opacity: fadeMultiplier.clamp(0.0, 1.0), child: result);
     }
 
     return result;
