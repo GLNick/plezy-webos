@@ -615,7 +615,9 @@ class PlayerWebos extends PlayerBase {
 
     final rawMatching = <WebosSubtitleCue>[];
     for (final cue in sourceCues) {
-      if (nowMs >= cue.startMs && nowMs < cue.endMs) {
+      // Allow a generous lookahead/trail window (-1500ms to +3000ms) so 24fps animation cues
+      // are never prematurely evicted before the 60fps VSync engine renders them.
+      if (nowMs + 3000 >= cue.startMs && nowMs - 1500 <= cue.endMs) {
         rawMatching.add(cue);
       }
     }
