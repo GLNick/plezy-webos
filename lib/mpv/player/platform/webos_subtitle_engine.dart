@@ -11,14 +11,14 @@ import 'package:flutter/scheduler.dart';
 
 import '../../../utils/app_logger.dart';
 
-/// High-precision monotonic subtitle clock that interpolates between coarse NDL_media
-/// position updates at 60fps without resetting on duplicate position callbacks.
+/// High-precision monotonic subtitle clock.
+/// Runs freely on the system monotonic crystal during normal playback so 24fps frame-by-frame
+/// ASS sequences never suffer from NDL_media 1-second quantization jitter.
 class WebosSubtitleClock {
   static final WebosSubtitleClock instance = WebosSubtitleClock._();
   WebosSubtitleClock._();
 
-  /// Compensates for hardware decoder reporting latency so scene cuts align tightly.
-  static const int kSceneCutLeadMs = 35;
+  static const int kSceneCutLeadMs = 25;
 
   final Stopwatch _watch = Stopwatch();
   int _anchorPosMs = 0;
@@ -48,26 +48,33 @@ class WebosSubtitleClock {
       }
     }
 
-    // CRITICAL: Ignore duplicate rawPosMs values triggered by background MKV cue updates!
     if (rawPosMs == _lastRawPosMs) return;
     _lastRawPosMs = rawPosMs;
 
     final currentEst = _extrapolatedRawMs;
     final diff = rawPosMs - currentEst;
 
-    if (!_watch.isRunning || diff.abs() > 280 || rawPosMs < currentEst - 250) {
+    // NDL_media often reports integer seconds (quantization error up to ~950ms) or 250ms ticks.
+    // Only hard-snap on real seeks (>900ms), or gently nudge (12%) if drift exceeds 350ms,
+    // and NEVER pull time backwards during normal forward playback!
+    if (!_watch.isRunning || diff.abs() > 900) {
       _anchorPosMs = rawPosMs;
-    } else {
-      // Smoothly blend minor hardware tick jitter so 60fps animations never jump backwards
-      _anchorPosMs = (rawPosMs * 0.65 + currentEst * 0.35).round();
-    }
-
-    if (_isPlaying) {
-      _watch
-        ..reset()
-        ..start();
-    } else {
-      _watch.reset();
+      if (_isPlaying) {
+        _watch
+          ..reset()
+          ..start();
+      } else {
+        _watch.reset();
+      }
+    } else if (diff.abs() > 350) {
+      final nudged = currentEst + (diff * 0.15).round();
+      // Keep monotonic forward progress during normal playback
+      _anchorPosMs = nudged < currentEst ? currentEst : nudged;
+      if (_isPlaying) {
+        _watch
+          ..reset()
+          ..start();
+      }
     }
   }
 
@@ -86,7 +93,7 @@ class WebosSubtitleClock {
 
   int get _extrapolatedRawMs {
     if (!_isPlaying || !_watch.isRunning) return _anchorPosMs;
-    final elapsed = _watch.elapsedMilliseconds.clamp(0, 2200);
+    final elapsed = _watch.elapsedMilliseconds;
     return _anchorPosMs + (elapsed * _playbackRate).round();
   }
 
@@ -290,8 +297,6 @@ class WebosSubtitlePreferenceStore {
 }
 
 /// Pre-compiled ASS vector drawing (\p1..\pN and vector \clip/\iclip).
-/// Uses a character-accurate token scanner so attached tokens like "50c", "l100", or "100-50"
-/// never drop the 4th vertex of a rectangle (which previously turned rectangles into triangles).
 class WebosCompiledVectorPath {
   final Path rawPath;
   final Path normalizedPath;
@@ -412,7 +417,6 @@ class WebosCompiledVectorPath {
           lastY = y3;
         }
       } else if ((cmd == 's' || cmd == 'p') && coords.length >= 2) {
-        // Uniform cubic B-spline approximation for 's' / 'p' points
         final pts = <Offset>[Offset(lastX, lastY)];
         for (int i = 0; i + 1 < coords.length; i += 2) {
           final px = coords[i], py = coords[i + 1];
@@ -473,7 +477,6 @@ class WebosCompiledVectorPath {
   }
 }
 
-/// Represents an ASS \clip or \iclip (either rectangular [x1,y1,x2,y2] or a vector path).
 class WebosAssClip {
   final bool inverse;
   final Rect? rect;
@@ -602,11 +605,19 @@ class WebosAssStyle {
     return Color.fromARGB(a, r, g, b);
   }
 
+  /// Parses an inline ASS color override like \c&HBBGGRR&, \1cHFFFFFF, or \c&H0&.
+  /// Returns null when the tag argument is empty (e.g., {\c} or {\1c}), which per libass spec
+  /// means "reset this color channel back to the Style's default color".
+  static final _hexDigitsRe = RegExp(r'[0-9A-Fa-f]+');
+
   static Color? parseAssOverrideRgb(String raw) {
-    var s = raw.trim().toUpperCase();
-    s = s.replaceAll('&', '').replaceAll('H', '').trim();
+    final s = raw.trim();
     if (s.isEmpty) return null;
-    final val = int.tryParse(s, radix: 16);
+    final cleaned = s.replaceAll('&', '').replaceAll(RegExp(r'[hH]'), '').trim();
+    if (cleaned.isEmpty) return null;
+    final m = _hexDigitsRe.firstMatch(cleaned);
+    if (m == null) return null;
+    final val = int.tryParse(m.group(0)!, radix: 16);
     if (val == null) return null;
     final int r = val & 0xFF;
     final int g = (val >> 8) & 0xFF;
@@ -615,10 +626,13 @@ class WebosAssStyle {
   }
 
   static int? parseAssAlpha(String raw) {
-    var s = raw.trim().toUpperCase();
-    s = s.replaceAll('&', '').replaceAll('H', '').trim();
+    final s = raw.trim();
     if (s.isEmpty) return null;
-    final val = int.tryParse(s, radix: 16);
+    final cleaned = s.replaceAll('&', '').replaceAll(RegExp(r'[hH]'), '').trim();
+    if (cleaned.isEmpty) return null;
+    final m = _hexDigitsRe.firstMatch(cleaned);
+    if (m == null) return null;
+    final val = int.tryParse(m.group(0)!, radix: 16);
     if (val == null) return null;
     return (255 - (val & 0xFF)).clamp(0, 255);
   }
@@ -637,6 +651,10 @@ class WebosAssTransform {
   final double? scaleX;
   final double? scaleY;
   final double? rotationZ;
+  final double? rotationX;
+  final double? rotationY;
+  final double? shearX;
+  final double? shearY;
   final double? outlineX;
   final double? outlineY;
   final double? blur;
@@ -656,6 +674,10 @@ class WebosAssTransform {
     this.scaleX,
     this.scaleY,
     this.rotationZ,
+    this.rotationX,
+    this.rotationY,
+    this.shearX,
+    this.shearY,
     this.outlineX,
     this.outlineY,
     this.blur,
@@ -678,6 +700,8 @@ class WebosAssSpan {
   final double? blur;
   final double? scaleX;
   final double? scaleY;
+  final double? shearX;
+  final double? shearY;
   final double? spacing;
   final int? borderStyle;
   final bool? bold;
@@ -702,6 +726,8 @@ class WebosAssSpan {
     this.blur,
     this.scaleX,
     this.scaleY,
+    this.shearX,
+    this.shearY,
     this.spacing,
     this.borderStyle,
     this.bold,
@@ -736,6 +762,10 @@ class WebosSubtitleCue {
   final double scaleX;
   final double scaleY;
   final double rotationZ;
+  final double rotationX;
+  final double rotationY;
+  final double shearX;
+  final double shearY;
   final WebosAssClip? clip;
   final List<WebosAssTransform> cueTransforms;
   final int playResX;
@@ -768,6 +798,10 @@ class WebosSubtitleCue {
     this.scaleX = 1.0,
     this.scaleY = 1.0,
     this.rotationZ = 0.0,
+    this.rotationX = 0.0,
+    this.rotationY = 0.0,
+    this.shearX = 0.0,
+    this.shearY = 0.0,
     this.clip,
     this.cueTransforms = const [],
     this.playResX = 1920,
@@ -811,8 +845,9 @@ class WebosSubtitleParser {
   static final _assTimeRe = RegExp(r'^(\d+):(\d{2}):(\d{2})\.(\d{1,3})$');
   static final _htmlTagRe = RegExp(r'<[^>]*>');
 
+  // Ordered longest-first so 1c/2c/3c/4c, 1a/2a/3a/4a, xbord/ybord, fscx/fscy, fade/fad never get shadowed by single-char tags
   static final _assTagRe = RegExp(
-    r'\\(1c|2c|3c|4c|1a|2a|3a|4a|alpha|an|fad|fade|fscx|fscy|fsp|frx|fry|frz|fr|fax|fay|fn|fs|xbord|ybord|bord|xshad|yshad|shad|blur|be|pos|move|org|pbo|p|q|r|b|i|u|s|c|a)\s*([^\\}]*)',
+    r'\\(alpha|xbord|ybord|xshad|yshad|fade|fscx|fscy|blur|move|bord|shad|fsp|frx|fry|frz|fax|fay|fad|pos|org|pbo|1c|2c|3c|4c|1a|2a|3a|4a|an|fn|fs|fr|be|p|q|r|b|i|u|s|c|a)(?![a-zA-Z])([^\\}]*)',
   );
 
   static final _clipTagRe = RegExp(r'\\(i?clip)\(([^)]*)\)');
@@ -1228,7 +1263,7 @@ class WebosSubtitleParser {
     return result;
   }
 
-  static WebosAssTransform? _parseTransformBlock(String inner) {
+  static WebosAssTransform? _parseTransformBlock(String inner, WebosAssStyle? defaultStyle) {
     final slashIdx = inner.indexOf(r'\');
     if (slashIdx == -1) return null;
     final headerPart = inner.substring(0, slashIdx).trim();
@@ -1264,6 +1299,10 @@ class WebosSubtitleParser {
     double? scX;
     double? scY;
     double? rotZ;
+    double? rotX;
+    double? rotY;
+    double? shX;
+    double? shY;
     double? outX;
     double? outY;
     double? blurVal;
@@ -1283,48 +1322,69 @@ class WebosSubtitleParser {
       final tagName = tm.group(1)!;
       final tagArg = tm.group(2)!.trim();
       if (tagName == 'c' || tagName == '1c') {
-        pRgb = WebosAssStyle.parseAssOverrideRgb(tagArg) ?? pRgb;
+        pRgb = tagArg.isEmpty
+            ? (defaultStyle?.primaryColor ?? Colors.white).withAlpha(255)
+            : (WebosAssStyle.parseAssOverrideRgb(tagArg) ?? pRgb);
       } else if (tagName == '3c') {
-        oRgb = WebosAssStyle.parseAssOverrideRgb(tagArg) ?? oRgb;
+        oRgb = tagArg.isEmpty
+            ? (defaultStyle?.outlineColor ?? Colors.black).withAlpha(255)
+            : (WebosAssStyle.parseAssOverrideRgb(tagArg) ?? oRgb);
       } else if (tagName == '4c') {
-        sRgb = WebosAssStyle.parseAssOverrideRgb(tagArg) ?? sRgb;
+        sRgb = tagArg.isEmpty
+            ? (defaultStyle?.shadowColor ?? Colors.black).withAlpha(255)
+            : (WebosAssStyle.parseAssOverrideRgb(tagArg) ?? sRgb);
       } else if (tagName == 'alpha') {
-        final a = WebosAssStyle.parseAssAlpha(tagArg);
+        final a = tagArg.isEmpty
+            ? (defaultStyle?.primaryColor.alpha ?? 255)
+            : WebosAssStyle.parseAssAlpha(tagArg);
         if (a != null) {
           a1 = a;
           a3 = a;
           a4 = a;
         }
       } else if (tagName == '1a') {
-        a1 = WebosAssStyle.parseAssAlpha(tagArg) ?? a1;
+        a1 = tagArg.isEmpty
+            ? (defaultStyle?.primaryColor.alpha ?? 255)
+            : (WebosAssStyle.parseAssAlpha(tagArg) ?? a1);
       } else if (tagName == '3a') {
-        a3 = WebosAssStyle.parseAssAlpha(tagArg) ?? a3;
+        a3 = tagArg.isEmpty
+            ? (defaultStyle?.outlineColor.alpha ?? 255)
+            : (WebosAssStyle.parseAssAlpha(tagArg) ?? a3);
       } else if (tagName == '4a') {
-        a4 = WebosAssStyle.parseAssAlpha(tagArg) ?? a4;
+        a4 = tagArg.isEmpty
+            ? (defaultStyle?.shadowColor.alpha ?? 170)
+            : (WebosAssStyle.parseAssAlpha(tagArg) ?? a4);
       } else if (tagName == 'fscx') {
         final v = double.tryParse(tagArg);
-        if (v != null) scX = v / 100.0;
+        scX = v != null ? (v / 100.0) : (defaultStyle?.scaleX ?? 1.0);
       } else if (tagName == 'fscy') {
         final v = double.tryParse(tagArg);
-        if (v != null) scY = v / 100.0;
+        scY = v != null ? (v / 100.0) : (defaultStyle?.scaleY ?? 1.0);
       } else if (tagName == 'frz' || tagName == 'fr') {
-        final v = double.tryParse(tagArg);
-        if (v != null) rotZ = v;
+        rotZ = double.tryParse(tagArg) ?? (defaultStyle?.angleZ ?? 0.0);
+      } else if (tagName == 'frx') {
+        rotX = double.tryParse(tagArg) ?? 0.0;
+      } else if (tagName == 'fry') {
+        rotY = double.tryParse(tagArg) ?? 0.0;
+      } else if (tagName == 'fax') {
+        shX = double.tryParse(tagArg) ?? 0.0;
+      } else if (tagName == 'fay') {
+        shY = double.tryParse(tagArg) ?? 0.0;
       } else if (tagName == 'bord') {
-        final v = double.tryParse(tagArg);
-        if (v != null && v >= 0) {
+        final v = double.tryParse(tagArg) ?? (defaultStyle?.outline ?? 2.0);
+        if (v >= 0) {
           outX = v;
           outY = v;
         }
       } else if (tagName == 'xbord') {
-        final v = double.tryParse(tagArg);
-        if (v != null && v >= 0) outX = v;
+        final v = double.tryParse(tagArg) ?? (defaultStyle?.outline ?? 2.0);
+        if (v >= 0) outX = v;
       } else if (tagName == 'ybord') {
-        final v = double.tryParse(tagArg);
-        if (v != null && v >= 0) outY = v;
+        final v = double.tryParse(tagArg) ?? (defaultStyle?.outline ?? 2.0);
+        if (v >= 0) outY = v;
       } else if (tagName == 'blur' || tagName == 'be') {
-        final v = double.tryParse(tagArg);
-        if (v != null && v >= 0) blurVal = v;
+        final v = double.tryParse(tagArg) ?? 0.0;
+        if (v >= 0) blurVal = v;
       }
     }
 
@@ -1341,6 +1401,10 @@ class WebosSubtitleParser {
       scaleX: scX,
       scaleY: scY,
       rotationZ: rotZ,
+      rotationX: rotX,
+      rotationY: rotY,
+      shearX: shX,
+      shearY: shY,
       outlineX: outX,
       outlineY: outY,
       blur: blurVal,
@@ -1364,7 +1428,8 @@ class WebosSubtitleParser {
     int layer = 0,
     int readOrder = 0,
   }) {
-    int alignment = style?.alignment ?? 2;
+    WebosAssStyle? activeStyle = style;
+    int alignment = activeStyle?.alignment ?? 2;
     double? posX;
     double? posY;
     double? moveX1, moveY1, moveX2, moveY2;
@@ -1372,38 +1437,43 @@ class WebosSubtitleParser {
     int fadeInMs = 0;
     int fadeOutMs = 0;
     List<int>? complexFade;
-    double curScaleX = style?.scaleX ?? 1.0;
-    double curScaleY = style?.scaleY ?? 1.0;
+    double curScaleX = activeStyle?.scaleX ?? 1.0;
+    double curScaleY = activeStyle?.scaleY ?? 1.0;
     double? firstSpanScaleX;
     double? firstSpanScaleY;
-    double rotationZ = style?.angleZ ?? 0.0;
+    double rotationZ = activeStyle?.angleZ ?? 0.0;
+    double rotationX = 0.0;
+    double rotationY = 0.0;
+    double curShearX = 0.0;
+    double curShearY = 0.0;
     WebosAssClip? cueClip;
     final cueLevelTransforms = <WebosAssTransform>[];
 
-    String? curFont = style?.fontName;
-    double? curSize = style?.fontSize;
-    Color curPrimaryRgb = (style?.primaryColor ?? Colors.white).withAlpha(255);
-    int curAlpha1 = style?.primaryColor.alpha ?? 255;
-    Color curOutlineRgb = (style?.outlineColor ?? Colors.black).withAlpha(255);
-    int curAlpha3 = style?.outlineColor.alpha ?? 255;
-    Color curShadowRgb = (style?.shadowColor ?? Colors.black).withAlpha(255);
-    int curAlpha4 = style?.shadowColor.alpha ?? 170;
-    double? curXBord = style?.outline;
-    double? curYBord = style?.outline;
-    double? curXShad = style?.shadow;
-    double? curYShad = style?.shadow;
+    String? curFont = activeStyle?.fontName;
+    double? curSize = activeStyle?.fontSize;
+    Color curPrimaryRgb = (activeStyle?.primaryColor ?? Colors.white).withAlpha(255);
+    int curAlpha1 = activeStyle?.primaryColor.alpha ?? 255;
+    Color curOutlineRgb = (activeStyle?.outlineColor ?? Colors.black).withAlpha(255);
+    int curAlpha3 = activeStyle?.outlineColor.alpha ?? 255;
+    Color curShadowRgb = (activeStyle?.shadowColor ?? Colors.black).withAlpha(255);
+    int curAlpha4 = activeStyle?.shadowColor.alpha ?? 170;
+    double? curXBord = activeStyle?.outline;
+    double? curYBord = activeStyle?.outline;
+    double? curXShad = activeStyle?.shadow;
+    double? curYShad = activeStyle?.shadow;
     double? curBlur;
-    double? curSpacing = style?.spacing;
-    int curBorderStyle = style?.borderStyle ?? 1;
-    bool? curBold = style?.bold;
-    bool? curItalic = style?.italic;
-    bool? curUnderline = style?.underline;
-    bool? curStrikeOut = style?.strikeOut;
+    double? curSpacing = activeStyle?.spacing;
+    int curBorderStyle = activeStyle?.borderStyle ?? 1;
+    bool? curBold = activeStyle?.bold;
+    bool? curItalic = activeStyle?.italic;
+    bool? curUnderline = activeStyle?.underline;
+    bool? curStrikeOut = activeStyle?.strikeOut;
     int curDrawingScale = 0;
     final curTransforms = <WebosAssTransform>[];
 
     void resetToStyle(WebosAssStyle? target) {
-      final s = target ?? style;
+      activeStyle = target ?? style;
+      final s = activeStyle;
       curFont = s?.fontName;
       curSize = s?.fontSize;
       curPrimaryRgb = (s?.primaryColor ?? Colors.white).withAlpha(255);
@@ -1419,6 +1489,8 @@ class WebosSubtitleParser {
       curBlur = null;
       curScaleX = s?.scaleX ?? 1.0;
       curScaleY = s?.scaleY ?? 1.0;
+      curShearX = 0.0;
+      curShearY = 0.0;
       curSpacing = s?.spacing;
       curBorderStyle = s?.borderStyle ?? 1;
       curBold = s?.bold;
@@ -1437,7 +1509,7 @@ class WebosSubtitleParser {
 
       if (rawTagBlock != null) {
         for (final inner in _extractTransformInners(rawTagBlock)) {
-          final tr = _parseTransformBlock(inner);
+          final tr = _parseTransformBlock(inner, activeStyle);
           if (tr != null) {
             curTransforms.add(tr);
             cueLevelTransforms.add(tr);
@@ -1459,7 +1531,9 @@ class WebosSubtitleParser {
 
           if (tagName == 'r') {
             final targetName = tagArg.replaceFirst('*', '').trim();
-            final targetStyle = (targetName.isNotEmpty && stylesMap != null) ? stylesMap[targetName] : style;
+            final targetStyle = (targetName.isNotEmpty && stylesMap != null)
+                ? (stylesMap[targetName] ?? style)
+                : style;
             resetToStyle(targetStyle);
           } else if (tagName == 'an') {
             final an = int.tryParse(tagArg);
@@ -1482,91 +1556,151 @@ class WebosSubtitleParser {
             }
           } else if (tagName == 'p') {
             final pVal = int.tryParse(tagArg);
-            if (pVal != null) curDrawingScale = pVal;
+            curDrawingScale = pVal ?? 0;
           } else if (tagName == 'c' || tagName == '1c') {
-            final rgb = WebosAssStyle.parseAssOverrideRgb(tagArg);
-            if (rgb != null) curPrimaryRgb = rgb;
+            // Empty {\c} or {\1c} resets primary color back to activeStyle's primaryColor!
+            if (tagArg.isEmpty) {
+              curPrimaryRgb = (activeStyle?.primaryColor ?? Colors.white).withAlpha(255);
+            } else {
+              final rgb = WebosAssStyle.parseAssOverrideRgb(tagArg);
+              if (rgb != null) curPrimaryRgb = rgb;
+            }
           } else if (tagName == '3c') {
-            final rgb = WebosAssStyle.parseAssOverrideRgb(tagArg);
-            if (rgb != null) curOutlineRgb = rgb;
+            if (tagArg.isEmpty) {
+              curOutlineRgb = (activeStyle?.outlineColor ?? Colors.black).withAlpha(255);
+            } else {
+              final rgb = WebosAssStyle.parseAssOverrideRgb(tagArg);
+              if (rgb != null) curOutlineRgb = rgb;
+            }
           } else if (tagName == '4c') {
-            final rgb = WebosAssStyle.parseAssOverrideRgb(tagArg);
-            if (rgb != null) curShadowRgb = rgb;
+            if (tagArg.isEmpty) {
+              curShadowRgb = (activeStyle?.shadowColor ?? Colors.black).withAlpha(255);
+            } else {
+              final rgb = WebosAssStyle.parseAssOverrideRgb(tagArg);
+              if (rgb != null) curShadowRgb = rgb;
+            }
           } else if (tagName == 'alpha') {
-            final a = WebosAssStyle.parseAssAlpha(tagArg);
-            if (a != null) {
-              curAlpha1 = a;
-              curAlpha3 = a;
-              curAlpha4 = a;
+            if (tagArg.isEmpty) {
+              curAlpha1 = activeStyle?.primaryColor.alpha ?? 255;
+              curAlpha3 = activeStyle?.outlineColor.alpha ?? 255;
+              curAlpha4 = activeStyle?.shadowColor.alpha ?? 170;
+            } else {
+              final a = WebosAssStyle.parseAssAlpha(tagArg);
+              if (a != null) {
+                curAlpha1 = a;
+                curAlpha3 = a;
+                curAlpha4 = a;
+              }
             }
           } else if (tagName == '1a') {
-            final a = WebosAssStyle.parseAssAlpha(tagArg);
-            if (a != null) curAlpha1 = a;
+            if (tagArg.isEmpty) {
+              curAlpha1 = activeStyle?.primaryColor.alpha ?? 255;
+            } else {
+              final a = WebosAssStyle.parseAssAlpha(tagArg);
+              if (a != null) curAlpha1 = a;
+            }
           } else if (tagName == '3a') {
-            final a = WebosAssStyle.parseAssAlpha(tagArg);
-            if (a != null) curAlpha3 = a;
+            if (tagArg.isEmpty) {
+              curAlpha3 = activeStyle?.outlineColor.alpha ?? 255;
+            } else {
+              final a = WebosAssStyle.parseAssAlpha(tagArg);
+              if (a != null) curAlpha3 = a;
+            }
           } else if (tagName == '4a') {
-            final a = WebosAssStyle.parseAssAlpha(tagArg);
-            if (a != null) curAlpha4 = a;
+            if (tagArg.isEmpty) {
+              curAlpha4 = activeStyle?.shadowColor.alpha ?? 170;
+            } else {
+              final a = WebosAssStyle.parseAssAlpha(tagArg);
+              if (a != null) curAlpha4 = a;
+            }
           } else if (tagName == 'fn') {
-            if (tagArg.isNotEmpty) curFont = tagArg;
+            curFont = tagArg.isNotEmpty ? tagArg : activeStyle?.fontName;
           } else if (tagName == 'fs') {
             final fs = double.tryParse(tagArg);
-            if (fs != null && fs > 0) curSize = fs;
+            curSize = (fs != null && fs > 0) ? fs : activeStyle?.fontSize;
           } else if (tagName == 'fscx') {
             final v = double.tryParse(tagArg);
-            if (v != null) curScaleX = v / 100.0;
+            curScaleX = v != null ? (v / 100.0) : (activeStyle?.scaleX ?? 1.0);
           } else if (tagName == 'fscy') {
             final v = double.tryParse(tagArg);
-            if (v != null) curScaleY = v / 100.0;
+            curScaleY = v != null ? (v / 100.0) : (activeStyle?.scaleY ?? 1.0);
           } else if (tagName == 'fsp') {
             final v = double.tryParse(tagArg);
-            if (v != null) curSpacing = v;
+            curSpacing = v ?? activeStyle?.spacing;
           } else if (tagName == 'frz' || tagName == 'fr') {
             final v = double.tryParse(tagArg);
-            if (v != null) rotationZ = v;
+            rotationZ = v ?? (activeStyle?.angleZ ?? 0.0);
+          } else if (tagName == 'frx') {
+            rotationX = double.tryParse(tagArg) ?? 0.0;
+          } else if (tagName == 'fry') {
+            rotationY = double.tryParse(tagArg) ?? 0.0;
+          } else if (tagName == 'fax') {
+            curShearX = double.tryParse(tagArg) ?? 0.0;
+          } else if (tagName == 'fay') {
+            curShearY = double.tryParse(tagArg) ?? 0.0;
           } else if (tagName == 'bord') {
             final v = double.tryParse(tagArg);
             if (v != null && v >= 0) {
               curXBord = v;
               curYBord = v;
+            } else if (tagArg.isEmpty) {
+              curXBord = activeStyle?.outline;
+              curYBord = activeStyle?.outline;
             }
           } else if (tagName == 'xbord') {
             final v = double.tryParse(tagArg);
-            if (v != null && v >= 0) curXBord = v;
+            curXBord = (v != null && v >= 0) ? v : activeStyle?.outline;
           } else if (tagName == 'ybord') {
             final v = double.tryParse(tagArg);
-            if (v != null && v >= 0) curYBord = v;
+            curYBord = (v != null && v >= 0) ? v : activeStyle?.outline;
           } else if (tagName == 'shad') {
             final v = double.tryParse(tagArg);
             if (v != null) {
               curXShad = v;
               curYShad = v;
+            } else if (tagArg.isEmpty) {
+              curXShad = activeStyle?.shadow;
+              curYShad = activeStyle?.shadow;
             }
           } else if (tagName == 'xshad') {
-            final v = double.tryParse(tagArg);
-            if (v != null) curXShad = v;
+            curXShad = double.tryParse(tagArg) ?? activeStyle?.shadow;
           } else if (tagName == 'yshad') {
-            final v = double.tryParse(tagArg);
-            if (v != null) curYShad = v;
+            curYShad = double.tryParse(tagArg) ?? activeStyle?.shadow;
           } else if (tagName == 'blur' || tagName == 'be') {
             final v = double.tryParse(tagArg);
-            if (v != null && v >= 0) curBlur = v;
+            curBlur = (v != null && v >= 0) ? v : null;
           } else if (tagName == 'b') {
             if (tagArg == '0') {
               curBold = false;
             } else if (tagArg == '1' || (int.tryParse(tagArg) ?? 0) >= 600) {
               curBold = true;
+            } else if (tagArg.isEmpty) {
+              curBold = activeStyle?.bold;
             }
           } else if (tagName == 'i') {
-            if (tagArg == '1') curItalic = true;
-            if (tagArg == '0') curItalic = false;
+            if (tagArg == '1') {
+              curItalic = true;
+            } else if (tagArg == '0') {
+              curItalic = false;
+            } else if (tagArg.isEmpty) {
+              curItalic = activeStyle?.italic;
+            }
           } else if (tagName == 'u') {
-            if (tagArg == '1') curUnderline = true;
-            if (tagArg == '0') curUnderline = false;
+            if (tagArg == '1') {
+              curUnderline = true;
+            } else if (tagArg == '0') {
+              curUnderline = false;
+            } else if (tagArg.isEmpty) {
+              curUnderline = activeStyle?.underline;
+            }
           } else if (tagName == 's') {
-            if (tagArg == '1') curStrikeOut = true;
-            if (tagArg == '0') curStrikeOut = false;
+            if (tagArg == '1') {
+              curStrikeOut = true;
+            } else if (tagArg == '0') {
+              curStrikeOut = false;
+            } else if (tagArg.isEmpty) {
+              curStrikeOut = activeStyle?.strikeOut;
+            }
           }
         }
 
@@ -1622,6 +1756,8 @@ class WebosSubtitleParser {
                 blur: curBlur,
                 scaleX: curScaleX,
                 scaleY: curScaleY,
+                shearX: curShearX,
+                shearY: curShearY,
                 borderStyle: curBorderStyle,
                 drawingScale: curDrawingScale,
                 compiledVectorPath: compiled,
@@ -1659,6 +1795,8 @@ class WebosSubtitleParser {
               blur: curBlur,
               scaleX: curScaleX,
               scaleY: curScaleY,
+              shearX: curShearX,
+              shearY: curShearY,
               spacing: curSpacing,
               borderStyle: curBorderStyle,
               bold: curBold,
@@ -1699,6 +1837,10 @@ class WebosSubtitleParser {
       scaleX: firstSpanScaleX ?? curScaleX,
       scaleY: firstSpanScaleY ?? curScaleY,
       rotationZ: rotationZ,
+      rotationX: rotationX,
+      rotationY: rotationY,
+      shearX: curShearX,
+      shearY: curShearY,
       clip: cueClip,
       cueTransforms: cueLevelTransforms,
       playResX: playResX > 0 ? playResX : 1920,
@@ -2272,14 +2414,11 @@ class WebosMkvSubtitleExtractor {
     }
   }
 
-  /// Element-streaming MKV Cluster parser that steps directly inside Cluster headers (0x1F43B675)
-  /// so multi-megabyte Clusters (>2MB) never drop subtitle blocks at chunk boundaries.
   int _parseClustersInBuffer(Uint8List buf) {
     int pos = 0;
     bool addedAny = false;
 
     while (pos < buf.length - 12) {
-      // 1. Check for Cluster header (0x1F 0x43 0xB6 0x75) and step into its body
       if (buf[pos] == 0x1F &&
           buf[pos + 1] == 0x43 &&
           buf[pos + 2] == 0xB6 &&
@@ -2304,7 +2443,6 @@ class WebosMkvSubtitleExtractor {
               elId.value == 0xBF);
 
       if (!isKnownClusterChild || elSz == null) {
-        // Resync forward to next Cluster header if we hit a top-level segment element or lost alignment
         pos++;
         while (pos < buf.length - 12) {
           if (buf[pos] == 0x1F &&
@@ -2322,12 +2460,10 @@ class WebosMkvSubtitleExtractor {
       final bEnd = bStart + elSz.value;
 
       if (bEnd > buf.length) {
-        // Element crosses the 2MB buffer boundary: resume from exact start of this element on next fetch!
         if (pos > 0) {
           if (addedAny) onCuesUpdated();
           return pos;
         } else {
-          // Single element at pos 0 is larger than 2MB (e.g. huge video keyframe); skip past it
           return bEnd;
         }
       }
@@ -2628,8 +2764,8 @@ class _WebosSubtitleOverlayState extends State<WebosSubtitleOverlay>
     final hasAnimatedClip = cue.cueTransforms.any((t) => t.clipRect != null);
     if (baseClip == null && !hasAnimatedClip) return child;
 
-    final rx = cue.playResX > 0 ? cue.playResX : 1920;
-    final ry = cue.playResY > 0 ? cue.playResY : 1080;
+    final rx = (cue.playResX > 0 ? cue.playResX : 1920).toDouble();
+    final ry = (cue.playResY > 0 ? cue.playResY : 1080).toDouble();
     final sx = screenW / rx;
     final sy = screenH / ry;
     final totalDur = (cue.endMs - cue.startMs).clamp(1, 3600000);
@@ -2654,14 +2790,14 @@ class _WebosSubtitleOverlayState extends State<WebosSubtitleOverlay>
       );
     }
 
-    Rect? curRect = baseClip?.rect;
+    // If a \t(\clip(...)) is animated without an initial \clip(), start from the full PlayRes canvas
+    Rect curRect = baseClip?.rect ?? Rect.fromLTWH(0.0, 0.0, rx, ry);
     bool inverse = baseClip?.inverse ?? false;
 
     for (final tr in cue.cueTransforms) {
       final targetRect = tr.clipRect;
       if (targetRect == null) continue;
       if (tr.clipInverse != null) inverse = tr.clipInverse!;
-      curRect ??= targetRect;
 
       final tStart = tr.t1 ?? 0;
       final tEnd = (tr.t2 != null && tr.t2! > tStart) ? tr.t2! : totalDur;
@@ -2679,8 +2815,6 @@ class _WebosSubtitleOverlayState extends State<WebosSubtitleOverlay>
       }
     }
 
-    if (curRect == null) return child;
-
     final screenRect = Rect.fromLTRB(
       curRect.left * sx,
       curRect.top * sy,
@@ -2695,6 +2829,50 @@ class _WebosSubtitleOverlayState extends State<WebosSubtitleOverlay>
       ),
       child: child,
     );
+  }
+
+  /// Filters active cues at 60fps while bridging 1..15ms MKV/centisecond rounding gaps
+  /// between consecutive 23.976fps frame-by-frame animation cues so they never flicker!
+  List<WebosSubtitleCue> _selectVisibleCuesForTimestamp(
+    List<WebosSubtitleCue> rawCues,
+    int? smoothNowMs,
+  ) {
+    if (smoothNowMs == null) return List<WebosSubtitleCue>.of(rawCues);
+
+    final visible = <WebosSubtitleCue>[];
+    for (int i = 0; i < rawCues.length; i++) {
+      final c = rawCues[i];
+      if (smoothNowMs < c.startMs) continue;
+
+      int effectiveEndMs = c.endMs;
+      // Check if another cue on the same layer/style starts within 1..18ms after this cue ends
+      // (common when 23.976fps frames are rounded to 10ms ASS centiseconds or 1ms MKV blocks).
+      if (smoothNowMs >= c.endMs && smoothNowMs <= c.endMs + 18) {
+        bool hasSuccessorStartingSoon = false;
+        bool successorAlreadyStarted = false;
+        for (int j = 0; j < rawCues.length; j++) {
+          if (i == j) continue;
+          final next = rawCues[j];
+          if (next.layer == c.layer &&
+              next.startMs >= c.endMs &&
+              next.startMs <= c.endMs + 18) {
+            hasSuccessorStartingSoon = true;
+            if (smoothNowMs >= next.startMs) {
+              successorAlreadyStarted = true;
+            }
+            break;
+          }
+        }
+        if (hasSuccessorStartingSoon && !successorAlreadyStarted) {
+          effectiveEndMs = smoothNowMs + 1;
+        }
+      }
+
+      if (smoothNowMs < effectiveEndMs) {
+        visible.add(c);
+      }
+    }
+    return visible;
   }
 
   @override
@@ -2715,16 +2893,7 @@ class _WebosSubtitleOverlayState extends State<WebosSubtitleOverlay>
                     if (rawCues.isEmpty) return const SizedBox.shrink();
 
                     final smoothNowMs = _resolveSmoothPlayheadMs();
-
-                    final visibleCues = <WebosSubtitleCue>[];
-                    for (final c in rawCues) {
-                      if (smoothNowMs != null) {
-                        if (smoothNowMs < c.startMs || smoothNowMs >= c.endMs) {
-                          continue;
-                        }
-                      }
-                      visibleCues.add(c);
-                    }
+                    final visibleCues = _selectVisibleCuesForTimestamp(rawCues, smoothNowMs);
 
                     if (visibleCues.isEmpty) return const SizedBox.shrink();
 
@@ -3306,15 +3475,41 @@ class _WebosSubtitleOverlayState extends State<WebosSubtitleOverlay>
       );
     }
 
-    final firstTransforms = effectiveSpans.first.transforms;
+    final firstTransforms = cue.cueTransforms.isNotEmpty
+        ? cue.cueTransforms
+        : effectiveSpans.first.transforms;
     final dynScaleX = _evalTransformedDouble(cue.scaleX, firstTransforms, elapsedMs, totalDur, (t) => t.scaleX);
     final dynScaleY = _evalTransformedDouble(cue.scaleY, firstTransforms, elapsedMs, totalDur, (t) => t.scaleY);
     final dynRotZ = _evalTransformedDouble(cue.rotationZ, firstTransforms, elapsedMs, totalDur, (t) => t.rotationZ);
+    final dynRotX = _evalTransformedDouble(cue.rotationX, firstTransforms, elapsedMs, totalDur, (t) => t.rotationX);
+    final dynRotY = _evalTransformedDouble(cue.rotationY, firstTransforms, elapsedMs, totalDur, (t) => t.rotationY);
+    final dynShearX = _evalTransformedDouble(cue.shearX, firstTransforms, elapsedMs, totalDur, (t) => t.shearX);
+    final dynShearY = _evalTransformedDouble(cue.shearY, firstTransforms, elapsedMs, totalDur, (t) => t.shearY);
 
-    if (dynScaleX != 1.0 || dynScaleY != 1.0) {
+    if (dynScaleX != 1.0 ||
+        dynScaleY != 1.0 ||
+        dynShearX != 0.0 ||
+        dynShearY != 0.0 ||
+        dynRotX != 0.0 ||
+        dynRotY != 0.0) {
+      final mat = Matrix4.identity();
+      if (dynRotX != 0.0 || dynRotY != 0.0) {
+        mat.setEntry(3, 2, 0.001);
+        if (dynRotX != 0.0) mat.rotateX(-dynRotX * (math.pi / 180.0));
+        if (dynRotY != 0.0) mat.rotateY(dynRotY * (math.pi / 180.0));
+      }
+      if (dynShearX != 0.0 || dynShearY != 0.0) {
+        final shearMat = Matrix4.identity();
+        shearMat.setEntry(0, 1, dynShearX);
+        shearMat.setEntry(1, 0, dynShearY);
+        mat.multiply(shearMat);
+      }
+      if (dynScaleX != 1.0 || dynScaleY != 1.0) {
+        mat.scale(dynScaleX, dynScaleY, 1.0);
+      }
       result = Transform(
         alignment: _flutterAlignmentFor(cue.alignment),
-        transform: Matrix4.diagonal3Values(dynScaleX, dynScaleY, 1.0),
+        transform: mat,
         child: result,
       );
     }
