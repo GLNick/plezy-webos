@@ -21,13 +21,31 @@ class WebosSubtitleClock {
   static const int kSceneCutLeadMs = 25;
 
   final Stopwatch _watch = Stopwatch();
+  final Stopwatch _seekCooldownWatch = Stopwatch();
   int _anchorPosMs = 0;
   int _lastRawPosMs = -1;
   bool _isPlaying = true;
   double _playbackRate = 1.0;
   bool _hasReported = false;
+  bool _awaitingPostSeekTick = false;
 
   bool get hasReportedPosition => _hasReported;
+
+  /// Called immediately when the user or intro-skipper triggers a seek.
+  /// Freezes the subtitle clock at the target position while the hardware decoder buffers,
+  /// preventing the stopwatch from running ~1s ahead before video playback resumes.
+  void notifySeek(int targetPosMs) {
+    if (targetPosMs < 0) return;
+    _hasReported = true;
+    _anchorPosMs = targetPosMs;
+    _lastRawPosMs = targetPosMs;
+    _awaitingPostSeekTick = true;
+    _watch.reset();
+    _watch.stop();
+    _seekCooldownWatch
+      ..reset()
+      ..start();
+  }
 
   void reportPlayerPosition(int rawPosMs, {bool? isPlaying, double? rate}) {
     if (rawPosMs < 0) return;
@@ -37,7 +55,7 @@ class WebosSubtitleClock {
     if (isPlaying != null) _isPlaying = isPlaying;
     if (rate != null && rate > 0) _playbackRate = rate;
 
-    if (playingChanged) {
+    if (playingChanged && !_awaitingPostSeekTick) {
       _anchorPosMs = _extrapolatedRawMs;
       if (_isPlaying) {
         _watch
@@ -49,15 +67,37 @@ class WebosSubtitleClock {
     }
 
     if (rawPosMs == _lastRawPosMs) return;
+
+    final prevRaw = _lastRawPosMs;
     _lastRawPosMs = rawPosMs;
+
+    // Detect sudden position jumps (manual seek, chapter/intro skip)
+    final rawJump = prevRaw >= 0 ? (rawPosMs - prevRaw).abs() : 0;
+    if (rawJump > 1500) {
+      notifySeek(rawPosMs);
+      return;
+    }
+
+    if (_awaitingPostSeekTick) {
+      // First real hardware progress tick after seek buffering finished:
+      // snap cleanly to this position and resume the 60fps stopwatch!
+      _awaitingPostSeekTick = false;
+      _seekCooldownWatch.stop();
+      _anchorPosMs = rawPosMs;
+      if (_isPlaying) {
+        _watch
+          ..reset()
+          ..start();
+      } else {
+        _watch.reset();
+      }
+      return;
+    }
 
     final currentEst = _extrapolatedRawMs;
     final diff = rawPosMs - currentEst;
 
-    // NDL_media often reports integer seconds (quantization error up to ~950ms) or 250ms ticks.
-    // Only hard-snap on real seeks (>900ms), or gently nudge (12%) if drift exceeds 350ms,
-    // and NEVER pull time backwards during normal forward playback!
-    if (!_watch.isRunning || diff.abs() > 900) {
+    if (!_watch.isRunning || diff.abs() > 850) {
       _anchorPosMs = rawPosMs;
       if (_isPlaying) {
         _watch
@@ -68,7 +108,6 @@ class WebosSubtitleClock {
       }
     } else if (diff.abs() > 350) {
       final nudged = currentEst + (diff * 0.15).round();
-      // Keep monotonic forward progress during normal playback
       _anchorPosMs = nudged < currentEst ? currentEst : nudged;
       if (_isPlaying) {
         _watch
@@ -82,7 +121,7 @@ class WebosSubtitleClock {
     if (_isPlaying == playing) return;
     _anchorPosMs = _extrapolatedRawMs;
     _isPlaying = playing;
-    if (playing) {
+    if (playing && !_awaitingPostSeekTick) {
       _watch
         ..reset()
         ..start();
@@ -92,12 +131,27 @@ class WebosSubtitleClock {
   }
 
   int get _extrapolatedRawMs {
+    if (_awaitingPostSeekTick) {
+      // Safety fallback if hardware player only reports coarse ticks after >1200ms
+      if (_seekCooldownWatch.isRunning && _seekCooldownWatch.elapsedMilliseconds > 1200) {
+        _awaitingPostSeekTick = false;
+        _seekCooldownWatch.stop();
+        if (_isPlaying) {
+          _watch
+            ..reset()
+            ..start();
+        }
+      } else {
+        return _anchorPosMs;
+      }
+    }
     if (!_isPlaying || !_watch.isRunning) return _anchorPosMs;
     final elapsed = _watch.elapsedMilliseconds;
     return _anchorPosMs + (elapsed * _playbackRate).round();
   }
 
-  int get currentPositionMs => _extrapolatedRawMs + kSceneCutLeadMs;
+  int get currentPositionMs =>
+      _awaitingPostSeekTick ? _anchorPosMs : (_extrapolatedRawMs + kSceneCutLeadMs);
 }
 
 /// Persistent subtitle preference store so new episodes automatically activate the

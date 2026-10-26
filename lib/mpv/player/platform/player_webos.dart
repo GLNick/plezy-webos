@@ -540,11 +540,6 @@ class PlayerWebos extends PlayerBase {
   }
 
   void _refreshActiveSubtitleCues() {
-    WebosSubtitleClock.instance.reportPlayerPosition(
-      state.position.inMilliseconds,
-      isPlaying: state.playing,
-      rate: state.rate,
-    );
     final autoSub = WebosSubtitlePreferenceStore.instance.checkAutoSelect<SubtitleTrack>(
       currentTrack: state.track.subtitle,
       availableTracks: state.tracks.subtitle,
@@ -566,6 +561,11 @@ class PlayerWebos extends PlayerBase {
 
     final trackId = _selectedSubTrackId!;
     final nowMs = sourcePositionFor(currentPosition).inMilliseconds;
+    WebosSubtitleClock.instance.reportPlayerPosition(
+      nowMs,
+      isPlaying: state.playing,
+      rate: state.rate,
+    );
 
     List<WebosSubtitleCue>? sourceCues = _loadedExternalSubtitles[trackId];
     if (sourceCues == null || sourceCues.isEmpty) {
@@ -707,6 +707,7 @@ class PlayerWebos extends PlayerBase {
 
   @override
   Future<void> seek(Duration position) async {
+    WebosSubtitleClock.instance.notifySeek(sourcePositionFor(position).inMilliseconds);
     final texId = _textureId;
     if (disposed || texId == null) return;
     await runSeek(position, () async {
