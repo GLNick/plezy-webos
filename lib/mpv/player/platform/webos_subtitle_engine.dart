@@ -796,8 +796,14 @@ class WebosAssSpan {
 
 class WebosSubtitleCue {
   final int startMs;
-  final int endMs;
+  int endMs;
   final String text;
+  final bool isPgs;
+  ui.Image? pgsImage;
+  final double pgsX;
+  final double pgsY;
+  final double pgsWidth;
+  final double pgsHeight;
   final List<WebosAssSpan> spans;
   final bool isAss;
   final WebosAssStyle? style;
@@ -830,10 +836,16 @@ class WebosSubtitleCue {
   final int layer;
   final int readOrder;
 
-  const WebosSubtitleCue({
+  WebosSubtitleCue({
     required this.startMs,
     required this.endMs,
     required this.text,
+    this.isPgs = false,
+    this.pgsImage,
+    this.pgsX = 0.0,
+    this.pgsY = 0.0,
+    this.pgsWidth = 0.0,
+    this.pgsHeight = 0.0,
     this.spans = const [],
     this.isAss = false,
     this.style,
@@ -1926,6 +1938,302 @@ class _MkvTrackInfo {
   });
 }
 
+
+class _PgsCompObject {
+  final int objectId;
+  final int x;
+  final int y;
+  const _PgsCompObject({required this.objectId, required this.x, required this.y});
+}
+
+class _PgsObjectBuffer {
+  final int width;
+  final int height;
+  final BytesBuilder rleBuilder;
+  _PgsObjectBuffer({required this.width, required this.height, required this.rleBuilder});
+}
+
+/// Native Blu-ray PGS (S_HDMV/PGS) RLE bitmap subtitle decoder.
+/// Decodes PDS (YCrCbA palettes), ODS (RLE object bitmaps), and PCS (screen composition)
+/// directly into Flutter ui.Image bitmaps so PGS subtitles work in Direct Play withoutMojibake.
+class _WebosPgsTrackDecoder {
+  final VoidCallback onImageDecoded;
+
+  int _canvasWidth = 1920;
+  int _canvasHeight = 1080;
+  int _activePaletteId = 0;
+  final Map<int, Uint8List> _palettes = {};
+  final Map<int, _PgsObjectBuffer> _objects = {};
+  List<_PgsCompObject> _compObjects = [];
+  bool _hasPcsInCurrentSet = false;
+  final List<WebosSubtitleCue> _openCues = [];
+
+  _WebosPgsTrackDecoder({required this.onImageDecoded});
+
+  static Uint8List _maybeDecompressZlib(Uint8List raw) {
+    if (raw.length < 2) return raw;
+    // Standard PGS segment types start with 0x14 (PDS), 0x15 (ODS), 0x16 (PCS), 0x17 (WDS), or 0x80 (END).
+    // Matroska tracks with ContentCompAlgo=0 (zlib) start with 0x78 (0x78 0x01, 0x78 0x5E, 0x78 0x9C, 0x78 0xDA).
+    if (raw[0] == 0x78 || (raw[0] != 0x14 && raw[0] != 0x15 && raw[0] != 0x16 && raw[0] != 0x17 && raw[0] != 0x80)) {
+      try {
+        return Uint8List.fromList(zlib.decode(raw));
+      } catch (_) {}
+    }
+    return raw;
+  }
+
+  bool processMkvBlock({
+    required int cueStartMs,
+    required Uint8List payload,
+    required List<WebosSubtitleCue> targetCueList,
+  }) {
+    final data = _maybeDecompressZlib(payload);
+    int pos = 0;
+    bool updatedAny = false;
+
+    while (pos + 3 <= data.length) {
+      final segType = data[pos];
+      final segLen = (data[pos + 1] << 8) | data[pos + 2];
+      pos += 3;
+      if (pos + segLen > data.length) break;
+      final seg = Uint8List.sublistView(data, pos, pos + segLen);
+      pos += segLen;
+
+      if (segType == 0x14) {
+        _parsePds(seg);
+      } else if (segType == 0x15) {
+        _parseOds(seg);
+      } else if (segType == 0x16) {
+        _parsePcs(seg);
+      } else if (segType == 0x80) {
+        if (_finalizeDisplaySet(cueStartMs, targetCueList)) {
+          updatedAny = true;
+        }
+      }
+    }
+
+    if (_hasPcsInCurrentSet) {
+      if (_finalizeDisplaySet(cueStartMs, targetCueList)) {
+        updatedAny = true;
+      }
+    }
+    return updatedAny;
+  }
+
+  void _parsePcs(Uint8List d) {
+    if (d.length < 11) return;
+    final w = (d[0] << 8) | d[1];
+    final h = (d[2] << 8) | d[3];
+    if (w > 0) _canvasWidth = w;
+    if (h > 0) _canvasHeight = h;
+
+    final compState = d[7];
+    if (compState == 0x80) {
+      // Epoch Start
+      _objects.clear();
+      _palettes.clear();
+    }
+
+    _activePaletteId = d[9];
+    final numObjs = d[10];
+    final comps = <_PgsCompObject>[];
+    int off = 11;
+    for (int i = 0; i < numObjs && off + 8 <= d.length; i++) {
+      final objId = (d[off] << 8) | d[off + 1];
+      final cropped = d[off + 3];
+      final x = (d[off + 4] << 8) | d[off + 5];
+      final y = (d[off + 6] << 8) | d[off + 7];
+      off += 8;
+      if ((cropped & 0x80) != 0) off += 8;
+      comps.add(_PgsCompObject(objectId: objId, x: x, y: y));
+    }
+    _compObjects = comps;
+    _hasPcsInCurrentSet = true;
+  }
+
+  void _parsePds(Uint8List d) {
+    if (d.length < 2) return;
+    final palId = d[0];
+    final pal = _palettes.putIfAbsent(palId, () => Uint8List(256 * 4));
+    int off = 2;
+    while (off + 5 <= d.length) {
+      final idx = d[off];
+      final y = d[off + 1];
+      final cr = d[off + 2];
+      final cb = d[off + 3];
+      final a = d[off + 4];
+      off += 5;
+      final cOff = idx * 4;
+      if (a == 0) {
+        pal[cOff] = 0;
+        pal[cOff + 1] = 0;
+        pal[cOff + 2] = 0;
+        pal[cOff + 3] = 0;
+      } else {
+        final yf = y.toDouble();
+        final crf = (cr - 128).toDouble();
+        final cbf = (cb - 128).toDouble();
+        pal[cOff] = (yf + 1.5748 * crf).round().clamp(0, 255);
+        pal[cOff + 1] = (yf - 0.1873 * cbf - 0.4681 * crf).round().clamp(0, 255);
+        pal[cOff + 2] = (yf + 1.8556 * cbf).round().clamp(0, 255);
+        pal[cOff + 3] = a;
+      }
+    }
+  }
+
+  void _parseOds(Uint8List d) {
+    if (d.length < 4) return;
+    final objId = (d[0] << 8) | d[1];
+    final seqFlag = d[3];
+    if ((seqFlag & 0x80) != 0) {
+      if (d.length < 11) return;
+      final w = (d[7] << 8) | d[8];
+      final h = (d[9] << 8) | d[10];
+      if (w <= 0 || h <= 0 || w > 4096 || h > 2160) return;
+      final builder = BytesBuilder(copy: false)..add(Uint8List.sublistView(d, 11));
+      _objects[objId] = _PgsObjectBuffer(width: w, height: h, rleBuilder: builder);
+    } else {
+      final existing = _objects[objId];
+      if (existing != null && d.length > 4) {
+        existing.rleBuilder.add(Uint8List.sublistView(d, 4));
+      }
+    }
+  }
+
+  bool _finalizeDisplaySet(int cueStartMs, List<WebosSubtitleCue> targetCueList) {
+    _hasPcsInCurrentSet = false;
+    bool changed = false;
+
+    // Close any previously open PGS cues on this track
+    for (final prev in _openCues) {
+      if (cueStartMs > prev.startMs && cueStartMs < prev.endMs) {
+        prev.endMs = cueStartMs;
+        changed = true;
+      }
+    }
+    _openCues.clear();
+
+    if (_compObjects.isEmpty) {
+      return changed;
+    }
+
+    final pal = _palettes[_activePaletteId];
+    if (pal == null) return changed;
+
+    for (final comp in _compObjects) {
+      final obj = _objects[comp.objectId];
+      if (obj == null || obj.width <= 0 || obj.height <= 0) continue;
+
+      final rle = obj.rleBuilder.toBytes();
+      final rgba = _decodeRleToRgba(rle, obj.width, obj.height, pal);
+      if (rgba == null) continue;
+
+      final cue = WebosSubtitleCue(
+        startMs: cueStartMs,
+        endMs: cueStartMs + 10000, // Will be shortened by the next PCS clear/update segment
+        text: '',
+        isPgs: true,
+        pgsX: comp.x.toDouble(),
+        pgsY: comp.y.toDouble(),
+        pgsWidth: obj.width.toDouble(),
+        pgsHeight: obj.height.toDouble(),
+        playResX: _canvasWidth,
+        playResY: _canvasHeight,
+      );
+
+      targetCueList.add(cue);
+      _openCues.add(cue);
+      changed = true;
+
+      ui.decodeImageFromPixels(
+        rgba,
+        obj.width,
+        obj.height,
+        ui.PixelFormat.rgba8888,
+        (ui.Image img) {
+          cue.pgsImage = img;
+          onImageDecoded();
+        },
+      );
+    }
+
+    return changed;
+  }
+
+  static Uint8List? _decodeRleToRgba(Uint8List rle, int width, int height, Uint8List pal) {
+    if (rle.isEmpty || width <= 0 || height <= 0) return null;
+    final pixels = Uint8List(width * height * 4);
+    int x = 0;
+    int y = 0;
+    int i = 0;
+
+    while (i < rle.length && y < height) {
+      final b0 = rle[i++];
+      if (b0 != 0) {
+        if (x < width) {
+          final cOff = b0 * 4;
+          final a = pal[cOff + 3];
+          if (a > 0) {
+            final pOff = (y * width + x) * 4;
+            pixels[pOff] = pal[cOff];
+            pixels[pOff + 1] = pal[cOff + 1];
+            pixels[pOff + 2] = pal[cOff + 2];
+            pixels[pOff + 3] = a;
+          }
+        }
+        x++;
+      } else {
+        if (i >= rle.length) break;
+        final b1 = rle[i++];
+        if (b1 == 0) {
+          x = 0;
+          y++;
+        } else {
+          final flag = b1 & 0xC0;
+          int count = 0;
+          int colorIdx = 0;
+          if (flag == 0x00) {
+            count = b1 & 0x3F;
+            colorIdx = 0;
+          } else if (flag == 0x40) {
+            if (i >= rle.length) break;
+            count = ((b1 & 0x3F) << 8) | rle[i++];
+            colorIdx = 0;
+          } else if (flag == 0x80) {
+            if (i >= rle.length) break;
+            count = b1 & 0x3F;
+            colorIdx = rle[i++];
+          } else {
+            if (i + 1 >= rle.length) break;
+            count = ((b1 & 0x3F) << 8) | rle[i++];
+            colorIdx = rle[i++];
+          }
+          final cOff = colorIdx * 4;
+          final a = pal[cOff + 3];
+          if (a > 0) {
+            final r = pal[cOff];
+            final g = pal[cOff + 1];
+            final b = pal[cOff + 2];
+            for (int k = 0; k < count; k++) {
+              if (x < width && y < height) {
+                final pOff = (y * width + x) * 4;
+                pixels[pOff] = r;
+                pixels[pOff + 1] = g;
+                pixels[pOff + 2] = b;
+                pixels[pOff + 3] = a;
+              }
+              x++;
+            }
+          } else {
+            x += count;
+          }
+        }
+      }
+    }
+    return pixels;
+  }
+}
+
 class WebosMkvSubtitleExtractor {
   final String url;
   final Map<String, String>? headers;
@@ -1946,6 +2254,7 @@ class WebosMkvSubtitleExtractor {
   final Map<int, _MkvTrackInfo> _subTrackByNumber = {};
   final Map<int, List<WebosSubtitleCue>> cuesByTrackNumber = {};
   final Map<int, Set<String>> _dedupByTrackNumber = {};
+  final Map<int, _WebosPgsTrackDecoder> _pgsDecoders = {};
   final List<({int timeMs, int clusterFileOffset})> _cuePoints = [];
   static final Set<String> _loadedFontFamilies = {};
 
@@ -2582,6 +2891,31 @@ class WebosMkvSubtitleExtractor {
     final relTimeMs = (relTime * _timestampScaleNs) ~/ 1000000;
     final cueStartMs = clusterTimeMs + relTimeMs;
 
+    final codecUpper = trackInfo.codecId.toUpperCase();
+    if (codecUpper.contains('PGS')) {
+      final rawBytes = Uint8List.sublistView(buf, headerEnd, end);
+      final sig = rawBytes.length >= 6
+          ? '${rawBytes[0]}:${rawBytes[1]}:${rawBytes[2]}:${rawBytes[rawBytes.length - 2]}'
+          : '${rawBytes.length}';
+      final dedupKey = 'pgs:$cueStartMs:${rawBytes.length}:$sig';
+      final dedupSet = _dedupByTrackNumber[trackInfo.trackNumber]!;
+      if (!dedupSet.add(dedupKey)) return false;
+
+      final decoder = _pgsDecoders.putIfAbsent(
+        trackInfo.trackNumber,
+        () => _WebosPgsTrackDecoder(onImageDecoded: onCuesUpdated),
+      );
+      final list = cuesByTrackNumber[trackInfo.trackNumber]!;
+      return decoder.processMkvBlock(
+        cueStartMs: cueStartMs,
+        payload: rawBytes,
+        targetCueList: list,
+      );
+    }
+    if (codecUpper.contains('VOBSUB') || codecUpper.contains('DVDSUB') || codecUpper.contains('DVB')) {
+      return false;
+    }
+
     final payloadStr = utf8.decode(buf.sublist(headerEnd, end), allowMalformed: true);
     final dedupKey = '$cueStartMs:$durationMs:$payloadStr';
     final dedupSet = _dedupByTrackNumber[trackInfo.trackNumber]!;
@@ -2967,6 +3301,28 @@ class _WebosSubtitleOverlayState extends State<WebosSubtitleOverlay>
                           cue.moveY1 != null &&
                           cue.moveX2 != null &&
                           cue.moveY2 != null;
+                      if (cue.isPgs) {
+                        if (cue.pgsImage != null) {
+                          final rx = cue.playResX > 0 ? cue.playResX : 1920;
+                          final ry = cue.playResY > 0 ? cue.playResY : 1080;
+                          final sx = screenW / rx;
+                          final sy = screenH / ry;
+                          positionedWidgets.add(
+                            Positioned(
+                              left: cue.pgsX * sx,
+                              top: cue.pgsY * sy,
+                              width: cue.pgsWidth * sx,
+                              height: cue.pgsHeight * sy,
+                              child: RawImage(
+                                image: cue.pgsImage,
+                                fit: BoxFit.fill,
+                                filterQuality: FilterQuality.medium,
+                              ),
+                            ),
+                          );
+                        }
+                        continue;
+                      }
                       if (cue.posX != null && cue.posY != null || hasMove || cue.hasVectorDrawing) {
                         final rx = cue.playResX > 0 ? cue.playResX : 1920;
                         final ry = cue.playResY > 0 ? cue.playResY : 1080;

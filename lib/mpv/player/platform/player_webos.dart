@@ -244,7 +244,7 @@ class PlayerWebos extends PlayerBase {
       if (extUri != null) {
         _subIdToExternalUri[tid] = extUri;
       } else if (!s.isExternal) {
-        if (!isBitmapSub) {
+        if (!isBitmapSub || codecUpper.contains('PGS')) {
           _subIdToEmbeddedOrderIndex[tid] = embeddedTextIdx++;
         } else {
           _subIdToEmbeddedOrderIndex[tid] = i;
@@ -464,14 +464,34 @@ class PlayerWebos extends PlayerBase {
           }
         },
         onError: (Object err) {
-          if (disposed || _currentSourceId != sourceId) return;
-          appLogger.e('[WebOS-NDL] Playback error on textureId=$texId: $err');
-          handlePlayerEvent('end-file', {
-            'reason': 'error',
-            'message': err.toString(),
-            'sourceId': sourceId,
-          });
-        },
+            if (disposed || _currentSourceId != sourceId) return;
+            final errStr = err.toString();
+            appLogger.e('[WebOS-NDL] Playback error on textureId=$texId: $errStr');
+            if (errStr.contains('702')) {
+              if (_targetResumeStartMs > 0) {
+                appLogger.w('[WebOS-NDL] Caught 702 Resume error on unindexed MKV; retrying open from 0ms');
+                _targetResumeStartMs = 0;
+                unawaited(
+                  open(
+                    Media(media.uri, headers: media.headers, start: Duration.zero),
+                    play: play,
+                    isLive: isLive,
+                    externalSubtitles: externalSubtitles,
+                    timelineDuration: timelineDuration,
+                    timelineOffset: Duration.zero,
+                  ),
+                );
+                return;
+              }
+              appLogger.w('[WebOS-NDL] Ignoring non-fatal 702 seek error on unindexed stream');
+              return;
+            }
+            handlePlayerEvent('end-file', {
+              'reason': 'error',
+              'message': errStr,
+              'sourceId': sourceId,
+            });
+          },
       );
 
       await _webosPlatform.play(texId);
@@ -572,7 +592,7 @@ class PlayerWebos extends PlayerBase {
       final extractor = _mkvExtractor;
       if (extractor != null && extractor.subtitleTracksInOrder.isNotEmpty) {
         final textTracks = extractor.subtitleTracksInOrder
-            .where((t) => t.codecId.contains('ASS') || t.codecId.contains('SSA') || t.codecId.contains('UTF8') || t.codecId.contains('TEXT'))
+            .where((t) => t.codecId.contains('ASS') || t.codecId.contains('SSA') || t.codecId.contains('UTF8') || t.codecId.contains('TEXT') || t.codecId.contains('PGS'))
             .toList();
         final candidates = textTracks.isNotEmpty ? textTracks : extractor.subtitleTracksInOrder;
         final embIdx = _subIdToEmbeddedOrderIndex[trackId];
@@ -712,7 +732,11 @@ class PlayerWebos extends PlayerBase {
     if (disposed || texId == null) return;
     await runSeek(position, () async {
       final target = sourcePositionFor(position);
-      await _webosPlatform.seekTo(texId, target);
+      try {
+        await _webosPlatform.seekTo(texId, target);
+      } catch (e) {
+        appLogger.w('[WebOS-NDL] seekTo(${target.inMilliseconds}ms) failed (unindexed MKV?): $e');
+      }
       _refreshActiveSubtitleCues();
     });
   }

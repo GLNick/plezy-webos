@@ -160,6 +160,7 @@ String _buildPlexHlsClientProfileExtra({required String videoTranscodeTarget, in
   }
   clauses
     ..add(videoTranscodeTarget)
+    ..add('add-transcode-target-audio-codec(type=videoProfile&context=streaming&protocol=hls&audioCodec=aac)')
     ..add(_plexHlsSubtitleTranscodeTarget);
   return clauses.join('+');
 }
@@ -3118,7 +3119,7 @@ class PlexClient
       // Null exactly for the original preset.
       if (preset.videoResolution != null) 'videoResolution': preset.videoResolution!,
       if (preset.videoQuality != null) 'videoQuality': preset.videoQuality!.toString(),
-      'directStreamAudio': '1',
+      'directStreamAudio': sourceCodecRefused ? '0' : '1',
       'mediaBufferSize': '102400',
       'session': transcodeSessionId,
       // `subtitles` is the only subtitle knob this endpoint honours. Which
@@ -3871,7 +3872,25 @@ class PlexClient
   /// option. Only an explicit refusal gates Plex direct play; a device the
   /// hardware probe reports without a decoder still direct-plays, as it
   /// always has on Plex.
+  static bool _isWebosUnsupportedAudioCodec(String? rawCodec) {
+    if (rawCodec == null) return false;
+    final c = rawCodec.trim().toLowerCase();
+    return c.contains('dts') || c == 'dca' || c.contains('truehd') || c == 'mlp';
+  }
+
   bool _sourceCodecRefused(PlexVideoPlaybackData data) {
+    final audioTracks = data.mediaInfo?.audioTracks ?? const <MediaAudioTrack>[];
+    if (audioTracks.isNotEmpty) {
+      final selectedAudio = audioTracks.where((a) => a.selected).firstOrNull ?? audioTracks.first;
+      if (_isWebosUnsupportedAudioCodec(selectedAudio.codec) ||
+          _isWebosUnsupportedAudioCodec(selectedAudio.displayTitle)) {
+        appLogger.i(
+          '[WebOS-Audio] Audio codec "${selectedAudio.codec}" (${selectedAudio.displayTitle}) is unsupported by webOS NDL Direct Play; using Direct Stream (Video Copy + AAC Audio)',
+        );
+        return true;
+      }
+    }
+
     final codec = RankedVideoCodec.fromServerCodec(_selectedVersion(data)?.videoCodec);
     if (codec == null || !VideoDecodeCapabilities.isRefusedByUser(codec)) return false;
     appLogger.i('Source codec ${codec.id} is refused in settings; transcoding');
