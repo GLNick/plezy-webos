@@ -89,6 +89,9 @@ class PlayerWebos extends PlayerBase {
   int _targetResumeStartMs = 0;
   DateTime? _openStartedAt;
   String? _selectedSubTrackId;
+  bool _isCurrentStreamHls = false;
+  bool _isHotSwapping = false;
+  bool _saw702Error = false;
 
   // Subtitle state
   final ValueNotifier<List<WebosSubtitleCue>> activeSubtitleCues = ValueNotifier<List<WebosSubtitleCue>>(const []);
@@ -229,7 +232,7 @@ class PlayerWebos extends PlayerBase {
       }
       if (extUri == null && externalSubtitles != null) {
         for (final ext in externalSubtitles) {
-          if (ext.uri != null && ext.uri!.contains('/${s.id}')) {
+          if (ext.uri != null && (ext.uri!.contains('/${s.id}') || ext.id == 's_${s.id}' || ext.id == '${s.id}')) {
             extUri = ext.uri;
             break;
           }
@@ -342,9 +345,11 @@ class PlayerWebos extends PlayerBase {
     handlePlayerEvent('start-file', {'sourceId': sourceId});
 
     _lastHeaders = media.headers;
-    final resolvedUri = _resolveUrlWithHeaders(media.uri, media.headers);
+    var resolvedUri = _resolveUrlWithHeaders(media.uri, media.headers);
     _lastResolvedUri = resolvedUri;
-    final isHls = resolvedUri.contains('.m3u8') || resolvedUri.contains('start.m3u8');
+    var isHls = resolvedUri.contains('.m3u8') || resolvedUri.contains('start.m3u8');
+    _isCurrentStreamHls = isHls;
+    _saw702Error = false;
 
     final payloadJson = sourceStart.inMilliseconds > 0
         ? jsonEncode({
@@ -359,27 +364,56 @@ class PlayerWebos extends PlayerBase {
     appLogger.i('[WebOS-NDL] Opening sourceId=$sourceId isHls=$isHls startMs=${sourceStart.inMilliseconds}');
 
     try {
-      final texId = await _webosPlatform.create(
-        DataSource(
-          sourceType: DataSourceType.network,
-          uri: resolvedUri,
-          formatHint: isHls ? VideoFormat.hls : null,
-          httpHeaders: payloadJson.isNotEmpty ? {'payload': payloadJson} : const <String, String>{},
-        ),
-      );
+      int? texId;
+      try {
+        texId = await _webosPlatform.create(
+          DataSource(
+            sourceType: DataSourceType.network,
+            uri: resolvedUri,
+            formatHint: isHls ? VideoFormat.hls : null,
+            httpHeaders: payloadJson.isNotEmpty ? {'payload': payloadJson} : const <String, String>{},
+          ),
+        );
+      } catch (createErr) {
+        if (!isHls && createErr.toString().contains('702')) {
+          appLogger.w('[WebOS-NDL] create() threw 702 Resume error on Direct Play MKV; switching to Direct Stream (start.m3u8)');
+          final dsUrl = await WebosDirectStreamFallbackRegistry.instance.obtainDirectStreamUrl();
+          if (dsUrl != null && dsUrl.isNotEmpty) {
+            resolvedUri = _resolveUrlWithHeaders(dsUrl, media.headers);
+            _lastResolvedUri = resolvedUri;
+            isHls = true;
+            _isCurrentStreamHls = true;
+            texId = await _webosPlatform.create(
+              DataSource(
+                sourceType: DataSourceType.network,
+                uri: resolvedUri,
+                formatHint: VideoFormat.hls,
+                httpHeaders: payloadJson.isNotEmpty ? {'payload': payloadJson} : const <String, String>{},
+              ),
+            );
+          } else {
+            rethrow;
+          }
+        } else {
+          rethrow;
+        }
+      }
 
       if (disposed || texId == null) {
         return null;
       }
       _textureId = texId;
-      appLogger.i('[WebOS-NDL] Created textureId=$texId for sourceId=$sourceId');
+      appLogger.i('[WebOS-NDL] Created textureId=$texId for sourceId=$sourceId (isHls=$isHls)');
 
       final trackEntries = _buildTrackListEntries(externalSubtitles);
 
-      // Start MKV embedded subtitle extractor if Direct Play
-      if (!isHls && !isLive && _subIdToEmbeddedOrderIndex.isNotEmpty) {
+      // Start MKV embedded subtitle extractor (works both for Direct Play and Direct Stream via raw MKV URL!)
+      final mkvUrlForSubs = !isHls
+          ? resolvedUri
+          : WebosDirectStreamFallbackRegistry.instance.lastRawMkvUrl;
+      if (mkvUrlForSubs != null && mkvUrlForSubs.isNotEmpty && !isLive && _subIdToEmbeddedOrderIndex.isNotEmpty) {
         _mkvExtractor = WebosMkvSubtitleExtractor(
-          url: resolvedUri,
+          url: _resolveUrlWithHeaders(mkvUrlForSubs, media.headers),
           headers: media.headers,
           getCurrentPositionMs: () => sourcePositionFor(currentPosition).inMilliseconds,
           onCuesUpdated: _refreshActiveSubtitleCues,
@@ -725,17 +759,170 @@ class PlayerWebos extends PlayerBase {
     setSeekable(false);
   }
 
+  Future<bool> _hotSwapToDirectStream(int targetPosMs) async {
+    if (disposed || _isHotSwapping) return false;
+    final sourceId = _currentSourceId;
+    if (sourceId == null) return false;
+
+    _isHotSwapping = true;
+    try {
+      final dsUrl = await WebosDirectStreamFallbackRegistry.instance.obtainDirectStreamUrl();
+      if (disposed || dsUrl == null || dsUrl.isEmpty || _currentSourceId != sourceId) {
+        return false;
+      }
+
+      final resolvedDsUri = _resolveUrlWithHeaders(dsUrl, _lastHeaders);
+      _lastResolvedUri = resolvedDsUri;
+      _isCurrentStreamHls = true;
+      _saw702Error = false;
+      _targetResumeStartMs = targetPosMs;
+      _openStartedAt = DateTime.now();
+      WebosSubtitleClock.instance.notifySeek(targetPosMs);
+
+      await _videoEventSub?.cancel();
+      _videoEventSub = null;
+      final oldTex = _textureId;
+      _textureId = null;
+      if (oldTex != null) {
+        try {
+          await _webosPlatform.dispose(oldTex);
+        } catch (_) {}
+      }
+
+      final payloadJson = targetPosMs > 0
+          ? jsonEncode({
+              'option': {
+                'transmission': {
+                  'playTime': {'start': targetPosMs},
+                },
+              },
+            })
+          : '';
+
+      final newTexId = await _webosPlatform.create(
+        DataSource(
+          sourceType: DataSourceType.network,
+          uri: resolvedDsUri,
+          formatHint: VideoFormat.hls,
+          httpHeaders: payloadJson.isNotEmpty ? {'payload': payloadJson} : const <String, String>{},
+        ),
+      );
+      if (disposed || newTexId == null || _currentSourceId != sourceId) return false;
+
+      _textureId = newTexId;
+      appLogger.i('[WebOS-NDL] Hot-swapped to Direct Stream textureId=$newTexId at ${targetPosMs}ms');
+
+      _videoEventSub = _webosPlatform.videoEventsFor(newTexId).listen(
+        (VideoEvent event) {
+          if (disposed || _currentSourceId != sourceId) return;
+          switch (event.eventType) {
+            case VideoEventType.initialized:
+              _videoReadyForSubtitles = true;
+              setSeekable(true);
+              unawaited(
+                updateVideoViewRect(
+                  _lastViewRect.left,
+                  _lastViewRect.top,
+                  _lastViewRect.width,
+                  _lastViewRect.height,
+                ),
+              );
+              if (targetPosMs > 2000) {
+                Future<void>.delayed(const Duration(milliseconds: 250), () async {
+                  if (disposed || _textureId != newTexId) return;
+                  try {
+                    final curPos = await _webosPlatform.getPosition(newTexId);
+                    if (curPos.inMilliseconds < targetPosMs - 3000) {
+                      await _webosPlatform.seekTo(newTexId, Duration(milliseconds: targetPosMs));
+                    }
+                  } catch (_) {}
+                });
+              }
+              break;
+            case VideoEventType.isPlayingStateUpdate:
+              final isPlaying = event.isPlaying ?? false;
+              handlePropertyChange('pause', !isPlaying, sourceId: sourceId);
+              break;
+            case VideoEventType.bufferingStart:
+              handlePropertyChange('paused-for-cache', true, sourceId: sourceId);
+              break;
+            case VideoEventType.bufferingEnd:
+              handlePropertyChange('paused-for-cache', false, sourceId: sourceId);
+              break;
+            case VideoEventType.bufferingUpdate:
+              if (event.buffered != null && event.buffered!.isNotEmpty) {
+                final endSec = event.buffered!.last.end.inMilliseconds / 1000.0;
+                handlePropertyChange('demuxer-cache-time', endSec, sourceId: sourceId);
+              }
+              break;
+            case VideoEventType.completed:
+              handlePropertyChange('eof-reached', true, sourceId: sourceId);
+              handlePlayerEvent('end-file', {'reason': 'eof', 'sourceId': sourceId});
+              break;
+            case VideoEventType.unknown:
+              break;
+          }
+        },
+        onError: (Object err) {
+          if (disposed || _currentSourceId != sourceId) return;
+          appLogger.e('[WebOS-NDL] Direct Stream playback error on textureId=$newTexId: $err');
+        },
+      );
+
+      await _webosPlatform.play(newTexId);
+      handlePropertyChange('pause', false, sourceId: sourceId);
+      handlePropertyChange('time-pos', targetPosMs / 1000.0, sourceId: sourceId);
+      _refreshActiveSubtitleCues();
+      return true;
+    } catch (e, st) {
+      appLogger.e('[WebOS-NDL] Hot-swap to Direct Stream failed: $e', error: e, stackTrace: st);
+      return false;
+    } finally {
+      _isHotSwapping = false;
+    }
+  }
+
   @override
   Future<void> seek(Duration position) async {
-    WebosSubtitleClock.instance.notifySeek(sourcePositionFor(position).inMilliseconds);
+    final target = sourcePositionFor(position);
+    final targetMs = target.inMilliseconds;
+    final preSeekMs = sourcePositionFor(currentPosition).inMilliseconds;
+    WebosSubtitleClock.instance.notifySeek(targetMs);
+
     final texId = _textureId;
     if (disposed || texId == null) return;
+
     await runSeek(position, () async {
-      final target = sourcePositionFor(position);
+      _saw702Error = false;
+      bool seekFailed = false;
       try {
         await _webosPlatform.seekTo(texId, target);
       } catch (e) {
-        appLogger.w('[WebOS-NDL] seekTo(${target.inMilliseconds}ms) failed (unindexed MKV?): $e');
+        appLogger.w('[WebOS-NDL] seekTo(${targetMs}ms) threw exception: $e');
+        seekFailed = true;
+      }
+
+      if (!_isCurrentStreamHls && (targetMs - preSeekMs).abs() > 4000) {
+        if (!seekFailed && !_saw702Error) {
+          for (int i = 0; i < 4; i++) {
+            await Future<void>.delayed(const Duration(milliseconds: 110));
+            if (disposed || _saw702Error || _isHotSwapping) break;
+            try {
+              final cur = await _webosPlatform.getPosition(texId);
+              if ((cur.inMilliseconds - targetMs).abs() <= 4500) {
+                break; // Seek landed!
+              }
+              if (i == 3 && (cur.inMilliseconds - preSeekMs).abs() < 2000) {
+                appLogger.w('[WebOS-NDL] Playhead stuck at ${cur.inMilliseconds}ms after seekTo(${targetMs}ms) on MKV');
+                seekFailed = true;
+              }
+            } catch (_) {}
+          }
+        }
+        if ((seekFailed || _saw702Error) && !_isCurrentStreamHls && !_isHotSwapping) {
+          appLogger.i('[WebOS-NDL] Unseekable MKV detected during seek; hot-swapping to Direct Stream at ${targetMs}ms');
+          await _hotSwapToDirectStream(targetMs);
+        }
       }
       _refreshActiveSubtitleCues();
     });

@@ -1,3 +1,4 @@
+import '../mpv/player/platform/webos_subtitle_engine.dart';
 import 'dart:async';
 import '../utils/isolate_helper.dart';
 import '../utils/json_utils.dart';
@@ -3746,7 +3747,40 @@ class PlexClient
       // (resolution/videoQuality) and is ignored for audio.
       final isTrack = options.metadata.kind == MediaKind.track;
       final audioPreset = options.audioQualityPreset ?? AudioQualityPreset.original;
-      final sourceCodecRefused = !isTrack && _sourceCodecRefused(data);
+      if (!isTrack) {
+        final rawMkvUrl = _trackStreamUrl(data.videoUrl, options);
+        WebosDirectStreamFallbackRegistry.instance.registerActiveSession(
+          ratingKey: options.metadata.id,
+          rawMkvUrl: rawMkvUrl,
+          headers: config.token != null ? {'X-Plex-Token': config.token!} : null,
+          buildDirectStreamUrl: () async {
+            final resolvedAudioId = carriedAudioTrack == null
+                ? _resolveAudioStreamId(options.selectedAudioStreamId, data.mediaInfo)
+                : carriedAudioStreamId;
+            final requestedSubtitleTrack = _resolveTranscodeSubtitleTrack(
+              data.mediaInfo,
+              options.preferredSubtitleTrack,
+            );
+            final res = await buildTranscodeStartPath(
+              ratingKey: options.metadata.id,
+              mediaIndex: data.selectedMediaIndex,
+              partIndex: data.selectedPartIndex,
+              preset: options.qualityPreset,
+              sessionIdentifier: options.sessionIdentifier ?? 'webos-ds-sess-${DateTime.now().millisecondsSinceEpoch}',
+              transcodeSessionId: options.transcodeSessionId ?? 'webos-ds-trans-${DateTime.now().millisecondsSinceEpoch}',
+              audioStreamId: resolvedAudioId,
+              selectedSubtitleTrack: requestedSubtitleTrack,
+              partId: data.mediaInfo?.partId,
+              sourceCodecRefused: true,
+            );
+            if (res.startPath != null) {
+              return '${config.baseUrl}${res.startPath}'.withPlexToken(config.token);
+            }
+            return null;
+          },
+        );
+      }
+      final sourceCodecRefused = !isTrack && await _sourceCodecRefused(data, options);
       final wantTranscode = isTrack
           ? !audioPreset.isOriginal
           : sourceCodecRefused || _presetNeedsTranscode(options.qualityPreset, data);
@@ -3878,7 +3912,20 @@ class PlexClient
     return c.contains('dts') || c == 'dca' || c.contains('truehd') || c == 'mlp';
   }
 
-  bool _sourceCodecRefused(PlexVideoPlaybackData data) {
+  Future<bool> _sourceCodecRefused(
+    PlexVideoPlaybackData data,
+    PlaybackInitializationOptions options,
+  ) async {
+    final rawDirectUrl = _trackStreamUrl(data.videoUrl, options);
+    final forceDirectStreamForMkv = await WebosDirectStreamFallbackRegistry.instance.shouldForceDirectStream(
+      ratingKey: options.metadata.id,
+      rawUrl: rawDirectUrl,
+      headers: config.token != null ? {'X-Plex-Token': config.token!} : null,
+    );
+    if (forceDirectStreamForMkv) {
+      appLogger.i('[WebOS-DirectStream] Switching ratingKey=${options.metadata.id} to Direct Stream (start.m3u8) for reliable seeking/resuming');
+      return true;
+    }
     final audioTracks = data.mediaInfo?.audioTracks ?? const <MediaAudioTrack>[];
     if (audioTracks.isNotEmpty) {
       final selectedAudio = audioTracks.where((a) => a.selected).firstOrNull ?? audioTracks.first;

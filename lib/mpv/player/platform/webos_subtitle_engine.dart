@@ -14,6 +14,274 @@ import '../../../utils/app_logger.dart';
 /// High-precision monotonic subtitle clock.
 /// Runs freely on the system monotonic crystal during normal playback so 24fps frame-by-frame
 /// ASS sequences never suffer from NDL_media 1-second quantization jitter.
+
+/// Manages automatic detection of unseekable MKV files (which trigger 702 Resume/Seek errors
+/// in webOS NDL_media) and provides live hot-swapping to Plex Direct Stream (start.m3u8).
+class WebosDirectStreamFallbackRegistry {
+  static final WebosDirectStreamFallbackRegistry instance = WebosDirectStreamFallbackRegistry._();
+  WebosDirectStreamFallbackRegistry._() {
+    _loadFromDisk();
+  }
+
+  final Set<String> _unseekableKeys = {};
+  String? activeRatingKey;
+  String? lastRawMkvUrl;
+  Map<String, String>? lastHeaders;
+  Future<String?> Function()? _buildDirectStreamUrlCallback;
+
+  static final File _cacheFile = File(
+    '/media/developer/apps/usr/palm/applications/com.edde746.plezy/appdata/webos_unseekable_mkvs.json',
+  );
+
+  void _loadFromDisk() {
+    try {
+      if (_cacheFile.existsSync()) {
+        final raw = jsonDecode(_cacheFile.readAsStringSync());
+        if (raw is List) {
+          for (final item in raw) {
+            if (item is String && item.isNotEmpty) _unseekableKeys.add(item);
+          }
+        }
+      }
+    } catch (_) {}
+  }
+
+  void _saveToDisk() {
+    try {
+      _cacheFile.parent.createSync(recursive: true);
+      _cacheFile.writeAsStringSync(jsonEncode(_unseekableKeys.toList()));
+    } catch (_) {}
+  }
+
+  void registerActiveSession({
+    required String ratingKey,
+    required String? rawMkvUrl,
+    required Map<String, String>? headers,
+    required Future<String?> Function() buildDirectStreamUrl,
+  }) {
+    activeRatingKey = ratingKey;
+    lastRawMkvUrl = rawMkvUrl;
+    lastHeaders = headers;
+    _buildDirectStreamUrlCallback = buildDirectStreamUrl;
+  }
+
+  bool isKnownUnseekable(String? ratingKey) {
+    if (ratingKey == null || ratingKey.isEmpty) return false;
+    return _unseekableKeys.contains(ratingKey);
+  }
+
+  void markActiveSessionUnseekable() {
+    final key = activeRatingKey;
+    if (key != null && key.isNotEmpty) {
+      if (_unseekableKeys.add(key)) {
+        appLogger.i('[WebOS-DirectStream] Marked ratingKey=$key as unseekable MKV in persistent cache');
+        _saveToDisk();
+      }
+    }
+  }
+
+  Future<String?> obtainDirectStreamUrl() async {
+    markActiveSessionUnseekable();
+    final cb = _buildDirectStreamUrlCallback;
+    if (cb == null) return null;
+    try {
+      return await cb();
+    } catch (e, st) {
+      appLogger.e('[WebOS-DirectStream] Failed to build fallback Direct Stream URL: $e', error: e, stackTrace: st);
+      return null;
+    }
+  }
+
+  /// Fast pre-flight check: returns true if the item is cached as unseekable or if its MKV
+  /// header lacks a valid SeekHead->Cues index or Segment Duration required by webOS NDL_media.
+  Future<bool> shouldForceDirectStream({
+    required String ratingKey,
+    required String? rawUrl,
+    Map<String, String>? headers,
+  }) async {
+    if (isKnownUnseekable(ratingKey)) {
+      appLogger.i('[WebOS-DirectStream] ratingKey=$ratingKey is cached as unseekable MKV; using Direct Stream');
+      return true;
+    }
+    if (rawUrl == null || rawUrl.isEmpty) return false;
+    final lower = rawUrl.toLowerCase();
+    if (!lower.contains('.mkv') && !lower.contains('/parts/')) return false;
+
+    final client = HttpClient()..connectionTimeout = const Duration(seconds: 4);
+    try {
+      final req = await client.getUrl(Uri.parse(rawUrl));
+      headers?.forEach((k, v) => req.headers.set(k, v));
+      req.headers.set('Range', 'bytes=0-65535');
+      final resp = await req.close().timeout(const Duration(seconds: 4));
+      if (resp.statusCode != 200 && resp.statusCode != 206) {
+        await resp.drain<void>();
+        return false;
+      }
+      final builder = BytesBuilder(copy: false);
+      await for (final chunk in resp) {
+        builder.add(chunk);
+        if (builder.length >= 65536) break;
+      }
+      final head = builder.takeBytes();
+      if (head.length < 64) return false;
+
+      // Check EBML signature (0x1A45DFA3)
+      if (head[0] != 0x1A || head[1] != 0x45 || head[2] != 0xDF || head[3] != 0xA3) {
+        return false; // Not an MKV file
+      }
+
+      int pos = 0;
+      final ebmlId = WebosMkvSubtitleExtractor._readVint(head, pos, keepMarkerBit: true);
+      if (ebmlId == null) return false;
+      pos += ebmlId.length;
+      final ebmlSz = WebosMkvSubtitleExtractor._readVint(head, pos, keepMarkerBit: false);
+      if (ebmlSz == null) return false;
+      pos += ebmlSz.length + ebmlSz.value;
+
+      final segId = WebosMkvSubtitleExtractor._readVint(head, pos, keepMarkerBit: true);
+      if (segId == null || segId.value != 0x18538067) return false;
+      pos += segId.length;
+      final segSzRaw = WebosMkvSubtitleExtractor._readVint(head, pos, keepMarkerBit: true);
+      final segSz = WebosMkvSubtitleExtractor._readVint(head, pos, keepMarkerBit: false);
+      if (segSz == null || segSzRaw == null) return false;
+
+      // Unknown Segment size (all 1s in VINT payload) -> live/unfinalized MKV, cannot seek in NDL_media
+      final maxUnsignedForLen = (1 << (segSz.length * 7)) - 1;
+      if (segSz.value == maxUnsignedForLen) {
+        appLogger.w('[WebOS-DirectStream] MKV has unknown Segment size; forcing Direct Stream for ratingKey=$ratingKey');
+        markActiveSessionUnseekable();
+        return true;
+      }
+
+      pos += segSz.length;
+      final segmentDataOffset = pos;
+      int? cuesOffset;
+      bool foundCuesInHeader = false;
+      bool hasDurationInSegmentInfo = false;
+
+      while (pos < head.length - 12) {
+        final elId = WebosMkvSubtitleExtractor._readVint(head, pos, keepMarkerBit: true);
+        if (elId == null) break;
+        final elSize = WebosMkvSubtitleExtractor._readVint(head, pos + elId.length, keepMarkerBit: false);
+        if (elSize == null) break;
+        final bStart = pos + elId.length + elSize.length;
+        final bEnd = bStart + elSize.value;
+
+        if (elId.value == 0x1F43B675) {
+          // Reached first Cluster
+          break;
+        }
+        if (elId.value == 0x1C53BB6B) {
+          foundCuesInHeader = true;
+          break;
+        }
+        if (bEnd <= head.length) {
+          if (elId.value == 0x114D9B74) {
+            // Parse SeekHead for Cues (0x1C53BB6B)
+            int sp = bStart;
+            while (sp < bEnd) {
+              final id = WebosMkvSubtitleExtractor._readVint(head, sp, keepMarkerBit: true);
+              if (id == null) break;
+              final sz = WebosMkvSubtitleExtractor._readVint(head, sp + id.length, keepMarkerBit: false);
+              if (sz == null) break;
+              final sbStart = sp + id.length + sz.length;
+              final sbEnd = sbStart + sz.value;
+              if (sbEnd > bEnd) break;
+              if (id.value == 0x4DBB) {
+                int? seekId;
+                int? seekPos;
+                int kp = sbStart;
+                while (kp < sbEnd) {
+                  final kid = WebosMkvSubtitleExtractor._readVint(head, kp, keepMarkerBit: true);
+                  if (kid == null) break;
+                  final ksz = WebosMkvSubtitleExtractor._readVint(head, kp + kid.length, keepMarkerBit: false);
+                  if (ksz == null) break;
+                  final kbStart = kp + kid.length + ksz.length;
+                  final kbEnd = kbStart + ksz.value;
+                  if (kbEnd > sbEnd) break;
+                  if (kid.value == 0x53AB) {
+                    seekId = WebosMkvSubtitleExtractor._readUint(head, kbStart, ksz.value);
+                  } else if (kid.value == 0x53AC) {
+                    seekPos = WebosMkvSubtitleExtractor._readUint(head, kbStart, ksz.value);
+                  }
+                  kp = kbEnd;
+                }
+                if (seekId == 0x1C53BB6B && seekPos != null) {
+                  cuesOffset = segmentDataOffset + seekPos;
+                }
+              }
+              sp = sbEnd;
+            }
+          } else if (elId.value == 0x1549A966) {
+            // SegmentInfo: check if Duration (0x4489) exists
+            int ip = bStart;
+            while (ip < bEnd) {
+              final iid = WebosMkvSubtitleExtractor._readVint(head, ip, keepMarkerBit: true);
+              if (iid == null) break;
+              final isz = WebosMkvSubtitleExtractor._readVint(head, ip + iid.length, keepMarkerBit: false);
+              if (isz == null) break;
+              final ibStart = ip + iid.length + isz.length;
+              final ibEnd = ibStart + isz.value;
+              if (ibEnd > bEnd) break;
+              if (iid.value == 0x4489 && isz.value > 0) {
+                hasDurationInSegmentInfo = true;
+              }
+              ip = ibEnd;
+            }
+          }
+        }
+        pos = bEnd;
+      }
+
+      if (!foundCuesInHeader && cuesOffset == null) {
+        appLogger.w('[WebOS-DirectStream] MKV lacks Cues index in SeekHead; forcing Direct Stream for ratingKey=$ratingKey');
+        markActiveSessionUnseekable();
+        return true;
+      }
+
+      if (!hasDurationInSegmentInfo) {
+        appLogger.w('[WebOS-DirectStream] MKV lacks Duration in SegmentInfo; forcing Direct Stream for ratingKey=$ratingKey');
+        markActiveSessionUnseekable();
+        return true;
+      }
+
+      if (cuesOffset != null && !foundCuesInHeader) {
+        // Verify that the Cues element at cuesOffset actually exists and is reachable via Range request
+        final reqCues = await client.getUrl(Uri.parse(rawUrl));
+        headers?.forEach((k, v) => reqCues.headers.set(k, v));
+        reqCues.headers.set('Range', 'bytes=$cuesOffset-${cuesOffset + 31}');
+        final respCues = await reqCues.close().timeout(const Duration(seconds: 3));
+        if (respCues.statusCode != 206 && respCues.statusCode != 200) {
+          await respCues.drain<void>();
+          appLogger.w('[WebOS-DirectStream] MKV Cues at $cuesOffset unreachable; forcing Direct Stream');
+          markActiveSessionUnseekable();
+          return true;
+        }
+        final cBuilder = BytesBuilder(copy: false);
+        await for (final chunk in respCues) {
+          cBuilder.add(chunk);
+          if (cBuilder.length >= 16) break;
+        }
+        final cBytes = cBuilder.takeBytes();
+        if (cBytes.length < 8 ||
+            cBytes[0] != 0x1C ||
+            cBytes[1] != 0x53 ||
+            cBytes[2] != 0xBB ||
+            cBytes[3] != 0x6B) {
+          appLogger.w('[WebOS-DirectStream] MKV Cues signature invalid at $cuesOffset; forcing Direct Stream');
+          markActiveSessionUnseekable();
+          return true;
+        }
+      }
+      return false;
+    } catch (_) {
+      return false;
+    } finally {
+      client.close(force: true);
+    }
+  }
+}
+
 class WebosSubtitleClock {
   static final WebosSubtitleClock instance = WebosSubtitleClock._();
   WebosSubtitleClock._();
