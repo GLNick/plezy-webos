@@ -12,27 +12,27 @@ This repository contains the native **LG webOS** port of Plezy (`v2.26.0`) using
 
 | webOS Version | Marketing Year | Example TV Models | Required Package | Why? |
 | :--- | :--- | :--- | :--- | :--- |
-| **webOS 25 / webOS 26+** | 2025 / 2026 (or updated 2023/2024 TVs) | LG OLED C5, G5, QNED81 (updated to webOS 25+) | `com.edde746.plezy_<ver>_arm.ipk` *(or `-32bit.ipk`)* | Ships natively with `glibc >= 2.38`, `GLIBCXX_3.4.32`, `wl_webos_shell` v2, and `NDL_MediaInitWithWindowId`. |
-| **webOS 24** | 2024 | LG OLED G4, C4, B4, QNED85T | **`com.edde746.plezy_<ver>_arm-32bit.ipk`** | Uses `glibc < 2.38`, `wl_webos_shell` v1, and legacy `NDL_MediaInit`. Requires `libwebos_compat32.so` shims. |
-| **webOS 22 / webOS 23** | 2022 / 2023 | LG QNED816RE, OLED C2, C3, G2, G3 | **`com.edde746.plezy_<ver>_arm-32bit.ipk`** | Uses `glibc < 2.38`, `/lib/ld-linux.so.3`, `wl_webos_shell` v1, and legacy `NDL_MediaInit`. |
-| **webOS 6.x** | 2021 | LG OLED C1, G1 | **`com.edde746.plezy_<ver>_arm-32bit.ipk`** | Requires ELF ABI kernel tag `3.2.0`, `glibc 2.4` symbol forwarding, and Wayland v1 clamping. |
+| **webOS 25 / webOS 26+** | 2025 / 2026 (or updated 2023/2024 TVs) | LG OLED C5, G5, QNED81 (updated to webOS 25+) | **`com.edde746.plezy_<ver>_arm_webos25-26.ipk`** | Ships natively with `glibc >= 2.38`, `GLIBCXX_3.4.32`, `wl_webos_shell` v2, and `NDL_MediaInitWithWindowId`. |
+| **webOS 24** | 2024 | LG OLED G4, C4, B4, QNED85T | **`com.edde746.plezy_<ver>_arm_webos6-24.ipk`** | Uses `glibc < 2.38`, `wl_webos_shell` v1, and legacy `NDL_MediaInit`. Requires `libwebos_compat32.so` shims. |
+| **webOS 22 / webOS 23** | 2022 / 2023 | LG QNED816RE, OLED C2, C3, G2, G3 | **`com.edde746.plezy_<ver>_arm_webos6-24.ipk`** | Uses `glibc < 2.38`, `/lib/ld-linux.so.3`, `wl_webos_shell` v1, and legacy `NDL_MediaInit`. |
+| **webOS 6.x** | 2021 | LG OLED C1, G1 | **`com.edde746.plezy_<ver>_arm_webos6-24.ipk`** | Requires ELF ABI kernel tag `3.2.0`, `glibc 2.4` symbol forwarding, and Wayland v1 clamping. |
 
 **Rule of Thumb:**
-- If your TV runs **webOS 25 or webOS 26**, you can install the standard `com.edde746.plezy_<ver>_arm.ipk`.
-- If your TV runs **webOS 24 or older** (including 2024 models like the **LG G4 / C4** on webOS 24), or if the standard `.ipk` fails to launch, **always install `com.edde746.plezy_<ver>_arm-32bit.ipk`**.
+- If your TV runs **webOS 25 or webOS 26**, install **`com.edde746.plezy_<ver>_arm_webos25-26.ipk`**.
+- If your TV runs **webOS 24 or older** (including 2024 models like the **LG G4 / C4** on webOS 24), or if the `webos25-26` package fails to launch, install **`com.edde746.plezy_<ver>_arm_webos6-24.ipk`**.
 - Both packages are packed using **POSIX `ustar` format** (`--format=ustar`) and work with **webOS Dev Manager**, **ares-install**, and **Glasshouse**.
 
 ---
 
 ## Technical Breakdown of the Two Builds
 
-1. **Standard Build (`com.edde746.plezy_<ver>_arm.ipk` — webOS 25 / 26+)**
+1. **Modern webOS Build (`com.edde746.plezy_<ver>_arm_webos25-26.ipk` — webOS 25 / 26+)**
    - Unmodified ELF output from `flutter-webos build webos --release`.
    - Links directly against `GLIBC_2.38` (`__isoc23_strtol`, `__isoc23_sscanf`), `GLIBCXX_3.4.32`, Wayland `wl_webos_shell` v2, and `NDL_MediaInitWithWindowId`.
    - Uses `lib/mpv/player/platform/player_webos.dart` and `lib/mpv/player/platform/webos_subtitle_engine.dart`.
    - Uses the patched `video_player_webos` plugin (`scripts/webos/video_player_plugin_patches/`), which keeps the Wayland exported video window (`_Window_Id_1`) persistent across playback sessions to prevent `104 fail to create AVProxy` errors.
 
-2. **Compatibility / Legacy Build (`com.edde746.plezy_<ver>_arm-32bit.ipk` — webOS 6 / 22 / 23 / 24)**
+2. **Compatibility Build (`com.edde746.plezy_<ver>_arm_webos6-24.ipk` — webOS 6 / 22 / 23 / 24)**
    - Generated automatically from the standard release IPK by `scripts/webos/build_32bit_ipk.sh`:
      - Compiles `libwebos_compat32.so` (`clang -target armv7a-linux-gnueabi -mfloat-abi=softfp -nostdlib`), providing:
        - `GLIBC_2.38` C23 symbol shims (`__isoc23_strtol`, `__isoc23_sscanf`, etc.) forwarded to baseline `glibc 2.4` functions.
@@ -66,17 +66,16 @@ cp -rf scripts/webos/video_player_plugin_patches/lib/* ~/plezy-webos-workspace/p
 cp -rf scripts/webos/video_player_plugin_patches/webos/* ~/plezy-webos-workspace/plugins/packages/video_player/webos/
 ```
 
-### 2. Build the Standard (webOS 25 / 26+) Release IPK
+### 2. Build the Modern (`webOS 25 / 26+`) Release IPK
 ```bash
 source ~/plezy-webos-workspace/env.sh
 flutter-webos build webos --release
+cp build/webos/arm/release/ipk/com.edde746.plezy_<version>_arm.ipk com.edde746.plezy_<version>_arm_webos25-26.ipk
 ```
-The resulting `.ipk` will be located at:
-`build/webos/arm/release/ipk/com.edde746.plezy_<version>_arm.ipk`
 
-### 3. Build the Compatibility (webOS 6 / 22 / 23 / 24 & Glasshouse) IPK
+### 3. Build the Compatibility (`webOS 6 / 22 / 23 / 24` & Glasshouse) IPK
 Run the conversion & POSIX USTAR packaging script:
 ```bash
 ./scripts/webos/build_32bit_ipk.sh
 ```
-This produces the Glasshouse-compatible package `com.edde746.plezy_<version>_arm-32bit.ipk`.
+This produces the Glasshouse-compatible package `com.edde746.plezy_<version>_arm_webos6-24.ipk`.

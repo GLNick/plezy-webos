@@ -5,9 +5,9 @@ WORK_DIR="$HOME/plezy-webos-workspace"
 source "$WORK_DIR/env.sh"
 OUT_TXT="/mnt/h/Projekte/PlezyWebOSv3/build_step18_v2_out.txt"
 
-ORIG_IPK="$(find "$WORK_DIR/plezy/build" -name "*.ipk" | grep -v "\-32bit\.ipk" | head -n 1)"
+ORIG_IPK="$(find "$WORK_DIR/plezy/build" -name "*.ipk" | grep -v -E "(-32bit|_webos6-24)\.ipk" | head -n 1)"
 if [ -z "$ORIG_IPK" ]; then
-  ORIG_IPK="/mnt/h/Projekte/PlezyWebOSv3/com.edde746.plezy_2.26.0_arm.ipk"
+  ORIG_IPK="/mnt/h/Projekte/PlezyWebOSv3/com.edde746.plezy_2.26.0_arm_webos25-26.ipk"
 fi
 
 {
@@ -732,7 +732,7 @@ cd "$STAGE_DIR/ctrl_extract"
 tar -xzf "$STAGE_DIR/ipk_extract/control.tar.gz"
 tar --format=ustar --numeric-owner --owner=0 --group=0 -czf "$STAGE_DIR/ipk_extract/control.tar.gz" .
 
-OUT_32BIT_PATH="/mnt/h/Projekte/PlezyWebOSv3/com.edde746.plezy_2.26.0_arm-32bit.ipk"
+OUT_32BIT_PATH="/mnt/h/Projekte/PlezyWebOSv3/com.edde746.plezy_2.26.0_arm_webos6-24.ipk"
 
 cd "$STAGE_DIR/ipk_extract"
 rm -f "$OUT_32BIT_PATH"
