@@ -148,6 +148,7 @@ class VideoPlayerWebOs extends VideoPlayerPlatform {
 
   final _windowChannel = const MethodChannel('webos/exported_windows');
   final _auxChannel = const MethodChannel('videoplayer_webos');
+  static String? _sharedWindowId;
   Map _windowIds = {}; // <texture_id, window_id>
   Map _widgetStates = {}; // <texture_id, _VideoWidgetState>
   Map _srcSizes = {}; // <texture_id, Size>
@@ -182,12 +183,7 @@ class VideoPlayerWebOs extends VideoPlayerPlatform {
       _windowIds.remove(textureId);
       _srcSizes.remove(textureId);
 
-      // exported window dispose
-      if (winId != null) {
-        _windowChannel.invokeMethod<void>('dispose', {
-          'windowId': winId,
-        });
-      }
+      // Keep exported window alive for reuse so NDL_media TVDisplay never points to a destroyed windowId
       print('video_player_webos($textureId) $winId disposed');
     }
   }
@@ -218,7 +214,10 @@ class VideoPlayerWebOs extends VideoPlayerPlatform {
         break;
     }
 
-    String? windowId = await _windowChannel.invokeMethod<String>('create', {});
+    if (_sharedWindowId == null || _sharedWindowId!.isEmpty || _sharedWindowId == 'invalid') {
+      _sharedWindowId = await _windowChannel.invokeMethod<String>('create', {});
+    }
+    String? windowId = _sharedWindowId;
     final CreateMessage message = CreateMessage(
       windowId: windowId ?? 'invalid',
       asset: asset,
@@ -400,8 +399,10 @@ class VideoPlayerWebOs extends VideoPlayerPlatform {
 
       winIds.forEach((texId, winId) async {
         if (winId == null) {
-          String? windowId =
-              await _windowChannel.invokeMethod<String>('create', {});
+          if (_sharedWindowId == null || _sharedWindowId!.isEmpty || _sharedWindowId == 'invalid') {
+            _sharedWindowId = await _windowChannel.invokeMethod<String>('create', {});
+          }
+          String? windowId = _sharedWindowId;
           _windowIds[texId] = windowId ?? 'invalid';
           print(
               'video_player_webos($texId) $windowId created by onHidden to onResumed');
@@ -434,11 +435,7 @@ class VideoPlayerWebOs extends VideoPlayerPlatform {
         _auxChannel.invokeMethod<void>('unload', {
           'textureId': texId,
         });
-        if (winId != null) {
-          _windowChannel.invokeMethod<void>('dispose', {
-            'windowId': winId,
-          });
-        }
+        // keep _sharedWindowId alive
         print('video_player_webos($texId) $winId disposed by onHidden');
       });
     }

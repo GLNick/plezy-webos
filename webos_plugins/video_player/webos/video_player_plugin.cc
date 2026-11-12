@@ -376,7 +376,7 @@ void VideoPlayerPlugin::dispose(int64_t texture_id) {
         }
         self->disposed_texture_ids_.clear();
         return G_SOURCE_REMOVE;
-      }, this, 2000);
+      }, this, 150);
     });
   }
 

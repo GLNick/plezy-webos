@@ -158,10 +158,8 @@ void VideoPlayer::Dispose(const DisposedCallback disposed_cb) {
   event_sink_ = nullptr;
   event_channel_->SetStreamHandler(nullptr);
 
-  int64_t timeout = (player_.getState() ==
-                     WebOSPlayer::UNLOADED) ? 0 : 500;
-  PushDispose(timeout);
   Unload();
+  PushDispose(50);
 }
 
 void VideoPlayer::SetUpEventChannel(flutter::BinaryMessenger *messenger) {

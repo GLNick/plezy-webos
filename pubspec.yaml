@@ -30,14 +30,14 @@ dependencies:
   flex_color_picker: any
   qr_flutter: ^4.1.0
   slang:
-    path: ../vendor/slang/slang
+    path: vendor/slang/slang
   slang_flutter:
-    path: ../vendor/slang/slang_flutter
+    path: vendor/slang/slang_flutter
   duration: any
   connectivity_plus:
-    path: ../vendor/plus_plugins/packages/connectivity_plus/connectivity_plus
+    path: vendor/plus_plugins/packages/connectivity_plus/connectivity_plus
   os_media_controls:
-    path: ../vendor/media_controls
+    path: vendor/media_controls
   rate_limiter: ^1.0.0
   wakelock_plus:
     path: packages/wakelock_plus
@@ -68,10 +68,10 @@ dependencies:
   # (job quota, lost network) instead of reporting it canceled and deleting the
   # partial. Keep the same-filesystem move/resume cleanup; no per-host TLS bypass.
   background_downloader:
-    path: ../vendor/background_downloader
+    path: vendor/background_downloader
   sentry_flutter: any
   auto_updater:
-    path: ../vendor/auto_updater/packages/auto_updater
+    path: vendor/auto_updater/packages/auto_updater
   win_http: any
   collection: ^1.18.0
   freezed_annotation: any
@@ -79,26 +79,26 @@ dependencies:
   string_similarity: ^2.2.0
   unorm_dart: ^0.3.2
   openwatchparty:
-    path: ../vendor/openwatchparty
+    path: vendor/openwatchparty
   web_socket:
-    path: ../vendor/web_socket
+    path: vendor/web_socket
   video_player_platform_interface: any
   shared_preferences_webos:
-    path: ../plugins/packages/shared_preferences
+    path: webos_plugins/shared_preferences
   path_provider_webos:
-    path: ../plugins/packages/path_provider
+    path: webos_plugins/path_provider
   connectivity_plus_webos:
-    path: ../plugins/packages/connectivity_plus
+    path: webos_plugins/connectivity_plus
   device_info_plus_webos:
-    path: ../plugins/packages/device_info_plus
+    path: webos_plugins/device_info_plus
   package_info_plus_webos:
-    path: ../plugins/packages/package_info_plus
+    path: webos_plugins/package_info_plus
   url_launcher_webos:
-    path: ../plugins/packages/url_launcher
+    path: webos_plugins/url_launcher
   video_player_webos:
-    path: ../plugins/packages/video_player
+    path: webos_plugins/video_player
   webos_service_bridge:
-    path: ../plugins/packages/webos_service_bridge
+    path: webos_plugins/webos_service_bridge
 
 dev_dependencies:
   archive: any
@@ -130,17 +130,17 @@ dev_dependencies:
 
 dependency_overrides:
   openwatchparty:
-    path: ../vendor/openwatchparty
+    path: vendor/openwatchparty
   web_socket:
-    path: ../vendor/web_socket
+    path: vendor/web_socket
   slang:
-    path: ../vendor/slang/slang
+    path: vendor/slang/slang
   slang_flutter:
-    path: ../vendor/slang/slang_flutter
+    path: vendor/slang/slang_flutter
   # background_downloader 9.6.2 requires hosted connectivity_plus; keep the
   # pinned git source for every consumer.
   connectivity_plus:
-    path: ../vendor/plus_plugins/packages/connectivity_plus/connectivity_plus
+    path: vendor/plus_plugins/packages/connectivity_plus/connectivity_plus
   auto_updater_platform_interface:
     git:
       url: https://github.com/edde746/auto_updater

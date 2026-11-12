@@ -1,0 +1,1010 @@
+# Upstream diffs applied to vendor/ packages for Dart 3.10 compatibility
+## Repository: slang (base commit: ca6b49fbcc720c304f9c41af82ec31e64afa46e3)
+diff --git a/slang/example/pubspec.yaml b/slang/example/pubspec.yaml
+index dd1f143..c9ba717 100644
+--- a/slang/example/pubspec.yaml
++++ b/slang/example/pubspec.yaml
+@@ -6,7 +6,7 @@ publish_to: 'none'
+ version: 1.0.0+1
+ 
+ environment:
+-  sdk: ">=3.3.0 <4.0.0"
++  sdk: ">=3.8.0 <4.0.0"
+ 
+ dependencies:
+   flutter:
+diff --git a/slang/lib/src/api/locale.dart b/slang/lib/src/api/locale.dart
+index 0bf46bb..1e576e5 100644
+--- a/slang/lib/src/api/locale.dart
++++ b/slang/lib/src/api/locale.dart
+@@ -4,7 +4,7 @@ import 'package:slang/src/builder/model/node.dart';
+ 
+ /// Root translation class of ONE locale
+ /// Entry point for every translation
+-abstract class BaseTranslations<E extends BaseAppLocale<E, T>,
++abstract mixin class BaseTranslations<E extends BaseAppLocale<E, T>,
+     T extends BaseTranslations<E, T>> {
+   /// Metadata of this root translation class
+   TranslationMetadata<E, T> get $meta;
+diff --git a/slang/pubspec.yaml b/slang/pubspec.yaml
+index a4ee6dc..ca08eed 100644
+--- a/slang/pubspec.yaml
++++ b/slang/pubspec.yaml
+@@ -15,7 +15,7 @@ funding:
+   - https://github.com/sponsors/Tienisto/
+ 
+ environment:
+-  sdk: ">=3.3.0 <4.0.0"
++  sdk: ">=3.8.0 <4.0.0"
+ 
+ dependencies:
+   collection: ^1.15.0
+diff --git a/slang_build_runner/pubspec.yaml b/slang_build_runner/pubspec.yaml
+index 5edd981..3b0c170 100644
+--- a/slang_build_runner/pubspec.yaml
++++ b/slang_build_runner/pubspec.yaml
+@@ -4,7 +4,7 @@ version: 4.7.0
+ repository: https://github.com/slang-i18n/slang
+ 
+ environment:
+-  sdk: ">=3.3.0 <4.0.0"
++  sdk: ">=3.8.0 <4.0.0"
+ 
+ dependencies:
+   build: ^2.2.1
+diff --git a/slang_flutter/pubspec.yaml b/slang_flutter/pubspec.yaml
+index ef367e1..59bb21d 100644
+--- a/slang_flutter/pubspec.yaml
++++ b/slang_flutter/pubspec.yaml
+@@ -4,8 +4,8 @@ version: 4.7.0
+ repository: https://github.com/slang-i18n/slang
+ 
+ environment:
+-  flutter: '>=3.19.0'
+-  sdk: ">=3.3.0 <4.0.0"
++  flutter: ">=3.24.0"
++  sdk: ">=3.8.0 <4.0.0"
+ 
+ dependencies:
+   flutter:
+@@ -14,7 +14,8 @@ dependencies:
+     sdk: flutter
+ 
+   # Use a tight version to ensure that all features are available
+-  slang: '>=4.7.0 <4.8.0'
++  slang:
++    path: ../slang
+ 
+ dev_dependencies:
+   intl: any
+diff --git a/slang_gpt/pubspec.yaml b/slang_gpt/pubspec.yaml
+index c376cbd..e7bf593 100644
+--- a/slang_gpt/pubspec.yaml
++++ b/slang_gpt/pubspec.yaml
+@@ -4,7 +4,7 @@ version: 0.11.0
+ repository: https://github.com/slang-i18n/slang
+ 
+ environment:
+-  sdk: '>=3.3.0 <4.0.0'
++  sdk: ">=3.8.0 <4.0.0"
+ 
+ dependencies:
+   collection: ^1.15.0
+## Repository: plus_plugins (base commit: bf04cdf66598dc3fca274b8b1db2b92b0bf6b73e)
+diff --git a/packages/android_alarm_manager_plus/example/pubspec.yaml b/packages/android_alarm_manager_plus/example/pubspec.yaml
+index 7891a811..71ff7a36 100644
+--- a/packages/android_alarm_manager_plus/example/pubspec.yaml
++++ b/packages/android_alarm_manager_plus/example/pubspec.yaml
+@@ -2,8 +2,8 @@ name: android_alarm_manager_plus_example
+ description: Demonstrates how to use the android_alarm_manager_plus plugin.
+ 
+ environment:
+-  sdk: ">=3.1.0 <4.0.0"
+-  flutter: ">=3.12.0"
++  sdk: ">=3.8.0 <4.0.0"
++  flutter: ">=3.24.0"
+ 
+ dependencies:
+   flutter:
+diff --git a/packages/android_alarm_manager_plus/pubspec.yaml b/packages/android_alarm_manager_plus/pubspec.yaml
+index 54d79d97..3b57ffc5 100644
+--- a/packages/android_alarm_manager_plus/pubspec.yaml
++++ b/packages/android_alarm_manager_plus/pubspec.yaml
+@@ -11,8 +11,8 @@ topics:
+   - utils
+ 
+ environment:
+-  sdk: ">=3.1.0 <4.0.0"
+-  flutter: ">=3.12.0"
++  sdk: ">=3.8.0 <4.0.0"
++  flutter: ">=3.24.0"
+ 
+ dependencies:
+   flutter:
+diff --git a/packages/android_intent_plus/example/pubspec.yaml b/packages/android_intent_plus/example/pubspec.yaml
+index 08af9888..84111764 100644
+--- a/packages/android_intent_plus/example/pubspec.yaml
++++ b/packages/android_intent_plus/example/pubspec.yaml
+@@ -2,8 +2,8 @@ name: android_intent_plus_example
+ description: Demonstrates how to use the android_intent plugin.
+ 
+ environment:
+-  sdk: ">=3.1.0 <4.0.0"
+-  flutter: ">=3.12.0"
++  sdk: ">=3.8.0 <4.0.0"
++  flutter: ">=3.24.0"
+ 
+ dependencies:
+   flutter:
+diff --git a/packages/android_intent_plus/pubspec.yaml b/packages/android_intent_plus/pubspec.yaml
+index 5bc0b833..28a2051d 100644
+--- a/packages/android_intent_plus/pubspec.yaml
++++ b/packages/android_intent_plus/pubspec.yaml
+@@ -10,8 +10,8 @@ topics:
+   - utils
+ 
+ environment:
+-  sdk: ">=3.1.0 <4.0.0"
+-  flutter: ">=3.12.0"
++  sdk: ">=3.8.0 <4.0.0"
++  flutter: ">=3.24.0"
+ 
+ flutter:
+   plugin:
+diff --git a/packages/battery_plus/battery_plus/example/pubspec.yaml b/packages/battery_plus/battery_plus/example/pubspec.yaml
+index 46a8ce38..39e270e8 100644
+--- a/packages/battery_plus/battery_plus/example/pubspec.yaml
++++ b/packages/battery_plus/battery_plus/example/pubspec.yaml
+@@ -2,8 +2,8 @@ name: battery_plus_example
+ description: Demonstrates how to use the battery_plus plugin.
+ 
+ environment:
+-  sdk: '>=3.4.0 <4.0.0'
+-  flutter: '>=3.22.0'
++  sdk: ">=3.8.0 <4.0.0"
++  flutter: ">=3.24.0"
+ 
+ dependencies:
+   flutter:
+diff --git a/packages/battery_plus/battery_plus/pubspec.yaml b/packages/battery_plus/battery_plus/pubspec.yaml
+index fbc6ece2..984cc2e1 100644
+--- a/packages/battery_plus/battery_plus/pubspec.yaml
++++ b/packages/battery_plus/battery_plus/pubspec.yaml
+@@ -45,5 +45,5 @@ dev_dependencies:
+   plugin_platform_interface: ^2.1.4
+ 
+ environment:
+-  sdk: ">=3.4.0 <4.0.0"
+-  flutter: ">=3.22.0"
++  sdk: ">=3.8.0 <4.0.0"
++  flutter: ">=3.24.0"
+diff --git a/packages/battery_plus/battery_plus_platform_interface/pubspec.yaml b/packages/battery_plus/battery_plus_platform_interface/pubspec.yaml
+index a548eef4..fc1a6ae4 100644
+--- a/packages/battery_plus/battery_plus_platform_interface/pubspec.yaml
++++ b/packages/battery_plus/battery_plus_platform_interface/pubspec.yaml
+@@ -6,7 +6,7 @@ repository: https://github.com/fluttercommunity/plus_plugins/tree/main/packages/
+ 
+ environment:
+   sdk: ">=2.18.0 <4.0.0"
+-  flutter: ">=3.3.0"
++  flutter: ">=3.24.0"
+ 
+ dependencies:
+   flutter:
+diff --git a/packages/connectivity_plus/connectivity_plus/pubspec.yaml b/packages/connectivity_plus/connectivity_plus/pubspec.yaml
+index c5492777..e54df325 100644
+--- a/packages/connectivity_plus/connectivity_plus/pubspec.yaml
++++ b/packages/connectivity_plus/connectivity_plus/pubspec.yaml
+@@ -9,10 +9,10 @@ topics:
+   - utils
+ 
+ environment:
+-  sdk: ">=3.2.0 <4.0.0"
++  sdk: ">=3.8.0 <4.0.0"
+   # Flutter versions prior to 3.7 did not support the
+   # sharedDarwinSource option.
+-  flutter: ">=3.7.0"
++  flutter: ">=3.24.0"
+ 
+ flutter:
+   plugin:
+diff --git a/packages/connectivity_plus/connectivity_plus_platform_interface/pubspec.yaml b/packages/connectivity_plus/connectivity_plus_platform_interface/pubspec.yaml
+index daba9120..d7e87d2a 100644
+--- a/packages/connectivity_plus/connectivity_plus_platform_interface/pubspec.yaml
++++ b/packages/connectivity_plus/connectivity_plus_platform_interface/pubspec.yaml
+@@ -6,7 +6,7 @@ repository: https://github.com/fluttercommunity/plus_plugins/tree/main/packages/
+ 
+ environment:
+   sdk: ">=2.18.0 <4.0.0"
+-  flutter: ">=3.3.0"
++  flutter: ">=3.24.0"
+ 
+ dependencies:
+   flutter:
+diff --git a/packages/device_info_plus/device_info_plus/example/pubspec.yaml b/packages/device_info_plus/device_info_plus/example/pubspec.yaml
+index a91d1969..a37469ff 100644
+--- a/packages/device_info_plus/device_info_plus/example/pubspec.yaml
++++ b/packages/device_info_plus/device_info_plus/example/pubspec.yaml
+@@ -19,7 +19,7 @@ flutter:
+   uses-material-design: true
+ 
+ environment:
+-  sdk: '>=3.10.0 <4.0.0'
+-  flutter: '>=3.38.1'
++  sdk: ">=3.8.0 <4.0.0"
++  flutter: ">=3.24.0"
+ 
+ 
+diff --git a/packages/device_info_plus/device_info_plus/pubspec.yaml b/packages/device_info_plus/device_info_plus/pubspec.yaml
+index beca5731..4b6d4bad 100644
+--- a/packages/device_info_plus/device_info_plus/pubspec.yaml
++++ b/packages/device_info_plus/device_info_plus/pubspec.yaml
+@@ -48,5 +48,5 @@ dev_dependencies:
+   mockito: ^5.6.4
+ 
+ environment:
+-  sdk: ">=3.10.0 <4.0.0"
+-  flutter: ">=3.38.1"
++  sdk: ">=3.8.0 <4.0.0"
++  flutter: ">=3.24.0"
+diff --git a/packages/device_info_plus/device_info_plus_platform_interface/pubspec.yaml b/packages/device_info_plus/device_info_plus_platform_interface/pubspec.yaml
+index 4cb7df2c..e928d6fe 100644
+--- a/packages/device_info_plus/device_info_plus_platform_interface/pubspec.yaml
++++ b/packages/device_info_plus/device_info_plus_platform_interface/pubspec.yaml
+@@ -17,5 +17,5 @@ dev_dependencies:
+   mockito: ^5.4.0
+ 
+ environment:
+-  sdk: ">=3.10.0 <4.0.0"
+-  flutter: ">=3.38.1"
++  sdk: ">=3.8.0 <4.0.0"
++  flutter: ">=3.24.0"
+diff --git a/packages/network_info_plus/network_info_plus/pubspec.yaml b/packages/network_info_plus/network_info_plus/pubspec.yaml
+index 9e0c64a1..1bebdf5f 100644
+--- a/packages/network_info_plus/network_info_plus/pubspec.yaml
++++ b/packages/network_info_plus/network_info_plus/pubspec.yaml
+@@ -10,8 +10,8 @@ topics:
+   - utils
+ 
+ environment:
+-  sdk: ">=3.10.0 <4.0.0"
+-  flutter: ">=3.38.1"
++  sdk: ">=3.8.0 <4.0.0"
++  flutter: ">=3.24.0"
+ 
+ flutter:
+   plugin:
+diff --git a/packages/network_info_plus/network_info_plus_platform_interface/pubspec.yaml b/packages/network_info_plus/network_info_plus_platform_interface/pubspec.yaml
+index 6b9356fd..8102980e 100644
+--- a/packages/network_info_plus/network_info_plus_platform_interface/pubspec.yaml
++++ b/packages/network_info_plus/network_info_plus_platform_interface/pubspec.yaml
+@@ -5,8 +5,8 @@ homepage: https://github.com/fluttercommunity/plus_plugins
+ repository: https://github.com/fluttercommunity/plus_plugins/tree/main/packages/
+ 
+ environment:
+-  sdk: ">=3.10.0 <4.0.0"
+-  flutter: ">=3.38.1"
++  sdk: ">=3.8.0 <4.0.0"
++  flutter: ">=3.24.0"
+ 
+ dependencies:
+   flutter:
+diff --git a/packages/package_info_plus/package_info_plus/example/pubspec.yaml b/packages/package_info_plus/package_info_plus/example/pubspec.yaml
+index 69d2dcc4..87a60a55 100644
+--- a/packages/package_info_plus/package_info_plus/example/pubspec.yaml
++++ b/packages/package_info_plus/package_info_plus/example/pubspec.yaml
+@@ -4,7 +4,7 @@ version: 1.2.3+4
+ publish_to: "none"
+ 
+ environment:
+-  sdk: ">=3.10.0 <4.0.0"
++  sdk: ">=3.8.0 <4.0.0"
+ 
+ dependencies:
+   clock: ^1.1.1
+diff --git a/packages/package_info_plus/package_info_plus/pubspec.yaml b/packages/package_info_plus/package_info_plus/pubspec.yaml
+index c26fae06..507e8546 100644
+--- a/packages/package_info_plus/package_info_plus/pubspec.yaml
++++ b/packages/package_info_plus/package_info_plus/pubspec.yaml
+@@ -47,5 +47,5 @@ dev_dependencies:
+     sdk: flutter
+ 
+ environment:
+-  sdk: ">=3.10.0 <4.0.0"
+-  flutter: ">=3.38.1"
++  sdk: ">=3.8.0 <4.0.0"
++  flutter: ">=3.24.0"
+diff --git a/packages/package_info_plus/package_info_plus_platform_interface/pubspec.yaml b/packages/package_info_plus/package_info_plus_platform_interface/pubspec.yaml
+index 2b64c80a..3f7614b4 100644
+--- a/packages/package_info_plus/package_info_plus_platform_interface/pubspec.yaml
++++ b/packages/package_info_plus/package_info_plus_platform_interface/pubspec.yaml
+@@ -17,5 +17,5 @@ dev_dependencies:
+   flutter_lints: ^6.0.0
+ 
+ environment:
+-  sdk: ">=3.10.0 <4.0.0"
+-  flutter: ">=3.38.1"
++  sdk: ">=3.8.0 <4.0.0"
++  flutter: ">=3.24.0"
+diff --git a/packages/sensors_plus/sensors_plus/example/pubspec.yaml b/packages/sensors_plus/sensors_plus/example/pubspec.yaml
+index 696b027b..2781b070 100644
+--- a/packages/sensors_plus/sensors_plus/example/pubspec.yaml
++++ b/packages/sensors_plus/sensors_plus/example/pubspec.yaml
+@@ -19,5 +19,5 @@ flutter:
+   uses-material-design: true
+ 
+ environment:
+-  sdk: '>=3.3.0 <4.0.0'
+-  flutter: '>=3.19.0'
++  sdk: ">=3.8.0 <4.0.0"
++  flutter: ">=3.24.0"
+diff --git a/packages/sensors_plus/sensors_plus/pubspec.yaml b/packages/sensors_plus/sensors_plus/pubspec.yaml
+index 11299f60..32894df6 100644
+--- a/packages/sensors_plus/sensors_plus/pubspec.yaml
++++ b/packages/sensors_plus/sensors_plus/pubspec.yaml
+@@ -36,5 +36,5 @@ dev_dependencies:
+   flutter_lints: ">=4.0.0 <6.0.0"
+ 
+ environment:
+-  sdk: ">=3.3.0 <4.0.0"
+-  flutter: ">=3.19.0"
++  sdk: ">=3.8.0 <4.0.0"
++  flutter: ">=3.24.0"
+diff --git a/packages/sensors_plus/sensors_plus_platform_interface/pubspec.yaml b/packages/sensors_plus/sensors_plus_platform_interface/pubspec.yaml
+index 047e3db3..c168665a 100644
+--- a/packages/sensors_plus/sensors_plus_platform_interface/pubspec.yaml
++++ b/packages/sensors_plus/sensors_plus_platform_interface/pubspec.yaml
+@@ -19,4 +19,4 @@ dev_dependencies:
+ 
+ environment:
+   sdk: ">=2.18.0 <4.0.0"
+-  flutter: ">=3.3.0"
++  flutter: ">=3.24.0"
+diff --git a/packages/share_plus/share_plus/example/pubspec.yaml b/packages/share_plus/share_plus/example/pubspec.yaml
+index 641e9412..2561d7a8 100644
+--- a/packages/share_plus/share_plus/example/pubspec.yaml
++++ b/packages/share_plus/share_plus/example/pubspec.yaml
+@@ -24,5 +24,5 @@ flutter:
+     - assets/flutter_logo.png
+ 
+ environment:
+-  sdk: '>=3.10.0 <4.0.0'
+-  flutter: '>=3.38.1'
++  sdk: ">=3.8.0 <4.0.0"
++  flutter: ">=3.24.0"
+diff --git a/packages/share_plus/share_plus/pubspec.yaml b/packages/share_plus/share_plus/pubspec.yaml
+index 9afbd8b6..628a5af6 100644
+--- a/packages/share_plus/share_plus/pubspec.yaml
++++ b/packages/share_plus/share_plus/pubspec.yaml
+@@ -51,6 +51,6 @@ dev_dependencies:
+   flutter_lints: ^6.0.0
+ 
+ environment:
+-  sdk: ">=3.10.0 <4.0.0"
+-  flutter: ">=3.38.1"
++  sdk: ">=3.8.0 <4.0.0"
++  flutter: ">=3.24.0"
+ 
+diff --git a/packages/share_plus/share_plus_platform_interface/pubspec.yaml b/packages/share_plus/share_plus_platform_interface/pubspec.yaml
+index 9ab967f2..cbd16e23 100644
+--- a/packages/share_plus/share_plus_platform_interface/pubspec.yaml
++++ b/packages/share_plus/share_plus_platform_interface/pubspec.yaml
+@@ -21,5 +21,5 @@ dev_dependencies:
+   flutter_lints: ^6.0.0
+ 
+ environment:
+-  sdk: ">=3.10.0 <4.0.0"
+-  flutter: ">=3.38.1"
++  sdk: ">=3.8.0 <4.0.0"
++  flutter: ">=3.24.0"
+diff --git a/pubspec.yaml b/pubspec.yaml
+index 9b418e3b..4b330aca 100644
+--- a/pubspec.yaml
++++ b/pubspec.yaml
+@@ -1,7 +1,7 @@
+ name: plus_plugins_workspace
+ 
+ environment:
+-  sdk: ">=3.3.0 <4.0.0"
++  sdk: ">=3.8.0 <4.0.0"
+ 
+ dev_dependencies:
+   flutter_lints: ^4.0.0
+## Repository: media_controls (base commit: a27208e641790029ac54d825b97508575caee1a7)
+diff --git a/example/pubspec.yaml b/example/pubspec.yaml
+index 6d4a08d..7cebc8d 100644
+--- a/example/pubspec.yaml
++++ b/example/pubspec.yaml
+@@ -5,7 +5,7 @@ description: "Demonstrates how to use the os_media_controls plugin."
+ publish_to: 'none' # Remove this line if you wish to publish to pub.dev
+ 
+ environment:
+-  sdk: ^3.9.2
++  sdk: ">=3.8.0 <4.0.0"
+ 
+ # Dependencies specify other packages that your package needs in order to work.
+ # To automatically upgrade your package dependencies to the latest versions
+diff --git a/pubspec.yaml b/pubspec.yaml
+index ab85afb..0cb2596 100644
+--- a/pubspec.yaml
++++ b/pubspec.yaml
+@@ -11,8 +11,8 @@ topics:
+   - mpris
+ 
+ environment:
+-  sdk: ^3.9.2
+-  flutter: ">=3.35.0"
++  sdk: ">=3.8.0 <4.0.0"
++  flutter: ">=3.24.0"
+ 
+ dependencies:
+   flutter:
+## Repository: background_downloader (base commit: ebdf69a7bdd03d410bfdfc700add08eed0de161d)
+diff --git a/example/pubspec.yaml b/example/pubspec.yaml
+index 30e6848..b00bd5b 100644
+--- a/example/pubspec.yaml
++++ b/example/pubspec.yaml
+@@ -8,8 +8,8 @@ version: 2.0.1
+ publish_to: 'none' # Remove this line if you wish to publish to pub.dev
+ 
+ environment:
+-  sdk: ^3.13.0
+-  flutter:  '>=3.47.0'
++  sdk: ">=3.8.0 <4.0.0"
++  flutter: ">=3.24.0"
+ 
+ # Dependencies specify other packages that your package needs in order to work.
+ # To automatically upgrade your package dependencies to the latest versions
+diff --git a/lib/src/base_downloader.dart b/lib/src/base_downloader.dart
+index 06cd546..e633b75 100644
+--- a/lib/src/base_downloader.dart
++++ b/lib/src/base_downloader.dart
+@@ -130,9 +130,9 @@ abstract base class BaseDownloader {
+     Database database,
+   ) {
+     final instance = switch (defaultTargetPlatform) {
+-      .android => AndroidDownloader(),
+-      .iOS => IOSDownloader(),
+-      .linux || .macOS || .windows => DesktopDownloader(),
++      TargetPlatform.android => AndroidDownloader(),
++      TargetPlatform.iOS => IOSDownloader(),
++      TargetPlatform.linux || TargetPlatform.macOS || TargetPlatform.windows => DesktopDownloader(),
+       _ => throw ArgumentError(
+         'Platform $defaultTargetPlatform is not supported',
+       ),
+@@ -1055,7 +1055,7 @@ abstract base class BaseDownloader {
+   /// ([pausedTasks] and [_clearPauseResumeInfo]
+   void processStatusUpdate(TaskStatusUpdate update) {
+     // Normal status updates are only sent here when the task is expected
+-    // to provide those.  The exception is a .failed status when a task
++    // to provide those.  The exception is a TaskStatus.failed status when a task
+     // has retriesRemaining > 0: those are always sent here, and are
+     // intercepted to hold the task and reschedule in the near future
+     final task = update.task;
+@@ -1368,13 +1368,13 @@ abstract base class BaseDownloader {
+       if (progress == null && status != null) {
+         // set progress based on status
+         progress = switch (status) {
+-          .enqueued || .running => 0.0,
+-          .complete => progressComplete,
+-          .notFound => progressNotFound,
+-          .failed => progressFailed,
+-          .canceled => progressCanceled,
+-          .waitingToRetry => progressWaitingToRetry,
+-          .paused => progressPaused,
++          TaskStatus.enqueued || TaskStatus.running => 0.0,
++          TaskStatus.complete => progressComplete,
++          TaskStatus.notFound => progressNotFound,
++          TaskStatus.failed => progressFailed,
++          TaskStatus.canceled => progressCanceled,
++          TaskStatus.waitingToRetry => progressWaitingToRetry,
++          TaskStatus.paused => progressPaused,
+         };
+       }
+       if (status != TaskStatus.paused) {
+diff --git a/lib/src/chunk.dart b/lib/src/chunk.dart
+index 7be1ae4..db23455 100644
+--- a/lib/src/chunk.dart
++++ b/lib/src/chunk.dart
+@@ -87,8 +87,8 @@ class Chunk {
+   /// Return [Updates] that is based on the [parentTask]
+   static Updates updatesBasedOnParent(Task parentTask) =>
+       switch (parentTask.updates) {
+-        .none || .status => Updates.status,
+-        .progress || .statusAndProgress => Updates.statusAndProgress,
++        Updates.none || Updates.status => Updates.status,
++        Updates.progress || Updates.statusAndProgress => Updates.statusAndProgress,
+       };
+ }
+ 
+diff --git a/lib/src/desktop/desktop_downloader.dart b/lib/src/desktop/desktop_downloader.dart
+index 4d3d439..bc6aa66 100644
+--- a/lib/src/desktop/desktop_downloader.dart
++++ b/lib/src/desktop/desktop_downloader.dart
+@@ -51,9 +51,9 @@ final class DesktopDownloader extends BaseDownloader {
+   static String? tempFilePath;
+   static int checkAvailableSpace = 0;
+ 
+-  factory() => _singleton;
++  factory DesktopDownloader() => _singleton;
+ 
+-  new _internal();
++  DesktopDownloader._internal();
+ 
+   @override
+   Future<bool> enqueue(Task task) async {
+diff --git a/lib/src/desktop/download_isolate.dart b/lib/src/desktop/download_isolate.dart
+index 0adb342..68649c4 100644
+--- a/lib/src/desktop/download_isolate.dart
++++ b/lib/src/desktop/download_isolate.dart
+@@ -171,9 +171,9 @@ Future<bool> determineIfResumeIsPossible(
+ ///
+ /// Performs the actual bytes transfer from response to a temp file,
+ /// and handles the result of the transfer:
+-/// - .complete -> rename temp to final file location
+-/// - .failed -> delete temp file
+-/// - .paused -> post resume information
++/// - TaskStatus.complete -> rename temp to final file location
++/// - TaskStatus.failed -> delete temp file
++/// - TaskStatus.paused -> post resume information
+ Future<TaskStatus> processOkDownloadResponse(
+   String filePath,
+   String tempFilePath,
+@@ -234,7 +234,7 @@ Future<TaskStatus> processOkDownloadResponse(
+       DesktopDownloader.checkAvailableSpace == 0 ? null : guard,
+     );
+     switch (transferBytesResult) {
+-      case .complete:
++      case TaskStatus.complete:
+         // rename file to destination, creating dirs if needed
+         await outStream.flush();
+         await outStream.close();
+@@ -244,11 +244,11 @@ Future<TaskStatus> processOkDownloadResponse(
+         await moveTempFileToDestination(actualTempFilePath, filePath, downloadTask.taskId);
+         resultStatus = TaskStatus.complete;
+ 
+-      case .canceled:
++      case TaskStatus.canceled:
+         // Close the writer before cleanup (required on Windows).
+         resultStatus = TaskStatus.canceled;
+ 
+-      case .paused:
++      case TaskStatus.paused:
+         if (taskCanResume) {
+           sendPort.send((
+             'resumeData',
+@@ -264,7 +264,7 @@ Future<TaskStatus> processOkDownloadResponse(
+           resultStatus = TaskStatus.failed;
+         }
+ 
+-      case .failed:
++      case TaskStatus.failed:
+         break;
+ 
+       default:
+diff --git a/lib/src/exceptions.dart b/lib/src/exceptions.dart
+index 7787eb5..96fdf65 100644
+--- a/lib/src/exceptions.dart
++++ b/lib/src/exceptions.dart
+@@ -26,7 +26,9 @@ bool isDownloadStorageFailure(TaskException? exception) {
+ /// exception message, or from the plugin. The localization is undefined
+ /// For the [TaskHttpException], the [httpResponseCode] is only valid if >0
+ /// and may offer details about the nature of the error
+-base class TaskException(final String description) implements Exception {
++base class TaskException implements Exception {
++  final String description;
++  TaskException(this.description);
+   String get exceptionType => 'TaskException';
+ 
+   /// Create object from [json]
+@@ -71,35 +73,40 @@ base class TaskException(final String description) implements Exception {
+ 
+ /// Exception related to the filesystem, e.g. insufficient space
+ /// or file not found
+-final class TaskFileSystemException(super.description) extends TaskException {
++final class TaskFileSystemException extends TaskException {
++  TaskFileSystemException(super.description);
+   @override
+   String get exceptionType => 'TaskFileSystemException';
+ }
+ 
+ /// Exception related to the url, eg malformed
+-final class TaskUrlException(super.description) extends TaskException {
++final class TaskUrlException extends TaskException {
++  TaskUrlException(super.description);
+   @override
+   String get exceptionType => 'TaskUrlException';
+ }
+ 
+ /// Exception related to the connection, e.g. socket exception
+ /// or request timeout
+-final class TaskConnectionException(super.description) extends TaskException {
++final class TaskConnectionException extends TaskException {
++  TaskConnectionException(super.description);
+   @override
+   String get exceptionType => 'TaskConnectionException';
+ }
+ 
+ /// Exception related to an attempt to resume a task, e.g.
+ /// the temp filename no longer exists, or eTag has changed
+-final class TaskResumeException(super.description) extends TaskException {
++final class TaskResumeException extends TaskException {
++  TaskResumeException(super.description);
+   @override
+   String get exceptionType => 'TaskResumeException';
+ }
+ 
+ /// Exception related to the HTTP response, e.g. a 403
+ /// response code
+-final class TaskHttpException(super.description, final int httpResponseCode)
+-    extends TaskException {
++final class TaskHttpException extends TaskException {
++  final int httpResponseCode;
++  TaskHttpException(super.description, this.httpResponseCode);
+   @override
+   String get exceptionType => 'TaskHttpException';
+ 
+diff --git a/lib/src/localstore/set_option.dart b/lib/src/localstore/set_option.dart
+index 5a27fea..646a6a0 100644
+--- a/lib/src/localstore/set_option.dart
++++ b/lib/src/localstore/set_option.dart
+@@ -10,5 +10,5 @@ final class SetOptions {
+   bool get merge => _merge;
+ 
+   /// Creates a [SetOptions] instance.
+-  SetOptions({this._merge = false});
++  SetOptions({bool merge = false}) : _merge = merge;
+ }
+diff --git a/lib/src/models.dart b/lib/src/models.dart
+index 60bd513..fe86766 100644
+--- a/lib/src/models.dart
++++ b/lib/src/models.dart
+@@ -56,8 +56,8 @@ enum TaskStatus {
+   /// True if this state is one of the 'final' states, meaning no more
+   /// state changes are possible
+   bool get isFinalState => switch (this) {
+-    .complete || .notFound || .failed || .canceled => true,
+-    .enqueued || .running || .waitingToRetry || .paused => false,
++    TaskStatus.complete || TaskStatus.notFound || TaskStatus.failed || TaskStatus.canceled => true,
++    TaskStatus.enqueued || TaskStatus.running || TaskStatus.waitingToRetry || TaskStatus.paused => false,
+   };
+ 
+   /// True if this state is not a 'final' state, meaning more
+@@ -139,10 +139,10 @@ typedef TaskNotificationTapCallback = void Function(
+ typedef BatchProgressCallback = void Function(int succeeded, int failed);
+ 
+ /// Contains tasks and results related to a batch of tasks
+-class Batch(
+-  final List<Task> tasks,
+-  final BatchProgressCallback? batchProgressCallback,
+-) {
++class Batch {
++  final List<Task> tasks;
++  final BatchProgressCallback? batchProgressCallback;
++  Batch(this.tasks, this.batchProgressCallback);
+   final results = <Task, TaskStatus>{};
+ 
+   /// Returns an Iterable with successful tasks in this batch
+@@ -460,7 +460,10 @@ enum NotificationType {
+ ///
+ /// Actual appearance of notification is dependent on the platform, e.g.
+ /// on iOS {progress} is not available and ignored
+-final class const TaskNotification(final String title, final String body) {
++final class TaskNotification {
++  final String title;
++  final String body;
++  const TaskNotification(this.title, this.body);
+   /// Return JSON Map representing object
+   Map<String, dynamic> toJson() => {"title": title, "body": body};
+ }
+diff --git a/lib/src/permissions.dart b/lib/src/permissions.dart
+index 209f8ee..7084802 100644
+--- a/lib/src/permissions.dart
++++ b/lib/src/permissions.dart
+@@ -38,9 +38,9 @@ base class PermissionsService implements Permissions {
+ 
+   /// Creates a [PermissionsService] appropriate for this platform
+   factory PermissionsService.instance() => switch (defaultTargetPlatform) {
+-    .android => AndroidPermissionsService(),
+-    .iOS => IOSPermissionsService(),
+-    .linux || .macOS || .windows => PermissionsService(),
++    TargetPlatform.android => AndroidPermissionsService(),
++    TargetPlatform.iOS => IOSPermissionsService(),
++    TargetPlatform.linux || TargetPlatform.macOS || TargetPlatform.windows => PermissionsService(),
+     _ => throw ArgumentError(
+       'Platform $defaultTargetPlatform is not supported',
+     ),
+diff --git a/lib/src/progress_widget.dart b/lib/src/progress_widget.dart
+index 5900859..f19a605 100644
+--- a/lib/src/progress_widget.dart
++++ b/lib/src/progress_widget.dart
+@@ -75,7 +75,7 @@ class _DownloadProgressIndicatorState extends State<DownloadProgressIndicator> {
+     downloadUpdates = widget.updates.listen((update) {
+       if (update is TaskStatusUpdate) {
+         switch (update.status) {
+-          case .running:
++          case TaskStatus.running:
+             totalTasks.add(update.task);
+             pausedTasks.remove(update.task);
+             inProgress[update.task] = (
+@@ -83,10 +83,10 @@ class _DownloadProgressIndicatorState extends State<DownloadProgressIndicator> {
+               DateTime.now().millisecondsSinceEpoch,
+             );
+ 
+-          case .waitingToRetry:
++          case TaskStatus.waitingToRetry:
+             break;
+ 
+-          case .paused:
++          case TaskStatus.paused:
+             pausedTasks.add(update.task);
+ 
+           default:
+diff --git a/lib/src/queue/serial_job_queue.dart b/lib/src/queue/serial_job_queue.dart
+index 722e41a..ee71535 100644
+--- a/lib/src/queue/serial_job_queue.dart
++++ b/lib/src/queue/serial_job_queue.dart
+@@ -5,7 +5,9 @@ import 'dart:collection';
+ ///
+ /// [J] is the type of the job data.
+ /// [R] is the type of the result returned by the processor.
+-class SerialJobQueue<J, R>(final Future<R> Function(J) _processor) {
++class SerialJobQueue<J, R> {
++  final Future<R> Function(J) _processor;
++  SerialJobQueue(this._processor);
+   final Queue<_Job<J, R>> _queue = Queue();
+   bool _isProcessing = false;
+ 
+@@ -43,4 +45,8 @@ class SerialJobQueue<J, R>(final Future<R> Function(J) _processor) {
+ }
+ 
+ // Simple container for the data and the completer
+-class _Job<J, R>(final J data, final Completer<R> completer);
++class _Job<J, R> {
++  final J data;
++  final Completer<R> completer;
++  _Job(this.data, this.completer);
++}
+diff --git a/lib/src/task.dart b/lib/src/task.dart
+index 377e719..80fc17c 100644
+--- a/lib/src/task.dart
++++ b/lib/src/task.dart
+@@ -471,7 +471,7 @@ sealed class Task extends Request implements Comparable {
+ 
+   /// Returns the path to the directory represented by [baseDirectory]
+   ///
+-  /// On Windows, if [baseDirectory] is .root, returns the empty string
++  /// On Windows, if [baseDirectory] is BaseDirectory.root, returns the empty string
+   /// because the drive letter is required to be included in the directory
+   /// path
+   static Future<String> baseDirectoryPath(BaseDirectory baseDirectory) async {
+@@ -491,25 +491,25 @@ sealed class Task extends Request implements Comparable {
+       }
+     }
+     final baseDir = switch ((baseDirectory, Task.useExternalStorage)) {
+-      (.applicationDocuments, false) =>
++      (BaseDirectory.applicationDocuments, false) =>
+         await getApplicationDocumentsDirectory(),
+-      (.temporary, false) => await getTemporaryDirectory(),
+-      (.applicationSupport, false) => await getApplicationSupportDirectory(),
+-      (.applicationLibrary, false)
++      (BaseDirectory.temporary, false) => await getTemporaryDirectory(),
++      (BaseDirectory.applicationSupport, false) => await getApplicationSupportDirectory(),
++      (BaseDirectory.applicationLibrary, false)
+           when defaultTargetPlatform == TargetPlatform.macOS ||
+               defaultTargetPlatform == TargetPlatform.iOS =>
+         await getLibraryDirectory(),
+-      (.applicationLibrary, false) => Directory(
++      (BaseDirectory.applicationLibrary, false) => Directory(
+         p.join((await getApplicationSupportDirectory()).path, 'Library'),
+       ),
+-      (.root, _) => Directory('/'),
++      (BaseDirectory.root, _) => Directory('/'),
+       // Android only: external storage variants
+-      (.applicationDocuments, true) => externalStorageDirectory!,
+-      (.temporary, true) => externalCacheDirectory!,
+-      (.applicationSupport, true) => Directory(
++      (BaseDirectory.applicationDocuments, true) => externalStorageDirectory!,
++      (BaseDirectory.temporary, true) => externalCacheDirectory!,
++      (BaseDirectory.applicationSupport, true) => Directory(
+         p.join(externalStorageDirectory!.path, 'Support'),
+       ),
+-      (.applicationLibrary, true) => Directory(
++      (BaseDirectory.applicationLibrary, true) => Directory(
+         p.join(externalStorageDirectory!.path, 'Library'),
+       ),
+     };
+diff --git a/lib/src/widgets/transfer_button.dart b/lib/src/widgets/transfer_button.dart
+index 21a0700..5f7970e 100644
+--- a/lib/src/widgets/transfer_button.dart
++++ b/lib/src/widgets/transfer_button.dart
+@@ -46,7 +46,7 @@ class TransferButton extends StatelessWidget {
+         final canPause =
+             transfer.task is DownloadTask && transfer.task.allowPause;
+         return switch (status) {
+-          .running || .enqueued =>
++          TaskStatus.running || TaskStatus.enqueued =>
+             canPause
+                 ? IconButton(
+                     icon: Icon(Icons.pause_circle_outline, size: iconSize),
+@@ -62,26 +62,26 @@ class TransferButton extends StatelessWidget {
+                     tooltip: 'Cancel',
+                     onPressed: onCancel ?? () => transfer.cancel(),
+                   ),
+-          .paused || .waitingToRetry => IconButton(
++          TaskStatus.paused || TaskStatus.waitingToRetry => IconButton(
+             icon: Icon(Icons.play_circle_outline, size: iconSize),
+             color: color ?? Colors.orange,
+             padding: padding,
+             tooltip: 'Resume',
+             onPressed: () => transfer.resume(),
+           ),
+-          .failed || .notFound => IconButton(
++          TaskStatus.failed || TaskStatus.notFound => IconButton(
+             icon: Icon(Icons.refresh, size: iconSize),
+             color: color ?? theme.colorScheme.error,
+             padding: padding,
+             tooltip: 'Retry',
+             onPressed: () => transfer.resume(),
+           ),
+-          .complete => Icon(
++          TaskStatus.complete => Icon(
+             Icons.check_circle,
+             size: iconSize,
+             color: color ?? Colors.green,
+           ),
+-          .canceled => IconButton(
++          TaskStatus.canceled => IconButton(
+             icon: Icon(Icons.replay, size: iconSize),
+             color: color ?? theme.colorScheme.outline,
+             padding: padding,
+diff --git a/lib/src/widgets/transfer_progress_bar.dart b/lib/src/widgets/transfer_progress_bar.dart
+index f335dec..a44d646 100644
+--- a/lib/src/widgets/transfer_progress_bar.dart
++++ b/lib/src/widgets/transfer_progress_bar.dart
+@@ -155,27 +155,27 @@ class TransferProgressBar extends StatelessWidget {
+       return Colors.orange;
+     }
+     return switch (status) {
+-      .complete => Colors.green,
+-      .failed || .notFound => theme.colorScheme.error,
+-      .paused || .waitingToRetry => Colors.orange,
+-      .running || .enqueued => theme.colorScheme.primary,
+-      .canceled => theme.colorScheme.outline,
++      TaskStatus.complete => Colors.green,
++      TaskStatus.failed || TaskStatus.notFound => theme.colorScheme.error,
++      TaskStatus.paused || TaskStatus.waitingToRetry => Colors.orange,
++      TaskStatus.running || TaskStatus.enqueued => theme.colorScheme.primary,
++      TaskStatus.canceled => theme.colorScheme.outline,
+     };
+   }
+ 
+   String _statusLabel(TaskStatus status, TransferHoldReason holdReason) =>
+       switch (holdReason) {
+-        .waitingForWiFi => 'Waiting for Wi-Fi',
+-        .offline => 'Waiting for network',
+-        .none => switch (status) {
+-          .enqueued => 'Enqueued',
+-          .running => 'Transferring',
+-          .complete => 'Complete',
+-          .paused => 'Paused',
+-          .waitingToRetry => 'Waiting to retry',
+-          .failed => 'Failed',
+-          .notFound => 'Not found',
+-          .canceled => 'Canceled',
++        TransferHoldReason.waitingForWiFi => 'Waiting for Wi-Fi',
++        TransferHoldReason.offline => 'Waiting for network',
++        TransferHoldReason.none => switch (status) {
++          TaskStatus.enqueued => 'Enqueued',
++          TaskStatus.running => 'Transferring',
++          TaskStatus.complete => 'Complete',
++          TaskStatus.paused => 'Paused',
++          TaskStatus.waitingToRetry => 'Waiting to retry',
++          TaskStatus.failed => 'Failed',
++          TaskStatus.notFound => 'Not found',
++          TaskStatus.canceled => 'Canceled',
+         },
+       };
+ 
+diff --git a/pubspec.yaml b/pubspec.yaml
+index b6e13be..1f6315b 100644
+--- a/pubspec.yaml
++++ b/pubspec.yaml
+@@ -5,8 +5,8 @@ version: 9.6.2
+ repository: https://github.com/781flyingdutchman/background_downloader
+ 
+ environment:
+-  sdk: ^3.13.0
+-  flutter:  '>=3.47.0'
++  sdk: ">=3.8.0 <4.0.0"
++  flutter: ">=3.24.0"
+ 
+ dependencies:
+   flutter:
+## Repository: auto_updater (base commit: 9e150f71e17495b7361aedbe6df22e89ad52c254)
+diff --git a/packages/auto_updater/example/pubspec.yaml b/packages/auto_updater/example/pubspec.yaml
+index a8d2512..76a825a 100644
+--- a/packages/auto_updater/example/pubspec.yaml
++++ b/packages/auto_updater/example/pubspec.yaml
+@@ -4,7 +4,7 @@ version: 1.0.0+1
+ publish_to: "none"
+ 
+ environment:
+-  sdk: ">=3.0.0 <4.0.0"
++  sdk: ">=3.8.0 <4.0.0"
+ 
+ dependencies:
+   auto_updater:
+diff --git a/packages/auto_updater/pubspec.yaml b/packages/auto_updater/pubspec.yaml
+index 6139153..d0514d2 100644
+--- a/packages/auto_updater/pubspec.yaml
++++ b/packages/auto_updater/pubspec.yaml
+@@ -11,8 +11,8 @@ topics:
+   - auto-updater
+ 
+ environment:
+-  sdk: ">=3.0.0 <4.0.0"
+-  flutter: ">=3.3.0"
++  sdk: ">=3.8.0 <4.0.0"
++  flutter: ">=3.24.0"
+ 
+ dependencies:
+   auto_updater_macos: ^1.0.0
+diff --git a/packages/auto_updater_macos/pubspec.yaml b/packages/auto_updater_macos/pubspec.yaml
+index f26e44f..338d49c 100644
+--- a/packages/auto_updater_macos/pubspec.yaml
++++ b/packages/auto_updater_macos/pubspec.yaml
+@@ -4,8 +4,8 @@ version: 1.0.0
+ repository: https://github.com/leanflutter/auto_updater/tree/main/packages/auto_updater_macos
+ 
+ environment:
+-  sdk: '>=3.0.0 <4.0.0'
+-  flutter: '>=3.3.0'
++  sdk: ">=3.8.0 <4.0.0"
++  flutter: ">=3.24.0"
+ 
+ dependencies:
+   flutter:
+diff --git a/packages/auto_updater_platform_interface/pubspec.yaml b/packages/auto_updater_platform_interface/pubspec.yaml
+index 1f82854..cf1ec3b 100644
+--- a/packages/auto_updater_platform_interface/pubspec.yaml
++++ b/packages/auto_updater_platform_interface/pubspec.yaml
+@@ -4,8 +4,8 @@ version: 1.0.0
+ homepage: https://github.com/leanflutter/auto_updater/blob/main/packages/auto_updater_platform_interface
+ 
+ environment:
+-  sdk: '>=3.0.0 <4.0.0'
+-  flutter: '>=3.3.0'
++  sdk: ">=3.8.0 <4.0.0"
++  flutter: ">=3.24.0"
+ 
+ dependencies:
+   flutter:
+diff --git a/packages/auto_updater_windows/pubspec.yaml b/packages/auto_updater_windows/pubspec.yaml
+index f3b739c..37f36c4 100644
+--- a/packages/auto_updater_windows/pubspec.yaml
++++ b/packages/auto_updater_windows/pubspec.yaml
+@@ -4,8 +4,8 @@ version: 1.0.0
+ repository: https://github.com/leanflutter/auto_updater/tree/main/packages/auto_updater_windows
+ 
+ environment:
+-  sdk: '>=3.0.0 <4.0.0'
+-  flutter: '>=3.3.0'
++  sdk: ">=3.8.0 <4.0.0"
++  flutter: ">=3.24.0"
+ 
+ dependencies:
+   flutter:
+diff --git a/pubspec.yaml b/pubspec.yaml
+index f131cb2..224adc9 100644
+--- a/pubspec.yaml
++++ b/pubspec.yaml
+@@ -3,7 +3,7 @@ homepage: https://github.com/leanflutter/auto_updater
+ publish_to: none
+ 
+ environment:
+-  sdk: ">=3.0.0 <4.0.0"
++  sdk: ">=3.8.0 <4.0.0"
+ 
+ dev_dependencies:
+   melos: ^6.2.0

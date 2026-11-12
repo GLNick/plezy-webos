@@ -1,0 +1,30 @@
+name: slang
+description: Localization / Internationalization (i18n) solution. Use JSON, YAML, CSV, or ARB files to create typesafe translations via source generation.
+version: 4.7.0
+repository: https://github.com/slang-i18n/slang
+topics:
+  - i18n
+  - l10n
+  - localization
+  - internationalization
+  - translation
+screenshots:
+  - description: The slang logo.
+    path: resources/icon.png
+funding:
+  - https://github.com/sponsors/Tienisto/
+
+environment:
+  sdk: ">=3.8.0 <4.0.0"
+
+dependencies:
+  collection: ^1.15.0
+  csv: ">=5.0.1 <7.0.0"
+  intl: ">=0.18.1 <2.0.0"
+  watcher: ^1.0.2
+  yaml: ^3.1.0
+
+dev_dependencies:
+  analyzer: '>=6.0.0'
+  lints: any
+  test: ^1.21.0

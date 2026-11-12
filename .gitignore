@@ -75,3 +75,12 @@ maestro/**/*.png
 
 server/deploy.sh
 server/Caddyfile
+
+# Local plugin build caches
+packages/*/build/
+packages/*/.dart_tool/
+webos_plugins/*/build/
+webos_plugins/*/.dart_tool/
+vendor/**/.dart_tool/
+vendor/**/build/
+dist/

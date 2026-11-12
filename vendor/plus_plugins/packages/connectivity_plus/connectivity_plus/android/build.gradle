@@ -1,0 +1,44 @@
+group = 'dev.fluttercommunity.plus.connectivity'
+version = '1.0-SNAPSHOT'
+
+buildscript {
+    repositories {
+        google()
+        mavenCentral()
+    }
+
+    dependencies {
+        classpath 'com.android.tools.build:gradle:8.12.1'
+    }
+}
+
+rootProject.allprojects {
+    repositories {
+        google()
+        mavenCentral()
+    }
+}
+
+apply plugin: 'com.android.library'
+
+android {
+    namespace = 'dev.fluttercommunity.plus.connectivity'
+    compileSdk = flutter.compileSdkVersion
+
+    compileOptions {
+      sourceCompatibility JavaVersion.VERSION_17
+      targetCompatibility JavaVersion.VERSION_17
+    }
+
+    defaultConfig {
+        minSdk = 21
+        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+    }
+    lint {
+        disable 'InvalidPackage'
+    }
+
+    dependencies {
+        implementation "androidx.core:core:1.18.0"
+    }
+}

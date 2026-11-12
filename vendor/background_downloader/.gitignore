@@ -1,0 +1,55 @@
+# Miscellaneous
+*.class
+*.log
+*.pyc
+__pycache__/
+.venv/
+venv/
+*.swp
+.DS_Store
+.atom/
+.buildlog/
+.history
+.svn/
+migrate_working_dir/
+
+# IntelliJ related
+*.iml
+*.ipr
+*.iws
+.idea/
+
+# The .vscode folder contains launch configuration and tasks you configure in
+# VS Code which you may wish to be included in version control, so this line
+# is commented out by default.
+#.vscode/
+
+# Flutter/Dart/Pub related
+# Libraries should not include pubspec.lock, per https://dart.dev/guides/libraries/private-files#pubspeclock.
+/pubspec.lock
+**/doc/api/
+.dart_tool/
+.packages
+build/
+
+# FVM Version Cache
+.fvm/
+.fvmrc
+
+# Ruby/Bundler for cocoa pods
+.ruby-version
+Gemfile*
+
+# Swift package manager
+.build/
+.swiftpm/
+
+# generated files
+*.mocks.dart
+
+# test files for uploading and downloading
+test_server/files/
+
+# Test artifacts cleanup script
+clean_test_artifacts.sh
+.agents/skills/publish-to-pub-dev/scripts/clean_test_artifacts.sh

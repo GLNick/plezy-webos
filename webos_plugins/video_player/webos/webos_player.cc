@@ -204,10 +204,7 @@ WebOSPlayer::WebOSPlayer(PluginPlayerDelegate* delegate, const std::string& wind
                    << s_slot_window_id_[slot_] << " requested=" << window_id
                    << " (platform keeps original; display handled by exported window)";
     }
-    // Safety net: drop any leftover pipeline state from the previous user
-    // of this slot. Owner-driven dispose normally calls unload() first,
-    // but this guards the edge case where it did not.
-    NDL_MediaUnload();
+    // Do not call NDL_MediaUnload() right before load() on an already unloaded slot.
   }
 }
 

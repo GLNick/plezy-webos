@@ -1,16 +1,35 @@
 #!/usr/bin/env bash
-set -e
+set -euo pipefail
 
-WORK_DIR="$HOME/plezy-webos-workspace"
-source "$WORK_DIR/env.sh"
-OUT_TXT="/mnt/h/Projekte/PlezyWebOSv3/build_step18_v2_out.txt"
+REPO_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)"
+WORK_DIR="${WORK_DIR:-$(cd "$REPO_ROOT/.." && pwd)}"
+WEBOS_SDK_DIR="${WEBOS_SDK_DIR:-/usr/local/starfish-sdk-x86_64}"
+OUT_DIR="${OUT_DIR:-$REPO_ROOT/dist}"
 
-ORIG_IPK="$(find "$WORK_DIR/plezy/build" -name "*.ipk" | grep -v -E "(-32bit|_webos6-24)\.ipk" | head -n 1)"
-if [ -z "$ORIG_IPK" ]; then
-  ORIG_IPK="/mnt/h/Projekte/PlezyWebOSv3/com.edde746.plezy_2.26.0_arm_webos25-26.ipk"
+if [ -f "$REPO_ROOT/scripts/webos/env.sh" ]; then
+  source "$REPO_ROOT/scripts/webos/env.sh"
 fi
 
-{
+APP_VER="$(grep -E '^version:' "$REPO_ROOT/pubspec.yaml" | head -n 1 | awk '{print $2}' | cut -d'+' -f1)"
+APP_VER="${APP_VER:-2.26.0}"
+
+mkdir -p "$OUT_DIR"
+
+ORIG_IPK="${ORIG_IPK:-$(find "$REPO_ROOT/build" -name "*.ipk" 2>/dev/null | grep -v -E "(-32bit|_webos6-24|_webos25-26)\.ipk" | head -n 1 || true)}"
+if [ -z "$ORIG_IPK" ] || [ ! -f "$ORIG_IPK" ]; then
+  ORIG_IPK="$OUT_DIR/com.edde746.plezy_${APP_VER}_arm_webos25-26.ipk"
+fi
+
+if [ ! -f "$ORIG_IPK" ]; then
+  echo "ERROR: Basis-IPK nicht gefunden. Bitte zuerst 'flutter-webos build webos --release' ausfuehren."
+  exit 1
+fi
+
+MODERN_IPK_PATH="$OUT_DIR/com.edde746.plezy_${APP_VER}_arm_webos25-26.ipk"
+if [ "$(realpath "$ORIG_IPK")" != "$(realpath "$MODERN_IPK_PATH" 2>/dev/null || echo "")" ]; then
+  cp -f "$ORIG_IPK" "$MODERN_IPK_PATH"
+fi
+
 echo "=== [1/5] Entpacke Basis-IPK: $(basename "$ORIG_IPK") ==="
 STAGE_DIR="/tmp/plezy_32bit_stage"
 rm -rf "$STAGE_DIR"
@@ -557,9 +576,9 @@ EXPORT int {sym}(int a, int b, int c, int d, int e, int f) {{
 c_out.write_text(c_code)
 PYEOF
 
-CLANG_BIN="/usr/local/starfish-sdk-x86_64/sysroots/x86_64-starfishsdk-linux/usr/bin/clang"
+CLANG_BIN="${WEBOS_SDK_DIR}/sysroots/x86_64-starfishsdk-linux/usr/bin/clang"
 if [ ! -x "$CLANG_BIN" ]; then
-  CLANG_BIN="$(find /usr/local/starfish-sdk-x86_64 -name "clang" -type f 2>/dev/null | head -n 1)"
+  CLANG_BIN="$(find ${WEBOS_SDK_DIR} -name "clang" -type f 2>/dev/null | head -n 1)"
 fi
 
 "$CLANG_BIN" -target armv7a-linux-gnueabi -mfloat-abi=softfp -march=armv7-a \
@@ -723,7 +742,7 @@ PYEOF
 rm -rf "$APP_DIR/appdata/"* "$APP_DIR/appdata/".* 2>/dev/null || true
 chmod 0777 "$APP_DIR/appdata" 2>/dev/null || true
 
-echo "=== [5/5] Baue separates Paket: com.edde746.plezy_2.26.0_arm-32bit.ipk ==="
+echo "=== [5/5] Baue kompatibles Paket (POSIX ustar): com.edde746.plezy_${APP_VER}_arm_webos6-24.ipk ==="
 cd "$STAGE_DIR/data_extract"
 tar --format=ustar --numeric-owner --owner=0 --group=0 -czf "$STAGE_DIR/ipk_extract/data.tar.gz" ./usr
 
@@ -732,18 +751,12 @@ cd "$STAGE_DIR/ctrl_extract"
 tar -xzf "$STAGE_DIR/ipk_extract/control.tar.gz"
 tar --format=ustar --numeric-owner --owner=0 --group=0 -czf "$STAGE_DIR/ipk_extract/control.tar.gz" .
 
-OUT_32BIT_PATH="/mnt/h/Projekte/PlezyWebOSv3/com.edde746.plezy_2.26.0_arm_webos6-24.ipk"
+OUT_COMPAT_PATH="$OUT_DIR/com.edde746.plezy_${APP_VER}_arm_webos6-24.ipk"
 
 cd "$STAGE_DIR/ipk_extract"
-rm -f "$OUT_32BIT_PATH"
-ar r "$OUT_32BIT_PATH" debian-binary control.tar.gz data.tar.gz
+rm -f "$OUT_COMPAT_PATH"
+ar r "$OUT_COMPAT_PATH" debian-binary control.tar.gz data.tar.gz
 
 echo ""
-echo "=== SYMBOL-CHECK libwebos_compat32.so ==="
-readelf -Ws "$APP_DIR/lib/libwebos_compat32.so"
-echo ""
-echo "🎉 NEUES 32-BIT PAKET BEREIT UNTER:"
-ls -lh "$OUT_32BIT_PATH"
-} > "$OUT_TXT" 2>&1
-
-echo "✅ Gespeichert unter: $OUT_TXT ($(wc -l < "$OUT_TXT") Zeilen)"
+echo "=== FERTIGE PAKETE IN $OUT_DIR ==="
+ls -lh "$MODERN_IPK_PATH" "$OUT_COMPAT_PATH"
