@@ -5,7 +5,7 @@ typedef DemuxedVideoFormat = ({double? fps, int width, int height});
 
 /// A hold on the next opened file's video decoder ([Player.holdVideoDecoderAtPreload]).
 class VideoDecoderHold {
-  VideoDecoderHold({required this.format, required this._release});
+  VideoDecoderHold({required this.format, required Future<void> Function() release}) : _release = release;
 
   /// The held file's demuxed video format once the player reached the hold,
   /// or null when nothing was held: the file has no video track, the open

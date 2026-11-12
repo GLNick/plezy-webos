@@ -7,7 +7,7 @@ OUT_TXT="/mnt/h/Projekte/PlezyWebOSv3/build_step18_v2_out.txt"
 
 ORIG_IPK="$(find "$WORK_DIR/plezy/build" -name "*.ipk" | grep -v "\-32bit\.ipk" | head -n 1)"
 if [ -z "$ORIG_IPK" ]; then
-  ORIG_IPK="/mnt/h/Projekte/PlezyWebOSv3/com.edde746.plezy_2.23.0_arm.ipk"
+  ORIG_IPK="/mnt/h/Projekte/PlezyWebOSv3/com.edde746.plezy_2.26.0_arm.ipk"
 fi
 
 {
@@ -723,7 +723,7 @@ PYEOF
 rm -rf "$APP_DIR/appdata/"* "$APP_DIR/appdata/".* 2>/dev/null || true
 chmod 0777 "$APP_DIR/appdata" 2>/dev/null || true
 
-echo "=== [5/5] Baue separates Paket: com.edde746.plezy_2.23.0_arm-32bit.ipk ==="
+echo "=== [5/5] Baue separates Paket: com.edde746.plezy_2.26.0_arm-32bit.ipk ==="
 cd "$STAGE_DIR/data_extract"
 tar --format=ustar --numeric-owner --owner=0 --group=0 -czf "$STAGE_DIR/ipk_extract/data.tar.gz" ./usr
 
@@ -732,7 +732,7 @@ cd "$STAGE_DIR/ctrl_extract"
 tar -xzf "$STAGE_DIR/ipk_extract/control.tar.gz"
 tar --format=ustar --numeric-owner --owner=0 --group=0 -czf "$STAGE_DIR/ipk_extract/control.tar.gz" .
 
-OUT_32BIT_PATH="/mnt/h/Projekte/PlezyWebOSv3/com.edde746.plezy_2.23.0_arm-32bit.ipk"
+OUT_32BIT_PATH="/mnt/h/Projekte/PlezyWebOSv3/com.edde746.plezy_2.26.0_arm-32bit.ipk"
 
 cd "$STAGE_DIR/ipk_extract"
 rm -f "$OUT_32BIT_PATH"

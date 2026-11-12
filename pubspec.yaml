@@ -66,11 +66,7 @@ dependencies:
   # a resumed SAF download reuse its own partial document and deletes SAF
   # partials through the provider; ebdf69a resumes a download the system stops
   # (job quota, lost network) instead of reporting it canceled and deleting the
-  # partial; 7c341be makes the rerun of a SAF download whose process died write
-  # to the document the dead run created instead of a "name (1)" copy; afa3fe6
-  # samples desktop free space once per 1 MiB instead of per received event
-  # (#2967). Keep the same-filesystem move/resume cleanup; no per-host TLS
-  # bypass.
+  # partial. Keep the same-filesystem move/resume cleanup; no per-host TLS bypass.
   background_downloader:
     path: ../vendor/background_downloader
   sentry_flutter: any
@@ -82,6 +78,11 @@ dependencies:
   xml: any
   string_similarity: ^2.2.0
   unorm_dart: ^0.3.2
+  openwatchparty:
+    path: ../vendor/openwatchparty
+  web_socket:
+    path: ../vendor/web_socket
+  video_player_platform_interface: any
   shared_preferences_webos:
     path: ../plugins/packages/shared_preferences
   path_provider_webos:
@@ -128,6 +129,10 @@ dev_dependencies:
   # analyzer: any
 
 dependency_overrides:
+  openwatchparty:
+    path: ../vendor/openwatchparty
+  web_socket:
+    path: ../vendor/web_socket
   slang:
     path: ../vendor/slang/slang
   slang_flutter:
@@ -160,6 +165,8 @@ flutter:
   uses-material-design: true
   assets:
     - assets/licenses/SpatialAudioBridge.txt
+    - assets/chapter_marker_model.bin
+    - assets/app_icons/previews/
     - assets/plezy.png
     - assets/plezy_adaptive_foreground.svg
     - assets/plex_chevron.svg
@@ -173,16 +180,11 @@ flutter:
     - assets/mdblist_mark.svg
     - assets/go-noto-current-regular.ttf
     - assets/go-noto-kurrent-hangul.ttf
-    # Intro/credits chapter classifier; scripts/codegen/train_chapter_marker_model.py writes it.
-    - assets/chapter_marker_model.bin
     - assets/shaders/nvscaler/
     - assets/shaders/artcnn/
     - assets/shaders/anime4k/
     - assets/player_icons/
     - assets/rating_icons/
-    # App icon picker thumbnails; scripts/codegen/generate_app_icons.py renders them from
-    # assets/app_icons/source, which stays out of the bundle.
-    - assets/app_icons/previews/
   # Registered as UI font families so the Linux build, whose fontconfig may
   # lack CJK fonts, can fall back to the bundled subtitle fonts (mono_theme).
   fonts:

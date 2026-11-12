@@ -30,6 +30,7 @@ class MediaControlsScreenController {
     required bool Function() hasLiveSeekWindow,
     required bool Function() hasNextLiveChannel,
     required bool Function() hasPreviousLiveChannel,
+    required bool Function() isPlaybackHeld,
     required bool Function() shouldSkipForPip,
     required bool Function() isPlayerInitialized,
     required MediaItem Function() metadata,
@@ -44,7 +45,7 @@ class MediaControlsScreenController {
     required dynamic clearWasPlayingBeforeInactive,
     required WakelockController wakelock,
     required dynamic recordLifecycle,
-  }) : _manager = manager, _player = player, _isMounted = isMounted, _hasLiveSeekWindow = hasLiveSeekWindow, _hasNextLiveChannel = hasNextLiveChannel, _hasPreviousLiveChannel = hasPreviousLiveChannel, _shouldSkipForPip = shouldSkipForPip, _isPlayerInitialized = isPlayerInitialized, _metadata = metadata, _client = client, _isPlaylistActive = isPlaylistActive, _canControlPlayback = canControlPlayback, _canNavigateMediaItems = canNavigateMediaItems, _rewindOnResumeSeconds = rewindOnResumeSeconds, _seek = seek, _play = play, _wasPlayingBeforeInactive = wasPlayingBeforeInactive, _clearWasPlayingBeforeInactive = clearWasPlayingBeforeInactive, _wakelock = wakelock, _recordLifecycle = recordLifecycle;
+  }) : _manager = manager, _player = player, _isMounted = isMounted, _hasLiveSeekWindow = hasLiveSeekWindow, _hasNextLiveChannel = hasNextLiveChannel, _hasPreviousLiveChannel = hasPreviousLiveChannel, _isPlaybackHeld = isPlaybackHeld, _shouldSkipForPip = shouldSkipForPip, _isPlayerInitialized = isPlayerInitialized, _metadata = metadata, _client = client, _isPlaylistActive = isPlaylistActive, _canControlPlayback = canControlPlayback, _canNavigateMediaItems = canNavigateMediaItems, _rewindOnResumeSeconds = rewindOnResumeSeconds, _seek = seek, _play = play, _wasPlayingBeforeInactive = wasPlayingBeforeInactive, _clearWasPlayingBeforeInactive = clearWasPlayingBeforeInactive, _wakelock = wakelock, _recordLifecycle = recordLifecycle;
 
   final MediaControlsManager? Function() _manager;
   final Player? Function() _player;

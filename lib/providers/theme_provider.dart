@@ -27,7 +27,7 @@ class ThemeProvider extends ChangeNotifier with DisposableChangeNotifierMixin, W
 
   /// Gated by the [SupporterService]: a stored preset or Custom paints only
   /// while it is unlocked, and reappears as soon as it is.
-  ThemeProvider({required this._supporter}) {
+  ThemeProvider({required SupporterService supporter}) : _supporter = supporter {
     _systemBrightness = WidgetsBinding.instance.platformDispatcher.platformBrightness;
     // Seed synchronously when settings are already loaded (main() initializes
     // them before runApp) so the first frame paints the persisted theme; the

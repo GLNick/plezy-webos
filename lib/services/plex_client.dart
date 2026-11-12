@@ -3134,7 +3134,7 @@ class PlexClient
       // Null exactly for the original preset.
       if (preset.videoResolution != null) 'videoResolution': preset.videoResolution!,
       if (preset.videoQuality != null) 'videoQuality': preset.videoQuality!.toString(),
-      'directStreamAudio': sourceCodecRefused ? '0' : '1',
+      'directStreamAudio': withholdDirectPlay ? '0' : '1',
       'mediaBufferSize': '102400',
       'session': transcodeSessionId,
       // `subtitles` is the only subtitle knob this endpoint honours. Which
@@ -3780,7 +3780,7 @@ class PlexClient
               audioStreamId: resolvedAudioId,
               selectedSubtitleTrack: requestedSubtitleTrack,
               partId: data.mediaInfo?.partId,
-              sourceCodecRefused: true,
+              withholdDirectPlay: true,
             );
             if (res.startPath != null) {
               return '${config.baseUrl}${res.startPath}'.withPlexToken(config.token);

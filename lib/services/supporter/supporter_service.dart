@@ -2,7 +2,6 @@ import 'dart:async';
 
 import 'package:collection/collection.dart';
 import 'package:flutter/foundation.dart';
-import 'package:in_app_purchase_platform_interface/in_app_purchase_platform_interface.dart';
 
 import '../../mixins/disposable_change_notifier_mixin.dart';
 import '../../utils/app_logger.dart';
@@ -131,8 +130,8 @@ class SupporterService extends ChangeNotifier with DisposableChangeNotifierMixin
   SupporterService.forTesting({required SupporterAvailability availability, bool? purchased, SupporterStore? store})
     : this._(availability, purchased: purchased, createStore: store == null ? null : () => store);
 
-  SupporterService._(this.availability, {bool? purchased, this._createStore})
-    : _purchased =
+  SupporterService._(this.availability, {bool? purchased, SupporterStore? Function()? createStore})
+    : _createStore = createStore, _purchased =
           purchased ??
           (availability == SupporterAvailability.purchasable &&
               (SettingsService.instanceOrNull?.read(SettingsService.supporterEntitlementCached) ?? false));

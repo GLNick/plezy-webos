@@ -48,14 +48,27 @@ class WatchPlayerHooks {
 /// the user's player attached to it, and the room's state and notices for the
 /// UI.
 ///
-/// This provider manages:
-/// - Session creation/joining
-/// - Peer connections
-/// - Playback synchronization
-/// - Participant list
-/// - Media switching across the session
-class WatchTogetherProvider with ChangeNotifier {
-  WatchTogetherProvider({WatchTogetherPeerServiceFactory peerServiceFactory = _createWatchTogetherPeerService}) : _peerServiceFactory = peerServiceFactory;
+/// The provider lives in the profile session, so a profile switch disposes of
+/// it and the party with it.
+class WatchTogetherProvider extends ChangeNotifier {
+  /// Without [clientFor] and [findCopies] the user has no libraries: other
+  /// participants' media finds nothing (widget tests that only need a room).
+  WatchTogetherProvider({
+    ServerClientLookup? clientFor,
+    TitleCopyFinder? findCopies,
+    String Function()? displayName,
+    String? Function()? profileId,
+    String? Function()? customRelayBaseUrl,
+    Future<String> Function()? clientName,
+    WatchPartyFactory? partyFactory,
+    this.shareDurationWait = const Duration(seconds: 30),
+  }) : _clientFor = clientFor ?? _noClient,
+       _displayName = displayName ?? _defaultName,
+       _profileId = profileId ?? _noProfile,
+       _customRelayBaseUrl = customRelayBaseUrl ?? _relaySetting,
+       _clientName = clientName ?? _plezyClientName,
+       _partyFactory = partyFactory ?? _defaultParty,
+       _resolver = LibraryResolver(clientFor: clientFor ?? _noClient, findCopies: findCopies ?? _noCopies);
 
   static MediaServerClient? _noClient(String serverId) => null;
   static String _defaultName() => 'Plezy';
