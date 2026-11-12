@@ -286,7 +286,7 @@ class WebosSubtitleClock {
   static final WebosSubtitleClock instance = WebosSubtitleClock._();
   WebosSubtitleClock._();
 
-  static const int kSceneCutLeadMs = 25;
+  static const int kSceneCutLeadMs = -15;
 
   final Stopwatch _watch = Stopwatch();
   final Stopwatch _seekCooldownWatch = Stopwatch();
@@ -365,7 +365,7 @@ class WebosSubtitleClock {
     final currentEst = _extrapolatedRawMs;
     final diff = rawPosMs - currentEst;
 
-    if (!_watch.isRunning || diff.abs() > 850) {
+    if (!_watch.isRunning || diff.abs() > 450) {
       _anchorPosMs = rawPosMs;
       if (_isPlaying) {
         _watch
@@ -374,9 +374,8 @@ class WebosSubtitleClock {
       } else {
         _watch.reset();
       }
-    } else if (diff.abs() > 350) {
-      final nudged = currentEst + (diff * 0.15).round();
-      _anchorPosMs = nudged < currentEst ? currentEst : nudged;
+    } else if (diff.abs() > 80) {
+      _anchorPosMs = currentEst + (diff * 0.35).round();
       if (_isPlaying) {
         _watch
           ..reset()
@@ -1185,6 +1184,15 @@ class WebosSubtitleParser {
   );
 
   static final _clipTagRe = RegExp(r'\\(i?clip)\(([^)]*)\)');
+  static final _tokenBlockRe = RegExp(r'\{([^}]*)\}|([^{]+)');
+  static final _posTagRe = RegExp(r'\\pos\(\s*([-\d.]+)\s*,\s*([-\d.]+)\s*\)');
+  static final _moveTagRe = RegExp(
+    r'\\move\(\s*([-\d.]+)\s*,\s*([-\d.]+)\s*,\s*([-\d.]+)\s*,\s*([-\d.]+)(?:\s*,\s*(\d+)\s*,\s*(\d+))?\s*\)',
+  );
+  static final _fadTagRe = RegExp(r'\\fad\(\s*(\d+)\s*,\s*(\d+)\s*\)');
+  static final _fadeComplexTagRe = RegExp(
+    r'\\fade\(\s*(\d+)\s*,\s*(\d+)\s*,\s*(\d+)\s*,\s*(\d+)\s*,\s*(\d+)\s*,\s*(\d+)\s*,\s*(\d+)\s*\)',
+  );
 
   static String _stripBom(String s) {
     if (s.startsWith('\uFEFF')) return s.substring(1);
@@ -1835,7 +1843,7 @@ class WebosSubtitleParser {
     }
 
     final spans = <WebosAssSpan>[];
-    final tokenRe = RegExp(r'\{([^}]*)\}|([^{]+)');
+    final tokenRe = _tokenBlockRe;
 
     for (final match in tokenRe.allMatches(rawText)) {
       final rawTagBlock = match.group(1);
@@ -2038,15 +2046,13 @@ class WebosSubtitleParser {
           }
         }
 
-        final posMatch = RegExp(r'\\pos\(\s*([-\d.]+)\s*,\s*([-\d.]+)\s*\)').firstMatch(tagBlock);
+        final posMatch = _posTagRe.firstMatch(tagBlock);
         if (posMatch != null) {
           posX = double.tryParse(posMatch.group(1)!);
           posY = double.tryParse(posMatch.group(2)!);
         }
 
-        final moveMatch = RegExp(
-          r'\\move\(\s*([-\d.]+)\s*,\s*([-\d.]+)\s*,\s*([-\d.]+)\s*,\s*([-\d.]+)(?:\s*,\s*(\d+)\s*,\s*(\d+))?\s*\)',
-        ).firstMatch(tagBlock);
+        final moveMatch = _moveTagRe.firstMatch(tagBlock);
         if (moveMatch != null) {
           moveX1 = double.tryParse(moveMatch.group(1)!);
           moveY1 = double.tryParse(moveMatch.group(2)!);
@@ -2056,15 +2062,13 @@ class WebosSubtitleParser {
           if (moveMatch.group(6) != null) moveT2 = int.tryParse(moveMatch.group(6)!);
         }
 
-        final fadMatch = RegExp(r'\\fad\(\s*(\d+)\s*,\s*(\d+)\s*\)').firstMatch(tagBlock);
+        final fadMatch = _fadTagRe.firstMatch(tagBlock);
         if (fadMatch != null) {
           fadeInMs = int.tryParse(fadMatch.group(1)!) ?? 0;
           fadeOutMs = int.tryParse(fadMatch.group(2)!) ?? 0;
         }
 
-        final fadeComplexMatch = RegExp(
-          r'\\fade\(\s*(\d+)\s*,\s*(\d+)\s*,\s*(\d+)\s*,\s*(\d+)\s*,\s*(\d+)\s*,\s*(\d+)\s*,\s*(\d+)\s*\)',
-        ).firstMatch(tagBlock);
+        final fadeComplexMatch = _fadeComplexTagRe.firstMatch(tagBlock);
         if (fadeComplexMatch != null) {
           complexFade = [
             for (int g = 1; g <= 7; g++) int.tryParse(fadeComplexMatch.group(g)!) ?? 0,
@@ -2712,7 +2716,7 @@ class WebosMkvSubtitleExtractor {
   }
 
   Future<void> _initializeMkvHeaders() async {
-    final head = await _fetchRange(0, 512 * 1024);
+    final head = await _fetchRange(0, 128 * 1024);
     if (head == null || head.length < 64) return;
 
     int pos = 0;
@@ -2754,10 +2758,17 @@ class WebosMkvSubtitleExtractor {
         } else if (elId.value == 0x1C53BB6B) {
           _parseCuesElement(head, bodyStart, bodyEnd);
         } else if (elId.value == 0x1941A469) {
-          await _parseAndLoadAttachments(head, bodyStart, bodyEnd);
+          _attachmentsOffset ??= pos;
         }
-      } else if (elId.value == 0x1941A469) {
-        _attachmentsOffset ??= pos;
+      } else {
+        if (elId.value == 0x1654AE6B) _tracksOffset ??= pos;
+        if (elId.value == 0x1C53BB6B) _cuesOffset ??= pos;
+        if (elId.value == 0x1941A469) {
+          _attachmentsOffset ??= pos;
+          if (_firstClusterOffset == 0 && elSize.value < 150 * 1024 * 1024) {
+            _firstClusterOffset = bodyEnd;
+          }
+        }
       }
       pos = bodyEnd;
     }
@@ -2794,6 +2805,8 @@ class WebosMkvSubtitleExtractor {
 
     if (_attachmentsOffset != null) {
       unawaited(() async {
+        await Future<void>.delayed(const Duration(milliseconds: 2200));
+        if (_disposed) return;
         final attBuf = await _fetchRange(_attachmentsOffset!, 6 * 1024 * 1024);
         if (attBuf != null && !_disposed) {
           final aid = _readVint(attBuf, 0, keepMarkerBit: true);
@@ -3009,73 +3022,178 @@ class WebosMkvSubtitleExtractor {
   }
 
   Future<void> _runExtractionLoop() async {
-    const chunkSize = 2 * 1024 * 1024;
-    final initialPosMs = getCurrentPositionMs();
-    _streamCursorOffset = _findClusterOffsetForTime((initialPosMs - 5000).clamp(0, 1 << 30));
+    int initialPosMs = getCurrentPositionMs();
+    _streamCursorOffset = _findClusterOffsetForTime((initialPosMs - 3000).clamp(0, 1 << 30));
     _lastSeekCheckMs = initialPosMs;
+    _maxBufferedTimeMs = initialPosMs;
 
     while (!_disposed) {
       final nowPosMs = getCurrentPositionMs();
-      if ((nowPosMs - _lastSeekCheckMs).abs() > 8000 &&
-          (nowPosMs < _lastSeekCheckMs - 5000 || nowPosMs > _maxBufferedTimeMs)) {
-        _streamCursorOffset = _findClusterOffsetForTime((nowPosMs - 5000).clamp(0, 1 << 30));
+      if ((nowPosMs - _lastSeekCheckMs).abs() > 4500 &&
+          (nowPosMs < _lastSeekCheckMs - 2000 || nowPosMs > _maxBufferedTimeMs + 2000)) {
+        _streamCursorOffset = _findClusterOffsetForTime((nowPosMs - 3000).clamp(0, 1 << 30));
         _maxBufferedTimeMs = nowPosMs;
       }
       _lastSeekCheckMs = nowPosMs;
 
-      if (_maxBufferedTimeMs > nowPosMs + 120000) {
-        await Future<void>.delayed(const Duration(seconds: 1));
+      if (_maxBufferedTimeMs > nowPosMs + 90000) {
+        await Future<void>.delayed(const Duration(milliseconds: 500));
         continue;
       }
 
-      final buf = await _fetchRange(_streamCursorOffset, chunkSize);
-      if (_disposed) return;
-      if (buf == null || buf.length < 16) {
-        await Future<void>.delayed(const Duration(seconds: 1));
-        continue;
+      await _streamClustersFromOffset(_streamCursorOffset);
+      if (!_disposed) {
+        await Future<void>.delayed(const Duration(milliseconds: 120));
       }
-
-      final consumed = _parseClustersInBuffer(buf);
-      if (consumed > 0) {
-        _streamCursorOffset += consumed;
-      } else {
-        _streamCursorOffset += buf.length;
-      }
-      await Future<void>.delayed(const Duration(milliseconds: 35));
     }
   }
 
-  int _parseClustersInBuffer(Uint8List buf) {
+  Future<void> _streamClustersFromOffset(int startOffset) async {
+    HttpClientRequest? req;
+    HttpClientResponse? resp;
+    StreamSubscription<List<int>>? sub;
+    final completer = Completer<void>();
+
+    try {
+      req = await _httpClient.getUrl(Uri.parse(url));
+      headers?.forEach((k, v) => req!.headers.set(k, v));
+      req.headers.set('Range', 'bytes=$startOffset-');
+      resp = await req.close().timeout(const Duration(seconds: 8));
+      if (resp.statusCode != 200 && resp.statusCode != 206) {
+        await resp.drain<void>();
+        return;
+      }
+
+      Uint8List carry = Uint8List(0);
+      int skipBytesRemaining = 0;
+      int bytesProcessedFromStart = 0;
+      int lastYieldMs = DateTime.now().millisecondsSinceEpoch;
+
+      sub = resp.listen(
+        (List<int> chunk) {
+          if (_disposed) {
+            sub?.cancel();
+            if (!completer.isCompleted) completer.complete();
+            return;
+          }
+
+          // Check if user seeked away while streaming
+          final nowPosMs = getCurrentPositionMs();
+          if ((nowPosMs - _lastSeekCheckMs).abs() > 4500 &&
+              (nowPosMs < _lastSeekCheckMs - 2000 || nowPosMs > _maxBufferedTimeMs + 3000)) {
+            _lastSeekCheckMs = nowPosMs;
+            _streamCursorOffset = _findClusterOffsetForTime((nowPosMs - 3000).clamp(0, 1 << 30));
+            _maxBufferedTimeMs = nowPosMs;
+            sub?.cancel();
+            if (!completer.isCompleted) completer.complete();
+            return;
+          }
+          _lastSeekCheckMs = nowPosMs;
+
+          int chunkOffset = 0;
+          // Fast-skip over large video/audio block bodies without buffering or scanning them!
+          if (skipBytesRemaining > 0) {
+            final int canSkip = skipBytesRemaining < chunk.length ? skipBytesRemaining : chunk.length;
+            skipBytesRemaining -= canSkip;
+            chunkOffset += canSkip;
+            bytesProcessedFromStart += canSkip;
+            if (chunkOffset >= chunk.length) {
+              _streamCursorOffset = startOffset + bytesProcessedFromStart;
+              return;
+            }
+          }
+
+          final Uint8List incoming = chunkOffset == 0
+              ? (chunk is Uint8List ? chunk : Uint8List.fromList(chunk))
+              : Uint8List.sublistView(chunk is Uint8List ? chunk : Uint8List.fromList(chunk), chunkOffset);
+
+          final Uint8List buf;
+          if (carry.isEmpty) {
+            buf = incoming;
+          } else {
+            buf = Uint8List(carry.length + incoming.length);
+            buf.setRange(0, carry.length, carry);
+            buf.setRange(carry.length, buf.length, incoming);
+          }
+
+          final res = _consumeStreamBuffer(buf);
+          bytesProcessedFromStart += res.consumedBytes;
+          _streamCursorOffset = startOffset + bytesProcessedFromStart;
+          skipBytesRemaining = res.skipAheadBytes;
+
+          if (res.remainingStart < buf.length && skipBytesRemaining == 0) {
+            carry = Uint8List.fromList(Uint8List.sublistView(buf, res.remainingStart));
+          } else {
+            carry = Uint8List(0);
+          }
+
+          // Throttle if we are >90s ahead of playback so we don't hog CPU/network on 32-bit TVs
+          if (_maxBufferedTimeMs > nowPosMs + 90000 && sub != null && !sub!.isPaused) {
+            sub!.pause(Future<void>.delayed(const Duration(milliseconds: 600)));
+          } else {
+            final nowWall = DateTime.now().millisecondsSinceEpoch;
+            if (nowWall - lastYieldMs > 45 && sub != null && !sub!.isPaused) {
+              lastYieldMs = nowWall;
+              sub!.pause(Future<void>.delayed(const Duration(milliseconds: 8)));
+            }
+          }
+        },
+        onDone: () {
+          if (!completer.isCompleted) completer.complete();
+        },
+        onError: (_) {
+          if (!completer.isCompleted) completer.complete();
+        },
+        cancelOnError: true,
+      );
+
+      await completer.future;
+    } catch (_) {
+    } finally {
+      try {
+        await sub?.cancel();
+      } catch (_) {}
+    }
+  }
+
+  /// Parses EBML Cluster/Block elements in [buf].
+  /// For non-subtitle blocks (video/audio), immediately skips their payload without copying or scanning!
+  ({int consumedBytes, int remainingStart, int skipAheadBytes}) _consumeStreamBuffer(Uint8List buf) {
     int pos = 0;
     bool addedAny = false;
 
     while (pos < buf.length - 12) {
+      // Cluster header (0x1F43B675): step right into its children
       if (buf[pos] == 0x1F &&
           buf[pos + 1] == 0x43 &&
           buf[pos + 2] == 0xB6 &&
           buf[pos + 3] == 0x75) {
         final cSize = _readVint(buf, pos + 4, keepMarkerBit: false);
         if (cSize == null) break;
-        pos = pos + 4 + cSize.length;
+        pos += 4 + cSize.length;
         continue;
       }
 
       final elId = _readVint(buf, pos, keepMarkerBit: true);
       final elSz = elId != null ? _readVint(buf, pos + elId.length, keepMarkerBit: false) : null;
 
-      final isKnownClusterChild = elId != null &&
-          (elId.value == 0xE7 ||
-              elId.value == 0xA3 ||
-              elId.value == 0xA0 ||
-              elId.value == 0xAB ||
-              elId.value == 0xA7 ||
-              elId.value == 0x5854 ||
-              elId.value == 0xEC ||
-              elId.value == 0xBF);
+      final isKnownElement = elId != null &&
+          elSz != null &&
+          (elId.value == 0xE7 ||     // Timestamp
+              elId.value == 0xA3 ||  // SimpleBlock
+              elId.value == 0xA0 ||  // BlockGroup
+              elId.value == 0xAB ||  // PrevSize
+              elId.value == 0xA7 ||  // Position
+              elId.value == 0x5854 || // SilentTracks
+              elId.value == 0xEC ||  // Void
+              elId.value == 0xBF ||  // CRC-32
+              elId.value == 0x1C53BB6B || // Cues
+              elId.value == 0x1941A469);  // Attachments
 
-      if (!isKnownClusterChild || elSz == null) {
+      if (!isKnownElement) {
+        // Fast scan for next Cluster magic 0x1F 0x43 0xB6 0x75
         pos++;
-        while (pos < buf.length - 12) {
+        while (pos < buf.length - 4) {
           if (buf[pos] == 0x1F &&
               buf[pos + 1] == 0x43 &&
               buf[pos + 2] == 0xB6 &&
@@ -3087,16 +3205,45 @@ class WebosMkvSubtitleExtractor {
         continue;
       }
 
-      final bStart = pos + elId.length + elSz.length;
-      final bEnd = bStart + elSz.value;
+      final int bStart = pos + elId!.length + elSz!.length;
+      final int bEnd = bStart + elSz.value;
 
-      if (bEnd > buf.length) {
-        if (pos > 0) {
-          if (addedAny) onCuesUpdated();
-          return pos;
-        } else {
-          return bEnd;
+      // Fast-path for SimpleBlock (0xA3): check track number in the first 4 bytes of the body!
+      // If it's a video/audio track (99.9% of blocks), we can skip it even if bEnd > buf.length!
+      if (elId.value == 0xA3 && bStart + 4 <= buf.length) {
+        final tNumVint = _readVint(buf, bStart, keepMarkerBit: false);
+        if (tNumVint != null && !_subTrackByNumber.containsKey(tNumVint.value)) {
+          // Video or audio block! Skip directly to bEnd without buffering the whole frame!
+          if (bEnd <= buf.length) {
+            pos = bEnd;
+            continue;
+          } else {
+            final int skipAhead = bEnd - buf.length;
+            if (addedAny) onCuesUpdated();
+            return (consumedBytes: buf.length, remainingStart: buf.length, skipAheadBytes: skipAhead);
+          }
         }
+      }
+
+      // Skip Cues / Void / Attachments / SilentTracks immediately even if larger than buffer
+      if (elId.value == 0x1C53BB6B ||
+          elId.value == 0x1941A469 ||
+          elId.value == 0xEC ||
+          elId.value == 0x5854) {
+        if (bEnd <= buf.length) {
+          pos = bEnd;
+          continue;
+        } else {
+          final int skipAhead = bEnd - buf.length;
+          if (addedAny) onCuesUpdated();
+          return (consumedBytes: buf.length, remainingStart: buf.length, skipAheadBytes: skipAhead);
+        }
+      }
+
+      // For subtitle blocks / BlockGroups / Cluster Timestamps that cross the chunk boundary:
+      // wait for the next chunk to complete the element
+      if (bEnd > buf.length) {
+        break;
       }
 
       if (elId.value == 0xE7) {
@@ -3142,7 +3289,7 @@ class WebosMkvSubtitleExtractor {
     }
 
     if (addedAny) onCuesUpdated();
-    return pos > 0 ? pos : buf.length;
+    return (consumedBytes: pos, remainingStart: pos, skipAheadBytes: 0);
   }
 
   bool _extractFromBlock(Uint8List buf, int start, int end, int clusterTimeMs, int durationMs) {
@@ -3340,6 +3487,7 @@ class _WebosSubtitleOverlayState extends State<WebosSubtitleOverlay>
     with SingleTickerProviderStateMixin {
   Ticker? _vsyncTicker;
   final Map<WebosSubtitleCue, DateTime> _cueFirstSeenAt = {};
+  List<WebosSubtitleCue> _lastVisibleSnapshot = const [];
 
   @override
   void initState() {
@@ -3368,11 +3516,26 @@ class _WebosSubtitleOverlayState extends State<WebosSubtitleOverlay>
 
   void _onVsyncTick(Duration _) {
     if (!mounted) return;
-    if (widget.activeCues.value.isEmpty) {
+    final raw = widget.activeCues.value;
+    if (raw.isEmpty) {
+      if (_lastVisibleSnapshot.isNotEmpty) {
+        _lastVisibleSnapshot = const [];
+        setState(() {});
+      }
       _vsyncTicker?.stop();
       return;
     }
-    setState(() {});
+    final nowMs = _resolveSmoothPlayheadMs();
+    final vis = _selectVisibleCuesForTimestamp(raw, nowMs);
+    final bool visibilityChanged = !listEquals(vis, _lastVisibleSnapshot);
+    if (visibilityChanged) {
+      _lastVisibleSnapshot = List<WebosSubtitleCue>.of(vis);
+      setState(() {});
+      return;
+    }
+    if (vis.any((c) => c.isAnimated)) {
+      setState(() {});
+    }
   }
 
   void _onActiveCuesChanged() {
@@ -4049,7 +4212,7 @@ class _WebosSubtitleOverlayState extends State<WebosSubtitleOverlay>
       }
 
       final blurSigma = (rawBlur * resScaleY * 0.75).clamp(0.0, 18.0);
-      final strokeMaskFilter = blurSigma > 0.15 ? MaskFilter.blur(BlurStyle.normal, blurSigma) : null;
+      const MaskFilter? strokeMaskFilter = null; // Avoid CPU MaskFilter.blur on TextSpan; handled via GPU Shadow below
 
       final shadOffsetX = isOpaqueBoxStyle ? 0.0 : (rawXShad * resScaleX * 0.85).clamp(-16.0, 16.0);
       final shadOffsetY = isOpaqueBoxStyle ? 0.0 : (rawYShad * resScaleY * 0.85).clamp(-16.0, 16.0);
@@ -4202,6 +4365,10 @@ class _WebosSubtitleOverlayState extends State<WebosSubtitleOverlay>
 
     if (fadeMultiplier < 0.999) {
       result = Opacity(opacity: fadeMultiplier.clamp(0.0, 1.0), child: result);
+    }
+
+    if (!cue.isAnimated) {
+      result = RepaintBoundary(child: result);
     }
 
     return result;

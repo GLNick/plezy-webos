@@ -92,6 +92,7 @@ class PlayerWebos extends PlayerBase {
   bool _isCurrentStreamHls = false;
   bool _isHotSwapping = false;
   bool _saw702Error = false;
+  bool _posQueryInFlight = false;
 
   // Subtitle state
   final ValueNotifier<List<WebosSubtitleCue>> activeSubtitleCues = ValueNotifier<List<WebosSubtitleCue>>(const []);
@@ -341,6 +342,7 @@ class PlayerWebos extends PlayerBase {
     _videoReadyForSubtitles = false;
     _targetResumeStartMs = sourceStart.inMilliseconds;
     _openStartedAt = DateTime.now();
+    WebosSubtitleClock.instance.notifySeek(sourceStart.inMilliseconds);
 
     handlePlayerEvent('start-file', {'sourceId': sourceId});
 
@@ -375,7 +377,18 @@ class PlayerWebos extends PlayerBase {
           ),
         );
       } catch (createErr) {
-        if (!isHls && createErr.toString().contains('702')) {
+        if (createErr.toString().contains('104')) {
+          appLogger.w('[WebOS-NDL] create() got 104 AVProxy busy; waiting 350ms and retrying...');
+          await Future<void>.delayed(const Duration(milliseconds: 350));
+          texId = await _webosPlatform.create(
+            DataSource(
+              sourceType: DataSourceType.network,
+              uri: resolvedUri,
+              formatHint: isHls ? VideoFormat.hls : null,
+              httpHeaders: payloadJson.isNotEmpty ? {'payload': payloadJson} : const <String, String>{},
+            ),
+          );
+        } else if (!isHls && createErr.toString().contains('702')) {
           appLogger.w('[WebOS-NDL] create() threw 702 Resume error on Direct Play MKV; switching to Direct Stream (start.m3u8)');
           final dsUrl = await WebosDirectStreamFallbackRegistry.instance.obtainDirectStreamUrl();
           if (dsUrl != null && dsUrl.isNotEmpty) {
@@ -501,6 +514,27 @@ class PlayerWebos extends PlayerBase {
             if (disposed || _currentSourceId != sourceId) return;
             final errStr = err.toString();
             appLogger.e('[WebOS-NDL] Playback error on textureId=$texId: $errStr');
+            if (errStr.contains('104')) {
+              final sinceOpen = DateTime.now().difference(_openStartedAt ?? DateTime.now()).inMilliseconds;
+              if (sinceOpen < 3500) {
+                appLogger.w('[WebOS-NDL] Caught 104 fail to create AVProxy on startup; retrying after 400ms...');
+                Future<void>.delayed(const Duration(milliseconds: 400), () {
+                  if (!disposed && _currentSourceId == sourceId) {
+                    unawaited(
+                      open(
+                        media,
+                        play: play,
+                        isLive: isLive,
+                        externalSubtitles: externalSubtitles,
+                        timelineDuration: timelineDuration,
+                        timelineOffset: timelineOffset,
+                      ),
+                    );
+                  }
+                });
+                return;
+              }
+            }
             if (errStr.contains('702')) {
               if (_targetResumeStartMs > 0) {
                 appLogger.w('[WebOS-NDL] Caught 702 Resume error on unindexed MKV; retrying open from 0ms');
@@ -533,9 +567,11 @@ class PlayerWebos extends PlayerBase {
         handlePropertyChange('pause', false, sourceId: sourceId);
       }
 
-      _positionTimer = Timer.periodic(const Duration(milliseconds: 50), (_) async {
+      _posQueryInFlight = false;
+      _positionTimer = Timer.periodic(const Duration(milliseconds: 90), (_) async {
         final activeTex = _textureId;
-        if (disposed || activeTex == null || _currentSourceId != sourceId) return;
+        if (disposed || activeTex == null || _currentSourceId != sourceId || _posQueryInFlight) return;
+        _posQueryInFlight = true;
         try {
           final pos = await _webosPlatform.getPosition(activeTex);
           if (!disposed && _currentSourceId == sourceId) {
@@ -550,7 +586,9 @@ class PlayerWebos extends PlayerBase {
             handlePropertyChange('time-pos', posMs / 1000.0, sourceId: sourceId);
             _refreshActiveSubtitleCues();
           }
-        } catch (_) {}
+        } catch (_) {} finally {
+          _posQueryInFlight = false;
+        }
       });
 
       return sourceId;
