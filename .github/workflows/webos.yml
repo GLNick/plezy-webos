@@ -4,10 +4,12 @@ on:
   push:
     branches:
       - webos-native-working
+    tags:
+      - 'v*-webos*'
   workflow_dispatch:
 
 permissions:
-  contents: read
+  contents: write
 
 jobs:
   build:
@@ -27,3 +29,9 @@ jobs:
           name: webos-ipks
           path: dist/*.ipk
           if-no-files-found: error
+
+      - name: Publish release with Homebrew Channel repositories
+        if: startsWith(github.ref, 'refs/tags/')
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: scripts/webos/ci/publish.sh "$GITHUB_REPOSITORY" "$GITHUB_REF_NAME"
