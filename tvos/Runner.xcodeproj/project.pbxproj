@@ -26,10 +26,15 @@
 		6F3C0DD6F2F8DA14E7E2F386 /* MpvPlayerCore.swift in Sources */ = {isa = PBXBuildFile; fileRef = A12B8610AE5D580077264851 /* MpvPlayerCore.swift */; };
 		72B802AB7864268C4439E8FA /* ShelfSources.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC4FE4CC3847E57D0552B366 /* ShelfSources.swift */; };
 		74858FAF1ED2DC5600515810 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74858FAE1ED2DC5600515810 /* AppDelegate.swift */; };
+		7A9C6EB5D12457D92C6041DC /* InAppPurchasePlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7445B8E53E56D6E08F6328F3 /* InAppPurchasePlugin.swift */; };
+		85196766A2A2BEF8AF7BB2D4 /* StoreKit2Translators.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4E382F89789AD9A8232ED27 /* StoreKit2Translators.swift */; };
+		A1F7CF09591B8FA69063EC27 /* StoreKit2Messages.g.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14EA8D9407ABD45D25119692 /* StoreKit2Messages.g.swift */; };
+		C8E8277DB6C15F663837C944 /* InAppPurchasePlugin+StoreKit2.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4B21B060FF4BC14C93C3754 /* InAppPurchasePlugin+StoreKit2.swift */; };
 		7CE4D37BDCAD02C28DFAF38A /* ShelfItemMapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = C339C20E52A6F6F6725EF31F /* ShelfItemMapper.swift */; };
 		81325C1CD13794375A81AC02 /* messages.g.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34CD411CCD84E381C4BF4C1B /* messages.g.swift */; };
 		81F08E404EBEB19B00FF148D /* ConnectivityPlusPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67C3193A50DFDECE2B92D075 /* ConnectivityPlusPlugin.swift */; };
-		89CF031971F407719E4B5DD8 /* TvosEventDeliveryCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66F56950138FF220CA079EB3 /* TvosEventDeliveryCoordinator.swift */; };
+		FF2FECD2C74D24587E5BB87E /* DeepLinkDeliveryCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 165687F714D48208D3711578 /* DeepLinkDeliveryCoordinator.swift */; };
+		7C9DA00B32FA54E6632CF58A /* DeepLinkPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0681E7E28FF4C910F1EC0B6C /* DeepLinkPlugin.swift */; };
 		8E5EED3DDAC9455D4DAA9776 /* MpvPlayerPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D7A998830EDC8F77BF521D1 /* MpvPlayerPlugin.swift */; };
 		97C146FC1CF9000F007C117D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 97C146FA1CF9000F007C117D /* Main.storyboard */; };
 		97C146FE1CF9000F007C117D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 97C146FD1CF9000F007C117D /* Assets.xcassets */; };
@@ -44,7 +49,7 @@
 		BDD87DA7F5C435F9DBB8F9BE /* TopShelfExtension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 035F0D5A5E54BE7AD9AFA23C /* TopShelfExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		C6A15611158B29B0FF43A960 /* Pods_Runner.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 824D2C68D1F1206932E118C2 /* Pods_Runner.framework */; };
 		CD1C0534948840272E58248E /* PathMonitorConnectivityProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AEF79DFBD1D80F00AB39CDA /* PathMonitorConnectivityProvider.swift */; };
-		D2004D7BB4A40340AB7A01E0 /* TvosEventDeliveryCoordinatorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE6C8125B201A8BC3261AE2B /* TvosEventDeliveryCoordinatorTests.swift */; };
+		D2004D7BB4A40340AB7A01E0 /* DeepLinkDeliveryCoordinatorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE6C8125B201A8BC3261AE2B /* DeepLinkDeliveryCoordinatorTests.swift */; };
 		D2A548D9DE1A0F319B30B74C /* SystemShelfPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0760C00EDC55A4D718BCB406 /* SystemShelfPlugin.swift */; };
 		E2CF133189FD5CD5272A4653 /* SceneLifecycleTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 026EA157972BC2E9A90763AC /* SceneLifecycleTests.swift */; };
 		E3DEAD2AAFC347A2E55AC0F7 /* SharedPreferencesPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0455EBA0EF4A61D3B71D2D7 /* SharedPreferencesPlugin.swift */; };
@@ -53,6 +58,8 @@
 		F9C95D532B6F6B72D187217D /* Pods_RunnerTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EF0E0C298AEDE34FF7C8BFD5 /* Pods_RunnerTests.framework */; };
 		B1D51A6A2F00110000000010 /* VideoDecodeCapabilitiesPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1D51A6A2F00110000000011 /* VideoDecodeCapabilitiesPlugin.swift */; };
 		B1D51A6A2F00110000000020 /* ExternalPlayerPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1D51A6A2F00110000000021 /* ExternalPlayerPlugin.swift */; };
+		A9C0FF1C2F00120000000011 /* AppIconPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9C0FF1C2F00120000000012 /* AppIconPlugin.swift */; };
+		A9C0FF1C2F00120000000013 /* AlternateAppIcons.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A9C0FF1C2F00120000000014 /* AlternateAppIcons.xcassets */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -102,6 +109,10 @@
 		04DD35536DEE7C27FFA53862 /* Pods-Runner.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Runner.release.xcconfig"; path = "Target Support Files/Pods-Runner/Pods-Runner.release.xcconfig"; sourceTree = "<group>"; };
 		0760C00EDC55A4D718BCB406 /* SystemShelfPlugin.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = SystemShelfPlugin.swift; sourceTree = "<group>"; };
 		0C25F4F2367A30B47E945AD6 /* Pods-Runner.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Runner.debug.xcconfig"; path = "Target Support Files/Pods-Runner/Pods-Runner.debug.xcconfig"; sourceTree = "<group>"; };
+		14EA8D9407ABD45D25119692 /* StoreKit2Messages.g.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = StoreKit2Messages.g.swift; sourceTree = "<group>"; };
+		7445B8E53E56D6E08F6328F3 /* InAppPurchasePlugin.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = InAppPurchasePlugin.swift; sourceTree = "<group>"; };
+		A4E382F89789AD9A8232ED27 /* StoreKit2Translators.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = StoreKit2Translators.swift; sourceTree = "<group>"; };
+		E4B21B060FF4BC14C93C3754 /* InAppPurchasePlugin+StoreKit2.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = "InAppPurchasePlugin+StoreKit2.swift"; sourceTree = "<group>"; };
 		1B17916D7270A141E3AC7B5D /* RunnerTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = RunnerTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		1CC83B6BDD3EF9204BEF754B /* Pods-RunnerTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RunnerTests.release.xcconfig"; path = "Target Support Files/Pods-RunnerTests/Pods-RunnerTests.release.xcconfig"; sourceTree = "<group>"; };
 		25B7925EFD8A2C1C7EB667D5 /* TVServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = TVServices.framework; path = System/Library/Frameworks/TVServices.framework; sourceTree = SDKROOT; };
@@ -114,7 +125,8 @@
 		4F1000014F1000014F100001 /* FlutterNativeTextInputTests.mm */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.cpp.objcpp; path = FlutterNativeTextInputTests.mm; sourceTree = "<group>"; };
 		5D44F4361594F517C002DC45 /* TopShelfFetchContractTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = TopShelfFetchContractTests.swift; sourceTree = "<group>"; };
 		5E1F41676FEF1AB57076F8B9 /* DeviceInfoPlusPlugin.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = DeviceInfoPlusPlugin.swift; sourceTree = "<group>"; };
-		66F56950138FF220CA079EB3 /* TvosEventDeliveryCoordinator.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = TvosEventDeliveryCoordinator.swift; sourceTree = "<group>"; };
+		165687F714D48208D3711578 /* DeepLinkDeliveryCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = DeepLinkDeliveryCoordinator.swift; path = ../shared/apple/DeepLink/DeepLinkDeliveryCoordinator.swift; sourceTree = SOURCE_ROOT; };
+		0681E7E28FF4C910F1EC0B6C /* DeepLinkPlugin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = DeepLinkPlugin.swift; path = ../shared/apple/DeepLink/DeepLinkPlugin.swift; sourceTree = SOURCE_ROOT; };
 		67C3193A50DFDECE2B92D075 /* ConnectivityPlusPlugin.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ConnectivityPlusPlugin.swift; sourceTree = "<group>"; };
 		6AEF79DFBD1D80F00AB39CDA /* PathMonitorConnectivityProvider.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = PathMonitorConnectivityProvider.swift; sourceTree = "<group>"; };
 		73645904F226A24585A092CE /* MpvPlayerPluginShared.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = MpvPlayerPluginShared.swift; path = ../shared/apple/MpvPlayer/MpvPlayerPluginShared.swift; sourceTree = "<source_root>"; };
@@ -149,9 +161,11 @@
 		EF0E0C298AEDE34FF7C8BFD5 /* Pods_RunnerTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_RunnerTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		F2F829B3F190657106F66379 /* TopShelfProvider.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = TopShelfProvider.swift; sourceTree = "<group>"; };
 		F9426EFA282CDA8E0E98EEE9 /* PackageInfoPlusPlugin.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = PackageInfoPlusPlugin.swift; sourceTree = "<group>"; };
-		FE6C8125B201A8BC3261AE2B /* TvosEventDeliveryCoordinatorTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = TvosEventDeliveryCoordinatorTests.swift; sourceTree = "<group>"; };
+		FE6C8125B201A8BC3261AE2B /* DeepLinkDeliveryCoordinatorTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = DeepLinkDeliveryCoordinatorTests.swift; sourceTree = "<group>"; };
 		B1D51A6A2F00110000000011 /* VideoDecodeCapabilitiesPlugin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = VideoDecodeCapabilitiesPlugin.swift; path = ../ios/Runner/VideoDecodeCapabilitiesPlugin.swift; sourceTree = SOURCE_ROOT; };
 		B1D51A6A2F00110000000021 /* ExternalPlayerPlugin.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ExternalPlayerPlugin.swift; sourceTree = "<group>"; };
+		A9C0FF1C2F00120000000012 /* AppIconPlugin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AppIconPlugin.swift; path = ../shared/apple/AppIcon/AppIconPlugin.swift; sourceTree = SOURCE_ROOT; };
+		A9C0FF1C2F00120000000014 /* AlternateAppIcons.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = AlternateAppIcons.xcassets; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -190,6 +204,18 @@
 			);
 			name = package_info_plus;
 			path = package_info_plus;
+			sourceTree = "<group>";
+		};
+		248B36B1989A43BD1610A60F /* in_app_purchase_storekit */ = {
+			isa = PBXGroup;
+			children = (
+				7445B8E53E56D6E08F6328F3 /* InAppPurchasePlugin.swift */,
+				E4B21B060FF4BC14C93C3754 /* InAppPurchasePlugin+StoreKit2.swift */,
+				14EA8D9407ABD45D25119692 /* StoreKit2Messages.g.swift */,
+				A4E382F89789AD9A8232ED27 /* StoreKit2Translators.swift */,
+			);
+			name = in_app_purchase_storekit;
+			path = in_app_purchase_storekit;
 			sourceTree = "<group>";
 		};
 		24CE237B5ECBF841DDDAD2D1 /* shared_preferences_foundation */ = {
@@ -306,17 +332,20 @@
 			children = (
 				97C146FA1CF9000F007C117D /* Main.storyboard */,
 				97C146FD1CF9000F007C117D /* Assets.xcassets */,
+				A9C0FF1C2F00120000000014 /* AlternateAppIcons.xcassets */,
 				97C146FF1CF9000F007C117D /* LaunchScreen.storyboard */,
 				97C147021CF9000F007C117D /* Info.plist */,
 				74858FAE1ED2DC5600515810 /* AppDelegate.swift */,
 				B1D51A6A2F00110000000011 /* VideoDecodeCapabilitiesPlugin.swift */,
 				B1D51A6A2F00110000000021 /* ExternalPlayerPlugin.swift */,
+				A9C0FF1C2F00120000000012 /* AppIconPlugin.swift */,
 				74858FAD1ED2DC5600515810 /* Runner-Bridging-Header.h */,
 				BF0B7DFE378943E9D7865D18 /* MpvPlayer */,
 				D58B788B11920D95BC7D750C /* Plugins */,
 				0760C00EDC55A4D718BCB406 /* SystemShelfPlugin.swift */,
 				937C0D45D6114EF1E957F5F6 /* Runner.entitlements */,
-				66F56950138FF220CA079EB3 /* TvosEventDeliveryCoordinator.swift */,
+				165687F714D48208D3711578 /* DeepLinkDeliveryCoordinator.swift */,
+				0681E7E28FF4C910F1EC0B6C /* DeepLinkPlugin.swift */,
 			);
 			path = Runner;
 			sourceTree = "<group>";
@@ -344,6 +373,7 @@
 				DF39F6BC85D449736C737F18 /* path_provider */,
 				6B0884FDB3DBCBC1E7F0CBAD /* device_info_plus */,
 				25FB49FF35E9FB1E7A2040EF /* connectivity_plus */,
+				248B36B1989A43BD1610A60F /* in_app_purchase_storekit */,
 			);
 			name = Plugins;
 			path = Plugins;
@@ -363,7 +393,7 @@
 			children = (
 				4F1000014F1000014F100001 /* FlutterNativeTextInputTests.mm */,
 				2A7C0B1D9E5F4A6381027C11 /* MpvPlayerContractTests.swift */,
-				FE6C8125B201A8BC3261AE2B /* TvosEventDeliveryCoordinatorTests.swift */,
+				FE6C8125B201A8BC3261AE2B /* DeepLinkDeliveryCoordinatorTests.swift */,
 				934BC4E316D2AC788C954766 /* ConnectivityPlusPluginTests.swift */,
 				A5E1F001234567890ABCDE01 /* SystemShelfPluginTests.swift */,
 				5D44F4361594F517C002DC45 /* TopShelfFetchContractTests.swift */,
@@ -493,6 +523,7 @@
 				97C147011CF9000F007C117D /* LaunchScreen.storyboard in Resources */,
 				3B3967161E833CAA004F5970 /* AppFrameworkInfo.plist in Resources */,
 				97C146FE1CF9000F007C117D /* Assets.xcassets in Resources */,
+				A9C0FF1C2F00120000000013 /* AlternateAppIcons.xcassets in Resources */,
 				97C146FC1CF9000F007C117D /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -622,7 +653,7 @@
 			files = (
 				4F1000024F1000024F100002 /* FlutterNativeTextInputTests.mm in Sources */,
 				2A7C0B1D9E5F4A6381027C12 /* MpvPlayerContractTests.swift in Sources */,
-				D2004D7BB4A40340AB7A01E0 /* TvosEventDeliveryCoordinatorTests.swift in Sources */,
+				D2004D7BB4A40340AB7A01E0 /* DeepLinkDeliveryCoordinatorTests.swift in Sources */,
 				65AC2C222043B3E6723E2076 /* ConnectivityPlusPluginTests.swift in Sources */,
 				A5E1F001234567890ABCDE02 /* SystemShelfPluginTests.swift in Sources */,
 				0092CB48B2682E3D69B1A09F /* TopShelfFetchContractTests.swift in Sources */,
@@ -637,6 +668,7 @@
 				74858FAF1ED2DC5600515810 /* AppDelegate.swift in Sources */,
 				B1D51A6A2F00110000000010 /* VideoDecodeCapabilitiesPlugin.swift in Sources */,
 				B1D51A6A2F00110000000020 /* ExternalPlayerPlugin.swift in Sources */,
+				A9C0FF1C2F00120000000011 /* AppIconPlugin.swift in Sources */,
 				691577F0EB3F4EB1A5160280 /* MpvPlayerCoreBase.swift in Sources */,
 				5C71F5F7B33075F2B007825B /* MpvPlayerPluginShared.swift in Sources */,
 				B1D51A6A2F00110000000014 /* MpvAudioPlayerCore.swift in Sources */,
@@ -652,8 +684,13 @@
 				81F08E404EBEB19B00FF148D /* ConnectivityPlusPlugin.swift in Sources */,
 				A7596F780E93AF0BE3838A26 /* ConnectivityProvider.swift in Sources */,
 				CD1C0534948840272E58248E /* PathMonitorConnectivityProvider.swift in Sources */,
+				7A9C6EB5D12457D92C6041DC /* InAppPurchasePlugin.swift in Sources */,
+				C8E8277DB6C15F663837C944 /* InAppPurchasePlugin+StoreKit2.swift in Sources */,
+				A1F7CF09591B8FA69063EC27 /* StoreKit2Messages.g.swift in Sources */,
+				85196766A2A2BEF8AF7BB2D4 /* StoreKit2Translators.swift in Sources */,
 				D2A548D9DE1A0F319B30B74C /* SystemShelfPlugin.swift in Sources */,
-				89CF031971F407719E4B5DD8 /* TvosEventDeliveryCoordinator.swift in Sources */,
+				FF2FECD2C74D24587E5BB87E /* DeepLinkDeliveryCoordinator.swift in Sources */,
+				7C9DA00B32FA54E6632CF58A /* DeepLinkPlugin.swift in Sources */,
 				40C477DC462980F6AF17BEA1 /* ShelfFetcher.swift in Sources */,
 				7CE4D37BDCAD02C28DFAF38A /* ShelfItemMapper.swift in Sources */,
 				06E9C60A796154EDE0A0D0E8 /* ShelfSources.swift in Sources */,
@@ -1179,7 +1216,7 @@
 			repositoryURL = "https://github.com/edde746/mpv-build";
 			requirement = {
 				kind = revision;
-				revision = 7361a5a6cdb38dd02e6a13451f6d16197e257c48;
+				revision = 6dbda06021b128b7adc30161bf7870977e575135;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */

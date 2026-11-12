@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <network-security-config>
     <!-- Fallback for user-entered hosts only: a self-hosted Plex/Jellyfin/Seerr
-         server, or a custom Watch Together relay, may be plain HTTP or fronted
-         by a private CA the device owner installed. Their hostnames are not
-         knowable at build time, so they can only be covered here.
+         server, or a self-hosted Open Watch Party relay on the LAN, may be
+         plain HTTP or fronted by a private CA the device owner installed.
+         Their hostnames are not knowable at build time, so they can only be
+         covered here.
 
          Only the platform HTTP stack (background_downloader, ExoPlayer's Cronet
          data source) reads this file. The app's own requests run on dart:io,
@@ -29,11 +30,9 @@
              lib/services/plex_client/parts/live_tv.dart:3).
              Does NOT match *.plex.direct — user PMS keeps base-config. -->
         <domain includeSubdomains="true">plex.tv</domain>
-        <!-- ice.plezy.app: relay + /auth OAuth proxy + /posters
-             (lib/watch_together/services/watch_together_relay_endpoint.dart:8,
-             lib/services/trackers/oauth_proxy_client.dart:22,
-             lib/services/discord_rpc_service.dart:55);
-             bugs.plezy.app: Sentry DSN (lib/main.dart:90). -->
+        <!-- ice.plezy.app: /auth OAuth proxy + /logs + /posters
+             (lib/services/plezy_server.dart:4);
+             bugs.plezy.app: Sentry DSN (lib/main.dart:111). -->
         <domain includeSubdomains="true">plezy.app</domain>
         <!-- api.trakt.tv incl. /oauth/device/*, /oauth/token
              (lib/services/trakt/trakt_constants.dart:16,21-24). -->
@@ -48,12 +47,15 @@
         <domain includeSubdomains="true">simkl.com</domain>
         <!-- data.simkl.in (lib/services/trackers/simkl/simkl_constants.dart:22). -->
         <domain includeSubdomains="true">simkl.in</domain>
-        <!-- cdn.jsdelivr.net: appcast (lib/services/update_service.dart:18) and
-             anime-list mappings (anime_lists_mapping_store.dart:37,
-             fribb_mapping_store.dart:49). -->
+        <!-- cdn.jsdelivr.net: appcast (lib/services/update_service.dart:19). -->
         <domain includeSubdomains="true">jsdelivr.net</domain>
-        <!-- Release check (lib/services/update_service.dart:161). -->
-        <domain includeSubdomains="true">api.github.com</domain>
+        <!-- api.github.com: release check (lib/services/update_service.dart:157);
+             github.com: anime mappings release asset
+             (lib/services/trackers/anime_mappings_store.dart:29). -->
+        <domain includeSubdomains="true">github.com</domain>
+        <!-- release-assets.githubusercontent.com: where github.com redirects
+             that release asset download. -->
+        <domain includeSubdomains="true">githubusercontent.com</domain>
         <!-- TMDB artwork (lib/services/catalog/seerr_catalog_source.dart:163). -->
         <domain includeSubdomains="true">image.tmdb.org</domain>
         <trust-anchors>

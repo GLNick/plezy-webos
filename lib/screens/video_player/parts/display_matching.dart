@@ -25,14 +25,17 @@ extension _VideoPlayerDisplayMatchingMethods on VideoPlayerScreenState {
 
   /// Ask Android for [target], then refresh the mpv decoder if the display
   /// actually switched — seeking to [refreshPosition] when given (where the
-  /// measurement window started), else in place. The caller has already
-  /// paused playback. Returns whether a switch was initiated.
+  /// measurement window started), else in place. A switch made while the
+  /// decoder is held has no decoder to refresh ([refreshDecoder] false). The
+  /// caller has already paused playback. Returns whether a switch was
+  /// initiated.
   Future<bool> _switchDisplayToTarget({
     required Player currentPlayer,
     required SettingsService settingsService,
     required ({double? fps, int width, int height}) target,
     required String reason,
     Duration? refreshPosition,
+    bool refreshDecoder = true,
   }) async {
     _frameRate.applied = true;
     final durationMs = currentPlayer.state.duration.inMilliseconds;
@@ -44,7 +47,7 @@ extension _VideoPlayerDisplayMatchingMethods on VideoPlayerScreenState {
       videoWidth: target.width,
       videoHeight: target.height,
     );
-    if (didSwitch && mounted && player == currentPlayer) {
+    if (didSwitch && refreshDecoder && mounted && player == currentPlayer) {
       await _refreshAndroidMpvDecoderAfterFrameRateSwitch(reason: reason, targetPosition: refreshPosition);
     }
 
@@ -61,6 +64,70 @@ extension _VideoPlayerDisplayMatchingMethods on VideoPlayerScreenState {
       '(duration: ${durationMs}ms, switched=$didSwitch, $reason)',
     );
     return didSwitch;
+  }
+
+  /// Kodi's order for an Android mpv VOD open (#2998): hold the file's video
+  /// decoder once the demuxer has opened it, switch the display from the
+  /// rate and size the container declares, then let the decoder open. A
+  /// decoder created before an HDMI mode switch can stay bound to the old
+  /// mode: on a Fire TV Stick 4K the Dolby Vision decoder kept the TV in
+  /// Dolby Vision mode through a 59.94 → 23.976 Hz switch and showed the
+  /// picture green and purple. Arm right before the open; the first-frame
+  /// negotiation awaits [_FrameRateStartupPlan.displaySwitchBeforeDecoder]
+  /// and then checks the presented format, which switches again only where
+  /// it differs from the declared one: a decoder that deinterlaces by itself
+  /// presents fields, and mpv exposes no field order before decoding, so
+  /// unlike Kodi an interlaced file is matched to its frame rate here and to
+  /// its field rate there.
+  void _armDisplaySwitchBeforeDecoder({
+    required Player currentPlayer,
+    required SettingsService settingsService,
+    required _FrameRateStartupPlan plan,
+    required PlaybackOpenOutcome outcome,
+  }) {
+    // needsDecoderRefreshAfterDisplaySwitch: the Android mpv core. Apple TV's
+    // first-frame gate waits out AVDisplayManager instead.
+    if (!plan.needsFirstFrameSwitch || !currentPlayer.needsDecoderRefreshAfterDisplaySwitch) return;
+    final hold = currentPlayer.holdVideoDecoderAtPreload();
+    if (hold == null) return;
+    plan.displaySwitchBeforeDecoder = _switchDisplayWhileDecoderHeld(
+      currentPlayer: currentPlayer,
+      settingsService: settingsService,
+      hold: hold,
+      outcome: outcome,
+    );
+  }
+
+  /// See [_armDisplaySwitchBeforeDecoder]. Always releases the hold, which
+  /// also cancels one the open never reached.
+  Future<void> _switchDisplayWhileDecoderHeld({
+    required Player currentPlayer,
+    required SettingsService settingsService,
+    required VideoDecoderHold hold,
+    required PlaybackOpenOutcome outcome,
+  }) async {
+    try {
+      // file-loaded follows the hold, so it ends this wait for an open the
+      // hold never reached: a failed or aborted load.
+      final format = await Future.any([hold.format, outcome.fileLoaded.then<DemuxedVideoFormat?>((_) => null)]);
+      if (format == null || !mounted || player != currentPlayer) return;
+      final target = _displayTargetFor(
+        settingsService,
+        PlayerOutputFormat(fps: format.fps, width: format.width, height: format.height),
+      );
+      if (target == null) return;
+      await _switchDisplayToTarget(
+        currentPlayer: currentPlayer,
+        settingsService: settingsService,
+        target: target,
+        reason: 'display switch before the decoder',
+        refreshDecoder: false,
+      );
+    } catch (e, stackTrace) {
+      appLogger.w('Display matching: the switch before the decoder failed', error: e, stackTrace: stackTrace);
+    } finally {
+      await hold.release();
+    }
   }
 
   /// Post-first-frame display matching for an Android open that no startup
@@ -178,10 +245,11 @@ extension _VideoPlayerDisplayMatchingMethods on VideoPlayerScreenState {
     }
   }
 
-  /// Apply Windows display mode matching (refresh rate, HDR) from what mpv
-  /// presents: the derived output rate and `video-params/sig-peak`, which mpv
-  /// raises above 1.0 for PQ/HLG (and Dolby Vision base layers).
-  Future<void> _applyWindowsDisplayMatching() async {
+  /// Apply desktop display mode matching from what mpv presents: the derived
+  /// output rate for the refresh rate (Windows, macOS) and
+  /// `video-params/sig-peak`, which mpv raises above 1.0 for PQ/HLG (and
+  /// Dolby Vision base layers), for system HDR (Windows).
+  Future<void> _applyDisplayModeMatching() async {
     if (player == null || _displayModeService == null) return;
 
     try {
@@ -196,7 +264,7 @@ extension _VideoPlayerDisplayMatchingMethods on VideoPlayerScreenState {
       if (!mounted || player != currentPlayer) return;
 
       // Leaving fullscreen clears mpv's colorspace hint so its HDR swapchain
-      // is released before system HDR goes off (_restoreWindowsDisplayMode).
+      // is released before system HDR goes off (_restoreDisplayMode).
       // With system HDR on again, restore the hint the user's HDR setting
       // asks for, or mpv keeps presenting SDR.
       if (displayModeService.hdrStateChanged) {
@@ -217,13 +285,13 @@ extension _VideoPlayerDisplayMatchingMethods on VideoPlayerScreenState {
   /// finishes re-syncing before playback runs on (as the Android switch
   /// does), rather than just waiting while the video keeps playing.
   ///
-  /// The pause and resume are the screen's own, not the viewer's: a bound
-  /// Watch Together room would take them as intents, so the hold runs
-  /// detached like the first-frame display negotiation. The resume answers
-  /// to the playback generation the hold started in: an in-place reload or
-  /// source switch that ran meanwhile owns the play state it left (its own
-  /// resume, or a room startup hold on the replacement), so the resume waits
-  /// for it to settle and stands down if it opened anything.
+  /// The pause and resume are the screen's own, not the viewer's: a Watch
+  /// Together room is held off meanwhile, so it neither takes them for the
+  /// viewer's nor commands the player. The resume answers to the playback
+  /// generation the hold started in: an in-place reload or source switch that
+  /// ran meanwhile owns the play state it left (its own resume, or the room
+  /// starting the replacement), so the resume waits for it to settle and
+  /// stands down if it opened anything.
   Future<void> _holdPlaybackForDisplaySwitch(Player currentPlayer, Duration delay) async {
     if (!currentPlayer.state.playing) {
       await Future<void>.delayed(delay);
@@ -231,7 +299,7 @@ extension _VideoPlayerDisplayMatchingMethods on VideoPlayerScreenState {
     }
     final generation = _transitionGate.generation;
     bool isCurrent() => _isCurrentPlaybackGeneration(generation, currentPlayer);
-    await _withWatchTogetherDetached(() async {
+    await _withWatchTogetherHeld(() async {
       await currentPlayer.pause();
       await Future<void>.delayed(delay);
       // Wait out the transition itself, not just its generation bump: leaving
@@ -246,8 +314,8 @@ extension _VideoPlayerDisplayMatchingMethods on VideoPlayerScreenState {
     });
   }
 
-  /// Called when fullscreen state changes — apply or restore Windows display
-  /// matching. On Windows the player opens windowed by default, so the initial
+  /// Called when fullscreen state changes — apply or restore desktop display
+  /// matching. The desktop player opens windowed by default, so the initial
   /// attempt during `playbackRestart` is skipped by DisplayModeService's
   /// fullscreen gate. Catching the enter-fullscreen transition here lets the
   /// switch happen at the natural moment the user starts watching.
@@ -255,17 +323,17 @@ extension _VideoPlayerDisplayMatchingMethods on VideoPlayerScreenState {
     if (_displayModeService == null) return;
     if (FullscreenStateManager().isFullscreen) {
       if (_firstFrame.uiReady.value && !_displayModeService!.anyChangeApplied) {
-        _applyWindowsDisplayMatching();
+        _applyDisplayModeMatching();
       }
     } else if (_displayModeService!.anyChangeApplied) {
-      _restoreWindowsDisplayMode();
+      _restoreDisplayMode();
     }
   }
 
-  /// Restore Windows display mode to original state. Fullscreen-exit only:
+  /// Restore the display mode to its original state. Fullscreen-exit only:
   /// `dispose()` runs its own fire-and-forget variant because it cannot await
   /// the HDR settle below.
-  Future<void> _restoreWindowsDisplayMode() async {
+  Future<void> _restoreDisplayMode() async {
     if (_displayModeService == null || !_displayModeService!.anyChangeApplied) return;
 
     try {

@@ -43,6 +43,7 @@ env:
     libxss-dev libxpresent-dev libxkbcommon-dev libpulse-dev libdbus-1-dev libdrm-dev
     libdisplay-info-dev libgbm-dev libwayland-dev wayland-protocols liblcms2-dev libmujs-dev liblua5.2-dev
     ruby ruby-dev rubygems build-essential rpm libarchive-tools imagemagick libcurl4-openssl-dev
+    zsync desktop-file-utils
 
 jobs:
   validate-trusted-ref:
@@ -261,7 +262,7 @@ jobs:
         run: flutter pub get --enforce-lockfile --no-example
 
       - name: Build macOS
-        run: flutter build macos --release ${{ env.RELEASE_DART_DEFINES }} --dart-define=SENTRY_DIST=github-macos --split-debug-info=debug-info/macos
+        run: flutter build macos --release ${{ env.RELEASE_DART_DEFINES }} --dart-define=SENTRY_DIST=github-macos --dart-define=SUPPORTER_MODE=unlocked --split-debug-info=debug-info/macos
 
       - name: Upload symbols to bugs.plezy.app
         if: github.repository == 'edde746/plezy'
@@ -460,7 +461,7 @@ jobs:
 
       - name: Build Windows ${{ matrix.arch }}
         shell: pwsh
-        run: flutter build windows --release ${{ env.RELEASE_DART_DEFINES }} --dart-define=SENTRY_DIST=github-windows-${{ matrix.arch }} --split-debug-info=debug-info/windows-${{ matrix.arch }}
+        run: flutter build windows --release ${{ env.RELEASE_DART_DEFINES }} --dart-define=SENTRY_DIST=github-windows-${{ matrix.arch }} --dart-define=SUPPORTER_MODE=msstore --split-debug-info=debug-info/windows-${{ matrix.arch }}
 
       - name: Verify Windows bundle contents
         shell: pwsh
@@ -514,6 +515,13 @@ jobs:
               Write-Output "::error::Forbidden link by-product is present in the Windows bundle: $file"
               $bundleErrors += "present $file"
             }
+          }
+          # Release links emit PDBs (windows/CMakeLists.txt) that
+          # scripts/release/upload_symbols.dart uploads from the build tree;
+          # none may ship in the bundle.
+          foreach ($file in @($foundFiles | Where-Object { $_ -like '*.pdb' })) {
+            Write-Output "::error::Forbidden debug file is present in the Windows bundle: $file"
+            $bundleErrors += "present $file"
           }
 
           # sentry.dll is the inproc-backend native SDK; crashpad_handler.exe is
@@ -667,7 +675,7 @@ jobs:
       matrix:
         include:
           - arch: x64
-            runner: ubuntu-latest
+            runner: ubuntu-24.04
             flutter_channel: stable
             pkg_config_arch: x86_64-linux-gnu
           - arch: arm64
@@ -749,7 +757,7 @@ jobs:
 
       - name: Build Linux ${{ matrix.arch }}
         shell: bash
-        run: flutter build linux --release ${{ env.RELEASE_DART_DEFINES }} --dart-define=SENTRY_DIST=github-linux-${{ matrix.arch }} --split-debug-info=debug-info/linux-${{ matrix.arch }}
+        run: flutter build linux --release ${{ env.RELEASE_DART_DEFINES }} --dart-define=SENTRY_DIST=github-linux-${{ matrix.arch }} --dart-define=SUPPORTER_MODE=unlocked --split-debug-info=debug-info/linux-${{ matrix.arch }}
         env:
           PKG_CONFIG_PATH: ${{ github.workspace }}/libmpv-prefix/lib/pkgconfig:${{ github.workspace }}/libmpv-prefix/lib/${{ matrix.pkg_config_arch }}/pkgconfig
 
@@ -858,6 +866,25 @@ jobs:
           flatpak install --user --noninteractive "plezy-linux-${{ matrix.arch }}.flatpak"
           dbus-run-session -- python3 linux/packaging/check-flatpak.py --arch ${{ matrix.arch }}
 
+      # The same resolved bundle, launched through plezy.sh as AppRun. The
+      # embedded update information names this repository's latest release,
+      # which is what Gear Lever and AppImageUpdate follow, so they see a
+      # release only once it is published and not marked as a pre-release.
+      - name: Build AppImage
+        shell: bash
+        env:
+          UPDATE_REPO: ${{ github.repository }}
+          # FUSE is not guaranteed on the runner, so appimagetool unpacks
+          # itself instead of mounting.
+          APPIMAGE_EXTRACT_AND_RUN: "1"
+        run: |
+          bash linux/packaging/fetch-appimage-tools.sh ${{ matrix.arch }} "$RUNNER_TEMP/appimage"
+          VERSION=$(python3 scripts/pubspec_version.py pubspec.yaml)
+          export VERSION=${VERSION%%+*}
+          APPIMAGETOOL="$RUNNER_TEMP/appimage/appimagetool" \
+          RUNTIME_FILE="$RUNNER_TEMP/appimage/runtime" \
+          bash linux/packaging/build-appimage.sh "$BUNDLE_DIR" ${{ matrix.arch }} "$GITHUB_WORKSPACE"
+
       - name: Create tarball
         shell: bash
         run: |
@@ -873,6 +900,8 @@ jobs:
             plezy-linux-${{ matrix.arch }}.rpm
             plezy-linux-${{ matrix.arch }}.pkg.tar.zst
             plezy-linux-${{ matrix.arch }}.flatpak
+            plezy-linux-${{ matrix.arch }}.AppImage
+            plezy-linux-${{ matrix.arch }}.AppImage.zsync
 
       - name: Upload Linux ${{ matrix.arch }} artifacts
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7
@@ -884,6 +913,8 @@ jobs:
             plezy-linux-${{ matrix.arch }}.rpm
             plezy-linux-${{ matrix.arch }}.pkg.tar.zst
             plezy-linux-${{ matrix.arch }}.flatpak
+            plezy-linux-${{ matrix.arch }}.AppImage
+            plezy-linux-${{ matrix.arch }}.AppImage.zsync
 
   create-release:
     needs: [validate-trusted-ref, build-android, build-ios, build-macos, build-windows, package-windows, build-linux]

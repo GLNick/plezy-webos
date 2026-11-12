@@ -22,6 +22,7 @@ import '../services/update_service.dart';
 import '../utils/app_logger.dart';
 import '../widgets/auth_error_banner.dart';
 import '../widgets/app_icon.dart';
+import '../utils/iphone_duo.dart';
 import '../utils/platform_detector.dart';
 import '../utils/snackbar_helper.dart';
 import '../utils/update_dialog.dart';
@@ -58,11 +59,14 @@ import '../services/companion_remote/companion_remote_receiver.dart';
 import '../services/fullscreen_state_manager.dart';
 import '../providers/companion_remote_provider.dart';
 import '../utils/desktop_window_padding.dart';
-import '../utils/live_tv_deep_link.dart';
+import '../services/deep_links/deep_link_launcher.dart';
+import '../services/deep_links/deep_link_service.dart';
 import '../widgets/music/mini_player.dart';
 import '../widgets/navigation_label_fit.dart';
 import '../widgets/mobile_navigation_rail.dart';
+import '../widgets/vertical_bar_shell.dart';
 import '../widgets/side_navigation_rail.dart';
+import '../focus/covered_route_focus_boundary.dart';
 import '../focus/dpad_navigator.dart';
 import '../focus/key_event_utils.dart';
 import 'discover_screen.dart';
@@ -76,7 +80,6 @@ import 'settings/settings_screen.dart';
 import 'profile/profile_switch_screen.dart';
 import 'video_player_screen.dart';
 import 'profile/profile_teardown.dart';
-import '../services/system_shelf_service.dart';
 import '../watch_together/watch_together.dart';
 
 /// Provides access to the main screen's focus control.
@@ -110,28 +113,28 @@ bool shouldHandleDesktopRootEscape({
 ///
 /// Mobile-only: on desktop `resumed` fires on every window focus gain
 /// (alt-tab, click), which is far too frequent — the startup prompt is
-/// sufficient there. Never during active video playback: waking the device
-/// mid-stream must resume the stream, not stack the root-navigator picker
-/// over the live player route, whose focus self-heal fights the picker for
-/// the remote (#2034) — the playback session already belongs to the profile
-/// that started it. Likewise never during a live companion-remote session:
-/// a phone driving another device backgrounds and sleeps constantly, and
-/// the picker + PIN would bury a session that already belongs to the
-/// profile that started it (#2087).
+/// sufficient there. An open player does not exempt the resume: "ask on
+/// open" exists so that whoever wakes the device cannot carry on with the
+/// previous profile's session, and a show left paused overnight is exactly
+/// that (#2195). The player stays paused under the picker
+/// ([VideoPlayerScreenState.holdActivePlaybackUntil]). A session that kept
+/// playing in Picture in Picture never left the user's sight, so it never
+/// arms [ProfileSelectionResumeGate]. Never during a live companion-remote
+/// session: a phone driving another device backgrounds and sleeps
+/// constantly, and the picker + PIN would bury a session that already
+/// belongs to the profile that started it (#2087).
 @visibleForTesting
 bool shouldShowProfileSelectionOnResume({
   required bool resumedFromBackground,
   required bool isOffline,
   required bool alreadyShowingProfileSelection,
   required bool isMobilePlatform,
-  required bool hasActiveVideoPlayback,
   required bool hasActiveCompanionRemoteSession,
 }) {
   return resumedFromBackground &&
       !isOffline &&
       !alreadyShowingProfileSelection &&
       isMobilePlatform &&
-      !hasActiveVideoPlayback &&
       !hasActiveCompanionRemoteSession;
 }
 
@@ -146,24 +149,42 @@ bool shouldShowProfileSelectionOnResume({
 /// previous state would miss a real return; latching the deepest state seen
 /// handles both. The startup flow owns the cold open, so a first `resumed`
 /// with no prior backgrounding does not prompt.
+///
+/// A backgrounding the active player spends in Picture in Picture does not
+/// latch: the session never left the user's sight. Only the way out decides
+/// that. Flutter walks every state in between, so a return from `paused`
+/// passes back through `hidden`, by when PiP may already have handed the
+/// session back to the app; that frame must not latch it after the fact.
 @visibleForTesting
 class ProfileSelectionResumeGate {
   bool _wasBackgrounded = false;
+  AppLifecycleState? _lastState;
 
   /// Whether a genuine backgrounding has been observed since the last resume.
   bool get wasBackgrounded => _wasBackgrounded;
 
   /// Feeds one lifecycle transition through the gate. Returns true exactly
   /// once per backgrounding: on the first `resumed` after the sequence
-  /// reached `hidden`/`paused`/`detached`. Consuming resets the latch.
-  bool consumePromptOn(AppLifecycleState state) {
+  /// reached `hidden`/`paused`/`detached` other than in Picture in Picture.
+  /// Consuming resets the latch.
+  ///
+  /// [sessionContinuesInPip] is whether the active player keeps playing in
+  /// PiP were the app backgrounded now; it is read only for frames on the way
+  /// out.
+  bool consumePromptOn(AppLifecycleState state, {bool sessionContinuesInPip = false}) {
+    final previous = _lastState;
+    _lastState = state;
     switch (state) {
       case AppLifecycleState.resumed:
         final shouldPrompt = _wasBackgrounded;
         _wasBackgrounded = false;
         return shouldPrompt;
       case AppLifecycleState.hidden:
+        if (previous != AppLifecycleState.paused && !sessionContinuesInPip) _wasBackgrounded = true;
+        return false;
       case AppLifecycleState.paused:
+        if (!sessionContinuesInPip) _wasBackgrounded = true;
+        return false;
       case AppLifecycleState.detached:
         _wasBackgrounded = true;
         return false;
@@ -400,9 +421,10 @@ class _MainScreenState extends State<MainScreen>
   /// Last selected online tab (restored when coming back online after an offline fallback)
   NavigationTabId? _lastOnlineTabId;
 
-  /// A preferred startup section (e.g. Live TV) that wasn't visible yet at cold
-  /// start because servers bind asynchronously. Applied once it becomes
-  /// available (see [_handleLiveTvChanged]); cleared on any explicit selection.
+  /// A preferred startup section (Live TV or Explore) that wasn't visible yet
+  /// at cold start because servers bind and catalog sources hydrate
+  /// asynchronously. Applied once it becomes available (see
+  /// [_applyPendingStartupTab]); cleared on any explicit selection.
   NavigationTabId? _pendingStartupTab;
 
   /// Whether we auto-switched to Downloads because the previous tab was unavailable offline
@@ -570,7 +592,6 @@ class _MainScreenState extends State<MainScreen>
     // Set up Watch Together callbacks immediately (must be synchronous to catch early messages)
     if (!_isOffline) {
       _setupWatchTogetherCallback();
-      _setupSystemShelfDeepLink();
     }
 
     // Wire profile binder + tracker bootstrap (skip in offline mode)
@@ -588,8 +609,8 @@ class _MainScreenState extends State<MainScreen>
       activeProfile.addListener(_onActiveProfileChanged);
       _plexHomeService = context.read<PlexHomeService>();
       // `start()` is the live/network entry point: it installs the connection
-      // watch, the refresh timer and an initial `_refreshAll()`. Hydration
-      // already happened from the provider's `create:`, so an offline launch
+      // watch, the refresh timer and an initial `_refreshAll()`. The root app
+      // state already hydrated it when it created the service, so an offline launch
       // keeps its cached Plex Home users without reaching the network.
       // `_handleOfflineStatusChanged` starts it if we come online later.
       if (!_isOffline) unawaited(_plexHomeService!.start());
@@ -618,10 +639,15 @@ class _MainScreenState extends State<MainScreen>
         }
       }
 
+      // Links act once the profile is settled and its preferences are loaded.
+      _attachDeepLinks();
+
       // Focus content initially (replaces autofocus which caused focus stealing issues)
-      // Skip if profile selection is on top — it manages its own focus.
+      // Skip if profile selection is on top — it manages its own focus. A
+      // session remounted under the root picker (another profile chosen)
+      // gets this claim when the picker pops instead of losing it (#2817).
       if (!_isSidebarFocused && !_isShowingProfileSelection) {
-        _contentFocusScope.requestFocus();
+        CoveredRouteFocusBoundary.requestInitialFocus(context, _contentFocusScope);
       }
 
       _updateTvosMenuPassthrough();
@@ -827,6 +853,9 @@ class _MainScreenState extends State<MainScreen>
   Future<void> _pushProfileSelection() async {
     _isShowingProfileSelection = true;
     _setTvosMenuPassthrough(false);
+    // A link waits for the viewer's choice; a different profile acts on it
+    // in its own session.
+    _detachDeepLinks();
     await Navigator.of(
       context,
       rootNavigator: true,
@@ -834,6 +863,25 @@ class _MainScreenState extends State<MainScreen>
     if (!mounted) return;
     _isShowingProfileSelection = false;
     _updateTvosMenuPassthrough();
+    _attachDeepLinks();
+  }
+
+  DeepLinkSession? _deepLinkSession;
+
+  /// Acts on `plezy://` links for this profile session ([DeepLinkService]).
+  void _attachDeepLinks() {
+    if (!mounted || _isShowingProfileSelection) return;
+    final session = _deepLinkSession ??= DeepLinkSession(
+      profileId: context.read<ActiveProfileProvider>().activeId,
+      launch: (link) async {
+        if (mounted) await launchDeepLink(context, link, isOffline: _isOffline);
+      },
+    );
+    DeepLinkService.instance.attach(session);
+  }
+
+  void _detachDeepLinks() {
+    if (_deepLinkSession case final session?) DeepLinkService.instance.detach(session);
   }
 
   Future<void> _checkForUpdatesOnStartup() async {
@@ -867,109 +915,23 @@ class _MainScreenState extends State<MainScreen>
     showSkipVersion: true,
   );
 
-  /// Set up the Watch Together navigation callback for guests
+  /// Lets the Watch Together room open its file when no player is open.
   void _setupWatchTogetherCallback() {
     try {
       final watchTogether = context.read<WatchTogetherProvider>();
-      watchTogether.onMediaSwitched = (ratingKey, serverId, mediaTitle) {
-        appLogger.d('WatchTogether: Media switch received - navigating to $mediaTitle');
-        return _navigateToWatchTogetherMedia(ratingKey, serverId);
-      };
-      watchTogether.onHostExitedPlayer = () {
-        appLogger.d('WatchTogether: Host exited player - exiting player for guest');
-        // Watch Together playback lives in the profile navigator; root-level
-        // dialogs/profile picker must not be affected.
-        if (!mounted) return;
-        final navigator = Navigator.of(context);
-        bool isVideoPlayerOnTop = false;
-        navigator.popUntil((route) {
-          if (route.isCurrent) {
-            isVideoPlayerOnTop = route.settings.name == kVideoPlayerRouteName;
-          }
-          return true;
-        });
-        if (isVideoPlayerOnTop && navigator.canPop()) {
-          navigator.pop();
-        }
-      };
+      _watchTogether = watchTogether;
+      watchTogether.navigatorOpener = _navigateToWatchTogetherMedia;
     } catch (e) {
       appLogger.w('Could not set up Watch Together callback', error: e);
     }
   }
 
-  /// Set up launcher shelf deep link handling for Android TV and tvOS taps.
-  void _setupSystemShelfDeepLink() {
-    if (!Platform.isAndroid && !PlatformDetector.isAppleTV()) return;
-
-    final systemShelf = SystemShelfService();
-
-    // Listen for deep links when app is already running (warm start)
-    systemShelf.onShelfItemTap = (contentId) {
-      appLogger.d('System shelf tap: $contentId');
-      _handleShelfContentId(contentId);
-    };
-    _systemShelfTapCallback = systemShelf.onShelfItemTap;
-
-    // Check for pending deep link from cold start
-    WidgetsBinding.instance.addPostFrameCallback((_) async {
-      final contentId = await systemShelf.getInitialDeepLink();
-      if (contentId != null && mounted) {
-        appLogger.d('System shelf initial deep link: $contentId');
-        unawaited(_handleShelfContentId(contentId));
-      }
-    });
-  }
-
-  /// Handle a launcher shelf content ID by fetching metadata and starting playback.
-  Future<void> _handleShelfContentId(String contentId) async {
-    if (!mounted) return;
-
-    // `plezy://live?...` links arrive through the same channel as shelf IDs.
-    final liveLink = LiveTvDeepLink.tryParse(contentId);
-    if (liveLink != null) {
-      try {
-        await liveLink.launch(context, context.read<MultiServerProvider>());
-      } catch (e) {
-        appLogger.e('Live TV deep link failed', error: e);
-      }
-      return;
-    }
-
-    final parsed = SystemShelfService.parseContentId(contentId);
-    if (parsed == null) {
-      appLogger.w('System shelf: invalid content ID: $contentId');
-      return;
-    }
-
-    final (serverId, ratingKey) = parsed;
-
+  /// Opens the Watch Together room's file in a new player. Returns whether
+  /// navigation started.
+  Future<bool> _navigateToWatchTogetherMedia(WatchCopy copy) async {
+    if (!mounted) return false;
     try {
-      final multiServer = context.read<MultiServerProvider>();
-      final client = multiServer.getClientForServer(serverId);
-
-      if (client == null) {
-        appLogger.w('System shelf: server $serverId not available');
-        return;
-      }
-
-      final metadata = await client.fetchItem(ratingKey);
-
-      if (metadata == null || !mounted) return;
-
-      unawaited(navigateToVideoPlayer(context, metadata: metadata));
-    } catch (e) {
-      appLogger.e('System shelf: failed to navigate to media', error: e);
-    }
-  }
-
-  /// Navigate to media when host switches content in Watch Together session.
-  /// Returns whether navigation was initiated; failures are re-dispatched on
-  /// the host's next state heartbeat.
-  Future<bool> _navigateToWatchTogetherMedia(String ratingKey, ServerId serverId) async {
-    if (!mounted) return false; // Check before any context usage
-
-    try {
-      return await navigateToWatchTogetherPlayback(context, ratingKey: ratingKey, serverId: serverId);
+      return await navigateToWatchTogetherPlayback(context, copy);
     } catch (e) {
       appLogger.e('WatchTogether: Failed to navigate to media', error: e);
       return false;
@@ -977,7 +939,7 @@ class _MainScreenState extends State<MainScreen>
   }
 
   bool _companionRemoteSetup = false;
-  ValueChanged<String>? _systemShelfTapCallback;
+  WatchTogetherProvider? _watchTogether;
 
   @override
   void didChangeDependencies() {
@@ -1094,6 +1056,7 @@ class _MainScreenState extends State<MainScreen>
 
   @override
   void dispose() {
+    if (_watchTogether?.navigatorOpener == _navigateToWatchTogetherMedia) _watchTogether?.navigatorOpener = null;
     WidgetsBinding.instance.removeObserver(this);
     _profileRouteObserver?.unsubscribe(this);
     if (PlatformDetector.isDesktopOS()) {
@@ -1133,11 +1096,8 @@ class _MainScreenState extends State<MainScreen>
         receiver.navigationOwner = null;
       }
     }
-    final shelfCallback = _systemShelfTapCallback;
-    final systemShelf = SystemShelfService();
-    if (shelfCallback != null && identical(systemShelf.onShelfItemTap, shelfCallback)) {
-      systemShelf.onShelfItemTap = null;
-    }
+    // A replacement MainScreen may already have attached its session.
+    _detachDeepLinks();
 
     super.dispose();
   }
@@ -1175,7 +1135,10 @@ class _MainScreenState extends State<MainScreen>
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
     // Always consume: the gates latch backgrounding on every lifecycle event.
-    final resumedFromBackground = _profileSelectionResumeGate.consumePromptOn(state);
+    final resumedFromBackground = _profileSelectionResumeGate.consumePromptOn(
+      state,
+      sessionContinuesInPip: VideoPlayerScreenState.activeSessionContinuesInPip,
+    );
     final refreshStaleContent = _contentRefreshResumeGate.consumeRefreshOn(state);
     // Seerr authority is independent of media-server reachability and stale
     // content. A grant must recover hidden Request actions on any real resume.
@@ -1187,7 +1150,6 @@ class _MainScreenState extends State<MainScreen>
       isOffline: _isOffline,
       alreadyShowingProfileSelection: _isShowingProfileSelection,
       isMobilePlatform: Platform.isAndroid || Platform.isIOS,
-      hasActiveVideoPlayback: VideoPlayerScreenState.activeGlobalKey != null,
       // Short-circuit on resumedFromBackground: the provider is lazy and
       // otherwise unused on phones, so an unconditional read would create it
       // on the first lifecycle event for users who never open the remote.
@@ -1227,8 +1189,14 @@ class _MainScreenState extends State<MainScreen>
     if (!mounted) return;
 
     if (!context.read<ActiveProfileProvider>().requiresSelectionOnOpen(settingsService)) return;
+    // The link that brought the app forward names the profile to open.
+    if (DeepLinkService.instance.selectsProfile) return;
 
-    await _pushProfileSelection();
+    final selection = _pushProfileSelection();
+    // Pushed synchronously above; from here on the picker stands between
+    // whoever woke the device and the previous profile's session.
+    VideoPlayerScreenState.holdActivePlaybackUntil(selection);
+    await selection;
   }
 
   /// IndexedStack that disables tickers for offscreen children to prevent
@@ -1315,6 +1283,9 @@ class _MainScreenState extends State<MainScreen>
         if (multiServerProvider.hasConnectedServers) {
           _offlineUntilConnected = false;
           _handleOfflineStatusChanged();
+        } else {
+          // Without this a failed press looks ignored (#2616).
+          showMainSnackBar(t.errors.connectionFailed);
         }
       } finally {
         setStateIfMounted(() => _isReconnecting = false);
@@ -1349,10 +1320,13 @@ class _MainScreenState extends State<MainScreen>
     _lastHasLiveTv = hasLiveTv;
 
     _handleTabAvailabilityChanged();
+    _applyPendingStartupTab();
+  }
 
-    // A preferred startup section (only Live TV can be deferred) just became
-    // available — switch to it via _selectTab so it gets the usual visibility
-    // and focus handling. _selectTab clears _pendingStartupTab.
+  /// A deferred startup section just became available — switch to it via
+  /// _selectTab so it gets the usual visibility and focus handling.
+  /// _selectTab clears _pendingStartupTab.
+  void _applyPendingStartupTab() {
     final pending = _pendingStartupTab;
     if (pending != null && _getVisibleTabs(_isOffline).any((t) => t.id == pending)) {
       _selectTab(pending);
@@ -1367,6 +1341,7 @@ class _MainScreenState extends State<MainScreen>
     _lastHasExplore = hasExplore;
 
     _handleTabAvailabilityChanged();
+    _applyPendingStartupTab();
   }
 
   void _handleOfflineStatusChanged() {
@@ -2058,11 +2033,15 @@ class _MainScreenState extends State<MainScreen>
   /// inset controller after this frame: the bottom bar's height in portrait,
   /// the leading rail's width in landscape (the bar mixes NavigationBar,
   /// optional offline banner, and label modes — measuring beats re-deriving).
-  void _scheduleNavBarMeasure({required bool rail}) {
+  void _scheduleNavBarMeasure({required bool rail, bool reportsInset = true}) {
     final controller = _miniPlayerInsets;
     if (controller == null) return;
     WidgetsBinding.instance.addPostFrameCallback((_) {
       if (!mounted) return;
+      if (!reportsInset) {
+        controller.setNavInsets(bottom: 0, start: 0);
+        return;
+      }
       final box = _navBarKey.currentContext?.findRenderObject() as RenderBox?;
       if (box == null || !box.hasSize) return;
       controller.setNavInsets(bottom: rail ? 0 : box.size.height, start: rail ? box.size.width : 0);
@@ -2073,7 +2052,11 @@ class _MainScreenState extends State<MainScreen>
   Widget build(BuildContext context) {
     final useSideNav = PlatformDetector.shouldUseSideNavigation(context);
 
-    return _buildContent(context, useSideNav);
+    // A detail page, player or settings screen pushed on the nested navigator
+    // covers this route without unmounting it. Every focus self-heal below
+    // (offline sidebar refocus, library reload, tab claims) is dropped while
+    // covered, and focus returns to where it was when the cover pops (#2915).
+    return CoveredRouteFocusBoundary(child: _buildContent(context, useSideNav));
   }
 
   Widget _buildContent(BuildContext context, bool useSideNav) {
@@ -2229,9 +2212,44 @@ class _MainScreenState extends State<MainScreen>
       },
       child: ScaffoldMessenger(
         key: ProfileNavigationScope.of(context).mainScaffoldMessengerKey,
-        child: PlatformDetector.shouldUseLandscapeNavigationRail(context)
-            ? _buildLandscapeShell(context)
-            : _buildPortraitShell(context),
+        child: switch (IphoneDuo.verticalBarEdgeOf(context)) {
+          final VerticalBarEdge edge => _buildVerticalBarShell(context, edge),
+          null when PlatformDetector.shouldUseLandscapeNavigationRail(context) => _buildLandscapeShell(context),
+          null => _buildPortraitShell(context),
+        },
+      ),
+    );
+  }
+
+  /// iPhone Duo with the system vertical bar: the tabs live in the bar.
+  Widget _buildVerticalBarShell(BuildContext context, VerticalBarEdge edge) {
+    return Scaffold(
+      body: VerticalBarShell(
+        edge: edge,
+        railBuilder: (context, barWidth) => SettingValueBuilder<bool>(
+          pref: SettingsService.showNavBarLabels,
+          builder: (context, showNavBarLabels, _) {
+            // The mini player already clears the bar through the safe area on
+            // that side, so report no extra nav inset.
+            _scheduleNavBarMeasure(rail: true, reportsInset: false);
+            return MobileNavigationRail(
+              key: _navBarKey,
+              tabs: _getBottomNavigationTabs(context),
+              selectedTab: _currentTab,
+              showLabels: showNavBarLabels,
+              onDestinationSelected: _selectTab,
+              onLibrariesLongPress: () => _showLibraryQuickPicker(context),
+              isOffline: _isOffline,
+              isReconnecting: _isReconnecting,
+              onReconnect: _triggerReconnect,
+              minWidth: barWidth,
+              // Bottom of the bar, within reach of the thumb.
+              groupAlignment: 1,
+              backgroundColor: Colors.transparent,
+            );
+          },
+        ),
+        child: _buildTickerAwareStack(),
       ),
     );
   }

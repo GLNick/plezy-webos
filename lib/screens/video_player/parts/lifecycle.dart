@@ -67,9 +67,17 @@ extension _VideoPlayerLifecycleMethods on VideoPlayerScreenState {
       return;
     }
 
-    // Suppress Watch Together heartbeats while backgrounded so App Nap
-    // doesn't cause stale position broadcasts that make guests loop.
-    _watchTogetherProvider?.setBackgrounded(true);
+    final isTv = PlatformDetector.isTV();
+    final isAutomotive = PlatformDetector.isAutomotive();
+    final shouldPauseForBackground = shouldPauseVideoForBackground(
+      isHandheld: PlatformDetector.isMobile(context),
+      isTv: isTv,
+      isAutomotive: isAutomotive,
+    );
+
+    // A Watch Together room stops waiting for a player the background pauses.
+    // A covered desktop window keeps playing, so its player stays in the room.
+    if (shouldPauseForBackground) _watchTogetherProvider?.setBackgrounded(true);
 
     final currentPlayer = player;
     if (currentPlayer == null || !_isPlayerInitialized) {
@@ -77,7 +85,6 @@ extension _VideoPlayerLifecycleMethods on VideoPlayerScreenState {
       return;
     }
 
-    final isTv = PlatformDetector.isTV();
     if (widget.isLive && shouldStopLiveSessionForTvBackground(isTv: isTv, policy: _live.session?.backgroundPolicy)) {
       _stopLiveSessionForTvBackground();
 
@@ -95,13 +102,6 @@ extension _VideoPlayerLifecycleMethods on VideoPlayerScreenState {
       _recordLifecycleState('hidden', action: 'live_stopped_exit_on_resume');
       return;
     }
-
-    final isAutomotive = PlatformDetector.isAutomotive();
-    final shouldPauseForBackground = shouldPauseVideoForBackground(
-      isHandheld: PlatformDetector.isMobile(context),
-      isTv: isTv,
-      isAutomotive: isAutomotive,
-    );
 
     // Pause first so Android MPV does not keep decoding against a transient
     // background surface while the app is locking or hiding.
@@ -219,6 +219,33 @@ extension _VideoPlayerLifecycleMethods on VideoPlayerScreenState {
 
     _resumeLiveTimelineAfterBackgroundIfNeeded();
     _recordLifecycleState('resumed', action: 'complete');
+  }
+
+  /// The resume profile picker now covers this player
+  /// ([VideoPlayerScreenState.holdActivePlaybackUntil]); the play-intent gates
+  /// stay shut until [until] completes. Whatever already started is paused:
+  /// the app's return races the picker's push, and the resume restore, a
+  /// room's catch-up or a native resume may have got there first. A room stops
+  /// waiting for this user meanwhile instead of pausing for everyone, and
+  /// catches the player up once a profile is chosen.
+  void _holdPlaybackForProfileSelection(Future<void> until) {
+    if (!mounted || _shuttingDown) return;
+    _profileSelectionHolds++;
+    _recordLifecycleState('profile_selection', action: 'hold');
+    _watchTogetherProvider?.setAwaitingProfileSelection(true);
+    final currentPlayer = player;
+    if (currentPlayer != null && (currentPlayer.state.playing || _playbackIntentShouldPlay)) {
+      _dispatchPlaybackIntent(_pauseWithPlaybackIntent(currentPlayer), source: 'Profile selection');
+    }
+    unawaited(
+      until.catchError((Object _) {}).whenComplete(() {
+        if (!mounted) return;
+        _profileSelectionHolds--;
+        if (_playbackHeldForProfileSelection) return;
+        _recordLifecycleState('profile_selection', action: 'released');
+        _watchTogetherProvider?.setAwaitingProfileSelection(false);
+      }),
+    );
   }
 
   /// Arm the grace timer that releases the native AV pipeline if the app

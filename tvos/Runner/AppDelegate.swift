@@ -135,10 +135,6 @@ import wakelock_plus
 
     application.beginReceivingRemoteControlEvents()
 
-    if let url = launchOptions?[UIApplication.LaunchOptionsKey.url] as? URL {
-      _ = SystemShelfPlugin.handleOpenURL(url)
-    }
-
     return super.application(application, didFinishLaunchingWithOptions: launchOptions)
   }
 
@@ -180,22 +176,20 @@ import wakelock_plus
     if let r = pluginRegistry.registrar(forPlugin: "SystemShelfPlugin") {
       SystemShelfPlugin.register(with: r)
     }
+    if let r = pluginRegistry.registrar(forPlugin: "DeepLinkPlugin") {
+      DeepLinkPlugin.register(with: r)
+    }
+    if let r = pluginRegistry.registrar(forPlugin: "AppIconPlugin") {
+      AppIconPlugin.register(with: r)
+    }
     if let r = pluginRegistry.registrar(forPlugin: "VideoDecodeCapabilitiesPlugin") {
       VideoDecodeCapabilitiesPlugin.register(with: r)
     }
     if let r = pluginRegistry.registrar(forPlugin: "ExternalPlayerPlugin") {
       ExternalPlayerPlugin.register(with: r)
     }
-  }
-
-  override func application(
-    _ application: UIApplication,
-    open url: URL,
-    options: [UIApplication.OpenURLOptionsKey: Any] = [:]
-  ) -> Bool {
-    if SystemShelfPlugin.handleOpenURL(url) {
-      return true
+    if let r = pluginRegistry.registrar(forPlugin: "InAppPurchasePlugin") {
+      InAppPurchasePlugin.register(with: r)
     }
-    return super.application(application, open: url, options: options)
   }
 }

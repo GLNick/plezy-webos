@@ -9,6 +9,7 @@ import 'package:plezy/database/app_database.dart';
 import 'package:plezy/media/artist_discography.dart';
 import 'package:plezy/exceptions/media_server_exceptions.dart';
 import 'package:plezy/media/ids.dart';
+import 'package:plezy/media/media_server_client.dart';
 import 'package:plezy/media/media_backend.dart';
 import 'package:plezy/media/media_item.dart';
 import 'package:plezy/media/media_kind.dart';
@@ -550,72 +551,119 @@ void main() {
     );
   });
 
-  test('show play queue source URI honors the specials-ordering preference', () async {
-    resetSharedPreferencesForTest();
-    await SettingsService.getInstance();
+  group('show play queue', () {
+    setUp(() async {
+      resetSharedPreferencesForTest();
+      await SettingsService.getInstance();
+    });
 
-    final uris = <String?>[];
-    final client = testPlexClient(
-      serverId: publicServerId,
-      profileScopeId: defaultProfileScopeId,
-      config: testPlexConfig(machineIdentifier: 'machine-1'),
-      handler: (request) async {
-        uris.add(request.url.queryParameters['uri']);
-        return http.Response(
-          jsonEncode({
-            'MediaContainer': {'playQueueID': '42', 'playQueueVersion': '5', 'Metadata': <dynamic>[]},
-          }),
-          200,
-          headers: {'content-type': 'application/json'},
+    http.Response container(Map<String, dynamic> body) =>
+        http.Response(jsonEncode({'MediaContainer': body}), 200, headers: {'content-type': 'application/json'});
+
+    /// Queue response whose selected item is [ratingKey].
+    Map<String, dynamic> selecting(String ratingKey, {int queueId = 42}) => {
+      'playQueueID': queueId,
+      'playQueueVersion': 1,
+      'playQueueSelectedItemID': 900,
+      'Metadata': [
+        {'playQueueItemID': 900, 'ratingKey': ratingKey, 'type': 'episode'},
+      ],
+    };
+
+    String lastSegment(String value) => value.split('/').last;
+
+    /// A show whose Specials season lists ahead of season 1, as Plex orders
+    /// seasons by index. Each queue POST is recorded in [posts] and answered
+    /// by [queueFor].
+    PlexClient showClient(
+      List<Map<String, String>> posts, {
+      required Map<String, dynamic> Function(Map<String, String> params) queueFor,
+    }) {
+      final client = testPlexClient(
+        serverId: publicServerId,
+        profileScopeId: defaultProfileScopeId,
+        config: testPlexConfig(machineIdentifier: 'machine-1'),
+        handler: (request) async {
+          switch (request.url.path) {
+            case '/library/metadata/show-1/children':
+              return container({
+                'size': 2,
+                'totalSize': 2,
+                'Metadata': [
+                  {'ratingKey': 'season-0', 'type': 'season', 'index': 0},
+                  {'ratingKey': 'season-1', 'type': 'season', 'index': 1},
+                ],
+              });
+            case '/library/metadata/season-1/children':
+              return container({
+                'size': 1,
+                'totalSize': 30,
+                'Metadata': [
+                  {'ratingKey': 'ep-1', 'type': 'episode', 'parentIndex': 1, 'index': 1},
+                ],
+              });
+            case '/playQueues':
+              posts.add(request.url.queryParameters);
+              return container(queueFor(request.url.queryParameters));
+          }
+          return http.Response('not found', 404);
+        },
+      );
+      addTearDown(client.close);
+      return client;
+    }
+
+    test('sequential queue is Plex Web continuous queue seeded at the first regular episode (#2770)', () async {
+      final posts = <Map<String, String>>[];
+      final client = showClient(posts, queueFor: (params) => selecting(lastSegment(params['key']!)));
+
+      for (final ordering in [SpecialsOrdering.respectServer, SpecialsOrdering.specialsLast]) {
+        await SettingsService.instance.write(SettingsService.specialsOrdering, ordering);
+        final queue = await client.createShowPlayQueue(showRatingKey: 'show-1', startingEpisodeKey: 'ep-12');
+
+        expect(queue?.playQueueID, 42, reason: '$ordering');
+        expect(
+          posts.last['uri'],
+          'server://machine-1/com.plexapp.plugins.library/library/metadata/ep-1',
+          reason: '$ordering',
         );
-      },
-    );
-    addTearDown(client.close);
+        expect(posts.last['continuous'], '1', reason: '$ordering');
+        expect(posts.last['key'], '/library/metadata/ep-12', reason: '$ordering');
+      }
+      expect(posts, hasLength(2));
+    });
 
-    // Default (respectServer) and explicit airDate: `/allLeaves` so Plex
-    // orders the queue by aired episode order with Specials interleaved
-    // (#1416).
-    final serverOrder = await client.createShowPlayQueue(showRatingKey: 'show-1');
-    expect(serverOrder, isNotNull);
-    expect(uris.single, 'server://machine-1/com.plexapp.plugins.library/library/metadata/show-1/allLeaves');
+    test('air-date and shuffled queues come from /allLeaves', () async {
+      final posts = <Map<String, String>>[];
+      final client = showClient(posts, queueFor: (params) => selecting('ep-1'));
 
-    await SettingsService.instance.write(SettingsService.specialsOrdering, SpecialsOrdering.airDate);
-    await client.createShowPlayQueue(showRatingKey: 'show-1');
-    expect(uris.last, 'server://machine-1/com.plexapp.plugins.library/library/metadata/show-1/allLeaves');
+      await SettingsService.instance.write(SettingsService.specialsOrdering, SpecialsOrdering.airDate);
+      await client.createShowPlayQueue(showRatingKey: 'show-1', startingEpisodeKey: 'ep-12');
+      expect(posts.last['uri'], 'server://machine-1/com.plexapp.plugins.library/library/metadata/show-1/allLeaves');
+      expect(posts.last['continuous'], '0');
+      expect(posts.last['key'], '/library/metadata/ep-12');
 
-    // specialsLast: `/children` keeps the Specials folder out of the regular
-    // run (#1952).
-    await SettingsService.instance.write(SettingsService.specialsOrdering, SpecialsOrdering.specialsLast);
-    final specialsApart = await client.createShowPlayQueue(showRatingKey: 'show-1');
-    expect(specialsApart, isNotNull);
-    expect(uris.last, 'server://machine-1/com.plexapp.plugins.library/library/metadata/show-1/children');
-  });
+      await SettingsService.instance.write(SettingsService.specialsOrdering, SpecialsOrdering.respectServer);
+      await client.createShowPlayQueue(showRatingKey: 'show-1', shuffle: 1);
+      expect(posts.last['uri'], 'server://machine-1/com.plexapp.plugins.library/library/metadata/show-1/allLeaves');
+      expect(posts.last['shuffle'], '1');
+    });
 
-  test('show play queue starting at an episode selects it with key', () async {
-    resetSharedPreferencesForTest();
-    await SettingsService.getInstance();
+    test('sequential queue re-seeds at the episode when Plex selects the seed instead', () async {
+      final posts = <Map<String, String>>[];
+      // PMS leaves some episodes out of a continuous queue and then selects
+      // the seed rather than `key`.
+      final client = showClient(
+        posts,
+        queueFor: (params) => selecting(lastSegment(params['uri']!), queueId: posts.length),
+      );
 
-    Map<String, String>? params;
-    final client = testPlexClient(
-      serverId: publicServerId,
-      profileScopeId: defaultProfileScopeId,
-      config: testPlexConfig(machineIdentifier: 'machine-1'),
-      handler: (request) async {
-        params = request.url.queryParameters;
-        return http.Response(
-          jsonEncode({
-            'MediaContainer': {'playQueueID': '42', 'playQueueVersion': '5', 'Metadata': <dynamic>[]},
-          }),
-          200,
-          headers: {'content-type': 'application/json'},
-        );
-      },
-    );
-    addTearDown(client.close);
+      final queue = await client.createShowPlayQueue(showRatingKey: 'show-1', startingEpisodeKey: 'ep-12');
 
-    await client.createShowPlayQueue(showRatingKey: 'show-1', startingEpisodeKey: 'ep-12');
-
-    expect(params!['key'], '/library/metadata/ep-12');
+      expect(posts.map((params) => lastSegment(params['uri']!)), ['ep-1', 'ep-12']);
+      expect(posts.last['continuous'], '1');
+      expect(queue?.playQueueID, 2);
+    });
   });
 
   test('activities tolerate scalar drift and skip only malformed rows', () async {
@@ -840,6 +888,38 @@ void main() {
         'POST:plex-fallback.example.com',
       ]);
       expect(client.config.baseUrl, fallback);
+    });
+
+    test('health stays online when the probe times out on a dead pooled socket but the server answers', () async {
+      // After an Apple TV sleep the pooled keep-alive socket can swallow the
+      // probe without an error. The server itself answers a fresh connection,
+      // so it must not be reported offline (#2915).
+      const primary = 'https://plex.example.com';
+      final events = <String>[];
+      var exhausted = 0;
+      var applicationRequests = 0;
+      final client = testPlexClient(
+        serverId: publicServerId,
+        profileScopeId: defaultProfileScopeId,
+        httpClient: MockClient((request) async {
+          events.add('application:${request.url.host}');
+          if (applicationRequests++ == 0) throw TimeoutException('dead pooled socket');
+          return identity('server-id');
+        }),
+        prioritizedEndpoints: const [primary, 'https://plex-fallback.example.com'],
+        endpointProbeHttpClientFactory: () => MockClient((request) async {
+          events.add('probe:${request.url.host}');
+          return identity('server-id');
+        }),
+        onAllEndpointsExhausted: () => exhausted++,
+      );
+      addTearDown(client.close);
+
+      expect(await client.checkHealth(), HealthStatus.online);
+
+      expect(events, ['application:plex.example.com', 'probe:plex.example.com', 'application:plex.example.com']);
+      expect(exhausted, 0);
+      expect(client.config.baseUrl, primary);
     });
   });
 

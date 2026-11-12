@@ -362,6 +362,12 @@ extension _VideoPlayerReloadMethods on VideoPlayerScreenState {
   /// happened: only [MediaReloadOutcome.failed] means the previous session
   /// is still on screen with its (possibly dead) stream; user feedback for
   /// failures is shown here unless [showErrorUi] is false.
+  ///
+  /// [forceTranscode] asks the server to transcode even where the file itself
+  /// would play; see [PlaybackInitializationOptions.forceTranscode].
+  /// When null, a forced open carries over to reloads of the same item at the
+  /// same preset (a resume, an audio switch, end-of-stream recovery), so
+  /// those never hand back the file the server refused.
   Future<MediaReloadOutcome> _reloadMediaInPlace({
     required MediaItem metadata,
     int? selectedMediaIndex,
@@ -378,8 +384,8 @@ extension _VideoPlayerReloadMethods on VideoPlayerScreenState {
     bool startPaused = false,
     bool useCurrentAudioStreamSelection = true,
     bool showErrorUi = true,
+    bool? forceTranscode,
     PlaybackTransitionLease? transitionLease,
-    WatchPlaybackLease? watchTogetherLease,
     String reason = 'media reload',
   }) async {
     if (_shuttingDown) return MediaReloadOutcome.superseded;
@@ -392,9 +398,6 @@ extension _VideoPlayerReloadMethods on VideoPlayerScreenState {
       if (mounted) _clearEpisodeLoadingFlags();
       return MediaReloadOutcome.rejected;
     }
-    final initialWatchTogether = _activeWatchTogetherSession();
-    final roomLease = watchTogetherLease ?? initialWatchTogether?.capturePlaybackLease();
-    if (roomLease != null && !roomLease.isCurrent) return MediaReloadOutcome.superseded;
 
     final reloadLease = transitionLease == null
         ? _transitionGate.tryAcquire(PlaybackTransition.reloadingMedia)
@@ -416,8 +419,7 @@ extension _VideoPlayerReloadMethods on VideoPlayerScreenState {
       // A reload wants termination to stop it too: unlike a start, it has a
       // committed previous session to roll back to rather than an error view
       // to raise.
-      bool isCurrentReload() =>
-          attempt.isCurrent && !_hasFatalPlaybackError && (roomLease == null || roomLease.isCurrent);
+      bool isCurrentReload() => attempt.isCurrent && !_hasFatalPlaybackError;
 
       // The session itself swaps atomically at the open boundary, so the only
       // rollback state is the eagerly-set identity (shown by the loading UI)
@@ -457,6 +459,7 @@ extension _VideoPlayerReloadMethods on VideoPlayerScreenState {
           : null;
       final wasPlayingBeforeReload = _playbackIntentShouldPlay;
       Completer<void>? reloadStartupHold;
+      final reloadDone = Completer<void>();
       var didOpenReplacement = false;
 
       // Capture context-dependent values before async gaps. The neutral
@@ -468,8 +471,6 @@ extension _VideoPlayerReloadMethods on VideoPlayerScreenState {
       late final PlaybackStateProvider playbackState;
       late final AppDatabase database;
       late final MultiServerManager serverManager;
-      late final WatchTogetherProvider? watchTogether;
-      late final Object? watchTogetherBinding;
       late final bool wtOwnsStart;
       try {
         offlineWatchService = context.read<OfflineWatchSyncService>();
@@ -477,13 +478,8 @@ extension _VideoPlayerReloadMethods on VideoPlayerScreenState {
         playbackState = context.read<PlaybackStateProvider>();
         database = context.read<AppDatabase>();
         serverManager = context.read<MultiServerProvider>().serverManager;
-        // Cycle the Watch Together attachment across every reload: the
-        // reload's internal pause/open churn must not leak into the sync layer
-        // as user intents. Readiness re-handshakes on re-attach (item changes
-        // start a new media epoch; same-item source switches group-wait while
-        // we reload).
-        watchTogether = initialWatchTogether;
-        watchTogetherBinding = _watchTogetherBinding;
+        // Read before the reload holds the room: the room starts a file it
+        // drives, or the room's file this reload opens for it.
         wtOwnsStart = _watchTogetherOwnsPlaybackStart();
       } catch (e, stackTrace) {
         appLogger.e('Failed to prepare media reload during $reason', error: e, stackTrace: stackTrace);
@@ -504,6 +500,12 @@ extension _VideoPlayerReloadMethods on VideoPlayerScreenState {
 
       final targetMediaIndex = selectedMediaIndex ?? _effectiveSelectedMediaIndex;
       final targetQualityPreset = qualityPreset ?? _selectedQualityPreset;
+      final targetForceTranscode =
+          forceTranscode ??
+          (!isItemChange &&
+              previousOpenRequest != null &&
+              previousOpenRequest.forceTranscode &&
+              previousOpenRequest.qualityPreset == targetQualityPreset);
       final downloadOutranksQuality = _downloadOutranksQuality;
       final targetAudioStreamId = crossesPart
           ? null
@@ -525,6 +527,7 @@ extension _VideoPlayerReloadMethods on VideoPlayerScreenState {
         qualityPreset: targetQualityPreset,
         audioStreamId: targetAudioStreamId,
         resumePosition: resumePosition,
+        forceTranscode: targetForceTranscode,
       );
       final preservesRequestedSubtitleSource =
           !isItemChange &&
@@ -552,11 +555,9 @@ extension _VideoPlayerReloadMethods on VideoPlayerScreenState {
         _episode.autoPlayTimer?.cancel();
         _firstFrame.resetUiForOpen();
 
-        // Detach before pausing so the reload's internal pause can't broadcast
-        // a party-wide pause; the finally below restores the attachment.
-        if (watchTogether != null && watchTogetherBinding != null) {
-          watchTogether.unbindPlayer(expectedBinding: watchTogetherBinding);
-        }
+        // Hold the Watch Together room off the player while it reloads: the
+        // room waits for it and commands it once the file is back.
+        _holdWatchTogether(reloadDone.future);
         try {
           await currentPlayer.pause();
         } catch (e) {
@@ -593,6 +594,7 @@ extension _VideoPlayerReloadMethods on VideoPlayerScreenState {
             sessionIdentifier: _playbackSessionIdentifier,
             transcodeSessionId: _playbackTranscodeSessionId,
             startPosition: openResumePosition,
+            forceTranscode: targetForceTranscode,
           ),
           offlineLibraryMode: _offlineLibraryMode,
           downloadOutranksQuality: downloadOutranksQuality,
@@ -694,7 +696,6 @@ extension _VideoPlayerReloadMethods on VideoPlayerScreenState {
             // reusing the player for replacement media, otherwise its late
             // completion can mutate the replacement item's tracks.
             await attempt.trackMutationDrain;
-            await watchTogether?.pendingRateCommands;
             // Native seeks must finish before a replacement source opens. The
             // EOF delegate's reload is not a native seek and never joins this drain.
             await _nativeSeekDrain?.future;
@@ -713,9 +714,10 @@ extension _VideoPlayerReloadMethods on VideoPlayerScreenState {
             // Versions/mediaInfo come from the committed session; rebuild so
             // the controls pick them up. Same-part switches
             // (quality/audio/subtitle) and moves between the files of one
-            // stacked version keep the scrub-preview source — BIF/trickplay
-            // is per part (a stacked preview spans them all), so a reset
-            // would re-download identical bytes.
+            // stacked version keep the scrub-preview source — a BIF is per
+            // part (a stacked preview spans them all) and Jellyfin/Emby
+            // previews are per source, so a reset would re-download
+            // identical bytes.
             final reusesScrubPreview =
                 previousMetadata.globalKey == metadata.globalKey &&
                 previousMediaInfo != null &&
@@ -742,7 +744,7 @@ extension _VideoPlayerReloadMethods on VideoPlayerScreenState {
             didOpenReplacement = true;
             if (!attempt.isCurrent) return;
             _commitPlaybackSession(session);
-            _commitWatchTogetherSelection(watchTogether, roomLease, metadata, openResumePosition ?? Duration.zero);
+            if (isItemChange) _serverLimitFallbackUsed = false;
           },
         );
         if (!opened) return MediaReloadOutcome.superseded;
@@ -810,7 +812,7 @@ extension _VideoPlayerReloadMethods on VideoPlayerScreenState {
           // resumed session keeps reporting (and its eventual real stop sends).
           _progressTracker?.resumeAfterStoppedReport();
           if (!wtOwnsStart && wasPlayingBeforeReload && mounted && player == currentPlayer) {
-            unawaited(_playWithPlaybackIntent(currentPlayer));
+            _dispatchPlaybackIntent(_playWithPlaybackIntent(currentPlayer), source: 'Reload rollback');
           }
         }
         if (_progressTracker == null && player == currentPlayer) {
@@ -861,26 +863,22 @@ extension _VideoPlayerReloadMethods on VideoPlayerScreenState {
           }
           _firstFrame.restore(previousFirstFrame);
         }
-        // Only the current screen/session/open may restore its committed source.
-        // A pre-open failure restores A; successful open commits B. Superseded
-        // work never binds either over its successor.
+        // Only the current screen/session/open hands its file to the room: a
+        // pre-open failure keeps A (the held adapter), a successful open
+        // binds B. Superseded work never binds over its successor.
         try {
-          if (watchTogether != null &&
-              roomLease != null &&
-              isCurrentReload() &&
-              watchTogether.isPlaybackLeaseCurrent(roomLease) &&
-              (watchTogetherBinding == null || watchTogether.ownsBinding(watchTogetherBinding)) &&
-              !watchTogether.hasAttachedPlayer) {
-            _attachToWatchTogetherSession(
-              lease: roomLease,
-              startupHold: didOpenReplacement ? reloadStartupHold?.future : null,
-            );
+          if (isCurrentReload()) {
+            _bindWatchTogether(startupHold: didOpenReplacement ? reloadStartupHold?.future : null);
+          } else {
+            _wtRoomOpen = false;
           }
         } catch (e, stackTrace) {
           // Playback has already reached a definitive opened/failed outcome;
-          // a best-effort sync reattach must not rewrite it or escape through
-          // the source-switch error classifier.
-          appLogger.w('Failed to reattach Watch Together after $reason', error: e, stackTrace: stackTrace);
+          // a best-effort bind must not rewrite it or escape through the
+          // source-switch error classifier.
+          appLogger.w('Failed to hand the file to Watch Together after $reason', error: e, stackTrace: stackTrace);
+        } finally {
+          reloadDone.complete();
         }
       }
     } finally {
@@ -900,13 +898,14 @@ extension _VideoPlayerReloadMethods on VideoPlayerScreenState {
   /// Re-push scope-persisted player values for the item swapped in by
   /// [_reloadMediaInPlace].
   ///
-  /// Shader, box-fit, and sync offsets are applied once per screen/player and
-  /// otherwise survive an in-place reload as latent native state. Sync offsets
-  /// are file timing, so every item starts from its own resolved offset and a
-  /// session-only tweak stays with the item it was made on (#2449). Shader and
-  /// box-fit are picture preferences: only changed resolutions are pushed, so
-  /// a session-local tweak keeps carrying over, and a Watch Together swap or a
-  /// next-episode hop across a library/title boundary still switches them.
+  /// Shader, box-fit, zoom, and sync offsets are applied once per
+  /// screen/player and otherwise survive an in-place reload as latent native
+  /// state. Sync offsets are file timing, so every item starts from its own
+  /// resolved offset and a session-only tweak stays with the item it was made
+  /// on (#2449). Shader, box-fit, and zoom are picture preferences: only
+  /// changed resolutions are pushed, so a session-local tweak keeps carrying
+  /// over, and a Watch Together swap or a next-episode hop across a
+  /// library/title boundary still switches them.
   /// Playback speed needs no handling here: TrackManager re-resolves it on
   /// every open.
   Future<void> _reapplyScopedPlayerPrefsForItemChange({
@@ -922,6 +921,12 @@ extension _VideoPlayerReloadMethods on VideoPlayerScreenState {
       final boxFit = ScopedPlayerPrefs.resolve(ScopedPlayerPrefs.boxFitMode, metadata);
       if (boxFit != previousBoxFit) {
         _videoFilterManager?.setBoxFitMode(boxFit);
+      }
+
+      final previousZoom = ScopedPlayerPrefs.resolve(ScopedPlayerPrefs.videoZoom, previousMetadata);
+      final zoom = ScopedPlayerPrefs.resolve(ScopedPlayerPrefs.videoZoom, metadata);
+      if (zoom != previousZoom) {
+        _videoFilterManager?.setZoomScale(zoom);
       }
 
       final previousShaderId = ScopedPlayerPrefs.resolve(ScopedPlayerPrefs.shaderPreset, previousMetadata);

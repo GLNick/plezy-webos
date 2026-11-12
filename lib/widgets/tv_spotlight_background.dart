@@ -96,8 +96,15 @@ class TvSpotlightBackground extends StatelessWidget {
               gradient: LinearGradient(
                 begin: Alignment.topCenter,
                 end: Alignment.bottomCenter,
-                colors: [Colors.black.withValues(alpha: 0.45), Colors.transparent, bgColor.withValues(alpha: 0.96)],
-                stops: const [0.0, 0.38, 1.0],
+                // Hard stop at the clear point so neither ramp blends toward
+                // the other's color while fading out.
+                colors: [
+                  Colors.black.withValues(alpha: 0.45),
+                  Colors.black.withValues(alpha: 0),
+                  bgColor.withValues(alpha: 0),
+                  bgColor.withValues(alpha: 0.96),
+                ],
+                stops: const [0.0, 0.38, 0.38, 1.0],
               ),
             ),
             if (media != null && showInfo)
@@ -179,7 +186,7 @@ class TvSpotlightBackground extends StatelessWidget {
       gradient: LinearGradient(
         begin: Alignment.centerLeft,
         end: Alignment.centerRight,
-        colors: [bgColor.withValues(alpha: 0.86), bgColor.withValues(alpha: 0.32), Colors.transparent],
+        colors: [bgColor.withValues(alpha: 0.86), bgColor.withValues(alpha: 0.32), bgColor.withValues(alpha: 0)],
         stops: const [0.0, 0.56, 1.0],
       ),
     );
@@ -307,7 +314,7 @@ class TvSpotlightBackground extends StatelessWidget {
       style: Theme.of(context).textTheme.displaySmall?.copyWith(
         color: colorScheme.onSurface,
         fontSize: _titleFontSize(scale),
-        fontWeight: .w800,
+        fontWeight: .w700,
         shadows: [Shadow(color: colorScheme.surface.withValues(alpha: 0.8), blurRadius: 12)],
       ),
     );
@@ -380,7 +387,7 @@ class TvSpotlightBackground extends StatelessWidget {
   double _logoHeight(double scale) =>
       (compact ? TvLayoutConstants.compactHeroLogoHeight : TvLayoutConstants.heroLogoHeight) * scale;
 
-  double _titleFontSize(double scale) => (compact ? 44 : 54) * scale;
+  double _titleFontSize(double scale) => (compact ? 36 : 54) * scale;
 
   double _metadataFontSize(double scale) => (compact ? 16 : 18) * scale;
 

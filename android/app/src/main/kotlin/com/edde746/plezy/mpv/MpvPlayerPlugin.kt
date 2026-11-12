@@ -20,16 +20,22 @@ import io.flutter.plugin.common.MethodChannel
 import java.util.concurrent.CancellationException
 import java.util.concurrent.atomic.AtomicBoolean
 
+/**
+ * [failureDetails] travels as the error's `details`; the message stays fixed so
+ * nothing a failure carried (possibly the value written) reaches Dart. See
+ * [mpvPropertyFailureDetails].
+ */
 internal fun completeMpvPropertyResult(
   result: MethodChannel.Result,
   outcome: Result<Unit>,
-  successValue: Any? = null
+  successValue: Any? = null,
+  failureDetails: Map<String, Any>? = null
 ) {
   val failure = outcome.exceptionOrNull()
   when {
     failure == null -> result.success(successValue)
     failure is CancellationException -> completeMpvPropertyNotInitialized(result)
-    else -> result.error("SET_PROPERTY_FAILED", "MPV property write was rejected", null)
+    else -> result.error("SET_PROPERTY_FAILED", "MPV property write was rejected", failureDetails)
   }
 }
 
@@ -231,6 +237,8 @@ open class MpvPlayerPlugin(
       "updateFrame" -> handleUpdateFrame(result)
       "setVideoFrameRate" -> handleSetVideoFrameRate(call, result)
       "clearVideoFrameRate" -> handleClearVideoFrameRate(result)
+      "holdVideoDecoder" -> handleHoldVideoDecoder(call, result)
+      "releaseVideoDecoderHold" -> handleReleaseVideoDecoderHold(call, result)
       "requestAudioFocus" -> handleRequestAudioFocus(result)
       "getAudioSpdifCodecs" -> handleGetAudioSpdifCodecs(result)
       "abandonAudioFocus" -> handleAbandonAudioFocus(result)
@@ -467,12 +475,16 @@ open class MpvPlayerPlugin(
     }
 
     core.setProperty(name, value) { outcome ->
-      if (outcome.isFailure && outcome.exceptionOrNull() !is CancellationException) {
-        Log.w(tag, "MPV rejected property '$name'; keeping the previous value")
-      }
-      completeMpvPropertyResult(result, outcome)
+      val details = propertyFailureDetails(core, name, outcome)
+      if (details != null) Log.w(tag, "MPV rejected property '$name' $details; keeping the previous value")
+      completeMpvPropertyResult(result, outcome, failureDetails = details)
     }
   }
+
+  /** Null for a success or a cancellation, which answers NOT_INITIALIZED instead. */
+  private fun propertyFailureDetails(core: MpvPlayerCore, name: String, outcome: Result<Unit>): Map<String, Any>? = outcome.exceptionOrNull()
+    ?.takeUnless { it is CancellationException }
+    ?.let { mpvPropertyFailureDetails(name, it, core.sessionFailure) }
 
   private fun handleGetProperty(call: MethodCall, result: MethodChannel.Result) {
     val name = call.argument<String>("name")
@@ -532,7 +544,9 @@ open class MpvPlayerPlugin(
     }
     // Install the id before registering: mpv may emit the initial value at once.
     nameToId[name] = id
-    core.observeProperty(name, format) { outcome -> completeMpvPropertyResult(result, outcome) }
+    core.observeProperty(name, format) { outcome ->
+      completeMpvPropertyResult(result, outcome, failureDetails = propertyFailureDetails(core, name, outcome))
+    }
   }
 
   private fun handleCommand(call: MethodCall, result: MethodChannel.Result) {
@@ -629,6 +643,27 @@ open class MpvPlayerPlugin(
   private fun handleClearVideoFrameRate(result: MethodChannel.Result) {
     PlayerDebugLog.d(tag) { "clearVideoFrameRate" }
     playerCore?.clearVideoFrameRate()
+    result.success(null)
+  }
+
+  // Answered once mpv reaches the next file's on_preloaded (the demuxed video
+  // format) or with null when nothing was held; see MpvPlayerCore.holdVideoDecoder.
+  private fun handleHoldVideoDecoder(call: MethodCall, result: MethodChannel.Result) {
+    val token = call.argument<Number>("token")?.toLong()
+    if (token == null) {
+      result.error("INVALID_ARGS", "Missing 'token'", null)
+      return
+    }
+    val core = playerCore
+    if (core == null) {
+      result.success(null)
+      return
+    }
+    core.holdVideoDecoder(token) { format -> result.success(format) }
+  }
+
+  private fun handleReleaseVideoDecoderHold(call: MethodCall, result: MethodChannel.Result) {
+    call.argument<Number>("token")?.toLong()?.let { playerCore?.releaseVideoDecoderHold(it) }
     result.success(null)
   }
 

@@ -6,10 +6,12 @@ import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
 import 'package:uuid/uuid.dart';
 
+import '../media/chapter_marker_classifier.dart';
 import '../media/artist_discography.dart';
 import '../media/download_resolution.dart';
 import '../media/episode_collection.dart';
 import '../media/library_filter_result.dart';
+import '../media/library_genre.dart';
 import '../media/library_first_character.dart';
 import '../media/library_query.dart';
 import '../media/live_tv_support.dart';
@@ -99,13 +101,18 @@ const _plexVideoHlsProtocol = 'hls';
 /// [VideoDecodeCapabilities.transcodeVideoCodecs] in their ranked order — the
 /// same list the MediaBrowser device profile sends.
 ///
-/// Every non-Original VOD request pins `directStream=0`, and an Original one
-/// transcodes only when the source codec was refused and is therefore absent
-/// here, so this codec list is a menu of *encode* outputs, never copy
-/// targets. HEVC must not be offered in an mpegts target: a Plex Pass server
-/// with HEVC encoding enabled obliges, and its hardware HEVC encode → TS
-/// segmenter path emits parameter sets mpv rejects ("PPS changed between
-/// slices", issue #1859). Apple's HLS spec likewise requires fMP4 for HEVC.
+/// Every non-Original VOD request pins `directStream=0`. An Original one
+/// transcodes only when the source codec was refused, and is therefore absent
+/// here, or when the server refused the file itself (HTTP 500). That second
+/// case keeps `directStream=1`, so the list doubles as copy targets: PMS 1.43
+/// copies a listed source codec into this target when its limits admit the
+/// source bitrate (measured on a LAN session with a 4K HEVC source), and
+/// encodes to one of them otherwise.
+///
+/// HEVC must not be offered in an mpegts target: a Plex Pass server with HEVC
+/// encoding enabled obliges, and its hardware HEVC encode → TS segmenter path
+/// emits parameter sets mpv rejects ("PPS changed between slices", issue
+/// #1859). Apple's HLS spec likewise requires fMP4 for HEVC.
 /// fMP4 decisions and segment output were verified against PMS 1.22 through
 /// 1.43; servers older than 1.22 fail the decision request itself regardless
 /// of container, so no version gate. PMS 1.43 has no AV1 encoder and answers
@@ -1062,7 +1069,10 @@ class PlexClient
   @override
   Future<HealthStatus> checkHealth() async {
     try {
-      final response = await _getWithFailover('/', timeout: MediaServerTimeouts.plexProbe);
+      // A dead pooled socket after an Apple TV sleep times out silently; the
+      // in-place retry keeps that from flipping a reachable server offline.
+      final response = await _http.get('/', timeout: MediaServerTimeouts.plexProbe, retryTimeoutInPlace: true);
+      throwIfHttpError(response);
       return response.statusCode == 200 ? HealthStatus.online : HealthStatus.offline;
     } on MediaServerHttpException catch (e) {
       return switch (e.statusCode) {
@@ -1235,8 +1245,9 @@ class PlexClient
     return 'server://$machineId/com.plexapp.plugins.library/library/metadata/$ratingKey';
   }
 
-  /// Build a server URI from a folder key for play queue creation.
-  /// Folder keys are like `/library/sections/1/folder?parent=123`.
+  /// Build a play-queue server URI from a library path: a folder key like
+  /// `/library/sections/1/folder?parent=123`, or a whole section's
+  /// `/library/sections/1/all`.
   Future<String> buildFolderUri(String folderKey) async {
     final machineId = config.machineIdentifier ?? await getMachineIdentifier();
     if (machineId == null) {
@@ -1800,19 +1811,16 @@ class PlexClient
     return _http.buildUri(thumbPath).toString().withPlexToken(config.token);
   }
 
-  /// Download the full BIF (Base Index Frames) file for a given part.
-  /// Returns the raw bytes, or null on failure.
-  Future<Uint8List?> downloadBifFile(int partId) async {
-    try {
-      final bytes = await _http.getBytes(
-        '${_http.baseUrl}/library/parts/$partId/indexes/sd',
-        timeout: const Duration(seconds: 30),
-      );
-      if (bytes.isNotEmpty) return bytes;
-      return null;
-    } catch (_) {
-      return null;
-    }
+  /// Download the full BIF (Base Index Frames) file for a given part, failing
+  /// once the body exceeds [maxBytes] instead of buffering it.
+  /// Returns null when the server answers with an empty body.
+  Future<Uint8List?> downloadBifFile(int partId, {required int maxBytes}) async {
+    final bytes = await _http.getBytes(
+      '${_http.baseUrl}/library/parts/$partId/indexes/sd',
+      timeout: const Duration(seconds: 30),
+      maxBytes: maxBytes,
+    );
+    return bytes.isEmpty ? null : bytes;
   }
 
   /// Chapters and markers for [ratingKey], from the shared
@@ -1864,7 +1872,7 @@ class PlexClient
               parseResponse: parseResponse,
             );
       final metadataJson = _getFirstMetadataJsonFromData(data);
-      final extras = _parsePlaybackExtrasFromMetadataJson(
+      final extras = await _parsePlaybackExtrasFromMetadataJson(
         metadataJson,
         introPattern: introPattern,
         creditsPattern: creditsPattern,
@@ -1908,13 +1916,14 @@ class PlexClient
     return _getFirstMetadataJsonFromData(data);
   }
 
-  PlaybackExtras _parsePlaybackExtrasFromMetadataJson(
+  Future<PlaybackExtras> _parsePlaybackExtrasFromMetadataJson(
     Map<String, dynamic>? metadataJson, {
     String? introPattern,
     String? creditsPattern,
     bool forceChapterFallback = false,
-  }) => plexPlaybackExtrasFromCacheJson(
+  }) async => plexPlaybackExtrasFromCacheJson(
     metadataJson,
+    classifier: await ChapterMarkerClassifier.bundled,
     introPattern: introPattern,
     creditsPattern: creditsPattern,
     forceChapterFallback: forceChapterFallback,
@@ -2738,7 +2747,7 @@ class PlexClient
     );
   }
 
-  /// Scan/refresh a library section to detect new files
+  @override
   Future<void> scanLibrary(String sectionId) async {
     await _getWithFailover('/library/sections/$sectionId/refresh');
   }
@@ -2842,9 +2851,9 @@ class PlexClient
   /// seeks + quality/version/audio switches within one playback so the
   /// server-side transcode session is preserved.
   ///
-  /// [sourceCodecRefused] asks for a video encode even at Original quality:
-  /// the user refused the source's codec, so the file itself must not be
-  /// served (#2443).
+  /// [withholdDirectPlay] asks for a transcode even at Original quality, where
+  /// the file itself must not be served: the user refused the source's codec
+  /// (#2443), or the server already refused the file (HTTP 500).
   ///
   /// Deliberately no `offset` request parameter: the start URL always
   /// describes the full title and the player seeks in-band by requesting the
@@ -2865,7 +2874,7 @@ class PlexClient
     int? audioStreamId,
     MediaSubtitleTrack? selectedSubtitleTrack,
     int? partId,
-    bool sourceCodecRefused = false,
+    bool withholdDirectPlay = false,
   }) async {
     try {
       await selectSubtitleStreamForBurn(partId: partId, track: selectedSubtitleTrack);
@@ -2879,7 +2888,7 @@ class PlexClient
         audioStreamId: audioStreamId,
         selectedSubtitleTrack: selectedSubtitleTrack,
         useTsFallbackTarget: useTsFallbackTarget,
-        sourceCodecRefused: sourceCodecRefused,
+        withholdDirectPlay: withholdDirectPlay,
       );
 
       final primary = await _runTranscodeDecision(
@@ -3077,7 +3086,7 @@ class PlexClient
     int? audioStreamId,
     MediaSubtitleTrack? selectedSubtitleTrack,
     bool useTsFallbackTarget = false,
-    bool sourceCodecRefused = false,
+    bool withholdDirectPlay = false,
   }) {
     final isOriginal = preset.isOriginal;
     final selectedInternalSubtitle = _selectedInternalSubtitleForHls(selectedSubtitleTrack);
@@ -3106,7 +3115,12 @@ class PlexClient
       // `directStream=1` it copies the audio and encodes the video to the
       // first target codec it can produce, at source resolution and 20 Mbps
       // when no preset caps it.
-      'directPlay': selectedInternalSubtitle == null && isOriginal && !sourceCodecRefused ? '1' : '0',
+      //
+      // So does a file the server refused (HTTP 500, typically its remote
+      // bandwidth limit). Plex Web answers that by re-asking the decision
+      // with direct play off and the viewer's quality unchanged ("[PDE]
+      // Forcing transcode"), leaving the output to the server's own limits.
+      'directPlay': selectedInternalSubtitle == null && isOriginal && !withholdDirectPlay ? '1' : '0',
       'directStream': isOriginal ? '1' : '0',
       'subtitleSize': '100',
       'audioBoost': '100',
@@ -3535,17 +3549,12 @@ class PlexClient
   /// Full-series fallback for episode navigation when Plex `/playQueues`
   /// creation is unavailable. Grandchildren includes watched episodes; sort
   /// locally per [SettingsService.specialsOrdering]. Under `respectServer`
-  /// the faithful reproduction of the server queue this fallback replaces is
-  /// the aired interleave — Plex's own `/allLeaves` order — so that mode maps
-  /// to [SpecialsOrdering.airDate] here.
+  /// that is Specials-last, the order of the server queue this fallback
+  /// replaces (Plex Web's continuous show queue, #2770).
   @override
   Future<List<MediaItem>?> fetchClientSideEpisodeQueue(String seriesId) async {
     final episodes = await fetchPlayableDescendants(seriesId);
-    final ordering = effectiveSpecialsOrdering();
-    sortEpisodesByWatchOrder(
-      episodes,
-      ordering: ordering == SpecialsOrdering.respectServer ? SpecialsOrdering.airDate : ordering,
-    );
+    sortEpisodesByWatchOrder(episodes);
     return episodes;
   }
 
@@ -3783,7 +3792,7 @@ class PlexClient
       final sourceCodecRefused = !isTrack && await _sourceCodecRefused(data, options);
       final wantTranscode = isTrack
           ? !audioPreset.isOriginal
-          : sourceCodecRefused || _presetNeedsTranscode(options.qualityPreset, data);
+          : sourceCodecRefused || options.forceTranscode || _presetNeedsTranscode(options.qualityPreset, data);
       if (wantTranscode && options.sessionIdentifier != null && options.transcodeSessionId != null) {
         if (isTrack) {
           final result = await buildMusicTranscodeStartPath(
@@ -3826,7 +3835,7 @@ class PlexClient
           audioStreamId: resolvedAudioId,
           selectedSubtitleTrack: requestedSubtitleTrack,
           partId: data.mediaInfo?.partId,
-          sourceCodecRefused: sourceCodecRefused,
+          withholdDirectPlay: sourceCodecRefused || options.forceTranscode,
         );
 
         // A transcode that cannot carry the requested caption is not the outcome we asked for. The
@@ -3854,8 +3863,10 @@ class PlexClient
           );
         }
 
+        if (options.forceTranscode) throw _forcedTranscodeUnavailable(result.outcome);
         return _transcodeFallbackResult(data, result.outcome, options, activeAudioStreamId: carriedAudioStreamId);
       }
+      if (options.forceTranscode && !isTrack) throw _forcedTranscodeUnavailable(null);
 
       return PlaybackInitializationResult(
         availableVersions: data.availableVersions,
@@ -3946,6 +3957,17 @@ class PlexClient
 
   MediaVersion? _selectedVersion(PlexVideoPlaybackData data) =>
       data.selectedMediaIndex < data.availableVersions.length ? data.availableVersions[data.selectedMediaIndex] : null;
+
+  /// A forced transcode ([PlaybackInitializationOptions.forceTranscode]) the
+  /// server would not start. The direct-play URL is not an answer here: the
+  /// server already refused that file, so opening it again could only fail the
+  /// same way.
+  PlaybackException _forcedTranscodeUnavailable(TranscodeDecisionOutcome? outcome) {
+    appLogger.w(
+      'Forced transcode unavailable (${outcome?.name ?? 'no transcode session'}); not falling back to the file',
+    );
+    return PlaybackException(t.messages.serverLimitBody, reason: PlaybackFailureReason.noPlayableSource);
+  }
 
   /// Direct-play result for a transcode decision that fell back (failed or
   /// said direct-play only), surfacing the reason so the UI can notify the
@@ -4215,6 +4237,43 @@ class PlexClient
     return LibraryFilterResult(filters: legacy, cachedValues: const {});
   }
 
+  /// Plex Web's Categories tab: one row per genre, keyed by the genre filter
+  /// that selects it (`/library/sections/2/all?genre=239`).
+  ///
+  /// PMS composes each tile image itself as
+  /// `/photo/:/transcode?blendColor=RRGGBB&width=2560&height=1440&url=<art>`.
+  /// The art and the tint are split back apart so the tile fetches the art at
+  /// its own size through [thumbnailUrl] and paints the tint itself, as it
+  /// does for backends that publish none.
+  @override
+  Future<List<LibraryGenre>> fetchLibraryGenres(String libraryId, {required MediaKind libraryKind}) async {
+    final response = await _getWithFailover('/library/sections/$libraryId/categories');
+    final directories = _getMediaContainer(response)?['Directory'];
+    if (directories is! List) return const [];
+    final genres = <LibraryGenre>[];
+    for (final entry in directories.whereType<Map<String, dynamic>>()) {
+      final title = entry['title'];
+      final key = entry['key'];
+      if (title is! String || title.isEmpty || key is! String) continue;
+      final value = Uri.tryParse(key)?.queryParameters[MediaFilterField.genre];
+      if (value == null || value.isEmpty) continue;
+      final (:artPath, :accentRgb) = _splitCategoryThumb(entry['thumb']);
+      genres.add(LibraryGenre(title: title, filterValue: value, artPath: artPath, accentRgb: accentRgb));
+    }
+    return genres;
+  }
+
+  static ({String? artPath, int? accentRgb}) _splitCategoryThumb(Object? thumb) {
+    if (thumb is! String || thumb.isEmpty) return (artPath: null, accentRgb: null);
+    final query = Uri.tryParse(thumb)?.queryParameters ?? const <String, String>{};
+    final art = query['url'];
+    final blend = query['blendColor'];
+    return (
+      artPath: art != null && art.isNotEmpty ? art : thumb,
+      accentRgb: blend == null ? null : int.tryParse(blend, radix: 16),
+    );
+  }
+
   /// Parse `Meta.Type[].Field[]` (the filterable fields for the browsed type)
   /// against `Meta.FieldType[].Operator[]` (what each field type can compare).
   List<MediaFilter> _parseFilterMetadata(MediaServerResponse response, {required String libraryId, int? typeId}) {
@@ -4416,7 +4475,7 @@ class PlexClient
     if (partId == null) return null;
     final service = BifThumbnailService();
     try {
-      await service.load(() => downloadBifFile(partId), aspectRatio: aspectRatio);
+      await service.load((maxBytes) => downloadBifFile(partId, maxBytes: maxBytes), aspectRatio: aspectRatio);
       return service;
     } catch (e, st) {
       appLogger.w('BIF thumbnail load failed for part $partId', error: e, stackTrace: st);

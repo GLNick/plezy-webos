@@ -2,6 +2,7 @@ import '../media/ids.dart';
 import '../media/media_item.dart';
 import '../media/media_library.dart';
 import '../media/playback_rate.dart';
+import '../media/video_zoom.dart';
 import '../models/player_setting_scope.dart';
 import '../utils/global_key_utils.dart';
 import 'settings_service.dart';
@@ -37,7 +38,8 @@ final class ScopedPlayerPref<T> {
 /// Resolution consults only the configured scope's entry, then the global
 /// pref — never entries saved under another scope — so switching scopes makes
 /// old entries inert instead of shadowing the new regime, and switching back
-/// resurrects them.
+/// resurrects them. The global pref does not carry over: entering a keyed
+/// scope resets it (see [PlayerSettingScopePref]).
 abstract final class ScopedPlayerPrefs {
   static final playbackSpeed = ScopedPlayerPref<double>._(
     'playback_speed',
@@ -60,6 +62,13 @@ abstract final class ScopedPlayerPrefs {
     SettingsService.boxFitScope,
     SettingsService.defaultBoxFitMode,
     _decodeBoxFit,
+  );
+
+  static final videoZoom = ScopedPlayerPref<double>._(
+    'video_zoom',
+    SettingsService.videoZoomScope,
+    SettingsService.defaultVideoZoom,
+    _decodeZoom,
   );
 
   static final audioSyncOffset = ScopedPlayerPref<int>._(
@@ -222,6 +231,9 @@ abstract final class ScopedPlayerPrefs {
 
   static double? _decodeSpeed(Object? raw) =>
       raw is num ? raw.toDouble().clamp(minimumPlaybackRate, maximumPlaybackRate) : null;
+
+  static double? _decodeZoom(Object? raw) =>
+      raw is num ? raw.toDouble().clamp(minimumVideoZoom, maximumVideoZoom) : null;
 
   static int? _decodeInt(Object? raw) => raw is int ? raw : null;
 

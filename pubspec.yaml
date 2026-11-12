@@ -1,7 +1,7 @@
 name: plezy
 description: "A beautiful Plex and Jellyfin client for Flutter"
 publish_to: "none"
-version: 2.23.0+153
+version: 2.26.0+160
 
 environment:
   # Dart floor stays 3.12: freezed 3.x emits `final` constructor parameters,
@@ -11,6 +11,8 @@ environment:
 
 dependencies:
   flutter:
+    sdk: flutter
+  flutter_localizations:
     sdk: flutter
   clock: ^1.1.2
   intl: ^0.20.2
@@ -64,7 +66,11 @@ dependencies:
   # a resumed SAF download reuse its own partial document and deletes SAF
   # partials through the provider; ebdf69a resumes a download the system stops
   # (job quota, lost network) instead of reporting it canceled and deleting the
-  # partial. Keep the same-filesystem move/resume cleanup; no per-host TLS bypass.
+  # partial; 7c341be makes the rerun of a SAF download whose process died write
+  # to the document the dead run created instead of a "name (1)" copy; afa3fe6
+  # samples desktop free space once per 1 MiB instead of per received event
+  # (#2967). Keep the same-filesystem move/resume cleanup; no per-host TLS
+  # bypass.
   background_downloader:
     path: ../vendor/background_downloader
   sentry_flutter: any
@@ -153,6 +159,7 @@ dependency_overrides:
 flutter:
   uses-material-design: true
   assets:
+    - assets/licenses/SpatialAudioBridge.txt
     - assets/plezy.png
     - assets/plezy_adaptive_foreground.svg
     - assets/plex_chevron.svg
@@ -166,11 +173,16 @@ flutter:
     - assets/mdblist_mark.svg
     - assets/go-noto-current-regular.ttf
     - assets/go-noto-kurrent-hangul.ttf
+    # Intro/credits chapter classifier; scripts/codegen/train_chapter_marker_model.py writes it.
+    - assets/chapter_marker_model.bin
     - assets/shaders/nvscaler/
     - assets/shaders/artcnn/
     - assets/shaders/anime4k/
     - assets/player_icons/
     - assets/rating_icons/
+    # App icon picker thumbnails; scripts/codegen/generate_app_icons.py renders them from
+    # assets/app_icons/source, which stays out of the bundle.
+    - assets/app_icons/previews/
   # Registered as UI font families so the Linux build, whose fontconfig may
   # lack CJK fonts, can fall back to the bundled subtitle fonts (mono_theme).
   fonts:

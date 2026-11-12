@@ -11,6 +11,7 @@ import 'artist_discography.dart';
 import 'download_resolution.dart';
 import 'ids.dart';
 import 'library_filter_result.dart';
+import 'library_genre.dart';
 import 'library_change_event.dart';
 import 'library_query.dart';
 import 'live_tv_support.dart';
@@ -200,6 +201,13 @@ abstract class MediaServerClient {
   /// lists (movie vs show).
   Future<List<MediaSort>> fetchSortOptions(String libraryId, {String? libraryType});
 
+  /// The genres of [libraryId] its Browse tab can filter by, in display
+  /// order. Plex reads `/library/sections/{id}/categories`, which is already
+  /// scoped to the section's own type; Jellyfin and Emby read `/Genres`
+  /// scoped by [libraryKind] to the item type Browse lists, so every genre
+  /// selects at least one Browse row. Failures throw.
+  Future<List<LibraryGenre>> fetchLibraryGenres(String libraryId, {required MediaKind libraryKind});
+
   /// Queue a metadata refresh for [libraryId]. The id is the backend-native
   /// library identifier (Plex section id / Jellyfin view item id, both
   /// surfaced via [MediaLibrary.key]). Plex hits
@@ -208,6 +216,12 @@ abstract class MediaServerClient {
   /// library view is itself a Jellyfin item, and refresh recurses into its
   /// children).
   Future<void> refreshLibraryMetadata(String libraryId);
+
+  /// Queue a scan of [libraryId] for new, changed, and removed files, keeping
+  /// existing metadata. Plex hits `/library/sections/{id}/refresh`; MediaBrowser
+  /// servers post `/Items/{id}/Refresh` with `metadataRefreshMode=Default`
+  /// (jellyfin-web's "Scan for new and updated files").
+  Future<void> scanLibrary(String libraryId);
 
   /// Fetch a single item by its backend-opaque id. An online HTTP 404 returns
   /// `null`; every other HTTP status remains an error. Implementations may use

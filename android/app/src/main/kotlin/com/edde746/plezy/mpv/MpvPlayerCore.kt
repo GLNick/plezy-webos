@@ -5,7 +5,6 @@ import android.app.ActivityManager
 import android.content.Context
 import android.hardware.display.DisplayManager
 import android.media.AudioAttributes
-import android.media.MediaCodecList
 import android.os.Build
 import android.os.Handler
 import android.os.Looper
@@ -17,12 +16,13 @@ import android.view.SurfaceView
 import android.view.View
 import android.view.ViewGroup
 import android.view.ViewTreeObserver
+import com.edde746.mpv.*
+import com.edde746.plezy.NativeModuleCache
+import com.edde746.plezy.TvDetection
 import com.edde746.plezy.exoplayer.DoviBridge
-import com.edde746.plezy.libmpv.*
 import com.edde746.plezy.shared.AudioFocusManager
+import com.edde746.plezy.shared.DeviceQuirks
 import com.edde746.plezy.shared.FrameRateManager
-import com.edde746.plezy.shared.GlCapabilities
-import com.edde746.plezy.shared.MediaCodecQuery
 import com.edde746.plezy.shared.PlayerDebugLog
 import com.edde746.plezy.shared.PlayerDelegate
 import com.edde746.plezy.shared.PlayerSurfaceHost
@@ -32,8 +32,6 @@ import java.util.concurrent.CountDownLatch
 import java.util.concurrent.TimeUnit
 import java.util.concurrent.atomic.AtomicReference
 import kotlinx.coroutines.*
-import kotlinx.coroutines.flow.filter
-import kotlinx.coroutines.flow.filterIsInstance
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
 /**
@@ -98,6 +96,22 @@ class MpvPlayerCore private constructor(
     private const val SURFACE_HANDOFF_TIMEOUT_MS = 2_000L
 
     /**
+     * Upper bound for the `on_preloaded` decode routing. mpv holds playback
+     * start until the hook is continued; past this the routing is cancelled
+     * and the hook moves on.
+     */
+    private const val HOOK_TIMEOUT_MS = 3_000L
+
+    /**
+     * Upper bound for holding a file's decoder at `on_preloaded` while Dart
+     * switches the display for it ([DecoderHold]): FrameRateManager's longest
+     * wait (settle, the 10 s maximum user delay and its watchdog margin: 15 s)
+     * plus the round trips. The library continues the hook itself once the
+     * routing and this have both run out.
+     */
+    private const val DECODER_HOLD_TIMEOUT_MS = 20_000L
+
+    /**
      * How long an admitted write may go unanswered before the core is declared
      * gone. A bound on a core that never returns, not on latency - see
      * [writeOperations] for why nothing shorter can be told apart from a
@@ -122,44 +136,81 @@ class MpvPlayerCore private constructor(
     /** `fw-bytes` inside mpv's JSON-serialised `demuxer-cache-state`. */
     private val FORWARD_CACHE_BYTES = Regex("\"fw-bytes\"\\s*:\\s*(\\d+)")
 
-    /** MIME types devices register Dolby Vision decoders under. FFmpeg only
-     * asks for the first; the others are enumerated so the routing log shows
-     * the decoder a device "has" but FFmpeg will never open. */
-    private val DV_MIME_TYPES = setOf(GpuVoPolicy.DV_MIME, "video/hevcdv", "video/dv_hevc")
-
     /**
-     * Every decoder registered under [DV_MIME_TYPES], in MediaCodecList
-     * order, for [GpuVoPolicy.nativeDvDecoder]. One walk per process: the
-     * codec list is static. A type whose capabilities cannot be queried is
-     * dropped, as FFmpeg drops it.
+     * The device's Dolby Vision decoders ([MediaCodecQuery.dvDecoderCandidates]),
+     * logged on first use so the routing log shows every decoder a device
+     * registers, including those FFmpeg never opens.
      */
     private val dvDecoderCandidates: List<GpuVoPolicy.DvDecoderCandidate> by lazy {
-      val candidates = try {
-        MediaCodecList(MediaCodecList.REGULAR_CODECS).codecInfos.filterNot { it.isEncoder }.flatMap { info ->
-          info.supportedTypes.filter { it.lowercase(Locale.ROOT) in DV_MIME_TYPES }.mapNotNull { type ->
-            val profiles = try {
-              info.getCapabilitiesForType(type).profileLevels.map { it.profile }
-            } catch (e: IllegalArgumentException) {
-              Log.w(TAG, "Failed to query ${info.name} capabilities for $type", e)
-              return@mapNotNull null
-            }
-            // isSoftwareOnly exists from API 29; FFmpeg consults it only there too.
-            val softwareOnly = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) info.isSoftwareOnly else false
-            GpuVoPolicy.DvDecoderCandidate(name = info.name, mime = type, profiles = profiles, isSoftwareOnly = softwareOnly)
+      MediaCodecQuery.dvDecoderCandidates.also { candidates ->
+        Log.i(
+          TAG,
+          "Dolby Vision decoders: " + candidates.joinToString(prefix = "[", postfix = "]") {
+            "${it.name} ${it.mime} profiles=${it.profiles.joinToString(",") { p -> "0x${p.toString(16)}" }}" +
+              (if (it.isSoftwareOnly) " software-only" else "")
           }
-        }
-      } catch (e: Exception) {
-        Log.w(TAG, "Failed to enumerate Dolby Vision decoders", e)
-        emptyList()
+        )
       }
-      Log.i(
-        TAG,
-        "Dolby Vision decoders: " + candidates.joinToString(prefix = "[", postfix = "]") {
-          "${it.name} ${it.mime} profiles=${it.profiles.joinToString(",") { p -> "0x${p.toString(16)}" }}" +
-            (if (it.isSoftwareOnly) " software-only" else "")
-        }
+    }
+
+    /**
+     * [GpuVoPolicy.needsToneMapping] as this app routes it: a display with
+     * any HDR type keeps the plane in every mode, where the library would
+     * check the display's types per transfer and the HDR output setting.
+     * A display without HDR leaves the conversion to the user's mode.
+     */
+    internal fun needsToneMapping(
+      gamma: String?,
+      displayHdrSupported: Boolean,
+      conversionMode: String,
+      sdkInt: Int
+    ): Boolean = !displayHdrSupported &&
+      GpuVoPolicy.needsToneMapping(
+        gamma = gamma,
+        displayHdrTypes = IntArray(0),
+        dolbyVisionDecoder = false,
+        hdrOutput = true,
+        conversionMode = conversionMode,
+        sdkInt = sdkInt
       )
-      candidates
+
+    /**
+     * [GpuVoPolicy.needsSoftwareDecode] as this app routes it: HEVC Main 10
+     * without a hardware profile stays with the hardware decoder and mpv's
+     * own fallback instead of going to software decode up front.
+     */
+    internal fun needsSoftwareDecode(
+      codec: String?,
+      codecProfile: String?,
+      hardwareHigh10: Boolean,
+      hardwareAv1: Boolean
+    ): Boolean = GpuVoPolicy.needsSoftwareDecode(
+      codec,
+      codecProfile,
+      hardwareHigh10,
+      hardwareHevcMain10 = true,
+      hardwareAv1 = hardwareAv1
+    )
+
+    /**
+     * The options the cheap render tier replaces, each mapped to the value
+     * [current] read for it, which the tier restores on leaving: those of
+     * [GpuVoPolicy.CHEAP_RENDER_OPTIONS] still at mpv's default, so a
+     * user's mpv.conf line wins. The tier changes the scalers and dither;
+     * `tone-mapping` keeps mpv's curve.
+     */
+    internal fun cheapRenderReplacements(current: (String) -> String?): Map<String, String> {
+      val replaced = LinkedHashMap<String, String>()
+      for (option in GpuVoPolicy.CHEAP_RENDER_OPTIONS.keys) {
+        if (option == "tone-mapping") continue
+        val value = current(option)
+        if (value == null || !GpuVoPolicy.isDefaultRenderOption(option, value)) {
+          PlayerDebugLog.d(TAG) { "Render tier keeps $option=$value (not the mpv default)" }
+          continue
+        }
+        replaced[option] = value
+      }
+      return replaced
     }
 
     /**
@@ -335,7 +386,7 @@ class MpvPlayerCore private constructor(
    * (null when the bitstream carries no DOVI record); set per file by
    * [applyDvReshapePolicy], read when `hwdec-current` reports the outcome
    * and by a mid-file [applyDvConversionMode]. */
-  @Volatile private var pendingDvProfile: Long? = null
+  @Volatile private var pendingDvProfile: Int? = null
 
   /** Whether this core already decided its GL surface colorspace; set by the
    * first `content-color-transfer` announcement ([applyContentColorTransfer]). */
@@ -354,7 +405,7 @@ class MpvPlayerCore private constructor(
 
   @Volatile private var displayDvSupported: Boolean = false
 
-  /** `hdr-sdr-conversion` the app last set; see [GpuVoPolicy.needsHdrToneMapping]. */
+  /** `hdr-sdr-conversion` the app last set; see [GpuVoPolicy.needsToneMapping]. */
   @Volatile private var hdrSdrConversionMode: String = "auto"
 
   /** Latest `video-params/gamma`, kept so a mode change re-decides the live file. */
@@ -414,7 +465,71 @@ class MpvPlayerCore private constructor(
   private var scope = CoroutineScope(SupervisorJob() + Dispatchers.Main)
   private val endFileDiagnostics = MpvEndFileDiagnostics()
 
+  /**
+   * Per-file decode routing run inside mpv's `on_preloaded` hook, set once
+   * the session is adopted; null continues the hook at once. Returns the
+   * pending video track it routed, which [holdDecoderForDisplay] reports.
+   */
+  @Volatile private var hookHandler: (suspend (name: String) -> org.json.JSONObject?)? = null
+
+  /** Dart's hold on the next file's video decoder; see [holdVideoDecoder]. */
+  private val decoderHold = DecoderHold()
+
+  /**
+   * The session's callbacks. The library calls them on the session's
+   * `mpv-listener-<session>` thread, one at a time in mpv's order (property
+   * changes, events, log lines, hooks), and mpv's own event thread never
+   * waits for them. Each only launches into [scope], so the handlers run on
+   * the main thread in that order, and a disposed core runs none: dispose
+   * cancels the scope before the player closes. The delivery thread never
+   * blocks on Plezy, so nothing that waits on mpv (a close, a surface handoff
+   * holding the main thread) can wait on it in turn.
+   */
+  private val mpvListener = object : MpvPlayer.Listener {
+    override fun onPropertyChange(change: PropertyChange) {
+      scope.launch { onMpvPropertyChange(change) }
+    }
+
+    override fun onEvent(event: MpvEvent) {
+      scope.launch { onMpvEvent(event) }
+    }
+
+    override fun onHook(player: MpvPlayer, name: String, id: Long) {
+      // Undispatched: the handler suspends on the write queue at once, which
+      // frees the delivery thread, and even a cancelled scope runs the finally
+      // that answers the hook. continueHook is idempotent, so answering after
+      // the library's own timeout or close is a no-op.
+      scope.launch(start = CoroutineStart.UNDISPATCHED) {
+        // Taken first, so this file's hook consumes the arm whatever the
+        // routing does: an arm left behind would hold the next file instead.
+        val hold = if (name == "on_preloaded") decoderHold.take() else null
+        try {
+          val handle = hookHandler
+          var track: org.json.JSONObject? = null
+          if (handle != null && withTimeoutOrNull(HOOK_TIMEOUT_MS) { track = handle(name) } == null) {
+            Log.w(TAG, "Hook $name handler overran; continuing playback")
+          }
+          if (hold != null) holdDecoderForDisplay(hold, track)
+        } catch (e: CancellationException) {
+          PlayerDebugLog.d(TAG) { "Hook $name handler canceled" }
+        } catch (e: Exception) {
+          Log.w(TAG, "Hook $name handler failed; continuing playback", e)
+        } finally {
+          hold?.let {
+            it.answer(null)
+            decoderHold.finish(it)
+          }
+          player.continueHook(id)
+        }
+      }
+    }
+  }
+
   private val nativeFailure = AtomicReference<Exception?>()
+
+  /** What condemned this session, once something has; see [condemnSession]. */
+  internal val sessionFailure: Exception? get() = nativeFailure.get()
+
   private val nativeOwnershipLock = Any()
 
   @Volatile private var videoSurfaceGeneration = 0L
@@ -963,7 +1078,8 @@ class MpvPlayerCore private constructor(
           val demuxerBudget = DemuxerBudget.forHeapClassMB(heapClassMB)
           val p = writeOperations.run("initialization") {
             withContext(NonCancellable) {
-              val created = MpvPlayer.create(context.applicationContext) {
+              // Blocks through mpv_initialize on this write worker (IO), never main.
+              val created = MpvPlayer.create(context.applicationContext, mpvListener, HOOK_TIMEOUT_MS + DECODER_HOLD_TIMEOUT_MS) {
                 // The level Dart hands us at `initialize` drives mpv's own
                 // verbosity and the Kotlin-side traces alike.
                 PlayerDebugLog.applyLogLevel(initialLogLevel)
@@ -985,6 +1101,20 @@ class MpvPlayerCore private constructor(
                   setOption("vo", initialVideoOutput(hardwareDecoding))
                   setOption("gpu-context", "android")
                   setOption("opengl-es", "yes")
+                  // The vo=mediacodec OSD plane fills the letterbox opaque black,
+                  // except where that black comes out gray in Dolby Vision output and
+                  // a transparent margin stays black; see PlayerSurfaceHost.createOsdSurface.
+                  if (DeviceQuirks.raisesGraphicsBlackInDolbyVision) {
+                    setOption("vo-mediacodec-letterbox-fill", "no")
+                  }
+                  // Present the OSD plane a refresh after the video's timestamp where the
+                  // video plane itself lags a refresh (rationale on
+                  // DeviceQuirks.videoPlaneLagsGraphics). The fork then presents the
+                  // plane on every video frame, without which the delay made Amlogic
+                  // video judder (mpv-build 0145).
+                  if (DeviceQuirks.videoPlaneLagsGraphics(TvDetection.isTv(context))) {
+                    setOption("vo-mediacodec-osd-vsync-delay", "1")
+                  }
                   // The Java MediaCodec wrapper, driven asynchronously where
                   // the platform is trusted to (rationale on
                   // initialDecoderEntries). This belongs to every video core,
@@ -996,6 +1126,16 @@ class MpvPlayerCore private constructor(
                   // the others' keys.
                   decoderOptions.putAll(initialDecoderEntries(Build.VERSION.SDK_INT))
                   setOption("vd-lavc-o", decoderOptions.compose())
+                  // mpv's default hwdec-codecs leaves out mpeg2video, so
+                  // broadcast MPEG-2 (Live TV at Original quality) would decode
+                  // in software and leave the plane for a GL vo, where 1080i with
+                  // deinterlacing falls behind on Fire TV-class CPUs (#2748). The
+                  // hardware decoder deinterlaces by itself and stays on the
+                  // plane. This is every bundled MediaCodec video wrapper except
+                  // mpeg4, which stays off so Xvid/DivX keep the software path
+                  // from #2602. Without an MPEG-2 decoder, mpv falls back to
+                  // software as before.
+                  setOption("hwdec-codecs", "h264,hevc,mpeg2video,vp8,vp9,av1")
                   if (hardwareDecoding) {
                     // Rationale on DECODER_QUEUE_OPTIONS.
                     for ((name, value) in DECODER_QUEUE_OPTIONS) setOption(name, value)
@@ -1040,6 +1180,8 @@ class MpvPlayerCore private constructor(
               created
             }
           }
+          // libmpv and FFmpeg are loaded by now; see NativeModuleCache.
+          NativeModuleCache.invalidate()
           if (demuxerBudget != null) {
             appliedDemuxerBudget = demuxerBudget
             steadyDemuxerBudget = demuxerBudget
@@ -1063,7 +1205,7 @@ class MpvPlayerCore private constructor(
             // MediaCodec decoder is already created by then (#2065). Nothing
             // is selected yet either, so the track both policies decide for
             // is resolved once here, from mpv's pending selection.
-            p.hookHandler = { name ->
+            hookHandler = { name ->
               if (name == "on_preloaded" && !disposing) {
                 writeOperations.run("preloaded hook") {
                   val track = pendingVideoTrack(p)
@@ -1071,17 +1213,22 @@ class MpvPlayerCore private constructor(
                   applySoftwareDecodePolicy(p, track)
                   applyDecoderOperatingRate(track)
                   applyFramedropPolicy()
+                  track
                 }
+              } else {
+                null
               }
             }
           } else if (!audioOnly) {
             // The plane arbiter that moves a DV P5 file to gpu-next never
             // runs in a software session, and its vo=gpu composites no RPU.
-            p.hookHandler = { name ->
+            hookHandler = { name ->
               if (name == "on_preloaded" && !disposing) {
                 writeOperations.run("preloaded hook") {
-                  applySoftwareDvReshapeOutput(pendingVideoTrack(p))
+                  pendingVideoTrack(p).also { applySoftwareDvReshapeOutput(it) }
                 }
+              } else {
+                null
               }
             }
           }
@@ -1106,18 +1253,8 @@ class MpvPlayerCore private constructor(
             }
           }
 
-          // Start collecting events/properties/logs
-          collectEvents(p)
-          collectPropertyChanges(p)
-          if (!audioOnly) collectMediaFrameRate(p)
-          if (usesMediaCodecVo) {
-            collectVideoDimensions(p)
-            collectShaderState(p)
-            collectHdrToneMapState(p)
-            collectDecoderState(p)
-            collectVoFormatRejection(p)
-          }
-          // Subscribe before registration so the initial property event is kept.
+          // Every observation, the internal ones below and Dart's, reports
+          // through [mpvListener], which the session has had since create.
           readOperations.run("internal property observation") {
             if (!audioOnly) p.observeProperty("container-fps", PropertyFormat.Double)
             if (usesMediaCodecVo) {
@@ -1170,116 +1307,126 @@ class MpvPlayerCore private constructor(
     }
   }
 
-  private fun collectEvents(p: MpvPlayer) {
-    scope.launch(start = CoroutineStart.UNDISPATCHED) {
-      p.eventFlow.collect { event ->
-        when (event) {
-          is MpvEvent.EndFile -> {
-            delegate?.onEvent("end-file", endFileDiagnostics.onEndFile(event))
-          }
-          is MpvEvent.StartFile -> {
-            endFileDiagnostics.onStartFile()
-            // Per file: mpv's verdict was on the previous stream's decode
-            // path, so the next file gets the plane back. A genuine
-            // rejection re-arms it, costing one switch per affected file
-            // instead of the whole session's HDR/10-bit scanout.
-            setGpuVoRequirement(GpuVoPolicy.REASON_FORMAT_REJECTED, false)
-            // The next file's rate arrives with its container-fps; until then
-            // there is nothing to vote for (Media3: Format.NO_VALUE). Whether
-            // it is presented as fields is measured at its first frame.
-            frameRateVote.onMediaFrameRate(0f)
-            frameRateVote.onFieldOutput(false)
-            delegate?.onEvent("start-file", lifecycleData(event.sourceId))
-          }
-          is MpvEvent.FileLoaded -> {
-            delegate?.onEvent("file-loaded", lifecycleData(event.sourceId))
-          }
-          is MpvEvent.PlaybackRestart -> {
-            if (!audioOnly) measureFieldOutput()
-            delegate?.onEvent(
-              "playback-restart",
-              lifecycleData(event.sourceId, event.positionSeconds)
-            )
-          }
-          is MpvEvent.LogMessage -> onMpvLog(event)
-        }
+  /** A lifecycle event or log line, on main through [mpvListener]. */
+  private fun onMpvEvent(event: MpvEvent) {
+    when (event) {
+      is MpvEvent.EndFile -> {
+        decoderHold.onFileEnded()
+        delegate?.onEvent("end-file", endFileDiagnostics.onEndFile(event))
       }
+      is MpvEvent.StartFile -> {
+        decoderHold.onFileStarted()
+        endFileDiagnostics.onStartFile()
+        // Per file: mpv's verdict was on the previous stream's decode
+        // path, so the next file gets the plane back. A genuine
+        // rejection re-arms it, costing one switch per affected file
+        // instead of the whole session's HDR/10-bit scanout.
+        setGpuVoRequirement(GpuVoPolicy.REASON_FORMAT_REJECTED, false)
+        // The next file's rate arrives with its container-fps; until then
+        // there is nothing to vote for (Media3: Format.NO_VALUE). Its
+        // presented rate (fields, inverse telecine) is measured at its
+        // first frame.
+        frameRateVote.onMediaFrameRate(0f)
+        frameRateVote.onPresentedRateFactor(1f)
+        delegate?.onEvent("start-file", lifecycleData(event.sourceId))
+      }
+      is MpvEvent.FileLoaded -> {
+        delegate?.onEvent("file-loaded", lifecycleData(event.sourceId))
+      }
+      is MpvEvent.PlaybackRestart -> {
+        if (!audioOnly) measurePresentedRate()
+        delegate?.onEvent(
+          "playback-restart",
+          lifecycleData(event.sourceId, event.positionSeconds)
+        )
+      }
+      is MpvEvent.LogMessage -> onMpvLog(event)
     }
   }
-
-  private fun collectPropertyChanges(p: MpvPlayer) {
-    scope.launch(start = CoroutineStart.UNDISPATCHED) {
-      p.propertyFlow.collect { change ->
-        // Skip None — matches old MPVLib behavior where eventProperty(name)
-        // with no value was a no-op. Forwarding null would incorrectly clear
-        // track selections (aid/sid) before the file loads.
-        if (change is PropertyChange.None) return@collect
-        val value: Any? = when (change) {
-          is PropertyChange.Flag -> change.value
-          is PropertyChange.Int64 -> change.value
-          is PropertyChange.Double -> change.value
-          is PropertyChange.Str -> change.value
-          is PropertyChange.None -> null
-        }
-        // pause and speed are Dart's core observations (PlayerBase
-        // corePropertyObservations), registered for every backend; a second
-        // native observer here would double every change Dart receives.
-        if (change.name == "pause" && change is PropertyChange.Flag) {
-          cachedPaused = change.value
-          if (change.value) {
-            frameRateVote.onStopped()
-          } else {
-            frameRateVote.onStarted()
-            if (!audioOnly) measureFieldOutput()
-          }
-        }
-        if (change.name == "speed" && change is PropertyChange.Double) {
-          frameRateVote.onPlaybackSpeed(change.value.toFloat())
-          // The decoder was told a rate for the previous speed; at 8x it needs eight times it.
-          if (usesMediaCodecVo) {
-            launchMpvWrite("operating rate") {
-              operatingRate.onSpeed(change.value)?.let { writeOperatingRate(it, "speed ${change.value}") }
-            }
-          }
-        }
-        delegate?.onPropertyChange(change.name, value, change.sourceId)
-      }
-    }
-  }
-
-  /** `container-fps` drives the Surface vote, as `Format.frameRate` does in Media3. */
-  private fun collectMediaFrameRate(p: MpvPlayer) {
-    scope.launch(start = CoroutineStart.UNDISPATCHED) {
-      p.propertyFlow.filterIsInstance<PropertyChange.Double>().filter { it.name == "container-fps" }.collect { change ->
-        frameRateVote.onMediaFrameRate(change.value.toFloat())
-      }
-    }
-  }
-
-  /** The pending [measureFieldOutput] delay; a newer trigger supersedes it. */
-  private var fieldOutputMeasurement: Job? = null
 
   /**
-   * Whether the stream is presented one frame per field ([PresentedFrameRate]),
-   * feeding the Surface vote. `estimated-vf-fps` is mpv's ten-frame average
-   * of shown frames, so it is honest only once playback has run: on the
-   * paused first frame Tegra has no interval yet and MediaTek's first field
-   * pair carries a duplicate timestamp. Hence the read is scheduled a moment
-   * after each playback restart and each unpause, superseding any pending one,
-   * and reads nothing while paused (the vote is cleared then anyway). Observing
-   * the property instead would forward a notification per frame to Dart.
+   * An observed property changed, on main through [mpvListener]: Dart's
+   * observations and the core's own (initialize registers those under the
+   * same conditions their handlers check here).
    */
-  private fun measureFieldOutput() {
-    fieldOutputMeasurement?.cancel()
-    fieldOutputMeasurement = scope.launch {
+  private fun onMpvPropertyChange(change: PropertyChange) {
+    // Skip None — matches old MPVLib behavior where eventProperty(name)
+    // with no value was a no-op. Forwarding null would incorrectly clear
+    // track selections (aid/sid) before the file loads.
+    if (change is PropertyChange.None) return
+    val value: Any? = when (change) {
+      is PropertyChange.Flag -> change.value
+      is PropertyChange.Int64 -> change.value
+      is PropertyChange.Double -> change.value
+      is PropertyChange.Str -> change.value
+      is PropertyChange.None -> null
+    }
+    // pause and speed are Dart's core observations (PlayerBase
+    // corePropertyObservations), registered for every backend; a second
+    // native observer here would double every change Dart receives.
+    if (change.name == "pause" && change is PropertyChange.Flag) {
+      cachedPaused = change.value
+      if (change.value) {
+        frameRateVote.onStopped()
+      } else {
+        frameRateVote.onStarted()
+        if (!audioOnly) measurePresentedRate()
+      }
+    }
+    if (change.name == "speed" && change is PropertyChange.Double) {
+      frameRateVote.onPlaybackSpeed(change.value.toFloat())
+      // The decoder was told a rate for the previous speed; at 8x it needs eight times it.
+      if (usesMediaCodecVo) {
+        launchMpvWrite("operating rate") {
+          operatingRate.onSpeed(change.value)?.let { writeOperatingRate(it, "speed ${change.value}") }
+        }
+      }
+    }
+    delegate?.onPropertyChange(change.name, value, change.sourceId)
+
+    // `container-fps` drives the Surface vote, as `Format.frameRate` does in Media3.
+    if (!audioOnly && change is PropertyChange.Double && change.name == "container-fps") {
+      frameRateVote.onMediaFrameRate(change.value.toFloat())
+    }
+    if (!usesMediaCodecVo) return
+    when (change) {
+      is PropertyChange.Int64 -> onVideoDisplaySize(change.name, change.value.toInt())
+      is PropertyChange.Flag -> if (change.name == "vo-format-rejected" && change.value) onVoFormatRejected()
+      is PropertyChange.Str -> when (change.name) {
+        "hwdec-current" -> onDecoderState(change.value)
+        "glsl-shaders" -> onShaderState(change.value)
+        "video-params/gamma" -> onHdrToneMapState(change.value)
+      }
+      else -> {}
+    }
+  }
+
+  /** The pending [measurePresentedRate] delay; a newer trigger supersedes it. */
+  private var presentedRateMeasurement: Job? = null
+
+  /**
+   * The presented rate over `container-fps` ([PresentedFrameRate]: field
+   * output or inverse telecine), feeding the Surface vote. `estimated-vf-fps`
+   * is mpv's average of shown frames, so it is honest only once playback has
+   * run: on the paused first frame Tegra has no interval yet and MediaTek's
+   * first field pair carries a duplicate timestamp. Hence the read is
+   * scheduled a moment after each playback restart and each unpause,
+   * superseding any pending one, and reads nothing while paused (the vote is
+   * cleared then anyway). Observing the property instead would forward a
+   * notification per frame to Dart.
+   */
+  private fun measurePresentedRate() {
+    presentedRateMeasurement?.cancel()
+    presentedRateMeasurement = scope.launch {
       delay(FIELD_OUTPUT_SETTLE_MS)
       if (disposing || cachedPaused) return@launch
-      val fieldOutput = try {
+      val rateFactor = try {
         readOperations.run("presented rate") {
-          PresentedFrameRate.presentsFields(
+          PresentedFrameRate.rateFactor(
             containerFps = readProperty("container-fps")?.toDoubleOrNull() ?: 0.0,
             estimatedFps = readProperty("estimated-vf-fps")?.toDoubleOrNull(),
-            deinterlaceActive = readProperty("deinterlace-active") == "yes"
+            deinterlaceActive = readProperty("deinterlace-active") == "yes",
+            ivtcActive = readProperty("ivtc-active") == "yes"
           )
         }
       } catch (e: CancellationException) {
@@ -1288,7 +1435,7 @@ class MpvPlayerCore private constructor(
         Log.w(TAG, "Presented rate unreadable", e)
         return@launch
       }
-      if (!disposing) frameRateVote.onFieldOutput(fieldOutput)
+      if (!disposing) frameRateVote.onPresentedRateFactor(rateFactor)
     }
   }
 
@@ -1382,23 +1529,16 @@ class MpvPlayerCore private constructor(
     }
   }
 
-  private fun collectVideoDimensions(p: MpvPlayer) {
-    scope.launch(start = CoroutineStart.UNDISPATCHED) {
-      p.propertyFlow.filterIsInstance<PropertyChange.Int64>().filter { it.name == "dwidth" }.collect { change ->
-        val w = change.value.toInt()
-        if (w > 0 && w != videoDisplayWidth) {
-          videoDisplayWidth = w
-          applyVideoRectLayout()
-        }
+  private fun onVideoDisplaySize(name: String, size: Int) {
+    if (size <= 0) return
+    when (name) {
+      "dwidth" -> if (size != videoDisplayWidth) {
+        videoDisplayWidth = size
+        applyVideoRectLayout()
       }
-    }
-    scope.launch(start = CoroutineStart.UNDISPATCHED) {
-      p.propertyFlow.filterIsInstance<PropertyChange.Int64>().filter { it.name == "dheight" }.collect { change ->
-        val h = change.value.toInt()
-        if (h > 0 && h != videoDisplayHeight) {
-          videoDisplayHeight = h
-          applyVideoRectLayout()
-        }
+      "dheight" -> if (size != videoDisplayHeight) {
+        videoDisplayHeight = size
+        applyVideoRectLayout()
       }
     }
   }
@@ -1515,24 +1655,25 @@ class MpvPlayerCore private constructor(
    * exclusion that sent every P5 file into software decode.
    */
   private suspend fun applyDvReshapePolicy(p: MpvPlayer, track: org.json.JSONObject?) {
-    val profile = track?.takeIf { it.has("dolby-vision-profile") }?.getLong("dolby-vision-profile")
+    val profile = track?.takeIf { it.has("dolby-vision-profile") }?.getInt("dolby-vision-profile")
     pendingDvProfile = profile
     val routing = dvRouting()
     val mode = routing.conversionMode
-    val p5Decoder = GpuVoPolicy.nativeDvDecoder(dvDecoderCandidates, 5L)
+    val p5Decoder = GpuVoPolicy.nativeDvDecoder(dvDecoderCandidates, 5)
     val needs = GpuVoPolicy.needsDvReshaping(
-      dvProfile = profile,
+      doviProfile = profile,
       conversionMode = mode,
-      canPlayP5Natively = p5Decoder != null
+      nativeP5Decoder = p5Decoder != null,
+      softwareDecode = false
     )
-    val options = GpuVoPolicy.dvDecoderOptions(mode, routing.displaySupportsDv, profile, canPlayP5Natively = p5Decoder != null)
+    val options = GpuVoPolicy.dvDecoderOptions(mode, routing.displaySupportsDv, profile, nativeP5Decoder = p5Decoder != null)
     writeDvDecoderOptions(options)
     if (profile != null) {
       // Unconditional for every DV file: this line is what a wrong-colour
       // report is diagnosed from, on the device and in the uploaded log.
       // `decoder` is what FFmpeg would open for this profile were the DV
       // path enabled; `dolby_vision` is whether it is.
-      val fileDecoder = if (profile == 5L) p5Decoder else GpuVoPolicy.nativeDvDecoder(dvDecoderCandidates, profile)
+      val fileDecoder = if (profile == 5) p5Decoder else GpuVoPolicy.nativeDvDecoder(dvDecoderCandidates, profile)
       val decision = "profile=$profile mode=$mode dvOutput=${if (dvOutputAllowed) "yes" else "no"} " +
         "decoder=${fileDecoder ?: "none"} nativeP5Decoder=${p5Decoder ?: "none"} " +
         "displayDv=$displayDvSupported dolby_vision=${if (options.dolbyVision) 1 else 0} dv_p7_mode=${options.p7Mode} " +
@@ -1570,10 +1711,10 @@ class MpvPlayerCore private constructor(
    * decoder or video chain yet, so the vo write rebuilds nothing live.
    */
   private suspend fun applySoftwareDvReshapeOutput(track: org.json.JSONObject?) {
-    val profile = track?.takeIf { it.has("dolby-vision-profile") }?.getLong("dolby-vision-profile")
+    val profile = track?.takeIf { it.has("dolby-vision-profile") }?.getInt("dolby-vision-profile")
     pendingDvProfile = profile
     val mode = dvRouting().conversionMode
-    val needs = GpuVoPolicy.needsDvReshaping(profile, mode, canPlayP5Natively = false)
+    val needs = GpuVoPolicy.needsDvReshaping(profile, mode, nativeP5Decoder = false, softwareDecode = true)
     val output = if (needs) "gpu-next" else initialVideoOutput(hardwareDecoding = false)
     if (output == softwareVideoOutput) return
     val decision = "profile=$profile mode=$mode path=software decode, vo=$output"
@@ -1594,10 +1735,10 @@ class MpvPlayerCore private constructor(
   private suspend fun applySoftwareDecodePolicy(p: MpvPlayer, track: org.json.JSONObject?) {
     val codec = track?.optString("codec")
     val codecProfile = track?.optString("codec-profile")
-    val hardwareHigh10 = MediaCodecQuery.hardwareAvcHigh10Support()
-    val hardwareAv1 = MediaCodecQuery.hardwareAv1Support()
+    val hardwareHigh10 = MediaCodecQuery.hardwareAvcHigh10
+    val hardwareAv1 = MediaCodecQuery.hardwareAv1
     PlayerDebugLog.d(TAG) { "Decode routing: codec=$codec profile=$codecProfile hardwareHigh10=$hardwareHigh10 hardwareAv1=$hardwareAv1" }
-    val needs = GpuVoPolicy.needsSoftwareDecode(codec, codecProfile, hardwareHigh10, hardwareAv1)
+    val needs = needsSoftwareDecode(codec, codecProfile, hardwareHigh10, hardwareAv1)
     if (holdHwdec(p, GpuVoPolicy.REASON_CODEC_SW_DECODE, needs) && needs) {
       Log.i(TAG, "$codec profile=$codecProfile without hardware support: native software decode on the GL vo")
     }
@@ -1690,7 +1831,7 @@ class MpvPlayerCore private constructor(
   private suspend fun applyRenderTier(p: MpvPlayer, glVoActive: Boolean) {
     val wanted = GpuVoPolicy.needsCheapRenderTier(
       glVoActive = glVoActive,
-      textureNorm16 = GlCapabilities.hasTextureNorm16()
+      textureNorm16 = GlCapabilities.textureNorm16
     )
     val transition: Boolean = synchronized(cheapRenderRestore) {
       if (wanted == cheapRenderTierActive) return
@@ -1698,16 +1839,8 @@ class MpvPlayerCore private constructor(
       wanted
     }
     if (transition) {
-      val replaced = LinkedHashMap<String, String>()
-      for ((option, cheap) in GpuVoPolicy.CHEAP_RENDER_OPTIONS) {
-        val current = p.getString(option)
-        if (!GpuVoPolicy.isDefaultRenderOption(option, current)) {
-          PlayerDebugLog.d(TAG) { "Render tier keeps $option=$current (not the mpv default)" }
-          continue
-        }
-        replaced[option] = current!!
-        writeProperty(option, cheap)
-      }
+      val replaced = cheapRenderReplacements { p.getString(it) }
+      for (option in replaced.keys) writeProperty(option, GpuVoPolicy.CHEAP_RENDER_OPTIONS.getValue(option))
       synchronized(cheapRenderRestore) { cheapRenderRestore.putAll(replaced) }
       Log.i(TAG, "Cheap render tier (no GL_EXT_texture_norm16): ${replaced.keys.joinToString(",")}")
     } else {
@@ -1793,7 +1926,7 @@ class MpvPlayerCore private constructor(
   }
 
   private suspend fun needsParkedRebuild(p: MpvPlayer): Boolean {
-    if (!MediaCodecQuery.hardwareAv1IsBigOcean()) return false
+    if (!MediaCodecQuery.bigOceanAv1) return false
     return GpuVoPolicy.needsParkedRebuild(
       codec = p.getString("current-tracks/video/codec"),
       hwdec = p.getString("hwdec"),
@@ -1817,12 +1950,8 @@ class MpvPlayerCore private constructor(
    * decoder, which fails the same way — an endless plane/GL oscillation
    * (#2272).
    */
-  private fun collectVoFormatRejection(p: MpvPlayer) {
-    scope.launch(start = CoroutineStart.UNDISPATCHED) {
-      p.propertyFlow.filterIsInstance<PropertyChange.Flag>()
-        .filter { it.name == "vo-format-rejected" && it.value }
-        .collect { setGpuVoRequirement(GpuVoPolicy.REASON_FORMAT_REJECTED, true) }
-    }
+  private fun onVoFormatRejected() {
+    setGpuVoRequirement(GpuVoPolicy.REASON_FORMAT_REJECTED, true)
   }
 
   /**
@@ -1834,14 +1963,10 @@ class MpvPlayerCore private constructor(
    * because the fallback is decided per file, inside mpv. The reason is per
    * file too — the next file's hook re-evaluates it.
    */
-  private fun collectDecoderState(p: MpvPlayer) {
-    scope.launch(start = CoroutineStart.UNDISPATCHED) {
-      p.propertyFlow.filterIsInstance<PropertyChange.Str>().filter { it.name == "hwdec-current" }.collect { change ->
-        if (GpuVoPolicy.softwareDecodeNeedsDvReshaping(pendingDvProfile, dvRouting().conversionMode, change.value)) {
-          Log.i(TAG, "DV P5 decoded in software (hwdec-current=${change.value}): gpu-next reshaping")
-          setGpuVoRequirement(GpuVoPolicy.REASON_DV_RESHAPE, true)
-        }
-      }
+  private fun onDecoderState(hwdecCurrent: String) {
+    if (GpuVoPolicy.softwareDecodeNeedsDvReshaping(pendingDvProfile, dvRouting().conversionMode, hwdecCurrent)) {
+      Log.i(TAG, "DV P5 decoded in software (hwdec-current=$hwdecCurrent): gpu-next reshaping")
+      setGpuVoRequirement(GpuVoPolicy.REASON_DV_RESHAPE, true)
     }
   }
 
@@ -1850,36 +1975,28 @@ class MpvPlayerCore private constructor(
    * natively so Dart's `glsl-shaders` change-list writes (ShaderService,
    * ambient lighting) switch the session live, without a channel contract.
    */
-  private fun collectShaderState(p: MpvPlayer) {
-    scope.launch(start = CoroutineStart.UNDISPATCHED) {
-      p.propertyFlow.filterIsInstance<PropertyChange.Str>().filter { it.name == "glsl-shaders" }.collect { change ->
-        setGpuVoRequirement(GpuVoPolicy.REASON_SHADERS, change.value.isNotBlank())
-      }
-    }
+  private fun onShaderState(shaders: String) {
+    setGpuVoRequirement(GpuVoPolicy.REASON_SHADERS, shaders.isNotBlank())
   }
 
   /**
    * Observed from video-params so the reason follows per-file transfer
-   * changes. Why it matters: [GpuVoPolicy.needsHdrToneMapping].
+   * changes. Why it matters: [GpuVoPolicy.needsToneMapping].
    */
-  private fun collectHdrToneMapState(p: MpvPlayer) {
-    scope.launch(start = CoroutineStart.UNDISPATCHED) {
-      p.propertyFlow.filterIsInstance<PropertyChange.Str>().filter { it.name == "video-params/gamma" }.collect { change ->
-        videoGamma = change.value
-        refreshHdrToneMapRequirement()
-      }
-    }
+  private fun onHdrToneMapState(gamma: String) {
+    videoGamma = gamma
+    refreshHdrToneMapRequirement()
   }
 
   private fun refreshHdrToneMapRequirement() {
     synchronized(hdrToneMapLock) {
-      val needsToneMap = GpuVoPolicy.needsHdrToneMapping(
+      val needsToneMap = needsToneMapping(
         gamma = videoGamma,
-        displaySupportsHdr = displayHdrSupported,
+        displayHdrSupported = displayHdrSupported,
         conversionMode = hdrSdrConversionMode,
         sdkInt = Build.VERSION.SDK_INT
       )
-      setGpuVoRequirement(GpuVoPolicy.REASON_HDR_SDR, needsToneMap)
+      setGpuVoRequirement(GpuVoPolicy.REASON_TONE_MAP, needsToneMap)
     }
   }
 
@@ -2426,7 +2543,13 @@ class MpvPlayerCore private constructor(
     }
   }
 
+  /**
+   * The library's calls block and never look at the coroutine, so the
+   * cancellation point is here: once its operation is cancelled (an overrun
+   * `on_preloaded` hook, a condemned session) no later write of it reaches mpv.
+   */
   private suspend fun writeProperty(name: String, value: String) {
+    currentCoroutineContext().ensureActive()
     val writer = propertyWriterOverride
     if (writer != null) {
       writer(name, value)
@@ -2438,6 +2561,7 @@ class MpvPlayerCore private constructor(
 
   /** The command counterpart of [writeProperty], on the same write operation. */
   private suspend fun runCommand(vararg args: String) {
+    currentCoroutineContext().ensureActive()
     val runner = commandRunnerOverride
     if (runner != null) {
       runner(arrayOf(*args))
@@ -2531,12 +2655,12 @@ class MpvPlayerCore private constructor(
     submitMpvOperation(writeOperations, "DV conversion", { onComplete?.invoke(it) }) {
       val profile = pendingDvProfile
       val routing = dvRouting()
-      val p5Decoder = GpuVoPolicy.nativeDvDecoder(dvDecoderCandidates, 5L)
+      val p5Decoder = GpuVoPolicy.nativeDvDecoder(dvDecoderCandidates, 5)
       val options = GpuVoPolicy.dvDecoderOptions(
         routing.conversionMode,
         routing.displaySupportsDv,
         profile,
-        canPlayP5Natively = p5Decoder != null
+        nativeP5Decoder = p5Decoder != null
       )
       Log.i(
         TAG,
@@ -2549,7 +2673,7 @@ class MpvPlayerCore private constructor(
 
   /**
    * `hdr-sdr-conversion` is an app-level property: who converts HDR for a
-   * display without HDR output ([GpuVoPolicy.needsHdrToneMapping]). It
+   * display without HDR output ([GpuVoPolicy.needsToneMapping]). It
    * re-decides the live file at once, so a change mid-file moves it between
    * the plane and the GL vo like any other routing reason.
    */
@@ -2903,6 +3027,7 @@ class MpvPlayerCore private constructor(
       "container-fps" to readProperty("container-fps"),
       "estimated-vf-fps" to readProperty("estimated-vf-fps"),
       "deinterlace-active" to readProperty("deinterlace-active"),
+      "ivtc-active" to readProperty("ivtc-active"),
       "video-bitrate" to readProperty("video-bitrate"),
       "hwdec-current" to readProperty("hwdec-current"),
       "audio-codec-name" to readProperty("audio-codec-name"),
@@ -2946,11 +3071,11 @@ class MpvPlayerCore private constructor(
       // What decodes a Dolby Vision file (#2534): the DV decoder, the bare
       // base layer, or gpu-next reshaping. The track's profile is the
       // bitstream's DOVI record, so a file without one reports nothing.
-      val dvProfile = readProperty("current-tracks/video/dolby-vision-profile")?.toLongOrNull()
+      val dvProfile = readProperty("current-tracks/video/dolby-vision-profile")?.toIntOrNull()
       if (dvProfile != null) {
         stats["dvSourceProfile"] = dvProfile
         stats["dvRoute"] = GpuVoPolicy.dvRoute(
-          dvProfile = dvProfile,
+          doviProfile = dvProfile,
           decoderOptions = readProperty("vd-lavc-o"),
           candidates = dvDecoderCandidates,
           hwdecCurrent = stats["hwdec-current"] as String?,
@@ -3091,6 +3216,53 @@ class MpvPlayerCore private constructor(
     frameRateManager?.clearVideoFrameRate(hdrActive = hdrDisplayActive)
   }
 
+  /**
+   * Holds the next opened file's video decoder at `on_preloaded` until Dart
+   * calls [releaseVideoDecoderHold] with [token], so the display can be
+   * switched for the file before its decoder exists ([DecoderHold], #2998).
+   * [onPreloaded] gets the file's demuxed video format (`fps`, `width`,
+   * `height`) once the hold is in place, or null when nothing was held: no
+   * video track, a failed or superseded open, a disposed core.
+   */
+  fun holdVideoDecoder(token: Long, onPreloaded: (Map<String, Any?>?) -> Unit) {
+    if (audioOnly || disposing) {
+      onPreloaded(null)
+      return
+    }
+    decoderHold.arm(token) { format -> runOnMain { onPreloaded(format) } }
+  }
+
+  /** Lets the decoder [holdVideoDecoder] held for [token] open, or cancels that hold. */
+  fun releaseVideoDecoderHold(token: Long) {
+    decoderHold.release(token)
+  }
+
+  /**
+   * The held side of [holdVideoDecoder], inside this file's `on_preloaded`:
+   * reports the pending [track]'s demuxed rate and size, then waits for
+   * Dart's release, at most [DECODER_HOLD_TIMEOUT_MS]. A file without a
+   * video track has nothing to switch for; the hook's finally answers that.
+   */
+  private suspend fun holdDecoderForDisplay(hold: DecoderHold.Hold, track: org.json.JSONObject?) {
+    if (track == null || disposing) return
+    val fps = track.optDouble("demux-fps").takeIf { it.isFinite() && it > 0.0 }
+    val width = track.optInt("demux-w")
+    val height = track.optInt("demux-h")
+    hold.answer(mapOf("fps" to fps, "width" to width, "height" to height))
+    val started = SystemClock.elapsedRealtime()
+    val released = withTimeoutOrNull(DECODER_HOLD_TIMEOUT_MS) { hold.released.await() } != null
+    val heldMs = SystemClock.elapsedRealtime() - started
+    emitLog(
+      "info",
+      "framerate",
+      if (released) {
+        "video decoder held ${heldMs}ms for the display (fps=$fps, ${width}x$height)"
+      } else {
+        "display not ready after ${heldMs}ms; opening the video decoder"
+      }
+    )
+  }
+
   // Cleanup
 
   // A dispose that arrives while an earlier one is still tearing down joins
@@ -3162,6 +3334,8 @@ class MpvPlayerCore private constructor(
     // Media3 onStopped: the Surface outlives this core until native teardown.
     frameRateVote.onStopped()
     frameRateVote.onSurfaceChanged(null)
+    // An armed hold's Dart waiter is answered; a held hook lets go.
+    decoderHold.close()
 
     // Cancel all coroutines
     scope.cancel()

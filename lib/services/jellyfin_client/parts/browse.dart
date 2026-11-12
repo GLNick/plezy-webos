@@ -504,6 +504,48 @@ mixin _JellyfinBrowseMethods on _JellyfinClientInternals {
     return LibraryFilterResult(filters: filters, cachedValues: values);
   }
 
+  /// `/Genres` scoped to the library and to the item type its Browse tab
+  /// lists: unscoped, a show library also reports genres no show carries
+  /// (2 of 32 on Jellyfin 10.11), and those tiles would filter Browse down to
+  /// nothing. A genre is selected by name, as in
+  /// [fetchLibraryFiltersWithValues]. Emby serves the same route (see
+  /// [_fetchFilterFacet]).
+  @override
+  Future<List<LibraryGenre>> fetchLibraryGenres(String libraryId, {required MediaKind libraryKind}) async {
+    final rows = await _fetchItemsArray('/Genres', {
+      'UserId': connection.userId,
+      'ParentId': libraryId,
+      'Recursive': 'true',
+      'IncludeItemTypes': ?switch (libraryKind) {
+        MediaKind.movie => 'Movie',
+        MediaKind.show => 'Series',
+        _ => null,
+      },
+      'SortBy': 'SortName',
+      'EnableImageTypes': 'Primary',
+      'ImageTypeLimit': '1',
+      'EnableTotalRecordCount': 'false',
+    });
+    final genres = <LibraryGenre>[];
+    for (final row in rows) {
+      final id = row['Id'];
+      final name = row['Name'];
+      if (name is! String || name.isEmpty) continue;
+      final imageTags = row['ImageTags'];
+      final primaryTag = imageTags is Map<String, dynamic> ? imageTags['Primary'] : null;
+      genres.add(
+        LibraryGenre(
+          title: name,
+          filterValue: name,
+          artPath: id is String && id.isNotEmpty && primaryTag is String && primaryTag.isNotEmpty
+              ? '/Items/${_segment(id)}/Images/Primary?tag=${Uri.encodeComponent(primaryTag)}'
+              : null,
+        ),
+      );
+    }
+    return genres;
+  }
+
   Future<Map<String, dynamic>?> _safeFetchFilterPayload(String libraryId) async {
     if (!dialect.supportsAggregateItemFilters) {
       // Emby 4.9.5 returns 404 for `/Items/Filters`; its three facet routes below are verified 200.
@@ -703,6 +745,25 @@ mixin _JellyfinBrowseMethods on _JellyfinClientInternals {
       '/Items/${_segment(libraryId)}/Refresh',
       queryParameters: {
         'metadataRefreshMode': 'FullRefresh',
+        'imageRefreshMode': 'Default',
+        'replaceAllMetadata': 'false',
+        'replaceAllImages': 'false',
+      },
+    );
+    throwIfHttpError(response);
+  }
+
+  /// Mirrors jellyfin-web's refresh dialog in "Scan for new and updated
+  /// files" mode: `Default` refresh modes walk the folder for new, changed,
+  /// and removed files and fill only missing metadata, unlike the
+  /// `FullRefresh` sent by [refreshLibraryMetadata].
+  @override
+  Future<void> scanLibrary(String libraryId) async {
+    final response = await _http.post(
+      '/Items/${_segment(libraryId)}/Refresh',
+      queryParameters: {
+        'Recursive': 'true',
+        'metadataRefreshMode': 'Default',
         'imageRefreshMode': 'Default',
         'replaceAllMetadata': 'false',
         'replaceAllImages': 'false',
@@ -1208,6 +1269,25 @@ mixin _JellyfinBrowseMethods on _JellyfinClientInternals {
     return _fetchAllPlayableDescendants(parentId, includeItemTypes: _playableFolderDescendantTypes, abort: abort);
   }
 
+  /// Up to [limit] playable videos from library [libraryId], in an order the
+  /// server randomizes (`SortBy=Random`). One request: a random order is not
+  /// stable across pages, so paging would repeat some items and skip others.
+  Future<List<MediaItem>> fetchRandomLibraryVideos(
+    String libraryId, {
+    required int limit,
+    AbortController? abort,
+  }) async {
+    final page = await _fetchPlayableDescendantsPage(
+      libraryId,
+      start: 0,
+      size: limit,
+      abort: abort,
+      includeItemTypes: _playableFolderDescendantTypes,
+      randomOrder: true,
+    );
+    return page.items;
+  }
+
   Future<List<MediaItem>> _fetchAllPlayableDescendants(
     String parentId, {
     required String includeItemTypes,
@@ -1251,6 +1331,7 @@ mixin _JellyfinBrowseMethods on _JellyfinClientInternals {
     AbortController? abort,
     required String includeItemTypes,
     bool byAlbumArtist = false,
+    bool randomOrder = false,
   }) async {
     final offset = start ?? 0;
     final pageSize = size ?? _pagedListPageSize;
@@ -1263,6 +1344,7 @@ mixin _JellyfinBrowseMethods on _JellyfinClientInternals {
         if (byAlbumArtist) 'AlbumArtistIds': parentId else 'ParentId': parentId,
         'Recursive': 'true',
         'IncludeItemTypes': includeItemTypes,
+        if (randomOrder) 'SortBy': 'Random',
         'StartIndex': offset.toString(),
         'Limit': pageSize.toString(),
         'Fields': _episodeRowFields,
@@ -1416,6 +1498,27 @@ mixin _JellyfinBrowseMethods on _JellyfinClientInternals {
               ...jellyfinImageQueryParameters,
             }, abort: abort),
           ]
+        : library.kind == MediaKind.movie && dialect.searchesMovieLibrariesByMediaType
+        // Emby answers `IncludeItemTypes=Movie` searches in seconds on large
+        // libraries; `MediaTypes=Video` returns the same rows in milliseconds.
+        ? <Future<List<Map<String, dynamic>>>>[
+            _fetchItemsArray('/Items', {
+              'userId': connection.userId,
+              'SearchTerm': query,
+              'Recursive': 'true',
+              'Limit': limit.toString(),
+              'MediaTypes': 'Video',
+              'ParentId': library.id,
+              'Fields': _browseFields,
+              'EnableTotalRecordCount': 'false',
+              ...jellyfinImageQueryParameters,
+            }, abort: abort).then(
+              (rows) => [
+                for (final row in rows)
+                  if (row['Type'] == 'Movie') row,
+              ],
+            ),
+          ]
         : <Future<List<Map<String, dynamic>>>>[
             _fetchItemsArray('/Items', {
               'userId': connection.userId,
@@ -1496,9 +1599,14 @@ mixin _JellyfinBrowseMethods on _JellyfinClientInternals {
       if (visible.length < titleLibraries.length) checkedLibraries = visible;
     }
 
-    final rows = await _fetchItemsArray('/Persons', {
+    // Emby's `/Persons` takes 20+ s on a large server, past the search
+    // deadline; its `/Items` index answers the same query in milliseconds
+    // (see [MediaBrowserDialect.searchesPeopleThroughItems]).
+    final viaItems = dialect.searchesPeopleThroughItems;
+    final rows = await _fetchItemsArray(viaItems ? '/Items' : '/Persons', {
       'userId': connection.userId,
       'SearchTerm': query,
+      if (viaItems) ...{'IncludeItemTypes': 'Person', 'Recursive': 'true'},
       'PersonTypes': 'Actor,Director',
       'Limit': '$_peopleSearchCandidateLimit',
       'EnableImageTypes': 'Primary',
@@ -1889,7 +1997,7 @@ mixin _JellyfinBrowseMethods on _JellyfinClientInternals {
     // When the caller knows the library kind, skip NextUp for movie libraries;
     // Jellyfin can otherwise spend time scanning TV state only to return [].
     return _playbackHubSet(
-      parentId: libraryId,
+      library: (id: libraryId, name: libraryName),
       idPrefix: 'library.$libraryId',
       limit: limit,
       includePlaybackHubs: includePlaybackHubs,
@@ -1905,7 +2013,7 @@ mixin _JellyfinBrowseMethods on _JellyfinClientInternals {
   /// Latest + Continue Watching + Next Up row set shared by the home and
   /// per-library surfaces. Both scopes issue the same three requests in the
   /// same order and synthesise the same three rows; they differ only in
-  /// [parentId], the row identifier prefix, the titles, and the transport
+  /// [library], the row identifier prefix, the titles, and the transport
   /// policy. The Latest request fires before the [includePlaybackHubs]
   /// short-circuit so callers that only want Recently Added still get it in
   /// one round-trip.
@@ -1918,10 +2026,12 @@ mixin _JellyfinBrowseMethods on _JellyfinClientInternals {
     required String continueTitle,
     required String nextUpTitle,
     required String recentTitle,
-    String? parentId,
+    ({String id, String name})? library,
     String? latestItemTypes,
     HubFetchDiagnostics? diagnostics,
   }) async {
+    final parentId = library?.id;
+    final mapItem = library == null ? _mapItem : _libraryRowMapper(library.id, library.name);
     final latestFuture = _safeFetchItemsArray(
       _latestItemsPath,
       {
@@ -1937,7 +2047,7 @@ mixin _JellyfinBrowseMethods on _JellyfinClientInternals {
 
     MediaHub hub(String suffix, String title, String type, List<Map<String, dynamic>> items) =>
         JellyfinMappers.syntheticHub(
-          mapItem: _mapItem,
+          mapItem: mapItem,
           identifier: '$idPrefix.$suffix',
           title: title,
           type: type,
@@ -1996,6 +2106,13 @@ mixin _JellyfinBrowseMethods on _JellyfinClientInternals {
     ].where((h) => h.items.isNotEmpty).toList();
   }
 
+  /// Maps rows fetched with `ParentId` = [libraryId] and stamps that library
+  /// on them. A MediaBrowser item DTO never names its library (see
+  /// [JellyfinMappers.mediaItem]), so without the stamp home cannot order
+  /// these rows by the user's library order or tell which library they hide.
+  MediaItem? Function(Map<String, dynamic>) _libraryRowMapper(String libraryId, String libraryName) =>
+      (json) => _mapItem(json)?.copyWith(libraryId: libraryId, libraryTitle: libraryName);
+
   /// Music-library hub set, mirroring the Jellyfin web client's music
   /// "Suggestions" tab. `/Users/{userId}/Items/Latest` natively groups a
   /// music library's new items into albums; the row carries the
@@ -2009,6 +2126,7 @@ mixin _JellyfinBrowseMethods on _JellyfinClientInternals {
     required bool includePlaybackHubs,
     HubFetchDiagnostics? diagnostics,
   }) async {
+    final mapItem = _libraryRowMapper(libraryId, libraryName);
     final latestFuture = _safeFetchItemsArray(
       _latestItemsPath,
       _latestAlbumsQuery(limit: limit, parentId: libraryId),
@@ -2017,7 +2135,7 @@ mixin _JellyfinBrowseMethods on _JellyfinClientInternals {
     );
 
     MediaHub latestAlbumsHub(List<Map<String, dynamic>> items) => JellyfinMappers.syntheticHub(
-      mapItem: _mapItem,
+      mapItem: mapItem,
       identifier: 'library.$libraryId.latestalbums',
       title: t.discover.latestAlbumsIn(library: libraryName),
       type: 'album',
@@ -2049,7 +2167,7 @@ mixin _JellyfinBrowseMethods on _JellyfinClientInternals {
     return [
       latestAlbumsHub(results.first),
       JellyfinMappers.syntheticHub(
-        mapItem: _mapItem,
+        mapItem: mapItem,
         identifier: 'library.$libraryId.recentlyplayed',
         title: t.discover.recentlyPlayedIn(library: libraryName),
         type: 'track',
@@ -2059,7 +2177,7 @@ mixin _JellyfinBrowseMethods on _JellyfinClientInternals {
         serverName: serverName,
       ),
       JellyfinMappers.syntheticHub(
-        mapItem: _mapItem,
+        mapItem: mapItem,
         identifier: 'library.$libraryId.mostplayed',
         title: t.discover.mostPlayedIn(library: libraryName),
         type: 'track',

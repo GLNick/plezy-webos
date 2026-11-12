@@ -29,6 +29,7 @@ import 'package:plezy/services/multi_server_manager.dart';
 import 'package:plezy/services/plex_api_cache.dart';
 import 'package:plezy/services/settings_service.dart';
 import 'package:plezy/utils/external_ids.dart';
+import 'package:plezy/utils/media_hub_ordering.dart';
 import 'package:plezy/utils/media_server_http_client.dart';
 import 'package:plezy/utils/media_server_timeouts.dart';
 
@@ -1189,6 +1190,107 @@ void main() {
       expect(result.items.map((item) => item.id), ['movie-uhd']);
     });
 
+    /// A 1080p and a 4K library holding the same movie (tmdb 777), plus an
+    /// unrelated movie that stands alone.
+    void registerDuplicateMovieLibraries() {
+      registerContinueWatchingPlex(
+        [
+          {
+            'ratingKey': 'movie-hd',
+            'type': 'movie',
+            'title': 'Shared Movie',
+            'guid': 'plex://movie/shared-movie',
+            'lastViewedAt': 300,
+            'librarySectionID': 1,
+            'librarySectionTitle': 'Movies',
+            'Media': [
+              {'id': 1, 'videoResolution': '1080', 'videoCodec': 'h264', 'container': 'mkv'},
+            ],
+          },
+          {'ratingKey': 'movie-alone', 'type': 'movie', 'title': 'Lonely Movie', 'lastViewedAt': 200},
+          {
+            'ratingKey': 'movie-uhd',
+            'type': 'movie',
+            'title': 'Shared Movie',
+            'guid': 'plex://movie/shared-movie',
+            'lastViewedAt': 100,
+            'librarySectionID': 2,
+            'librarySectionTitle': 'Movies 4K',
+            'Media': [
+              {'id': 2, 'videoResolution': '4k', 'videoCodec': 'hevc', 'container': 'mkv'},
+            ],
+          },
+        ],
+        metadata: (ratingKey) {
+          if (ratingKey != 'movie-hd' && ratingKey != 'movie-uhd') return null;
+          return {
+            'ratingKey': ratingKey,
+            'type': 'movie',
+            'title': 'Shared Movie',
+            'Guid': [
+              {'id': 'tmdb://777'},
+            ],
+          };
+        },
+      );
+    }
+
+    test('getOnDeckFromAllServers keeps every copy behind a merged row, best first', () async {
+      registerDuplicateMovieLibraries();
+
+      final result = await service.getOnDeckFromAllServers(limit: 10);
+
+      expect(result.items.map((item) => item.id), ['movie-hd', 'movie-alone']);
+      expect(result.copies.keys, ['plex-1:movie-hd']);
+      expect(result.copies['plex-1:movie-hd']!.map((copy) => copy.id), ['movie-uhd', 'movie-hd']);
+    });
+
+    test('mergeContinueWatching regroups the copies a row absorbed with fresh rows', () async {
+      registerDuplicateMovieLibraries();
+      final settings = await SettingsService.getInstance();
+      await settings.write(SettingsService.localLastPlayedAt, {'plex-1:movie-uhd': 999999});
+      final first = await service.getOnDeckFromAllServers(limit: 10);
+      expect(first.items.map((item) => item.id), ['movie-uhd', 'movie-alone']);
+
+      // A newly-online server answers with an unrelated row. The 1080p copy
+      // left the list when the 4K copy took the row, but it must come back
+      // through the regrouped row, not vanish from the picker.
+      final merged = await service.mergeContinueWatching(
+        first.items,
+        [
+          testMediaItem(
+            id: 'fresh',
+            backend: MediaBackend.plex,
+            kind: MediaKind.movie,
+            title: 'Fresh',
+            serverId: 'plex-2',
+          ),
+        ],
+        existingCopies: first.copies,
+        freshCopies: const {},
+      );
+
+      expect(merged.items.map((item) => item.id), ['movie-uhd', 'movie-alone', 'fresh']);
+      expect(merged.copies['plex-1:movie-uhd']!.map((copy) => copy.id), ['movie-uhd', 'movie-hd']);
+    });
+
+    test('mergeContinueWatching keeps the copies a newly-online server deduplicated', () async {
+      // The duplicate pair arrives from a server that came online after the
+      // first load: its fetch already folded movie-uhd into movie-hd's row.
+      registerDuplicateMovieLibraries();
+      final fresh = await service.getOnDeckFromAllServers(limit: 10);
+
+      final merged = await service.mergeContinueWatching(
+        const [],
+        fresh.items,
+        existingCopies: const {},
+        freshCopies: fresh.copies,
+      );
+
+      expect(merged.items.map((item) => item.id), ['movie-hd', 'movie-alone']);
+      expect(merged.copies['plex-1:movie-hd']!.map((copy) => copy.id), ['movie-uhd', 'movie-hd']);
+    });
+
     test('getOnDeckFromAllServers keeps duplicate titles without stable ids', () async {
       registerContinueWatchingPlex(
         [
@@ -1432,6 +1534,59 @@ void main() {
       );
       expect(movieLatest.queryParameters['Fields'], 'Overview,DateCreated');
       expect(movieLatest.queryParameters.containsKey('EnableUserData'), isFalse);
+    });
+
+    test('MediaBrowser per-library home rows follow the user library order across servers (#2669)', () async {
+      Future<http.Response> respond(http.Request req) async {
+        if (req.url.path == '/Users/user-1/Views') {
+          return _json({
+            'Items': [
+              {'Id': 'movies', 'Name': 'Movies', 'CollectionType': 'movies'},
+              {'Id': 'music', 'Name': 'Music', 'CollectionType': 'music'},
+            ],
+          });
+        }
+        if (req.url.path == '/Users/user-1/Items/Latest') {
+          final parentId = req.url.queryParameters['ParentId'];
+          return _json({
+            'Items': [
+              {'Id': 'latest-$parentId', 'Type': parentId == 'music' ? 'MusicAlbum' : 'Movie', 'Name': 'Latest'},
+            ],
+          });
+        }
+        return http.Response('unexpected request', 500);
+      }
+
+      final jellyfin = testJellyfinClient(
+        connection: testJellyfinConnection(machineId: 'jellyfin'),
+        handler: respond,
+      );
+      final emby = testEmbyClient(
+        connection: testEmbyConnection(machineId: 'emby'),
+        handler: respond,
+      );
+      addTearDown(jellyfin.close);
+      addTearDown(emby.close);
+      manager.debugRegisterJellyfinClientForTesting(jellyfin);
+      manager.debugRegisterJellyfinClientForTesting(emby);
+
+      final hubs = (await service.getHubsFromAllServers(useGlobalHubs: true, includePlaybackHubs: false)).hubs;
+      MediaLibrary library(String serverId, String id) =>
+          MediaLibrary(id: id, backend: MediaBackend.jellyfin, title: id, serverId: ServerId(serverId));
+      // Interleaved across servers and against each server's own view order.
+      sortMediaHubsByLibraryOrder(hubs, [
+        library('emby', 'music'),
+        library('jellyfin', 'movies'),
+        library('emby', 'movies'),
+        library('jellyfin', 'music'),
+      ]);
+
+      expect(hubs.map((hub) => '${hub.serverId} ${hub.identifier}'), [
+        'emby library.music.latestalbums',
+        'jellyfin library.movies.recent',
+        'emby library.movies.recent',
+        'jellyfin library.music.latestalbums',
+      ]);
     });
 
     test('music library recommendations retain recently and most-played rows', () async {

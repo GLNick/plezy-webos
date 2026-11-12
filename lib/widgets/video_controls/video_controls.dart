@@ -14,7 +14,6 @@ import 'package:flutter/gestures.dart'
         PointerUpEvent,
         kDoubleTapTimeout;
 import 'package:flutter/material.dart';
-import 'package:plezy/widgets/app_icon.dart';
 import 'package:material_symbols_icons/symbols.dart';
 import 'package:rate_limiter/rate_limiter.dart';
 import 'package:flutter/services.dart'
@@ -80,6 +79,7 @@ import 'widgets/linux_keep_alive.dart';
 import 'widgets/mobile_edge_adjustment_indicator.dart';
 import 'widgets/mobile_skip_zones.dart';
 import 'widgets/skip_marker_button.dart';
+import 'widgets/screen_lock_overlay.dart';
 import 'widgets/track_chapter_controls.dart';
 import 'widgets/performance_overlay/performance_overlay.dart';
 import '../rasterized_gradient.dart';
@@ -297,6 +297,11 @@ class PlayerNavigationCoordinator {
   final PlayerChromeController chromeController;
   final bool Function() isPromptOpen;
   final VoidCallback dismissPrompt;
+
+  /// Whether the open prompt stands for a finished item (Play Next, which
+  /// only shows with playback parked at the end). Back then leaves the
+  /// player in one press instead of uncovering the dead last frame (#2686).
+  final bool Function() _backLeavesPrompt;
   final bool Function() isChromePresented;
   final Future<bool> Function() exitFullscreenIfActive;
   final bool Function() _physicalEscapeExitsFullscreen;
@@ -315,11 +320,13 @@ class PlayerNavigationCoordinator {
     required this.exitFullscreenIfActive,
     bool Function()? physicalEscapeExitsFullscreen,
     bool Function()? exitPlayerBeforeChrome,
+    bool Function()? backLeavesPrompt,
     required this.exitPlayer,
     required this.navigateHome,
     bool Function()? isActive,
   }) : _physicalEscapeExitsFullscreen = physicalEscapeExitsFullscreen ?? _alwaysTrue,
        _exitPlayerBeforeChrome = exitPlayerBeforeChrome ?? _alwaysFalse,
+       _backLeavesPrompt = backLeavesPrompt ?? _alwaysFalse,
        isActive = isActive ?? _alwaysActive;
 
   static bool _alwaysActive() => true;
@@ -332,7 +339,14 @@ class PlayerNavigationCoordinator {
       return;
     }
     if (isPromptOpen()) {
-      dismissPrompt();
+      // A physical Escape is Back unless it owns fullscreen, the same split
+      // [resolvePlayerBackDisposition] makes.
+      final isBack = navigationKey == PlayerNavigationKey.back || !_physicalEscapeExitsFullscreen();
+      if (isBack && _backLeavesPrompt()) {
+        exitPlayer();
+      } else {
+        dismissPrompt();
+      }
       return;
     }
     if (navigationKey == PlayerNavigationKey.back && _exitPlayerBeforeChrome()) {
@@ -783,8 +797,6 @@ class _PlexVideoControlsState extends State<PlexVideoControls>
   int get _subtitleSyncOffset => PlayerSyncOffsets.of(widget.player).subtitleMs;
   bool get _isRotationLocked => _settings.read(SettingsService.rotationLocked);
   bool _isScreenLocked = false; // Touch lock during playback
-  bool _showLockIcon = false; // Whether to show the lock overlay icon
-  Timer? _lockIconTimer;
   bool get _clickVideoTogglesPlayback => _settings.read(SettingsService.clickVideoTogglesPlayback);
   bool get _showChapterMarkersOnTimeline => _settings.read(SettingsService.showChapterMarkersOnTimeline);
   int _trafficLightVisibilityGeneration = 0;
@@ -1086,7 +1098,6 @@ class _PlexVideoControlsState extends State<PlexVideoControls>
     _feedbackTimer?.cancel();
     _feedbackHideTimer?.cancel();
     _accumulatedSkipSeconds.dispose();
-    _lockIconTimer?.cancel();
     _edgeAdjustmentIndicatorHideTimer?.cancel();
     _edgeAdjustmentIndicatorClearTimer?.cancel();
     _edgeAdjustmentLifecycleListener?.dispose();
@@ -1483,46 +1494,16 @@ class _PlexVideoControlsState extends State<PlexVideoControls>
                           opacity: performanceOverlayVisible ? 1.0 : 0.0,
                           duration: const Duration(milliseconds: 200),
                           child: IgnorePointer(
-                            child: PlayerPerformanceOverlay(player: widget.player, active: performanceOverlayVisible),
-                          ),
-                        ),
-                      ),
-                    ),
-                  if (_isScreenLocked)
-                    Positioned.fill(
-                      child: GestureDetector(
-                        behavior: HitTestBehavior.opaque,
-                        onTap: () {
-                          setState(() => _showLockIcon = true);
-                          _startLockIconHideTimer();
-                        },
-                        onLongPress: _unlockScreen,
-                        child: AnimatedOpacity(
-                          opacity: _showLockIcon ? 1.0 : 0.0,
-                          duration: const Duration(milliseconds: 200),
-                          child: Center(
-                            child: Container(
-                              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 14),
-                              decoration: BoxDecoration(
-                                color: Colors.black.withValues(alpha: 0.6),
-                                borderRadius: const BorderRadius.all(Radius.circular(28)),
-                              ),
-                              child: Row(
-                                mainAxisSize: .min,
-                                children: [
-                                  const AppIcon(Symbols.lock_rounded, fill: 1, color: Colors.white, size: 20),
-                                  const SizedBox(width: 8),
-                                  Text(
-                                    t.videoControls.longPressToUnlock,
-                                    style: const TextStyle(color: Colors.white, fontSize: 14, fontWeight: .w500),
-                                  ),
-                                ],
-                              ),
+                            child: PlayerPerformanceOverlay(
+                              player: widget.player,
+                              active: performanceOverlayVisible,
+                              isTranscoding: widget.isLive || widget.isOfflinePlayback ? null : widget.isTranscoding,
                             ),
                           ),
                         ),
                       ),
                     ),
+                  if (_isScreenLocked) Positioned.fill(child: ScreenLockOverlay(onUnlock: _unlockScreen)),
                 ],
               ),
             ),

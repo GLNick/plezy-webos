@@ -367,8 +367,8 @@ class PlayerAndroid extends PlayerBase {
       () => invoke('setAudioNormalization', {'enabled': enabled}),
       () => _audioNormalizationEnabled == enabled,
     );
-    // Keep the mpv audiotrack-normalize property flowing through setMpvProperty so
-    // the plugin's pendingMpvProperties replay normalizes if exo falls back to mpv.
+    // Keep mpv's normalization `af` flowing through setMpvProperty so the
+    // plugin's pendingMpvProperties replay normalizes if exo falls back to mpv.
     await super.setAudioNormalization(enabled);
   }
 
@@ -438,6 +438,7 @@ class PlayerAndroid extends PlayerBase {
         return fps?.toString();
       case 'estimated-vf-fps':
       case 'deinterlace-active':
+      case 'ivtc-active':
         final stats = await getStats();
         return stats[name]?.toString();
       case 'width':

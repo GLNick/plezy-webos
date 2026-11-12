@@ -18,6 +18,7 @@ import 'package:flutter/foundation.dart';
 import 'package:shared_preferences_foundation/shared_preferences_foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/material.dart' as material show ThemeMode;
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:material_symbols_icons/symbols.dart';
 import 'package:flutter/services.dart';
 import 'package:window_manager/window_manager.dart';
@@ -35,6 +36,7 @@ import 'profiles/profile.dart';
 import 'profiles/profile_connection_cleanup.dart';
 import 'profiles/profile_connection_registry.dart';
 import 'profiles/profile_registry.dart';
+import 'profiles/profile_activation.dart';
 import 'profiles/profile_selection_policy.dart';
 import 'models/external_player_models.dart';
 import 'mixins/mounted_set_state_mixin.dart';
@@ -54,6 +56,7 @@ import 'services/settings_service.dart';
 import 'services/agent_control_service.dart';
 import 'widgets/agent_control_scope.dart';
 import 'widgets/settings_builder.dart';
+import 'utils/iphone_duo.dart';
 import 'utils/platform_detector.dart';
 import 'utils/pointer_scroll_axis.dart';
 import 'services/apple_tv_remote_touch_service.dart';
@@ -61,13 +64,16 @@ import 'services/discord_rpc_service.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:path/path.dart' as p;
 import 'services/image_cache_service.dart';
+import 'services/app_icon/app_icon_service.dart';
 import 'services/gamepad_service.dart';
 import 'services/trackers/tracker_coordinator.dart';
 import 'services/playback_coordinator.dart';
+import 'services/deep_links/deep_link_service.dart';
 import 'providers/account_preferences_controller.dart';
 import 'services/account_preferences_repository.dart';
 import 'providers/multi_server_provider.dart';
 import 'providers/theme_provider.dart';
+import 'services/supporter/supporter_service.dart';
 import 'providers/download_provider.dart';
 import 'providers/offline_mode_provider.dart';
 import 'providers/offline_watch_provider.dart';
@@ -100,6 +106,7 @@ import 'utils/watch_state_notifier.dart';
 import 'i18n/app_locale_utils.dart';
 import 'i18n/strings.g.dart';
 import 'widgets/app_icon.dart';
+import 'widgets/app_system_ui_style.dart';
 import 'focus/input_mode_tracker.dart';
 import 'focus/key_event_utils.dart';
 import 'package:intl/date_symbol_data_local.dart';
@@ -512,6 +519,9 @@ void _registerTvosPlatformPlugins() {
   }
   if (!Platform.isIOS) return; // tvOS reports as iOS via dart:io.
   SharedPreferencesFoundation.registerWith();
+  // in_app_purchase needs no entry here: `InAppPurchase.instance` registers
+  // its StoreKit platform on first use (tvOS reports iOS), which
+  // SupporterService reaches only in SUPPORTER_MODE=iap builds.
 }
 
 void main() {
@@ -530,6 +540,7 @@ void main() {
   // target in Flutter's tool), so register platform stores manually for
   // the plugins we use.
   _registerTvosPlatformPlugins();
+  _registerAppLicenses();
   _bootstrapApp();
 }
 
@@ -556,11 +567,11 @@ void _bootstrapApp() {
       ),
       discard: (dependencies) => dependencies.appDatabase.close(),
       onCommitted: (dependencies) => _startNonessentialInitialization(dependencies.settings),
-      lightTheme: monoTheme(dark: false),
-      darkTheme: monoTheme(dark: true),
+      lightTheme: monoTheme(MonoPalette.light),
+      darkTheme: monoTheme(MonoPalette.dark),
       resolveTheme: _resolveStartupTheme,
       // Android runs the Flutter surface in transparent mode over a window
-      // whose background MainActivity already restored, so the loading frame
+      // whose background PlezyActivity already restored, so the loading frame
       // can leave the launch screen on display. Every other platform composites
       // opaquely and has nothing behind Flutter worth showing.
       transparentWhileLoading: Platform.isAndroid,
@@ -578,14 +589,22 @@ void _bootstrapApp() {
 /// detection has to come first: the `themeMode` default is TV-aware and
 /// [TvDetectionService.isTVSync] answers false until its singleton exists,
 /// which would make a fresh Android TV install resolve the light theme.
+///
+/// A stored Supporter perk is gated by the cached entitlement, the same rule
+/// [ThemeProvider] applies, so a locked perk never flashes and an unlocked one
+/// never flashes the fallback. That fallback is the same TV-aware default.
 Future<StartupThemeResolution> _resolveStartupTheme() async {
   final settings = await SettingsService.getInstance();
   await TvDetectionService.getInstance(forceTv: settings.read(SettingsService.forceTvMode));
-  final mode = settings.read(SettingsService.themeMode);
+  final palette = ThemeProvider.resolveStored(settings, unlocked: SupporterService.startupUnlocked(settings)).palette;
   ThemeProvider.applyWindowChromeBrightness(
-    ThemeProvider.isDarkFor(mode, WidgetsBinding.instance.platformDispatcher.platformBrightness),
+    ThemeProvider.isDarkFor(palette, WidgetsBinding.instance.platformDispatcher.platformBrightness),
   );
-  return (themeMode: ThemeProvider.materialThemeModeFor(mode), darkTheme: ThemeProvider.darkThemeFor(mode));
+  return (
+    themeMode: ThemeProvider.materialThemeModeFor(palette),
+    lightTheme: ThemeProvider.lightThemeFor(palette),
+    darkTheme: ThemeProvider.darkThemeFor(palette),
+  );
 }
 
 /// Wraps [step] so a failure names the gate phase it came from.
@@ -996,7 +1015,7 @@ Future<void> showRepairOutcomeDialog(
 }
 
 /// Theme the startup frames adopt once the persisted preference is readable.
-typedef StartupThemeResolution = ({material.ThemeMode themeMode, ThemeData darkTheme});
+typedef StartupThemeResolution = ({material.ThemeMode themeMode, ThemeData lightTheme, ThemeData darkTheme});
 
 /// Mounts a Flutter-owned startup frame before invoking the asynchronous
 /// initialization gate. The generic seam keeps frame ordering, failure, and
@@ -1052,7 +1071,7 @@ class StartupBootstrap<T> extends StatefulWidget {
   /// background, so the loading frame must not cover it.
   ///
   /// True only on Android, where `TransparencyMode.transparent` lets the
-  /// window decor show through and `MainActivity` has already restored the
+  /// window decor show through and `PlezyActivity` has already restored the
   /// persisted launch colour.
   final bool transparentWhileLoading;
 
@@ -1207,9 +1226,13 @@ class _StartupBootstrapState<T> extends State<StartupBootstrap<T>> {
         builder: (context) => InputModeTracker(
           child: MaterialApp(
             debugShowCheckedModeBanner: false,
-            theme: widget.lightTheme,
+            locale: TranslationProvider.of(context).locale.localizationsLocale,
+            supportedLocales: supportedLocalizationsLocales,
+            localizationsDelegates: GlobalMaterialLocalizations.delegates,
+            theme: resolved?.lightTheme ?? widget.lightTheme,
             darkTheme: resolved?.darkTheme ?? widget.darkTheme,
             themeMode: resolved?.themeMode ?? widget.themeMode,
+            builder: (context, child) => AppSystemUiStyle(child: child!),
             home: Builder(builder: _buildBootstrapHome),
           ),
         ),
@@ -1428,7 +1451,6 @@ void _startNonessentialInitialization(SettingsService settings) {
     unawaited(AndroidExitDiagnostics.logPreviousExit());
   }
 
-  bestEffort('Shader licenses', _registerShaderLicenses);
   // The startup-gate application can precede the engine's first metrics
   // report, which reads as a 1.0 display budget; re-derive it now that the
   // tree is mounted and the display is known.
@@ -1510,6 +1532,31 @@ FutureOr<SentryEvent?> _beforeSend(SentryEvent event, Hint _) {
     if (exceptions.any(shouldDrop)) return null;
   }
   return event;
+}
+
+/// Registers notices for code Plezy ships outside its pub packages.
+///
+/// Runs in [main], before `SentryFlutter.init`, and must stay ahead of every
+/// [LicenseRegistry.licenses] reader. Sentry's event enricher walks the
+/// registry for the first captured event, and the registry iterates its live
+/// collector list across each collector's await: a collector added while that
+/// walk is suspended throws `ConcurrentModificationError` on the next step and
+/// the event never finishes enriching. The collectors are lazy, so registering
+/// them here loads nothing until a reader runs.
+void _registerAppLicenses() {
+  _registerShaderLicenses();
+  // iOS covers iPhone, iPad, and Apple TV; mpv-build links SpatialAudioBridge
+  // into libmpv there and not on macOS.
+  if (Platform.isIOS) _registerSpatialAudioLicenses();
+}
+
+/// Notices for the SpatialAudioBridge core compiled into libmpv, verbatim from
+/// the source commit mpv-build pins (versions.json `spatialaudiobridge`).
+void _registerSpatialAudioLicenses() {
+  LicenseRegistry.addLicense(() async* {
+    final notices = await rootBundle.loadString('assets/licenses/SpatialAudioBridge.txt');
+    yield LicenseEntryWithLineBreaks(const ['SpatialAudioBridge'], notices);
+  });
 }
 
 void _registerShaderLicenses() {
@@ -1594,6 +1641,32 @@ Future<String?> _rootPinPrompt(Profile profile, {String? errorMessage}) {
   return showPinEntryDialog(ctx, profile.displayName, errorMessage: errorMessage);
 }
 
+/// Applies the profile a deep link names once the app is running, from the
+/// root navigator so the PIN dialog and the switch outlive the profile
+/// session they replace.
+class _RootDeepLinkProfileHost implements DeepLinkProfileHost {
+  const _RootDeepLinkProfileHost();
+
+  BuildContext? get _context => rootNavigatorKey.currentState?.overlay?.context;
+
+  @override
+  List<Profile> get profiles => _context?.read<ActiveProfileProvider>().profiles ?? const [];
+
+  @override
+  String? get activeProfileId => _context?.read<ActiveProfileProvider>().activeId;
+
+  @override
+  Future<bool> switchTo(Profile profile) async {
+    // Playback leaves first so its final progress report still carries the
+    // outgoing profile's token.
+    final coordinator = PlaybackCoordinator.instance;
+    if (!await coordinator.stopVideoAndExit()) await coordinator.shutdownVideo();
+    final context = _context;
+    if (context == null || !context.mounted) return false;
+    return switchProfileFromUi(context, profile);
+  }
+}
+
 class MainApp extends StatefulWidget {
   final SettingsService settings;
   final StorageService storage;
@@ -1619,6 +1692,9 @@ class _MainAppState extends State<MainApp> with WidgetsBindingObserver {
   late final AppDatabase _appDatabase;
   late final DownloadManagerService _downloadManager;
   late final OfflineWatchSyncService _offlineWatchSyncService;
+  late final ConnectionRegistry _connections;
+  late final ProfileConnectionRegistry _profileConnections;
+  late final PlexHomeService _plexHomeService;
   late final AppLifecycleListener _appLifecycleListener;
   StreamSubscription<WatchStateEvent>? _watchStateSubscription;
 
@@ -1628,7 +1704,9 @@ class _MainAppState extends State<MainApp> with WidgetsBindingObserver {
   OfflineModeProvider? _connectivitySyncProvider;
   Timer? _syncDebounce;
   final Set<String> _pendingSyncKeys = <String>{};
-  bool _isAutoDeleteRunning = false;
+
+  /// The [_autoDeleteAndSync] pass in flight; exit teardown awaits it.
+  Completer<void>? _autoDeleteRun;
   bool _lastConnectivityWasWifi = false;
   bool _lastConnectivityHadNetwork = true;
   Future<void>? _shutdownFuture;
@@ -1675,6 +1753,22 @@ class _MainAppState extends State<MainApp> with WidgetsBindingObserver {
     );
 
     _offlineWatchSyncService = OfflineWatchSyncService(database: _appDatabase, serverManager: _serverManager);
+
+    _connections = ConnectionRegistry(_appDatabase);
+    _profileConnections = ProfileConnectionRegistry(_appDatabase);
+    // Owned here rather than by its provider: exit teardown must settle it
+    // before the database closes. Hydrate the disk cache eagerly for profile
+    // resolution; live refresh starts only after MainScreen has settled the
+    // startup offline decision.
+    _plexHomeService = PlexHomeService(
+      connections: _connections,
+      profileConnections: _profileConnections,
+      storage: widget.storage,
+    );
+    unawaited(_plexHomeService.hydrate());
+
+    // The first read registers the link channel handler.
+    DeepLinkService.instance.host = const _RootDeepLinkProfileHost();
 
     _appLifecycleListener = AppLifecycleListener(
       onExitRequested: () async {
@@ -1737,6 +1831,14 @@ class _MainAppState extends State<MainApp> with WidgetsBindingObserver {
       closeArtworkHttpClientGracefully(),
     ], eagerError: false);
     await ManagedHttpClient.closeAllGracefully();
+    // Settle everything that can still query the database. A query issued
+    // after close throws from whichever timer or callback started it, and
+    // those keep firing if the process outlives this teardown (#2651, #3012).
+    await Future.wait([
+      _plexHomeService.dispose(),
+      _offlineWatchSyncService.stopBackgroundSync(),
+      ?_autoDeleteRun?.future,
+    ]);
     await _appDatabase.close();
   }
 
@@ -1751,6 +1853,7 @@ class _MainAppState extends State<MainApp> with WidgetsBindingObserver {
       _libraryEventService.dispose();
       _downloadManager.dispose();
       _serverManager.dispose();
+      unawaited(_plexHomeService.dispose());
     }
     WidgetsBinding.instance.removeObserver(this);
     super.dispose();
@@ -1864,11 +1967,14 @@ class _MainAppState extends State<MainApp> with WidgetsBindingObserver {
     List<String>? targetKeys,
     bool force = false,
   }) async {
-    if (_isAutoDeleteRunning) {
+    // Exit teardown awaits the pass in flight before closing the database; a
+    // pass started after that would query a closed database (#3012).
+    if (_shutdownFuture != null) return;
+    if (_autoDeleteRun != null) {
       if (targetKeys != null) _pendingSyncKeys.addAll(targetKeys);
       return;
     }
-    _isAutoDeleteRunning = true;
+    final run = _autoDeleteRun = Completer<void>();
     try {
       await downloadProvider.refreshMetadataFromCache();
       final activeGlobalKey = VideoPlayerScreenState.activeGlobalKey;
@@ -1899,7 +2005,8 @@ class _MainAppState extends State<MainApp> with WidgetsBindingObserver {
         }
       }
     } finally {
-      _isAutoDeleteRunning = false;
+      _autoDeleteRun = null;
+      run.complete();
       if (_pendingSyncKeys.isNotEmpty) {
         final queuedKeys = _pendingSyncKeys.toList();
         _pendingSyncKeys.clear();
@@ -1979,24 +2086,10 @@ class _MainAppState extends State<MainApp> with WidgetsBindingObserver {
         Provider<SettingsService>.value(value: widget.settings),
         Provider<StorageService>.value(value: widget.storage),
         Provider<AppDatabase>.value(value: _appDatabase),
-        Provider<ConnectionRegistry>(create: (_) => ConnectionRegistry(_appDatabase)),
+        Provider<ConnectionRegistry>.value(value: _connections),
         Provider<ProfileRegistry>(create: (_) => ProfileRegistry(_appDatabase)),
-        Provider<ProfileConnectionRegistry>(create: (_) => ProfileConnectionRegistry(_appDatabase)),
-        Provider<PlexHomeService>(
-          create: (context) {
-            // Hydrate the disk cache eagerly for profile resolution. Live
-            // refresh is started only after MainScreen has settled the
-            // startup offline decision.
-            final service = PlexHomeService(
-              connections: context.read<ConnectionRegistry>(),
-              profileConnections: context.read<ProfileConnectionRegistry>(),
-              storage: context.read<StorageService>(),
-            );
-            unawaited(service.hydrate());
-            return service;
-          },
-          dispose: (_, s) => s.dispose(),
-        ),
+        Provider<ProfileConnectionRegistry>.value(value: _profileConnections),
+        Provider<PlexHomeService>.value(value: _plexHomeService),
         ChangeNotifierProvider<ActiveProfileProvider>(
           create: (context) {
             final provider = ActiveProfileProvider(
@@ -2050,7 +2143,10 @@ class _MainAppState extends State<MainApp> with WidgetsBindingObserver {
               serverManager: _serverManager,
               multiServerProvider: context.read<MultiServerProvider>(),
               pinPrompt: _rootPinPrompt,
-              shouldDeferInitialBind: (_) async {
+              shouldDeferInitialBind: (profile) async {
+                // A launch link that names another profile replaces this bind.
+                final linkProfileId = DeepLinkService.instance.startupProfileId;
+                if (linkProfileId != null) return profile.id != linkProfileId;
                 final settings = await SettingsService.getInstance();
                 return activeProfile.requiresSelectionOnOpen(settings);
               },
@@ -2152,10 +2248,29 @@ class _MainAppState extends State<MainApp> with WidgetsBindingObserver {
         ProxyProvider<AccountPreferencesController, AccountPreferencesRepository>(
           update: (_, controller, _) => controller.repository,
         ),
-        ChangeNotifierProvider(create: (context) => ThemeProvider()),
+        // App-global: a Supporter purchase belongs to the store account on this
+        // device, not to a profile.
+        ChangeNotifierProvider(
+          create: (context) {
+            final supporter = SupporterService();
+            unawaited(supporter.init());
+            return supporter;
+          },
+        ),
+        ChangeNotifierProvider(create: (context) => ThemeProvider(supporter: context.read<SupporterService>())),
         // Shader presets are app-global — deliberately outside the
         // profile-scoped session in ProfileSessionScreen.
         ChangeNotifierProvider(create: (context) => ShaderProvider()),
+        // Created eagerly: it must be listening when a Supporter refund is
+        // confirmed, so the default app icon comes back even with Settings closed.
+        ChangeNotifierProvider(
+          lazy: false,
+          create: (context) {
+            final appIcons = AppIconService(supporter: context.read<SupporterService>());
+            unawaited(appIcons.refresh());
+            return appIcons;
+          },
+        ),
       ],
       child: _AppShell(databaseRecoveryOutcome: widget.databaseRecoveryOutcome),
     );
@@ -2196,6 +2311,12 @@ class _AppShell extends StatelessWidget {
                   child: MaterialApp(
                     title: t.app.title,
                     debugShowCheckedModeBanner: false,
+                    // The app language, not Flutter's en-US default: every
+                    // Text inherits it as the locale that selects CJK glyph
+                    // forms, and Material's own strings follow it.
+                    locale: TranslationProvider.of(context).locale.localizationsLocale,
+                    supportedLocales: supportedLocalizationsLocales,
+                    localizationsDelegates: GlobalMaterialLocalizations.delegates,
                     theme: themeProvider.lightTheme,
                     darkTheme: themeProvider.darkTheme,
                     themeMode: themeProvider.materialThemeMode,
@@ -2267,10 +2388,14 @@ class _AppShell extends StatelessWidget {
 /// below would leave global snackbars at the car's native density while the rest of the
 /// interface grew.
 Widget rootShell(Widget? child) {
-  return FormFactorScale(
-    child: ScaffoldMessenger(
-      key: rootScaffoldMessengerKey,
-      child: Scaffold(backgroundColor: Colors.transparent, body: child),
+  return AppSystemUiStyle(
+    child: IphoneDuoScope(
+      child: FormFactorScale(
+        child: ScaffoldMessenger(
+          key: rootScaffoldMessengerKey,
+          child: Scaffold(backgroundColor: Colors.transparent, body: child),
+        ),
+      ),
     ),
   );
 }
@@ -2395,14 +2520,19 @@ class _SetupScreenState extends State<SetupScreen> with MountedSetStateMixin {
     setStateIfMounted(() => _statusMessage = message);
   }
 
-  Future<void> _enterOfflineMode() async {
+  Future<void> _enterOfflineMode({bool initialPromptHandled = false}) async {
     if (_enteringOffline) return;
     _enteringOffline = true;
     _setStatus(t.common.startingOfflineMode);
     await context.read<DownloadProvider>().ensureInitialized();
     if (!mounted) return;
     AndroidExitDiagnostics.markStartupPhase(AndroidStartupPhase.mainScreen);
-    unawaited(Navigator.pushReplacement(context, fadeRoute(const ProfileSessionScreen(isOfflineMode: true))));
+    unawaited(
+      Navigator.pushReplacement(
+        context,
+        fadeRoute(ProfileSessionScreen(isOfflineMode: true, initialPromptHandled: initialPromptHandled)),
+      ),
+    );
   }
 
   Future<void> _loadSavedCredentials() async {
@@ -2568,60 +2698,87 @@ class _SetupScreenState extends State<SetupScreen> with MountedSetStateMixin {
     // checkmarks fill in even while the user is choosing a profile.
     _bindServerStatusListener();
 
-    // Start only after the active profile snapshot is hydrated. Without a
-    // network the initial bind stays PIN-free: plex.tv cannot verify a PIN,
-    // and the capped wait below would navigate out from under the dialog.
-    AndroidExitDiagnostics.markStartupPhase(AndroidStartupPhase.bindingStarted);
-    binder.start(allowInitialPinPrompt: hasNetwork);
-
-    // If "prompt for profile on launch" is on (or no profile is selected
-    // yet), surface the picker BEFORE waiting for the previously-active
-    // profile's bind to settle — otherwise the user sees the splash fully
-    // connect before the prompt arrives. The picker's own `_switchTo` calls
-    // `awaitBindingSettle` after activation, so by the time it pops, the
-    // chosen profile's bind is settled.
-    final settings = await SettingsService.getInstance();
+    // A launch link that names a profile chooses it, in place of both the
+    // previously active profile (the binder defers that bind, see
+    // `shouldDeferInitialBind`) and the profile picker. A protected profile
+    // still asks for its PIN; backing out drops the link and, since nothing
+    // is bound, shows the picker.
+    final deepLinks = DeepLinkService.instance;
+    await deepLinks.fetchInitialLink();
     if (!mounted) return;
-    final hasNoActive = activeProfile.active == null && activeProfile.profiles.isNotEmpty;
-    final shouldPrompt = hasNoActive || activeProfile.requiresSelectionOnOpen(settings);
+    final linkProfile = deepLinks.claimStartupProfile(activeProfile.profiles);
+    final linkSwitches = linkProfile != null && linkProfile.id != activeProfile.activeId;
+    var linkApplied = linkProfile != null && !linkSwitches;
+    try {
+      // Start only after the active profile snapshot is hydrated. Without a
+      // network the initial bind stays PIN-free: plex.tv cannot verify a PIN,
+      // and the capped wait below would navigate out from under the dialog.
+      AndroidExitDiagnostics.markStartupPhase(AndroidStartupPhase.bindingStarted);
+      binder.start(allowInitialPinPrompt: hasNetwork);
 
-    var bindingSucceeded = activeProfile.lastBindingSucceeded;
-    if (shouldPrompt) {
-      await Navigator.of(
-        context,
-      ).push(MaterialPageRoute(builder: (_) => const ProfileSwitchScreen(requireSelection: true)));
+      if (linkSwitches) {
+        // Waits for the profile's bind, like the picker's switch.
+        linkApplied = await switchProfileFromUi(context, linkProfile);
+        if (!mounted) return;
+      }
+
+      // If "prompt for profile on launch" is on (or no profile is selected
+      // yet), surface the picker BEFORE waiting for the previously-active
+      // profile's bind to settle — otherwise the user sees the splash fully
+      // connect before the prompt arrives. The picker's own `_switchTo` calls
+      // `awaitBindingSettle` after activation, so by the time it pops, the
+      // chosen profile's bind is settled.
+      final settings = await SettingsService.getInstance();
       if (!mounted) return;
-      bindingSucceeded = activeProfile.active != null && activeProfile.lastBindingSucceeded;
-    } else {
-      // Now wait for the binder to settle. This is the media-server client
-      // race: per-server status flips on the splash list as each client comes
-      // online, and we don't push MainScreen until they're all done (success
-      // or fail). Eliminates the "Failed to load discover content: No servers
-      // available" race the old eager-navigate flow caused. Without a network
-      // the wait is capped so airplane mode reaches the offline shell fast.
-      bindingSucceeded = await awaitStartupBindSettle(activeProfile.awaitBindingSettle(), hasNetwork: hasNetwork);
+      final hasNoActive = activeProfile.active == null && activeProfile.profiles.isNotEmpty;
+      final shouldPrompt =
+          !linkApplied && (linkSwitches || hasNoActive || activeProfile.requiresSelectionOnOpen(settings));
+
+      var bindingSucceeded = activeProfile.lastBindingSucceeded;
+      if (shouldPrompt) {
+        await Navigator.of(
+          context,
+        ).push(MaterialPageRoute(builder: (_) => const ProfileSwitchScreen(requireSelection: true)));
+        if (!mounted) return;
+        bindingSucceeded = activeProfile.active != null && activeProfile.lastBindingSucceeded;
+      } else if (!linkSwitches) {
+        // Now wait for the binder to settle. This is the media-server client
+        // race: per-server status flips on the splash list as each client comes
+        // online, and we don't push MainScreen until they're all done (success
+        // or fail). Eliminates the "Failed to load discover content: No servers
+        // available" race the old eager-navigate flow caused. Without a network
+        // the wait is capped so airplane mode reaches the offline shell fast.
+        bindingSucceeded = await awaitStartupBindSettle(activeProfile.awaitBindingSettle(), hasNetwork: hasNetwork);
+        if (!mounted) return;
+      }
+      AndroidExitDiagnostics.markStartupPhase(AndroidStartupPhase.bindingSettled);
+
+      if (shouldEnterOfflineModeAfterStartupBind(
+        bindingSucceeded: bindingSucceeded,
+        hasOnlineServers: _serverManagerFromContext().onlineServerIds.isNotEmpty,
+      )) {
+        appLogger.w('Setup: no servers online after startup bind; starting offline mode');
+        await _enterOfflineMode(initialPromptHandled: linkApplied);
+        return;
+      }
+
+      // Repopulate metadata for downloaded items now that per-backend caches
+      // are resolvable (the Connections row + live MediaBrowser client are in
+      // place). Without this the downloads list and sync-rule titles render
+      // empty until something forces a later refresh.
+      await downloadProvider.refreshMetadataFromCache();
       if (!mounted) return;
+
+      AndroidExitDiagnostics.markStartupPhase(AndroidStartupPhase.mainScreen);
+      unawaited(
+        Navigator.pushReplacement(
+          context,
+          fadeRoute(ProfileSessionScreen(initialPromptHandled: shouldPrompt || linkApplied)),
+        ),
+      );
+    } finally {
+      deepLinks.settleStartupProfile(applied: linkApplied);
     }
-    AndroidExitDiagnostics.markStartupPhase(AndroidStartupPhase.bindingSettled);
-
-    if (shouldEnterOfflineModeAfterStartupBind(
-      bindingSucceeded: bindingSucceeded,
-      hasOnlineServers: _serverManagerFromContext().onlineServerIds.isNotEmpty,
-    )) {
-      appLogger.w('Setup: no servers online after startup bind; starting offline mode');
-      await _enterOfflineMode();
-      return;
-    }
-
-    // Repopulate metadata for downloaded items now that per-backend caches
-    // are resolvable (the Connections row + live MediaBrowser client are in
-    // place). Without this the downloads list and sync-rule titles render
-    // empty until something forces a later refresh.
-    await downloadProvider.refreshMetadataFromCache();
-    if (!mounted) return;
-
-    AndroidExitDiagnostics.markStartupPhase(AndroidStartupPhase.mainScreen);
-    unawaited(Navigator.pushReplacement(context, fadeRoute(ProfileSessionScreen(initialPromptHandled: shouldPrompt))));
   }
 
   /// Wire per-server status updates from [MultiServerManager] into the
