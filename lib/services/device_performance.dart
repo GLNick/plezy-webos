@@ -161,6 +161,11 @@ class DevicePerformance {
   static void applyImageCacheBudget() {
     _detectDisplayBudget();
     final cache = PaintingBinding.instance.imageCache;
+    if (Platform.isLinux) {
+      cache.maximumSize = 2500;
+      cache.maximumSizeBytes = 250 << 20; // 250MB on webOS
+      return;
+    }
     if (PlatformDetector.isDesktopOS()) {
       cache.maximumSize = 1000;
       cache.maximumSizeBytes = 150 << 20; // 150MB

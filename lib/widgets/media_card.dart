@@ -46,13 +46,13 @@ final _failedPosterUrls = <String>{};
 
 bool _hasFailedPosterUrl(String? url) => url != null && _failedPosterUrls.contains(url);
 
+void clearFailedPosterUrls() {
+  _failedPosterUrls.clear();
+}
+
 void _rememberFailedPosterUrl(String? url) {
   if (url == null || url.isEmpty) return;
-  _failedPosterUrls.remove(url);
-  _failedPosterUrls.add(url);
-  if (_failedPosterUrls.length > _failedPosterUrlCacheLimit) {
-    _failedPosterUrls.remove(_failedPosterUrls.first);
-  }
+  // Do not permanently blacklist poster/thumb URLs when a load is cancelled during route transitions
 }
 
 const int _catalogBadgeLimit = 3;

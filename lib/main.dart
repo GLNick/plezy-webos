@@ -1,3 +1,4 @@
+import 'widgets/optimized_media_image.dart' show triggerWebosPostPlayerImageRefresh;
 import 'dart:ui' as ui;
 import 'package:flutter/rendering.dart';
 import 'package:flutter/gestures.dart';
@@ -216,7 +217,10 @@ Future<bool> _triggerInternalWebosBack() async {
   if (now.difference(_lastWebosBackHandledAt).inMilliseconds < 180) return true;
   _lastWebosBackHandledAt = now;
 
-  if (BackKeyCoordinator.consumeIfHandled()) return true;
+  if (BackKeyCoordinator.consumeIfHandled()) {
+    _refreshVisibleImagesAfterPlayerExit();
+    return true;
+  }
 
   // 1. Falls der Root-Navigator (z.B. VideoPlayerScreen, Dialoge, Sheets) poppen kann:
   final rootNavigator = rootNavigatorKey.currentState;
@@ -294,6 +298,7 @@ void _clearFrozenWebosMouseHover() {
 /// alle bereits gemounteten Episoden-Thumbnails auf der Startseite sofort neu gezeichnet werden,
 /// ohne dass man erst nach rechts und wieder zurück scrollen muss.
 void _refreshVisibleImagesAfterPlayerExit() {
+  triggerWebosPostPlayerImageRefresh();
   void refreshNow() {
     final root = WidgetsBinding.instance.rootElement;
     if (root == null) return;
@@ -1909,6 +1914,7 @@ class _MainAppState extends State<MainApp> with WidgetsBindingObserver {
   }
 
   void _evictImageCaches() {
+    if (Platform.isLinux) return;
     PaintingBinding.instance.imageCache.clear();
     PaintingBinding.instance.imageCache.clearLiveImages();
   }

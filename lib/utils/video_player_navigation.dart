@@ -1,3 +1,4 @@
+import '../widgets/optimized_media_image.dart' show triggerWebosPostPlayerImageRefresh;
 import 'dart:async';
 
 import '../media/ids.dart';
@@ -95,6 +96,7 @@ class VideoPlayerRoute extends PageRouteBuilder<bool> {
   void dispose() {
     final owner = navigator;
     if (owner != null && identical(_activeRoutes[owner], this)) _activeRoutes[owner] = null;
+    triggerWebosPostPlayerImageRefresh();
     super.dispose();
   }
 }

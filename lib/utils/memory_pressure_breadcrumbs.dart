@@ -37,6 +37,7 @@ mixin MemoryPressureBreadcrumbs on PaintingBinding {
 
   @override
   void handleMemoryPressure() {
+    if (Platform.isLinux) return;
     final now = clock.now();
     final last = _lastMemoryPressureBreadcrumb;
     // A wall clock set backwards must not silence the breadcrumb until it

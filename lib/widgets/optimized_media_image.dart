@@ -17,6 +17,20 @@ import '../utils/tone_mapped_logo_image.dart';
 /// Tracks recent image load failures to log a periodic summary instead of
 /// spamming per-image. Resets after [_logInterval] so recurring issues
 /// remain visible.
+/// Bumped whenever VideoPlayerRoute / Video disposes so any offstage-mounted
+/// OptimizedMediaImage that had a pending/cancelled stream immediately re-resolves.
+final ValueNotifier<int> webosPlayerExitImageEpoch = ValueNotifier<int>(0);
+
+void triggerWebosPostPlayerImageRefresh() {
+  webosPlayerExitImageEpoch.value++;
+  Future<void>.delayed(const Duration(milliseconds: 100), () {
+    webosPlayerExitImageEpoch.value++;
+  });
+  Future<void>.delayed(const Duration(milliseconds: 350), () {
+    webosPlayerExitImageEpoch.value++;
+  });
+}
+
 int _imageFailureCount = 0;
 DateTime _lastFailureLog = DateTime.now();
 const _logInterval = Duration(seconds: 10);
@@ -743,32 +757,73 @@ class _FadeInNetworkImage extends StatefulWidget {
 }
 
 class _FadeInNetworkImageState extends State<_FadeInNetworkImage> with SingleTickerProviderStateMixin {
-  // Starts fully visible so synchronously-available (memory-cached) images
-  // paint immediately; dropped to 0 only once we know the load is async.
   late final AnimationController _opacity = AnimationController(vsync: this, duration: widget.duration, value: 1);
   bool _sawFirstFrame = false;
   bool _placeholderVisible = false;
+  bool _hadError = false;
+  int _retryGeneration = 0;
+
+  @override
+  void initState() {
+    super.initState();
+    webosPlayerExitImageEpoch.addListener(_onPlayerExitEpoch);
+  }
+
+  void _onPlayerExitEpoch() {
+    if (!mounted) return;
+    if (!_sawFirstFrame || _hadError || _placeholderVisible || _opacity.value < 1.0) {
+      if (_sawFirstFrame && !_hadError) {
+        // Frame already decoded while offstage, ensure full opacity & hide placeholder!
+        _opacity.value = 1.0;
+        if (_placeholderVisible) {
+          setState(() => _placeholderVisible = false);
+        }
+      } else {
+        // Image stream had not produced a frame or errored while offstage: evict stale key & force fresh resolve
+        PaintingBinding.instance.imageCache.evict(widget.image);
+        setState(() {
+          _hadError = false;
+          _sawFirstFrame = false;
+          _placeholderVisible = false;
+          _opacity.value = 1.0;
+          _retryGeneration++;
+        });
+      }
+    }
+  }
 
   @override
   void didUpdateWidget(covariant _FadeInNetworkImage oldWidget) {
     super.didUpdateWidget(oldWidget);
     if (widget.image != oldWidget.image) {
-      // New stream: rearm so an async swap fades again (a memory-cached swap
-      // stays at full opacity via the wasSynchronouslyLoaded path).
       _sawFirstFrame = false;
       _placeholderVisible = false;
+      _hadError = false;
       _opacity.value = 1;
     }
   }
 
   @override
   void dispose() {
+    webosPlayerExitImageEpoch.removeListener(_onPlayerExitEpoch);
     _opacity.dispose();
     super.dispose();
   }
 
-  void _startFade() {
+  void _startFade(BuildContext context) {
     _sawFirstFrame = true;
+    _hadError = false;
+    if (!TickerMode.of(context) || Platform.isLinux) {
+      // On webOS TV or when built offstage under VideoPlayerRoute, snap directly to 1.0
+      // so a muted Ticker can never leave _opacity stuck at 0.0!
+      _opacity.value = 1.0;
+      if (_placeholderVisible) {
+        WidgetsBinding.instance.addPostFrameCallback((_) {
+          if (mounted && _placeholderVisible) setState(() => _placeholderVisible = false);
+        });
+      }
+      return;
+    }
     _opacity.forward().whenComplete(() {
       if (mounted && _placeholderVisible) setState(() => _placeholderVisible = false);
     });
@@ -776,39 +831,53 @@ class _FadeInNetworkImageState extends State<_FadeInNetworkImage> with SingleTic
 
   @override
   Widget build(BuildContext context) {
-    return _withArtworkDim(
-      widget.artworkDim,
-      (tint) => Image(
-        image: widget.image,
-        width: widget.width,
-        height: widget.height,
-        // Decorative — see OptimizedMediaImage.
-        excludeFromSemantics: true,
-        fit: widget.fit,
-        filterQuality: widget.filterQuality,
-        alignment: widget.alignment,
-        color: tint,
-        colorBlendMode: tint == null ? null : BlendMode.srcATop,
-        opacity: _opacity,
-        errorBuilder: widget.errorBuilder,
-        frameBuilder: (context, child, frame, wasSynchronouslyLoaded) {
-          if (wasSynchronouslyLoaded) return child;
-          if (frame == null && !_sawFirstFrame) {
-            // Async load in progress: hide the image and show the placeholder
-            // beneath until the first frame arrives. Mutating outside setState
-            // is fine here — we're inside build.
-            _opacity.value = 0;
-            _placeholderVisible = true;
-          } else if (frame != null && !_sawFirstFrame) {
-            _startFade();
-          }
-          if (!_placeholderVisible) return child;
-          return Stack(
-            fit: StackFit.passthrough,
-            alignment: Alignment.center,
-            children: [widget.placeholderBuilder(context), child],
-          );
-        },
+    // Keep TickerMode enabled for the inner Image widget so pushing an opaque VideoPlayerRoute
+    // never triggers _ImageState._stopListeningToStream(), which would cancel in-flight
+    // CachedNetworkImageProvider downloads for Continue Watching / Home rails!
+    return TickerMode(
+      enabled: true,
+      child: _withArtworkDim(
+        widget.artworkDim,
+        (tint) => Image(
+          key: _retryGeneration > 0 ? ValueKey<int>(_retryGeneration) : null,
+          image: widget.image,
+          width: widget.width,
+          height: widget.height,
+          excludeFromSemantics: true,
+          fit: widget.fit,
+          filterQuality: widget.filterQuality,
+          alignment: widget.alignment,
+          color: tint,
+          colorBlendMode: tint == null ? null : BlendMode.srcATop,
+          opacity: _opacity,
+          errorBuilder: (ctx, err, st) {
+            _hadError = true;
+            return widget.errorBuilder(ctx, err, st);
+          },
+          frameBuilder: (context, child, frame, wasSynchronouslyLoaded) {
+            if (wasSynchronouslyLoaded) {
+              _sawFirstFrame = true;
+              _placeholderVisible = false;
+              if (_opacity.value < 1.0) _opacity.value = 1.0;
+              return child;
+            }
+            if (frame == null && !_sawFirstFrame) {
+              _opacity.value = 0;
+              _placeholderVisible = true;
+            } else if (frame != null && !_sawFirstFrame) {
+              _startFade(context);
+            } else if (frame != null && _sawFirstFrame && _opacity.value < 1.0 && !TickerMode.of(context)) {
+              _opacity.value = 1.0;
+              _placeholderVisible = false;
+            }
+            if (!_placeholderVisible) return child;
+            return Stack(
+              fit: StackFit.passthrough,
+              alignment: Alignment.center,
+              children: [widget.placeholderBuilder(context), child],
+            );
+          },
+        ),
       ),
     );
   }
