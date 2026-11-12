@@ -15,8 +15,18 @@ jobs:
   build:
     runs-on: ubuntu-24.04
     timeout-minutes: 60
+    env:
+      # Under $HOME so actions/cache can restore it; the NDK bakes this path in at install time.
+      WEBOS_SDK_DIR: /home/runner/starfish-sdk-x86_64
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+
+      - uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6
+        with:
+          path: |
+            /home/runner/starfish-sdk-x86_64
+            /home/runner/plezy-webos-workspace
+          key: webos-toolchain-${{ runner.os }}-${{ hashFiles('scripts/webos/ci/setup-toolchain.sh') }}
 
       - name: Install toolchain
         run: scripts/webos/ci/setup-toolchain.sh
@@ -26,8 +36,14 @@ jobs:
 
       - uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7
         with:
-          name: webos-ipks
-          path: dist/*.ipk
+          name: plezy-webos25-26
+          path: dist/*_arm_webos25-26.ipk
+          if-no-files-found: error
+
+      - uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7
+        with:
+          name: plezy-webos6-24
+          path: dist/*_arm_webos6-24.ipk
           if-no-files-found: error
 
       - name: Publish release with Homebrew Channel repositories
