@@ -87,13 +87,18 @@ def main() -> int:
                                 f"{base}/releases/download/{args.tag}/{ipk.name}")
         manifest_name = f"{args.prefix}-{variant}.manifest.json"
         title = f"{manifest['title']} ({variant.replace('webos', 'webOS ')})"
-        index = {"packages": [{
-            "id": manifest["id"],
-            "title": title,
-            "shortDescription": f"Plex client for webOS TVs, {variant.replace('webos', 'webOS ')} build",
-            "iconUri": icon_uri,
-            "manifestUrl": f"{base}/releases/latest/download/{manifest_name}",
-        }]}
+        # The manifest is embedded as well as linked: Glasshouse only lists entries carrying it inline.
+        index = {
+            "paging": {"page": 1, "count": 1, "maxPage": 1, "itemsTotal": 1},
+            "packages": [{
+                "id": manifest["id"],
+                "title": title,
+                "shortDescription": f"Plex client for webOS TVs, {variant.replace('webos', 'webOS ')} build",
+                "iconUri": icon_uri,
+                "manifestUrl": f"{base}/releases/latest/download/{manifest_name}",
+                "manifest": manifest,
+            }],
+        }
         (args.dist / manifest_name).write_text(json.dumps(manifest, indent=2) + "\n")
         (args.dist / f"{args.prefix}-{variant}.repo.json").write_text(json.dumps(index, indent=2) + "\n")
         print(f"{ipk.name}: {manifest['id']} {manifest['version']} sha256 {manifest['ipkHash']['sha256']}")
