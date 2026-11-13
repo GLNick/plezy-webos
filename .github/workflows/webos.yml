@@ -2,11 +2,10 @@ name: webOS IPKs
 
 on:
   push:
-    branches:
-      - webos-native-working
     tags:
-      - 'v*-webos*'
+      - 'v*'
   workflow_dispatch:
+
 
 permissions:
   contents: write
