@@ -286,7 +286,7 @@ class WebosSubtitleClock {
   static final WebosSubtitleClock instance = WebosSubtitleClock._();
   WebosSubtitleClock._();
 
-  static const int kSceneCutLeadMs = -15;
+  static const int kSceneCutLeadMs = 70;
 
   final Stopwatch _watch = Stopwatch();
   final Stopwatch _seekCooldownWatch = Stopwatch();
@@ -1005,6 +1005,68 @@ class WebosAssTransform {
     this.clipRect,
     this.clipInverse,
   });
+
+  bool get isEmpty =>
+      primaryRgb == null &&
+      outlineRgb == null &&
+      shadowRgb == null &&
+      alpha1 == null &&
+      alpha3 == null &&
+      alpha4 == null &&
+      scaleX == null &&
+      scaleY == null &&
+      rotationZ == null &&
+      rotationX == null &&
+      rotationY == null &&
+      shearX == null &&
+      shearY == null &&
+      outlineX == null &&
+      outlineY == null &&
+      blur == null &&
+      clipRect == null;
+
+  WebosAssTransform clearOverriden({
+    bool clearPrimaryRgb = false,
+    bool clearOutlineRgb = false,
+    bool clearShadowRgb = false,
+    bool clearAlpha1 = false,
+    bool clearAlpha3 = false,
+    bool clearAlpha4 = false,
+    bool clearScaleX = false,
+    bool clearScaleY = false,
+    bool clearRotationZ = false,
+    bool clearRotationX = false,
+    bool clearRotationY = false,
+    bool clearShearX = false,
+    bool clearShearY = false,
+    bool clearOutlineX = false,
+    bool clearOutlineY = false,
+    bool clearBlur = false,
+  }) {
+    return WebosAssTransform(
+      t1: t1,
+      t2: t2,
+      accel: accel,
+      primaryRgb: clearPrimaryRgb ? null : primaryRgb,
+      outlineRgb: clearOutlineRgb ? null : outlineRgb,
+      shadowRgb: clearShadowRgb ? null : shadowRgb,
+      alpha1: clearAlpha1 ? null : alpha1,
+      alpha3: clearAlpha3 ? null : alpha3,
+      alpha4: clearAlpha4 ? null : alpha4,
+      scaleX: clearScaleX ? null : scaleX,
+      scaleY: clearScaleY ? null : scaleY,
+      rotationZ: clearRotationZ ? null : rotationZ,
+      rotationX: clearRotationX ? null : rotationX,
+      rotationY: clearRotationY ? null : rotationY,
+      shearX: clearShearX ? null : shearX,
+      shearY: clearShearY ? null : shearY,
+      outlineX: clearOutlineX ? null : outlineX,
+      outlineY: clearOutlineY ? null : outlineY,
+      blur: clearBlur ? null : blur,
+      clipRect: clipRect,
+      clipInverse: clipInverse,
+    );
+  }
 }
 
 class WebosAssSpan {
@@ -1850,13 +1912,6 @@ class WebosSubtitleParser {
       final textSegment = match.group(2);
 
       if (rawTagBlock != null) {
-        for (final inner in _extractTransformInners(rawTagBlock)) {
-          final tr = _parseTransformBlock(inner, activeStyle);
-          if (tr != null) {
-            curTransforms.add(tr);
-            cueLevelTransforms.add(tr);
-          }
-        }
         final tagBlockWithoutT = _stripTransformBlocks(rawTagBlock);
 
         for (final cm in _clipTagRe.allMatches(tagBlockWithoutT)) {
@@ -1866,6 +1921,52 @@ class WebosSubtitleParser {
           }
         }
         final tagBlock = tagBlockWithoutT.replaceAll(_clipTagRe, '');
+
+        void stripTransforms({
+          bool primaryRgb = false,
+          bool outlineRgb = false,
+          bool shadowRgb = false,
+          bool alpha1 = false,
+          bool alpha3 = false,
+          bool alpha4 = false,
+          bool scaleX = false,
+          bool scaleY = false,
+          bool rotZ = false,
+          bool rotX = false,
+          bool rotY = false,
+          bool shearX = false,
+          bool shearY = false,
+          bool outX = false,
+          bool outY = false,
+          bool blur = false,
+        }) {
+          if (curTransforms.isEmpty) return;
+          final updated = <WebosAssTransform>[];
+          for (final existing in curTransforms) {
+            final cleaned = existing.clearOverriden(
+              clearPrimaryRgb: primaryRgb,
+              clearOutlineRgb: outlineRgb,
+              clearShadowRgb: shadowRgb,
+              clearAlpha1: alpha1,
+              clearAlpha3: alpha3,
+              clearAlpha4: alpha4,
+              clearScaleX: scaleX,
+              clearScaleY: scaleY,
+              clearRotationZ: rotZ,
+              clearRotationX: rotX,
+              clearRotationY: rotY,
+              clearShearX: shearX,
+              clearShearY: shearY,
+              clearOutlineX: outX,
+              clearOutlineY: outY,
+              clearBlur: blur,
+            );
+            if (!cleaned.isEmpty) updated.add(cleaned);
+          }
+          curTransforms
+            ..clear()
+            ..addAll(updated);
+        }
 
         for (final tm in _assTagRe.allMatches(tagBlock)) {
           final tagName = tm.group(1)!;
@@ -1900,7 +2001,7 @@ class WebosSubtitleParser {
             final pVal = int.tryParse(tagArg);
             curDrawingScale = pVal ?? 0;
           } else if (tagName == 'c' || tagName == '1c') {
-            // Empty {\c} or {\1c} resets primary color back to activeStyle's primaryColor!
+            stripTransforms(primaryRgb: true);
             if (tagArg.isEmpty) {
               curPrimaryRgb = (activeStyle?.primaryColor ?? Colors.white).withAlpha(255);
             } else {
@@ -1908,6 +2009,7 @@ class WebosSubtitleParser {
               if (rgb != null) curPrimaryRgb = rgb;
             }
           } else if (tagName == '3c') {
+            stripTransforms(outlineRgb: true);
             if (tagArg.isEmpty) {
               curOutlineRgb = (activeStyle?.outlineColor ?? Colors.black).withAlpha(255);
             } else {
@@ -1915,6 +2017,7 @@ class WebosSubtitleParser {
               if (rgb != null) curOutlineRgb = rgb;
             }
           } else if (tagName == '4c') {
+            stripTransforms(shadowRgb: true);
             if (tagArg.isEmpty) {
               curShadowRgb = (activeStyle?.shadowColor ?? Colors.black).withAlpha(255);
             } else {
@@ -1922,6 +2025,7 @@ class WebosSubtitleParser {
               if (rgb != null) curShadowRgb = rgb;
             }
           } else if (tagName == 'alpha') {
+            stripTransforms(alpha1: true, alpha3: true, alpha4: true);
             if (tagArg.isEmpty) {
               curAlpha1 = activeStyle?.primaryColor.alpha ?? 255;
               curAlpha3 = activeStyle?.outlineColor.alpha ?? 255;
@@ -1935,6 +2039,7 @@ class WebosSubtitleParser {
               }
             }
           } else if (tagName == '1a') {
+            stripTransforms(alpha1: true);
             if (tagArg.isEmpty) {
               curAlpha1 = activeStyle?.primaryColor.alpha ?? 255;
             } else {
@@ -1942,6 +2047,7 @@ class WebosSubtitleParser {
               if (a != null) curAlpha1 = a;
             }
           } else if (tagName == '3a') {
+            stripTransforms(alpha3: true);
             if (tagArg.isEmpty) {
               curAlpha3 = activeStyle?.outlineColor.alpha ?? 255;
             } else {
@@ -1949,6 +2055,7 @@ class WebosSubtitleParser {
               if (a != null) curAlpha3 = a;
             }
           } else if (tagName == '4a') {
+            stripTransforms(alpha4: true);
             if (tagArg.isEmpty) {
               curAlpha4 = activeStyle?.shadowColor.alpha ?? 170;
             } else {
@@ -1956,7 +2063,14 @@ class WebosSubtitleParser {
               if (a != null) curAlpha4 = a;
             }
           } else if (tagName == 'fn') {
-            curFont = tagArg.isNotEmpty ? tagArg : activeStyle?.fontName;
+            if (tagArg.isNotEmpty) {
+              curFont = tagArg;
+              final fl = tagArg.toLowerCase();
+              if (fl.contains('bold')) curBold = true;
+              if (fl.contains('italic') || fl.contains('oblique')) curItalic = true;
+            } else {
+              curFont = activeStyle?.fontName;
+            }
           } else if (tagName == 'fs') {
             final fs = double.tryParse(tagArg);
             curSize = (fs != null && fs > 0) ? fs : activeStyle?.fontSize;
@@ -2073,6 +2187,14 @@ class WebosSubtitleParser {
           complexFade = [
             for (int g = 1; g <= 7; g++) int.tryParse(fadeComplexMatch.group(g)!) ?? 0,
           ];
+        }
+
+        for (final inner in _extractTransformInners(rawTagBlock)) {
+          final tr = _parseTransformBlock(inner, activeStyle);
+          if (tr != null) {
+            curTransforms.add(tr);
+            cueLevelTransforms.add(tr);
+          }
         }
       } else if (textSegment != null) {
         if (curDrawingScale > 0) {
@@ -2701,6 +2823,10 @@ class WebosMkvSubtitleExtractor {
           final families = _extractTtfFamilyNames(fileBytes);
           final baseName = fileName.replaceAll(RegExp(r'\.[^.]+$'), '');
           if (baseName.isNotEmpty) families.add(baseName);
+          for (final f in List<String>.of(families)) {
+            final stripped = f.replaceAll(RegExp(r'\s+(?:Bold|Italic|Oblique|Regular|Medium|Light|Semibold)+$', caseSensitive: false), '').trim();
+            if (stripped.isNotEmpty) families.add(stripped);
+          }
           for (final fam in families) {
             if (_loadedFontFamilies.add(fam)) {
               try {
@@ -2805,7 +2931,7 @@ class WebosMkvSubtitleExtractor {
 
     if (_attachmentsOffset != null) {
       unawaited(() async {
-        await Future<void>.delayed(const Duration(milliseconds: 2200));
+        await Future<void>.delayed(const Duration(milliseconds: 150));
         if (_disposed) return;
         final attBuf = await _fetchRange(_attachmentsOffset!, 6 * 1024 * 1024);
         if (attBuf != null && !_disposed) {
@@ -3489,11 +3615,16 @@ class _WebosSubtitleOverlayState extends State<WebosSubtitleOverlay>
   final Map<WebosSubtitleCue, DateTime> _cueFirstSeenAt = {};
   List<WebosSubtitleCue> _lastVisibleSnapshot = const [];
 
+  void _onStyleChanged() {
+    if (mounted) setState(() {});
+  }
+
   @override
   void initState() {
     super.initState();
     _vsyncTicker = createTicker(_onVsyncTick);
     widget.activeCues.addListener(_onActiveCuesChanged);
+    widget.styleConfig.addListener(_onStyleChanged);
     _onActiveCuesChanged();
   }
 
@@ -3505,11 +3636,16 @@ class _WebosSubtitleOverlayState extends State<WebosSubtitleOverlay>
       widget.activeCues.addListener(_onActiveCuesChanged);
       _onActiveCuesChanged();
     }
+    if (oldWidget.styleConfig != widget.styleConfig) {
+      oldWidget.styleConfig.removeListener(_onStyleChanged);
+      widget.styleConfig.addListener(_onStyleChanged);
+    }
   }
 
   @override
   void dispose() {
     widget.activeCues.removeListener(_onActiveCuesChanged);
+    widget.styleConfig.removeListener(_onStyleChanged);
     _vsyncTicker?.dispose();
     super.dispose();
   }
@@ -3553,6 +3689,7 @@ class _WebosSubtitleOverlayState extends State<WebosSubtitleOverlay>
     } else {
       _vsyncTicker?.stop();
     }
+    if (mounted) setState(() {});
   }
 
   int? _resolveSmoothPlayheadMs() {
@@ -3773,7 +3910,7 @@ class _WebosSubtitleOverlayState extends State<WebosSubtitleOverlay>
 
                         final screenX = (px / rx) * screenW;
                         final screenY = (py / ry) * screenH;
-                        final anchorOffset = _anchorTranslationFor(cue.alignment);
+                        final anchorOffset = _anchorTranslationFor(cue.alignment, isAssPositioned: cue.isAss);
 
                         Widget posWidget = Stack(
                           clipBehavior: Clip.none,
@@ -3884,17 +4021,20 @@ class _WebosSubtitleOverlayState extends State<WebosSubtitleOverlay>
     );
   }
 
-  static Offset _anchorTranslationFor(int an) {
+  static Offset _anchorTranslationFor(int an, {bool isAssPositioned = false}) {
     final double dx = (an == 1 || an == 4 || an == 7)
         ? 0.0
         : (an == 3 || an == 6 || an == 9)
             ? -1.0
             : -0.5;
+    // In libass, bottom-aligned (\an1..\an3) \pos(x,y) places the font descent bottom at y,
+    // whereas Flutter's RichText box includes extra bottom descender padding below the baseline.
+    // Shifting dy from -1.0 to -0.84 aligns the glyph cap-center with libass \clip coordinates!
     final double dy = (an >= 7)
         ? 0.0
         : (an >= 4)
             ? -0.5
-            : -1.0;
+            : (isAssPositioned ? -0.84 : -1.0);
     return Offset(dx, dy);
   }
 
@@ -4217,8 +4357,13 @@ class _WebosSubtitleOverlayState extends State<WebosSubtitleOverlay>
       final shadOffsetX = isOpaqueBoxStyle ? 0.0 : (rawXShad * resScaleX * 0.85).clamp(-16.0, 16.0);
       final shadOffsetY = isOpaqueBoxStyle ? 0.0 : (rawYShad * resScaleY * 0.85).clamp(-16.0, 16.0);
 
-      final isBold = cue.isAss ? (sp.bold ?? cue.style?.bold ?? false) : cfg.bold;
-      final isItalic = cue.isAss ? (sp.italic ?? cue.style?.italic ?? false) : cfg.italic;
+      final rawFontName = (sp.fontName ?? cue.style?.fontName ?? '').trim();
+      final rawFontLower = rawFontName.toLowerCase();
+      final bool fnImpliesBold = rawFontLower.contains('bold');
+      final bool fnImpliesItalic = rawFontLower.contains('italic') || rawFontLower.contains('oblique');
+
+      final isBold = cue.isAss ? ((sp.bold ?? cue.style?.bold ?? false) || fnImpliesBold) : cfg.bold;
+      final isItalic = cue.isAss ? ((sp.italic ?? cue.style?.italic ?? false) || fnImpliesItalic) : cfg.italic;
       final isUnderline = sp.underline ?? false;
       final isStrike = sp.strikeOut ?? false;
       final decoration = TextDecoration.combine([
@@ -4226,7 +4371,12 @@ class _WebosSubtitleOverlayState extends State<WebosSubtitleOverlay>
         if (isStrike) TextDecoration.lineThrough,
       ]);
 
-      final fontFamily = sp.fontName ?? cue.style?.fontName;
+      String? fontFamily;
+      if (rawFontLower.contains('times new roman') || rawFontLower == 'times' || rawFontLower.contains('georgia') || rawFontLower.contains('garamond') || rawFontLower.contains('serif')) {
+        fontFamily = 'Times New Roman';
+      } else if (rawFontName.isNotEmpty) {
+        fontFamily = rawFontName.replaceAll(RegExp(r'\s+(?:Bold|Italic|Oblique|Regular)+$', caseSensitive: false), '').trim();
+      }
       final letterSpacing = (sp.spacing != null && sp.spacing != 0.0) ? sp.spacing! * resScaleX : null;
 
       strokeSpans.add(
@@ -4239,7 +4389,7 @@ class _WebosSubtitleOverlayState extends State<WebosSubtitleOverlay>
             fontStyle: isItalic ? FontStyle.italic : FontStyle.normal,
             letterSpacing: letterSpacing,
             decoration: decoration,
-            height: 1.18,
+            height: cue.isAss ? 1.02 : 1.18,
             foreground: Paint()
               ..style = PaintingStyle.stroke
               ..strokeWidth = strokeWidth > 0.1 ? strokeWidth : 0.0
@@ -4261,7 +4411,7 @@ class _WebosSubtitleOverlayState extends State<WebosSubtitleOverlay>
             fontStyle: isItalic ? FontStyle.italic : FontStyle.normal,
             letterSpacing: letterSpacing,
             decoration: decoration,
-            height: 1.18,
+            height: cue.isAss ? 1.02 : 1.18,
             color: fillColor,
             shadows: ((shadOffsetX != 0.0 || shadOffsetY != 0.0) && shadowColor.alpha > 0)
                 ? [
@@ -4284,10 +4434,18 @@ class _WebosSubtitleOverlayState extends State<WebosSubtitleOverlay>
         if (hasAnyStroke)
           RichText(
             textAlign: textAlign,
+            textHeightBehavior: const TextHeightBehavior(
+              applyHeightToFirstAscent: false,
+              applyHeightToLastDescent: false,
+            ),
             text: TextSpan(children: strokeSpans),
           ),
         RichText(
           textAlign: textAlign,
+          textHeightBehavior: const TextHeightBehavior(
+            applyHeightToFirstAscent: false,
+            applyHeightToLastDescent: false,
+          ),
           text: TextSpan(children: fillSpans),
         ),
       ],

@@ -164,6 +164,8 @@ dependency_overrides:
 flutter:
   uses-material-design: true
   assets:
+    - assets/webos-serif-regular.ttf
+    - assets/webos-serif-bold.ttf
     - assets/licenses/SpatialAudioBridge.txt
     - assets/chapter_marker_model.bin
     - assets/app_icons/previews/
@@ -188,6 +190,11 @@ flutter:
   # Registered as UI font families so the Linux build, whose fontconfig may
   # lack CJK fonts, can fall back to the bundled subtitle fonts (mono_theme).
   fonts:
+    - family: Times New Roman
+      fonts:
+        - asset: assets/webos-serif-regular.ttf
+        - asset: assets/webos-serif-bold.ttf
+          weight: 700
     - family: Go Noto Current
       fonts:
         - asset: assets/go-noto-current-regular.ttf
