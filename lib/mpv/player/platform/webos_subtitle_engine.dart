@@ -979,6 +979,8 @@ class WebosAssTransform {
   final double? outlineX;
   final double? outlineY;
   final double? blur;
+  final double? fontSize;
+  final double? letterSpacing;
   final Rect? clipRect;
   final bool? clipInverse;
 
@@ -1002,6 +1004,8 @@ class WebosAssTransform {
     this.outlineX,
     this.outlineY,
     this.blur,
+    this.fontSize,
+    this.letterSpacing,
     this.clipRect,
     this.clipInverse,
   });
@@ -1023,6 +1027,8 @@ class WebosAssTransform {
       outlineX == null &&
       outlineY == null &&
       blur == null &&
+      fontSize == null &&
+      letterSpacing == null &&
       clipRect == null;
 
   WebosAssTransform clearOverriden({
@@ -1042,6 +1048,8 @@ class WebosAssTransform {
     bool clearOutlineX = false,
     bool clearOutlineY = false,
     bool clearBlur = false,
+    bool clearFontSize = false,
+    bool clearLetterSpacing = false,
   }) {
     return WebosAssTransform(
       t1: t1,
@@ -1063,6 +1071,8 @@ class WebosAssTransform {
       outlineX: clearOutlineX ? null : outlineX,
       outlineY: clearOutlineY ? null : outlineY,
       blur: clearBlur ? null : blur,
+      fontSize: clearFontSize ? null : fontSize,
+      letterSpacing: clearLetterSpacing ? null : letterSpacing,
       clipRect: clipRect,
       clipInverse: clipInverse,
     );
@@ -1242,7 +1252,7 @@ class WebosSubtitleParser {
 
   // Ordered longest-first so 1c/2c/3c/4c, 1a/2a/3a/4a, xbord/ybord, fscx/fscy, fade/fad never get shadowed by single-char tags
   static final _assTagRe = RegExp(
-    r'\\(alpha|xbord|ybord|xshad|yshad|fade|fscx|fscy|blur|move|bord|shad|fsp|frx|fry|frz|fax|fay|fad|pos|org|pbo|1c|2c|3c|4c|1a|2a|3a|4a|an|fn|fs|fr|be|p|q|r|b|i|u|s|c|a)(?![a-zA-Z])([^\\}]*)',
+    r'\\(fn|r|(?:alpha|xbord|ybord|xshad|yshad|fade|fscx|fscy|blur|move|bord|shad|fsp|frx|fry|frz|fax|fay|fad|pos|org|pbo|1c|2c|3c|4c|1a|2a|3a|4a|an|fs|fr|be|p|q|b|i|u|s|c|a)(?![a-zA-Z]))([^\\}]*)',
   );
 
   static final _clipTagRe = RegExp(r'\\(i?clip)\(([^)]*)\)');
@@ -1710,6 +1720,8 @@ class WebosSubtitleParser {
     double? outX;
     double? outY;
     double? blurVal;
+    double? fsVal;
+    double? fspVal;
     Rect? clipR;
     bool? clipInv;
 
@@ -1789,6 +1801,12 @@ class WebosSubtitleParser {
       } else if (tagName == 'blur' || tagName == 'be') {
         final v = double.tryParse(tagArg) ?? 0.0;
         if (v >= 0) blurVal = v;
+      } else if (tagName == 'fs') {
+        final v = double.tryParse(tagArg);
+        if (v != null && v > 0) fsVal = v;
+      } else if (tagName == 'fsp') {
+        final v = double.tryParse(tagArg);
+        if (v != null) fspVal = v;
       }
     }
 
@@ -1812,6 +1830,8 @@ class WebosSubtitleParser {
       outlineX: outX,
       outlineY: outY,
       blur: blurVal,
+      fontSize: fsVal,
+      letterSpacing: fspVal,
       clipRect: clipR,
       clipInverse: clipInv,
     );
@@ -1974,9 +1994,19 @@ class WebosSubtitleParser {
 
           if (tagName == 'r') {
             final targetName = tagArg.replaceFirst('*', '').trim();
-            final targetStyle = (targetName.isNotEmpty && stylesMap != null)
-                ? (stylesMap[targetName] ?? style)
-                : style;
+            WebosAssStyle? targetStyle = style;
+            if (targetName.isNotEmpty && stylesMap != null) {
+              targetStyle = stylesMap[targetName];
+              if (targetStyle == null) {
+                for (final entry in stylesMap.entries) {
+                  if (entry.key.toLowerCase() == targetName.toLowerCase()) {
+                    targetStyle = entry.value;
+                    break;
+                  }
+                }
+              }
+              targetStyle ??= style;
+            }
             resetToStyle(targetStyle);
           } else if (tagName == 'an') {
             final an = int.tryParse(tagArg);
@@ -3801,27 +3831,26 @@ class _WebosSubtitleOverlayState extends State<WebosSubtitleOverlay>
       if (smoothNowMs < c.startMs) continue;
 
       int effectiveEndMs = c.endMs;
-      // Check if another cue on the same layer/style starts within 1..18ms after this cue ends
-      // (common when 23.976fps frames are rounded to 10ms ASS centiseconds or 1ms MKV blocks).
-      if (smoothNowMs >= c.endMs && smoothNowMs <= c.endMs + 18) {
-        bool hasSuccessorStartingSoon = false;
-        bool successorAlreadyStarted = false;
-        for (int j = 0; j < rawCues.length; j++) {
-          if (i == j) continue;
-          final next = rawCues[j];
-          if (next.layer == c.layer &&
-              next.startMs >= c.endMs &&
-              next.startMs <= c.endMs + 18) {
-            hasSuccessorStartingSoon = true;
-            if (smoothNowMs >= next.startMs) {
-              successorAlreadyStarted = true;
-            }
-            break;
+      // Seamless 23.976fps 1-frame cue handoff:
+      // 1) If a successor cue on the same layer/alignment starts within -12..+18ms of c.endMs,
+      //    clamp c's end strictly to next.startMs once next has started (prevents 2 frames overlapping),
+      //    or bridge the gap until next.startMs (prevents 1-frame flicker).
+      int? nearestSuccessorStartMs;
+      for (int j = 0; j < rawCues.length; j++) {
+        if (i == j) continue;
+        final next = rawCues[j];
+        if (next.layer == c.layer &&
+            next.alignment == c.alignment &&
+            next.startMs > c.startMs &&
+            next.startMs >= c.endMs - 12 &&
+            next.startMs <= c.endMs + 18) {
+          if (nearestSuccessorStartMs == null || next.startMs < nearestSuccessorStartMs) {
+            nearestSuccessorStartMs = next.startMs;
           }
         }
-        if (hasSuccessorStartingSoon && !successorAlreadyStarted) {
-          effectiveEndMs = smoothNowMs + 1;
-        }
+      }
+      if (nearestSuccessorStartMs != null) {
+        effectiveEndMs = nearestSuccessorStartMs;
       }
 
       if (smoothNowMs < effectiveEndMs) {
@@ -3972,7 +4001,7 @@ class _WebosSubtitleOverlayState extends State<WebosSubtitleOverlay>
                             mainAxisSize: MainAxisSize.min,
                             crossAxisAlignment: crossAlign,
                             children: [
-                              for (final c in groupCues)
+                              for (final c in (an <= 3 ? groupCues.reversed : groupCues))
                                 Padding(
                                   padding: const EdgeInsets.symmetric(vertical: 2.0),
                                   child: _buildCueWidget(
@@ -4034,7 +4063,7 @@ class _WebosSubtitleOverlayState extends State<WebosSubtitleOverlay>
         ? 0.0
         : (an >= 4)
             ? -0.5
-            : (isAssPositioned ? -0.84 : -1.0);
+            : -1.0;
     return Offset(dx, dy);
   }
 
@@ -4288,6 +4317,8 @@ class _WebosSubtitleOverlayState extends State<WebosSubtitleOverlay>
     final fillSpans = <InlineSpan>[];
     final strokeSpans = <InlineSpan>[];
     bool hasAnyStroke = false;
+    double maxAnisoExtraX = 0.0;
+    double maxAnisoExtraY = 0.0;
     bool isOpaqueBoxStyle = (cue.style?.borderStyle == 3);
     Color? opaqueBoxColor;
     double opaqueBoxPadX = 10.0;
@@ -4300,9 +4331,12 @@ class _WebosSubtitleOverlayState extends State<WebosSubtitleOverlay>
     for (final sp in effectiveSpans) {
       if (sp.borderStyle == 3) isOpaqueBoxStyle = true;
 
-      final rawFs = cue.isAss
+      final baseRawFs = cue.isAss
           ? (sp.fontSize ?? cue.style?.fontSize ?? 48.0)
           : cfg.fontSize;
+      final rawFs = (cue.isAss && sp.transforms.isNotEmpty)
+          ? _evalTransformedDouble(baseRawFs, sp.transforms, elapsedMs, totalDur, (t) => t.fontSize)
+          : baseRawFs;
       final fontSize = cue.isAss
           ? (rawFs * resScaleY * assFontCalibration).clamp(14.0, 180.0)
           : (rawFs * (screenH / 1080.0) * 0.72).clamp(18.0, 80.0);
@@ -4335,8 +4369,7 @@ class _WebosSubtitleOverlayState extends State<WebosSubtitleOverlay>
       final rawXShad = cue.isAss ? (sp.shadowX ?? cue.style?.shadow ?? 1.5) : 1.5;
       final rawYShad = cue.isAss ? (sp.shadowY ?? cue.style?.shadow ?? 1.5) : 1.5;
 
-      if (cue.isAss && (isOpaqueBoxStyle || (rawXBord >= 6.0 && (rawXBord - rawYBord).abs() >= 3.0))) {
-        isOpaqueBoxStyle = true;
+      if (cue.isAss && isOpaqueBoxStyle) {
         opaqueBoxColor ??= (outlineColor.alpha > 0)
             ? outlineColor
             : (shadowColor.alpha > 0 ? shadowColor : outlineColor);
@@ -4344,15 +4377,29 @@ class _WebosSubtitleOverlayState extends State<WebosSubtitleOverlay>
         opaqueBoxPadY = (rawYBord > 0 ? rawYBord * resScaleY : 6.0).clamp(1.0, 120.0);
       }
 
+      final strokeWidthX = isOpaqueBoxStyle ? 0.0 : (rawXBord * resScaleX * 1.75).clamp(0.0, 64.0);
+      final strokeWidthY = isOpaqueBoxStyle ? 0.0 : (rawYBord * resScaleY * 1.75).clamp(0.0, 64.0);
+      final bool isAnisotropicStroke = !isOpaqueBoxStyle && (strokeWidthX - strokeWidthY).abs() > 2.0;
       final strokeWidth = isOpaqueBoxStyle
           ? 0.0
-          : (math.max(rawXBord, rawYBord) * resScaleY * 1.75).clamp(0.0, 42.0);
-      if (strokeWidth > 0.1 && outlineColor.alpha > 0) {
+          : (isAnisotropicStroke
+              ? math.max(2.0, math.min(strokeWidthX, strokeWidthY))
+              : math.max(strokeWidthX, strokeWidthY).clamp(0.0, 42.0));
+      if (isAnisotropicStroke && outlineColor.alpha > 0) {
+        if (strokeWidthX > strokeWidthY) {
+          maxAnisoExtraX = math.max(maxAnisoExtraX, (strokeWidthX - strokeWidthY) * 0.5);
+        } else {
+          maxAnisoExtraY = math.max(maxAnisoExtraY, (strokeWidthY - strokeWidthX) * 0.5);
+        }
+      }
+      if ((strokeWidth > 0.1 || isAnisotropicStroke) && outlineColor.alpha > 0) {
         hasAnyStroke = true;
       }
 
       final blurSigma = (rawBlur * resScaleY * 0.75).clamp(0.0, 18.0);
-      const MaskFilter? strokeMaskFilter = null; // Avoid CPU MaskFilter.blur on TextSpan; handled via GPU Shadow below
+      final MaskFilter? strokeMaskFilter = blurSigma > 0.25
+          ? MaskFilter.blur(BlurStyle.normal, blurSigma)
+          : null;
 
       final shadOffsetX = isOpaqueBoxStyle ? 0.0 : (rawXShad * resScaleX * 0.85).clamp(-16.0, 16.0);
       final shadOffsetY = isOpaqueBoxStyle ? 0.0 : (rawYShad * resScaleY * 0.85).clamp(-16.0, 16.0);
@@ -4377,7 +4424,11 @@ class _WebosSubtitleOverlayState extends State<WebosSubtitleOverlay>
       } else if (rawFontName.isNotEmpty) {
         fontFamily = rawFontName.replaceAll(RegExp(r'\s+(?:Bold|Italic|Oblique|Regular)+$', caseSensitive: false), '').trim();
       }
-      final letterSpacing = (sp.spacing != null && sp.spacing != 0.0) ? sp.spacing! * resScaleX : null;
+      final baseSpacing = sp.spacing ?? cue.style?.spacing ?? 0.0;
+      final rawSpacing = (cue.isAss && sp.transforms.isNotEmpty)
+          ? _evalTransformedDouble(baseSpacing, sp.transforms, elapsedMs, totalDur, (t) => t.letterSpacing)
+          : baseSpacing;
+      final letterSpacing = (rawSpacing.abs() > 0.01) ? rawSpacing * resScaleX : null;
 
       strokeSpans.add(
         TextSpan(
@@ -4427,21 +4478,49 @@ class _WebosSubtitleOverlayState extends State<WebosSubtitleOverlay>
       );
     }
 
+    final StrutStyle? assStrutStyle = cue.isAss
+        ? StrutStyle(
+            fontSize: ((effectiveSpans.first.fontSize ?? cue.style?.fontSize ?? 48.0) * resScaleY * assFontCalibration).clamp(14.0, 180.0),
+            height: 1.02,
+            leading: 0.0,
+            forceStrutHeight: true,
+          )
+        : null;
+
+    Widget buildStrokeRichText() => RichText(
+          textAlign: textAlign,
+          strutStyle: assStrutStyle,
+          textHeightBehavior: const TextHeightBehavior(
+            applyHeightToFirstAscent: false,
+            applyHeightToLastDescent: false,
+          ),
+          text: TextSpan(children: strokeSpans),
+        );
+
+    final strokeWidgets = <Widget>[];
+    if (hasAnyStroke) {
+      if (maxAnisoExtraX > 1.0 || maxAnisoExtraY > 1.0) {
+        for (final frac in const [-1.0, -0.66, -0.33, 0.0, 0.33, 0.66, 1.0]) {
+          strokeWidgets.add(
+            Transform.translate(
+              offset: Offset(maxAnisoExtraX * frac, maxAnisoExtraY * frac),
+              child: buildStrokeRichText(),
+            ),
+          );
+        }
+      } else {
+        strokeWidgets.add(buildStrokeRichText());
+      }
+    }
+
     Widget result = Stack(
       clipBehavior: Clip.none,
       alignment: _flutterAlignmentFor(cue.alignment),
       children: [
-        if (hasAnyStroke)
-          RichText(
-            textAlign: textAlign,
-            textHeightBehavior: const TextHeightBehavior(
-              applyHeightToFirstAscent: false,
-              applyHeightToLastDescent: false,
-            ),
-            text: TextSpan(children: strokeSpans),
-          ),
+        ...strokeWidgets,
         RichText(
           textAlign: textAlign,
+          strutStyle: assStrutStyle,
           textHeightBehavior: const TextHeightBehavior(
             applyHeightToFirstAscent: false,
             applyHeightToLastDescent: false,
@@ -4490,17 +4569,23 @@ class _WebosSubtitleOverlayState extends State<WebosSubtitleOverlay>
         dynShearX != 0.0 ||
         dynShearY != 0.0 ||
         dynRotX != 0.0 ||
-        dynRotY != 0.0) {
+        dynRotY != 0.0 ||
+        dynRotZ != 0.0) {
       final mat = Matrix4.identity();
       if (dynRotX != 0.0 || dynRotY != 0.0) {
-        mat.setEntry(3, 2, 0.001);
-        if (dynRotX != 0.0) mat.rotateX(-dynRotX * (math.pi / 180.0));
-        if (dynRotY != 0.0) mat.rotateY(dynRotY * (math.pi / 180.0));
+        // libass camera distance is 2500 PlayRes units -> ~0.00045 perspective entry
+        mat.setEntry(3, 2, 0.00045);
       }
+      // libass 3D rotation order: Ry(fry) * Rx(-frx) * Rz(-frz)
+      // Rotating around Y before X keeps horizontal text lines level instead of tilting diagonally!
+      if (dynRotY != 0.0) mat.rotateY(dynRotY * (math.pi / 180.0));
+      if (dynRotX != 0.0) mat.rotateX(-dynRotX * (math.pi / 180.0));
+      if (dynRotZ != 0.0) mat.rotateZ(-dynRotZ * (math.pi / 180.0));
+
       if (dynShearX != 0.0 || dynShearY != 0.0) {
         final shearMat = Matrix4.identity();
-        shearMat.setEntry(0, 1, dynShearX);
-        shearMat.setEntry(1, 0, dynShearY);
+        shearMat.setEntry(0, 1, -dynShearX);
+        shearMat.setEntry(1, 0, -dynShearY);
         mat.multiply(shearMat);
       }
       if (dynScaleX != 1.0 || dynScaleY != 1.0) {
@@ -4509,14 +4594,6 @@ class _WebosSubtitleOverlayState extends State<WebosSubtitleOverlay>
       result = Transform(
         alignment: _flutterAlignmentFor(cue.alignment),
         transform: mat,
-        child: result,
-      );
-    }
-
-    if (dynRotZ != 0.0) {
-      result = Transform.rotate(
-        angle: -dynRotZ * (math.pi / 180.0),
-        alignment: _flutterAlignmentFor(cue.alignment),
         child: result,
       );
     }
