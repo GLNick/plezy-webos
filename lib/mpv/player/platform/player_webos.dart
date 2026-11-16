@@ -716,7 +716,7 @@ class PlayerWebos extends PlayerBase {
 
     final matching = <WebosSubtitleCue>[];
     for (final cue in rawMatching) {
-      final bool isStandardLine = cue.posX == null && cue.moveX1 == null && !cue.hasVectorDrawing;
+      final bool isStandardLine = false; // Allow parallel ASS/MKV subtitle lines to stay visible until their true endMs
       final int remainingMs = cue.endMs - nowMs;
       if (isStandardLine && remainingMs <= 85 && rawMatching.length > 1) {
         final bool newerLineJustStarted = rawMatching.any(
