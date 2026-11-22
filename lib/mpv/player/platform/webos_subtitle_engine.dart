@@ -1133,6 +1133,12 @@ class WebosAssSpan {
   });
 }
 
+enum WebosCueAnimTier {
+  staticCue,
+  compositorOnly,
+  contentAnimated,
+}
+
 class WebosSubtitleCue {
   final int startMs;
   int endMs;
@@ -1254,6 +1260,116 @@ class WebosSubtitleCue {
       moveX1 != null ||
       cueTransforms.isNotEmpty ||
       spans.any((s) => s.transforms.isNotEmpty);
+
+  WebosCueAnimTier? _animTierCache;
+  bool? _hasLargeAnimatedScaleCache;
+
+  static bool _isContentTransform(WebosAssTransform t) =>
+      t.primaryRgb != null ||
+      t.outlineRgb != null ||
+      t.shadowRgb != null ||
+      t.alpha1 != null ||
+      t.alpha3 != null ||
+      t.alpha4 != null ||
+      t.outlineX != null ||
+      t.outlineY != null ||
+      t.blur != null ||
+      t.fontSize != null ||
+      t.letterSpacing != null;
+
+  /// Classifies whether this cue is static, only animates compositor properties
+  /// (`\fad`, `\fade`, `\move`, `\t(\frx/\fry/\frz/\fax/\fay/\fscx/\fscy/\clip)`),
+  /// or animates inner text/vector paint or layout (`\1c`, `\3c`, `\blur`, `\bord`, `\fs`, `\fsp`).
+  WebosCueAnimTier get animTier {
+    final cached = _animTierCache;
+    if (cached != null) return cached;
+    if (!isAnimated) {
+      return _animTierCache = WebosCueAnimTier.staticCue;
+    }
+    if (hasVectorDrawing) {
+      final drawSpan = spans.where((s) => s.drawingScale > 0 && s.compiledVectorPath != null).firstOrNull;
+      if (drawSpan != null &&
+          drawSpan.transforms.any((t) => _isContentTransform(t) || t.scaleX != null || t.scaleY != null)) {
+        return _animTierCache = WebosCueAnimTier.contentAnimated;
+      }
+      return _animTierCache = WebosCueAnimTier.compositorOnly;
+    }
+    for (final sp in spans) {
+      if (sp.transforms.any(_isContentTransform)) {
+        return _animTierCache = WebosCueAnimTier.contentAnimated;
+      }
+    }
+    return _animTierCache = WebosCueAnimTier.compositorOnly;
+  }
+
+  /// True when a `\t(\fscx/\fscy)` transform targets a scale > 1.25x, where caching
+  /// an inner `RepaintBoundary` at 1x would cause raster blur during zoom-in.
+  bool get hasLargeAnimatedScale {
+    final cached = _hasLargeAnimatedScaleCache;
+    if (cached != null) return cached;
+    bool large = false;
+    final transforms = cueTransforms.isNotEmpty
+        ? cueTransforms
+        : (spans.isNotEmpty ? spans.first.transforms : const <WebosAssTransform>[]);
+    for (final t in transforms) {
+      if ((t.scaleX != null && t.scaleX! > 1.25) || (t.scaleY != null && t.scaleY! > 1.25)) {
+        large = true;
+        break;
+      }
+    }
+    return _hasLargeAnimatedScaleCache = large;
+  }
+
+  /// Returns true iff advancing/seeking from [prevElapsedMs] to [curElapsedMs] crosses
+  /// or falls inside any active animation interval of this cue.
+  /// Flat plateaus (e.g. middle of `\fad(200,200)` or outside `[t1, t2]`) return false,
+  /// while crossing any endpoint (`t1`/`t2`) or seeking backwards always returns true once
+  /// so final keyframes (`progress == 1.0` / `opacity == 1.0`) never stick mid-transition.
+  bool needsUpdateBetween(int? prevElapsedMs, int curElapsedMs) {
+    if (!isAnimated) return false;
+    if (prevElapsedMs == null) return true;
+    if (prevElapsedMs == curElapsedMs) return false;
+
+    final totalDur = (endMs - startMs).clamp(1, 3600000);
+
+    bool intervalHit(int a, int b) {
+      if (b <= a) {
+        return (prevElapsedMs < a && curElapsedMs >= a) || (prevElapsedMs >= a && curElapsedMs < a);
+      }
+      return !(prevElapsedMs <= a && curElapsedMs <= a) && !(prevElapsedMs >= b && curElapsedMs >= b);
+    }
+
+    if (fadeInMs > 0 && intervalHit(0, fadeInMs)) return true;
+    if (fadeOutMs > 0 && intervalHit((totalDur - fadeOutMs).clamp(0, totalDur), totalDur)) return true;
+
+    final cf = complexFade;
+    if (cf != null && cf.length == 7) {
+      if (cf[0] != cf[1] && intervalHit(cf[3], cf[4])) return true;
+      if (cf[1] != cf[2] && intervalHit(cf[5], cf[6])) return true;
+    }
+
+    if (moveX1 != null && moveY1 != null && moveX2 != null && moveY2 != null) {
+      final t1 = moveT1 ?? 0;
+      final t2 = (moveT2 != null && moveT2! > t1) ? moveT2! : totalDur;
+      if (intervalHit(t1, t2)) return true;
+    }
+
+    for (final tr in cueTransforms) {
+      final t1 = tr.t1 ?? 0;
+      final t2 = (tr.t2 != null && tr.t2! > t1) ? tr.t2! : totalDur;
+      if (intervalHit(t1, t2)) return true;
+    }
+
+    for (final sp in spans) {
+      for (final tr in sp.transforms) {
+        final t1 = tr.t1 ?? 0;
+        final t2 = (tr.t2 != null && tr.t2! > t1) ? tr.t2! : totalDur;
+        if (intervalHit(t1, t2)) return true;
+      }
+    }
+
+    return false;
+  }
 }
 
 class WebosAssDocument {
@@ -4193,10 +4309,291 @@ class WebosAlignedGroupLayoutDelegate extends MultiChildLayoutDelegate {
   }
 }
 
+/// Scoped host for compositor-only animated cues (`\fad`, `\fade`, `\move`,
+/// `\t(\frx/\fry/\frz/\fax/\fay/\fscx/\fscy)`, `\t(\clip)`).
+/// Keeps [child] (the static text/vector widget) immutable across 60 Hz ticks so inner
+/// `RichText` / `CustomPaint` is never rebuilt or re-laid out during animations.
+class _WebosCompositorAnimatedCue extends StatefulWidget {
+  final WebosSubtitleCue cue;
+  final ValueListenable<int> tickNotifier;
+  final int Function(WebosSubtitleCue) resolveElapsedMs;
+  final double screenW;
+  final double screenH;
+  final bool isPositioned;
+  final bool wrapScreenClip;
+  final bool isVectorDrawing;
+  final List<WebosAssTransform> vectorTransforms;
+  final Widget child;
+
+  const _WebosCompositorAnimatedCue({
+    required this.cue,
+    required this.tickNotifier,
+    required this.resolveElapsedMs,
+    required this.screenW,
+    required this.screenH,
+    required this.isPositioned,
+    required this.wrapScreenClip,
+    this.isVectorDrawing = false,
+    this.vectorTransforms = const [],
+    required this.child,
+  });
+
+  @override
+  State<_WebosCompositorAnimatedCue> createState() => _WebosCompositorAnimatedCueState();
+}
+
+class _WebosCompositorAnimatedCueState extends State<_WebosCompositorAnimatedCue> {
+  int? _lastRenderedElapsed;
+
+  @override
+  void initState() {
+    super.initState();
+    widget.tickNotifier.addListener(_onTick);
+  }
+
+  @override
+  void didUpdateWidget(covariant _WebosCompositorAnimatedCue oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (oldWidget.tickNotifier != widget.tickNotifier) {
+      oldWidget.tickNotifier.removeListener(_onTick);
+      widget.tickNotifier.addListener(_onTick);
+    }
+    if (!identical(oldWidget.cue, widget.cue)) {
+      _lastRenderedElapsed = null;
+    }
+  }
+
+  @override
+  void dispose() {
+    widget.tickNotifier.removeListener(_onTick);
+    super.dispose();
+  }
+
+  void _onTick() {
+    if (!mounted) return;
+    final curElapsed = widget.resolveElapsedMs(widget.cue);
+    if (!widget.cue.needsUpdateBetween(_lastRenderedElapsed, curElapsed)) return;
+    setState(() {});
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    WebosSubtitleOverlay.debugAnimatedCueBuildCount++;
+    final cue = widget.cue;
+    final elapsed = widget.resolveElapsedMs(cue);
+    _lastRenderedElapsed = elapsed;
+
+    Widget res = widget.isVectorDrawing
+        ? _WebosSubtitleOverlayState._applyVectorTransformAndFade(
+            cue,
+            widget.vectorTransforms,
+            widget.child,
+            elapsed,
+          )
+        : _WebosSubtitleOverlayState._applyCueTransformAndFade(
+            cue,
+            widget.child,
+            elapsed,
+          );
+
+    if (widget.isPositioned) {
+      res = _WebosSubtitleOverlayState._wrapPositionedCue(
+        cue: cue,
+        child: res,
+        screenW: widget.screenW,
+        screenH: widget.screenH,
+        elapsedMs: elapsed,
+      );
+    }
+
+    if (widget.wrapScreenClip) {
+      res = _WebosSubtitleOverlayState._maybeWrapWithAssScreenClipStatic(
+        child: res,
+        cue: cue,
+        screenW: widget.screenW,
+        screenH: widget.screenH,
+        elapsedMs: elapsed,
+      );
+    }
+
+    return res;
+  }
+}
+
+/// Scoped host for content-animated cues (`\t(\1c/\3c/\4c/\1a/\3a/\4a/\alpha/\bord/\xbord/\ybord/\blur/\fs/\fsp)`
+/// or animated vector paths). Rebuilds only this single cue on active ticks without touching siblings.
+class _WebosContentAnimatedCue extends StatefulWidget {
+  final WebosSubtitleCue cue;
+  final ValueListenable<int> tickNotifier;
+  final int Function(WebosSubtitleCue) resolveElapsedMs;
+  final double screenW;
+  final double screenH;
+  final bool isPositioned;
+  final bool wrapScreenClip;
+  final Widget Function(int elapsedMs) buildContent;
+
+  const _WebosContentAnimatedCue({
+    required this.cue,
+    required this.tickNotifier,
+    required this.resolveElapsedMs,
+    required this.screenW,
+    required this.screenH,
+    required this.isPositioned,
+    required this.wrapScreenClip,
+    required this.buildContent,
+  });
+
+  @override
+  State<_WebosContentAnimatedCue> createState() => _WebosContentAnimatedCueState();
+}
+
+class _WebosContentAnimatedCueState extends State<_WebosContentAnimatedCue> {
+  int? _lastRenderedElapsed;
+
+  @override
+  void initState() {
+    super.initState();
+    widget.tickNotifier.addListener(_onTick);
+  }
+
+  @override
+  void didUpdateWidget(covariant _WebosContentAnimatedCue oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (oldWidget.tickNotifier != widget.tickNotifier) {
+      oldWidget.tickNotifier.removeListener(_onTick);
+      widget.tickNotifier.addListener(_onTick);
+    }
+    if (!identical(oldWidget.cue, widget.cue)) {
+      _lastRenderedElapsed = null;
+    }
+  }
+
+  @override
+  void dispose() {
+    widget.tickNotifier.removeListener(_onTick);
+    super.dispose();
+  }
+
+  void _onTick() {
+    if (!mounted) return;
+    final curElapsed = widget.resolveElapsedMs(widget.cue);
+    if (!widget.cue.needsUpdateBetween(_lastRenderedElapsed, curElapsed)) return;
+    setState(() {});
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    WebosSubtitleOverlay.debugAnimatedCueBuildCount++;
+    final cue = widget.cue;
+    final elapsed = widget.resolveElapsedMs(cue);
+    _lastRenderedElapsed = elapsed;
+
+    Widget res = widget.buildContent(elapsed);
+    if (widget.isPositioned) {
+      res = _WebosSubtitleOverlayState._wrapPositionedCue(
+        cue: cue,
+        child: res,
+        screenW: widget.screenW,
+        screenH: widget.screenH,
+        elapsedMs: elapsed,
+      );
+    }
+    if (widget.wrapScreenClip) {
+      res = _WebosSubtitleOverlayState._maybeWrapWithAssScreenClipStatic(
+        child: res,
+        cue: cue,
+        screenW: widget.screenW,
+        screenH: widget.screenH,
+        elapsedMs: elapsed,
+      );
+    }
+    return res;
+  }
+}
+
+/// Scoped host for animated `\t(\clip)` on a single-cue aligned group so clipping updates
+/// at 60 Hz without rebuilding the overlay or the inner cue widget.
+class _WebosAnimatedScreenClip extends StatefulWidget {
+  final WebosSubtitleCue cue;
+  final ValueListenable<int> tickNotifier;
+  final int Function(WebosSubtitleCue) resolveElapsedMs;
+  final double screenW;
+  final double screenH;
+  final Widget child;
+
+  const _WebosAnimatedScreenClip({
+    required this.cue,
+    required this.tickNotifier,
+    required this.resolveElapsedMs,
+    required this.screenW,
+    required this.screenH,
+    required this.child,
+  });
+
+  @override
+  State<_WebosAnimatedScreenClip> createState() => _WebosAnimatedScreenClipState();
+}
+
+class _WebosAnimatedScreenClipState extends State<_WebosAnimatedScreenClip> {
+  int? _lastRenderedElapsed;
+
+  @override
+  void initState() {
+    super.initState();
+    widget.tickNotifier.addListener(_onTick);
+  }
+
+  @override
+  void didUpdateWidget(covariant _WebosAnimatedScreenClip oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (oldWidget.tickNotifier != widget.tickNotifier) {
+      oldWidget.tickNotifier.removeListener(_onTick);
+      widget.tickNotifier.addListener(_onTick);
+    }
+    if (!identical(oldWidget.cue, widget.cue)) {
+      _lastRenderedElapsed = null;
+    }
+  }
+
+  @override
+  void dispose() {
+    widget.tickNotifier.removeListener(_onTick);
+    super.dispose();
+  }
+
+  void _onTick() {
+    if (!mounted) return;
+    final curElapsed = widget.resolveElapsedMs(widget.cue);
+    if (!widget.cue.needsUpdateBetween(_lastRenderedElapsed, curElapsed)) return;
+    setState(() {});
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final elapsed = widget.resolveElapsedMs(widget.cue);
+    _lastRenderedElapsed = elapsed;
+    return _WebosSubtitleOverlayState._maybeWrapWithAssScreenClipStatic(
+      child: widget.child,
+      cue: widget.cue,
+      screenW: widget.screenW,
+      screenH: widget.screenH,
+      elapsedMs: elapsed,
+    );
+  }
+}
+
 class WebosSubtitleOverlay extends StatefulWidget {
   /// Test-only counter of overlay builds.
   @visibleForTesting
   static int debugBuildCount = 0;
+
+  /// Test-only counter of static cue content builds.
+  @visibleForTesting
+  static int debugStaticCueBuildCount = 0;
+
+  /// Test-only counter of animated cue host builds.
+  @visibleForTesting
+  static int debugAnimatedCueBuildCount = 0;
 
   final ValueListenable<List<WebosSubtitleCue>> activeCues;
   final ValueListenable<WebosSubtitleStyleConfig> styleConfig;
@@ -4217,6 +4614,8 @@ class _WebosSubtitleOverlayState extends State<WebosSubtitleOverlay>
     with SingleTickerProviderStateMixin {
   Ticker? _vsyncTicker;
   final Map<WebosSubtitleCue, DateTime> _cueFirstSeenAt = {};
+  final ValueNotifier<int> _animTickNotifier = ValueNotifier<int>(0);
+  final Map<WebosSubtitleCue, int> _lastTickElapsedByCue = {};
   List<WebosSubtitleCue> _lastVisibleSnapshot = const [];
   List<bool> _visiblePgsReady = const [];
   List<WebosSubtitleCue> _visibleSorted = const [];
@@ -4259,6 +4658,7 @@ class _WebosSubtitleOverlayState extends State<WebosSubtitleOverlay>
     widget.activeCues.removeListener(_onActiveCuesChanged);
     widget.styleConfig.removeListener(_onStyleChanged);
     _vsyncTicker?.dispose();
+    _animTickNotifier.dispose();
     super.dispose();
   }
 
@@ -4287,6 +4687,7 @@ class _WebosSubtitleOverlayState extends State<WebosSubtitleOverlay>
           if (sCmp != 0) return sCmp;
           return a.readOrder.compareTo(b.readOrder);
         });
+      _lastTickElapsedByCue.removeWhere((k, _) => !_visibleSorted.contains(k));
     }
     return changed;
   }
@@ -4329,8 +4730,20 @@ class _WebosSubtitleOverlayState extends State<WebosSubtitleOverlay>
     // Playhead did not move (paused / buffering): animated cues cannot change either.
     if (nowMs != null && nowMs == _lastTickNowMs) return;
     _lastTickNowMs = nowMs;
-    if (_visibleSorted.any((c) => c.isAnimated)) {
-      setState(() {});
+
+    bool anyNeedsUpdate = false;
+    for (final c in _visibleSorted) {
+      if (!c.isAnimated) continue;
+      final curElapsed = _resolveElapsedMsForCue(c, nowMs);
+      final prevElapsed = _lastTickElapsedByCue[c];
+      if (c.needsUpdateBetween(prevElapsed, curElapsed)) {
+        _lastTickElapsedByCue[c] = curElapsed;
+        anyNeedsUpdate = true;
+      }
+    }
+    if (anyNeedsUpdate) {
+      // Scoped tick: notify only animated cue hosts without rebuilding static cues or the overlay.
+      _animTickNotifier.value = _animTickNotifier.value + 1;
     }
   }
 
@@ -4376,7 +4789,56 @@ class _WebosSubtitleOverlayState extends State<WebosSubtitleOverlay>
     return wallElapsed.clamp(0, dur);
   }
 
-  Widget _maybeWrapWithAssScreenClip({
+  int _resolveCurrentElapsedMsForCue(WebosSubtitleCue cue) =>
+      _resolveElapsedMsForCue(cue, _resolveSmoothPlayheadMs());
+
+  static Widget _wrapPositionedCue({
+    required WebosSubtitleCue cue,
+    required Widget child,
+    required double screenW,
+    required double screenH,
+    required int elapsedMs,
+  }) {
+    final hasMove = cue.moveX1 != null &&
+        cue.moveY1 != null &&
+        cue.moveX2 != null &&
+        cue.moveY2 != null;
+    final rx = cue.playResX > 0 ? cue.playResX : 1920;
+    final ry = cue.playResY > 0 ? cue.playResY : 1080;
+    double px = cue.posX ?? cue.moveX1 ?? 0.0;
+    double py = cue.posY ?? cue.moveY1 ?? 0.0;
+
+    if (hasMove) {
+      final t1 = cue.moveT1 ?? 0;
+      final t2 = (cue.moveT2 != null && cue.moveT2! > t1)
+          ? cue.moveT2!
+          : (cue.endMs - cue.startMs);
+      final frac = t2 > t1 ? ((elapsedMs - t1) / (t2 - t1)).clamp(0.0, 1.0) : 1.0;
+      px = cue.moveX1! + (cue.moveX2! - cue.moveX1!) * frac;
+      py = cue.moveY1! + (cue.moveY2! - cue.moveY1!) * frac;
+    }
+
+    final screenX = (px / rx) * screenW;
+    final screenY = (py / ry) * screenH;
+    final anchorOffset = _anchorTranslationFor(cue.alignment, isAssPositioned: cue.isAss);
+
+    // Keep \pos/\move inside an unconstrained Stack + Positioned so positioned lines never wrap.
+    return Stack(
+      clipBehavior: Clip.none,
+      children: [
+        Positioned(
+          left: screenX,
+          top: screenY,
+          child: FractionalTranslation(
+            translation: anchorOffset,
+            child: child,
+          ),
+        ),
+      ],
+    );
+  }
+
+  static Widget _maybeWrapWithAssScreenClipStatic({
     required Widget child,
     required WebosSubtitleCue cue,
     required double screenW,
@@ -4454,6 +4916,94 @@ class _WebosSubtitleOverlayState extends State<WebosSubtitleOverlay>
     );
   }
 
+  Widget _buildCueHost({
+    required WebosSubtitleCue cue,
+    required WebosSubtitleStyleConfig cfg,
+    required double screenW,
+    required double screenH,
+    required int? smoothNowMs,
+    required bool isPositioned,
+    required bool wrapScreenClip,
+  }) {
+    final elapsed = _resolveElapsedMsForCue(cue, smoothNowMs);
+    if (cue.isAnimated) {
+      _lastTickElapsedByCue[cue] = elapsed;
+    }
+
+    switch (cue.animTier) {
+      case WebosCueAnimTier.staticCue:
+        WebosSubtitleOverlay.debugStaticCueBuildCount++;
+        Widget res = _buildCueWidget(cue, cfg, screenW, screenH, elapsed);
+        if (isPositioned) {
+          res = _wrapPositionedCue(
+            cue: cue,
+            child: res,
+            screenW: screenW,
+            screenH: screenH,
+            elapsedMs: elapsed,
+          );
+        }
+        if (wrapScreenClip) {
+          res = _maybeWrapWithAssScreenClipStatic(
+            child: res,
+            cue: cue,
+            screenW: screenW,
+            screenH: screenH,
+            elapsedMs: elapsed,
+          );
+        }
+        return res;
+
+      case WebosCueAnimTier.compositorOnly:
+        WebosSubtitleOverlay.debugStaticCueBuildCount++;
+        final drawSpan = cue.spans.where((s) => s.drawingScale > 0 && s.compiledVectorPath != null).firstOrNull;
+        if (drawSpan != null) {
+          final vecWidget = _buildVectorDrawingWidget(cue, drawSpan, screenW, screenH, 0);
+          if (vecWidget != null) {
+            return _WebosCompositorAnimatedCue(
+              cue: cue,
+              tickNotifier: _animTickNotifier,
+              resolveElapsedMs: _resolveCurrentElapsedMsForCue,
+              screenW: screenW,
+              screenH: screenH,
+              isPositioned: isPositioned,
+              wrapScreenClip: wrapScreenClip,
+              isVectorDrawing: true,
+              vectorTransforms: drawSpan.transforms,
+              child: RepaintBoundary(child: vecWidget),
+            );
+          }
+        }
+        Widget staticInner = _buildCueTextStack(cue, cfg, screenW, screenH, 0);
+        // Omit RepaintBoundary when \t(\fscx/\fscy) targets > 1.25x so zoom-ins never raster-blur.
+        if (!cue.hasLargeAnimatedScale) {
+          staticInner = RepaintBoundary(child: staticInner);
+        }
+        return _WebosCompositorAnimatedCue(
+          cue: cue,
+          tickNotifier: _animTickNotifier,
+          resolveElapsedMs: _resolveCurrentElapsedMsForCue,
+          screenW: screenW,
+          screenH: screenH,
+          isPositioned: isPositioned,
+          wrapScreenClip: wrapScreenClip,
+          child: staticInner,
+        );
+
+      case WebosCueAnimTier.contentAnimated:
+        return _WebosContentAnimatedCue(
+          cue: cue,
+          tickNotifier: _animTickNotifier,
+          resolveElapsedMs: _resolveCurrentElapsedMsForCue,
+          screenW: screenW,
+          screenH: screenH,
+          isPositioned: isPositioned,
+          wrapScreenClip: wrapScreenClip,
+          buildContent: (elapsedMs) => _buildCueWidget(cue, cfg, screenW, screenH, elapsedMs),
+        );
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     WebosSubtitleOverlay.debugBuildCount++;
@@ -4503,48 +5053,15 @@ class _WebosSubtitleOverlayState extends State<WebosSubtitleOverlay>
                 continue;
               }
               if (cue.posX != null && cue.posY != null || hasMove || cue.hasVectorDrawing) {
-                final rx = cue.playResX > 0 ? cue.playResX : 1920;
-                final ry = cue.playResY > 0 ? cue.playResY : 1080;
-                double px = cue.posX ?? cue.moveX1 ?? 0.0;
-                double py = cue.posY ?? cue.moveY1 ?? 0.0;
-                final elapsed = _resolveElapsedMsForCue(cue, smoothNowMs);
-
-                if (hasMove) {
-                  final t1 = cue.moveT1 ?? 0;
-                  final t2 = (cue.moveT2 != null && cue.moveT2! > t1)
-                      ? cue.moveT2!
-                      : (cue.endMs - cue.startMs);
-                  final frac = t2 > t1 ? ((elapsed - t1) / (t2 - t1)).clamp(0.0, 1.0) : 1.0;
-                  px = cue.moveX1! + (cue.moveX2! - cue.moveX1!) * frac;
-                  py = cue.moveY1! + (cue.moveY2! - cue.moveY1!) * frac;
-                }
-
-                final screenX = (px / rx) * screenW;
-                final screenY = (py / ry) * screenH;
-                final anchorOffset = _anchorTranslationFor(cue.alignment, isAssPositioned: cue.isAss);
-
-                Widget posWidget = Stack(
-                  clipBehavior: Clip.none,
-                  children: [
-                    Positioned(
-                      left: screenX,
-                      top: screenY,
-                      child: FractionalTranslation(
-                        translation: anchorOffset,
-                        child: _buildCueWidget(cue, cfg, screenW, screenH, elapsed),
-                      ),
-                    ),
-                  ],
-                );
-
-                posWidget = _maybeWrapWithAssScreenClip(
-                  child: posWidget,
+                final posWidget = _buildCueHost(
                   cue: cue,
+                  cfg: cfg,
                   screenW: screenW,
                   screenH: screenH,
-                  elapsedMs: elapsed,
+                  smoothNowMs: smoothNowMs,
+                  isPositioned: true,
+                  wrapScreenClip: true,
                 );
-
                 positionedWidgets.add(
                   Positioned.fill(key: ObjectKey(cue), child: posWidget),
                 );
@@ -4578,12 +5095,14 @@ class _WebosSubtitleOverlayState extends State<WebosSubtitleOverlay>
                       id: i,
                       child: Padding(
                         padding: const EdgeInsets.symmetric(vertical: 2.0),
-                        child: _buildCueWidget(
-                          groupCues[i],
-                          cfg,
-                          screenW,
-                          screenH,
-                          _resolveElapsedMsForCue(groupCues[i], smoothNowMs),
+                        child: _buildCueHost(
+                          cue: groupCues[i],
+                          cfg: cfg,
+                          screenW: screenW,
+                          screenH: screenH,
+                          smoothNowMs: smoothNowMs,
+                          isPositioned: false,
+                          wrapScreenClip: false,
                         ),
                       ),
                     ),
@@ -4591,13 +5110,25 @@ class _WebosSubtitleOverlayState extends State<WebosSubtitleOverlay>
               );
 
               if (groupCues.length == 1) {
-                groupStack = _maybeWrapWithAssScreenClip(
-                  child: groupStack,
-                  cue: first,
-                  screenW: screenW,
-                  screenH: screenH,
-                  elapsedMs: _resolveElapsedMsForCue(first, smoothNowMs),
-                );
+                final hasAnimClip = first.cueTransforms.any((t) => t.clipRect != null);
+                if (hasAnimClip) {
+                  groupStack = _WebosAnimatedScreenClip(
+                    cue: first,
+                    tickNotifier: _animTickNotifier,
+                    resolveElapsedMs: _resolveCurrentElapsedMsForCue,
+                    screenW: screenW,
+                    screenH: screenH,
+                    child: groupStack,
+                  );
+                } else {
+                  groupStack = _maybeWrapWithAssScreenClipStatic(
+                    child: groupStack,
+                    cue: first,
+                    screenW: screenW,
+                    screenH: screenH,
+                    elapsedMs: _resolveElapsedMsForCue(first, smoothNowMs),
+                  );
+                }
               }
 
               groupWidgets.add(
@@ -4814,13 +5345,7 @@ class _WebosSubtitleOverlayState extends State<WebosSubtitleOverlay>
     );
   }
 
-  Widget _buildCueWidget(
-    WebosSubtitleCue cue,
-    WebosSubtitleStyleConfig cfg,
-    double screenW,
-    double screenH,
-    int elapsedMs,
-  ) {
+  static double _evalFadeMultiplier(WebosSubtitleCue cue, int elapsedMs) {
     final totalDur = (cue.endMs - cue.startMs).clamp(1, 3600000);
     final remainingMs = (totalDur - elapsedMs).clamp(0, totalDur);
 
@@ -4849,26 +5374,102 @@ class _WebosSubtitleOverlayState extends State<WebosSubtitleOverlay>
         fadeMultiplier = (remainingMs / cue.fadeOutMs).clamp(0.0, 1.0);
       }
     }
+    return fadeMultiplier;
+  }
 
-    final drawSpan = cue.spans.where((s) => s.drawingScale > 0 && s.compiledVectorPath != null).firstOrNull;
-    if (drawSpan != null) {
-      final vecWidget = _buildVectorDrawingWidget(cue, drawSpan, screenW, screenH, elapsedMs);
-      if (vecWidget != null) {
-        Widget res = vecWidget;
-        final rotZ = _evalTransformedDouble(cue.rotationZ, drawSpan.transforms, elapsedMs, totalDur, (t) => t.rotationZ);
-        if (rotZ != 0.0) {
-          res = Transform.rotate(
-            angle: -rotZ * (math.pi / 180.0),
-            alignment: _flutterAlignmentFor(cue.alignment),
-            child: res,
-          );
-        }
-        if (fadeMultiplier < 0.999) {
-          res = Opacity(opacity: fadeMultiplier.clamp(0.0, 1.0), child: res);
-        }
-        return res;
-      }
+  static Widget _applyVectorTransformAndFade(
+    WebosSubtitleCue cue,
+    List<WebosAssTransform> drawSpanTransforms,
+    Widget child,
+    int elapsedMs,
+  ) {
+    final totalDur = (cue.endMs - cue.startMs).clamp(1, 3600000);
+    final fadeMultiplier = _evalFadeMultiplier(cue, elapsedMs);
+    Widget res = child;
+    final rotZ = _evalTransformedDouble(cue.rotationZ, drawSpanTransforms, elapsedMs, totalDur, (t) => t.rotationZ);
+    if (rotZ != 0.0) {
+      res = Transform.rotate(
+        angle: -rotZ * (math.pi / 180.0),
+        alignment: _flutterAlignmentFor(cue.alignment),
+        child: res,
+      );
     }
+    if (fadeMultiplier < 0.999) {
+      res = Opacity(opacity: fadeMultiplier.clamp(0.0, 1.0), child: res);
+    }
+    return res;
+  }
+
+  static Widget _applyCueTransformAndFade(
+    WebosSubtitleCue cue,
+    Widget child,
+    int elapsedMs,
+  ) {
+    final totalDur = (cue.endMs - cue.startMs).clamp(1, 3600000);
+    final fadeMultiplier = _evalFadeMultiplier(cue, elapsedMs);
+    final effectiveSpans = cue.spans.isNotEmpty ? cue.spans : [WebosAssSpan(text: cue.text)];
+    final firstTransforms = cue.cueTransforms.isNotEmpty
+        ? cue.cueTransforms
+        : effectiveSpans.first.transforms;
+
+    final dynScaleX = _evalTransformedDouble(cue.scaleX, firstTransforms, elapsedMs, totalDur, (t) => t.scaleX);
+    final dynScaleY = _evalTransformedDouble(cue.scaleY, firstTransforms, elapsedMs, totalDur, (t) => t.scaleY);
+    final dynRotZ = _evalTransformedDouble(cue.rotationZ, firstTransforms, elapsedMs, totalDur, (t) => t.rotationZ);
+    final dynRotX = _evalTransformedDouble(cue.rotationX, firstTransforms, elapsedMs, totalDur, (t) => t.rotationX);
+    final dynRotY = _evalTransformedDouble(cue.rotationY, firstTransforms, elapsedMs, totalDur, (t) => t.rotationY);
+    final dynShearX = _evalTransformedDouble(cue.shearX, firstTransforms, elapsedMs, totalDur, (t) => t.shearX);
+    final dynShearY = _evalTransformedDouble(cue.shearY, firstTransforms, elapsedMs, totalDur, (t) => t.shearY);
+
+    Widget result = child;
+    if (dynScaleX != 1.0 ||
+        dynScaleY != 1.0 ||
+        dynShearX != 0.0 ||
+        dynShearY != 0.0 ||
+        dynRotX != 0.0 ||
+        dynRotY != 0.0 ||
+        dynRotZ != 0.0) {
+      final mat = Matrix4.identity();
+      if (dynRotX != 0.0 || dynRotY != 0.0) {
+        // libass camera distance is 2500 PlayRes units -> ~0.00045 perspective entry
+        mat.setEntry(3, 2, 0.00045);
+      }
+      // libass 3D rotation order: Ry(fry) * Rx(-frx) * Rz(-frz)
+      // Rotating around Y before X keeps horizontal text lines level instead of tilting diagonally!
+      if (dynRotY != 0.0) mat.rotateY(dynRotY * (math.pi / 180.0));
+      if (dynRotX != 0.0) mat.rotateX(-dynRotX * (math.pi / 180.0));
+      if (dynRotZ != 0.0) mat.rotateZ(-dynRotZ * (math.pi / 180.0));
+
+      if (dynShearX != 0.0 || dynShearY != 0.0) {
+        final shearMat = Matrix4.identity();
+        shearMat.setEntry(0, 1, -dynShearX);
+        shearMat.setEntry(1, 0, -dynShearY);
+        mat.multiply(shearMat);
+      }
+      if (dynScaleX != 1.0 || dynScaleY != 1.0) {
+        mat.scale(dynScaleX, dynScaleY, 1.0);
+      }
+      result = Transform(
+        alignment: _flutterAlignmentFor(cue.alignment),
+        transform: mat,
+        child: result,
+      );
+    }
+
+    if (fadeMultiplier < 0.999) {
+      result = Opacity(opacity: fadeMultiplier.clamp(0.0, 1.0), child: result);
+    }
+
+    return result;
+  }
+
+  Widget _buildCueTextStack(
+    WebosSubtitleCue cue,
+    WebosSubtitleStyleConfig cfg,
+    double screenW,
+    double screenH,
+    int elapsedMs,
+  ) {
+    final totalDur = (cue.endMs - cue.startMs).clamp(1, 3600000);
 
     final rx = cue.playResX > 0 ? cue.playResX : 1920;
     final ry = cue.playResY > 0 ? cue.playResY : 1080;
@@ -5116,54 +5717,30 @@ class _WebosSubtitleOverlayState extends State<WebosSubtitleOverlay>
       );
     }
 
-    final firstTransforms = cue.cueTransforms.isNotEmpty
-        ? cue.cueTransforms
-        : effectiveSpans.first.transforms;
-    final dynScaleX = _evalTransformedDouble(cue.scaleX, firstTransforms, elapsedMs, totalDur, (t) => t.scaleX);
-    final dynScaleY = _evalTransformedDouble(cue.scaleY, firstTransforms, elapsedMs, totalDur, (t) => t.scaleY);
-    final dynRotZ = _evalTransformedDouble(cue.rotationZ, firstTransforms, elapsedMs, totalDur, (t) => t.rotationZ);
-    final dynRotX = _evalTransformedDouble(cue.rotationX, firstTransforms, elapsedMs, totalDur, (t) => t.rotationX);
-    final dynRotY = _evalTransformedDouble(cue.rotationY, firstTransforms, elapsedMs, totalDur, (t) => t.rotationY);
-    final dynShearX = _evalTransformedDouble(cue.shearX, firstTransforms, elapsedMs, totalDur, (t) => t.shearX);
-    final dynShearY = _evalTransformedDouble(cue.shearY, firstTransforms, elapsedMs, totalDur, (t) => t.shearY);
+    return result;
+  }
 
-    if (dynScaleX != 1.0 ||
-        dynScaleY != 1.0 ||
-        dynShearX != 0.0 ||
-        dynShearY != 0.0 ||
-        dynRotX != 0.0 ||
-        dynRotY != 0.0 ||
-        dynRotZ != 0.0) {
-      final mat = Matrix4.identity();
-      if (dynRotX != 0.0 || dynRotY != 0.0) {
-        // libass camera distance is 2500 PlayRes units -> ~0.00045 perspective entry
-        mat.setEntry(3, 2, 0.00045);
+  Widget _buildCueWidget(
+    WebosSubtitleCue cue,
+    WebosSubtitleStyleConfig cfg,
+    double screenW,
+    double screenH,
+    int elapsedMs,
+  ) {
+    final drawSpan = cue.spans.where((s) => s.drawingScale > 0 && s.compiledVectorPath != null).firstOrNull;
+    if (drawSpan != null) {
+      final vecWidget = _buildVectorDrawingWidget(cue, drawSpan, screenW, screenH, elapsedMs);
+      if (vecWidget != null) {
+        Widget res = _applyVectorTransformAndFade(cue, drawSpan.transforms, vecWidget, elapsedMs);
+        if (!cue.isAnimated) {
+          res = RepaintBoundary(child: res);
+        }
+        return res;
       }
-      // libass 3D rotation order: Ry(fry) * Rx(-frx) * Rz(-frz)
-      // Rotating around Y before X keeps horizontal text lines level instead of tilting diagonally!
-      if (dynRotY != 0.0) mat.rotateY(dynRotY * (math.pi / 180.0));
-      if (dynRotX != 0.0) mat.rotateX(-dynRotX * (math.pi / 180.0));
-      if (dynRotZ != 0.0) mat.rotateZ(-dynRotZ * (math.pi / 180.0));
-
-      if (dynShearX != 0.0 || dynShearY != 0.0) {
-        final shearMat = Matrix4.identity();
-        shearMat.setEntry(0, 1, -dynShearX);
-        shearMat.setEntry(1, 0, -dynShearY);
-        mat.multiply(shearMat);
-      }
-      if (dynScaleX != 1.0 || dynScaleY != 1.0) {
-        mat.scale(dynScaleX, dynScaleY, 1.0);
-      }
-      result = Transform(
-        alignment: _flutterAlignmentFor(cue.alignment),
-        transform: mat,
-        child: result,
-      );
     }
 
-    if (fadeMultiplier < 0.999) {
-      result = Opacity(opacity: fadeMultiplier.clamp(0.0, 1.0), child: result);
-    }
+    Widget result = _buildCueTextStack(cue, cfg, screenW, screenH, elapsedMs);
+    result = _applyCueTransformAndFade(cue, result, elapsedMs);
 
     if (!cue.isAnimated) {
       result = RepaintBoundary(child: result);
