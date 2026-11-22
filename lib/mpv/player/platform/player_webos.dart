@@ -735,7 +735,7 @@ class PlayerWebos extends PlayerBase {
     }
 
     if (!listEquals(activeSubtitleCues.value, matching)) {
-      if (!listEquals(activeSubtitleCues.value, matching)) { activeSubtitleCues.value = matching; }
+      activeSubtitleCues.value = matching;
     }
   }
 

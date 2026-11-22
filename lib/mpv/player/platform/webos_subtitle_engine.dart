@@ -3623,7 +3623,154 @@ class _AssVectorDrawingPainter extends CustomPainter {
   }
 }
 
+/// Precomputes, for every cue of [rawCues], the end time after seamless 23.976fps handoff:
+/// if a successor cue on the same layer/alignment starts within -12..+18 ms of `c.endMs`,
+/// the end is clamped/bridged to that successor's start (no early `break`, nearest wins).
+@visibleForTesting
+List<int> computeWebosEffectiveEndMs(List<WebosSubtitleCue> rawCues) {
+  final result = List<int>.filled(rawCues.length, 0);
+  for (int i = 0; i < rawCues.length; i++) {
+    final c = rawCues[i];
+    int? nearestSuccessorStartMs;
+    for (int j = 0; j < rawCues.length; j++) {
+      if (i == j) continue;
+      final next = rawCues[j];
+      if (next.layer == c.layer &&
+          next.alignment == c.alignment &&
+          next.startMs > c.startMs &&
+          next.startMs >= c.endMs - 12 &&
+          next.startMs <= c.endMs + 18) {
+        if (nearestSuccessorStartMs == null || next.startMs < nearestSuccessorStartMs) {
+          nearestSuccessorStartMs = next.startMs;
+        }
+      }
+    }
+    result[i] = nearestSuccessorStartMs ?? c.endMs;
+  }
+  return result;
+}
+
+/// Cues visible at [nowMs], given the output of [computeWebosEffectiveEndMs].
+@visibleForTesting
+List<WebosSubtitleCue> selectWebosVisibleCues(
+  List<WebosSubtitleCue> rawCues,
+  List<int> effectiveEndMs,
+  int nowMs,
+) {
+  final visible = <WebosSubtitleCue>[];
+  for (int i = 0; i < rawCues.length; i++) {
+    final c = rawCues[i];
+    if (nowMs < c.startMs) continue;
+    if (nowMs < effectiveEndMs[i]) visible.add(c);
+  }
+  return visible;
+}
+
+/// Per-cue outer padding of a non-positioned (aligned) cue.
+class WebosAlignedGroupEntry {
+  final double left;
+  final double right;
+
+  /// Distance from the screen edge the alignment anchors to (bottom for \an1-3, top for \an7-9).
+  final double v;
+
+  const WebosAlignedGroupEntry({required this.left, required this.right, required this.v});
+
+  @override
+  bool operator ==(Object other) =>
+      other is WebosAlignedGroupEntry && other.left == left && other.right == right && other.v == v;
+
+  @override
+  int get hashCode => Object.hash(left, right, v);
+}
+
+/// Resolves a cue's own marginL/marginR/marginV (scaled from its PlayRes) into screen padding.
+@visibleForTesting
+WebosAlignedGroupEntry computeWebosAlignedCueEntry({
+  required WebosSubtitleCue cue,
+  required int subtitlePosition,
+  required double screenW,
+  required double screenH,
+}) {
+  final rx = cue.playResX > 0 ? cue.playResX : 1920;
+  final ry = cue.playResY > 0 ? cue.playResY : 1080;
+  final scaleX = screenW / rx;
+  final scaleY = screenH / ry;
+  final left = (cue.marginL * scaleX).clamp(24.0, screenW * 0.35);
+  final right = (cue.marginR * scaleX).clamp(24.0, screenW * 0.35);
+  final v = cue.isAss
+      ? (cue.marginV * scaleY).clamp(16.0, screenH * 0.45)
+      : (((100 - subtitlePosition).clamp(0, 50) / 100.0) * screenH + 38.0);
+  return WebosAlignedGroupEntry(left: left, right: right, v: v);
+}
+
+/// Stacks the cues of one alignment (\an1..\an9) without overlap while honouring each cue's
+/// own margins. Child 0 is the first cue: bottom-most for \an1-3, top-most for \an4-9.
+/// Children must be [LayoutId]s with ids 0..entries.length-1.
+class WebosAlignedGroupLayoutDelegate extends MultiChildLayoutDelegate {
+  final int an;
+  final List<WebosAlignedGroupEntry> entries;
+
+  WebosAlignedGroupLayoutDelegate({required this.an, required this.entries});
+
+  @override
+  void performLayout(Size size) {
+    final n = entries.length;
+    final sizes = <Size>[];
+    for (int i = 0; i < n; i++) {
+      final e = entries[i];
+      final maxW = math.max(0.0, size.width - e.left - e.right);
+      sizes.add(layoutChild(i, BoxConstraints(maxWidth: maxW, maxHeight: size.height)));
+    }
+
+    double xFor(int i) {
+      final e = entries[i];
+      final w = sizes[i].width;
+      final areaW = math.max(0.0, size.width - e.left - e.right);
+      if (an == 1 || an == 4 || an == 7) return e.left;
+      if (an == 3 || an == 6 || an == 9) return size.width - e.right - w;
+      return e.left + (areaW - w) / 2.0;
+    }
+
+    if (an <= 3) {
+      double cursorTop = size.height;
+      for (int i = 0; i < n; i++) {
+        final bottomEdge = math.min(size.height - entries[i].v, cursorTop);
+        final y = bottomEdge - sizes[i].height;
+        positionChild(i, Offset(xFor(i), y));
+        cursorTop = y;
+      }
+    } else if (an >= 7) {
+      double cursorBottom = 0.0;
+      for (int i = 0; i < n; i++) {
+        final y = math.max(entries[i].v, cursorBottom);
+        positionChild(i, Offset(xFor(i), y));
+        cursorBottom = y + sizes[i].height;
+      }
+    } else {
+      double total = 0.0;
+      for (final s in sizes) {
+        total += s.height;
+      }
+      double y = (size.height - total) / 2.0;
+      for (int i = 0; i < n; i++) {
+        positionChild(i, Offset(xFor(i), y));
+        y += sizes[i].height;
+      }
+    }
+  }
+
+  @override
+  bool shouldRelayout(covariant WebosAlignedGroupLayoutDelegate oldDelegate) {
+    return oldDelegate.an != an || !listEquals(oldDelegate.entries, entries);
+  }
+}
+
 class WebosSubtitleOverlay extends StatefulWidget {
+  /// Test-only counter of overlay builds.
+  @visibleForTesting
+  static int debugBuildCount = 0;
+
   final ValueListenable<List<WebosSubtitleCue>> activeCues;
   final ValueListenable<WebosSubtitleStyleConfig> styleConfig;
   final int Function()? getCurrentPositionMs;
@@ -3644,6 +3791,13 @@ class _WebosSubtitleOverlayState extends State<WebosSubtitleOverlay>
   Ticker? _vsyncTicker;
   final Map<WebosSubtitleCue, DateTime> _cueFirstSeenAt = {};
   List<WebosSubtitleCue> _lastVisibleSnapshot = const [];
+  List<bool> _visiblePgsReady = const [];
+  List<WebosSubtitleCue> _visibleSorted = const [];
+  List<WebosSubtitleCue>? _effectiveEndRaw;
+  List<int> _effectiveEndMs = const [];
+  List<int> _effectiveEndSig = const [];
+  int? _lastTickNowMs;
+  bool _initialized = false;
 
   void _onStyleChanged() {
     if (mounted) setState(() {});
@@ -3656,6 +3810,7 @@ class _WebosSubtitleOverlayState extends State<WebosSubtitleOverlay>
     widget.activeCues.addListener(_onActiveCuesChanged);
     widget.styleConfig.addListener(_onStyleChanged);
     _onActiveCuesChanged();
+    _initialized = true;
   }
 
   @override
@@ -3680,26 +3835,74 @@ class _WebosSubtitleOverlayState extends State<WebosSubtitleOverlay>
     super.dispose();
   }
 
+  /// Recomputes the visible cue set for [nowMs]. Returns true when the visible cues or the
+  /// readiness of their PGS bitmaps changed (i.e. when a rebuild is actually required).
+  bool _recomputeVisible(int? nowMs) {
+    final raw = widget.activeCues.value;
+    final List<WebosSubtitleCue> vis;
+    if (raw.isEmpty) {
+      vis = const [];
+    } else if (nowMs == null) {
+      vis = List<WebosSubtitleCue>.of(raw);
+    } else {
+      vis = selectWebosVisibleCues(raw, _effectiveEndsFor(raw), nowMs);
+    }
+    final ready = <bool>[for (final c in vis) c.isPgs && c.pgsImage != null];
+    final changed = !listEquals(vis, _lastVisibleSnapshot) || !listEquals(ready, _visiblePgsReady);
+    if (changed) {
+      _lastVisibleSnapshot = vis;
+      _visiblePgsReady = ready;
+      _visibleSorted = List<WebosSubtitleCue>.of(vis)
+        ..sort((a, b) {
+          final lCmp = a.layer.compareTo(b.layer);
+          if (lCmp != 0) return lCmp;
+          final sCmp = a.startMs.compareTo(b.startMs);
+          if (sCmp != 0) return sCmp;
+          return a.readOrder.compareTo(b.readOrder);
+        });
+    }
+    return changed;
+  }
+
+  /// Effective end times (-12..+18 ms successor clamping) are computed once per raw cue list.
+  /// PGS cues get their endMs mutated in place when the next display set arrives, so the cache
+  /// is validated against an endMs signature in O(M).
+  List<int> _effectiveEndsFor(List<WebosSubtitleCue> raw) {
+    bool valid = identical(raw, _effectiveEndRaw) && _effectiveEndSig.length == raw.length;
+    if (valid) {
+      for (int i = 0; i < raw.length; i++) {
+        if (raw[i].endMs != _effectiveEndSig[i]) {
+          valid = false;
+          break;
+        }
+      }
+    }
+    if (!valid) {
+      _effectiveEndRaw = raw;
+      _effectiveEndMs = computeWebosEffectiveEndMs(raw);
+      _effectiveEndSig = [for (final c in raw) c.endMs];
+    }
+    return _effectiveEndMs;
+  }
+
   void _onVsyncTick(Duration _) {
     if (!mounted) return;
     final raw = widget.activeCues.value;
     if (raw.isEmpty) {
-      if (_lastVisibleSnapshot.isNotEmpty) {
-        _lastVisibleSnapshot = const [];
-        setState(() {});
-      }
+      if (_recomputeVisible(null)) setState(() {});
       _vsyncTicker?.stop();
       return;
     }
     final nowMs = _resolveSmoothPlayheadMs();
-    final vis = _selectVisibleCuesForTimestamp(raw, nowMs);
-    final bool visibilityChanged = !listEquals(vis, _lastVisibleSnapshot);
-    if (visibilityChanged) {
-      _lastVisibleSnapshot = List<WebosSubtitleCue>.of(vis);
+    if (_recomputeVisible(nowMs)) {
+      _lastTickNowMs = nowMs;
       setState(() {});
       return;
     }
-    if (vis.any((c) => c.isAnimated)) {
+    // Playhead did not move (paused / buffering): animated cues cannot change either.
+    if (nowMs != null && nowMs == _lastTickNowMs) return;
+    _lastTickNowMs = nowMs;
+    if (_visibleSorted.any((c) => c.isAnimated)) {
       setState(() {});
     }
   }
@@ -3719,7 +3922,14 @@ class _WebosSubtitleOverlayState extends State<WebosSubtitleOverlay>
     } else {
       _vsyncTicker?.stop();
     }
-    if (mounted) setState(() {});
+
+    final nowMs = _resolveSmoothPlayheadMs();
+    final changed = _recomputeVisible(nowMs);
+    // Lookahead / trail churn of the raw window does not affect what is on screen.
+    if (changed && mounted && _initialized) {
+      _lastTickNowMs = nowMs;
+      setState(() {});
+    }
   }
 
   int? _resolveSmoothPlayheadMs() {
@@ -3817,51 +4027,9 @@ class _WebosSubtitleOverlayState extends State<WebosSubtitleOverlay>
     );
   }
 
-  /// Filters active cues at 60fps while bridging 1..15ms MKV/centisecond rounding gaps
-  /// between consecutive 23.976fps frame-by-frame animation cues so they never flicker!
-  List<WebosSubtitleCue> _selectVisibleCuesForTimestamp(
-    List<WebosSubtitleCue> rawCues,
-    int? smoothNowMs,
-  ) {
-    if (smoothNowMs == null) return List<WebosSubtitleCue>.of(rawCues);
-
-    final visible = <WebosSubtitleCue>[];
-    for (int i = 0; i < rawCues.length; i++) {
-      final c = rawCues[i];
-      if (smoothNowMs < c.startMs) continue;
-
-      int effectiveEndMs = c.endMs;
-      // Seamless 23.976fps 1-frame cue handoff:
-      // 1) If a successor cue on the same layer/alignment starts within -12..+18ms of c.endMs,
-      //    clamp c's end strictly to next.startMs once next has started (prevents 2 frames overlapping),
-      //    or bridge the gap until next.startMs (prevents 1-frame flicker).
-      int? nearestSuccessorStartMs;
-      for (int j = 0; j < rawCues.length; j++) {
-        if (i == j) continue;
-        final next = rawCues[j];
-        if (next.layer == c.layer &&
-            next.alignment == c.alignment &&
-            next.startMs > c.startMs &&
-            next.startMs >= c.endMs - 12 &&
-            next.startMs <= c.endMs + 18) {
-          if (nearestSuccessorStartMs == null || next.startMs < nearestSuccessorStartMs) {
-            nearestSuccessorStartMs = next.startMs;
-          }
-        }
-      }
-      if (nearestSuccessorStartMs != null) {
-        effectiveEndMs = nearestSuccessorStartMs;
-      }
-
-      if (smoothNowMs < effectiveEndMs) {
-        visible.add(c);
-      }
-    }
-    return visible;
-  }
-
   @override
   Widget build(BuildContext context) {
+    WebosSubtitleOverlay.debugBuildCount++;
     return RepaintBoundary(
       child: IgnorePointer(
         child: LayoutBuilder(
@@ -3869,180 +4037,154 @@ class _WebosSubtitleOverlayState extends State<WebosSubtitleOverlay>
             final screenW = constraints.maxWidth > 0 ? constraints.maxWidth : 1920.0;
             final screenH = constraints.maxHeight > 0 ? constraints.maxHeight : 1080.0;
 
-            return ValueListenableBuilder<WebosSubtitleStyleConfig>(
-              valueListenable: widget.styleConfig,
-              builder: (context, cfg, _) {
-                return ValueListenableBuilder<List<WebosSubtitleCue>>(
-                  valueListenable: widget.activeCues,
-                  builder: (context, rawCues, _) {
-                    if (rawCues.isEmpty) return const SizedBox.shrink();
+            // Style and active cues are observed by the listeners registered in initState,
+            // which call setState; no nested ValueListenableBuilders are needed here.
+            final cfg = widget.styleConfig.value;
+            final visibleCues = _visibleSorted;
+            if (visibleCues.isEmpty) return const SizedBox.shrink();
 
-                    final smoothNowMs = _resolveSmoothPlayheadMs();
-                    final visibleCues = _selectVisibleCuesForTimestamp(rawCues, smoothNowMs);
+            final smoothNowMs = _resolveSmoothPlayheadMs();
+            final positionedWidgets = <Widget>[];
+            final alignedGroups = <int, List<WebosSubtitleCue>>{};
 
-                    if (visibleCues.isEmpty) return const SizedBox.shrink();
+            for (final cue in visibleCues) {
+              final hasMove = cue.moveX1 != null &&
+                  cue.moveY1 != null &&
+                  cue.moveX2 != null &&
+                  cue.moveY2 != null;
+              if (cue.isPgs) {
+                if (cue.pgsImage != null) {
+                  final rx = cue.playResX > 0 ? cue.playResX : 1920;
+                  final ry = cue.playResY > 0 ? cue.playResY : 1080;
+                  final sx = screenW / rx;
+                  final sy = screenH / ry;
+                  positionedWidgets.add(
+                    Positioned(
+                      key: ObjectKey(cue),
+                      left: cue.pgsX * sx,
+                      top: cue.pgsY * sy,
+                      width: cue.pgsWidth * sx,
+                      height: cue.pgsHeight * sy,
+                      child: RawImage(
+                        image: cue.pgsImage,
+                        fit: BoxFit.fill,
+                        filterQuality: FilterQuality.medium,
+                      ),
+                    ),
+                  );
+                }
+                continue;
+              }
+              if (cue.posX != null && cue.posY != null || hasMove || cue.hasVectorDrawing) {
+                final rx = cue.playResX > 0 ? cue.playResX : 1920;
+                final ry = cue.playResY > 0 ? cue.playResY : 1080;
+                double px = cue.posX ?? cue.moveX1 ?? 0.0;
+                double py = cue.posY ?? cue.moveY1 ?? 0.0;
+                final elapsed = _resolveElapsedMsForCue(cue, smoothNowMs);
 
-                    visibleCues.sort((a, b) {
-                      final lCmp = a.layer.compareTo(b.layer);
-                      if (lCmp != 0) return lCmp;
-                      final sCmp = a.startMs.compareTo(b.startMs);
-                      if (sCmp != 0) return sCmp;
-                      return a.readOrder.compareTo(b.readOrder);
-                    });
+                if (hasMove) {
+                  final t1 = cue.moveT1 ?? 0;
+                  final t2 = (cue.moveT2 != null && cue.moveT2! > t1)
+                      ? cue.moveT2!
+                      : (cue.endMs - cue.startMs);
+                  final frac = t2 > t1 ? ((elapsed - t1) / (t2 - t1)).clamp(0.0, 1.0) : 1.0;
+                  px = cue.moveX1! + (cue.moveX2! - cue.moveX1!) * frac;
+                  py = cue.moveY1! + (cue.moveY2! - cue.moveY1!) * frac;
+                }
 
-                    final positionedWidgets = <Widget>[];
-                    final alignedGroups = <int, List<WebosSubtitleCue>>{};
+                final screenX = (px / rx) * screenW;
+                final screenY = (py / ry) * screenH;
+                final anchorOffset = _anchorTranslationFor(cue.alignment, isAssPositioned: cue.isAss);
 
-                    for (final cue in visibleCues) {
-                      final hasMove = cue.moveX1 != null &&
-                          cue.moveY1 != null &&
-                          cue.moveX2 != null &&
-                          cue.moveY2 != null;
-                      if (cue.isPgs) {
-                        if (cue.pgsImage != null) {
-                          final rx = cue.playResX > 0 ? cue.playResX : 1920;
-                          final ry = cue.playResY > 0 ? cue.playResY : 1080;
-                          final sx = screenW / rx;
-                          final sy = screenH / ry;
-                          positionedWidgets.add(
-                            Positioned(
-                              left: cue.pgsX * sx,
-                              top: cue.pgsY * sy,
-                              width: cue.pgsWidth * sx,
-                              height: cue.pgsHeight * sy,
-                              child: RawImage(
-                                image: cue.pgsImage,
-                                fit: BoxFit.fill,
-                                filterQuality: FilterQuality.medium,
-                              ),
-                            ),
-                          );
-                        }
-                        continue;
-                      }
-                      if (cue.posX != null && cue.posY != null || hasMove || cue.hasVectorDrawing) {
-                        final rx = cue.playResX > 0 ? cue.playResX : 1920;
-                        final ry = cue.playResY > 0 ? cue.playResY : 1080;
-                        double px = cue.posX ?? cue.moveX1 ?? 0.0;
-                        double py = cue.posY ?? cue.moveY1 ?? 0.0;
-                        final elapsed = _resolveElapsedMsForCue(cue, smoothNowMs);
-
-                        if (hasMove) {
-                          final t1 = cue.moveT1 ?? 0;
-                          final t2 = (cue.moveT2 != null && cue.moveT2! > t1)
-                              ? cue.moveT2!
-                              : (cue.endMs - cue.startMs);
-                          final frac = t2 > t1 ? ((elapsed - t1) / (t2 - t1)).clamp(0.0, 1.0) : 1.0;
-                          px = cue.moveX1! + (cue.moveX2! - cue.moveX1!) * frac;
-                          py = cue.moveY1! + (cue.moveY2! - cue.moveY1!) * frac;
-                        }
-
-                        final screenX = (px / rx) * screenW;
-                        final screenY = (py / ry) * screenH;
-                        final anchorOffset = _anchorTranslationFor(cue.alignment, isAssPositioned: cue.isAss);
-
-                        Widget posWidget = Stack(
-                          clipBehavior: Clip.none,
-                          children: [
-                            Positioned(
-                              left: screenX,
-                              top: screenY,
-                              child: FractionalTranslation(
-                                translation: anchorOffset,
-                                child: _buildCueWidget(cue, cfg, screenW, screenH, elapsed),
-                              ),
-                            ),
-                          ],
-                        );
-
-                        posWidget = _maybeWrapWithAssScreenClip(
-                          child: posWidget,
-                          cue: cue,
-                          screenW: screenW,
-                          screenH: screenH,
-                          elapsedMs: elapsed,
-                        );
-
-                        positionedWidgets.add(
-                          Positioned.fill(child: posWidget),
-                        );
-                      } else {
-                        (alignedGroups[cue.alignment] ??= <WebosSubtitleCue>[]).add(cue);
-                      }
-                    }
-
-                    final groupWidgets = <Widget>[];
-                    alignedGroups.forEach((an, groupCues) {
-                      final first = groupCues.first;
-                      final rx = first.playResX > 0 ? first.playResX : 1920;
-                      final ry = first.playResY > 0 ? first.playResY : 1080;
-                      final scaleX = screenW / rx;
-                      final scaleY = screenH / ry;
-
-                      final leftPad = (first.marginL * scaleX).clamp(24.0, screenW * 0.35);
-                      final rightPad = (first.marginR * scaleX).clamp(24.0, screenW * 0.35);
-                      final vPad = first.isAss
-                          ? (first.marginV * scaleY).clamp(16.0, screenH * 0.45)
-                          : (((100 - cfg.subtitlePosition).clamp(0, 50) / 100.0) * screenH + 38.0);
-
-                      final flutterAlign = _flutterAlignmentFor(an);
-                      final crossAlign = _crossAxisFor(an);
-
-                      Widget groupStack = Padding(
-                        padding: EdgeInsets.only(
-                          left: leftPad,
-                          right: rightPad,
-                          top: an >= 7 ? vPad : 16.0,
-                          bottom: an <= 3 ? vPad : 16.0,
-                        ),
-                        child: Align(
-                          alignment: flutterAlign,
-                          child: Column(
-                            mainAxisSize: MainAxisSize.min,
-                            crossAxisAlignment: crossAlign,
-                            children: [
-                              for (final c in (an <= 3 ? groupCues.reversed : groupCues))
-                                Padding(
-                                  padding: const EdgeInsets.symmetric(vertical: 2.0),
-                                  child: _buildCueWidget(
-                                    c,
-                                    cfg,
-                                    screenW,
-                                    screenH,
-                                    _resolveElapsedMsForCue(c, smoothNowMs),
-                                  ),
-                                ),
-                            ],
-                          ),
-                        ),
-                      );
-
-                      if (groupCues.length == 1) {
-                        groupStack = _maybeWrapWithAssScreenClip(
-                          child: groupStack,
-                          cue: first,
-                          screenW: screenW,
-                          screenH: screenH,
-                          elapsedMs: _resolveElapsedMsForCue(first, smoothNowMs),
-                        );
-                      }
-
-                      groupWidgets.add(
-                        Positioned.fill(child: groupStack),
-                      );
-                    });
-
-                    return Stack(
-                      clipBehavior: Clip.none,
-                      fit: StackFit.expand,
-                      children: [
-                        ...positionedWidgets,
-                        ...groupWidgets,
-                      ],
-                    );
-                  },
+                Widget posWidget = Stack(
+                  clipBehavior: Clip.none,
+                  children: [
+                    Positioned(
+                      left: screenX,
+                      top: screenY,
+                      child: FractionalTranslation(
+                        translation: anchorOffset,
+                        child: _buildCueWidget(cue, cfg, screenW, screenH, elapsed),
+                      ),
+                    ),
+                  ],
                 );
-              },
+
+                posWidget = _maybeWrapWithAssScreenClip(
+                  child: posWidget,
+                  cue: cue,
+                  screenW: screenW,
+                  screenH: screenH,
+                  elapsedMs: elapsed,
+                );
+
+                positionedWidgets.add(
+                  Positioned.fill(key: ObjectKey(cue), child: posWidget),
+                );
+              } else {
+                (alignedGroups[cue.alignment] ??= <WebosSubtitleCue>[]).add(cue);
+              }
+            }
+
+            final groupWidgets = <Widget>[];
+            alignedGroups.forEach((an, groupCues) {
+              final first = groupCues.first;
+
+              // Every cue keeps its own marginL/marginR/marginV; the layout delegate stacks
+              // the cues of one alignment without overlap while honouring each cue's margins.
+              final entries = <WebosAlignedGroupEntry>[
+                for (final c in groupCues)
+                  computeWebosAlignedCueEntry(
+                    cue: c,
+                    subtitlePosition: cfg.subtitlePosition,
+                    screenW: screenW,
+                    screenH: screenH,
+                  ),
+              ];
+
+              Widget groupStack = CustomMultiChildLayout(
+                delegate: WebosAlignedGroupLayoutDelegate(an: an, entries: entries),
+                children: [
+                  for (int i = 0; i < groupCues.length; i++)
+                    LayoutId(
+                      key: ObjectKey(groupCues[i]),
+                      id: i,
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 2.0),
+                        child: _buildCueWidget(
+                          groupCues[i],
+                          cfg,
+                          screenW,
+                          screenH,
+                          _resolveElapsedMsForCue(groupCues[i], smoothNowMs),
+                        ),
+                      ),
+                    ),
+                ],
+              );
+
+              if (groupCues.length == 1) {
+                groupStack = _maybeWrapWithAssScreenClip(
+                  child: groupStack,
+                  cue: first,
+                  screenW: screenW,
+                  screenH: screenH,
+                  elapsedMs: _resolveElapsedMsForCue(first, smoothNowMs),
+                );
+              }
+
+              groupWidgets.add(
+                Positioned.fill(key: ValueKey<String>('webos-an-$an'), child: groupStack),
+              );
+            });
+
+            return Stack(
+              clipBehavior: Clip.none,
+              fit: StackFit.expand,
+              children: [
+                ...positionedWidgets,
+                ...groupWidgets,
+              ],
             );
           },
         ),
@@ -4080,12 +4222,6 @@ class _WebosSubtitleOverlayState extends State<WebosSubtitleOverlay>
       9 => Alignment.topRight,
       _ => Alignment.bottomCenter,
     };
-  }
-
-  static CrossAxisAlignment _crossAxisFor(int an) {
-    if (an == 1 || an == 4 || an == 7) return CrossAxisAlignment.start;
-    if (an == 3 || an == 6 || an == 9) return CrossAxisAlignment.end;
-    return CrossAxisAlignment.center;
   }
 
   static TextAlign _textAlignFor(int an) {
