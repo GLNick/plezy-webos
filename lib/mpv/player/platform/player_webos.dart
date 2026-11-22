@@ -648,6 +648,9 @@ class PlayerWebos extends PlayerBase {
       if (activeSubtitleCues.value.isNotEmpty) {
         activeSubtitleCues.value = const [];
       }
+      if (!disposed && (_subtitlesHidden || _selectedSubTrackId == null || _selectedSubTrackId == 'no')) {
+        _mkvExtractor?.setActiveTrackNumber(null);
+      }
       return;
     }
 
@@ -660,7 +663,10 @@ class PlayerWebos extends PlayerBase {
     );
 
     List<WebosSubtitleCue>? sourceCues = _loadedExternalSubtitles[trackId];
-    if (sourceCues == null || sourceCues.isEmpty) {
+    final bool isExternalSource = sourceCues != null && sourceCues.isNotEmpty;
+    if (isExternalSource) {
+      _mkvExtractor?.setActiveTrackNumber(null);
+    } else {
       final extractor = _mkvExtractor;
       if (extractor != null && extractor.subtitleTracksInOrder.isNotEmpty) {
         final textTracks = extractor.subtitleTracksInOrder
@@ -693,7 +699,16 @@ class PlayerWebos extends PlayerBase {
           chosenTrackNum = candidates[embIdx].trackNumber;
         }
         if (chosenTrackNum != null) {
+          if (extractor.activeTrackNumber != chosenTrackNum && activeSubtitleCues.value.isNotEmpty) {
+            activeSubtitleCues.value = const [];
+          }
+          extractor.setActiveTrackNumber(chosenTrackNum);
           sourceCues = extractor.cuesByTrackNumber[chosenTrackNum];
+        } else {
+          if (extractor.activeTrackNumber != null && activeSubtitleCues.value.isNotEmpty) {
+            activeSubtitleCues.value = const [];
+          }
+          extractor.setActiveTrackNumber(null);
         }
       }
     }
@@ -707,6 +722,9 @@ class PlayerWebos extends PlayerBase {
 
     final rawMatching = <WebosSubtitleCue>[];
     for (final cue in sourceCues) {
+      if (isExternalSource && cue.startMs > nowMs + 3000) {
+        break;
+      }
       // Allow a generous lookahead/trail window (-1500ms to +3000ms) so 24fps animation cues
       // are never prematurely evicted before the 60fps VSync engine renders them.
       if (nowMs + 3000 >= cue.startMs && nowMs - 1500 <= cue.endMs) {
@@ -760,10 +778,10 @@ class PlayerWebos extends PlayerBase {
   Future<void> _teardownActiveTexture() async {
     _positionTimer?.cancel();
     _positionTimer = null;
+    activeSubtitleCues.value = const [];
     _mkvExtractor?.dispose();
     _mkvExtractor = null;
     _loadedExternalSubtitles.clear();
-    activeSubtitleCues.value = const [];
     await _videoEventSub?.cancel();
     _videoEventSub = null;
     final texId = _textureId;
@@ -816,6 +834,7 @@ class PlayerWebos extends PlayerBase {
       _targetResumeStartMs = targetPosMs;
       _openStartedAt = DateTime.now();
       WebosSubtitleClock.instance.notifySeek(targetPosMs);
+      _mkvExtractor?.notifySeek(targetPosMs);
 
       await _videoEventSub?.cancel();
       _videoEventSub = null;
@@ -926,6 +945,7 @@ class PlayerWebos extends PlayerBase {
     final targetMs = target.inMilliseconds;
     final preSeekMs = sourcePositionFor(currentPosition).inMilliseconds;
     WebosSubtitleClock.instance.notifySeek(targetMs);
+    _mkvExtractor?.notifySeek(targetMs);
 
     final texId = _textureId;
     if (disposed || texId == null) return;

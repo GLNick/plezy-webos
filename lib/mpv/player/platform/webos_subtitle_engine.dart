@@ -1139,6 +1139,7 @@ class WebosSubtitleCue {
   final String text;
   final bool isPgs;
   ui.Image? pgsImage;
+  bool _pgsDisposed = false;
   final double pgsX;
   final double pgsY;
   final double pgsWidth;
@@ -1217,6 +1218,32 @@ class WebosSubtitleCue {
     this.layer = 0,
     this.readOrder = 0,
   });
+
+  bool get isPgsDisposed => _pgsDisposed;
+
+  /// Releases the native Skia [ui.Image] held by a PGS cue.
+  /// Defers disposal by one frame when a frame is currently scheduled or painting so
+  /// any in-flight [RawImage] finishes safely before the handle is freed.
+  void disposePgsImage({bool deferToPostFrame = true}) {
+    _pgsDisposed = true;
+    final img = pgsImage;
+    pgsImage = null;
+    if (img == null) return;
+    if (!deferToPostFrame) {
+      img.dispose();
+      return;
+    }
+    try {
+      final binding = SchedulerBinding.instance;
+      if (binding.hasScheduledFrame || binding.schedulerPhase != SchedulerPhase.idle) {
+        binding.addPostFrameCallback((_) => img.dispose());
+      } else {
+        img.dispose();
+      }
+    } catch (_) {
+      img.dispose();
+    }
+  }
 
   bool get hasVectorDrawing => spans.any((s) => s.drawingScale > 0 && s.compiledVectorPath != null);
 
@@ -2377,11 +2404,20 @@ class _PgsObjectBuffer {
   _PgsObjectBuffer({required this.width, required this.height, required this.rleBuilder});
 }
 
+typedef WebosPgsPixelDecoder = void Function(
+  Uint8List pixels,
+  int width,
+  int height,
+  void Function(ui.Image) callback,
+);
+
 /// Native Blu-ray PGS (S_HDMV/PGS) RLE bitmap subtitle decoder.
 /// Decodes PDS (YCrCbA palettes), ODS (RLE object bitmaps), and PCS (screen composition)
 /// directly into Flutter ui.Image bitmaps so PGS subtitles work in Direct Play withoutMojibake.
 class _WebosPgsTrackDecoder {
   final VoidCallback onImageDecoded;
+  final WebosPgsPixelDecoder _decodePixels;
+  bool _disposed = false;
 
   int _canvasWidth = 1920;
   int _canvasHeight = 1080;
@@ -2392,7 +2428,44 @@ class _WebosPgsTrackDecoder {
   bool _hasPcsInCurrentSet = false;
   final List<WebosSubtitleCue> _openCues = [];
 
-  _WebosPgsTrackDecoder({required this.onImageDecoded});
+  _WebosPgsTrackDecoder({
+    required this.onImageDecoded,
+    WebosPgsPixelDecoder? decodePixels,
+  }) : _decodePixels = decodePixels ?? _defaultDecodePixels;
+
+  static void _defaultDecodePixels(
+    Uint8List pixels,
+    int width,
+    int height,
+    void Function(ui.Image) callback,
+  ) {
+    ui.decodeImageFromPixels(
+      pixels,
+      width,
+      height,
+      ui.PixelFormat.rgba8888,
+      callback,
+    );
+  }
+
+  bool isOpenCue(WebosSubtitleCue cue) => _openCues.contains(cue);
+
+  void pruneDisposedOpenCues() {
+    _openCues.removeWhere((c) => c.isPgsDisposed);
+  }
+
+  void resetOnSeek() {
+    _openCues.clear();
+    _objects.clear();
+    _palettes.clear();
+    _compObjects = [];
+    _hasPcsInCurrentSet = false;
+  }
+
+  void dispose() {
+    _disposed = true;
+    resetOnSeek();
+  }
 
   static Uint8List _maybeDecompressZlib(Uint8List raw) {
     if (raw.length < 2) return raw;
@@ -2569,13 +2642,20 @@ class _WebosPgsTrackDecoder {
       _openCues.add(cue);
       changed = true;
 
-      ui.decodeImageFromPixels(
+      _decodePixels(
         rgba,
         obj.width,
         obj.height,
-        ui.PixelFormat.rgba8888,
         (ui.Image img) {
+          if (_disposed || cue.isPgsDisposed) {
+            img.dispose();
+            return;
+          }
+          final prevImg = cue.pgsImage;
           cue.pgsImage = img;
+          if (prevImg != null && !identical(prevImg, img)) {
+            prevImg.dispose();
+          }
           onImageDecoded();
         },
       );
@@ -2659,10 +2739,19 @@ class _WebosPgsTrackDecoder {
 }
 
 class WebosMkvSubtitleExtractor {
+  static const int kTextKeepBehindMs = 120000;
+  static const int kPgsKeepBehindMs = 15000;
+  static const int kTextLookaheadMs = 90000;
+  static const int kPgsLookaheadMs = 30000;
+  static const int kMinRewindLookbackMs = 10000;
+  static const int kMaxRewindLookbackMs = 60000;
+  static const int kDynamicCuePointIntervalMs = 5000;
+
   final String url;
   final Map<String, String>? headers;
   final int Function() getCurrentPositionMs;
   final VoidCallback onCuesUpdated;
+  final WebosPgsPixelDecoder? _pgsPixelDecoder;
 
   final HttpClient _httpClient = HttpClient()..connectionTimeout = const Duration(seconds: 10);
   bool _disposed = false;
@@ -2677,26 +2766,322 @@ class WebosMkvSubtitleExtractor {
   final List<_MkvTrackInfo> subtitleTracksInOrder = [];
   final Map<int, _MkvTrackInfo> _subTrackByNumber = {};
   final Map<int, List<WebosSubtitleCue>> cuesByTrackNumber = {};
-  final Map<int, Set<String>> _dedupByTrackNumber = {};
+  final Map<int, Map<String, int>> _dedupExpiryByTrackNumber = {};
   final Map<int, _WebosPgsTrackDecoder> _pgsDecoders = {};
   final List<({int timeMs, int clusterFileOffset})> _cuePoints = [];
   static final Set<String> _loadedFontFamilies = {};
 
+  int? _activeTrackNumber;
   int _streamCursorOffset = 0;
+  int _currentClusterFileOffset = -1;
   int _currentClusterTimeMs = 0;
   int _maxBufferedTimeMs = 0;
   int _lastSeekCheckMs = -1;
+  int _textEvictedBeforeMs = -1;
+  int _pgsEvictedBeforeMs = -1;
+  int _maxSeenCueDurationMs = 0;
+  int? _pendingRewindTargetMs;
+  StreamSubscription<List<int>>? _activeStreamSub;
+  Completer<void>? _activeStreamCompleter;
 
   WebosMkvSubtitleExtractor({
     required this.url,
     required this.headers,
     required this.getCurrentPositionMs,
     required this.onCuesUpdated,
-  });
+    @visibleForTesting WebosPgsPixelDecoder? pgsPixelDecoder,
+  }) : _pgsPixelDecoder = pgsPixelDecoder;
 
-  void dispose() {
+  bool _isPgsTrack(int? trackNum) {
+    if (trackNum == null) return false;
+    return _subTrackByNumber[trackNum]?.codecId.toUpperCase().contains('PGS') ?? false;
+  }
+
+  bool get _activeTrackIsPgs => _isPgsTrack(_activeTrackNumber);
+
+  int get _lookaheadWindowMs => _activeTrackIsPgs ? kPgsLookaheadMs : kTextLookaheadMs;
+
+  int? get activeTrackNumber => _activeTrackNumber;
+
+  @visibleForTesting
+  int? get debugActiveTrackNumber => _activeTrackNumber;
+
+  @visibleForTesting
+  int get debugStreamCursorOffset => _streamCursorOffset;
+
+  @visibleForTesting
+  int? get debugPendingRewindTargetMs => _pendingRewindTargetMs;
+
+  @visibleForTesting
+  int get debugTextEvictedBeforeMs => _textEvictedBeforeMs;
+
+  @visibleForTesting
+  int get debugPgsEvictedBeforeMs => _pgsEvictedBeforeMs;
+
+  @visibleForTesting
+  int get debugMaxSeenCueDurationMs => _maxSeenCueDurationMs;
+
+  @visibleForTesting
+  int debugDedupCountForTrack(int trackNum) => _dedupExpiryByTrackNumber[trackNum]?.length ?? 0;
+
+  @visibleForTesting
+  List<({int timeMs, int clusterFileOffset})> get debugCuePoints => List.unmodifiable(_cuePoints);
+
+  @visibleForTesting
+  void debugRegisterTrack({
+    required int trackNumber,
+    required String codecId,
+    String? language,
+    String? name,
+    WebosAssDocument? assHeader,
+  }) {
+    final info = _MkvTrackInfo(
+      trackNumber: trackNumber,
+      trackType: 0x11,
+      codecId: codecId,
+      language: language,
+      name: name,
+      assHeader: assHeader,
+    );
+    subtitleTracksInOrder.add(info);
+    _subTrackByNumber[trackNumber] = info;
+    cuesByTrackNumber[trackNumber] = <WebosSubtitleCue>[];
+    _dedupExpiryByTrackNumber[trackNumber] = <String, int>{};
+  }
+
+  @visibleForTesting
+  ({int consumedBytes, int remainingStart, int skipAheadBytes}) debugConsumeBuffer(
+    Uint8List buf, {
+    int bufferBaseFileOffset = 0,
+  }) =>
+      _consumeStreamBuffer(buf, bufferBaseFileOffset: bufferBaseFileOffset);
+
+  @visibleForTesting
+  int debugFindClusterOffsetForTime(int targetMs) => _findClusterOffsetForTime(targetMs);
+
+  void _cancelActiveStreamForRewind() {
+    final sub = _activeStreamSub;
+    _activeStreamSub = null;
+    if (sub != null) {
+      unawaited(sub.cancel().catchError((_) {}));
+    }
+    final comp = _activeStreamCompleter;
+    _activeStreamCompleter = null;
+    if (comp != null && !comp.isCompleted) {
+      comp.complete();
+    }
+  }
+
+  void _clearPgsTrack(int trackNum, {bool deferToPostFrame = true}) {
+    final cues = cuesByTrackNumber[trackNum];
+    if (cues != null) {
+      for (final cue in cues) {
+        if (cue.isPgs) {
+          cue.disposePgsImage(deferToPostFrame: deferToPostFrame);
+        }
+      }
+      cues.clear();
+    }
+    _dedupExpiryByTrackNumber[trackNum]?.clear();
+    _pgsDecoders[trackNum]?.resetOnSeek();
+  }
+
+  /// Updates the currently selected embedded subtitle track number (or `null` when
+  /// subtitles are disabled or an external subtitle file is active).
+  /// Disposes bitmaps of any previously active PGS track and triggers an immediate
+  /// stream rewind when switching to a PGS track so it extracts from the current playhead.
+  void setActiveTrackNumber(int? trackNum) {
+    if (_disposed || trackNum == _activeTrackNumber) return;
+    final prevTrack = _activeTrackNumber;
+    _activeTrackNumber = trackNum;
+
+    if (prevTrack != null && _isPgsTrack(prevTrack)) {
+      _clearPgsTrack(prevTrack);
+      _pgsEvictedBeforeMs = -1;
+    }
+
+    if (trackNum != null && _isPgsTrack(trackNum)) {
+      _pgsEvictedBeforeMs = -1;
+      final nowPosMs = getCurrentPositionMs();
+      notifySeek(nowPosMs, forceRewind: true);
+    }
+  }
+
+  bool _positionNeedsRewind(int nowPosMs) {
+    if (_pendingRewindTargetMs != null) return true;
+    if (_lastSeekCheckMs >= 0 &&
+        (nowPosMs - _lastSeekCheckMs).abs() > 4500 &&
+        (nowPosMs < _lastSeekCheckMs - 2000 || nowPosMs > _maxBufferedTimeMs + 2000)) {
+      return true;
+    }
+    final activeEvictedBefore = _activeTrackIsPgs ? _pgsEvictedBeforeMs : _textEvictedBeforeMs;
+    if (activeEvictedBefore >= 0 && nowPosMs < activeEvictedBefore + kMinRewindLookbackMs) {
+      return true;
+    }
+    return false;
+  }
+
+  @visibleForTesting
+  bool checkNeedsRewind(int nowPosMs) => _positionNeedsRewind(nowPosMs);
+
+  void _applyRewind(int targetPosMs) {
+    final lookback = math.max(kMinRewindLookbackMs, _maxSeenCueDurationMs);
+    final rewindToMs = (targetPosMs - lookback).clamp(0, 1 << 30);
+    _streamCursorOffset = _findClusterOffsetForTime(rewindToMs);
+    _maxBufferedTimeMs = targetPosMs;
+    _lastSeekCheckMs = targetPosMs;
+    _pendingRewindTargetMs = null;
+    for (final dec in _pgsDecoders.values) {
+      dec.resetOnSeek();
+    }
+    if (_textEvictedBeforeMs >= 0 && rewindToMs <= _textEvictedBeforeMs) {
+      _textEvictedBeforeMs = rewindToMs > 0 ? rewindToMs - 1 : -1;
+    }
+    if (_pgsEvictedBeforeMs >= 0 && rewindToMs <= _pgsEvictedBeforeMs) {
+      _pgsEvictedBeforeMs = rewindToMs > 0 ? rewindToMs - 1 : -1;
+    }
+  }
+
+  @visibleForTesting
+  void debugApplyRewind(int targetPosMs) => _applyRewind(targetPosMs);
+
+  /// Explicitly notifies the extractor of a seek or track-switch rewind so the
+  /// active HTTP stream restarts immediately at the target cluster offset.
+  void notifySeek(int targetPosMs, {bool forceRewind = false}) {
+    if (_disposed || targetPosMs < 0) return;
+    if (forceRewind || _positionNeedsRewind(targetPosMs)) {
+      _pendingRewindTargetMs = targetPosMs;
+      _applyRewind(targetPosMs);
+      _cancelActiveStreamForRewind();
+    }
+  }
+
+  /// Evicts far-past cues and matching dedup entries across all tracks while preserving
+  /// active (including long-duration) cues and safely disposing expired PGS [ui.Image]s.
+  @visibleForTesting
+  void evictExpiredCues(int nowPosMs, {int? clockPosMs, bool deferPgsDispose = true}) {
+    if (_disposed) return;
+    final int safeNowMs;
+    if (clockPosMs != null) {
+      safeNowMs = math.min(nowPosMs, clockPosMs);
+    } else if (WebosSubtitleClock.instance.hasReportedPosition) {
+      safeNowMs = math.min(nowPosMs, WebosSubtitleClock.instance.currentPositionMs);
+    } else {
+      safeNowMs = nowPosMs;
+    }
+
+    final textCutoffMs = safeNowMs - kTextKeepBehindMs;
+    final pgsCutoffMs = safeNowMs - kPgsKeepBehindMs;
+
+    bool evictedAnyText = false;
+    bool evictedAnyPgs = false;
+
+    for (final entry in cuesByTrackNumber.entries) {
+      final trackNum = entry.key;
+      final list = entry.value;
+      final isPgsTrack = _isPgsTrack(trackNum);
+      final cutoffMs = isPgsTrack ? pgsCutoffMs : textCutoffMs;
+      if (cutoffMs <= 0) continue;
+
+      if (list.isNotEmpty) {
+        final kept = <WebosSubtitleCue>[];
+        bool removedHere = false;
+        for (final cue in list) {
+          if (cue.endMs < cutoffMs) {
+            if (cue.isPgs) {
+              cue.disposePgsImage(deferToPostFrame: deferPgsDispose);
+            }
+            removedHere = true;
+          } else {
+            kept.add(cue);
+          }
+        }
+        if (removedHere) {
+          list
+            ..clear()
+            ..addAll(kept);
+          if (isPgsTrack) {
+            evictedAnyPgs = true;
+            _pgsDecoders[trackNum]?.pruneDisposedOpenCues();
+          } else {
+            evictedAnyText = true;
+          }
+        }
+      }
+
+      final dedupMap = _dedupExpiryByTrackNumber[trackNum];
+      if (dedupMap != null && dedupMap.isNotEmpty) {
+        final dedupCutoff = isPgsTrack ? (cutoffMs - 5000) : cutoffMs;
+        final beforeLen = dedupMap.length;
+        dedupMap.removeWhere((_, expiryMs) => expiryMs < dedupCutoff);
+        if (dedupMap.length < beforeLen) {
+          if (isPgsTrack) {
+            evictedAnyPgs = true;
+          } else {
+            evictedAnyText = true;
+          }
+        }
+      }
+    }
+
+    if (evictedAnyText && textCutoffMs > _textEvictedBeforeMs) {
+      _textEvictedBeforeMs = textCutoffMs;
+    }
+    if (evictedAnyPgs && pgsCutoffMs > _pgsEvictedBeforeMs) {
+      _pgsEvictedBeforeMs = pgsCutoffMs;
+    }
+  }
+
+  void _recordDynamicCuePoint(int timeMs, int clusterOffset) {
+    if (clusterOffset < 0 || timeMs < 0) return;
+    if (_cuePoints.isEmpty) {
+      _cuePoints.add((timeMs: timeMs, clusterFileOffset: clusterOffset));
+      return;
+    }
+    final last = _cuePoints.last;
+    if (timeMs >= last.timeMs) {
+      if (timeMs - last.timeMs >= kDynamicCuePointIntervalMs) {
+        _cuePoints.add((timeMs: timeMs, clusterFileOffset: clusterOffset));
+      }
+      return;
+    }
+    int lo = 0;
+    int hi = _cuePoints.length;
+    while (lo < hi) {
+      final mid = (lo + hi) >> 1;
+      if (_cuePoints[mid].timeMs < timeMs) {
+        lo = mid + 1;
+      } else {
+        hi = mid;
+      }
+    }
+    if (lo < _cuePoints.length && (_cuePoints[lo].timeMs - timeMs).abs() < kDynamicCuePointIntervalMs) {
+      return;
+    }
+    if (lo > 0 && (timeMs - _cuePoints[lo - 1].timeMs).abs() < kDynamicCuePointIntervalMs) {
+      return;
+    }
+    _cuePoints.insert(lo, (timeMs: timeMs, clusterFileOffset: clusterOffset));
+  }
+
+  void dispose({bool deferPgsDispose = true}) {
     _disposed = true;
+    _cancelActiveStreamForRewind();
     _httpClient.close(force: true);
+    for (final dec in _pgsDecoders.values) {
+      dec.dispose();
+    }
+    _pgsDecoders.clear();
+    for (final cues in cuesByTrackNumber.values) {
+      for (final cue in cues) {
+        if (cue.isPgs) {
+          cue.disposePgsImage(deferToPostFrame: deferPgsDispose);
+        }
+      }
+      cues.clear();
+    }
+    cuesByTrackNumber.clear();
+    _dedupExpiryByTrackNumber.clear();
   }
 
   Future<void> start() async {
@@ -3101,7 +3486,7 @@ class WebosMkvSubtitleExtractor {
           subtitleTracksInOrder.add(info);
           _subTrackByNumber[trackNum] = info;
           cuesByTrackNumber[trackNum] = <WebosSubtitleCue>[];
-          _dedupByTrackNumber[trackNum] = <String>{};
+          _dedupExpiryByTrackNumber[trackNum] = <String, int>{};
         }
       }
       p = bEnd;
@@ -3178,21 +3563,24 @@ class WebosMkvSubtitleExtractor {
   }
 
   Future<void> _runExtractionLoop() async {
-    int initialPosMs = getCurrentPositionMs();
+    final initialPosMs = getCurrentPositionMs();
     _streamCursorOffset = _findClusterOffsetForTime((initialPosMs - 3000).clamp(0, 1 << 30));
     _lastSeekCheckMs = initialPosMs;
     _maxBufferedTimeMs = initialPosMs;
 
     while (!_disposed) {
       final nowPosMs = getCurrentPositionMs();
-      if ((nowPosMs - _lastSeekCheckMs).abs() > 4500 &&
-          (nowPosMs < _lastSeekCheckMs - 2000 || nowPosMs > _maxBufferedTimeMs + 2000)) {
-        _streamCursorOffset = _findClusterOffsetForTime((nowPosMs - 3000).clamp(0, 1 << 30));
-        _maxBufferedTimeMs = nowPosMs;
-      }
-      _lastSeekCheckMs = nowPosMs;
+      evictExpiredCues(nowPosMs);
 
-      if (_maxBufferedTimeMs > nowPosMs + 90000) {
+      if (_pendingRewindTargetMs != null) {
+        _applyRewind(_pendingRewindTargetMs!);
+      } else if (_positionNeedsRewind(nowPosMs)) {
+        _applyRewind(nowPosMs);
+      } else {
+        _lastSeekCheckMs = nowPosMs;
+      }
+
+      if (_maxBufferedTimeMs > nowPosMs + _lookaheadWindowMs) {
         await Future<void>.delayed(const Duration(milliseconds: 500));
         continue;
       }
@@ -3209,6 +3597,7 @@ class WebosMkvSubtitleExtractor {
     HttpClientResponse? resp;
     StreamSubscription<List<int>>? sub;
     final completer = Completer<void>();
+    _activeStreamCompleter = completer;
 
     try {
       req = await _httpClient.getUrl(Uri.parse(url));
@@ -3224,6 +3613,7 @@ class WebosMkvSubtitleExtractor {
       int skipBytesRemaining = 0;
       int bytesProcessedFromStart = 0;
       int lastYieldMs = DateTime.now().millisecondsSinceEpoch;
+      int lastEvictMs = lastYieldMs;
 
       sub = resp.listen(
         (List<int> chunk) {
@@ -3233,18 +3623,21 @@ class WebosMkvSubtitleExtractor {
             return;
           }
 
-          // Check if user seeked away while streaming
+          // Check if user seeked away, crossed an evicted window, or switched tracks while streaming
           final nowPosMs = getCurrentPositionMs();
-          if ((nowPosMs - _lastSeekCheckMs).abs() > 4500 &&
-              (nowPosMs < _lastSeekCheckMs - 2000 || nowPosMs > _maxBufferedTimeMs + 3000)) {
-            _lastSeekCheckMs = nowPosMs;
-            _streamCursorOffset = _findClusterOffsetForTime((nowPosMs - 3000).clamp(0, 1 << 30));
-            _maxBufferedTimeMs = nowPosMs;
+          if (_pendingRewindTargetMs != null || _positionNeedsRewind(nowPosMs)) {
+            _applyRewind(_pendingRewindTargetMs ?? nowPosMs);
             sub?.cancel();
             if (!completer.isCompleted) completer.complete();
             return;
           }
           _lastSeekCheckMs = nowPosMs;
+
+          final nowWallEvict = DateTime.now().millisecondsSinceEpoch;
+          if (nowWallEvict - lastEvictMs > 2000) {
+            lastEvictMs = nowWallEvict;
+            evictExpiredCues(nowPosMs);
+          }
 
           int chunkOffset = 0;
           // Fast-skip over large video/audio block bodies without buffering or scanning them!
@@ -3264,6 +3657,7 @@ class WebosMkvSubtitleExtractor {
               : Uint8List.sublistView(chunk is Uint8List ? chunk : Uint8List.fromList(chunk), chunkOffset);
 
           final Uint8List buf;
+          final int bufferBaseFileOffset = startOffset + bytesProcessedFromStart - carry.length;
           if (carry.isEmpty) {
             buf = incoming;
           } else {
@@ -3272,19 +3666,20 @@ class WebosMkvSubtitleExtractor {
             buf.setRange(carry.length, buf.length, incoming);
           }
 
-          final res = _consumeStreamBuffer(buf);
-          bytesProcessedFromStart += res.consumedBytes;
+          final res = _consumeStreamBuffer(buf, bufferBaseFileOffset: bufferBaseFileOffset);
+          bytesProcessedFromStart += res.consumedBytes - carry.length;
           _streamCursorOffset = startOffset + bytesProcessedFromStart;
           skipBytesRemaining = res.skipAheadBytes;
 
           if (res.remainingStart < buf.length && skipBytesRemaining == 0) {
             carry = Uint8List.fromList(Uint8List.sublistView(buf, res.remainingStart));
+            bytesProcessedFromStart += carry.length;
           } else {
             carry = Uint8List(0);
           }
 
-          // Throttle if we are >90s ahead of playback so we don't hog CPU/network on 32-bit TVs
-          if (_maxBufferedTimeMs > nowPosMs + 90000 && sub != null && !sub!.isPaused) {
+          // Throttle if we are ahead of playback so we don't hog CPU/network on 32-bit TVs
+          if (_maxBufferedTimeMs > nowPosMs + _lookaheadWindowMs && sub != null && !sub!.isPaused) {
             sub!.pause(Future<void>.delayed(const Duration(milliseconds: 600)));
           } else {
             final nowWall = DateTime.now().millisecondsSinceEpoch;
@@ -3302,10 +3697,17 @@ class WebosMkvSubtitleExtractor {
         },
         cancelOnError: true,
       );
+      _activeStreamSub = sub;
 
       await completer.future;
     } catch (_) {
     } finally {
+      if (identical(_activeStreamSub, sub)) {
+        _activeStreamSub = null;
+      }
+      if (identical(_activeStreamCompleter, completer)) {
+        _activeStreamCompleter = null;
+      }
       try {
         await sub?.cancel();
       } catch (_) {}
@@ -3314,7 +3716,10 @@ class WebosMkvSubtitleExtractor {
 
   /// Parses EBML Cluster/Block elements in [buf].
   /// For non-subtitle blocks (video/audio), immediately skips their payload without copying or scanning!
-  ({int consumedBytes, int remainingStart, int skipAheadBytes}) _consumeStreamBuffer(Uint8List buf) {
+  ({int consumedBytes, int remainingStart, int skipAheadBytes}) _consumeStreamBuffer(
+    Uint8List buf, {
+    int bufferBaseFileOffset = 0,
+  }) {
     int pos = 0;
     bool addedAny = false;
 
@@ -3326,6 +3731,7 @@ class WebosMkvSubtitleExtractor {
           buf[pos + 3] == 0x75) {
         final cSize = _readVint(buf, pos + 4, keepMarkerBit: false);
         if (cSize == null) break;
+        _currentClusterFileOffset = bufferBaseFileOffset + pos;
         pos += 4 + cSize.length;
         continue;
       }
@@ -3405,6 +3811,7 @@ class WebosMkvSubtitleExtractor {
       if (elId.value == 0xE7) {
         final rawTs = _readUint(buf, bStart, elSz.value);
         _currentClusterTimeMs = (rawTs * _timestampScaleNs) ~/ 1000000;
+        _recordDynamicCuePoint(_currentClusterTimeMs, _currentClusterFileOffset);
         if (_currentClusterTimeMs > _maxBufferedTimeMs) {
           _maxBufferedTimeMs = _currentClusterTimeMs;
         }
@@ -3464,24 +3871,38 @@ class WebosMkvSubtitleExtractor {
 
     final codecUpper = trackInfo.codecId.toUpperCase();
     if (codecUpper.contains('PGS')) {
+      // Only decode PGS RLE/RGBA bitmaps for the currently selected PGS track.
+      if (_activeTrackNumber != trackInfo.trackNumber) {
+        return false;
+      }
       final rawBytes = Uint8List.sublistView(buf, headerEnd, end);
       final sig = rawBytes.length >= 6
           ? '${rawBytes[0]}:${rawBytes[1]}:${rawBytes[2]}:${rawBytes[rawBytes.length - 2]}'
           : '${rawBytes.length}';
       final dedupKey = 'pgs:$cueStartMs:${rawBytes.length}:$sig';
-      final dedupSet = _dedupByTrackNumber[trackInfo.trackNumber]!;
-      if (!dedupSet.add(dedupKey)) return false;
+      final dedupMap = _dedupExpiryByTrackNumber[trackInfo.trackNumber]!;
+      if (dedupMap.containsKey(dedupKey)) return false;
+      dedupMap[dedupKey] = cueStartMs + 10000;
 
       final decoder = _pgsDecoders.putIfAbsent(
         trackInfo.trackNumber,
-        () => _WebosPgsTrackDecoder(onImageDecoded: onCuesUpdated),
+        () => _WebosPgsTrackDecoder(
+          onImageDecoded: onCuesUpdated,
+          decodePixels: _pgsPixelDecoder,
+        ),
       );
       final list = cuesByTrackNumber[trackInfo.trackNumber]!;
-      return decoder.processMkvBlock(
+      final beforeLen = list.length;
+      final changed = decoder.processMkvBlock(
         cueStartMs: cueStartMs,
         payload: rawBytes,
         targetCueList: list,
       );
+      for (int idx = beforeLen; idx < list.length; idx++) {
+        final dur = (list[idx].endMs - list[idx].startMs).clamp(0, kMaxRewindLookbackMs);
+        if (dur > _maxSeenCueDurationMs) _maxSeenCueDurationMs = dur;
+      }
+      return changed;
     }
     if (codecUpper.contains('VOBSUB') || codecUpper.contains('DVDSUB') || codecUpper.contains('DVB')) {
       return false;
@@ -3489,8 +3910,8 @@ class WebosMkvSubtitleExtractor {
 
     final payloadStr = utf8.decode(buf.sublist(headerEnd, end), allowMalformed: true);
     final dedupKey = '$cueStartMs:$durationMs:$payloadStr';
-    final dedupSet = _dedupByTrackNumber[trackInfo.trackNumber]!;
-    if (!dedupSet.add(dedupKey)) return false;
+    final dedupMap = _dedupExpiryByTrackNumber[trackInfo.trackNumber]!;
+    if (dedupMap.containsKey(dedupKey)) return false;
 
     final cue = WebosSubtitleParser.parseMkvBlock(
       startMs: cueStartMs,
@@ -3499,7 +3920,13 @@ class WebosMkvSubtitleExtractor {
       blockText: payloadStr,
       assHeader: trackInfo.assHeader,
     );
-    if (cue == null) return false;
+    if (cue == null) {
+      dedupMap[dedupKey] = cueStartMs + (durationMs > 0 ? durationMs : 3500);
+      return false;
+    }
+    dedupMap[dedupKey] = cue.endMs;
+    final cueDur = (cue.endMs - cue.startMs).clamp(0, kMaxRewindLookbackMs);
+    if (cueDur > _maxSeenCueDurationMs) _maxSeenCueDurationMs = cueDur;
     final list = cuesByTrackNumber[trackInfo.trackNumber]!;
     list.add(cue);
     return true;
@@ -3847,7 +4274,7 @@ class _WebosSubtitleOverlayState extends State<WebosSubtitleOverlay>
     } else {
       vis = selectWebosVisibleCues(raw, _effectiveEndsFor(raw), nowMs);
     }
-    final ready = <bool>[for (final c in vis) c.isPgs && c.pgsImage != null];
+    final ready = <bool>[for (final c in vis) c.isPgs && !c.isPgsDisposed && c.pgsImage != null];
     final changed = !listEquals(vis, _lastVisibleSnapshot) || !listEquals(ready, _visiblePgsReady);
     if (changed) {
       _lastVisibleSnapshot = vis;
@@ -4053,7 +4480,7 @@ class _WebosSubtitleOverlayState extends State<WebosSubtitleOverlay>
                   cue.moveX2 != null &&
                   cue.moveY2 != null;
               if (cue.isPgs) {
-                if (cue.pgsImage != null) {
+                if (cue.pgsImage != null && !cue.isPgsDisposed) {
                   final rx = cue.playResX > 0 ? cue.playResX : 1920;
                   final ry = cue.playResY > 0 ? cue.playResY : 1080;
                   final sx = screenW / rx;
