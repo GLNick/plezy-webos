@@ -7,6 +7,7 @@ import 'dart:ui' as ui;
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:flutter/scheduler.dart';
 
 import '../../../utils/app_logger.dart';
@@ -2886,6 +2887,18 @@ class WebosMkvSubtitleExtractor {
   final Map<int, _WebosPgsTrackDecoder> _pgsDecoders = {};
   final List<({int timeMs, int clusterFileOffset})> _cuePoints = [];
   static final Set<String> _loadedFontFamilies = {};
+  static final RegExp _attachmentExtRe = RegExp(r'\.[^.]+$');
+  static final RegExp _attachmentWeightSuffixRe =
+      RegExp(r'\s+(?:Bold|Italic|Oblique|Regular|Medium|Light|Semibold)+$', caseSensitive: false);
+
+  /// Incremented whenever embedded MKV fonts finish loading via [ui.loadFontFromList]
+  /// so mounted [_RenderAssTextBlock]s invalidate cached layouts/pictures immediately.
+  static final ValueNotifier<int> fontGeneration = ValueNotifier<int>(0);
+
+  @visibleForTesting
+  static void notifyFontsLoaded() {
+    fontGeneration.value = fontGeneration.value + 1;
+  }
 
   int? _activeTrackNumber;
   int _streamCursorOffset = 0;
@@ -3309,6 +3322,7 @@ class WebosMkvSubtitleExtractor {
 
   Future<void> _parseAndLoadAttachments(Uint8List data, int start, int end) async {
     int p = start;
+    bool loadedAnyFont = false;
     while (p < end) {
       final id = _readVint(data, p, keepMarkerBit: true);
       if (id == null) break;
@@ -3352,16 +3366,17 @@ class WebosMkvSubtitleExtractor {
 
         if (isFont && fileBytes != null && fileBytes.isNotEmpty) {
           final families = _extractTtfFamilyNames(fileBytes);
-          final baseName = fileName.replaceAll(RegExp(r'\.[^.]+$'), '');
+          final baseName = fileName.replaceAll(_attachmentExtRe, '');
           if (baseName.isNotEmpty) families.add(baseName);
           for (final f in List<String>.of(families)) {
-            final stripped = f.replaceAll(RegExp(r'\s+(?:Bold|Italic|Oblique|Regular|Medium|Light|Semibold)+$', caseSensitive: false), '').trim();
+            final stripped = f.replaceAll(_attachmentWeightSuffixRe, '').trim();
             if (stripped.isNotEmpty) families.add(stripped);
           }
           for (final fam in families) {
             if (_loadedFontFamilies.add(fam)) {
               try {
                 await ui.loadFontFromList(fileBytes, fontFamily: fam);
+                loadedAnyFont = true;
                 appLogger.i('[WebOS-MKV-Font] Loaded embedded font family: "$fam" ($fileName)');
               } catch (_) {}
             }
@@ -3369,6 +3384,9 @@ class WebosMkvSubtitleExtractor {
         }
       }
       p = bEnd;
+    }
+    if (loadedAnyFont) {
+      notifyFontsLoaded();
     }
   }
 
@@ -4209,6 +4227,636 @@ List<WebosSubtitleCue> selectWebosVisibleCues(
   return visible;
 }
 
+/// Value-comparable resolved style + paint properties for one span inside [WebosAssTextBlock].
+/// Comparing primitive fields avoids `Paint` reference-identity misses during picture caching.
+class WebosAssResolvedSpan {
+  final String text;
+  final String? fontFamily;
+  final double fontSize;
+  final FontWeight fontWeight;
+  final FontStyle fontStyle;
+  final double? letterSpacing;
+  final TextDecoration decoration;
+  final double height;
+  final Color fillColor;
+  final Color outlineColor;
+  final double strokeWidth;
+  final double blurSigma;
+  final Offset? shadowOffset;
+  final double shadowBlurRadius;
+  final Color? shadowColor;
+
+  const WebosAssResolvedSpan({
+    required this.text,
+    required this.fontFamily,
+    required this.fontSize,
+    required this.fontWeight,
+    required this.fontStyle,
+    required this.letterSpacing,
+    required this.decoration,
+    required this.height,
+    required this.fillColor,
+    required this.outlineColor,
+    required this.strokeWidth,
+    required this.blurSigma,
+    required this.shadowOffset,
+    required this.shadowBlurRadius,
+    required this.shadowColor,
+  });
+
+  bool layoutEquals(WebosAssResolvedSpan other) =>
+      text == other.text &&
+      fontFamily == other.fontFamily &&
+      fontSize == other.fontSize &&
+      fontWeight == other.fontWeight &&
+      fontStyle == other.fontStyle &&
+      letterSpacing == other.letterSpacing &&
+      height == other.height;
+
+  @override
+  bool operator ==(Object other) =>
+      other is WebosAssResolvedSpan &&
+      text == other.text &&
+      fontFamily == other.fontFamily &&
+      fontSize == other.fontSize &&
+      fontWeight == other.fontWeight &&
+      fontStyle == other.fontStyle &&
+      letterSpacing == other.letterSpacing &&
+      decoration == other.decoration &&
+      height == other.height &&
+      fillColor == other.fillColor &&
+      outlineColor == other.outlineColor &&
+      strokeWidth == other.strokeWidth &&
+      blurSigma == other.blurSigma &&
+      shadowOffset == other.shadowOffset &&
+      shadowBlurRadius == other.shadowBlurRadius &&
+      shadowColor == other.shadowColor;
+
+  @override
+  int get hashCode => Object.hash(
+        text,
+        fontFamily,
+        fontSize,
+        fontWeight,
+        fontStyle,
+        letterSpacing,
+        decoration,
+        height,
+        fillColor,
+        outlineColor,
+        strokeWidth,
+        blurSigma,
+        shadowOffset,
+        shadowBlurRadius,
+        shadowColor,
+      );
+}
+
+/// Computes adaptive symmetric pass offsets (1, 3, 5, or 7) for anisotropic `\xbord`/`\ybord`.
+@visibleForTesting
+List<Offset> computeWebosAnisoStrokeOffsets({
+  required double extraX,
+  required double extraY,
+  required double baseStrokeWidth,
+}) {
+  final maxExtra = math.max(extraX, extraY);
+  if (maxExtra <= 1.0) {
+    return const [Offset.zero];
+  }
+  final step = math.max(1.0, baseStrokeWidth * 0.55);
+  final halfSteps = (maxExtra / step).ceil().clamp(1, 3);
+  final List<double> fracs;
+  switch (halfSteps) {
+    case 1:
+      fracs = const [-1.0, 0.0, 1.0];
+    case 2:
+      fracs = const [-1.0, -0.5, 0.0, 0.5, 1.0];
+    default:
+      fracs = const [-1.0, -0.66, -0.33, 0.0, 0.33, 0.66, 1.0];
+  }
+  return [
+    for (final frac in fracs) Offset(extraX * frac, extraY * frac),
+  ];
+}
+
+/// Computes inflated `saveLayer` bounds so collapsed `\blur` neon glows never clip at layer edges.
+@visibleForTesting
+Rect computeWebosBlurLayerBounds({
+  required Size textSize,
+  required double maxAnisoExtraX,
+  required double maxAnisoExtraY,
+  required double maxStrokeWidth,
+  required double blurSigma,
+}) {
+  final padX = maxAnisoExtraX + maxStrokeWidth + blurSigma * 3.0 + 4.0;
+  final padY = maxAnisoExtraY + maxStrokeWidth + blurSigma * 3.0 + 4.0;
+  return Rect.fromLTWH(-padX, -padY, textSize.width + padX * 2.0, textSize.height + padY * 2.0);
+}
+
+/// Cached single-render-object ASS/SRT text block that lays out fill & stroke `TextPainter`s
+/// once, caches a recorded `ui.Picture`, invalidates on embedded MKV font loads, and collapses
+/// uniform anisotropic `\blur` strokes into a single `saveLayer(ImageFilter.blur)` pass.
+class WebosAssTextBlock extends LeafRenderObjectWidget {
+  @visibleForTesting
+  static int debugPictureRecordCount = 0;
+
+  @visibleForTesting
+  static int debugPictureDisposeCount = 0;
+
+  @visibleForTesting
+  static int debugLayoutCount = 0;
+
+  @visibleForTesting
+  static int debugActivePictureCount = 0;
+
+  final List<WebosAssResolvedSpan> spans;
+  final TextAlign textAlign;
+  final TextDirection textDirection;
+  final StrutStyle? strutStyle;
+  final bool hasAnyStroke;
+  final double maxAnisoExtraX;
+  final double maxAnisoExtraY;
+  final double anisoBaseStrokeWidth;
+  final double maxStrokeWidth;
+  final bool useCollapsedAnisoBlur;
+  final double collapsedBlurSigma;
+  final int collapsedOutlineAlpha;
+
+  const WebosAssTextBlock({
+    super.key,
+    required this.spans,
+    required this.textAlign,
+    this.textDirection = TextDirection.ltr,
+    this.strutStyle,
+    required this.hasAnyStroke,
+    required this.maxAnisoExtraX,
+    required this.maxAnisoExtraY,
+    required this.anisoBaseStrokeWidth,
+    required this.maxStrokeWidth,
+    required this.useCollapsedAnisoBlur,
+    required this.collapsedBlurSigma,
+    required this.collapsedOutlineAlpha,
+  });
+
+  String get plainText => spans.map((s) => s.text).join();
+
+  @override
+  RenderObject createRenderObject(BuildContext context) {
+    return _RenderAssTextBlock(
+      spans: spans,
+      textAlign: textAlign,
+      textDirection: textDirection,
+      strutStyle: strutStyle,
+      hasAnyStroke: hasAnyStroke,
+      maxAnisoExtraX: maxAnisoExtraX,
+      maxAnisoExtraY: maxAnisoExtraY,
+      anisoBaseStrokeWidth: anisoBaseStrokeWidth,
+      maxStrokeWidth: maxStrokeWidth,
+      useCollapsedAnisoBlur: useCollapsedAnisoBlur,
+      collapsedBlurSigma: collapsedBlurSigma,
+      collapsedOutlineAlpha: collapsedOutlineAlpha,
+    );
+  }
+
+  @override
+  void updateRenderObject(BuildContext context, RenderObject renderObject) {
+    if (renderObject is _RenderAssTextBlock) {
+      renderObject.updateConfig(
+        spans: spans,
+        textAlign: textAlign,
+        textDirection: textDirection,
+        strutStyle: strutStyle,
+        hasAnyStroke: hasAnyStroke,
+        maxAnisoExtraX: maxAnisoExtraX,
+        maxAnisoExtraY: maxAnisoExtraY,
+        anisoBaseStrokeWidth: anisoBaseStrokeWidth,
+        maxStrokeWidth: maxStrokeWidth,
+        useCollapsedAnisoBlur: useCollapsedAnisoBlur,
+        collapsedBlurSigma: collapsedBlurSigma,
+        collapsedOutlineAlpha: collapsedOutlineAlpha,
+      );
+    }
+  }
+}
+
+class _RenderAssTextBlock extends RenderBox {
+  List<WebosAssResolvedSpan> _spans;
+  TextAlign _textAlign;
+  TextDirection _textDirection;
+  StrutStyle? _strutStyle;
+  bool _hasAnyStroke;
+  double _maxAnisoExtraX;
+  double _maxAnisoExtraY;
+  double _anisoBaseStrokeWidth;
+  double _maxStrokeWidth;
+  bool _useCollapsedAnisoBlur;
+  double _collapsedBlurSigma;
+  int _collapsedOutlineAlpha;
+
+  TextPainter? _fillPainter;
+  TextPainter? _strokePainter;
+  ui.Picture? _cachedPicture;
+  int _observedFontGen;
+  bool _paintersDirty = true;
+  bool _needsPainterLayout = true;
+  double? _lastLayoutMinWidth;
+  double? _lastLayoutMaxWidth;
+
+  _RenderAssTextBlock({
+    required List<WebosAssResolvedSpan> spans,
+    required TextAlign textAlign,
+    required TextDirection textDirection,
+    required StrutStyle? strutStyle,
+    required bool hasAnyStroke,
+    required double maxAnisoExtraX,
+    required double maxAnisoExtraY,
+    required double anisoBaseStrokeWidth,
+    required double maxStrokeWidth,
+    required bool useCollapsedAnisoBlur,
+    required double collapsedBlurSigma,
+    required int collapsedOutlineAlpha,
+  })  : _spans = spans,
+        _textAlign = textAlign,
+        _textDirection = textDirection,
+        _strutStyle = strutStyle,
+        _hasAnyStroke = hasAnyStroke,
+        _maxAnisoExtraX = maxAnisoExtraX,
+        _maxAnisoExtraY = maxAnisoExtraY,
+        _anisoBaseStrokeWidth = anisoBaseStrokeWidth,
+        _maxStrokeWidth = maxStrokeWidth,
+        _useCollapsedAnisoBlur = useCollapsedAnisoBlur,
+        _collapsedBlurSigma = collapsedBlurSigma,
+        _collapsedOutlineAlpha = collapsedOutlineAlpha,
+        _observedFontGen = WebosMkvSubtitleExtractor.fontGeneration.value;
+
+  @override
+  void attach(PipelineOwner owner) {
+    super.attach(owner);
+    WebosMkvSubtitleExtractor.fontGeneration.addListener(_onFontGenerationChanged);
+    if (_observedFontGen != WebosMkvSubtitleExtractor.fontGeneration.value) {
+      _onFontGenerationChanged();
+    }
+  }
+
+  @override
+  void detach() {
+    WebosMkvSubtitleExtractor.fontGeneration.removeListener(_onFontGenerationChanged);
+    _disposeCachedPicture();
+    super.detach();
+  }
+
+  @override
+  void dispose() {
+    _disposeCachedPicture();
+    _disposePainters();
+    super.dispose();
+  }
+
+  void _onFontGenerationChanged() {
+    _observedFontGen = WebosMkvSubtitleExtractor.fontGeneration.value;
+    _disposeCachedPicture();
+    _disposePainters();
+    _paintersDirty = true;
+    _needsPainterLayout = true;
+    _lastLayoutMinWidth = null;
+    _lastLayoutMaxWidth = null;
+    markNeedsLayout();
+    markNeedsPaint();
+  }
+
+  void _disposeCachedPicture() {
+    final pic = _cachedPicture;
+    if (pic != null) {
+      _cachedPicture = null;
+      pic.dispose();
+      WebosAssTextBlock.debugPictureDisposeCount++;
+      WebosAssTextBlock.debugActivePictureCount--;
+    }
+  }
+
+  void _disposePainters() {
+    _fillPainter?.dispose();
+    _fillPainter = null;
+    _strokePainter?.dispose();
+    _strokePainter = null;
+  }
+
+  static bool _spansLayoutEqual(List<WebosAssResolvedSpan> a, List<WebosAssResolvedSpan> b) {
+    if (identical(a, b)) return true;
+    if (a.length != b.length) return false;
+    for (int i = 0; i < a.length; i++) {
+      if (!a[i].layoutEquals(b[i])) return false;
+    }
+    return true;
+  }
+
+  void updateConfig({
+    required List<WebosAssResolvedSpan> spans,
+    required TextAlign textAlign,
+    required TextDirection textDirection,
+    required StrutStyle? strutStyle,
+    required bool hasAnyStroke,
+    required double maxAnisoExtraX,
+    required double maxAnisoExtraY,
+    required double anisoBaseStrokeWidth,
+    required double maxStrokeWidth,
+    required bool useCollapsedAnisoBlur,
+    required double collapsedBlurSigma,
+    required int collapsedOutlineAlpha,
+  }) {
+    final bool layoutChanged = _textAlign != textAlign ||
+        _textDirection != textDirection ||
+        _strutStyle != strutStyle ||
+        !_spansLayoutEqual(_spans, spans);
+
+    final bool configChanged = layoutChanged ||
+        !listEquals(_spans, spans) ||
+        _hasAnyStroke != hasAnyStroke ||
+        _maxAnisoExtraX != maxAnisoExtraX ||
+        _maxAnisoExtraY != maxAnisoExtraY ||
+        _anisoBaseStrokeWidth != anisoBaseStrokeWidth ||
+        _maxStrokeWidth != maxStrokeWidth ||
+        _useCollapsedAnisoBlur != useCollapsedAnisoBlur ||
+        _collapsedBlurSigma != collapsedBlurSigma ||
+        _collapsedOutlineAlpha != collapsedOutlineAlpha;
+
+    if (!configChanged) return;
+
+    _spans = spans;
+    _textAlign = textAlign;
+    _textDirection = textDirection;
+    _strutStyle = strutStyle;
+    _hasAnyStroke = hasAnyStroke;
+    _maxAnisoExtraX = maxAnisoExtraX;
+    _maxAnisoExtraY = maxAnisoExtraY;
+    _anisoBaseStrokeWidth = anisoBaseStrokeWidth;
+    _maxStrokeWidth = maxStrokeWidth;
+    _useCollapsedAnisoBlur = useCollapsedAnisoBlur;
+    _collapsedBlurSigma = collapsedBlurSigma;
+    _collapsedOutlineAlpha = collapsedOutlineAlpha;
+
+    _disposeCachedPicture();
+    _paintersDirty = true;
+    _needsPainterLayout = true;
+
+    if (layoutChanged) {
+      _lastLayoutMinWidth = null;
+      _lastLayoutMaxWidth = null;
+      markNeedsLayout();
+    } else {
+      markNeedsPaint();
+    }
+  }
+
+  void _rebuildPainters() {
+    _disposePainters();
+    final fillChildren = <InlineSpan>[];
+    final strokeChildren = _hasAnyStroke ? <InlineSpan>[] : null;
+
+    for (final sp in _spans) {
+      fillChildren.add(
+        TextSpan(
+          text: sp.text,
+          style: TextStyle(
+            fontFamily: sp.fontFamily,
+            fontSize: sp.fontSize,
+            fontWeight: sp.fontWeight,
+            fontStyle: sp.fontStyle,
+            letterSpacing: sp.letterSpacing,
+            decoration: sp.decoration,
+            height: sp.height,
+            color: sp.fillColor,
+            shadows: (sp.shadowOffset != null && sp.shadowColor != null)
+                ? [
+                    Shadow(
+                      offset: sp.shadowOffset!,
+                      blurRadius: sp.shadowBlurRadius,
+                      color: sp.shadowColor!,
+                    ),
+                  ]
+                : null,
+          ),
+        ),
+      );
+
+      if (strokeChildren != null) {
+        final outlineAlpha = (sp.outlineColor.a * 255.0).round().clamp(0, 255);
+        final hasSpanStroke = sp.strokeWidth > 0.1 && outlineAlpha > 0;
+        final Color effectiveStrokeColor;
+        final MaskFilter? effectiveMaskFilter;
+        if (!hasSpanStroke) {
+          effectiveStrokeColor = Colors.transparent;
+          effectiveMaskFilter = null;
+        } else if (_useCollapsedAnisoBlur) {
+          // Draw crisp opaque strokes into the saveLayer; ImageFilter.blur + layer alpha run once on restore().
+          effectiveStrokeColor = sp.outlineColor.withAlpha(255);
+          effectiveMaskFilter = null;
+        } else {
+          effectiveStrokeColor = sp.outlineColor;
+          effectiveMaskFilter = sp.blurSigma > 0.25 ? MaskFilter.blur(BlurStyle.normal, sp.blurSigma) : null;
+        }
+
+        strokeChildren.add(
+          TextSpan(
+            text: sp.text,
+            style: TextStyle(
+              fontFamily: sp.fontFamily,
+              fontSize: sp.fontSize,
+              fontWeight: sp.fontWeight,
+              fontStyle: sp.fontStyle,
+              letterSpacing: sp.letterSpacing,
+              decoration: sp.decoration,
+              height: sp.height,
+              foreground: Paint()
+                ..style = PaintingStyle.stroke
+                ..strokeWidth = hasSpanStroke ? sp.strokeWidth : 0.0
+                ..strokeJoin = StrokeJoin.round
+                ..strokeCap = StrokeCap.round
+                ..maskFilter = effectiveMaskFilter
+                ..color = effectiveStrokeColor,
+            ),
+          ),
+        );
+      }
+    }
+
+    const heightBehavior = TextHeightBehavior(
+      applyHeightToFirstAscent: false,
+      applyHeightToLastDescent: false,
+    );
+
+    _fillPainter = TextPainter(
+      text: TextSpan(children: fillChildren),
+      textAlign: _textAlign,
+      textDirection: _textDirection,
+      textScaler: TextScaler.noScaling,
+      strutStyle: _strutStyle,
+      textHeightBehavior: heightBehavior,
+    );
+
+    if (strokeChildren != null) {
+      _strokePainter = TextPainter(
+        text: TextSpan(children: strokeChildren),
+        textAlign: _textAlign,
+        textDirection: _textDirection,
+        textScaler: TextScaler.noScaling,
+        strutStyle: _strutStyle,
+        textHeightBehavior: heightBehavior,
+      );
+    }
+
+    _paintersDirty = false;
+    _needsPainterLayout = true;
+  }
+
+  void _layoutFillForIntrinsic(double width) {
+    if (_paintersDirty || _fillPainter == null) {
+      _rebuildPainters();
+    }
+    _fillPainter!.layout(maxWidth: width);
+    _needsPainterLayout = true;
+  }
+
+  @override
+  double computeMinIntrinsicWidth(double height) {
+    _layoutFillForIntrinsic(double.infinity);
+    return _fillPainter!.minIntrinsicWidth;
+  }
+
+  @override
+  double computeMaxIntrinsicWidth(double height) {
+    _layoutFillForIntrinsic(double.infinity);
+    return _fillPainter!.maxIntrinsicWidth;
+  }
+
+  @override
+  double computeMinIntrinsicHeight(double width) {
+    _layoutFillForIntrinsic(width);
+    return _fillPainter!.height;
+  }
+
+  @override
+  double computeMaxIntrinsicHeight(double width) {
+    _layoutFillForIntrinsic(width);
+    return _fillPainter!.height;
+  }
+
+  @override
+  double? computeDistanceToActualBaseline(TextBaseline baseline) {
+    if (_paintersDirty || _fillPainter == null) {
+      _rebuildPainters();
+    }
+    if (_needsPainterLayout) {
+      _fillPainter!.layout(
+        minWidth: _lastLayoutMinWidth ?? 0.0,
+        maxWidth: _lastLayoutMaxWidth ?? (hasSize ? size.width : double.infinity),
+      );
+      _strokePainter?.layout(minWidth: _fillPainter!.width, maxWidth: _fillPainter!.width);
+      _needsPainterLayout = false;
+    }
+    return _fillPainter!.computeDistanceToActualBaseline(baseline);
+  }
+
+  @override
+  void performLayout() {
+    if (_paintersDirty || _fillPainter == null) {
+      _rebuildPainters();
+    }
+    if (_needsPainterLayout ||
+        _lastLayoutMinWidth != constraints.minWidth ||
+        _lastLayoutMaxWidth != constraints.maxWidth) {
+      _fillPainter!.layout(minWidth: constraints.minWidth, maxWidth: constraints.maxWidth);
+      _strokePainter?.layout(minWidth: _fillPainter!.width, maxWidth: _fillPainter!.width);
+      _lastLayoutMinWidth = constraints.minWidth;
+      _lastLayoutMaxWidth = constraints.maxWidth;
+      _needsPainterLayout = false;
+      WebosAssTextBlock.debugLayoutCount++;
+      _disposeCachedPicture();
+    }
+    size = constraints.constrain(_fillPainter!.size);
+  }
+
+  @override
+  void describeSemanticsConfiguration(SemanticsConfiguration config) {
+    super.describeSemanticsConfiguration(config);
+    config.label = _spans.map((s) => s.text).join();
+    config.textDirection = _textDirection;
+  }
+
+  ui.Picture _ensurePicture() {
+    if (_paintersDirty || _fillPainter == null) {
+      _rebuildPainters();
+    }
+    if (_needsPainterLayout) {
+      _fillPainter!.layout(
+        minWidth: _lastLayoutMinWidth ?? 0.0,
+        maxWidth: _lastLayoutMaxWidth ?? size.width,
+      );
+      _strokePainter?.layout(minWidth: _fillPainter!.width, maxWidth: _fillPainter!.width);
+      _needsPainterLayout = false;
+    }
+    final existing = _cachedPicture;
+    if (existing != null) return existing;
+
+    final recorder = ui.PictureRecorder();
+    final canvas = Canvas(recorder);
+
+    if (_hasAnyStroke && _strokePainter != null) {
+      final offsets = computeWebosAnisoStrokeOffsets(
+        extraX: _maxAnisoExtraX,
+        extraY: _maxAnisoExtraY,
+        baseStrokeWidth: _anisoBaseStrokeWidth,
+      );
+      if (_useCollapsedAnisoBlur && offsets.length > 1 && _collapsedBlurSigma > 0.25) {
+        final bounds = computeWebosBlurLayerBounds(
+          textSize: size,
+          maxAnisoExtraX: _maxAnisoExtraX,
+          maxAnisoExtraY: _maxAnisoExtraY,
+          maxStrokeWidth: _maxStrokeWidth,
+          blurSigma: _collapsedBlurSigma,
+        );
+        final layerPaint = Paint()
+          ..imageFilter = ui.ImageFilter.blur(
+            sigmaX: _collapsedBlurSigma,
+            sigmaY: _collapsedBlurSigma,
+            tileMode: ui.TileMode.decal,
+          )
+          ..color = Color.fromARGB(_collapsedOutlineAlpha.clamp(0, 255), 255, 255, 255);
+        canvas.saveLayer(bounds, layerPaint);
+        for (final off in offsets) {
+          _strokePainter!.paint(canvas, off);
+        }
+        canvas.restore();
+      } else {
+        for (final off in offsets) {
+          _strokePainter!.paint(canvas, off);
+        }
+      }
+    }
+
+    _fillPainter!.paint(canvas, Offset.zero);
+
+    final recorded = recorder.endRecording();
+    _cachedPicture = recorded;
+    WebosAssTextBlock.debugPictureRecordCount++;
+    WebosAssTextBlock.debugActivePictureCount++;
+    return recorded;
+  }
+
+  @override
+  void paint(PaintingContext context, Offset offset) {
+    final pic = _ensurePicture();
+    if (offset == Offset.zero) {
+      context.canvas.drawPicture(pic);
+    } else {
+      context.canvas.save();
+      context.canvas.translate(offset.dx, offset.dy);
+      context.canvas.drawPicture(pic);
+      context.canvas.restore();
+    }
+  }
+}
+
 /// Per-cue outer padding of a non-positioned (aligned) cue.
 class WebosAlignedGroupEntry {
   final double left;
@@ -4612,6 +5260,9 @@ class WebosSubtitleOverlay extends StatefulWidget {
 
 class _WebosSubtitleOverlayState extends State<WebosSubtitleOverlay>
     with SingleTickerProviderStateMixin {
+  static final RegExp _fontWeightSuffixRe =
+      RegExp(r'\s+(?:Bold|Italic|Oblique|Regular)+$', caseSensitive: false);
+
   Ticker? _vsyncTicker;
   final Map<WebosSubtitleCue, DateTime> _cueFirstSeenAt = {};
   final ValueNotifier<int> _animTickNotifier = ValueNotifier<int>(0);
@@ -5477,12 +6128,17 @@ class _WebosSubtitleOverlayState extends State<WebosSubtitleOverlay>
     final resScaleY = screenH / ry;
     const assFontCalibration = 0.80;
     final textAlign = _textAlignFor(cue.alignment);
+    final lineHeight = cue.isAss ? 1.02 : 1.18;
 
-    final fillSpans = <InlineSpan>[];
-    final strokeSpans = <InlineSpan>[];
+    final resolvedSpans = <WebosAssResolvedSpan>[];
     bool hasAnyStroke = false;
     double maxAnisoExtraX = 0.0;
     double maxAnisoExtraY = 0.0;
+    double maxStrokeWidth = 0.0;
+    double minAnisoBaseStroke = double.infinity;
+    bool canCollapseAnisoBlur = true;
+    double? firstStrokeBlurSigma;
+    int? firstStrokeOutlineAlpha;
     bool isOpaqueBoxStyle = (cue.style?.borderStyle == 3);
     Color? opaqueBoxColor;
     double opaqueBoxPadX = 10.0;
@@ -5520,6 +6176,8 @@ class _WebosSubtitleOverlayState extends State<WebosSubtitleOverlay>
       final shadowColor = (cue.isAss && sp.transforms.isNotEmpty)
           ? _evalTransformedColor(baseShadow, sp.transforms, elapsedMs, totalDur, (t) => t.shadowRgb, (t) => t.alpha4)
           : baseShadow;
+      final outlineAlpha = (outlineColor.a * 255.0).round().clamp(0, 255);
+      final shadowAlpha = (shadowColor.a * 255.0).round().clamp(0, 255);
 
       final rawXBord = cue.isAss
           ? _evalTransformedDouble(sp.outlineX ?? cue.style?.outline ?? 2.0, sp.transforms, elapsedMs, totalDur, (t) => t.outlineX)
@@ -5534,9 +6192,9 @@ class _WebosSubtitleOverlayState extends State<WebosSubtitleOverlay>
       final rawYShad = cue.isAss ? (sp.shadowY ?? cue.style?.shadow ?? 1.5) : 1.5;
 
       if (cue.isAss && isOpaqueBoxStyle) {
-        opaqueBoxColor ??= (outlineColor.alpha > 0)
+        opaqueBoxColor ??= (outlineAlpha > 0)
             ? outlineColor
-            : (shadowColor.alpha > 0 ? shadowColor : outlineColor);
+            : (shadowAlpha > 0 ? shadowColor : outlineColor);
         opaqueBoxPadX = (rawXBord > 0 ? rawXBord * resScaleX : 10.0).clamp(2.0, 120.0);
         opaqueBoxPadY = (rawYBord > 0 ? rawYBord * resScaleY : 6.0).clamp(1.0, 120.0);
       }
@@ -5549,24 +6207,30 @@ class _WebosSubtitleOverlayState extends State<WebosSubtitleOverlay>
           : (isAnisotropicStroke
               ? math.max(2.0, math.min(strokeWidthX, strokeWidthY))
               : math.max(strokeWidthX, strokeWidthY).clamp(0.0, 42.0));
-      if (isAnisotropicStroke && outlineColor.alpha > 0) {
+      if (isAnisotropicStroke && outlineAlpha > 0) {
         if (strokeWidthX > strokeWidthY) {
           maxAnisoExtraX = math.max(maxAnisoExtraX, (strokeWidthX - strokeWidthY) * 0.5);
         } else {
           maxAnisoExtraY = math.max(maxAnisoExtraY, (strokeWidthY - strokeWidthX) * 0.5);
         }
+        minAnisoBaseStroke = math.min(minAnisoBaseStroke, strokeWidth);
       }
-      if ((strokeWidth > 0.1 || isAnisotropicStroke) && outlineColor.alpha > 0) {
-        hasAnyStroke = true;
-      }
-
       final blurSigma = (rawBlur * resScaleY * 0.75).clamp(0.0, 18.0);
-      final MaskFilter? strokeMaskFilter = blurSigma > 0.25
-          ? MaskFilter.blur(BlurStyle.normal, blurSigma)
-          : null;
+      if ((strokeWidth > 0.1 || isAnisotropicStroke) && outlineAlpha > 0) {
+        hasAnyStroke = true;
+        maxStrokeWidth = math.max(maxStrokeWidth, strokeWidth);
+        if (firstStrokeBlurSigma == null) {
+          firstStrokeBlurSigma = blurSigma;
+          firstStrokeOutlineAlpha = outlineAlpha;
+        } else if ((blurSigma - firstStrokeBlurSigma).abs() > 0.05 ||
+            outlineAlpha != firstStrokeOutlineAlpha) {
+          canCollapseAnisoBlur = false;
+        }
+      }
 
       final shadOffsetX = isOpaqueBoxStyle ? 0.0 : (rawXShad * resScaleX * 0.85).clamp(-16.0, 16.0);
       final shadOffsetY = isOpaqueBoxStyle ? 0.0 : (rawYShad * resScaleY * 0.85).clamp(-16.0, 16.0);
+      final hasShadow = (shadOffsetX != 0.0 || shadOffsetY != 0.0) && shadowAlpha > 0;
 
       final rawFontName = (sp.fontName ?? cue.style?.fontName ?? '').trim();
       final rawFontLower = rawFontName.toLowerCase();
@@ -5586,7 +6250,7 @@ class _WebosSubtitleOverlayState extends State<WebosSubtitleOverlay>
       if (rawFontLower.contains('times new roman') || rawFontLower == 'times' || rawFontLower.contains('georgia') || rawFontLower.contains('garamond') || rawFontLower.contains('serif')) {
         fontFamily = 'Times New Roman';
       } else if (rawFontName.isNotEmpty) {
-        fontFamily = rawFontName.replaceAll(RegExp(r'\s+(?:Bold|Italic|Oblique|Regular)+$', caseSensitive: false), '').trim();
+        fontFamily = rawFontName.replaceAll(_fontWeightSuffixRe, '').trim();
       }
       final baseSpacing = sp.spacing ?? cue.style?.spacing ?? 0.0;
       final rawSpacing = (cue.isAss && sp.transforms.isNotEmpty)
@@ -5594,50 +6258,23 @@ class _WebosSubtitleOverlayState extends State<WebosSubtitleOverlay>
           : baseSpacing;
       final letterSpacing = (rawSpacing.abs() > 0.01) ? rawSpacing * resScaleX : null;
 
-      strokeSpans.add(
-        TextSpan(
+      resolvedSpans.add(
+        WebosAssResolvedSpan(
           text: sp.text,
-          style: TextStyle(
-            fontFamily: fontFamily,
-            fontSize: fontSize,
-            fontWeight: isBold ? FontWeight.bold : FontWeight.w600,
-            fontStyle: isItalic ? FontStyle.italic : FontStyle.normal,
-            letterSpacing: letterSpacing,
-            decoration: decoration,
-            height: cue.isAss ? 1.02 : 1.18,
-            foreground: Paint()
-              ..style = PaintingStyle.stroke
-              ..strokeWidth = strokeWidth > 0.1 ? strokeWidth : 0.0
-              ..strokeJoin = StrokeJoin.round
-              ..strokeCap = StrokeCap.round
-              ..maskFilter = strokeMaskFilter
-              ..color = strokeWidth > 0.1 ? outlineColor : Colors.transparent,
-          ),
-        ),
-      );
-
-      fillSpans.add(
-        TextSpan(
-          text: sp.text,
-          style: TextStyle(
-            fontFamily: fontFamily,
-            fontSize: fontSize,
-            fontWeight: isBold ? FontWeight.bold : FontWeight.w600,
-            fontStyle: isItalic ? FontStyle.italic : FontStyle.normal,
-            letterSpacing: letterSpacing,
-            decoration: decoration,
-            height: cue.isAss ? 1.02 : 1.18,
-            color: fillColor,
-            shadows: ((shadOffsetX != 0.0 || shadOffsetY != 0.0) && shadowColor.alpha > 0)
-                ? [
-                    Shadow(
-                      offset: Offset(shadOffsetX, shadOffsetY),
-                      blurRadius: blurSigma > 0.15 ? blurSigma + 2.0 : 2.0,
-                      color: shadowColor,
-                    ),
-                  ]
-                : null,
-          ),
+          fontFamily: fontFamily,
+          fontSize: fontSize,
+          fontWeight: isBold ? FontWeight.bold : FontWeight.w600,
+          fontStyle: isItalic ? FontStyle.italic : FontStyle.normal,
+          letterSpacing: letterSpacing,
+          decoration: decoration,
+          height: lineHeight,
+          fillColor: fillColor,
+          outlineColor: outlineColor,
+          strokeWidth: strokeWidth > 0.1 ? strokeWidth : 0.0,
+          blurSigma: blurSigma,
+          shadowOffset: hasShadow ? Offset(shadOffsetX, shadOffsetY) : null,
+          shadowBlurRadius: blurSigma > 0.15 ? blurSigma + 2.0 : 2.0,
+          shadowColor: hasShadow ? shadowColor : null,
         ),
       );
     }
@@ -5651,50 +6288,29 @@ class _WebosSubtitleOverlayState extends State<WebosSubtitleOverlay>
           )
         : null;
 
-    Widget buildStrokeRichText() => RichText(
-          textAlign: textAlign,
-          strutStyle: assStrutStyle,
-          textHeightBehavior: const TextHeightBehavior(
-            applyHeightToFirstAscent: false,
-            applyHeightToLastDescent: false,
-          ),
-          text: TextSpan(children: strokeSpans),
-        );
+    final bool isAnisoMultiPass = hasAnyStroke && (maxAnisoExtraX > 1.0 || maxAnisoExtraY > 1.0);
+    final bool useCollapsedAnisoBlur = isAnisoMultiPass &&
+        canCollapseAnisoBlur &&
+        (firstStrokeBlurSigma ?? 0.0) > 0.25 &&
+        firstStrokeOutlineAlpha != null;
 
-    final strokeWidgets = <Widget>[];
-    if (hasAnyStroke) {
-      if (maxAnisoExtraX > 1.0 || maxAnisoExtraY > 1.0) {
-        for (final frac in const [-1.0, -0.66, -0.33, 0.0, 0.33, 0.66, 1.0]) {
-          strokeWidgets.add(
-            Transform.translate(
-              offset: Offset(maxAnisoExtraX * frac, maxAnisoExtraY * frac),
-              child: buildStrokeRichText(),
-            ),
-          );
-        }
-      } else {
-        strokeWidgets.add(buildStrokeRichText());
-      }
-    }
-
-    Widget result = Stack(
-      clipBehavior: Clip.none,
-      alignment: _flutterAlignmentFor(cue.alignment),
-      children: [
-        ...strokeWidgets,
-        RichText(
-          textAlign: textAlign,
-          strutStyle: assStrutStyle,
-          textHeightBehavior: const TextHeightBehavior(
-            applyHeightToFirstAscent: false,
-            applyHeightToLastDescent: false,
-          ),
-          text: TextSpan(children: fillSpans),
-        ),
-      ],
+    Widget result = WebosAssTextBlock(
+      spans: resolvedSpans,
+      textAlign: textAlign,
+      strutStyle: assStrutStyle,
+      hasAnyStroke: hasAnyStroke,
+      maxAnisoExtraX: maxAnisoExtraX,
+      maxAnisoExtraY: maxAnisoExtraY,
+      anisoBaseStrokeWidth: minAnisoBaseStroke.isFinite ? minAnisoBaseStroke : 2.0,
+      maxStrokeWidth: maxStrokeWidth,
+      useCollapsedAnisoBlur: useCollapsedAnisoBlur,
+      collapsedBlurSigma: firstStrokeBlurSigma ?? 0.0,
+      collapsedOutlineAlpha: firstStrokeOutlineAlpha ?? 255,
     );
 
-    if (isOpaqueBoxStyle && opaqueBoxColor != null && opaqueBoxColor.alpha > 0) {
+    if (isOpaqueBoxStyle &&
+        opaqueBoxColor != null &&
+        (opaqueBoxColor.a * 255.0).round().clamp(0, 255) > 0) {
       result = Container(
         padding: EdgeInsets.symmetric(
           horizontal: opaqueBoxPadX,

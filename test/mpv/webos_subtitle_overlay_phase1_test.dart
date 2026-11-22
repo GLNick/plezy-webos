@@ -238,6 +238,10 @@ void main() {
       WebosSubtitleClock.instance.notifySeek(1000);
     });
 
+    Finder findCueText(String substring) => find.byWidgetPredicate(
+          (w) => w is WebosAssTextBlock && w.plainText.contains(substring),
+        );
+
     testWidgets('paused playhead: animated cue causes no repeated rebuilds', (tester) async {
       cues.value = [_cue(start: 0, end: 5000, fadeIn: 200, fadeOut: 200)];
       await pumpOverlay(tester);
@@ -248,7 +252,7 @@ void main() {
         await tester.pump(const Duration(milliseconds: 16));
       }
       expect(WebosSubtitleOverlay.debugBuildCount, before);
-      expect(find.textContaining('Hello', findRichText: true), findsWidgets);
+      expect(findCueText('Hello'), findsOneWidget);
     });
 
     testWidgets('raw window churn without visibility change does not rebuild', (tester) async {
@@ -265,19 +269,19 @@ void main() {
         await tester.pump(const Duration(milliseconds: 16));
       }
       expect(WebosSubtitleOverlay.debugBuildCount, before);
-      expect(find.textContaining('future', findRichText: true), findsNothing);
+      expect(findCueText('future'), findsNothing);
     });
 
     testWidgets('visibility change rebuilds and hides expired cue', (tester) async {
       cues.value = [_cue(start: 0, end: 5000)];
       await pumpOverlay(tester);
       await tester.pump(const Duration(milliseconds: 16));
-      expect(find.textContaining('Hello', findRichText: true), findsWidgets);
+      expect(findCueText('Hello'), findsOneWidget);
 
       WebosSubtitleClock.instance.notifySeek(6000);
       await tester.pump(const Duration(milliseconds: 16));
       await tester.pump(const Duration(milliseconds: 16));
-      expect(find.textContaining('Hello', findRichText: true), findsNothing);
+      expect(findCueText('Hello'), findsNothing);
     });
 
     testWidgets('style change rebuilds', (tester) async {
@@ -301,7 +305,7 @@ void main() {
       await tester.pump(const Duration(milliseconds: 16));
       await tester.pump(const Duration(milliseconds: 16));
 
-      expect(find.textContaining('B', findRichText: true), findsWidgets);
+      expect(findCueText('B'), findsOneWidget);
       expect(identical(tester.element(find.byKey(ObjectKey(a))), elementBefore), isTrue);
     });
   });
