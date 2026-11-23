@@ -206,6 +206,7 @@ bool _canAppHandleBackInternally() {
   if (isTextEditingFocused()) return true;
   if (OverlaySheetController.openSheetCount.value > 0) return true;
   if (rootNavigatorKey.currentState?.canPop() ?? false) return true;
+  if (profileNavigationRegistry.navigator?.canPop() ?? false) return true;
   if (_findDeepestPoppableNavigator() != null) return true;
   return false;
 }
@@ -217,36 +218,40 @@ Future<bool> _triggerInternalWebosBack() async {
   if (now.difference(_lastWebosBackHandledAt).inMilliseconds < 180) return true;
   _lastWebosBackHandledAt = now;
 
-  if (BackKeyCoordinator.consumeIfHandled()) {
-    _refreshVisibleImagesAfterPlayerExit();
-    return true;
-  }
+  try {
+    if (BackKeyCoordinator.consumeIfHandled()) {
+      _refreshVisibleImagesAfterPlayerExit();
+      return true;
+    }
 
-  // 1. Falls der Root-Navigator (z.B. VideoPlayerScreen, Dialoge, Sheets) poppen kann:
-  final rootNavigator = rootNavigatorKey.currentState;
-  if (rootNavigator != null && rootNavigator.canPop()) {
-    BackKeyCoordinator.markHandled();
-    await rootNavigator.maybePop();
-    _refreshVisibleImagesAfterPlayerExit();
-    return true;
-  }
+    // 1. Falls der Root-Navigator (z.B. VideoPlayerScreen, Dialoge, Sheets) poppen kann:
+    final rootNavigator = rootNavigatorKey.currentState;
+    if (rootNavigator != null && rootNavigator.canPop()) {
+      BackKeyCoordinator.markHandled();
+      await rootNavigator.maybePop();
+      _refreshVisibleImagesAfterPlayerExit();
+      return true;
+    }
 
-  // 2. Frage Plezys eigene profileNavigationRegistry (Serien, Staffeln, Bibliotheken, Tabs):
-  final poppedProfile = await profileNavigationRegistry.maybePopProfileRoute();
-  if (poppedProfile) {
-    BackKeyCoordinator.markHandled();
-    return true;
-  }
+    // 2. Frage Plezys eigene profileNavigationRegistry (Serien, Staffeln, Bibliotheken, Tabs):
+    final poppedProfile = await profileNavigationRegistry.maybePopProfileRoute();
+    if (poppedProfile) {
+      BackKeyCoordinator.markHandled();
+      return true;
+    }
 
-  // 3. Fallback: Tiefster poppable Navigator im Widget-Baum
-  final poppable = _findDeepestPoppableNavigator();
-  if (poppable != null) {
-    BackKeyCoordinator.markHandled();
-    await poppable.maybePop();
-    return true;
-  }
+    // 3. Fallback: Tiefster poppable Navigator im Widget-Baum
+    final poppable = _findDeepestPoppableNavigator();
+    if (poppable != null) {
+      BackKeyCoordinator.markHandled();
+      await poppable.maybePop();
+      return true;
+    }
 
-  return false;
+    return false;
+  } finally {
+    _scheduleWebosBackPolicySync();
+  }
 }
 
 class _WebosBackNavigationObserver with WidgetsBindingObserver {
@@ -326,13 +331,13 @@ void _refreshVisibleImagesAfterPlayerExit() {
 bool _webosBackHooksInstalled = false;
 const MethodChannel _webosAuxChannel = MethodChannel('videoplayer_webos');
 bool? _lastSentBackIntercept;
-
-int _syncTickCounter = 0;
+bool _webosBackPolicySyncMicrotaskScheduled = false;
+bool _webosBackPolicySyncFrameScheduled = false;
+bool _lastWebosTextEditingFocused = false;
 
 void _syncWebosBackPolicy({bool force = false}) {
   final shouldIntercept = _canAppHandleBackInternally();
-  _syncTickCounter++;
-  if (force || _lastSentBackIntercept != shouldIntercept || (_syncTickCounter % 10 == 0)) {
+  if (force || _lastSentBackIntercept != shouldIntercept) {
     if (_lastSentBackIntercept != shouldIntercept) {
       appLogger.i('[WebOS-Back] Updating _WEBOS_ACCESS_POLICY_KEYS_BACK intercept=$shouldIntercept');
     }
@@ -345,22 +350,44 @@ void _syncWebosBackPolicy({bool force = false}) {
   }
 }
 
+void _scheduleWebosBackPolicySync() {
+  if (!Platform.isLinux || PlatformDetector.isDesktopOS()) return;
+  if (!_webosBackPolicySyncMicrotaskScheduled) {
+    _webosBackPolicySyncMicrotaskScheduled = true;
+    scheduleMicrotask(() {
+      _webosBackPolicySyncMicrotaskScheduled = false;
+      _syncWebosBackPolicy();
+    });
+  }
+  if (!_webosBackPolicySyncFrameScheduled) {
+    _webosBackPolicySyncFrameScheduled = true;
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      _webosBackPolicySyncFrameScheduled = false;
+      _syncWebosBackPolicy();
+    });
+  }
+}
+
+void _onWebosFocusChanged() {
+  final editing = isTextEditingFocused();
+  if (editing == _lastWebosTextEditingFocused) return;
+  _lastWebosTextEditingFocused = editing;
+  _scheduleWebosBackPolicySync();
+}
+
 void _installWebosBackAndNavigationHooks() {
   if (!Platform.isLinux || _webosBackHooksInstalled) return;
   _webosBackHooksInstalled = true;
 
-  PaintingBinding.instance.imageCache.maximumSize = 2500;
-  PaintingBinding.instance.imageCache.maximumSizeBytes = 250 * 1024 * 1024;
   WidgetsBinding.instance.addObserver(_WebosBackNavigationObserver());
   GestureBinding.instance.pointerRouter.addGlobalRoute(_handleWebosPointerRoute);
   FocusManager.instance.rootScope.onKeyEvent = _handleWebosRootBackKey;
 
-  WidgetsBinding.instance.addPersistentFrameCallback((_) {
-    _syncWebosBackPolicy();
-  });
-  Timer.periodic(const Duration(milliseconds: 200), (_) {
-    _syncWebosBackPolicy();
-  });
+  BackKeySuppressorObserver.onNavigationChanged = _scheduleWebosBackPolicySync;
+  profileNavigationRegistry.onNavigatorChanged = _scheduleWebosBackPolicySync;
+  OverlaySheetController.openSheetCount.addListener(_scheduleWebosBackPolicySync);
+  FocusManager.instance.addListener(_onWebosFocusChanged);
+  WidgetsBinding.instance.addPostFrameCallback((_) => _syncWebosBackPolicy(force: true));
 
   // 1. Roher PlatformDispatcher.onKeyData Hook (fängt Events von FlutterEngineSendKeyEvent ab,
   //    selbst wenn XKB für Keycode 412 / 0x19c logical=0 oder physical=0 liefert!)
@@ -1478,7 +1505,7 @@ Future<void> _logEnvironmentDiagnostics() async {
   );
   appLogger.i('Display: ${DevicePerformance.describeDisplay()}');
   appLogger.i('Video decoders: ${VideoDecodeCapabilities.describeSync()}');
-  if (Platform.isAndroid) {
+  if (Platform.isAndroid || (Platform.isLinux && !PlatformDetector.isDesktopOS())) {
     appLogger.i('Startup RSS: ${ProcessInfo.currentRss >> 20}MB');
   }
 }
@@ -1726,6 +1753,7 @@ class _MainAppState extends State<MainApp> with WidgetsBindingObserver {
   /// still-climbing RSS can re-evict inside the cooldown window.
   DateTime _lastRssEviction = DateTime(0);
   int _lastEvictionRss = 0;
+  bool _appBackgrounded = false;
 
   @override
   void initState() {
@@ -1868,14 +1896,18 @@ class _MainAppState extends State<MainApp> with WidgetsBindingObserver {
   void didHaveMemoryPressure() {
     super.didHaveMemoryPressure();
     appLogger.w('System memory pressure, evicting image caches');
-    _evictImageCaches();
+    _evictImageCaches(clearLive: true);
+    if (Platform.isLinux && !PlatformDetector.isDesktopOS() && !_appBackgrounded) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        if (mounted) triggerWebosPostPlayerImageRefresh();
+      });
+    }
   }
 
   /// RSS-based image-cache eviction. Desktop keeps its fixed 1.5GB bar;
-  /// Android scales to the device because LMK on a 2GB TV box kills well
-  /// below any fixed desktop threshold — and Android trim callbacks
-  /// ([didHaveMemoryPressure]) are best-effort, LMK can kill without ever
-  /// delivering one (#1349).
+  /// Android and 32-bit webOS TVs scale to device RAM because OOM/LMK killers
+  /// can terminate the process below any fixed desktop threshold or before
+  /// pressure callbacks arrive (#1349).
   void _startRssWatchdog() {
     final int threshold;
     final Duration period;
@@ -1888,6 +1920,10 @@ class _MainAppState extends State<MainApp> with WidgetsBindingObserver {
       // Decode bursts can spike RSS in seconds on low-end boxes; the read
       // itself is an in-process syscall, cheap enough for a short period.
       period = DevicePerformance.isLowEndHardware ? const Duration(seconds: 15) : const Duration(seconds: 30);
+    } else if (Platform.isLinux) {
+      final totalMem = DevicePerformance.totalMemBytes;
+      threshold = totalMem != null ? (totalMem * 0.22).round().clamp(280 << 20, 512 << 20) : 352 << 20;
+      period = const Duration(seconds: 15);
     } else {
       return; // iOS/tvOS: jetsam pressure arrives via didHaveMemoryPressure.
     }
@@ -1913,10 +1949,16 @@ class _MainAppState extends State<MainApp> with WidgetsBindingObserver {
     });
   }
 
-  void _evictImageCaches() {
-    if (Platform.isLinux) return;
-    PaintingBinding.instance.imageCache.clear();
-    PaintingBinding.instance.imageCache.clearLiveImages();
+  void _evictImageCaches({bool clearLive = false}) {
+    final cache = PaintingBinding.instance.imageCache;
+    cache.clear();
+    if (Platform.isLinux && !PlatformDetector.isDesktopOS()) {
+      // Preserve live visible poster images on foreground RSS trims; only drop
+      // live references under OS memory pressure or background suspension.
+      if (clearLive) cache.clearLiveImages();
+      return;
+    }
+    cache.clearLiveImages();
   }
 
   /// Two connectivity-driven triggers, both listening on [OfflineModeProvider],
@@ -2025,6 +2067,10 @@ class _MainAppState extends State<MainApp> with WidgetsBindingObserver {
   void didChangeAppLifecycleState(AppLifecycleState state) {
     switch (state) {
       case AppLifecycleState.resumed:
+        _appBackgrounded = false;
+        if (Platform.isLinux && !PlatformDetector.isDesktopOS()) {
+          _syncWebosBackPolicy(force: true);
+        }
         // App came back to foreground - trigger sync check
         _offlineWatchSyncService.onAppResumed();
         unawaited(TrackerCoordinator.instance.flushWriteQueue());
@@ -2053,6 +2099,7 @@ class _MainAppState extends State<MainApp> with WidgetsBindingObserver {
         }
       case AppLifecycleState.paused:
       case AppLifecycleState.detached:
+        _appBackgrounded = true;
         // Backgrounded: drop the library push sockets — they are
         // foreground-only, and the stale-resume refresh covers the gap.
         _libraryEventService.suspend();
@@ -2073,6 +2120,12 @@ class _MainAppState extends State<MainApp> with WidgetsBindingObserver {
           final bar = totalMem != null ? (totalMem * 0.35).round() : 768 << 20;
           if (ProcessInfo.currentRss > bar) {
             _evictImageCaches();
+          }
+        } else if (Platform.isLinux) {
+          final totalMem = DevicePerformance.totalMemBytes;
+          final bar = totalMem != null ? (totalMem * 0.18).round().clamp(200 << 20, 384 << 20) : 256 << 20;
+          if (ProcessInfo.currentRss > bar) {
+            _evictImageCaches(clearLive: true);
           }
         }
       case AppLifecycleState.inactive:

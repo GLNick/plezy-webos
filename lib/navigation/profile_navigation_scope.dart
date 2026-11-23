@@ -10,17 +10,20 @@ import 'package:flutter/material.dart';
 class ProfileNavigationRegistry {
   GlobalKey<NavigatorState>? _navigatorKey;
   GlobalKey<ScaffoldMessengerState>? _mainScaffoldMessengerKey;
+  VoidCallback? onNavigatorChanged;
 
   NavigatorState? get navigator => _navigatorKey?.currentState;
   ScaffoldMessengerState? get mainScaffoldMessenger => _mainScaffoldMessengerKey?.currentState;
 
   void attachNavigator(GlobalKey<NavigatorState> key) {
     _navigatorKey = key;
+    onNavigatorChanged?.call();
   }
 
   void detachNavigator(GlobalKey<NavigatorState> key) {
     if (identical(_navigatorKey, key)) {
       _navigatorKey = null;
+      onNavigatorChanged?.call();
     }
   }
 

@@ -16,6 +16,26 @@ import '../../../utils/app_logger.dart';
 /// Runs freely on the system monotonic crystal during normal playback so 24fps frame-by-frame
 /// ASS sequences never suffer from NDL_media 1-second quantization jitter.
 
+const String _kLegacyWebosAppdataDir =
+    '/media/developer/apps/usr/palm/applications/com.edde746.plezy/appdata';
+
+/// Resolves a writable appdata directory on webOS, honoring `libwebos_compat32.so`'s
+/// `FLUTTER_APPDATA_HOME` / `XDG_DATA_HOME` redirects before falling back to
+/// `$HOME/.local/share/com.edde746.plezy` or the legacy read-only bundle path.
+@visibleForTesting
+String resolveWebosAppdataDir({Map<String, String>? environment}) {
+  final env = environment ?? Platform.environment;
+  for (final key in const ['FLUTTER_APPDATA_HOME', 'XDG_DATA_HOME']) {
+    final value = env[key]?.trim();
+    if (value != null && value.isNotEmpty) return value;
+  }
+  final home = env['HOME']?.trim();
+  if (home != null && home.isNotEmpty) {
+    return '$home/.local/share/com.edde746.plezy';
+  }
+  return _kLegacyWebosAppdataDir;
+}
+
 /// Manages automatic detection of unseekable MKV files (which trigger 702 Resume/Seek errors
 /// in webOS NDL_media) and provides live hot-swapping to Plex Direct Stream (start.m3u8).
 class WebosDirectStreamFallbackRegistry {
@@ -24,20 +44,27 @@ class WebosDirectStreamFallbackRegistry {
     _loadFromDisk();
   }
 
+  @visibleForTesting
+  static String? debugStorageDirOverride;
+
   final Set<String> _unseekableKeys = {};
   String? activeRatingKey;
   String? lastRawMkvUrl;
   Map<String, String>? lastHeaders;
   Future<String?> Function()? _buildDirectStreamUrlCallback;
 
-  static final File _cacheFile = File(
-    '/media/developer/apps/usr/palm/applications/com.edde746.plezy/appdata/webos_unseekable_mkvs.json',
-  );
+  static File get _cacheFile =>
+      File('${debugStorageDirOverride ?? resolveWebosAppdataDir()}/webos_unseekable_mkvs.json');
 
   void _loadFromDisk() {
     try {
-      if (_cacheFile.existsSync()) {
-        final raw = jsonDecode(_cacheFile.readAsStringSync());
+      var file = _cacheFile;
+      if (!file.existsSync() && debugStorageDirOverride == null) {
+        final legacyFile = File('$_kLegacyWebosAppdataDir/webos_unseekable_mkvs.json');
+        if (legacyFile.existsSync()) file = legacyFile;
+      }
+      if (file.existsSync()) {
+        final raw = jsonDecode(file.readAsStringSync());
         if (raw is List) {
           for (final item in raw) {
             if (item is String && item.isNotEmpty) _unseekableKeys.add(item);
@@ -49,9 +76,20 @@ class WebosDirectStreamFallbackRegistry {
 
   void _saveToDisk() {
     try {
-      _cacheFile.parent.createSync(recursive: true);
-      _cacheFile.writeAsStringSync(jsonEncode(_unseekableKeys.toList()));
+      final file = _cacheFile;
+      file.parent.createSync(recursive: true);
+      file.writeAsStringSync(jsonEncode(_unseekableKeys.toList()));
     } catch (_) {}
+  }
+
+  @visibleForTesting
+  void debugReset({bool reloadFromDisk = false}) {
+    _unseekableKeys.clear();
+    activeRatingKey = null;
+    lastRawMkvUrl = null;
+    lastHeaders = null;
+    _buildDirectStreamUrlCallback = null;
+    if (reloadFromDisk) _loadFromDisk();
   }
 
   void registerActiveSession({
@@ -465,14 +503,20 @@ class WebosSubtitlePreferenceStore {
   bool _autoSelectDoneForCurrentMedia = false;
   int _lastEvaluatedTrackCount = 0;
 
-  static final File _prefFile = File(
-    '/media/developer/apps/usr/palm/applications/com.edde746.plezy/appdata/webos_sub_pref.json',
-  );
+  @visibleForTesting
+  static String? debugStorageDirOverride;
+
+  static File get _prefFile => File('${debugStorageDirOverride ?? resolveWebosAppdataDir()}/webos_sub_pref.json');
 
   void _loadFromDisk() {
     try {
-      if (_prefFile.existsSync()) {
-        final raw = jsonDecode(_prefFile.readAsStringSync());
+      var file = _prefFile;
+      if (!file.existsSync() && debugStorageDirOverride == null) {
+        final legacyFile = File('$_kLegacyWebosAppdataDir/webos_sub_pref.json');
+        if (legacyFile.existsSync()) file = legacyFile;
+      }
+      if (file.existsSync()) {
+        final raw = jsonDecode(file.readAsStringSync());
         if (raw is Map) {
           preferredLanguage = raw['lang'] as String?;
           preferredTitle = raw['title'] as String?;
@@ -485,8 +529,9 @@ class WebosSubtitlePreferenceStore {
 
   void _saveToDisk() {
     try {
-      _prefFile.parent.createSync(recursive: true);
-      _prefFile.writeAsStringSync(
+      final file = _prefFile;
+      file.parent.createSync(recursive: true);
+      file.writeAsStringSync(
         jsonEncode({
           'lang': preferredLanguage,
           'title': preferredTitle,
@@ -495,6 +540,18 @@ class WebosSubtitlePreferenceStore {
         }),
       );
     } catch (_) {}
+  }
+
+  @visibleForTesting
+  void debugReset({bool reloadFromDisk = false}) {
+    preferredLanguage = null;
+    preferredTitle = null;
+    preferredId = null;
+    explicitlyDisabled = false;
+    _lastMediaOpenTime = DateTime.fromMillisecondsSinceEpoch(0);
+    _autoSelectDoneForCurrentMedia = false;
+    _lastEvaluatedTrackCount = 0;
+    if (reloadFromDisk) _loadFromDisk();
   }
 
   static String? normalizeLang(String? raw) {

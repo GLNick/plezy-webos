@@ -3,15 +3,15 @@ import 'dart:io' show Platform;
 
 import 'package:flutter/material.dart';
 
+import '../../../utils/platform_detector.dart';
+
 /// A 1x1 pixel widget that continuously repaints to keep Flutter's frame clock
-/// active on Linux, where GTK's frame clock goes idle and freezes animations.
+/// active on desktop Linux, where GTK's frame clock goes idle and freezes animations.
 ///
-/// Linux-only by design. Mounting this on other platforms is harmful: on
-/// Windows the 10Hz repaints become DirectComposition commits during playback,
-/// and once fullscreen focus engages VRR (FreeSync/G-Sync) each commit forces a
-/// scanout off the video's cadence — the micro-stutter of issue #1707. Every
-/// non-Linux platform must instead uphold the invariant that the player UI
-/// schedules no frames while its chrome is hidden.
+/// Desktop Linux only. On webOS TV ([Platform.isLinux] == true with
+/// [PlatformDetector.isDesktopOS] == false), 10Hz repaints force unnecessary
+/// full-surface EGL `swapBuffers` commits over hardware video playback. Every
+/// non-desktop-Linux platform must uphold frame quiescence when hidden.
 class LinuxKeepAlive extends StatefulWidget {
   const LinuxKeepAlive({super.key});
 
@@ -20,10 +20,10 @@ class LinuxKeepAlive extends StatefulWidget {
   @visibleForTesting
   static bool? debugIsLinuxOverride;
 
-  /// Whether this widget repaints on the current platform. Exposed so the
-  /// quiescence test can pin the policy to exactly [Platform.isLinux].
+  /// Whether this widget repaints on the current platform (desktop Linux only;
+  /// excluded on webOS TV and all non-Linux platforms).
   @visibleForTesting
-  static bool get ticksOnThisPlatform => debugIsLinuxOverride ?? Platform.isLinux;
+  static bool get ticksOnThisPlatform => debugIsLinuxOverride ?? (Platform.isLinux && PlatformDetector.isDesktopOS());
 
   @override
   State<LinuxKeepAlive> createState() => _LinuxKeepAliveState();

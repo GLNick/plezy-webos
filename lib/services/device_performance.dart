@@ -30,6 +30,30 @@ class DevicePerformance {
   /// reservations), below 3 GB Shield-class devices (~2.8 GiB).
   static const int _lowMemThresholdBytes = 2252 << 20;
 
+  static bool get _isWebos => Platform.isLinux && !PlatformDetector.isDesktopOS();
+
+  @visibleForTesting
+  static int? debugMemTotalBytesOverride;
+
+  /// Parses `MemTotal` from `/proc/meminfo` text in bytes, or returns null.
+  @visibleForTesting
+  static int? parseMemTotalBytes(String memInfoContent) {
+    final match = RegExp(r'^MemTotal:\s+(\d+)\s*kB', caseSensitive: false, multiLine: true).firstMatch(memInfoContent);
+    if (match == null) return null;
+    final kib = int.tryParse(match.group(1)!);
+    return kib != null && kib > 0 ? kib * 1024 : null;
+  }
+
+  static Future<int?> _readLinuxTotalMemBytes() async {
+    if (debugMemTotalBytesOverride != null) return debugMemTotalBytesOverride;
+    try {
+      final content = await File('/proc/meminfo').readAsString();
+      return parseMemTotalBytes(content);
+    } catch (_) {
+      return null;
+    }
+  }
+
   bool _autoReduced = false;
   VisualEffectsSetting _override = VisualEffectsSetting.auto;
 
@@ -44,22 +68,32 @@ class DevicePerformance {
       _singleton.getInstance(() => DevicePerformance._().._override = override, (instance) => instance._detect());
 
   Future<void> _detect() async {
-    if (!Platform.isAndroid) return; // tvOS/iOS/desktop: always full tier
-    try {
-      final result = await deviceChannel.invokeMapMethod<dynamic, dynamic>('getPerformanceSignals');
-      if (result == null) return;
-      _is64Bit = result['is64Bit'] == true;
-      _isLowRam = result['isLowRamDevice'] == true;
-      _totalMemBytes = (result['totalMemBytes'] as num?)?.toInt();
-      _autoReduced =
-          _is64Bit == false ||
-          _isLowRam == true ||
-          (_totalMemBytes != null && _totalMemBytes! <= _lowMemThresholdBytes);
-      if (_autoReduced) _capSkiaResourceCache();
-    } on MissingPluginException {
-      // Stale native build — stay on the full tier.
-    } on PlatformException {
-      // Signal query failed — stay on the full tier.
+    if (Platform.isAndroid) {
+      try {
+        final result = await deviceChannel.invokeMapMethod<dynamic, dynamic>('getPerformanceSignals');
+        if (result == null) return;
+        _is64Bit = result['is64Bit'] == true;
+        _isLowRam = result['isLowRamDevice'] == true;
+        _totalMemBytes = (result['totalMemBytes'] as num?)?.toInt();
+        _autoReduced =
+            _is64Bit == false ||
+            _isLowRam == true ||
+            (_totalMemBytes != null && _totalMemBytes! <= _lowMemThresholdBytes);
+        if (_autoReduced) _capSkiaResourceCache();
+      } on MissingPluginException {
+        // Stale native build — stay on the full tier.
+      } on PlatformException {
+        // Signal query failed — stay on the full tier.
+      }
+      return;
+    }
+    if (_isWebos) {
+      _is64Bit = false; // webOS targets 32-bit ARM (armv7l).
+      _totalMemBytes = await _readLinuxTotalMemBytes();
+      _autoReduced = _totalMemBytes != null && _totalMemBytes! <= _lowMemThresholdBytes;
+      // Always cap Skia's GPU resource cache on 32-bit webOS TVs so 4K compositor
+      // surfaces do not exhaust the 32-bit address space or trigger OOM kills.
+      _capSkiaResourceCache();
     }
   }
 
@@ -69,7 +103,11 @@ class DevicePerformance {
   /// a shell arg because FlutterLoader appends its own threshold after it; a
   /// flutter/skia override sticks. Impeller ignores it.
   static void _capSkiaResourceCache() {
-    SystemChannels.skia.invokeMethod<void>('Skia.setResourceCacheMaxBytes', 48 << 20).ignore();
+    try {
+      SystemChannels.skia.invokeMethod<void>('Skia.setResourceCacheMaxBytes', 48 << 20).ignore();
+    } catch (_) {
+      // Ignore if ServicesBinding is not yet initialized (e.g., isolated unit tests).
+    }
   }
 
   /// Total device RAM as reported by the platform, or null off-Android /
@@ -161,9 +199,18 @@ class DevicePerformance {
   static void applyImageCacheBudget() {
     _detectDisplayBudget();
     final cache = PaintingBinding.instance.imageCache;
-    if (Platform.isLinux) {
-      cache.maximumSize = 2500;
-      cache.maximumSizeBytes = 250 << 20; // 250MB on webOS
+    if (_isWebos) {
+      final mem = totalMemBytes;
+      if (isReduced || (mem != null && mem <= _lowMemThresholdBytes)) {
+        cache.maximumSize = 400;
+        cache.maximumSizeBytes = 64 << 20; // 64MB on ≤2.2 GiB webOS TVs
+      } else if (mem != null && mem >= (3072 << 20)) {
+        cache.maximumSize = 500;
+        cache.maximumSizeBytes = 96 << 20; // 96MB on ≥3 GiB webOS TVs
+      } else {
+        cache.maximumSize = 450;
+        cache.maximumSizeBytes = 80 << 20; // 80MB baseline on mid/unknown-RAM webOS TVs
+      }
       return;
     }
     if (PlatformDetector.isDesktopOS()) {
@@ -237,6 +284,7 @@ class DevicePerformance {
   static void debugReset({bool? autoReduced, VisualEffectsSetting? override, int? totalMemBytes}) {
     _displayBudgetFactor = 1.0;
     debugDisplayShortestSideOverride = null;
+    debugMemTotalBytesOverride = null;
     if (autoReduced == null && override == null && totalMemBytes == null) {
       _singleton.debugReset();
       return;

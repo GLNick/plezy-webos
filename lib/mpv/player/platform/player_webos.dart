@@ -53,16 +53,29 @@ class _WebosHoleLayer extends Layer {
   _WebosHoleLayer({required this.rect});
 
   final Rect rect;
+  Picture? _picture;
 
   @override
   void addToScene(SceneBuilder builder, [Offset layerOffset = Offset.zero]) {
-    final recorder = PictureRecorder();
-    final canvas = Canvas(recorder);
-    final paint = Paint()
-      ..color = Colors.transparent
-      ..blendMode = BlendMode.src;
-    canvas.drawRect(rect, paint);
-    builder.addPicture(layerOffset, recorder.endRecording());
+    var pic = _picture;
+    if (pic == null) {
+      final recorder = PictureRecorder();
+      final canvas = Canvas(recorder);
+      final paint = Paint()
+        ..color = Colors.transparent
+        ..blendMode = BlendMode.src;
+      canvas.drawRect(rect, paint);
+      pic = recorder.endRecording();
+      _picture = pic;
+    }
+    builder.addPicture(layerOffset, pic);
+  }
+
+  @override
+  void dispose() {
+    _picture?.dispose();
+    _picture = null;
+    super.dispose();
   }
 }
 
@@ -93,6 +106,61 @@ class PlayerWebos extends PlayerBase {
   bool _isHotSwapping = false;
   bool _saw702Error = false;
   bool _posQueryInFlight = false;
+  bool _disposing = false;
+
+  bool get _isClosed => disposed || _disposing;
+
+  Future<void> _disposeOrphanTexture(int? texId) async {
+    if (texId == null) return;
+    try {
+      await _webosPlatform.dispose(texId);
+    } catch (_) {}
+  }
+
+  /// Decodes raw external subtitle bytes, handling UTF-8/UTF-16 BOMs and falling
+  /// back to Latin-1 for legacy Western European `.srt` files instead of throwing.
+  @visibleForTesting
+  static String decodeExternalSubtitleBytes(List<int> bytes) {
+    if (bytes.isEmpty) return '';
+    if (bytes.length >= 2 && bytes[0] == 0xFF && bytes[1] == 0xFE) {
+      final codes = <int>[];
+      for (var i = 2; i + 1 < bytes.length; i += 2) {
+        codes.add(bytes[i] | (bytes[i + 1] << 8));
+      }
+      return String.fromCharCodes(codes);
+    }
+    if (bytes.length >= 2 && bytes[0] == 0xFE && bytes[1] == 0xFF) {
+      final codes = <int>[];
+      for (var i = 2; i + 1 < bytes.length; i += 2) {
+        codes.add((bytes[i] << 8) | bytes[i + 1]);
+      }
+      return String.fromCharCodes(codes);
+    }
+    final payload =
+        (bytes.length >= 3 && bytes[0] == 0xEF && bytes[1] == 0xBB && bytes[2] == 0xBF) ? bytes.sublist(3) : bytes;
+    try {
+      return utf8.decode(payload);
+    } on FormatException {
+      return latin1.decode(payload);
+    }
+  }
+
+  @visibleForTesting
+  void debugRegisterExternalSubtitleForTest(String trackId, String uri, {int? sourceId}) {
+    _subIdToExternalUri[trackId] = uri;
+    if (sourceId != null) {
+      _currentSourceId = sourceId;
+    }
+  }
+
+  @visibleForTesting
+  Future<void> debugEnsureSubtitleLoaded(String trackId) => _ensureSubtitleLoaded(trackId);
+
+  @visibleForTesting
+  List<WebosSubtitleCue>? debugLoadedExternalSubtitle(String trackId) => _loadedExternalSubtitles[trackId];
+
+  @visibleForTesting
+  void debugRefreshActiveSubtitleCues() => _refreshActiveSubtitleCues();
 
   // Subtitle state
   final ValueNotifier<List<WebosSubtitleCue>> activeSubtitleCues = ValueNotifier<List<WebosSubtitleCue>>(const []);
@@ -324,10 +392,17 @@ class PlayerWebos extends PlayerBase {
     Duration? timelineDuration,
     Duration timelineOffset = Duration.zero,
   }) async {
-    if (disposed) return null;
+    if (_isClosed) return null;
+    final sourceId = ++_sourceCounter;
+    _currentSourceId = sourceId;
+
     await _ensureInitialized();
+    if (_isClosed || _currentSourceId != sourceId) return null;
 
     await _teardownActiveTexture();
+    if (_isClosed || _currentSourceId != sourceId) return null;
+
+    WebosSubtitlePreferenceStore.instance.notifyMediaOpened();
 
     final startPosition = media.start ?? timelineOffset;
     configureTimeline(duration: timelineDuration, offset: timelineOffset);
@@ -337,8 +412,6 @@ class PlayerWebos extends PlayerBase {
     resetPlaybackProgress(startPosition);
     setSeekable(!isLive);
 
-    final sourceId = ++_sourceCounter;
-    _currentSourceId = sourceId;
     _videoReadyForSubtitles = false;
     _targetResumeStartMs = sourceStart.inMilliseconds;
     _openStartedAt = DateTime.now();
@@ -378,8 +451,10 @@ class PlayerWebos extends PlayerBase {
         );
       } catch (createErr) {
         if (createErr.toString().contains('104')) {
+          if (_isClosed || _currentSourceId != sourceId) return null;
           appLogger.w('[WebOS-NDL] create() got 104 AVProxy busy; waiting 350ms and retrying...');
           await Future<void>.delayed(const Duration(milliseconds: 350));
+          if (_isClosed || _currentSourceId != sourceId) return null;
           texId = await _webosPlatform.create(
             DataSource(
               sourceType: DataSourceType.network,
@@ -389,8 +464,10 @@ class PlayerWebos extends PlayerBase {
             ),
           );
         } else if (!isHls && createErr.toString().contains('702')) {
+          if (_isClosed || _currentSourceId != sourceId) return null;
           appLogger.w('[WebOS-NDL] create() threw 702 Resume error on Direct Play MKV; switching to Direct Stream (start.m3u8)');
           final dsUrl = await WebosDirectStreamFallbackRegistry.instance.obtainDirectStreamUrl();
+          if (_isClosed || _currentSourceId != sourceId) return null;
           if (dsUrl != null && dsUrl.isNotEmpty) {
             resolvedUri = _resolveUrlWithHeaders(dsUrl, media.headers);
             _lastResolvedUri = resolvedUri;
@@ -412,7 +489,8 @@ class PlayerWebos extends PlayerBase {
         }
       }
 
-      if (disposed || texId == null) {
+      if (_isClosed || _currentSourceId != sourceId || texId == null) {
+        await _disposeOrphanTexture(texId);
         return null;
       }
       _textureId = texId;
@@ -441,7 +519,7 @@ class PlayerWebos extends PlayerBase {
 
       _videoEventSub = _webosPlatform.videoEventsFor(texId).listen(
         (VideoEvent event) {
-          if (disposed || _currentSourceId != sourceId) return;
+          if (_isClosed || _currentSourceId != sourceId) return;
           switch (event.eventType) {
             case VideoEventType.initialized:
               _videoReadyForSubtitles = true;
@@ -511,7 +589,7 @@ class PlayerWebos extends PlayerBase {
           }
         },
         onError: (Object err) {
-            if (disposed || _currentSourceId != sourceId) return;
+            if (_isClosed || _currentSourceId != sourceId) return;
             final errStr = err.toString();
             appLogger.e('[WebOS-NDL] Playback error on textureId=$texId: $errStr');
             if (errStr.contains('104')) {
@@ -519,7 +597,7 @@ class PlayerWebos extends PlayerBase {
               if (sinceOpen < 3500) {
                 appLogger.w('[WebOS-NDL] Caught 104 fail to create AVProxy on startup; retrying after 400ms...');
                 Future<void>.delayed(const Duration(milliseconds: 400), () {
-                  if (!disposed && _currentSourceId == sourceId) {
+                  if (!_isClosed && _currentSourceId == sourceId) {
                     unawaited(
                       open(
                         media,
@@ -563,18 +641,22 @@ class PlayerWebos extends PlayerBase {
       );
 
       await _webosPlatform.play(texId);
+      if (_isClosed || _currentSourceId != sourceId || _textureId != texId) {
+        return null;
+      }
       if (play) {
         handlePropertyChange('pause', false, sourceId: sourceId);
       }
 
+      _positionTimer?.cancel();
       _posQueryInFlight = false;
       _positionTimer = Timer.periodic(const Duration(milliseconds: 90), (_) async {
         final activeTex = _textureId;
-        if (disposed || activeTex == null || _currentSourceId != sourceId || _posQueryInFlight) return;
+        if (_isClosed || activeTex == null || _currentSourceId != sourceId || _posQueryInFlight) return;
         _posQueryInFlight = true;
         try {
           final pos = await _webosPlatform.getPosition(activeTex);
-          if (!disposed && _currentSourceId == sourceId) {
+          if (!_isClosed && _currentSourceId == sourceId) {
             final posMs = pos.inMilliseconds;
             if (_targetResumeStartMs > 2000 && posMs < _targetResumeStartMs - 2000) {
               final elapsedMs = DateTime.now().difference(_openStartedAt ?? DateTime.now()).inMilliseconds;
@@ -594,44 +676,57 @@ class PlayerWebos extends PlayerBase {
       return sourceId;
     } catch (e, st) {
       appLogger.e('[WebOS-NDL] open() exception', error: e, stackTrace: st);
-      handlePlayerEvent('end-file', {
-        'reason': 'error',
-        'message': e.toString(),
-        'sourceId': sourceId,
-      });
+      if (!_isClosed && _currentSourceId == sourceId) {
+        handlePlayerEvent('end-file', {
+          'reason': 'error',
+          'message': e.toString(),
+          'sourceId': sourceId,
+        });
+      }
       rethrow;
     }
   }
 
   Future<void> _ensureSubtitleLoaded(String trackId) async {
+    if (_isClosed) return;
     if (_loadedExternalSubtitles.containsKey(trackId)) {
       _refreshActiveSubtitleCues();
       return;
     }
     final extUri = _subIdToExternalUri[trackId];
     if (extUri == null || extUri.isEmpty) return;
+    final sourceId = _currentSourceId;
 
+    HttpClient? client;
     try {
-      final client = HttpClient()..connectionTimeout = const Duration(seconds: 8);
+      client = HttpClient()..connectionTimeout = const Duration(seconds: 8);
       final req = await client.getUrl(Uri.parse(extUri));
       _lastHeaders?.forEach((k, v) => req.headers.set(k, v));
       final resp = await req.close().timeout(const Duration(seconds: 12));
       if (resp.statusCode == 200) {
-        final content = await resp.transform(utf8.decoder).join();
+        final bytes = await consolidateHttpClientResponseBytes(resp).timeout(const Duration(seconds: 15));
+        if (_isClosed || _currentSourceId != sourceId) return;
+        final content = decodeExternalSubtitleBytes(bytes);
         final cues = WebosSubtitleParser.parseAuto(content);
+        if (_isClosed || _currentSourceId != sourceId) return;
         if (cues.isNotEmpty) {
           _loadedExternalSubtitles[trackId] = cues;
           appLogger.i('[WebOS-Sub] Loaded ${cues.length} subtitle cues from URL for $trackId');
           _refreshActiveSubtitleCues();
         }
       } else {
-        await resp.drain<void>();
+        await resp.drain<void>().catchError((Object _) {});
       }
-      client.close();
-    } catch (_) {}
+    } catch (_) {
+    } finally {
+      try {
+        client?.close(force: true);
+      } catch (_) {}
+    }
   }
 
   void _refreshActiveSubtitleCues() {
+    if (_isClosed) return;
     final autoSub = WebosSubtitlePreferenceStore.instance.checkAutoSelect<SubtitleTrack>(
       currentTrack: state.track.subtitle,
       availableTracks: state.tracks.subtitle,
@@ -644,11 +739,11 @@ class PlayerWebos extends PlayerBase {
       return;
     }
 
-    if (disposed || !_videoReadyForSubtitles || _subtitlesHidden || _selectedSubTrackId == null || _selectedSubTrackId == 'no') {
+    if (!_videoReadyForSubtitles || _subtitlesHidden || _selectedSubTrackId == null || _selectedSubTrackId == 'no') {
       if (activeSubtitleCues.value.isNotEmpty) {
         activeSubtitleCues.value = const [];
       }
-      if (!disposed && (_subtitlesHidden || _selectedSubTrackId == null || _selectedSubTrackId == 'no')) {
+      if (_subtitlesHidden || _selectedSubTrackId == null || _selectedSubTrackId == 'no') {
         _mkvExtractor?.setActiveTrackNumber(null);
       }
       return;
@@ -765,7 +860,7 @@ class PlayerWebos extends PlayerBase {
       _lastViewRect = Rect.fromLTWH(x, y, w, h);
     }
     final texId = _textureId;
-    if (disposed || texId == null || audioOnly) return;
+    if (_isClosed || texId == null || audioOnly) return;
     if (_lastViewRect.width <= 0 || _lastViewRect.height <= 0) return;
     try {
       await _webosPlatform.viewRect(
@@ -781,25 +876,23 @@ class PlayerWebos extends PlayerBase {
   Future<void> _teardownActiveTexture() async {
     _positionTimer?.cancel();
     _positionTimer = null;
+    _posQueryInFlight = false;
     activeSubtitleCues.value = const [];
     _mkvExtractor?.dispose();
     _mkvExtractor = null;
     _loadedExternalSubtitles.clear();
-    await _videoEventSub?.cancel();
+    final eventSub = _videoEventSub;
     _videoEventSub = null;
+    await eventSub?.cancel();
     final texId = _textureId;
     _textureId = null;
-    if (texId != null) {
-      try {
-        await _webosPlatform.dispose(texId);
-      } catch (_) {}
-    }
+    await _disposeOrphanTexture(texId);
   }
 
   @override
   Future<void> play() async {
     final texId = _textureId;
-    if (disposed || texId == null) return;
+    if (_isClosed || texId == null) return;
     await _webosPlatform.play(texId);
     handlePropertyChange('pause', false, sourceId: _currentSourceId);
   }
@@ -807,26 +900,28 @@ class PlayerWebos extends PlayerBase {
   @override
   Future<void> pause() async {
     final texId = _textureId;
-    if (disposed || texId == null) return;
+    if (_isClosed || texId == null) return;
     await _webosPlatform.pause(texId);
     handlePropertyChange('pause', true, sourceId: _currentSourceId);
   }
 
   @override
   Future<void> stop() async {
+    _sourceCounter++;
+    _currentSourceId = null;
     await _teardownActiveTexture();
     setSeekable(false);
   }
 
   Future<bool> _hotSwapToDirectStream(int targetPosMs) async {
-    if (disposed || _isHotSwapping) return false;
+    if (_isClosed || _isHotSwapping) return false;
     final sourceId = _currentSourceId;
     if (sourceId == null) return false;
 
     _isHotSwapping = true;
     try {
       final dsUrl = await WebosDirectStreamFallbackRegistry.instance.obtainDirectStreamUrl();
-      if (disposed || dsUrl == null || dsUrl.isEmpty || _currentSourceId != sourceId) {
+      if (_isClosed || dsUrl == null || dsUrl.isEmpty || _currentSourceId != sourceId) {
         return false;
       }
 
@@ -839,15 +934,13 @@ class PlayerWebos extends PlayerBase {
       WebosSubtitleClock.instance.notifySeek(targetPosMs);
       _mkvExtractor?.notifySeek(targetPosMs);
 
-      await _videoEventSub?.cancel();
+      final eventSub = _videoEventSub;
       _videoEventSub = null;
+      await eventSub?.cancel();
       final oldTex = _textureId;
       _textureId = null;
-      if (oldTex != null) {
-        try {
-          await _webosPlatform.dispose(oldTex);
-        } catch (_) {}
-      }
+      await _disposeOrphanTexture(oldTex);
+      if (_isClosed || _currentSourceId != sourceId) return false;
 
       final payloadJson = targetPosMs > 0
           ? jsonEncode({
@@ -867,14 +960,17 @@ class PlayerWebos extends PlayerBase {
           httpHeaders: payloadJson.isNotEmpty ? {'payload': payloadJson} : const <String, String>{},
         ),
       );
-      if (disposed || newTexId == null || _currentSourceId != sourceId) return false;
+      if (_isClosed || newTexId == null || _currentSourceId != sourceId) {
+        await _disposeOrphanTexture(newTexId);
+        return false;
+      }
 
       _textureId = newTexId;
       appLogger.i('[WebOS-NDL] Hot-swapped to Direct Stream textureId=$newTexId at ${targetPosMs}ms');
 
       _videoEventSub = _webosPlatform.videoEventsFor(newTexId).listen(
         (VideoEvent event) {
-          if (disposed || _currentSourceId != sourceId) return;
+          if (_isClosed || _currentSourceId != sourceId) return;
           switch (event.eventType) {
             case VideoEventType.initialized:
               _videoReadyForSubtitles = true;
@@ -889,7 +985,7 @@ class PlayerWebos extends PlayerBase {
               );
               if (targetPosMs > 2000) {
                 Future<void>.delayed(const Duration(milliseconds: 250), () async {
-                  if (disposed || _textureId != newTexId) return;
+                  if (_isClosed || _textureId != newTexId || _currentSourceId != sourceId) return;
                   try {
                     final curPos = await _webosPlatform.getPosition(newTexId);
                     if (curPos.inMilliseconds < targetPosMs - 3000) {
@@ -924,12 +1020,13 @@ class PlayerWebos extends PlayerBase {
           }
         },
         onError: (Object err) {
-          if (disposed || _currentSourceId != sourceId) return;
+          if (_isClosed || _currentSourceId != sourceId) return;
           appLogger.e('[WebOS-NDL] Direct Stream playback error on textureId=$newTexId: $err');
         },
       );
 
       await _webosPlatform.play(newTexId);
+      if (_isClosed || _currentSourceId != sourceId || _textureId != newTexId) return false;
       handlePropertyChange('pause', false, sourceId: sourceId);
       handlePropertyChange('time-pos', targetPosMs / 1000.0, sourceId: sourceId);
       _refreshActiveSubtitleCues();
@@ -950,9 +1047,10 @@ class PlayerWebos extends PlayerBase {
     WebosSubtitleClock.instance.notifySeek(targetMs);
 
     final texId = _textureId;
-    if (disposed || texId == null) return;
+    if (_isClosed || texId == null) return;
 
     await runSeek(position, () async {
+      if (_isClosed || _textureId != texId) return;
       _mkvExtractor?.notifySeek(targetMs);
       _saw702Error = false;
       bool seekFailed = false;
@@ -967,7 +1065,7 @@ class PlayerWebos extends PlayerBase {
         if (!seekFailed && !_saw702Error) {
           for (int i = 0; i < 4; i++) {
             await Future<void>.delayed(const Duration(milliseconds: 110));
-            if (disposed || _saw702Error || _isHotSwapping) break;
+            if (_isClosed || _textureId != texId || _saw702Error || _isHotSwapping) break;
             try {
               final cur = await _webosPlatform.getPosition(texId);
               if ((cur.inMilliseconds - targetMs).abs() <= 4500) {
@@ -980,7 +1078,11 @@ class PlayerWebos extends PlayerBase {
             } catch (_) {}
           }
         }
-        if ((seekFailed || _saw702Error) && !_isCurrentStreamHls && !_isHotSwapping) {
+        if ((seekFailed || _saw702Error) &&
+            !_isClosed &&
+            _textureId == texId &&
+            !_isCurrentStreamHls &&
+            !_isHotSwapping) {
           appLogger.i('[WebOS-NDL] Unseekable MKV detected during seek; hot-swapping to Direct Stream at ${targetMs}ms');
           await _hotSwapToDirectStream(targetMs);
         }
@@ -991,6 +1093,7 @@ class PlayerWebos extends PlayerBase {
 
   @override
   Future<void> selectAudioTrack(AudioTrack track) async {
+    if (_isClosed) return;
     updateSelectedAudioTrack(track.id);
     final texId = _textureId;
     final orderIdx = _audioIdToOrderIndex[track.id];
@@ -1007,6 +1110,7 @@ class PlayerWebos extends PlayerBase {
 
   @override
   Future<void> selectSubtitleTrack(SubtitleTrack track) async {
+    if (_isClosed) return;
     WebosSubtitlePreferenceStore.instance.onSelectSubtitleTrack(id: track.id, language: track.language, title: track.title);
     if (track.id == SubtitleTrack.off.id || track.id == 'no') {
       _selectedSubTrackId = null;
@@ -1135,6 +1239,10 @@ class PlayerWebos extends PlayerBase {
 
   @override
   Future<void> dispose({bool preserveDisplayMode = false}) async {
+    if (_disposing || disposed) return;
+    _disposing = true;
+    _sourceCounter++;
+    _currentSourceId = null;
     await _teardownActiveTexture();
     await super.dispose(preserveDisplayMode: preserveDisplayMode);
   }

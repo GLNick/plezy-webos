@@ -265,6 +265,15 @@ String describeKeyEvent(KeyEvent event) {
 /// on KeyDown for dialogs) and Android TV system back gestures, preventing the
 /// orphaned KeyUp from propagating to the underlying screen's back handler.
 class BackKeySuppressorObserver extends NavigatorObserver {
+  /// Invoked whenever any observed [Navigator] mutates its route stack
+  /// (used on webOS to keep Wayland Back key interception in sync without polling).
+  static VoidCallback? onNavigationChanged;
+
+  @override
+  void didPush(Route<dynamic> route, Route<dynamic>? previousRoute) {
+    onNavigationChanged?.call();
+  }
+
   @override
   void didPop(Route route, Route? previousRoute) {
     // On AppleTV, handleBackKeyAction consumes the KeyUp silently regardless,
@@ -272,9 +281,19 @@ class BackKeySuppressorObserver extends NavigatorObserver {
     // KeyDown+KeyUp in a single recognizer Began callback, so didPop fires
     // squarely inside the window where BackKeyPressTracker.isBackKeyDown is
     // true.)
-    if (PlatformDetector.isAppleTV()) return;
-    if (BackKeyPressTracker.isBackKeyDown) {
+    if (!PlatformDetector.isAppleTV() && BackKeyPressTracker.isBackKeyDown) {
       BackKeyUpSuppressor.suppressBackUntilKeyUp();
     }
+    onNavigationChanged?.call();
+  }
+
+  @override
+  void didRemove(Route<dynamic> route, Route<dynamic>? previousRoute) {
+    onNavigationChanged?.call();
+  }
+
+  @override
+  void didReplace({Route<dynamic>? newRoute, Route<dynamic>? oldRoute}) {
+    onNavigationChanged?.call();
   }
 }

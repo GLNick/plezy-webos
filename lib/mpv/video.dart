@@ -158,8 +158,9 @@ class _VideoState extends State<Video> {
       return LayoutBuilder(
         builder: (context, constraints) {
           WidgetsBinding.instance.addPostFrameCallback((_) {
+            if (!mounted) return;
             final renderBox = context.findRenderObject() as RenderBox?;
-                                                if (renderBox != null && renderBox.hasSize) {
+            if (renderBox != null && renderBox.hasSize) {
               final view = View.of(context);
               final double physW = view.physicalSize.width;
               final double effectiveDpr = physW >= 1800 ? (physW / 1280.0) : view.devicePixelRatio;
