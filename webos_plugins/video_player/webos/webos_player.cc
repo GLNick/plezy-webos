@@ -3,6 +3,7 @@
 
 #include <pbnjson.hpp>
 #include <NDL/NDL_media.h>
+#include <cstdlib>
 
 #include "webos_player.h"
 #include "plugin_player_delegate.h"
@@ -265,6 +266,7 @@ bool WebOSPlayer::load(const std::string& appId,
   if (start_position != 0) {
     LogInfo(TAG) <<"load(sartPosition:" << start_position << ")";
   }
+  has_pending_seek_.store(false);
   current_ = start_position;
 
   std::string media_transport_type;
@@ -331,6 +333,7 @@ bool WebOSPlayer::load(const std::string& appId,
 
 bool WebOSPlayer::unload(bool reset) {
   bool retv = true;
+  has_pending_seek_.store(false);
   if (state_ != UNLOADED) {
     if (slot_ >= 0 && NDL_MediaSetPlayer(slot_) == 0) {
       if (NDL_MediaUnload() != 0) {
@@ -433,6 +436,8 @@ bool WebOSPlayer::seek(int64_t position, bool update_position) {
                  << stateToString(state_) << " failed";
     return false;
   }
+  pending_seek_position_.store(position);
+  has_pending_seek_.store(true);
   if (update_position) {
     current_ = position;
   }
@@ -504,6 +509,9 @@ void WebOSPlayer::handleEvent(const std::string& event_json) {
     }
     if (current_ != t) {
       current_ = t;
+    }
+    if (has_pending_seek_.load() && std::llabs(t - pending_seek_position_.load()) <= 2000) {
+      has_pending_seek_.store(false);
     }
   } else if (!obj["sourceInfo"].isNull()) {
     pbnjson::JValue src = obj["sourceInfo"];
@@ -601,6 +609,9 @@ void WebOSPlayer::execPaused() {
 }
 
 void WebOSPlayer::execSeekDone() {
+  if (has_pending_seek_.exchange(false)) {
+    current_ = pending_seek_position_.load();
+  }
   delegate_->OnSeekCompleted();
 }
 
@@ -641,6 +652,10 @@ void WebOSPlayer::execBufferRange(int64_t begin, int64_t end) {
 void WebOSPlayer::execError(int64_t code, const std::string& text) {
   LogInfo(TAG) << "execError(" << code << "," << text << ") at " << stateToString(state_);
 
+  if (code == MediaPipelineStatus::SMP_SEEK_FAILURE ||
+      code == MediaPipelineStatus::SMP_RESUME_SEEK_FAILURE) {
+    has_pending_seek_.store(false);
+  }
   if (code == MediaPipelineStatus::SMP_SEEK_FAILURE) {
     // ignored
   } else if (code == MediaPipelineStatus::SMP_RM_RELATED_ERROR) {

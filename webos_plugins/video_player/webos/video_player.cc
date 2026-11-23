@@ -142,14 +142,16 @@ void VideoPlayer::Seek(int64_t position) {
 
   if (reload_ || removed_ || position == player_.getCurrentPosition()) {
     seek_position_ = position;
-  } else if (player_.seek(position, true)) {
+  } else if (player_.seek(position, false)) {
     seek_position_ = position;
   }
 }
 
 int64_t VideoPlayer::GetPosition() {
-  int64_t position = player_.getCurrentPosition();
-  return std::max(seek_position_, position);
+  if (removed_ || reload_) {
+    return seek_position_;
+  }
+  return player_.getCurrentPosition();
 }
 
 void VideoPlayer::Dispose(const DisposedCallback disposed_cb) {
@@ -366,6 +368,16 @@ void VideoPlayer::OnError(int64_t errorCode,const std::string& errorText) {
   }
   pending_error_code_ = 0;
   pending_error_text_.clear();
+
+  // Error 702 during active playback is a recoverable seek failure on
+  // unindexed MKVs: notify Dart so PlayerWebos can hot-swap to Direct Stream
+  // without prematurely unloading or removing this player instance.
+  if (errorCode == 702 && is_initialized_) {
+    std::string errCode = std::to_string(errorCode);
+    std::string errText = errCode + " " + errorText;
+    event_sink_->Error(errCode, errText, flutter::EncodableValue(errText));
+    return;
+  }
 
   // for Dart videoController.Dispose()
   if (!is_initialized_) {

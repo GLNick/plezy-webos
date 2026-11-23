@@ -82,6 +82,7 @@ private:
     SMP_DVR_RESOURCE_ALLOCATION_ERROR = 602,
     SMP_SEEK_FAILURE = 700,
     SMP_SETPLAYRATE_FAILURE = 701,
+    SMP_RESUME_SEEK_FAILURE = 702,
     SMP_PIPELINE_DIED_ABNORMALLY = 1000,
     SMP_STREAMING_PROTOCOL_RELATED_ERROR = 40000,
     SMP_MEDIA_API_PLAYING_ERROR = 61440,
@@ -189,6 +190,8 @@ private:
   bool audio_out_;
   int state_;
   std::atomic<int64_t> current_;
+  std::atomic<bool> has_pending_seek_{false};
+  std::atomic<int64_t> pending_seek_position_{0};
   int64_t duration_;
   bool seekable_;
   bool has_video_;

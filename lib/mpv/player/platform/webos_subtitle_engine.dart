@@ -321,11 +321,12 @@ class WebosDirectStreamFallbackRegistry {
   }
 }
 
-class WebosSubtitleClock {
+class WebosSubtitleClock extends ChangeNotifier {
   static final WebosSubtitleClock instance = WebosSubtitleClock._();
   WebosSubtitleClock._();
 
   static const int kSceneCutLeadMs = 70;
+  static const int _kSeekCooldownFallbackMs = 1200;
 
   final Stopwatch _watch = Stopwatch();
   final Stopwatch _seekCooldownWatch = Stopwatch();
@@ -337,6 +338,33 @@ class WebosSubtitleClock {
   bool _awaitingPostSeekTick = false;
 
   bool get hasReportedPosition => _hasReported;
+  bool get isPlaying => _isPlaying;
+  double get playbackRate => _playbackRate;
+
+  bool get isAwaitingPostSeekTick {
+    _maybeExpireSeekCooldown();
+    return _awaitingPostSeekTick;
+  }
+
+  int get seekCooldownRemainingMs {
+    _maybeExpireSeekCooldown();
+    if (!_awaitingPostSeekTick) return 0;
+    return math.max(0, _kSeekCooldownFallbackMs - _seekCooldownWatch.elapsedMilliseconds);
+  }
+
+  void _maybeExpireSeekCooldown() {
+    if (_awaitingPostSeekTick &&
+        _seekCooldownWatch.isRunning &&
+        _seekCooldownWatch.elapsedMilliseconds > _kSeekCooldownFallbackMs) {
+      _awaitingPostSeekTick = false;
+      _seekCooldownWatch.stop();
+      if (_isPlaying) {
+        _watch
+          ..reset()
+          ..start();
+      }
+    }
+  }
 
   @visibleForTesting
   bool get debugAwaitingPostSeekTick => _awaitingPostSeekTick;
@@ -344,8 +372,7 @@ class WebosSubtitleClock {
   @visibleForTesting
   bool get debugWatchRunning => _watch.isRunning;
 
-  @visibleForTesting
-  void debugReset() {
+  void reset() {
     _watch
       ..reset()
       ..stop();
@@ -358,7 +385,11 @@ class WebosSubtitleClock {
     _playbackRate = 1.0;
     _hasReported = false;
     _awaitingPostSeekTick = false;
+    notifyListeners();
   }
+
+  @visibleForTesting
+  void debugReset() => reset();
 
   /// Called immediately when the user or intro-skipper triggers a seek.
   /// Freezes the subtitle clock at the target position while the hardware decoder buffers,
@@ -374,28 +405,36 @@ class WebosSubtitleClock {
     _seekCooldownWatch
       ..reset()
       ..start();
+    notifyListeners();
   }
 
   void reportPlayerPosition(int rawPosMs, {bool? isPlaying, double? rate}) {
     if (rawPosMs < 0) return;
+    bool shouldNotify = !_hasReported;
     _hasReported = true;
 
     final playingChanged = isPlaying != null && isPlaying != _isPlaying;
     final rateChanged = rate != null && rate > 0 && rate != _playbackRate;
-    if ((playingChanged || rateChanged) && !_awaitingPostSeekTick) {
-      _anchorPosMs = _extrapolatedRawMs;
-      if (isPlaying ?? _isPlaying) {
-        _watch
-          ..reset()
-          ..start();
-      } else {
-        _watch.stop();
+    if (playingChanged || rateChanged) {
+      shouldNotify = true;
+      if (!_awaitingPostSeekTick) {
+        _anchorPosMs = _extrapolatedRawMs;
+        if (isPlaying ?? _isPlaying) {
+          _watch
+            ..reset()
+            ..start();
+        } else {
+          _watch.stop();
+        }
       }
     }
     if (isPlaying != null) _isPlaying = isPlaying;
     if (rate != null && rate > 0) _playbackRate = rate;
 
-    if (rawPosMs == _lastRawPosMs) return;
+    if (rawPosMs == _lastRawPosMs) {
+      if (shouldNotify) notifyListeners();
+      return;
+    }
 
     final prevRaw = _lastRawPosMs;
     _lastRawPosMs = rawPosMs;
@@ -424,6 +463,7 @@ class WebosSubtitleClock {
       } else {
         _watch.reset();
       }
+      notifyListeners();
       return;
     }
 
@@ -438,7 +478,9 @@ class WebosSubtitleClock {
           ..start();
       } else {
         _watch.reset();
+        shouldNotify = true;
       }
+      if (diff.abs() > 80) shouldNotify = true;
     } else if (diff.abs() > 80) {
       _anchorPosMs = currentEst + (diff * 0.35).round();
       if (_isPlaying) {
@@ -446,6 +488,11 @@ class WebosSubtitleClock {
           ..reset()
           ..start();
       }
+      shouldNotify = true;
+    }
+
+    if (shouldNotify) {
+      notifyListeners();
     }
   }
 
@@ -460,22 +507,13 @@ class WebosSubtitleClock {
     } else {
       _watch.stop();
     }
+    notifyListeners();
   }
 
   int get _extrapolatedRawMs {
+    _maybeExpireSeekCooldown();
     if (_awaitingPostSeekTick) {
-      // Safety fallback if hardware player only reports coarse ticks after >1200ms
-      if (_seekCooldownWatch.isRunning && _seekCooldownWatch.elapsedMilliseconds > 1200) {
-        _awaitingPostSeekTick = false;
-        _seekCooldownWatch.stop();
-        if (_isPlaying) {
-          _watch
-            ..reset()
-            ..start();
-        }
-      } else {
-        return _anchorPosMs;
-      }
+      return _anchorPosMs;
     }
     if (!_isPlaying || !_watch.isRunning) return _anchorPosMs;
     final elapsed = _watch.elapsedMilliseconds;
@@ -2819,6 +2857,7 @@ class _WebosPgsTrackDecoder {
   }) {
     _hasPcsInCurrentSet = false;
     bool changed = false;
+    bool closedOpenCue = false;
 
     // Close any previously open PGS cues on this track
     for (final prev in _openCues) {
@@ -2828,9 +2867,13 @@ class _WebosPgsTrackDecoder {
           dedupMap[prev.pgsDedupKey!] = cueStartMs;
         }
         changed = true;
+        closedOpenCue = true;
       }
     }
     _openCues.clear();
+    if (closedOpenCue) {
+      WebosMkvSubtitleExtractor.notifyPgsImageDecoded();
+    }
 
     if (_compObjects.isEmpty) {
       return changed;
@@ -2879,6 +2922,7 @@ class _WebosPgsTrackDecoder {
           if (prevImg != null && !identical(prevImg, img)) {
             prevImg.dispose();
           }
+          WebosMkvSubtitleExtractor.notifyPgsImageDecoded();
           onImageDecoded();
         },
       );
@@ -2966,6 +3010,7 @@ class WebosMkvSubtitleExtractor {
   static const int kPgsKeepBehindMs = 15000;
   static const int kTextLookaheadMs = 90000;
   static const int kPgsLookaheadMs = 30000;
+  static const int kPausedLookaheadMs = 5000;
   static const int kMinRewindLookbackMs = 10000;
   static const int kMaxRewindLookbackMs = 60000;
   static const int kDynamicCuePointIntervalMs = 5000;
@@ -3011,7 +3056,18 @@ class WebosMkvSubtitleExtractor {
     fontGeneration.value = fontGeneration.value + 1;
   }
 
+  /// Incremented whenever async PGS RLE->RGBA->ui.Image bitmap decode finishes
+  /// or an open PGS cue's `endMs` is shortened in place so [WebosSubtitleOverlay]
+  /// wakes / reschedules its boundary timer immediately.
+  static final ValueNotifier<int> pgsImageRevision = ValueNotifier<int>(0);
+
+  @visibleForTesting
+  static void notifyPgsImageDecoded() {
+    pgsImageRevision.value = pgsImageRevision.value + 1;
+  }
+
   int? _activeTrackNumber;
+  bool _isPaused;
   int _streamCursorOffset = 0;
   int _currentClusterFileOffset = -1;
   int _currentClusterTimeMs = 0;
@@ -3024,6 +3080,7 @@ class WebosMkvSubtitleExtractor {
   int? _catchUpTargetMs;
   int _streamGeneration = 0;
   int _streamRequestCount = 0;
+  int _activeStreamSafeResumeOffset = 0;
   HttpClientRequest? _activeRequest;
   Completer<void>? _loopWakeCompleter;
   int? _explicitSeekTargetMs;
@@ -3036,8 +3093,10 @@ class WebosMkvSubtitleExtractor {
     required this.headers,
     required this.getCurrentPositionMs,
     required this.onCuesUpdated,
+    bool initialPaused = false,
     @visibleForTesting WebosPgsPixelDecoder? pgsPixelDecoder,
-  }) : _pgsPixelDecoder = pgsPixelDecoder;
+  }) : _pgsPixelDecoder = pgsPixelDecoder,
+       _isPaused = initialPaused;
 
   bool _isPgsTrack(int? trackNum) {
     if (trackNum == null) return false;
@@ -3052,6 +3111,12 @@ class WebosMkvSubtitleExtractor {
 
   @visibleForTesting
   int? get debugActiveTrackNumber => _activeTrackNumber;
+
+  @visibleForTesting
+  bool get debugIsPaused => _isPaused;
+
+  @visibleForTesting
+  bool get debugHasActiveStream => _activeStreamSub != null || _activeRequest != null;
 
   @visibleForTesting
   int get debugStreamCursorOffset => _streamCursorOffset;
@@ -3141,22 +3206,20 @@ class WebosMkvSubtitleExtractor {
     }
   }
 
-  int _effectivePositionMs() {
-    final rawPos = getCurrentPositionMs();
-    final target = _explicitSeekTargetMs;
-    if (target != null) {
-      if ((rawPos - target).abs() <= 4500 ||
-          _explicitSeekWatch.elapsedMilliseconds > kExplicitSeekGuardMs) {
-        _explicitSeekTargetMs = null;
-        _explicitSeekWatch.stop();
-        return rawPos;
+  Future<void> _sleepUntilWake() async {
+    if (_disposed || _pendingRewindTargetMs != null || !_isPaused) return;
+    final wake = Completer<void>();
+    _loopWakeCompleter = wake;
+    try {
+      await wake.future;
+    } finally {
+      if (identical(_loopWakeCompleter, wake)) {
+        _loopWakeCompleter = null;
       }
-      return target;
     }
-    return rawPos;
   }
 
-  void _cancelActiveStreamForRewind() {
+  void _interruptActiveStream() {
     _streamGeneration++;
     final req = _activeRequest;
     _activeRequest = null;
@@ -3175,6 +3238,40 @@ class WebosMkvSubtitleExtractor {
     if (comp != null && !comp.isCompleted) {
       comp.complete();
     }
+  }
+
+  void setPaused(bool paused) {
+    if (_disposed || _isPaused == paused) return;
+    _isPaused = paused;
+    if (!paused) {
+      _wakeExtractionLoop();
+      return;
+    }
+    final nowPosMs = _effectivePositionMs();
+    if (_maxBufferedTimeMs > nowPosMs + kPausedLookaheadMs &&
+        (_activeStreamSub != null || _activeRequest != null)) {
+      _streamCursorOffset = _activeStreamSafeResumeOffset;
+      _interruptActiveStream();
+    }
+  }
+
+  int _effectivePositionMs() {
+    final rawPos = getCurrentPositionMs();
+    final target = _explicitSeekTargetMs;
+    if (target != null) {
+      if ((rawPos - target).abs() <= 4500 ||
+          _explicitSeekWatch.elapsedMilliseconds > kExplicitSeekGuardMs) {
+        _explicitSeekTargetMs = null;
+        _explicitSeekWatch.stop();
+        return rawPos;
+      }
+      return target;
+    }
+    return rawPos;
+  }
+
+  void _cancelActiveStreamForRewind() {
+    _interruptActiveStream();
     _wakeExtractionLoop();
   }
 
@@ -3998,6 +4095,11 @@ class WebosMkvSubtitleExtractor {
         _lastSeekCheckMs = nowPosMs;
       }
 
+      if (_isPaused && _maxBufferedTimeMs > nowPosMs + kPausedLookaheadMs) {
+        await _sleepUntilWake();
+        continue;
+      }
+
       if (_maxBufferedTimeMs > nowPosMs + _lookaheadWindowMs) {
         await _sleepInterruptible(const Duration(milliseconds: 500));
         continue;
@@ -4006,7 +4108,11 @@ class WebosMkvSubtitleExtractor {
       final streamGen = _streamGeneration;
       await _streamClustersFromOffset(_streamCursorOffset, streamGen);
       if (!_disposed && streamGen == _streamGeneration) {
-        await _sleepInterruptible(const Duration(milliseconds: 120));
+        if (_isPaused && _maxBufferedTimeMs > _effectivePositionMs() + kPausedLookaheadMs) {
+          await _sleepUntilWake();
+        } else {
+          await _sleepInterruptible(const Duration(milliseconds: 120));
+        }
       }
     }
   }
@@ -4020,6 +4126,7 @@ class WebosMkvSubtitleExtractor {
 
   Future<void> _streamClustersFromOffset(int startOffset, int gen) async {
     if (_disposed || gen != _streamGeneration) return;
+    _activeStreamSafeResumeOffset = startOffset;
     HttpClientRequest? req;
     HttpClientResponse? resp;
     StreamSubscription<List<int>>? sub;
@@ -4091,6 +4198,9 @@ class WebosMkvSubtitleExtractor {
             if (chunkOffset >= chunk.length) {
               if (gen == _streamGeneration) {
                 _streamCursorOffset = startOffset + bytesProcessedFromStart;
+                _activeStreamSafeResumeOffset = (skipBytesRemaining == 0)
+                    ? _streamCursorOffset
+                    : (_currentClusterFileOffset >= startOffset ? _currentClusterFileOffset : startOffset);
               }
               return;
             }
@@ -4127,9 +4237,27 @@ class WebosMkvSubtitleExtractor {
             carry = Uint8List(0);
           }
 
-          // Throttle if we are ahead of playback so we don't hog CPU/network on 32-bit TVs
-          if (_maxBufferedTimeMs > nowPosMs + _lookaheadWindowMs && sub != null && !sub!.isPaused) {
-            sub!.pause(Future<void>.delayed(const Duration(milliseconds: 600)));
+          final bool aligned = skipBytesRemaining == 0 && carry.isEmpty;
+          _activeStreamSafeResumeOffset = aligned
+              ? _streamCursorOffset
+              : (_currentClusterFileOffset >= startOffset ? _currentClusterFileOffset : startOffset);
+
+          // Stop streaming cleanly while paused past 5 s so we return to interruptible sleep;
+          // during active playback keep the TCP stream open and throttle with 600 ms pauses.
+          final bool pausedAhead = _isPaused && _maxBufferedTimeMs > nowPosMs + kPausedLookaheadMs;
+          if (pausedAhead) {
+            if (gen == _streamGeneration) {
+              _streamCursorOffset = _activeStreamSafeResumeOffset;
+            }
+            sub?.cancel();
+            if (!completer.isCompleted) completer.complete();
+            return;
+          }
+
+          if (_maxBufferedTimeMs > nowPosMs + _lookaheadWindowMs) {
+            if (sub != null && !sub!.isPaused) {
+              sub!.pause(Future<void>.delayed(const Duration(milliseconds: 600)));
+            }
           } else {
             final nowWall = DateTime.now().millisecondsSinceEpoch;
             if (nowWall - lastYieldMs > 45 && sub != null && !sub!.isPaused) {
@@ -5676,6 +5804,18 @@ class WebosSubtitleOverlay extends StatefulWidget {
   @visibleForTesting
   static int debugAnimatedCueBuildCount = 0;
 
+  /// Test-only counter of VSync ticker callbacks executed.
+  @visibleForTesting
+  static int debugVsyncTickCount = 0;
+
+  /// Whether the overlay's 60 Hz VSync ticker is currently active.
+  @visibleForTesting
+  static bool debugTickerActive = false;
+
+  /// Whether the overlay's one-shot static boundary wakeup timer is currently armed.
+  @visibleForTesting
+  static bool debugBoundaryTimerActive = false;
+
   final ValueListenable<List<WebosSubtitleCue>> activeCues;
   final ValueListenable<WebosSubtitleStyleConfig> styleConfig;
   final int Function()? getCurrentPositionMs;
@@ -5697,6 +5837,7 @@ class _WebosSubtitleOverlayState extends State<WebosSubtitleOverlay>
       RegExp(r'\s+(?:Bold|Italic|Oblique|Regular)+$', caseSensitive: false);
 
   Ticker? _vsyncTicker;
+  Timer? _boundaryTimer;
   final Map<WebosSubtitleCue, DateTime> _cueFirstSeenAt = {};
   final ValueNotifier<int> _animTickNotifier = ValueNotifier<int>(0);
   final Map<WebosSubtitleCue, int> _lastTickElapsedByCue = {};
@@ -5713,12 +5854,31 @@ class _WebosSubtitleOverlayState extends State<WebosSubtitleOverlay>
     if (mounted) setState(() {});
   }
 
+  void _onClockChanged() {
+    if (!mounted) return;
+    _syncOverlayToPlayhead();
+  }
+
+  void _onPgsImageDecoded() {
+    if (!mounted) return;
+    final nowMs = _resolveSmoothPlayheadMs();
+    if (_recomputeVisible(nowMs)) {
+      _lastTickNowMs = nowMs;
+      if (_initialized) {
+        setState(() {});
+      }
+    }
+    _updateScheduling(nowMs);
+  }
+
   @override
   void initState() {
     super.initState();
     _vsyncTicker = createTicker(_onVsyncTick);
     widget.activeCues.addListener(_onActiveCuesChanged);
     widget.styleConfig.addListener(_onStyleChanged);
+    WebosSubtitleClock.instance.addListener(_onClockChanged);
+    WebosMkvSubtitleExtractor.pgsImageRevision.addListener(_onPgsImageDecoded);
     _onActiveCuesChanged();
     _initialized = true;
   }
@@ -5741,6 +5901,10 @@ class _WebosSubtitleOverlayState extends State<WebosSubtitleOverlay>
   void dispose() {
     widget.activeCues.removeListener(_onActiveCuesChanged);
     widget.styleConfig.removeListener(_onStyleChanged);
+    WebosSubtitleClock.instance.removeListener(_onClockChanged);
+    WebosMkvSubtitleExtractor.pgsImageRevision.removeListener(_onPgsImageDecoded);
+    _cancelBoundaryTimer();
+    WebosSubtitleOverlay.debugTickerActive = false;
     _vsyncTicker?.dispose();
     _animTickNotifier.dispose();
     super.dispose();
@@ -5797,38 +5961,150 @@ class _WebosSubtitleOverlayState extends State<WebosSubtitleOverlay>
     return _effectiveEndMs;
   }
 
-  void _onVsyncTick(Duration _) {
+  void _cancelBoundaryTimer() {
+    _boundaryTimer?.cancel();
+    _boundaryTimer = null;
+    WebosSubtitleOverlay.debugBoundaryTimerActive = false;
+  }
+
+  void _armBoundaryTimer(Duration delay) {
+    _cancelBoundaryTimer();
+    WebosSubtitleOverlay.debugBoundaryTimerActive = true;
+    _boundaryTimer = Timer(delay, _onBoundaryTimerFired);
+  }
+
+  void _setTickerEnabled(bool enabled) {
+    final ticker = _vsyncTicker;
+    if (ticker == null) {
+      WebosSubtitleOverlay.debugTickerActive = false;
+      return;
+    }
+    if (enabled) {
+      if (!ticker.isActive) ticker.start();
+    } else {
+      if (ticker.isActive) ticker.stop();
+    }
+    WebosSubtitleOverlay.debugTickerActive = ticker.isActive;
+  }
+
+  void _onBoundaryTimerFired() {
+    _boundaryTimer = null;
+    WebosSubtitleOverlay.debugBoundaryTimerActive = false;
+    if (!mounted) return;
+    _syncOverlayToPlayhead();
+  }
+
+  void _updateScheduling(int? nowMs) {
+    _cancelBoundaryTimer();
+    final raw = widget.activeCues.value;
+    if (!mounted || raw.isEmpty) {
+      _setTickerEnabled(false);
+      return;
+    }
+
+    final clock = WebosSubtitleClock.instance;
+    if (clock.hasReportedPosition && !clock.isPlaying) {
+      // Paused playback: keep both the 60 Hz ticker and boundary timer off.
+      _setTickerEnabled(false);
+      return;
+    }
+
+    final anyAnimatedVisible = _visibleSorted.any((c) => c.isAnimated);
+    if (anyAnimatedVisible) {
+      if (clock.hasReportedPosition && clock.isAwaitingPostSeekTick) {
+        _setTickerEnabled(false);
+        _armBoundaryTimer(Duration(milliseconds: clock.seekCooldownRemainingMs.clamp(16, 1250)));
+      } else {
+        _setTickerEnabled(true);
+      }
+      return;
+    }
+
+    // Static-only window while playing: sleep until ~40 ms before the next cue
+    // boundary, then enable VSync for exact -12..+18 ms scene-cut handoff.
+    if (nowMs == null) {
+      _setTickerEnabled(true);
+      return;
+    }
+    if (clock.hasReportedPosition && clock.isAwaitingPostSeekTick) {
+      _setTickerEnabled(false);
+      _armBoundaryTimer(Duration(milliseconds: clock.seekCooldownRemainingMs.clamp(16, 1250)));
+      return;
+    }
+
+    final effEnds = _effectiveEndsFor(raw);
+    int? nextBoundaryMs;
+    for (int i = 0; i < raw.length; i++) {
+      final s = raw[i].startMs;
+      if (s > nowMs && (nextBoundaryMs == null || s < nextBoundaryMs)) {
+        nextBoundaryMs = s;
+      }
+      final e = effEnds[i];
+      if (e > nowMs && (nextBoundaryMs == null || e < nextBoundaryMs)) {
+        nextBoundaryMs = e;
+      }
+    }
+    if (nextBoundaryMs == null) {
+      _setTickerEnabled(false);
+      return;
+    }
+
+    final rate = clock.hasReportedPosition ? clock.playbackRate.clamp(0.25, 4.0) : 1.0;
+    final deltaWallMs = ((nextBoundaryMs - nowMs) / rate).floor();
+    if (deltaWallMs <= 50) {
+      _setTickerEnabled(true);
+    } else {
+      _setTickerEnabled(false);
+      _armBoundaryTimer(Duration(milliseconds: math.max(1, deltaWallMs - 40)));
+    }
+  }
+
+  void _syncOverlayToPlayhead() {
     if (!mounted) return;
     final raw = widget.activeCues.value;
     if (raw.isEmpty) {
-      if (_recomputeVisible(null)) setState(() {});
-      _vsyncTicker?.stop();
+      if (_recomputeVisible(null) && _initialized) {
+        setState(() {});
+      }
+      _cancelBoundaryTimer();
+      _setTickerEnabled(false);
       return;
     }
+
     final nowMs = _resolveSmoothPlayheadMs();
     if (_recomputeVisible(nowMs)) {
       _lastTickNowMs = nowMs;
-      setState(() {});
+      if (_initialized) {
+        setState(() {});
+      }
+      _updateScheduling(nowMs);
       return;
     }
-    // Playhead did not move (paused / buffering): animated cues cannot change either.
-    if (nowMs != null && nowMs == _lastTickNowMs) return;
-    _lastTickNowMs = nowMs;
 
-    bool anyNeedsUpdate = false;
-    for (final c in _visibleSorted) {
-      if (!c.isAnimated) continue;
-      final curElapsed = _resolveElapsedMsForCue(c, nowMs);
-      final prevElapsed = _lastTickElapsedByCue[c];
-      if (c.needsUpdateBetween(prevElapsed, curElapsed)) {
-        _lastTickElapsedByCue[c] = curElapsed;
-        anyNeedsUpdate = true;
+    if (nowMs != null && nowMs != _lastTickNowMs) {
+      _lastTickNowMs = nowMs;
+      bool anyNeedsUpdate = false;
+      for (final c in _visibleSorted) {
+        if (!c.isAnimated) continue;
+        final curElapsed = _resolveElapsedMsForCue(c, nowMs);
+        final prevElapsed = _lastTickElapsedByCue[c];
+        if (c.needsUpdateBetween(prevElapsed, curElapsed)) {
+          _lastTickElapsedByCue[c] = curElapsed;
+          anyNeedsUpdate = true;
+        }
+      }
+      if (anyNeedsUpdate) {
+        // Scoped tick: notify only animated cue hosts without rebuilding static cues or the overlay.
+        _animTickNotifier.value = _animTickNotifier.value + 1;
       }
     }
-    if (anyNeedsUpdate) {
-      // Scoped tick: notify only animated cue hosts without rebuilding static cues or the overlay.
-      _animTickNotifier.value = _animTickNotifier.value + 1;
-    }
+    _updateScheduling(nowMs);
+  }
+
+  void _onVsyncTick(Duration _) {
+    if (!mounted) return;
+    WebosSubtitleOverlay.debugVsyncTickCount++;
+    _syncOverlayToPlayhead();
   }
 
   void _onActiveCuesChanged() {
@@ -5838,22 +6114,7 @@ class _WebosSubtitleOverlayState extends State<WebosSubtitleOverlay>
     for (final c in cues) {
       _cueFirstSeenAt.putIfAbsent(c, () => now);
     }
-
-    if (cues.isNotEmpty) {
-      if (_vsyncTicker != null && !_vsyncTicker!.isActive) {
-        _vsyncTicker!.start();
-      }
-    } else {
-      _vsyncTicker?.stop();
-    }
-
-    final nowMs = _resolveSmoothPlayheadMs();
-    final changed = _recomputeVisible(nowMs);
-    // Lookahead / trail churn of the raw window does not affect what is on screen.
-    if (changed && mounted && _initialized) {
-      _lastTickNowMs = nowMs;
-      setState(() {});
-    }
+    _syncOverlayToPlayhead();
   }
 
   int? _resolveSmoothPlayheadMs() {

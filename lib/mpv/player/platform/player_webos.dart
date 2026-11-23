@@ -107,8 +107,123 @@ class PlayerWebos extends PlayerBase {
   bool _saw702Error = false;
   bool _posQueryInFlight = false;
   bool _disposing = false;
+  int _seekGeneration = 0;
+  bool _seekVerificationActive = false;
+  int? _lastSeekTargetMs;
+  DateTime? _lastSeekAt;
+
+  // Cached MKV track resolution + scratch list to avoid per-tick allocations.
+  String? _cachedMkvSubTrackId;
+  int _cachedMkvTrackListLen = -1;
+  int? _cachedMkvTrackNum;
+  final List<WebosSubtitleCue> _matchingScratch = <WebosSubtitleCue>[];
 
   bool get _isClosed => disposed || _disposing;
+
+  @visibleForTesting
+  bool get debugSaw702Error => _saw702Error;
+
+  @visibleForTesting
+  bool get debugIsPositionTimerActive => _positionTimer != null;
+
+  @visibleForTesting
+  int get debugSeekGeneration => _seekGeneration;
+
+  static bool _sameCueIdentityList(List<WebosSubtitleCue> a, List<WebosSubtitleCue> b) {
+    if (identical(a, b)) return true;
+    if (a.length != b.length) return false;
+    for (int i = 0; i < a.length; i++) {
+      if (!identical(a[i], b[i])) return false;
+    }
+    return true;
+  }
+
+  /// Precomputes monotonic prefix-max endMs for sorted external subtitle cues
+  /// so window queries can run in O(log N) via binary search.
+  @visibleForTesting
+  static List<int> buildPrefixMaxEndMs(List<WebosSubtitleCue> sortedCues) {
+    final len = sortedCues.length;
+    if (len == 0) return const <int>[];
+    final prefix = List<int>.filled(len, 0);
+    int maxEnd = sortedCues[0].endMs;
+    prefix[0] = maxEnd;
+    for (int i = 1; i < len; i++) {
+      final end = sortedCues[i].endMs;
+      if (end > maxEnd) maxEnd = end;
+      prefix[i] = maxEnd;
+    }
+    return prefix;
+  }
+
+  /// Appends all external subtitle cues overlapping `[nowMs - 1500, nowMs + 3000]`
+  /// using binary search on `startMs` and `prefixMaxEndMs`.
+  @visibleForTesting
+  static void collectExternalCuesBinarySearch(
+    List<WebosSubtitleCue> sortedCues,
+    List<int> prefixMaxEndMs,
+    int nowMs,
+    List<WebosSubtitleCue> out,
+  ) {
+    final len = sortedCues.length;
+    if (len == 0) return;
+    final int windowStart = nowMs - 1500;
+    final int windowEnd = nowMs + 3000;
+
+    if (prefixMaxEndMs.length != len) {
+      for (final cue in sortedCues) {
+        if (cue.startMs > windowEnd) break;
+        if (cue.endMs >= windowStart) out.add(cue);
+      }
+      return;
+    }
+
+    // Upper bound: first index where startMs > windowEnd -> hi = ub - 1.
+    int loBound = 0;
+    int hiBound = len;
+    while (loBound < hiBound) {
+      final mid = (loBound + hiBound) >> 1;
+      if (sortedCues[mid].startMs <= windowEnd) {
+        loBound = mid + 1;
+      } else {
+        hiBound = mid;
+      }
+    }
+    final int hi = loBound - 1;
+    if (hi < 0) return;
+
+    // Lower bound in [0..hi]: smallest index where prefixMaxEndMs >= windowStart.
+    int l = 0;
+    int r = hi;
+    int firstPossible = -1;
+    while (l <= r) {
+      final mid = (l + r) >> 1;
+      if (prefixMaxEndMs[mid] >= windowStart) {
+        firstPossible = mid;
+        r = mid - 1;
+      } else {
+        l = mid + 1;
+      }
+    }
+    if (firstPossible < 0) return;
+
+    for (int i = firstPossible; i <= hi; i++) {
+      final cue = sortedCues[i];
+      if (cue.endMs >= windowStart) {
+        out.add(cue);
+      }
+    }
+  }
+
+  @visibleForTesting
+  static List<WebosSubtitleCue> queryExternalCuesBinarySearch(
+    List<WebosSubtitleCue> sortedCues,
+    List<int> prefixMaxEndMs,
+    int nowMs,
+  ) {
+    final out = <WebosSubtitleCue>[];
+    collectExternalCuesBinarySearch(sortedCues, prefixMaxEndMs, nowMs, out);
+    return out;
+  }
 
   Future<void> _disposeOrphanTexture(int? texId) async {
     if (texId == null) return;
@@ -168,14 +283,21 @@ class PlayerWebos extends PlayerBase {
       ValueNotifier<WebosSubtitleStyleConfig>(const WebosSubtitleStyleConfig());
 
   final Map<String, List<WebosSubtitleCue>> _loadedExternalSubtitles = {};
+  final Map<String, List<int>> _loadedExternalPrefixMaxEndMs = {};
   final Map<String, int> _subIdToEmbeddedOrderIndex = {};
   final Map<String, String> _subIdToExternalUri = {};
   final Map<String, int> _audioIdToOrderIndex = {};
   WebosMkvSubtitleExtractor? _mkvExtractor;
+  final VideoPlayerPlatform? _platformOverride;
 
-  PlayerWebos({this.audioOnly = false});
+  PlayerWebos({
+    this.audioOnly = false,
+    @visibleForTesting VideoPlayerPlatform? platformOverride,
+  }) : _platformOverride = platformOverride;
 
-  PlayerWebos.audio() : audioOnly = true;
+  PlayerWebos.audio()
+      : audioOnly = true,
+        _platformOverride = null;
 
   int? get textureId => _textureId;
   int get currentSourcePositionMs => sourcePositionFor(currentPosition).inMilliseconds;
@@ -186,11 +308,12 @@ class PlayerWebos extends PlayerBase {
     _pendingMediaInfo = info;
   }
 
-  VideoPlayerWebOs get _webosPlatform {
+  VideoPlayerPlatform get _webosPlatform {
+    if (_platformOverride != null) return _platformOverride;
     if (VideoPlayerPlatform.instance is! VideoPlayerWebOs) {
       VideoPlayerWebOs.registerWith();
     }
-    return VideoPlayerPlatform.instance as VideoPlayerWebOs;
+    return VideoPlayerPlatform.instance;
   }
 
   @override
@@ -238,6 +361,9 @@ class PlayerWebos extends PlayerBase {
     _subIdToExternalUri.clear();
     _subIdToLangCode.clear();
     _audioIdToOrderIndex.clear();
+    _cachedMkvSubTrackId = null;
+    _cachedMkvTrackListLen = -1;
+    _cachedMkvTrackNum = null;
     _initialAudioOrderIdx = null;
     _initialPlexSelectedSubId = null;
 
@@ -412,6 +538,10 @@ class PlayerWebos extends PlayerBase {
     resetPlaybackProgress(startPosition);
     setSeekable(!isLive);
 
+    _seekGeneration++;
+    _lastSeekTargetMs = null;
+    _lastSeekAt = null;
+    _seekVerificationActive = false;
     _videoReadyForSubtitles = false;
     _targetResumeStartMs = sourceStart.inMilliseconds;
     _openStartedAt = DateTime.now();
@@ -508,6 +638,7 @@ class PlayerWebos extends PlayerBase {
           headers: media.headers,
           getCurrentPositionMs: () => sourcePositionFor(currentPosition).inMilliseconds,
           onCuesUpdated: _refreshActiveSubtitleCues,
+          initialPaused: !play,
         );
         unawaited(_mkvExtractor!.start());
       }
@@ -555,13 +686,15 @@ class PlayerWebos extends PlayerBase {
                 'positionSeconds': sourceStart.inMilliseconds / 1000.0,
               });
               if (!play) {
-                unawaited(this.pause());
+                unawaited(pause());
               }
+              _refreshActiveSubtitleCues();
               break;
 
             case VideoEventType.isPlayingStateUpdate:
               final isPlaying = event.isPlaying ?? false;
-              handlePropertyChange('pause', !isPlaying, sourceId: sourceId);
+              _syncPlaybackRunningState(isPlaying, sourceId: sourceId);
+              _refreshActiveSubtitleCues();
               break;
 
             case VideoEventType.bufferingStart:
@@ -580,6 +713,7 @@ class PlayerWebos extends PlayerBase {
               break;
 
             case VideoEventType.completed:
+              _syncPlaybackRunningState(false, sourceId: sourceId, emitProperty: false);
               handlePropertyChange('eof-reached', true, sourceId: sourceId);
               handlePlayerEvent('end-file', {'reason': 'eof', 'sourceId': sourceId});
               break;
@@ -614,22 +748,39 @@ class PlayerWebos extends PlayerBase {
               }
             }
             if (errStr.contains('702')) {
+              _saw702Error = true;
               if (_targetResumeStartMs > 0) {
-                appLogger.w('[WebOS-NDL] Caught 702 Resume error on unindexed MKV; retrying open from 0ms');
+                final resumeMs = _targetResumeStartMs;
                 _targetResumeStartMs = 0;
-                unawaited(
-                  open(
-                    Media(media.uri, headers: media.headers, start: Duration.zero),
-                    play: play,
-                    isLive: isLive,
-                    externalSubtitles: externalSubtitles,
-                    timelineDuration: timelineDuration,
-                    timelineOffset: Duration.zero,
-                  ),
-                );
+                appLogger.w('[WebOS-NDL] Caught 702 Resume error on unindexed MKV at ${resumeMs}ms');
+                unawaited(() async {
+                  if (!_isCurrentStreamHls && !_isHotSwapping) {
+                    final swapped = await _hotSwapToDirectStream(resumeMs, emitErrorOnFailure: false);
+                    if (swapped) return;
+                  }
+                  if (!_isClosed && _currentSourceId == sourceId) {
+                    appLogger.w('[WebOS-NDL] Direct Stream unavailable after startup 702; retrying open from 0ms');
+                    await open(
+                      Media(media.uri, headers: media.headers, start: Duration.zero),
+                      play: play,
+                      isLive: isLive,
+                      externalSubtitles: externalSubtitles,
+                      timelineDuration: timelineDuration,
+                      timelineOffset: Duration.zero,
+                    );
+                  }
+                }());
                 return;
               }
-              appLogger.w('[WebOS-NDL] Ignoring non-fatal 702 seek error on unindexed stream');
+              appLogger.w('[WebOS-NDL] Caught 702 seek error on unindexed stream (verifying=$_seekVerificationActive)');
+              final recentSeek = _lastSeekAt != null && DateTime.now().difference(_lastSeekAt!).inMilliseconds <= 3000;
+              if (!_seekVerificationActive &&
+                  !_isCurrentStreamHls &&
+                  !_isHotSwapping &&
+                  _lastSeekTargetMs != null &&
+                  recentSeek) {
+                unawaited(_hotSwapToDirectStream(_lastSeekTargetMs!));
+              }
               return;
             }
             handlePlayerEvent('end-file', {
@@ -644,34 +795,7 @@ class PlayerWebos extends PlayerBase {
       if (_isClosed || _currentSourceId != sourceId || _textureId != texId) {
         return null;
       }
-      if (play) {
-        handlePropertyChange('pause', false, sourceId: sourceId);
-      }
-
-      _positionTimer?.cancel();
-      _posQueryInFlight = false;
-      _positionTimer = Timer.periodic(const Duration(milliseconds: 90), (_) async {
-        final activeTex = _textureId;
-        if (_isClosed || activeTex == null || _currentSourceId != sourceId || _posQueryInFlight) return;
-        _posQueryInFlight = true;
-        try {
-          final pos = await _webosPlatform.getPosition(activeTex);
-          if (!_isClosed && _currentSourceId == sourceId) {
-            final posMs = pos.inMilliseconds;
-            if (_targetResumeStartMs > 2000 && posMs < _targetResumeStartMs - 2000) {
-              final elapsedMs = DateTime.now().difference(_openStartedAt ?? DateTime.now()).inMilliseconds;
-              if (elapsedMs < 4000) {
-                return;
-              }
-            }
-            _targetResumeStartMs = 0;
-            handlePropertyChange('time-pos', posMs / 1000.0, sourceId: sourceId);
-            _refreshActiveSubtitleCues();
-          }
-        } catch (_) {} finally {
-          _posQueryInFlight = false;
-        }
-      });
+      _syncPlaybackRunningState(play, sourceId: sourceId, emitProperty: play);
 
       return sourceId;
     } catch (e, st) {
@@ -711,6 +835,7 @@ class PlayerWebos extends PlayerBase {
         if (_isClosed || _currentSourceId != sourceId) return;
         if (cues.isNotEmpty) {
           _loadedExternalSubtitles[trackId] = cues;
+          _loadedExternalPrefixMaxEndMs[trackId] = buildPrefixMaxEndMs(cues);
           appLogger.i('[WebOS-Sub] Loaded ${cues.length} subtitle cues from URL for $trackId');
           _refreshActiveSubtitleCues();
         }
@@ -723,6 +848,113 @@ class PlayerWebos extends PlayerBase {
         client?.close(force: true);
       } catch (_) {}
     }
+  }
+
+  void _stopPositionTimer() {
+    _positionTimer?.cancel();
+    _positionTimer = null;
+    _posQueryInFlight = false;
+  }
+
+  void _startPositionTimer(int sourceId) {
+    _positionTimer?.cancel();
+    _posQueryInFlight = false;
+    _positionTimer = Timer.periodic(const Duration(milliseconds: 90), (_) async {
+      final activeTex = _textureId;
+      if (_isClosed || activeTex == null || _currentSourceId != sourceId || !state.playing || _posQueryInFlight) {
+        return;
+      }
+      _posQueryInFlight = true;
+      try {
+        final pos = await _webosPlatform.getPosition(activeTex);
+        if (!_isClosed && _currentSourceId == sourceId && _textureId == activeTex) {
+          final posMs = pos.inMilliseconds;
+          if (_targetResumeStartMs > 2000 && posMs < _targetResumeStartMs - 2000) {
+            final elapsedMs = DateTime.now().difference(_openStartedAt ?? DateTime.now()).inMilliseconds;
+            if (elapsedMs < 4000) {
+              return;
+            }
+          }
+          _targetResumeStartMs = 0;
+          handlePropertyChange('time-pos', posMs / 1000.0, sourceId: sourceId);
+          _refreshActiveSubtitleCues();
+        }
+      } catch (_) {} finally {
+        _posQueryInFlight = false;
+      }
+    });
+  }
+
+  void _syncPositionTimerState() {
+    final sourceId = _currentSourceId;
+    if (_isClosed || sourceId == null || _textureId == null || !state.playing) {
+      _stopPositionTimer();
+      return;
+    }
+    if (_positionTimer == null) {
+      _startPositionTimer(sourceId);
+    }
+  }
+
+  void _syncPlaybackRunningState(bool isPlaying, {int? sourceId, bool emitProperty = true}) {
+    if (_isClosed) return;
+    if (sourceId != null && _currentSourceId != sourceId) return;
+    if (emitProperty) {
+      handlePropertyChange('pause', !isPlaying, sourceId: sourceId ?? _currentSourceId);
+    }
+    WebosSubtitleClock.instance.setPlaying(isPlaying);
+    _mkvExtractor?.setPaused(!isPlaying);
+    if (isPlaying) {
+      _syncPositionTimerState();
+    } else {
+      _stopPositionTimer();
+    }
+  }
+
+  int? _resolveMkvTrackNumber(WebosMkvSubtitleExtractor extractor, String trackId) {
+    final tracks = extractor.subtitleTracksInOrder;
+    if (_cachedMkvSubTrackId == trackId && _cachedMkvTrackListLen == tracks.length) {
+      return _cachedMkvTrackNum;
+    }
+    final textTracks = tracks
+        .where((t) =>
+            t.codecId.contains('ASS') ||
+            t.codecId.contains('SSA') ||
+            t.codecId.contains('UTF8') ||
+            t.codecId.contains('TEXT') ||
+            t.codecId.contains('PGS'))
+        .toList();
+    final candidates = textTracks.isNotEmpty ? textTracks : tracks;
+    final embIdx = _subIdToEmbeddedOrderIndex[trackId];
+    final wantedLang = _subIdToLangCode[trackId];
+
+    int? chosenTrackNum;
+    if (embIdx != null && embIdx < candidates.length) {
+      final cand = candidates[embIdx];
+      if (wantedLang == null ||
+          cand.language == null ||
+          cand.language!.toLowerCase().startsWith(wantedLang.substring(0, wantedLang.length.clamp(0, 2)))) {
+        chosenTrackNum = cand.trackNumber;
+      }
+    }
+    if (chosenTrackNum == null && wantedLang != null && wantedLang.length >= 2) {
+      final prefix = wantedLang.substring(0, 2);
+      for (final cand in candidates) {
+        final cl = (cand.language ?? '').toLowerCase();
+        if (cl == wantedLang || cl.startsWith(prefix) || (prefix == 'de' && cl == 'ger') || (prefix == 'ge' && cl == 'deu')) {
+          chosenTrackNum = cand.trackNumber;
+          break;
+        }
+      }
+    }
+    if (chosenTrackNum == null && embIdx != null && embIdx < candidates.length) {
+      chosenTrackNum = candidates[embIdx].trackNumber;
+    }
+
+    _cachedMkvSubTrackId = trackId;
+    _cachedMkvTrackListLen = tracks.length;
+    _cachedMkvTrackNum = chosenTrackNum;
+    return chosenTrackNum;
   }
 
   void _refreshActiveSubtitleCues() {
@@ -767,35 +999,7 @@ class PlayerWebos extends PlayerBase {
     } else {
       final extractor = _mkvExtractor;
       if (extractor != null && extractor.subtitleTracksInOrder.isNotEmpty) {
-        final textTracks = extractor.subtitleTracksInOrder
-            .where((t) => t.codecId.contains('ASS') || t.codecId.contains('SSA') || t.codecId.contains('UTF8') || t.codecId.contains('TEXT') || t.codecId.contains('PGS'))
-            .toList();
-        final candidates = textTracks.isNotEmpty ? textTracks : extractor.subtitleTracksInOrder;
-        final embIdx = _subIdToEmbeddedOrderIndex[trackId];
-        final wantedLang = _subIdToLangCode[trackId];
-
-        int? chosenTrackNum;
-        if (embIdx != null && embIdx < candidates.length) {
-          final cand = candidates[embIdx];
-          if (wantedLang == null ||
-              cand.language == null ||
-              cand.language!.toLowerCase().startsWith(wantedLang.substring(0, wantedLang.length.clamp(0, 2)))) {
-            chosenTrackNum = cand.trackNumber;
-          }
-        }
-        if (chosenTrackNum == null && wantedLang != null && wantedLang.length >= 2) {
-          final prefix = wantedLang.substring(0, 2);
-          for (final cand in candidates) {
-            final cl = (cand.language ?? '').toLowerCase();
-            if (cl == wantedLang || cl.startsWith(prefix) || (prefix == 'de' && cl == 'ger') || (prefix == 'ge' && cl == 'deu')) {
-              chosenTrackNum = cand.trackNumber;
-              break;
-            }
-          }
-        }
-        if (chosenTrackNum == null && embIdx != null && embIdx < candidates.length) {
-          chosenTrackNum = candidates[embIdx].trackNumber;
-        }
+        final chosenTrackNum = _resolveMkvTrackNumber(extractor, trackId);
         if (chosenTrackNum != null) {
           if (extractor.activeTrackNumber != chosenTrackNum && activeSubtitleCues.value.isNotEmpty) {
             activeSubtitleCues.value = const [];
@@ -818,41 +1022,26 @@ class PlayerWebos extends PlayerBase {
       return;
     }
 
-    final rawMatching = <WebosSubtitleCue>[];
-    for (final cue in sourceCues) {
-      if (isExternalSource && cue.startMs > nowMs + 3000) {
-        break;
-      }
-      // Allow a generous lookahead/trail window (-1500ms to +3000ms) so 24fps animation cues
-      // are never prematurely evicted before the 60fps VSync engine renders them.
-      if (nowMs + 3000 >= cue.startMs && nowMs - 1500 <= cue.endMs) {
-        rawMatching.add(cue);
+    // Populate active cues in [nowMs - 1500, nowMs + 3000], keeping parallel
+    // ASS/MKV dialogue lines intact (old isStandardLine cutoff stays disabled).
+    _matchingScratch.clear();
+    if (isExternalSource) {
+      final prefixMax = _loadedExternalPrefixMaxEndMs[trackId] ?? const <int>[];
+      collectExternalCuesBinarySearch(sourceCues, prefixMax, nowMs, _matchingScratch);
+    } else {
+      final int winStart = nowMs - 1500;
+      final int winEnd = nowMs + 3000;
+      for (final cue in sourceCues) {
+        if (winEnd >= cue.startMs && winStart <= cue.endMs) {
+          _matchingScratch.add(cue);
+        }
       }
     }
 
-    final matching = <WebosSubtitleCue>[];
-    for (final cue in rawMatching) {
-      final bool isStandardLine = false; // Allow parallel ASS/MKV subtitle lines to stay visible until their true endMs
-      final int remainingMs = cue.endMs - nowMs;
-      if (isStandardLine && remainingMs <= 85 && rawMatching.length > 1) {
-        final bool newerLineJustStarted = rawMatching.any(
-          (other) =>
-              !identical(other, cue) &&
-              other.posX == null &&
-              other.moveX1 == null &&
-              !other.hasVectorDrawing &&
-              other.alignment == cue.alignment &&
-              other.startMs > cue.startMs &&
-              (nowMs - other.startMs) <= 150,
-        );
-        if (newerLineJustStarted) continue;
-      }
-      matching.add(cue);
+    if (!_sameCueIdentityList(activeSubtitleCues.value, _matchingScratch)) {
+      activeSubtitleCues.value = List<WebosSubtitleCue>.of(_matchingScratch, growable: false);
     }
-
-    if (!listEquals(activeSubtitleCues.value, matching)) {
-      activeSubtitleCues.value = matching;
-    }
+    _matchingScratch.clear();
   }
 
   Future<void> updateVideoViewRect(double x, double y, double w, double h) async {
@@ -862,25 +1051,35 @@ class PlayerWebos extends PlayerBase {
     final texId = _textureId;
     if (_isClosed || texId == null || audioOnly) return;
     if (_lastViewRect.width <= 0 || _lastViewRect.height <= 0) return;
-    try {
-      await _webosPlatform.viewRect(
-        texId,
-        _lastViewRect.left,
-        _lastViewRect.top,
-        _lastViewRect.width,
-        _lastViewRect.height,
-      );
-    } catch (_) {}
+    final platform = _webosPlatform;
+    if (platform is VideoPlayerWebOs) {
+      try {
+        await platform.viewRect(
+          texId,
+          _lastViewRect.left,
+          _lastViewRect.top,
+          _lastViewRect.width,
+          _lastViewRect.height,
+        );
+      } catch (_) {}
+    }
   }
 
   Future<void> _teardownActiveTexture() async {
-    _positionTimer?.cancel();
-    _positionTimer = null;
-    _posQueryInFlight = false;
+    _stopPositionTimer();
+    _seekGeneration++;
+    _seekVerificationActive = false;
+    _lastSeekTargetMs = null;
+    _lastSeekAt = null;
+    WebosSubtitleClock.instance.setPlaying(false);
     activeSubtitleCues.value = const [];
     _mkvExtractor?.dispose();
     _mkvExtractor = null;
     _loadedExternalSubtitles.clear();
+    _loadedExternalPrefixMaxEndMs.clear();
+    _cachedMkvSubTrackId = null;
+    _cachedMkvTrackListLen = -1;
+    _cachedMkvTrackNum = null;
     final eventSub = _videoEventSub;
     _videoEventSub = null;
     await eventSub?.cancel();
@@ -894,7 +1093,9 @@ class PlayerWebos extends PlayerBase {
     final texId = _textureId;
     if (_isClosed || texId == null) return;
     await _webosPlatform.play(texId);
-    handlePropertyChange('pause', false, sourceId: _currentSourceId);
+    if (_isClosed || _textureId != texId) return;
+    _syncPlaybackRunningState(true, sourceId: _currentSourceId);
+    _refreshActiveSubtitleCues();
   }
 
   @override
@@ -902,7 +1103,9 @@ class PlayerWebos extends PlayerBase {
     final texId = _textureId;
     if (_isClosed || texId == null) return;
     await _webosPlatform.pause(texId);
-    handlePropertyChange('pause', true, sourceId: _currentSourceId);
+    if (_isClosed || _textureId != texId) return;
+    _syncPlaybackRunningState(false, sourceId: _currentSourceId);
+    _refreshActiveSubtitleCues();
   }
 
   @override
@@ -913,12 +1116,14 @@ class PlayerWebos extends PlayerBase {
     setSeekable(false);
   }
 
-  Future<bool> _hotSwapToDirectStream(int targetPosMs) async {
+  Future<bool> _hotSwapToDirectStream(int targetPosMs, {bool emitErrorOnFailure = true}) async {
     if (_isClosed || _isHotSwapping) return false;
     final sourceId = _currentSourceId;
     if (sourceId == null) return false;
 
     _isHotSwapping = true;
+    bool oldTextureDisposed = false;
+    String? failureMessage;
     try {
       final dsUrl = await WebosDirectStreamFallbackRegistry.instance.obtainDirectStreamUrl();
       if (_isClosed || dsUrl == null || dsUrl.isEmpty || _currentSourceId != sourceId) {
@@ -932,14 +1137,17 @@ class PlayerWebos extends PlayerBase {
       _targetResumeStartMs = targetPosMs;
       _openStartedAt = DateTime.now();
       WebosSubtitleClock.instance.notifySeek(targetPosMs);
+      // Preserve _mkvExtractor (fed via lastRawMkvUrl) so ASS/PGS extraction continues seamlessly.
       _mkvExtractor?.notifySeek(targetPosMs);
 
+      _stopPositionTimer();
       final eventSub = _videoEventSub;
       _videoEventSub = null;
       await eventSub?.cancel();
       final oldTex = _textureId;
       _textureId = null;
       await _disposeOrphanTexture(oldTex);
+      oldTextureDisposed = oldTex != null;
       if (_isClosed || _currentSourceId != sourceId) return false;
 
       final payloadJson = targetPosMs > 0
@@ -962,6 +1170,7 @@ class PlayerWebos extends PlayerBase {
       );
       if (_isClosed || newTexId == null || _currentSourceId != sourceId) {
         await _disposeOrphanTexture(newTexId);
+        failureMessage = 'Direct Stream fallback create() returned null';
         return false;
       }
 
@@ -994,10 +1203,12 @@ class PlayerWebos extends PlayerBase {
                   } catch (_) {}
                 });
               }
+              _refreshActiveSubtitleCues();
               break;
             case VideoEventType.isPlayingStateUpdate:
               final isPlaying = event.isPlaying ?? false;
-              handlePropertyChange('pause', !isPlaying, sourceId: sourceId);
+              _syncPlaybackRunningState(isPlaying, sourceId: sourceId);
+              _refreshActiveSubtitleCues();
               break;
             case VideoEventType.bufferingStart:
               handlePropertyChange('paused-for-cache', true, sourceId: sourceId);
@@ -1012,6 +1223,7 @@ class PlayerWebos extends PlayerBase {
               }
               break;
             case VideoEventType.completed:
+              _syncPlaybackRunningState(false, sourceId: sourceId, emitProperty: false);
               handlePropertyChange('eof-reached', true, sourceId: sourceId);
               handlePlayerEvent('end-file', {'reason': 'eof', 'sourceId': sourceId});
               break;
@@ -1025,17 +1237,39 @@ class PlayerWebos extends PlayerBase {
         },
       );
 
-      await _webosPlatform.play(newTexId);
+      try {
+        await _webosPlatform.play(newTexId);
+      } catch (playErr) {
+        failureMessage = playErr.toString();
+        _textureId = null;
+        final sub = _videoEventSub;
+        _videoEventSub = null;
+        await sub?.cancel();
+        await _disposeOrphanTexture(newTexId);
+        rethrow;
+      }
+
       if (_isClosed || _currentSourceId != sourceId || _textureId != newTexId) return false;
-      handlePropertyChange('pause', false, sourceId: sourceId);
+      _syncPlaybackRunningState(true, sourceId: sourceId);
       handlePropertyChange('time-pos', targetPosMs / 1000.0, sourceId: sourceId);
       _refreshActiveSubtitleCues();
       return true;
     } catch (e, st) {
+      failureMessage ??= e.toString();
       appLogger.e('[WebOS-NDL] Hot-swap to Direct Stream failed: $e', error: e, stackTrace: st);
       return false;
     } finally {
       _isHotSwapping = false;
+      if (oldTextureDisposed && _textureId == null && !_isClosed && _currentSourceId == sourceId) {
+        _syncPlaybackRunningState(false, sourceId: sourceId, emitProperty: false);
+        if (emitErrorOnFailure) {
+          handlePlayerEvent('end-file', {
+            'reason': 'error',
+            'message': failureMessage ?? 'Direct Stream fallback failed',
+            'sourceId': sourceId,
+          });
+        }
+      }
     }
   }
 
@@ -1047,47 +1281,74 @@ class PlayerWebos extends PlayerBase {
     WebosSubtitleClock.instance.notifySeek(targetMs);
 
     final texId = _textureId;
-    if (_isClosed || texId == null) return;
+    final sourceId = _currentSourceId;
+    if (_isClosed || texId == null || sourceId == null) return;
+
+    final seekGen = ++_seekGeneration;
+    _lastSeekTargetMs = targetMs;
+    _lastSeekAt = DateTime.now();
 
     await runSeek(position, () async {
-      if (_isClosed || _textureId != texId) return;
+      if (_isClosed || _currentSourceId != sourceId || _seekGeneration != seekGen || _textureId != texId) {
+        return;
+      }
       _mkvExtractor?.notifySeek(targetMs);
       _saw702Error = false;
+      _seekVerificationActive = true;
       bool seekFailed = false;
       try {
-        await _webosPlatform.seekTo(texId, target);
-      } catch (e) {
-        appLogger.w('[WebOS-NDL] seekTo(${targetMs}ms) threw exception: $e');
-        seekFailed = true;
-      }
+        try {
+          await _webosPlatform.seekTo(texId, target);
+        } catch (e) {
+          appLogger.w('[WebOS-NDL] seekTo(${targetMs}ms) threw exception: $e');
+          seekFailed = true;
+        }
 
-      if (!_isCurrentStreamHls && (targetMs - preSeekMs).abs() > 4000) {
-        if (!seekFailed && !_saw702Error) {
-          for (int i = 0; i < 4; i++) {
-            await Future<void>.delayed(const Duration(milliseconds: 110));
-            if (_isClosed || _textureId != texId || _saw702Error || _isHotSwapping) break;
-            try {
-              final cur = await _webosPlatform.getPosition(texId);
-              if ((cur.inMilliseconds - targetMs).abs() <= 4500) {
-                break; // Seek landed!
+        if (!_isCurrentStreamHls && (targetMs - preSeekMs).abs() > 4000) {
+          if (!seekFailed && !_saw702Error) {
+            for (int i = 0; i < 4; i++) {
+              await Future<void>.delayed(const Duration(milliseconds: 110));
+              if (_isClosed ||
+                  _currentSourceId != sourceId ||
+                  _seekGeneration != seekGen ||
+                  _textureId != texId ||
+                  _saw702Error ||
+                  _isHotSwapping) {
+                break;
               }
-              if (i == 3 && (cur.inMilliseconds - preSeekMs).abs() < 2000) {
-                appLogger.w('[WebOS-NDL] Playhead stuck at ${cur.inMilliseconds}ms after seekTo(${targetMs}ms) on MKV');
+              try {
+                final cur = await _webosPlatform.getPosition(texId);
+                if ((cur.inMilliseconds - targetMs).abs() <= 4500) {
+                  break; // Seek landed!
+                }
+                if (i == 3 && (cur.inMilliseconds - preSeekMs).abs() < 2000) {
+                  appLogger.w('[WebOS-NDL] Playhead stuck at ${cur.inMilliseconds}ms after seekTo(${targetMs}ms) on MKV');
+                  seekFailed = true;
+                }
+              } catch (posErr) {
+                appLogger.w('[WebOS-NDL] getPosition($texId) failed during seek verify: $posErr');
                 seekFailed = true;
+                break;
               }
-            } catch (_) {}
+            }
           }
         }
         if ((seekFailed || _saw702Error) &&
             !_isClosed &&
+            _currentSourceId == sourceId &&
+            _seekGeneration == seekGen &&
             _textureId == texId &&
             !_isCurrentStreamHls &&
             !_isHotSwapping) {
           appLogger.i('[WebOS-NDL] Unseekable MKV detected during seek; hot-swapping to Direct Stream at ${targetMs}ms');
           await _hotSwapToDirectStream(targetMs);
         }
+        _refreshActiveSubtitleCues();
+      } finally {
+        if (_seekGeneration == seekGen) {
+          _seekVerificationActive = false;
+        }
       }
-      _refreshActiveSubtitleCues();
     });
   }
 
@@ -1162,13 +1423,19 @@ class PlayerWebos extends PlayerBase {
   @override
   Future<void> setRate(double rate) async {
     final texId = _textureId;
-    if (disposed) return;
+    if (_isClosed) return;
     if (texId != null) {
       try {
         await _webosPlatform.setPlaybackSpeed(texId, rate);
       } catch (_) {}
     }
     setRateState(rate);
+    WebosSubtitleClock.instance.reportPlayerPosition(
+      sourcePositionFor(currentPosition).inMilliseconds,
+      isPlaying: state.playing,
+      rate: rate,
+    );
+    _refreshActiveSubtitleCues();
   }
 
   @override
