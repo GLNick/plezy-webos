@@ -12,8 +12,8 @@ import 'platform_detector.dart';
 /// user-facing device name (Plex dashboards show it as the "Player";
 /// Jellyfin as the "Device").
 class DeviceIdentity {
-  /// 'Android' | 'iOS' | 'tvOS' | 'macOS' | 'Windows' | 'Linux', falling back
-  /// to [Platform.operatingSystem] when detection fails.
+  /// 'Android' | 'iOS' | 'tvOS' | 'macOS' | 'Windows' | 'Linux' | 'webOS',
+  /// falling back to [Platform.operatingSystem] when detection fails.
   final String platform;
 
   /// Hardware model for `X-Plex-Device`, e.g. 'AFTKM' (Fire TV), 'iPhone',
@@ -49,6 +49,7 @@ class DeviceIdentityService {
   static Future<DeviceIdentity> _resolve() async {
     final deviceInfo = DeviceInfoPlugin();
     final isTv = PlatformDetector.isTV();
+    final isWebos = Platform.isLinux && !PlatformDetector.isDesktopOS();
 
     try {
       if (Platform.isAndroid) {
@@ -89,13 +90,20 @@ class DeviceIdentityService {
       if (Platform.isLinux) {
         final host = Platform.localHostname.trim();
         final name = (host.isNotEmpty && host != 'localhost') ? host : (await deviceInfo.linuxInfo).name;
+        if (isWebos) {
+          return DeviceIdentity(platform: 'webOS', deviceModel: 'LG webOS TV', deviceName: name, isTv: true);
+        }
         return DeviceIdentity(platform: 'Linux', deviceModel: 'Linux', deviceName: name, isTv: isTv);
       }
     } catch (e) {
       appLogger.w('DeviceIdentity: failed to resolve device info', error: e);
     }
 
-    return DeviceIdentity(platform: Platform.operatingSystem, isTv: isTv);
+    return DeviceIdentity(
+      platform: isWebos ? 'webOS' : Platform.operatingSystem,
+      deviceModel: isWebos ? 'LG webOS TV' : null,
+      isTv: isWebos || isTv,
+    );
   }
 }
 

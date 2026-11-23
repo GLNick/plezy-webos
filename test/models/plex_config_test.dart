@@ -40,5 +40,21 @@ void main() {
       );
       expect(config.headers['Accept'], 'application/json');
     });
+
+    test('emits webOS platform headers while keeping Generic client profile', () {
+      final config = PlexConfig(
+        baseUrl: 'https://plex.example.com',
+        clientIdentifier: 'client-1',
+        product: 'Plezy',
+        version: '2.26.0',
+        platform: 'webOS',
+        device: 'LG webOS TV',
+        deviceName: 'LGwebOSTV',
+      );
+      expect(config.headers['X-Plex-Platform'], 'webOS');
+      expect(config.headers['X-Plex-Device'], 'LG webOS TV');
+      expect(config.headers['X-Plex-Device-Name'], 'LGwebOSTV');
+      expect(config.headers['X-Plex-Client-Profile-Name'], 'Generic');
+    });
   });
 }

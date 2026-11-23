@@ -1,5 +1,8 @@
+import 'dart:io';
+
 import 'package:flutter_test/flutter_test.dart';
 import 'package:plezy/utils/device_identity.dart';
+import 'package:plezy/utils/platform_detector.dart';
 
 void main() {
   group('sanitizeHeaderValue', () {
@@ -52,5 +55,31 @@ void main() {
       DeviceIdentityService.debugOverride(const DeviceIdentity(platform: 'Second'));
       expect((await DeviceIdentityService.resolve()).platform, 'Second');
     });
+  });
+
+  group('DeviceIdentityService Linux vs webOS', () {
+    tearDown(() {
+      DeviceIdentityService.debugOverride(null);
+      PlatformDetector.debugSetIsDesktopOSOverride(null);
+    });
+
+    test('resolves webOS identity when Platform.isLinux and not desktop OS', () async {
+      PlatformDetector.debugSetIsDesktopOSOverride(false);
+      DeviceIdentityService.debugOverride(null);
+
+      final identity = await DeviceIdentityService.resolve();
+      expect(identity.platform, 'webOS');
+      expect(identity.deviceModel, 'LG webOS TV');
+      expect(identity.isTv, isTrue);
+    }, skip: !Platform.isLinux);
+
+    test('resolves Linux desktop identity when Platform.isLinux and desktop OS', () async {
+      PlatformDetector.debugSetIsDesktopOSOverride(true);
+      DeviceIdentityService.debugOverride(null);
+
+      final identity = await DeviceIdentityService.resolve();
+      expect(identity.platform, 'Linux');
+      expect(identity.deviceModel, 'Linux');
+    }, skip: !Platform.isLinux);
   });
 }
