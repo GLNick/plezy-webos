@@ -665,6 +665,9 @@ class PlayerWebos extends PlayerBase {
     List<WebosSubtitleCue>? sourceCues = _loadedExternalSubtitles[trackId];
     final bool isExternalSource = sourceCues != null && sourceCues.isNotEmpty;
     if (isExternalSource) {
+      if (_mkvExtractor?.activeTrackNumber != null && activeSubtitleCues.value.isNotEmpty) {
+        activeSubtitleCues.value = const [];
+      }
       _mkvExtractor?.setActiveTrackNumber(null);
     } else {
       final extractor = _mkvExtractor;

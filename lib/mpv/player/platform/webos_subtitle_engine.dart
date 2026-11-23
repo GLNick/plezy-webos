@@ -300,6 +300,28 @@ class WebosSubtitleClock {
 
   bool get hasReportedPosition => _hasReported;
 
+  @visibleForTesting
+  bool get debugAwaitingPostSeekTick => _awaitingPostSeekTick;
+
+  @visibleForTesting
+  bool get debugWatchRunning => _watch.isRunning;
+
+  @visibleForTesting
+  void debugReset() {
+    _watch
+      ..reset()
+      ..stop();
+    _seekCooldownWatch
+      ..reset()
+      ..stop();
+    _anchorPosMs = 0;
+    _lastRawPosMs = -1;
+    _isPlaying = true;
+    _playbackRate = 1.0;
+    _hasReported = false;
+    _awaitingPostSeekTick = false;
+  }
+
   /// Called immediately when the user or intro-skipper triggers a seek.
   /// Freezes the subtitle clock at the target position while the hardware decoder buffers,
   /// preventing the stopwatch from running ~1s ahead before video playback resumes.
@@ -321,12 +343,10 @@ class WebosSubtitleClock {
     _hasReported = true;
 
     final playingChanged = isPlaying != null && isPlaying != _isPlaying;
-    if (isPlaying != null) _isPlaying = isPlaying;
-    if (rate != null && rate > 0) _playbackRate = rate;
-
-    if (playingChanged && !_awaitingPostSeekTick) {
+    final rateChanged = rate != null && rate > 0 && rate != _playbackRate;
+    if ((playingChanged || rateChanged) && !_awaitingPostSeekTick) {
       _anchorPosMs = _extrapolatedRawMs;
-      if (_isPlaying) {
+      if (isPlaying ?? _isPlaying) {
         _watch
           ..reset()
           ..start();
@@ -334,15 +354,21 @@ class WebosSubtitleClock {
         _watch.stop();
       }
     }
+    if (isPlaying != null) _isPlaying = isPlaying;
+    if (rate != null && rate > 0) _playbackRate = rate;
 
     if (rawPosMs == _lastRawPosMs) return;
 
     final prevRaw = _lastRawPosMs;
     _lastRawPosMs = rawPosMs;
 
-    // Detect sudden position jumps (manual seek, chapter/intro skip)
+    // Detect sudden position jumps (manual seek, chapter/intro skip).
+    // Scale the forward jump threshold by _playbackRate so 1s hardware ticks at
+    // >=1.5x-2.0x speed never re-trigger notifySeek() and freeze the clock.
     final rawJump = prevRaw >= 0 ? (rawPosMs - prevRaw).abs() : 0;
-    if (rawJump > 1500) {
+    final forwardJumpThresholdMs = math.max(1500, (1500 * _playbackRate).round());
+    final isBackwardJump = prevRaw >= 0 && rawPosMs < prevRaw && rawJump > 1500;
+    if (isBackwardJump || rawJump > forwardJumpThresholdMs) {
       notifySeek(rawPosMs);
       return;
     }
@@ -1146,6 +1172,7 @@ class WebosSubtitleCue {
   final String text;
   final bool isPgs;
   ui.Image? pgsImage;
+  String? pgsDedupKey;
   bool _pgsDisposed = false;
   final double pgsX;
   final double pgsY;
@@ -1189,6 +1216,7 @@ class WebosSubtitleCue {
     required this.text,
     this.isPgs = false,
     this.pgsImage,
+    this.pgsDedupKey,
     this.pgsX = 0.0,
     this.pgsY = 0.0,
     this.pgsWidth = 0.0,
@@ -2600,6 +2628,8 @@ class _WebosPgsTrackDecoder {
     required int cueStartMs,
     required Uint8List payload,
     required List<WebosSubtitleCue> targetCueList,
+    String? dedupKey,
+    Map<String, int>? dedupMap,
   }) {
     final data = _maybeDecompressZlib(payload);
     int pos = 0;
@@ -2620,14 +2650,24 @@ class _WebosPgsTrackDecoder {
       } else if (segType == 0x16) {
         _parsePcs(seg);
       } else if (segType == 0x80) {
-        if (_finalizeDisplaySet(cueStartMs, targetCueList)) {
+        if (_finalizeDisplaySet(
+          cueStartMs,
+          targetCueList,
+          dedupKey: dedupKey,
+          dedupMap: dedupMap,
+        )) {
           updatedAny = true;
         }
       }
     }
 
     if (_hasPcsInCurrentSet) {
-      if (_finalizeDisplaySet(cueStartMs, targetCueList)) {
+      if (_finalizeDisplaySet(
+        cueStartMs,
+        targetCueList,
+        dedupKey: dedupKey,
+        dedupMap: dedupMap,
+      )) {
         updatedAny = true;
       }
     }
@@ -2714,7 +2754,12 @@ class _WebosPgsTrackDecoder {
     }
   }
 
-  bool _finalizeDisplaySet(int cueStartMs, List<WebosSubtitleCue> targetCueList) {
+  bool _finalizeDisplaySet(
+    int cueStartMs,
+    List<WebosSubtitleCue> targetCueList, {
+    String? dedupKey,
+    Map<String, int>? dedupMap,
+  }) {
     _hasPcsInCurrentSet = false;
     bool changed = false;
 
@@ -2722,6 +2767,9 @@ class _WebosPgsTrackDecoder {
     for (final prev in _openCues) {
       if (cueStartMs > prev.startMs && cueStartMs < prev.endMs) {
         prev.endMs = cueStartMs;
+        if (dedupMap != null && prev.pgsDedupKey != null && dedupMap.containsKey(prev.pgsDedupKey!)) {
+          dedupMap[prev.pgsDedupKey!] = cueStartMs;
+        }
         changed = true;
       }
     }
@@ -2747,6 +2795,7 @@ class _WebosPgsTrackDecoder {
         endMs: cueStartMs + 10000, // Will be shortened by the next PCS clear/update segment
         text: '',
         isPgs: true,
+        pgsDedupKey: dedupKey,
         pgsX: comp.x.toDouble(),
         pgsY: comp.y.toDouble(),
         pgsWidth: obj.width.toDouble(),
@@ -2864,6 +2913,8 @@ class WebosMkvSubtitleExtractor {
   static const int kMaxRewindLookbackMs = 60000;
   static const int kDynamicCuePointIntervalMs = 5000;
   static const int kExplicitSeekGuardMs = 2500;
+  static const int kMaxCuesFetchBytes = 2 * 1024 * 1024;
+  static const int kMaxAttachmentsFetchBytes = 16 * 1024 * 1024;
 
   final String url;
   final Map<String, String>? headers;
@@ -2878,7 +2929,9 @@ class WebosMkvSubtitleExtractor {
   int _timestampScaleNs = 1000000;
   int? _tracksOffset;
   int? _cuesOffset;
+  int? _cuesTotalSize;
   int? _attachmentsOffset;
+  int? _attachmentsTotalSize;
   int _firstClusterOffset = 0;
 
   final List<_MkvTrackInfo> subtitleTracksInOrder = [];
@@ -2911,7 +2964,9 @@ class WebosMkvSubtitleExtractor {
   int _pgsEvictedBeforeMs = -1;
   int _maxSeenCueDurationMs = 0;
   int? _pendingRewindTargetMs;
+  int? _catchUpTargetMs;
   int _streamGeneration = 0;
+  int _streamRequestCount = 0;
   HttpClientRequest? _activeRequest;
   Completer<void>? _loopWakeCompleter;
   int? _explicitSeekTargetMs;
@@ -2960,6 +3015,9 @@ class WebosMkvSubtitleExtractor {
 
   @visibleForTesting
   int get debugMaxSeenCueDurationMs => _maxSeenCueDurationMs;
+
+  @visibleForTesting
+  int get debugStreamRequestCount => _streamRequestCount;
 
   @visibleForTesting
   int debugDedupCountForTrack(int trackNum) => _dedupExpiryByTrackNumber[trackNum]?.length ?? 0;
@@ -3098,14 +3156,8 @@ class WebosMkvSubtitleExtractor {
     }
   }
 
-  bool _positionNeedsRewind(int nowPosMs) {
+  bool _positionNeedsRewind(int nowPosMs, {bool inActiveStream = false}) {
     if (_pendingRewindTargetMs != null) return true;
-    // Forward outrun: whenever playback advances ahead of what we have buffered, jump
-    // immediately without gating on a single-tick delta so rapid or incremental forward
-    // seeks never strand the extractor behind the playhead.
-    if (_maxBufferedTimeMs >= 0 && nowPosMs > _maxBufferedTimeMs + 2000) {
-      return true;
-    }
     // Backward jump: trigger rewind when playhead moves significantly earlier.
     if (_lastSeekCheckMs >= 0 && nowPosMs < _lastSeekCheckMs - 4500) {
       return true;
@@ -3114,27 +3166,53 @@ class WebosMkvSubtitleExtractor {
     if (activeEvictedBefore >= 0 && nowPosMs < activeEvictedBefore + kMinRewindLookbackMs) {
       return true;
     }
-    return false;
+
+    final isOutrun = _maxBufferedTimeMs >= 0 && nowPosMs > _maxBufferedTimeMs + 2000;
+    if (!inActiveStream) {
+      return isOutrun;
+    }
+
+    final isUnnotifiedForwardJump = _lastSeekCheckMs >= 0 && nowPosMs > _lastSeekCheckMs + 4500;
+    if (!isUnnotifiedForwardJump && !isOutrun) {
+      return false;
+    }
+
+    // While actively streaming forward through a 10-60s lookback after a seek,
+    // normal playback advancing past targetPosMs + 2s must not abort the stream.
+    final catchUp = _catchUpTargetMs;
+    if (!isUnnotifiedForwardJump && catchUp != null && nowPosMs <= catchUp + 15000) {
+      return false;
+    }
+
+    // Only abort the active stream if jumping ahead actually advances _streamCursorOffset;
+    // otherwise we'd abort only to rewind backwards to an already-passed cluster (livelock).
+    final lookback = math.max(kMinRewindLookbackMs, _maxSeenCueDurationMs);
+    final rewindToMs = (nowPosMs - lookback).clamp(0, 1 << 30);
+    final targetOffset = _findClusterOffsetForTime(rewindToMs);
+    return targetOffset > _streamCursorOffset;
   }
 
   @visibleForTesting
   bool checkNeedsRewind(int nowPosMs) => _positionNeedsRewind(nowPosMs);
 
-  bool _applyRewind(int targetPosMs) {
+  bool _applyRewind(int targetPosMs, {bool forceRewind = false}) {
     final lookback = math.max(kMinRewindLookbackMs, _maxSeenCueDurationMs);
     final rewindToMs = (targetPosMs - lookback).clamp(0, 1 << 30);
     final targetOffset = _findClusterOffsetForTime(rewindToMs);
     final isForwardJump = targetPosMs > _maxBufferedTimeMs;
-    final keepForwardCursor = isForwardJump &&
-        _cuePoints.isNotEmpty &&
-        rewindToMs > _cuePoints.last.timeMs &&
-        targetOffset < _streamCursorOffset;
+    final keepForwardCursor = !forceRewind &&
+        isForwardJump &&
+        _streamCursorOffset > 0 &&
+        targetOffset <= _streamCursorOffset;
 
     if (!keepForwardCursor) {
       _streamCursorOffset = targetOffset;
       for (final dec in _pgsDecoders.values) {
         dec.resetOnSeek();
       }
+      _catchUpTargetMs = targetPosMs;
+    } else if (_catchUpTargetMs != null && targetPosMs > _catchUpTargetMs!) {
+      _catchUpTargetMs = targetPosMs;
     }
     _maxBufferedTimeMs = targetPosMs;
     _lastSeekCheckMs = targetPosMs;
@@ -3161,7 +3239,7 @@ class WebosMkvSubtitleExtractor {
       ..start();
     if (forceRewind || _positionNeedsRewind(targetPosMs)) {
       _pendingRewindTargetMs = targetPosMs;
-      final cursorChanged = _applyRewind(targetPosMs);
+      final cursorChanged = _applyRewind(targetPosMs, forceRewind: forceRewind);
       if (forceRewind || cursorChanged) {
         _cancelActiveStreamForRewind();
       } else {
@@ -3230,7 +3308,7 @@ class WebosMkvSubtitleExtractor {
 
       final dedupMap = _dedupExpiryByTrackNumber[trackNum];
       if (dedupMap != null && dedupMap.isNotEmpty) {
-        final dedupCutoff = isPgsTrack ? (cutoffMs - 5000) : cutoffMs;
+        final dedupCutoff = cutoffMs;
         final beforeLen = dedupMap.length;
         dedupMap.removeWhere((_, expiryMs) => expiryMs < dedupCutoff);
         if (dedupMap.length < beforeLen) {
@@ -3481,6 +3559,41 @@ class WebosMkvSubtitleExtractor {
     }
   }
 
+  Future<Uint8List?> _fetchExactEbmlElement(
+    int offset, {
+    required int expectedId,
+    required int maxBytes,
+    int? knownTotalSize,
+  }) async {
+    if (_disposed || offset < 0 || maxBytes <= 0) return null;
+    if (knownTotalSize != null && knownTotalSize > 0) {
+      return _fetchRange(offset, math.min(knownTotalSize, maxBytes));
+    }
+
+    final hdr = await _fetchRange(offset, 16);
+    if (hdr == null || hdr.isEmpty || _disposed) return null;
+    final id = _readVint(hdr, 0, keepMarkerBit: true);
+    if (id == null || id.value != expectedId) return null;
+    final sz = _readVint(hdr, id.length, keepMarkerBit: false);
+    if (sz == null) return null;
+
+    final hdrLen = id.length + sz.length;
+    final maxUnsignedForLen = sz.length == 8 ? -1 : ((1 << (sz.length * 7)) - 1);
+    final int totalSize;
+    if ((maxUnsignedForLen >= 0 && sz.value == maxUnsignedForLen) ||
+        (sz.length == 8 && sz.value == 0x00FFFFFFFFFFFFFF) ||
+        sz.value >= maxBytes - hdrLen) {
+      totalSize = maxBytes;
+    } else {
+      totalSize = hdrLen + sz.value;
+    }
+    if (totalSize <= hdrLen) return null;
+    if (totalSize <= hdr.length) {
+      return Uint8List.sublistView(hdr, 0, totalSize);
+    }
+    return _fetchRange(offset, totalSize.clamp(1, maxBytes));
+  }
+
   Future<void> _initializeMkvHeaders() async {
     final head = await _fetchRange(0, 128 * 1024);
     if (head == null || head.length < 64) return;
@@ -3500,6 +3613,8 @@ class WebosMkvSubtitleExtractor {
     if (segSize == null) return;
     pos += segSize.length;
     _segmentDataOffset = pos;
+
+    Uint8List? inlineAttachmentsBuf;
 
     while (pos < head.length - 12) {
       final elId = _readVint(head, pos, keepMarkerBit: true);
@@ -3525,12 +3640,17 @@ class WebosMkvSubtitleExtractor {
           _parseCuesElement(head, bodyStart, bodyEnd);
         } else if (elId.value == 0x1941A469) {
           _attachmentsOffset ??= pos;
+          inlineAttachmentsBuf ??= Uint8List.fromList(Uint8List.sublistView(head, bodyStart, bodyEnd));
         }
       } else {
         if (elId.value == 0x1654AE6B) _tracksOffset ??= pos;
-        if (elId.value == 0x1C53BB6B) _cuesOffset ??= pos;
+        if (elId.value == 0x1C53BB6B) {
+          _cuesOffset ??= pos;
+          if (_cuesOffset == pos) _cuesTotalSize = bodyEnd - pos;
+        }
         if (elId.value == 0x1941A469) {
           _attachmentsOffset ??= pos;
+          if (_attachmentsOffset == pos) _attachmentsTotalSize = bodyEnd - pos;
           if (_firstClusterOffset == 0 && elSize.value < 150 * 1024 * 1024) {
             _firstClusterOffset = bodyEnd;
           }
@@ -3555,7 +3675,12 @@ class WebosMkvSubtitleExtractor {
     }
 
     if (_cuePoints.isEmpty && _cuesOffset != null) {
-      final cuesBuf = await _fetchRange(_cuesOffset!, 256 * 1024);
+      final cuesBuf = await _fetchExactEbmlElement(
+        _cuesOffset!,
+        expectedId: 0x1C53BB6B,
+        maxBytes: kMaxCuesFetchBytes,
+        knownTotalSize: _cuesTotalSize,
+      );
       if (cuesBuf != null) {
         final cid = _readVint(cuesBuf, 0, keepMarkerBit: true);
         if (cid != null && cid.value == 0x1C53BB6B) {
@@ -3569,11 +3694,22 @@ class WebosMkvSubtitleExtractor {
       }
     }
 
-    if (_attachmentsOffset != null) {
+    if (_attachmentsOffset != null || inlineAttachmentsBuf != null) {
+      final inlineBuf = inlineAttachmentsBuf;
       unawaited(() async {
         await Future<void>.delayed(const Duration(milliseconds: 150));
         if (_disposed) return;
-        final attBuf = await _fetchRange(_attachmentsOffset!, 6 * 1024 * 1024);
+        if (inlineBuf != null) {
+          await _parseAndLoadAttachments(inlineBuf, 0, inlineBuf.length);
+          if (!_disposed) onCuesUpdated();
+          return;
+        }
+        final attBuf = await _fetchExactEbmlElement(
+          _attachmentsOffset!,
+          expectedId: 0x1941A469,
+          maxBytes: kMaxAttachmentsFetchBytes,
+          knownTotalSize: _attachmentsTotalSize,
+        );
         if (attBuf != null && !_disposed) {
           final aid = _readVint(attBuf, 0, keepMarkerBit: true);
           if (aid != null && aid.value == 0x1941A469) {
@@ -3582,7 +3718,7 @@ class WebosMkvSubtitleExtractor {
               final bStart = aid.length + asz.length;
               final bEnd = (bStart + asz.value).clamp(0, attBuf.length);
               await _parseAndLoadAttachments(attBuf, bStart, bEnd);
-              onCuesUpdated();
+              if (!_disposed) onCuesUpdated();
             }
           }
         }
@@ -3818,6 +3954,13 @@ class WebosMkvSubtitleExtractor {
     }
   }
 
+  static void _abortHttpResponse(HttpClientResponse resp) {
+    try {
+      final sub = resp.listen((_) {}, onError: (_) {}, cancelOnError: true);
+      unawaited(sub.cancel().catchError((_) {}));
+    } catch (_) {}
+  }
+
   Future<void> _streamClustersFromOffset(int startOffset, int gen) async {
     if (_disposed || gen != _streamGeneration) return;
     HttpClientRequest? req;
@@ -3827,6 +3970,7 @@ class WebosMkvSubtitleExtractor {
     _activeStreamCompleter = completer;
 
     try {
+      _streamRequestCount++;
       req = await _httpClient.getUrl(Uri.parse(url));
       if (_disposed || gen != _streamGeneration) {
         try {
@@ -3842,11 +3986,11 @@ class WebosMkvSubtitleExtractor {
         _activeRequest = null;
       }
       if (_disposed || gen != _streamGeneration) {
-        unawaited(resp.drain<void>().catchError((_) {}));
+        _abortHttpResponse(resp);
         return;
       }
       if (resp.statusCode != 200 && resp.statusCode != 206) {
-        await resp.drain<void>();
+        _abortHttpResponse(resp);
         return;
       }
 
@@ -3866,7 +4010,7 @@ class WebosMkvSubtitleExtractor {
 
           // Check if user seeked away, crossed an evicted window, or switched tracks while streaming
           final nowPosMs = _effectivePositionMs();
-          if (_pendingRewindTargetMs != null || _positionNeedsRewind(nowPosMs)) {
+          if (_pendingRewindTargetMs != null || _positionNeedsRewind(nowPosMs, inActiveStream: true)) {
             _applyRewind(_pendingRewindTargetMs ?? nowPosMs);
             sub?.cancel();
             if (!completer.isCompleted) completer.complete();
@@ -3949,6 +4093,11 @@ class WebosMkvSubtitleExtractor {
 
       await completer.future;
     } catch (_) {
+      if (resp == null && req != null) {
+        try {
+          req.abort();
+        } catch (_) {}
+      }
     } finally {
       if (identical(_activeRequest, req)) {
         _activeRequest = null;
@@ -4038,6 +4187,43 @@ class WebosMkvSubtitleExtractor {
         }
       }
 
+      // Fast-path for BlockGroup (0xA0): inspect child Block (0xA1) track number so large
+      // non-subtitle video/audio BlockGroups are skipped via skipAheadBytes without O(N^2) buffering.
+      if (elId.value == 0xA0 && bStart < buf.length) {
+        final int availEnd = math.min(bEnd, buf.length);
+        int gp = bStart;
+        bool isNonSubtitleBlockGroup = false;
+        while (gp < availEnd) {
+          final gid = _readVint(buf, gp, keepMarkerBit: true);
+          if (gid == null) break;
+          final gsz = _readVint(buf, gp + gid.length, keepMarkerBit: false);
+          if (gsz == null) break;
+          final gbStart = gp + gid.length + gsz.length;
+          final gbEnd = gbStart + gsz.value;
+          if (gid.value == 0xA1) {
+            if (gbStart + 4 <= availEnd) {
+              final tNumVint = _readVint(buf, gbStart, keepMarkerBit: false);
+              if (tNumVint != null && !_subTrackByNumber.containsKey(tNumVint.value)) {
+                isNonSubtitleBlockGroup = true;
+              }
+            }
+            break;
+          }
+          if (gbEnd > availEnd) break;
+          gp = gbEnd;
+        }
+        if (isNonSubtitleBlockGroup) {
+          if (bEnd <= buf.length) {
+            pos = bEnd;
+            continue;
+          } else {
+            final int skipAhead = bEnd - buf.length;
+            if (addedAny) onCuesUpdated();
+            return (consumedBytes: buf.length, remainingStart: buf.length, skipAheadBytes: skipAhead);
+          }
+        }
+      }
+
       // Skip Cues / Void / Attachments / SilentTracks immediately even if larger than buffer
       if (elId.value == 0x1C53BB6B ||
           elId.value == 0x1941A469 ||
@@ -4065,6 +4251,9 @@ class WebosMkvSubtitleExtractor {
         _recordDynamicCuePoint(_currentClusterTimeMs, _currentClusterFileOffset);
         if (_currentClusterTimeMs > _maxBufferedTimeMs) {
           _maxBufferedTimeMs = _currentClusterTimeMs;
+        }
+        if (_catchUpTargetMs != null && _currentClusterTimeMs >= _catchUpTargetMs!) {
+          _catchUpTargetMs = null;
         }
       } else if (elId.value == 0xA3) {
         if (_extractFromBlock(buf, bStart, bEnd, _currentClusterTimeMs, 0)) {
@@ -4133,7 +4322,6 @@ class WebosMkvSubtitleExtractor {
       final dedupKey = 'pgs:$cueStartMs:${rawBytes.length}:$sig';
       final dedupMap = _dedupExpiryByTrackNumber[trackInfo.trackNumber]!;
       if (dedupMap.containsKey(dedupKey)) return false;
-      dedupMap[dedupKey] = cueStartMs + 10000;
 
       final decoder = _pgsDecoders.putIfAbsent(
         trackInfo.trackNumber,
@@ -4148,10 +4336,19 @@ class WebosMkvSubtitleExtractor {
         cueStartMs: cueStartMs,
         payload: rawBytes,
         targetCueList: list,
+        dedupKey: dedupKey,
+        dedupMap: dedupMap,
       );
-      for (int idx = beforeLen; idx < list.length; idx++) {
-        final dur = (list[idx].endMs - list[idx].startMs).clamp(0, kMaxRewindLookbackMs);
-        if (dur > _maxSeenCueDurationMs) _maxSeenCueDurationMs = dur;
+      if (list.length > beforeLen) {
+        int maxNewEndMs = cueStartMs;
+        for (int idx = beforeLen; idx < list.length; idx++) {
+          if (list[idx].endMs > maxNewEndMs) maxNewEndMs = list[idx].endMs;
+          final dur = (list[idx].endMs - list[idx].startMs).clamp(0, kMaxRewindLookbackMs);
+          if (dur > _maxSeenCueDurationMs) _maxSeenCueDurationMs = dur;
+        }
+        dedupMap[dedupKey] = maxNewEndMs;
+      } else {
+        dedupMap[dedupKey] = cueStartMs;
       }
       return changed;
     }
@@ -5347,6 +5544,68 @@ class _WebosAnimatedScreenClipState extends State<_WebosAnimatedScreenClip> {
   }
 }
 
+/// Holds an independent [ui.Image.clone] handle while a PGS cue is mounted in
+/// [WebosSubtitleOverlay] so evicting or disposing the cue's image handle never
+/// races an active [RawImage] paint pass.
+class _WebosOwnedPgsImage extends StatefulWidget {
+  final ui.Image image;
+
+  const _WebosOwnedPgsImage({required this.image});
+
+  @override
+  State<_WebosOwnedPgsImage> createState() => _WebosOwnedPgsImageState();
+}
+
+class _WebosOwnedPgsImageState extends State<_WebosOwnedPgsImage> {
+  ui.Image? _ownedClone;
+
+  @override
+  void initState() {
+    super.initState();
+    _acquireClone(widget.image);
+  }
+
+  @override
+  void didUpdateWidget(covariant _WebosOwnedPgsImage oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (!identical(oldWidget.image, widget.image)) {
+      _releaseClone();
+      _acquireClone(widget.image);
+    }
+  }
+
+  void _acquireClone(ui.Image source) {
+    try {
+      _ownedClone = source.clone();
+    } catch (_) {
+      _ownedClone = null;
+    }
+  }
+
+  void _releaseClone() {
+    final img = _ownedClone;
+    _ownedClone = null;
+    img?.dispose();
+  }
+
+  @override
+  void dispose() {
+    _releaseClone();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final img = _ownedClone;
+    if (img == null) return const SizedBox.shrink();
+    return RawImage(
+      image: img,
+      fit: BoxFit.fill,
+      filterQuality: FilterQuality.medium,
+    );
+  }
+}
+
 class WebosSubtitleOverlay extends StatefulWidget {
   /// Test-only counter of overlay builds.
   @visibleForTesting
@@ -5810,11 +6069,7 @@ class _WebosSubtitleOverlayState extends State<WebosSubtitleOverlay>
                       top: cue.pgsY * sy,
                       width: cue.pgsWidth * sx,
                       height: cue.pgsHeight * sy,
-                      child: RawImage(
-                        image: cue.pgsImage,
-                        fit: BoxFit.fill,
-                        filterQuality: FilterQuality.medium,
-                      ),
+                      child: _WebosOwnedPgsImage(image: cue.pgsImage!),
                     ),
                   );
                 }
