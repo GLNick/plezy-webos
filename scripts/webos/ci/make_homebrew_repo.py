@@ -1,9 +1,10 @@
 #!/usr/bin/env python3
 """Writes a webOS Homebrew Channel manifest and repository index for each IPK in a directory.
 
-Both IPKs share one app id, and a Homebrew Channel repository lists an id once, so every IPK
-gets its own repository: <prefix>-<variant>.repo.json, where the variant is the IPK name's
-suffix after "_arm_" (webos6-24, webos25-26).
+All IPKs share one app id, and a Homebrew Channel repository lists an id once, so every IPK
+gets its own repository: <prefix>-<slug>.repo.json, where the slug is derived from the IPK
+name's suffix after "_arm_" with underscores normalized to hyphens (webos6-24, webos25-26,
+webos25-26-libass).
 
 The manifest fields match webosbrew-gen-manifest. URLs point at the GitHub release <tag> of
 <repo>; the repository's manifestUrl uses releases/latest so a channel subscription follows
@@ -81,26 +82,50 @@ def main() -> int:
 
     base = f"https://github.com/{args.repo}"
     icon_uri = f"https://raw.githubusercontent.com/{args.repo}/{args.tag}/webos/meta/icon.png"
+    seen_slugs = set()
     for ipk in ipks:
         variant = ipk.stem.rsplit("_arm_", 1)[1]
+        slug = variant.replace("_", "-")
+        if slug in seen_slugs:
+            print(f"duplicate output slug '{slug}' from {ipk.name}", file=sys.stderr)
+            return 1
+        seen_slugs.add(slug)
+
         manifest = manifest_for(ipk, icon_uri, base,
                                 f"{base}/releases/download/{args.tag}/{ipk.name}")
-        manifest_name = f"{args.prefix}-{variant}.manifest.json"
-        title = f"{manifest['title']} ({variant.replace('webos', 'webOS ')})"
+        manifest_name = f"{args.prefix}-{slug}.manifest.json"
+
+        if variant.endswith("_libass"):
+            base_variant = variant[:-len("_libass")]
+            os_label = base_variant.replace("webos", "webOS ")
+            slash_label = os_label.replace("-", "/")
+            title = f"{manifest['title']} ({os_label}, native libass)"
+            manifest["title"] = title
+            manifest["appDescription"] = (
+                f"Plex client for factory {slash_label} TVs with native libass 0.17.4 ASS/SSA subtitle rendering"
+            )
+            short_desc = (
+                f"Plex client for factory {slash_label} TVs with native libass ASS/SSA subtitle rendering"
+            )
+        else:
+            os_label = variant.replace("webos", "webOS ")
+            title = f"{manifest['title']} ({os_label})"
+            short_desc = f"Plex client for webOS TVs, {os_label} build"
+
         # The manifest is embedded as well as linked: Glasshouse only lists entries carrying it inline.
         index = {
             "paging": {"page": 1, "count": 1, "maxPage": 1, "itemsTotal": 1},
             "packages": [{
                 "id": manifest["id"],
                 "title": title,
-                "shortDescription": f"Plex client for webOS TVs, {variant.replace('webos', 'webOS ')} build",
+                "shortDescription": short_desc,
                 "iconUri": icon_uri,
                 "manifestUrl": f"{base}/releases/latest/download/{manifest_name}",
                 "manifest": manifest,
             }],
         }
         (args.dist / manifest_name).write_text(json.dumps(manifest, indent=2) + "\n")
-        (args.dist / f"{args.prefix}-{variant}.repo.json").write_text(json.dumps(index, indent=2) + "\n")
+        (args.dist / f"{args.prefix}-{slug}.repo.json").write_text(json.dumps(index, indent=2) + "\n")
         print(f"{ipk.name}: {manifest['id']} {manifest['version']} sha256 {manifest['ipkHash']['sha256']}")
     return 0
 

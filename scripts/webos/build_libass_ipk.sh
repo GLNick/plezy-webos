@@ -8,12 +8,15 @@
 set -euo pipefail
 
 REPO_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)"
-WORK_DIR="${WORK_DIR:-$(cd "$REPO_ROOT/.." && pwd)}"
-WEBOS_SDK_DIR="${WEBOS_SDK_DIR:-/usr/local/starfish-sdk-x86_64}"
 OUT_DIR="${OUT_DIR:-$REPO_ROOT/dist}"
 
 if [ -f "$REPO_ROOT/scripts/webos/env.sh" ]; then
   source "$REPO_ROOT/scripts/webos/env.sh"
+fi
+WORK_DIR="${WORK_DIR:-$(cd "$REPO_ROOT/.." && pwd)}"
+WEBOS_SDK_DIR="${WEBOS_SDK_DIR:-/usr/local/starfish-sdk-x86_64}"
+if [ -d "$WORK_DIR/node/bin" ]; then
+  export PATH="$WORK_DIR/node/bin:$PATH"
 fi
 
 TARGET_MODE="webos25-26"
@@ -88,13 +91,13 @@ fi
 if [ "$SKIP_FLUTTER_BUILD" -eq 0 ] || [ ! -f "$BASE_LIBASS_ARCHIVE" ]; then
   echo "=== [libass-ipk] Building flutter-webos release (--dart-define=WEBOS_LIBASS=true) ==="
 
-  # Preserve any pre-existing non-libass .ipk in build/ so build_32bit_ipk.sh is never polluted
+  # Preserve any pre-existing non-libass .ipk in build/ (excluding LIBASS_WORK) so build_32bit_ipk.sh is never polluted
   BACKUP_DIR="$LIBASS_WORK/preexisting_ipk_backup"
   rm -rf "$BACKUP_DIR"
   mkdir -p "$BACKUP_DIR"
-  PREEXISTING_IPK="$(find "$REPO_ROOT/build" -name "*.ipk" 2>/dev/null | head -n 1 || true)"
+  PREEXISTING_IPK="$(find "$REPO_ROOT/build" -path "$LIBASS_WORK" -prune -o -name "*.ipk" -print 2>/dev/null | head -n 1 || true)"
   if [ -n "$PREEXISTING_IPK" ] && [ -f "$PREEXISTING_IPK" ]; then
-    cp -a "$PREEXISTING_IPK" "$BACKUP_DIR/saved.ipk"
+    cp -a "$PREEXISTING_IPK" "$BACKUP_DIR/saved.orig"
     echo "  -> Backed up existing $PREEXISTING_IPK"
   fi
 
@@ -109,7 +112,7 @@ if [ "$SKIP_FLUTTER_BUILD" -eq 0 ] || [ ! -f "$BASE_LIBASS_ARCHIVE" ]; then
   )
   cleanup_flutter_main
 
-  BUILT_IPK="$(find "$REPO_ROOT/build" -name "*.ipk" 2>/dev/null | grep -v -E "(-32bit|_webos6-24|_webos25-26|_libass)\.ipk" | head -n 1 || true)"
+  BUILT_IPK="$(find "$REPO_ROOT/build" -path "$LIBASS_WORK" -prune -o -name "*.ipk" -print 2>/dev/null | grep -v -E "(-32bit|_webos6-24|_webos25-26|_libass)\.ipk" | head -n 1 || true)"
   if [ -z "$BUILT_IPK" ] || [ ! -f "$BUILT_IPK" ]; then
     echo "ERROR: flutter-webos build did not produce a base .ipk under build/" >&2
     exit 1
@@ -117,8 +120,8 @@ if [ "$SKIP_FLUTTER_BUILD" -eq 0 ] || [ ! -f "$BASE_LIBASS_ARCHIVE" ]; then
 
   # Move to a non-.ipk filename so build_32bit_ipk.sh's `find build -name "*.ipk"` never picks it up
   mv -f "$BUILT_IPK" "$BASE_LIBASS_ARCHIVE"
-  if [ -f "$BACKUP_DIR/saved.ipk" ] && [ -n "$PREEXISTING_IPK" ]; then
-    mv -f "$BACKUP_DIR/saved.ipk" "$PREEXISTING_IPK"
+  if [ -f "$BACKUP_DIR/saved.orig" ] && [ -n "$PREEXISTING_IPK" ]; then
+    mv -f "$BACKUP_DIR/saved.orig" "$PREEXISTING_IPK"
   fi
   rm -rf "$BACKUP_DIR"
 else
@@ -156,11 +159,17 @@ package_target_ipk() {
   local orig_app_id
   orig_app_id="$(basename "$app_dir")"
   local target_app_id="$orig_app_id"
-  local out_prefix="com.plezy.app"
+  local out_prefix="$orig_app_id"
 
   if [ "$SIDE_BY_SIDE" -eq 1 ]; then
     target_app_id="com.plezy.app.libass"
     out_prefix="com.plezy.app.libass"
+  fi
+
+  # Verify libapp.so was compiled with --dart-define=WEBOS_LIBASS=true
+  if [ ! -f "$app_dir/lib/libapp.so" ] || ! grep -q -a "libplezy_ass.so" "$app_dir/lib/libapp.so"; then
+    echo "ERROR: $app_dir/lib/libapp.so is missing libplezy_ass.so (WEBOS_LIBASS=true not compiled in)" >&2
+    exit 1
   fi
 
   # Inject libplezy_ass.so into app_dir/lib/
