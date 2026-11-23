@@ -1,4 +1,4 @@
-import 'dart:async' show StreamSubscription, Timer, unawaited;
+import 'dart:async' show StreamSubscription, Timer, scheduleMicrotask, unawaited;
 import 'dart:io' show Platform;
 
 import '../../media/ids.dart';
@@ -859,6 +859,8 @@ class _PlexVideoControlsState extends State<PlexVideoControls>
   int _hiddenSeekRepeatCount = 0;
   // Current marker state
   MediaMarker? _currentMarker;
+  final Set<String> _skippedMarkerKeys = <String>{};
+  int _markerSkipSeeksInFlight = 0;
 
   /// Latched for the whole Back press; see [_handleLocalPlayerNavigationKeyEvent].
   bool _skipMarkerOwnsBackPress = false;
@@ -870,6 +872,7 @@ class _PlexVideoControlsState extends State<PlexVideoControls>
   StreamSubscription<bool>? _completedSubscription;
   // Position subscription for marker tracking
   StreamSubscription<Duration>? _positionSubscription;
+  StreamSubscription<Duration?>? _playheadJumpSubscription;
   // Skip-marker state
   SkipMarkerMode _skipModeFor(MediaMarker marker) =>
       _settings.read(marker.isCredits ? SettingsService.skipCreditsMode : SettingsService.skipIntroMode);
@@ -981,6 +984,7 @@ class _PlexVideoControlsState extends State<PlexVideoControls>
     widget.chromeController.setPlaying(widget.player.state.playing);
     _initKeyboardService();
     _listenToPosition();
+    _listenToPlayheadJumps();
     _listenToPlayingState();
     _listenToCompleted();
     _checkPipSupport();
@@ -1056,6 +1060,8 @@ class _PlexVideoControlsState extends State<PlexVideoControls>
       // Otherwise the accumulator keeps listening to the retired player and
       // never hears the new one move.
       _hiddenSeek.attachPlayheadJumps(widget.player.streams.playheadJump);
+      _skippedMarkerKeys.clear();
+      _listenToPlayheadJumps();
       _releaseSyncOffsetsListener();
       _releaseSyncOffsetsListener = bindListenable(PlayerSyncOffsets.of(widget.player), _onSyncOffsetsChanged);
     }
@@ -1080,6 +1086,7 @@ class _PlexVideoControlsState extends State<PlexVideoControls>
       _hiddenSeek.cancel();
       _desktopControlsKey.currentState?.abandonPendingSeek();
       _dismissSkipFeedback();
+      _skippedMarkerKeys.clear();
       _setControlsState(() {
         _chapters = [];
         _chaptersLoaded = false;
@@ -1121,6 +1128,7 @@ class _PlexVideoControlsState extends State<PlexVideoControls>
     _playingSubscription?.cancel();
     _completedSubscription?.cancel();
     _positionSubscription?.cancel();
+    _playheadJumpSubscription?.cancel();
     _rateSubscription?.cancel();
     _focusNode.dispose();
     _skipMarkerFocusNode.dispose();

@@ -11,9 +11,26 @@ class ProfileNavigationRegistry {
   GlobalKey<NavigatorState>? _navigatorKey;
   GlobalKey<ScaffoldMessengerState>? _mainScaffoldMessengerKey;
   VoidCallback? onNavigatorChanged;
+  Future<bool> Function()? _rootBackHandler;
 
   NavigatorState? get navigator => _navigatorKey?.currentState;
   ScaffoldMessengerState? get mainScaffoldMessenger => _mainScaffoldMessengerKey?.currentState;
+
+  void attachRootBackHandler(Future<bool> Function() handler) {
+    _rootBackHandler = handler;
+  }
+
+  void detachRootBackHandler(Future<bool> Function() handler) {
+    if (identical(_rootBackHandler, handler)) {
+      _rootBackHandler = null;
+    }
+  }
+
+  Future<bool> handleRootBack() async {
+    final handler = _rootBackHandler;
+    if (handler == null) return false;
+    return await handler();
+  }
 
   void attachNavigator(GlobalKey<NavigatorState> key) {
     _navigatorKey = key;

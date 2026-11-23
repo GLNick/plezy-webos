@@ -44,8 +44,10 @@ import 'mixins/mounted_set_state_mixin.dart';
 import 'theme/mono_theme.dart';
 import 'profiles/plex_home_service.dart';
 import 'screens/auth_screen.dart';
+import 'screens/main_screen.dart';
 import 'screens/profile/pin_entry_dialog.dart';
 import 'screens/profile/profile_switch_screen.dart';
+import 'services/app_exit_service.dart';
 import 'services/storage_service.dart';
 import 'services/assistive_technology_service.dart';
 import 'services/device_performance.dart';
@@ -202,7 +204,24 @@ NavigatorState? _findDeepestPoppableNavigator() {
   return null;
 }
 
+bool _webosExitInProgress = false;
+
+Future<void> _performWebosAppExit() async {
+  if (_webosExitInProgress) return;
+  _webosExitInProgress = true;
+  if (Platform.isLinux && !PlatformDetector.isDesktopOS()) {
+    _lastSentBackIntercept = false;
+    try {
+      await _webosAuxChannel.invokeMethod<void>('setBackPolicy', {'intercept': false});
+    } catch (_) {}
+  }
+  await AppExitService.requestExit();
+}
+
 bool _canAppHandleBackInternally() {
+  if (Platform.isLinux && !PlatformDetector.isDesktopOS()) {
+    return !_webosExitInProgress;
+  }
   if (isTextEditingFocused()) return true;
   if (OverlaySheetController.openSheetCount.value > 0) return true;
   if (rootNavigatorKey.currentState?.canPop() ?? false) return true;
@@ -224,27 +243,57 @@ Future<bool> _triggerInternalWebosBack() async {
       return true;
     }
 
-    // 1. Falls der Root-Navigator (z.B. VideoPlayerScreen, Dialoge, Sheets) poppen kann:
+    // 1. Root-Navigator (dialogs, profile switcher, auth modals above ProfileSessionScreen):
     final rootNavigator = rootNavigatorKey.currentState;
     if (rootNavigator != null && rootNavigator.canPop()) {
-      BackKeyCoordinator.markHandled();
       await rootNavigator.maybePop();
+      BackKeyCoordinator.markHandled();
       _refreshVisibleImagesAfterPlayerExit();
       return true;
     }
 
-    // 2. Frage Plezys eigene profileNavigationRegistry (Serien, Staffeln, Bibliotheken, Tabs):
-    final poppedProfile = await profileNavigationRegistry.maybePopProfileRoute();
-    if (poppedProfile) {
+    // 2. Active-route OverlaySheet (e.g. subtitle/audio/settings sheet inside VideoPlayerScreen):
+    // closes before popping the underlying route itself.
+    if (OverlaySheetController.popTopmostOpenSheet(onlyCurrentRoute: true)) {
       BackKeyCoordinator.markHandled();
       return true;
     }
 
-    // 3. Fallback: Tiefster poppable Navigator im Widget-Baum
+    // 3. Profile-scoped Navigator (scoped dialogs, VideoPlayerScreen, MediaDetailScreen, etc.):
+    final profileNav = profileNavigationRegistry.navigator;
+    if (profileNav != null && profileNav.canPop()) {
+      final hadVideo = PlaybackCoordinator.instance.hasVideoSession;
+      await profileNav.maybePop();
+      BackKeyCoordinator.markHandled();
+      if (hadVideo && !PlaybackCoordinator.instance.hasVideoSession) {
+        _refreshVisibleImagesAfterPlayerExit();
+      }
+      return true;
+    }
+
+    // 4. Fallback: any remaining open OverlaySheet or deeper poppable Navigator:
+    if (OverlaySheetController.popTopmostOpenSheet()) {
+      BackKeyCoordinator.markHandled();
+      return true;
+    }
     final poppable = _findDeepestPoppableNavigator();
     if (poppable != null) {
-      BackKeyCoordinator.markHandled();
       await poppable.maybePop();
+      BackKeyCoordinator.markHandled();
+      return true;
+    }
+
+    // 5. Browser-like tab/library history in MainScreen -> "Exit Plezy?" at true root:
+    if (await profileNavigationRegistry.handleRootBack()) {
+      BackKeyCoordinator.markHandled();
+      return true;
+    }
+
+    // 6. True-root fallback when MainScreen isn't mounted (e.g. AuthScreen):
+    final rootCtx = rootNavigatorKey.currentState?.overlay?.context;
+    if (rootCtx != null && rootCtx.mounted) {
+      BackKeyCoordinator.markHandled();
+      await showWebosExitConfirmDialog(rootCtx, onConfirmExit: _performWebosAppExit);
       return true;
     }
 
@@ -385,6 +434,7 @@ void _installWebosBackAndNavigationHooks() {
 
   BackKeySuppressorObserver.onNavigationChanged = _scheduleWebosBackPolicySync;
   profileNavigationRegistry.onNavigatorChanged = _scheduleWebosBackPolicySync;
+  MainScreen.webosExitAppHandler = _performWebosAppExit;
   OverlaySheetController.openSheetCount.addListener(_scheduleWebosBackPolicySync);
   FocusManager.instance.addListener(_onWebosFocusChanged);
   WidgetsBinding.instance.addPostFrameCallback((_) => _syncWebosBackPolicy(force: true));
@@ -2068,6 +2118,7 @@ class _MainAppState extends State<MainApp> with WidgetsBindingObserver {
     switch (state) {
       case AppLifecycleState.resumed:
         _appBackgrounded = false;
+        _webosExitInProgress = false;
         if (Platform.isLinux && !PlatformDetector.isDesktopOS()) {
           _syncWebosBackPolicy(force: true);
         }

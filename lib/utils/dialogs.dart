@@ -128,6 +128,33 @@ Future<bool> showConfirmDialog(
   return confirmed ?? false;
 }
 
+bool _webosExitDialogOpen = false;
+
+/// Shows a TV-friendly confirmation dialog before exiting Plezy on webOS.
+Future<bool> showWebosExitConfirmDialog(
+  BuildContext context, {
+  Future<void> Function()? onConfirmExit,
+}) async {
+  if (_webosExitDialogOpen) return false;
+  _webosExitDialogOpen = true;
+  try {
+    final confirmed = await showConfirmDialog(
+      context,
+      title: 'Exit Plezy?',
+      message: 'Are you sure you want to exit Plezy?',
+      cancelText: t.common.cancel,
+      confirmText: 'Exit',
+      isDestructive: true,
+    );
+    if (confirmed) {
+      await (onConfirmExit ?? () async {})();
+    }
+    return confirmed;
+  } finally {
+    _webosExitDialogOpen = false;
+  }
+}
+
 /// Shows a non-dismissible loading-spinner dialog. Caller is responsible for
 /// closing it via `Navigator.pop(context)` when the work completes.
 ///

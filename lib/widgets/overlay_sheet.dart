@@ -53,6 +53,26 @@ class OverlaySheetController {
   /// mounted above the navigator (the music mini-player) can never sit under
   /// them — such chrome listens here and hides itself while this is nonzero.
   static final ValueNotifier<int> openSheetCount = ValueNotifier<int>(0);
+  static final List<OverlaySheetController> _openControllers = <OverlaySheetController>[];
+
+  /// Closes the topmost open sheet (or pops its topmost sub-page).
+  ///
+  /// When [onlyCurrentRoute] is true, sheets whose owning [ModalRoute] is no
+  /// longer the top route (e.g. a dialog or child page is above them) are skipped
+  /// so callers can pop the modal/route first.
+  static bool popTopmostOpenSheet({bool onlyCurrentRoute = false}) {
+    for (int i = _openControllers.length - 1; i >= 0; i--) {
+      final controller = _openControllers[i];
+      if (!controller._state.mounted || !controller.isOpen || controller._state._isClosing) continue;
+      if (onlyCurrentRoute) {
+        final isCurrent = ModalRoute.of(controller._state.context)?.isCurrent ?? true;
+        if (!isCurrent) continue;
+      }
+      controller._state._handleBack();
+      return true;
+    }
+    return false;
+  }
 
   /// Whether a sheet is currently showing (including while animating closed).
   bool get isOpen => _state._isOpen;
@@ -352,7 +372,8 @@ class _OverlaySheetHostState extends State<OverlaySheetHost> with SingleTickerPr
     }
     // A host torn down mid-sheet (or mid-close animation) never reaches the
     // close completion below — release its slot in the global count here.
-    if (_isOpen) OverlaySheetController.openSheetCount.value--;
+      OverlaySheetController._openControllers.remove(_controller);
+      if (_isOpen) OverlaySheetController.openSheetCount.value--;
     _sheetFocusScopeNode.dispose();
     _slideCurve.dispose();
     _animationController.dispose();
@@ -399,6 +420,9 @@ class _OverlaySheetHostState extends State<OverlaySheetHost> with SingleTickerPr
       _dragOffset = 0;
       _isDragging = false;
     });
+    OverlaySheetController._openControllers
+      ..remove(_controller)
+      ..add(_controller);
     if (!wasOpen) {
       widget.onOpenChanged?.call(true);
       OverlaySheetController.openSheetCount.value++;
@@ -447,6 +471,7 @@ class _OverlaySheetHostState extends State<OverlaySheetHost> with SingleTickerPr
   void _close([dynamic result]) {
     if (!_isOpen || _isClosing) return;
     _isClosing = true;
+    OverlaySheetController._openControllers.remove(_controller);
 
     _animationController.reverse().then((_) {
       if (!mounted) return;

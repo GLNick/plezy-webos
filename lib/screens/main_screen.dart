@@ -8,7 +8,7 @@ import 'dart:io' show Platform, exit;
 export '../navigation/main_screen_scope.dart'
     show MainScreenFocusScope, MainScreenScopeAspect, SideNavigationBleedBuilder;
 
-import 'package:flutter/foundation.dart' show ValueListenable;
+import 'package:flutter/foundation.dart' show ValueListenable, visibleForTesting;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart'
     show HardwareKeyboard, KeyDownEvent, KeyRepeatEvent, KeyUpEvent, LogicalKeyboardKey;
@@ -22,6 +22,7 @@ import '../services/update_service.dart';
 import '../utils/app_logger.dart';
 import '../widgets/auth_error_banner.dart';
 import '../widgets/app_icon.dart';
+import '../utils/dialogs.dart';
 import '../utils/iphone_duo.dart';
 import '../utils/platform_detector.dart';
 import '../utils/snackbar_helper.dart';
@@ -387,7 +388,61 @@ Future<void> runInitialProfilePrompt({
   }
 }
 
+class MainTabHistoryEntry {
+  final NavigationTabId tab;
+  final String? libraryGlobalKey;
+
+  const MainTabHistoryEntry({required this.tab, this.libraryGlobalKey});
+
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is MainTabHistoryEntry && other.tab == tab && other.libraryGlobalKey == libraryGlobalKey);
+
+  @override
+  int get hashCode => Object.hash(tab, libraryGlobalKey);
+}
+
+/// Tracks visited top-level tabs and libraries in browser-like stack order
+/// so Remote Back steps back through visited sections before reaching root.
+class MainTabHistory {
+  MainTabHistory({this.maxEntries = 32});
+
+  final int maxEntries;
+  final List<MainTabHistoryEntry> _entries = <MainTabHistoryEntry>[];
+
+  List<MainTabHistoryEntry> get entries => List.unmodifiable(_entries);
+  bool get isEmpty => _entries.isEmpty;
+  int get length => _entries.length;
+
+  void push(MainTabHistoryEntry entry) {
+    if (_entries.isNotEmpty && _entries.last == entry) return;
+    _entries.add(entry);
+    if (_entries.length > maxEntries) {
+      _entries.removeAt(0);
+    }
+  }
+
+  MainTabHistoryEntry? popValid(bool Function(MainTabHistoryEntry entry) isValid) {
+    while (_entries.isNotEmpty) {
+      final entry = _entries.removeLast();
+      if (isValid(entry)) return entry;
+    }
+    return null;
+  }
+
+  void clear() => _entries.clear();
+}
+
 class MainScreen extends StatefulWidget {
+  static Future<void> Function()? webosExitAppHandler;
+
+  @visibleForTesting
+  static bool? debugWebosBrowserBackOverride;
+
+  @visibleForTesting
+  static Future<void> Function()? debugOnWebosExitOverride;
+
   final bool isOfflineMode;
 
   /// When `true`, the previous screen (typically [SetupScreen]) already
@@ -405,7 +460,11 @@ class _MainScreenState extends State<MainScreen>
     with RouteAware, WindowListener, WidgetsBindingObserver, MountedSetStateMixin {
   NavigationTabId _currentTab = NavigationTabId.discover;
   String? _selectedLibraryGlobalKey;
+  final MainTabHistory _tabHistory = MainTabHistory();
   Future<void>? _desktopExitFuture;
+
+  bool get _isWebosBrowserBackMode =>
+      MainScreen.debugWebosBrowserBackOverride ?? (Platform.isLinux && !PlatformDetector.isDesktopOS());
 
   /// Whether the app is in offline mode (no server connection)
   bool _isOffline = false;
@@ -543,6 +602,7 @@ class _MainScreenState extends State<MainScreen>
     _offlineUntilConnected = widget.isOfflineMode;
 
     WidgetsBinding.instance.addObserver(this);
+    profileNavigationRegistry.attachRootBackHandler(_handleWebosRootBack);
     _contentFocusScope.addListener(_syncSidebarFocusWithContent);
 
     if (PlatformDetector.isDesktopOS()) {
@@ -1056,6 +1116,7 @@ class _MainScreenState extends State<MainScreen>
 
   @override
   void dispose() {
+    profileNavigationRegistry.detachRootBackHandler(_handleWebosRootBack);
     if (_watchTogether?.navigatorOpener == _navigateToWatchTogetherMedia) _watchTogether?.navigatorOpener = null;
     WidgetsBinding.instance.removeObserver(this);
     _profileRouteObserver?.unsubscribe(this);
@@ -1329,7 +1390,7 @@ class _MainScreenState extends State<MainScreen>
   void _applyPendingStartupTab() {
     final pending = _pendingStartupTab;
     if (pending != null && _getVisibleTabs(_isOffline).any((t) => t.id == pending)) {
-      _selectTab(pending);
+      _selectTab(pending, recordHistory: false);
     }
   }
 
@@ -1508,13 +1569,54 @@ class _MainScreenState extends State<MainScreen>
   /// so BackKeySuppressorObserver misses them and they leak into _handleBackKey.
   bool _suppressBackAfterPop = false;
 
+  Future<bool> _handleWebosRootBack() async {
+    if (!mounted) return false;
+    final tabs = _getVisibleTabs(_isOffline);
+    final visibleIds = tabs.map((t) => t.id).toSet();
+    final currentEntry = MainTabHistoryEntry(
+      tab: _currentTab,
+      libraryGlobalKey: _currentTab == NavigationTabId.libraries ? _selectedLibraryGlobalKey : null,
+    );
+
+    final prev = _tabHistory.popValid((e) => visibleIds.contains(e.tab) && e != currentEntry);
+    if (prev != null) {
+      if (prev.tab == NavigationTabId.libraries && prev.libraryGlobalKey != null) {
+        _selectLibrary(prev.libraryGlobalKey!, recordHistory: false);
+      } else {
+        _selectTab(prev.tab, focusSearchInput: false, recordHistory: false);
+      }
+      _focusContent(restorePreviousFocus: false);
+      return true;
+    }
+
+    if (tabs.isNotEmpty && _currentTab != tabs.first.id) {
+      _selectTab(tabs.first.id, focusSearchInput: false, recordHistory: false);
+      _focusContent(restorePreviousFocus: false);
+      return true;
+    }
+
+    await showWebosExitConfirmDialog(
+      context,
+      onConfirmExit:
+          MainScreen.debugOnWebosExitOverride ??
+          MainScreen.webosExitAppHandler ??
+          () => AppExitService.requestExit(),
+    );
+    return true;
+  }
+
   KeyEventResult _handleMainBack() {
+    if (_isWebosBrowserBackMode) {
+      unawaited(_handleWebosRootBack());
+      return KeyEventResult.handled;
+    }
+
     final tabs = _getVisibleTabs(_isOffline);
     if (tabs.isEmpty) return KeyEventResult.handled;
 
     final homeTab = tabs.first.id;
     if (_currentTab != homeTab) {
-      _selectTab(homeTab);
+      _selectTab(homeTab, recordHistory: false);
       // Keep the focus ring in step with the new selection; the sidebar scope
       // already has focus, so no post-frame deferral is needed.
       _sideNavKey.currentState?.focusHomeItem();
@@ -1597,6 +1699,10 @@ class _MainScreenState extends State<MainScreen>
     if (_suppressBackAfterPop && event.logicalKey.isBackKey) {
       if (event is KeyUpEvent) _suppressBackAfterPop = false;
       return KeyEventResult.handled;
+    }
+
+    if (_isWebosBrowserBackMode) {
+      return handleBackKeyAction(event, () => unawaited(_handleWebosRootBack()));
     }
 
     if (!_isSidebarFocused) {
@@ -1774,12 +1880,20 @@ class _MainScreenState extends State<MainScreen>
     _fullRefreshContentTabs();
   }
 
-  void _selectTab(NavigationTabId tab, {bool focusSearchInput = true}) {
+  void _selectTab(NavigationTabId tab, {bool focusSearchInput = true, bool recordHistory = true}) {
     // Guard: ignore if tab isn't available in current mode
     if (!_getVisibleTabs(_isOffline).any((t) => t.id == tab)) return;
 
     final previousTab = _currentTab;
     final wasMounted = _mountedTabs.contains(tab);
+    if (recordHistory && previousTab != tab) {
+      _tabHistory.push(
+        MainTabHistoryEntry(
+          tab: previousTab,
+          libraryGlobalKey: previousTab == NavigationTabId.libraries ? _selectedLibraryGlobalKey : null,
+        ),
+      );
+    }
     setState(() {
       _currentTab = tab;
       if (!wasMounted) {
@@ -1844,11 +1958,20 @@ class _MainScreenState extends State<MainScreen>
   }
 
   /// Handle library selection from side navigation rail
-  void _selectLibrary(String libraryGlobalKey) {
+  void _selectLibrary(String libraryGlobalKey, {bool recordHistory = true}) {
     if (!_getVisibleTabs(_isOffline).any((tab) => tab.id == NavigationTabId.libraries)) return;
 
+    final previousEntry = MainTabHistoryEntry(
+      tab: _currentTab,
+      libraryGlobalKey: _currentTab == NavigationTabId.libraries ? _selectedLibraryGlobalKey : null,
+    );
+    final nextEntry = MainTabHistoryEntry(tab: NavigationTabId.libraries, libraryGlobalKey: libraryGlobalKey);
+    if (recordHistory && previousEntry != nextEntry) {
+      _tabHistory.push(previousEntry);
+    }
+
     _selectedLibraryGlobalKey = libraryGlobalKey;
-    _selectTab(NavigationTabId.libraries);
+    _selectTab(NavigationTabId.libraries, recordHistory: false);
     // A first visit promotes LibrariesScreen in _selectTab. Wait for its State
     // before applying the requested library and focus; neither action may drop.
     WidgetsBinding.instance.addPostFrameCallback((_) {
@@ -1870,6 +1993,11 @@ class _MainScreenState extends State<MainScreen>
 
   void _handleLibrariesScreenSelected(String libraryGlobalKey) {
     if (_selectedLibraryGlobalKey == libraryGlobalKey) return;
+    if (_currentTab == NavigationTabId.libraries && _selectedLibraryGlobalKey != null) {
+      _tabHistory.push(
+        MainTabHistoryEntry(tab: NavigationTabId.libraries, libraryGlobalKey: _selectedLibraryGlobalKey),
+      );
+    }
     setState(() => _selectedLibraryGlobalKey = libraryGlobalKey);
   }
 

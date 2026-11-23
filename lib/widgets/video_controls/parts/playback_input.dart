@@ -170,7 +170,14 @@ extension _PlexVideoControlsPlaybackInputMethods on _PlexVideoControlsState {
     unawaited(_applyChapterSeek(resolved, forward: forward));
   }
 
-  Future<void> _seekToPosition(Duration position, {bool notifyCompletion = true}) async {
+  Future<void> _seekToPosition(
+    Duration position, {
+    bool notifyCompletion = true,
+    bool fromMarkerSkip = false,
+  }) async {
+    if (!fromMarkerSkip) {
+      _clearSkippedMarkersOnManualSeek();
+    }
     final clamped = clampSeekPosition(widget.player, position);
     await (widget.onSeekRequested ?? widget.player.seek)(clamped);
     if (notifyCompletion && mounted) {
@@ -179,6 +186,7 @@ extension _PlexVideoControlsPlaybackInputMethods on _PlexVideoControlsState {
   }
 
   Future<void> _seekByOffset(Duration delta, {bool notifyCompletion = true}) async {
+    _clearSkippedMarkersOnManualSeek();
     // Route relative live-TV skips through the parent accumulator, which
     // coalesces a rapid burst into a single transcode re-open and computes the
     // target from a stable base rather than the laggy live epoch (#1253).

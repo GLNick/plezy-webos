@@ -7,6 +7,25 @@ extension _PlexVideoControlsMarkerMethods on _PlexVideoControlsState {
     });
   }
 
+  void _listenToPlayheadJumps() {
+    _playheadJumpSubscription?.cancel();
+    _playheadJumpSubscription = widget.player.streams.playheadJump.listen((target) {
+      if (_markerSkipSeeksInFlight == 0) {
+        _clearSkippedMarkersOnManualSeek();
+        if (mounted) {
+          _syncCurrentMarkerForPosition(target ?? widget.player.state.position);
+        }
+      }
+    });
+  }
+
+  String _markerSkipKey(MediaMarker marker) =>
+      '${marker.id}:${marker.type}:${marker.startTimeOffset}:${marker.endTimeOffset}';
+
+  void _clearSkippedMarkersOnManualSeek() {
+    _skippedMarkerKeys.clear();
+  }
+
   void _syncCurrentMarkerForCurrentPosition() {
     _syncCurrentMarkerForPosition(widget.player.state.position);
   }
@@ -17,13 +36,19 @@ extension _PlexVideoControlsMarkerMethods on _PlexVideoControlsState {
       return;
     }
 
+    final posMs = position.inMilliseconds;
     MediaMarker? foundMarker;
     for (final marker in _markers) {
+      final key = _markerSkipKey(marker);
+      if (posMs < marker.startTimeOffset) {
+        // Rewinding before a marker starts allows it to trigger/skip again naturally.
+        _skippedMarkerKeys.remove(key);
+      }
       // An Off marker kind plays through as if the server had sent no marker.
       if (_skipModeFor(marker) == SkipMarkerMode.off) continue;
+      if (_skippedMarkerKeys.contains(key)) continue;
       if (marker.containsPosition(position)) {
-        foundMarker = marker;
-        break;
+        foundMarker ??= marker;
       }
     }
 
@@ -112,6 +137,15 @@ extension _PlexVideoControlsMarkerMethods on _PlexVideoControlsState {
     final isAtEnd = duration > Duration.zero && (duration - endTime).inMilliseconds <= 1000;
 
     final handsOffToCompletion = marker.isCredits && isAtEnd;
+    // Mark skipped and clear active prompt BEFORE awaiting seek so intermediate
+    // position ticks or a keyframe snap-back (e.g. 1:30 -> 1:28) cannot re-trigger.
+    _skippedMarkerKeys.add(_markerSkipKey(marker));
+    _cancelAutoSkipTimer();
+    _cancelSkipButtonDismissTimer();
+    _setControlsState(() {
+      _currentMarker = null;
+    });
+
     if (handsOffToCompletion) {
       if (!skipAutoPlayCountdown && widget.onNext != null) {
         _abandoningBurst(widget.onNext)!.call();
@@ -122,18 +156,20 @@ extension _PlexVideoControlsMarkerMethods on _PlexVideoControlsState {
         widget.onReachedEnd?.call(skipAutoPlayCountdown: skipAutoPlayCountdown);
       }
     } else {
-      await _seekToPosition(endTime);
+      _markerSkipSeeksInFlight++;
+      try {
+        await _seekToPosition(endTime, fromMarkerSkip: true);
+      } finally {
+        scheduleMicrotask(() {
+          if (_markerSkipSeeksInFlight > 0) _markerSkipSeeksInFlight--;
+        });
+      }
     }
 
     if (!mounted) return;
-    _setControlsState(() {
-      _currentMarker = null;
-    });
     // The play-next flow requests its own focus; claiming the surface here
     // would race it.
     if (!handsOffToCompletion) _releaseSkipMarkerFocusToSurface();
-    _cancelAutoSkipTimer();
-    _cancelSkipButtonDismissTimer();
   }
 
   void _startAutoSkipTimer(MediaMarker marker) {

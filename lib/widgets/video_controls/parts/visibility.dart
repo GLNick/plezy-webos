@@ -96,6 +96,7 @@ extension _PlexVideoControlsVisibilityMethods on _PlexVideoControlsState {
 
   void _handlePointerSignal(PointerSignalEvent event) {
     if (event is! PointerScrollEvent) return;
+    if (PlatformDetector.isTV()) return;
     _cancelAutoSkipFromUserInteraction();
     widget.volumeController.adjust(-event.scrollDelta.dy / 20);
     _showControlsFromPointerActivity();

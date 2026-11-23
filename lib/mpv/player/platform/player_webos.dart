@@ -1304,7 +1304,10 @@ class PlayerWebos extends PlayerBase {
           seekFailed = true;
         }
 
-        if (!_isCurrentStreamHls && (targetMs - preSeekMs).abs() > 4000) {
+        // Normal hardware decoders snap backward up to one GOP (~2-8 s) to the nearest
+        // preceding keyframe; allow up to 10 s backward snap-back without treating it
+        // as an unseekable MKV. Error 702 and seekTo exceptions still hot-swap immediately.
+        if (!_isCurrentStreamHls && (targetMs - preSeekMs).abs() > 10000) {
           if (!seekFailed && !_saw702Error) {
             for (int i = 0; i < 4; i++) {
               await Future<void>.delayed(const Duration(milliseconds: 110));
@@ -1318,11 +1321,12 @@ class PlayerWebos extends PlayerBase {
               }
               try {
                 final cur = await _webosPlatform.getPosition(texId);
-                if ((cur.inMilliseconds - targetMs).abs() <= 4500) {
-                  break; // Seek landed!
+                final curMs = cur.inMilliseconds;
+                if (curMs >= targetMs - 10000 && curMs <= targetMs + 4500) {
+                  break; // Seek landed (allowing preceding-keyframe snap-back).
                 }
-                if (i == 3 && (cur.inMilliseconds - preSeekMs).abs() < 2000) {
-                  appLogger.w('[WebOS-NDL] Playhead stuck at ${cur.inMilliseconds}ms after seekTo(${targetMs}ms) on MKV');
+                if (i == 3 && (curMs - preSeekMs).abs() < 2000) {
+                  appLogger.w('[WebOS-NDL] Playhead stuck at ${curMs}ms after seekTo(${targetMs}ms) on MKV');
                   seekFailed = true;
                 }
               } catch (posErr) {
