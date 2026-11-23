@@ -245,24 +245,40 @@ typedef _RenderFrameRgbaDart = int Function(
 /// Top-level worker Isolate entry point for [WebosLibassIsolateBackend].
 void _webosLibassWorkerMain(Map<String, Object?> initArgs) {
   final replyPort = initArgs['replyPort']! as SendPort;
-  final exeDir = initArgs['exeDir'] as String?;
+  String? exeDir = initArgs['exeDir'] as String?;
+  if (exeDir == null || exeDir.isEmpty) {
+    try {
+      final exe = Platform.resolvedExecutable;
+      if (exe.isNotEmpty) {
+        exeDir = File(exe).parent.path;
+      }
+    } catch (_) {}
+  }
+
+  final candidates = <String>[
+    if (exeDir != null && exeDir.isNotEmpty) '$exeDir/lib/libplezy_ass.so',
+    'libplezy_ass.so',
+  ];
 
   DynamicLibrary? lib;
-  try {
-    lib = DynamicLibrary.open('libplezy_ass.so');
-  } catch (_) {
-    if (exeDir != null && exeDir.isNotEmpty) {
-      final candidate = '$exeDir/lib/libplezy_ass.so';
-      if (File(candidate).existsSync()) {
-        try {
-          lib = DynamicLibrary.open(candidate);
-        } catch (_) {}
-      }
+  String? loadedPath;
+  final errors = <String>[];
+  for (final candidate in candidates) {
+    try {
+      lib = DynamicLibrary.open(candidate);
+      loadedPath = candidate;
+      break;
+    } catch (e) {
+      errors.add('$candidate: $e');
     }
   }
 
   if (lib == null) {
-    replyPort.send(<String, Object?>{'kind': 'init', 'ok': false});
+    replyPort.send(<String, Object?>{
+      'kind': 'init',
+      'ok': false,
+      'error': errors.join(' | '),
+    });
     return;
   }
 
@@ -313,14 +329,22 @@ void _webosLibassWorkerMain(Map<String, Object?> initArgs) {
     renderFrameRgbaFn = lib.lookupFunction<_RenderFrameRgbaNative, _RenderFrameRgbaDart>(
       'plezy_ass_render_frame_rgba',
     );
-  } catch (_) {
-    replyPort.send(<String, Object?>{'kind': 'init', 'ok': false});
+  } catch (e) {
+    replyPort.send(<String, Object?>{
+      'kind': 'init',
+      'ok': false,
+      'error': 'symbol lookup failed in $loadedPath: $e',
+    });
     return;
   }
 
   final ctx = createFn();
   if (ctx == nullptr) {
-    replyPort.send(<String, Object?>{'kind': 'init', 'ok': false});
+    replyPort.send(<String, Object?>{
+      'kind': 'init',
+      'ok': false,
+      'error': 'plezy_ass_create() returned nullptr ($loadedPath)',
+    });
     return;
   }
 
@@ -331,7 +355,11 @@ void _webosLibassWorkerMain(Map<String, Object?> initArgs) {
     if (rawInt32Scratch != nullptr) freeFn(rawInt32Scratch);
     if (rawPixelsScratch != nullptr) freeFn(rawPixelsScratch);
     destroyFn(ctx);
-    replyPort.send(<String, Object?>{'kind': 'init', 'ok': false});
+    replyPort.send(<String, Object?>{
+      'kind': 'init',
+      'ok': false,
+      'error': 'plezy_ass_alloc scratch failed ($loadedPath)',
+    });
     return;
   }
 
@@ -392,6 +420,7 @@ void _webosLibassWorkerMain(Map<String, Object?> initArgs) {
     'ok': true,
     'cmdPort': cmdPort.sendPort,
     'version': libVerFn(),
+    'loadedPath': loadedPath,
   });
 
   cmdPort.listen((dynamic rawMsg) {
@@ -634,6 +663,8 @@ class WebosLibassIsolateBackend implements WebosLibassBackend {
   final Map<int, Completer<WebosLibassRenderedFrame>> _pendingRenders = {};
   int _nextReqId = 1;
   int? _libraryVersion;
+  String? _loadedLibraryPath;
+  String? _lastInitError;
   bool _initialized = false;
   bool _disposed = false;
 
@@ -642,6 +673,10 @@ class WebosLibassIsolateBackend implements WebosLibassBackend {
 
   @override
   int? get libraryVersion => _libraryVersion;
+
+  String? get loadedLibraryPath => _loadedLibraryPath;
+
+  String? get lastInitError => _lastInitError;
 
   @override
   Future<bool> initialize() async {
@@ -681,12 +716,20 @@ class WebosLibassIsolateBackend implements WebosLibassBackend {
 
     final ok = await initComp.future.timeout(
       const Duration(seconds: 3),
-      onTimeout: () => false,
+      onTimeout: () {
+        _lastInitError ??= 'worker isolate initialization timed out after 3s';
+        return false;
+      },
     );
     if (!ok) {
+      appLogger.w('[WebOS-libass] dlopen/init failed (${_lastInitError ?? "unknown error"})');
       await _cleanupOnFailedInit();
     } else {
       _initialized = true;
+      appLogger.i(
+        '[WebOS-libass] Loaded native library from ${_loadedLibraryPath ?? "libplezy_ass.so"} '
+        '(version=0x${(_libraryVersion ?? 0).toRadixString(16)})',
+      );
     }
     return ok;
   }
@@ -700,6 +743,9 @@ class WebosLibassIsolateBackend implements WebosLibassBackend {
         if (ok) {
           _cmdPort = rawMsg['cmdPort'] as SendPort?;
           _libraryVersion = rawMsg['version'] as int?;
+          _loadedLibraryPath = rawMsg['loadedPath'] as String?;
+        } else {
+          _lastInitError = rawMsg['error'] as String?;
         }
         final comp = _initCompleter;
         if (comp != null && !comp.isCompleted) {

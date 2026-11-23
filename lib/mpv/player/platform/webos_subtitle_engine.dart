@@ -23,7 +23,7 @@ const String _kLegacyWebosAppdataDir =
 /// `FLUTTER_APPDATA_HOME` / `XDG_DATA_HOME` redirects before falling back to
 /// `$HOME/.local/share/com.edde746.plezy` or the legacy read-only bundle path.
 @visibleForTesting
-String resolveWebosAppdataDir({Map<String, String>? environment}) {
+String resolveWebosAppdataDir({Map<String, String>? environment, String? executablePath}) {
   final env = environment ?? Platform.environment;
   for (final key in const ['FLUTTER_APPDATA_HOME', 'XDG_DATA_HOME']) {
     final value = env[key]?.trim();
@@ -33,6 +33,12 @@ String resolveWebosAppdataDir({Map<String, String>? environment}) {
   if (home != null && home.isNotEmpty) {
     return '$home/.local/share/com.edde746.plezy';
   }
+  try {
+    final exe = (executablePath ?? Platform.resolvedExecutable).trim();
+    if (exe.contains('/usr/palm/applications/')) {
+      return '${File(exe).parent.path}/appdata';
+    }
+  } catch (_) {}
   return _kLegacyWebosAppdataDir;
 }
 

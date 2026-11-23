@@ -316,11 +316,22 @@ void main() {
       await tester.runAsync(player.dispose);
     });
 
-    test('WebosLibassIsolateBackend.initialize returns false cleanly when libplezy_ass.so is missing', () async {
+    test('WebosLibassIsolateBackend.initialize tries <exeDir>/lib/libplezy_ass.so first and returns false cleanly',
+        () async {
       final backend = WebosLibassIsolateBackend(executablePathOverride: '/nonexistent/plezy/plezy');
       addTearDown(backend.dispose);
       final ok = await backend.initialize();
       expect(ok, isFalse);
+      expect(backend.lastInitError, isNotNull);
+      expect(backend.lastInitError, startsWith('/nonexistent/plezy/lib/libplezy_ass.so:'));
+      expect(backend.lastInitError, contains('libplezy_ass.so:'));
+      expect(
+        resolveWebosAppdataDir(
+          environment: const {},
+          executablePath: '/media/developer/apps/usr/palm/applications/com.plezy.app.libass/plezy',
+        ),
+        '/media/developer/apps/usr/palm/applications/com.plezy.app.libass/appdata',
+      );
     });
 
     test('PlayerWebos falls back cleanly to Dart ASS parser if libass backend fails to initialize', () async {
