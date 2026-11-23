@@ -2863,6 +2863,7 @@ class WebosMkvSubtitleExtractor {
   static const int kMinRewindLookbackMs = 10000;
   static const int kMaxRewindLookbackMs = 60000;
   static const int kDynamicCuePointIntervalMs = 5000;
+  static const int kExplicitSeekGuardMs = 2500;
 
   final String url;
   final Map<String, String>? headers;
@@ -2910,6 +2911,11 @@ class WebosMkvSubtitleExtractor {
   int _pgsEvictedBeforeMs = -1;
   int _maxSeenCueDurationMs = 0;
   int? _pendingRewindTargetMs;
+  int _streamGeneration = 0;
+  HttpClientRequest? _activeRequest;
+  Completer<void>? _loopWakeCompleter;
+  int? _explicitSeekTargetMs;
+  final Stopwatch _explicitSeekWatch = Stopwatch();
   StreamSubscription<List<int>>? _activeStreamSub;
   Completer<void>? _activeStreamCompleter;
 
@@ -2937,6 +2943,11 @@ class WebosMkvSubtitleExtractor {
 
   @visibleForTesting
   int get debugStreamCursorOffset => _streamCursorOffset;
+
+  @visibleForTesting
+  void debugSetStreamCursorOffset(int offset) {
+    _streamCursorOffset = offset;
+  }
 
   @visibleForTesting
   int? get debugPendingRewindTargetMs => _pendingRewindTargetMs;
@@ -2988,7 +2999,57 @@ class WebosMkvSubtitleExtractor {
   @visibleForTesting
   int debugFindClusterOffsetForTime(int targetMs) => _findClusterOffsetForTime(targetMs);
 
+  @visibleForTesting
+  int debugEffectivePositionMs() => _effectivePositionMs();
+
+  void _wakeExtractionLoop() {
+    final wake = _loopWakeCompleter;
+    _loopWakeCompleter = null;
+    if (wake != null && !wake.isCompleted) {
+      wake.complete();
+    }
+  }
+
+  Future<void> _sleepInterruptible(Duration duration) async {
+    if (_disposed || _pendingRewindTargetMs != null) return;
+    final wake = Completer<void>();
+    _loopWakeCompleter = wake;
+    try {
+      await Future.any<void>([
+        Future<void>.delayed(duration),
+        wake.future,
+      ]);
+    } finally {
+      if (identical(_loopWakeCompleter, wake)) {
+        _loopWakeCompleter = null;
+      }
+    }
+  }
+
+  int _effectivePositionMs() {
+    final rawPos = getCurrentPositionMs();
+    final target = _explicitSeekTargetMs;
+    if (target != null) {
+      if ((rawPos - target).abs() <= 4500 ||
+          _explicitSeekWatch.elapsedMilliseconds > kExplicitSeekGuardMs) {
+        _explicitSeekTargetMs = null;
+        _explicitSeekWatch.stop();
+        return rawPos;
+      }
+      return target;
+    }
+    return rawPos;
+  }
+
   void _cancelActiveStreamForRewind() {
+    _streamGeneration++;
+    final req = _activeRequest;
+    _activeRequest = null;
+    if (req != null) {
+      try {
+        req.abort();
+      } catch (_) {}
+    }
     final sub = _activeStreamSub;
     _activeStreamSub = null;
     if (sub != null) {
@@ -2999,6 +3060,7 @@ class WebosMkvSubtitleExtractor {
     if (comp != null && !comp.isCompleted) {
       comp.complete();
     }
+    _wakeExtractionLoop();
   }
 
   void _clearPgsTrack(int trackNum, {bool deferToPostFrame = true}) {
@@ -3031,16 +3093,21 @@ class WebosMkvSubtitleExtractor {
 
     if (trackNum != null && _isPgsTrack(trackNum)) {
       _pgsEvictedBeforeMs = -1;
-      final nowPosMs = getCurrentPositionMs();
+      final nowPosMs = _effectivePositionMs();
       notifySeek(nowPosMs, forceRewind: true);
     }
   }
 
   bool _positionNeedsRewind(int nowPosMs) {
     if (_pendingRewindTargetMs != null) return true;
-    if (_lastSeekCheckMs >= 0 &&
-        (nowPosMs - _lastSeekCheckMs).abs() > 4500 &&
-        (nowPosMs < _lastSeekCheckMs - 2000 || nowPosMs > _maxBufferedTimeMs + 2000)) {
+    // Forward outrun: whenever playback advances ahead of what we have buffered, jump
+    // immediately without gating on a single-tick delta so rapid or incremental forward
+    // seeks never strand the extractor behind the playhead.
+    if (_maxBufferedTimeMs >= 0 && nowPosMs > _maxBufferedTimeMs + 2000) {
+      return true;
+    }
+    // Backward jump: trigger rewind when playhead moves significantly earlier.
+    if (_lastSeekCheckMs >= 0 && nowPosMs < _lastSeekCheckMs - 4500) {
       return true;
     }
     final activeEvictedBefore = _activeTrackIsPgs ? _pgsEvictedBeforeMs : _textEvictedBeforeMs;
@@ -3053,22 +3120,32 @@ class WebosMkvSubtitleExtractor {
   @visibleForTesting
   bool checkNeedsRewind(int nowPosMs) => _positionNeedsRewind(nowPosMs);
 
-  void _applyRewind(int targetPosMs) {
+  bool _applyRewind(int targetPosMs) {
     final lookback = math.max(kMinRewindLookbackMs, _maxSeenCueDurationMs);
     final rewindToMs = (targetPosMs - lookback).clamp(0, 1 << 30);
-    _streamCursorOffset = _findClusterOffsetForTime(rewindToMs);
+    final targetOffset = _findClusterOffsetForTime(rewindToMs);
+    final isForwardJump = targetPosMs > _maxBufferedTimeMs;
+    final keepForwardCursor = isForwardJump &&
+        _cuePoints.isNotEmpty &&
+        rewindToMs > _cuePoints.last.timeMs &&
+        targetOffset < _streamCursorOffset;
+
+    if (!keepForwardCursor) {
+      _streamCursorOffset = targetOffset;
+      for (final dec in _pgsDecoders.values) {
+        dec.resetOnSeek();
+      }
+    }
     _maxBufferedTimeMs = targetPosMs;
     _lastSeekCheckMs = targetPosMs;
     _pendingRewindTargetMs = null;
-    for (final dec in _pgsDecoders.values) {
-      dec.resetOnSeek();
-    }
     if (_textEvictedBeforeMs >= 0 && rewindToMs <= _textEvictedBeforeMs) {
       _textEvictedBeforeMs = rewindToMs > 0 ? rewindToMs - 1 : -1;
     }
     if (_pgsEvictedBeforeMs >= 0 && rewindToMs <= _pgsEvictedBeforeMs) {
       _pgsEvictedBeforeMs = rewindToMs > 0 ? rewindToMs - 1 : -1;
     }
+    return !keepForwardCursor;
   }
 
   @visibleForTesting
@@ -3078,10 +3155,23 @@ class WebosMkvSubtitleExtractor {
   /// active HTTP stream restarts immediately at the target cluster offset.
   void notifySeek(int targetPosMs, {bool forceRewind = false}) {
     if (_disposed || targetPosMs < 0) return;
+    _explicitSeekTargetMs = targetPosMs;
+    _explicitSeekWatch
+      ..reset()
+      ..start();
     if (forceRewind || _positionNeedsRewind(targetPosMs)) {
       _pendingRewindTargetMs = targetPosMs;
-      _applyRewind(targetPosMs);
-      _cancelActiveStreamForRewind();
+      final cursorChanged = _applyRewind(targetPosMs);
+      if (forceRewind || cursorChanged) {
+        _cancelActiveStreamForRewind();
+      } else {
+        _wakeExtractionLoop();
+      }
+    } else {
+      _lastSeekCheckMs = targetPosMs;
+      if (_maxBufferedTimeMs <= targetPosMs + _lookaheadWindowMs) {
+        _wakeExtractionLoop();
+      }
     }
   }
 
@@ -3196,6 +3286,7 @@ class WebosMkvSubtitleExtractor {
   void dispose({bool deferPgsDispose = true}) {
     _disposed = true;
     _cancelActiveStreamForRewind();
+    _wakeExtractionLoop();
     _httpClient.close(force: true);
     for (final dec in _pgsDecoders.values) {
       dec.dispose();
@@ -3697,13 +3788,13 @@ class WebosMkvSubtitleExtractor {
   }
 
   Future<void> _runExtractionLoop() async {
-    final initialPosMs = getCurrentPositionMs();
+    final initialPosMs = _effectivePositionMs();
     _streamCursorOffset = _findClusterOffsetForTime((initialPosMs - 3000).clamp(0, 1 << 30));
     _lastSeekCheckMs = initialPosMs;
     _maxBufferedTimeMs = initialPosMs;
 
     while (!_disposed) {
-      final nowPosMs = getCurrentPositionMs();
+      final nowPosMs = _effectivePositionMs();
       evictExpiredCues(nowPosMs);
 
       if (_pendingRewindTargetMs != null) {
@@ -3715,18 +3806,20 @@ class WebosMkvSubtitleExtractor {
       }
 
       if (_maxBufferedTimeMs > nowPosMs + _lookaheadWindowMs) {
-        await Future<void>.delayed(const Duration(milliseconds: 500));
+        await _sleepInterruptible(const Duration(milliseconds: 500));
         continue;
       }
 
-      await _streamClustersFromOffset(_streamCursorOffset);
-      if (!_disposed) {
-        await Future<void>.delayed(const Duration(milliseconds: 120));
+      final streamGen = _streamGeneration;
+      await _streamClustersFromOffset(_streamCursorOffset, streamGen);
+      if (!_disposed && streamGen == _streamGeneration) {
+        await _sleepInterruptible(const Duration(milliseconds: 120));
       }
     }
   }
 
-  Future<void> _streamClustersFromOffset(int startOffset) async {
+  Future<void> _streamClustersFromOffset(int startOffset, int gen) async {
+    if (_disposed || gen != _streamGeneration) return;
     HttpClientRequest? req;
     HttpClientResponse? resp;
     StreamSubscription<List<int>>? sub;
@@ -3735,9 +3828,23 @@ class WebosMkvSubtitleExtractor {
 
     try {
       req = await _httpClient.getUrl(Uri.parse(url));
+      if (_disposed || gen != _streamGeneration) {
+        try {
+          req.abort();
+        } catch (_) {}
+        return;
+      }
+      _activeRequest = req;
       headers?.forEach((k, v) => req!.headers.set(k, v));
       req.headers.set('Range', 'bytes=$startOffset-');
       resp = await req.close().timeout(const Duration(seconds: 8));
+      if (identical(_activeRequest, req)) {
+        _activeRequest = null;
+      }
+      if (_disposed || gen != _streamGeneration) {
+        unawaited(resp.drain<void>().catchError((_) {}));
+        return;
+      }
       if (resp.statusCode != 200 && resp.statusCode != 206) {
         await resp.drain<void>();
         return;
@@ -3751,14 +3858,14 @@ class WebosMkvSubtitleExtractor {
 
       sub = resp.listen(
         (List<int> chunk) {
-          if (_disposed) {
+          if (_disposed || gen != _streamGeneration) {
             sub?.cancel();
             if (!completer.isCompleted) completer.complete();
             return;
           }
 
           // Check if user seeked away, crossed an evicted window, or switched tracks while streaming
-          final nowPosMs = getCurrentPositionMs();
+          final nowPosMs = _effectivePositionMs();
           if (_pendingRewindTargetMs != null || _positionNeedsRewind(nowPosMs)) {
             _applyRewind(_pendingRewindTargetMs ?? nowPosMs);
             sub?.cancel();
@@ -3781,7 +3888,9 @@ class WebosMkvSubtitleExtractor {
             chunkOffset += canSkip;
             bytesProcessedFromStart += canSkip;
             if (chunkOffset >= chunk.length) {
-              _streamCursorOffset = startOffset + bytesProcessedFromStart;
+              if (gen == _streamGeneration) {
+                _streamCursorOffset = startOffset + bytesProcessedFromStart;
+              }
               return;
             }
           }
@@ -3801,6 +3910,11 @@ class WebosMkvSubtitleExtractor {
           }
 
           final res = _consumeStreamBuffer(buf, bufferBaseFileOffset: bufferBaseFileOffset);
+          if (gen != _streamGeneration) {
+            sub?.cancel();
+            if (!completer.isCompleted) completer.complete();
+            return;
+          }
           bytesProcessedFromStart += res.consumedBytes - carry.length;
           _streamCursorOffset = startOffset + bytesProcessedFromStart;
           skipBytesRemaining = res.skipAheadBytes;
@@ -3836,6 +3950,9 @@ class WebosMkvSubtitleExtractor {
       await completer.future;
     } catch (_) {
     } finally {
+      if (identical(_activeRequest, req)) {
+        _activeRequest = null;
+      }
       if (identical(_activeStreamSub, sub)) {
         _activeStreamSub = null;
       }

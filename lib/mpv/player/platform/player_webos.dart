@@ -945,12 +945,12 @@ class PlayerWebos extends PlayerBase {
     final targetMs = target.inMilliseconds;
     final preSeekMs = sourcePositionFor(currentPosition).inMilliseconds;
     WebosSubtitleClock.instance.notifySeek(targetMs);
-    _mkvExtractor?.notifySeek(targetMs);
 
     final texId = _textureId;
     if (disposed || texId == null) return;
 
     await runSeek(position, () async {
+      _mkvExtractor?.notifySeek(targetMs);
       _saw702Error = false;
       bool seekFailed = false;
       try {

@@ -416,6 +416,10 @@ void main() {
         ]),
         bufferBaseFileOffset: 8500,
       );
+      extractor.debugConsumeBuffer(
+        _buildCluster(200000, []),
+        bufferBaseFileOffset: 20000,
+      );
 
       expect(extractor.debugMaxSeenCueDurationMs, 30000);
 
