@@ -110,6 +110,7 @@ class PlayerWebos extends PlayerBase {
   bool _disposing = false;
   int _seekGeneration = 0;
   bool _seekVerificationActive = false;
+  int _seekToInFlightCount = 0;
   int? _lastSeekTargetMs;
   DateTime? _lastSeekAt;
 
@@ -614,6 +615,7 @@ class PlayerWebos extends PlayerBase {
     _lastSeekTargetMs = null;
     _lastSeekAt = null;
     _seekVerificationActive = false;
+    _seekToInFlightCount = 0;
     _videoReadyForSubtitles = false;
     _targetResumeStartMs = sourceStart.inMilliseconds;
     _openStartedAt = DateTime.now();
@@ -1002,14 +1004,29 @@ class PlayerWebos extends PlayerBase {
     _posQueryInFlight = false;
     _positionTimer = Timer.periodic(const Duration(milliseconds: 90), (_) async {
       final activeTex = _textureId;
-      if (_isClosed || activeTex == null || _currentSourceId != sourceId || !state.playing || _posQueryInFlight) {
+      if (_isClosed ||
+          activeTex == null ||
+          _currentSourceId != sourceId ||
+          !state.playing ||
+          _posQueryInFlight ||
+          _seekToInFlightCount > 0) {
         return;
       }
       _posQueryInFlight = true;
       try {
         final pos = await _webosPlatform.getPosition(activeTex);
-        if (!_isClosed && _currentSourceId == sourceId && _textureId == activeTex) {
+        if (!_isClosed &&
+            _currentSourceId == sourceId &&
+            _textureId == activeTex &&
+            _seekToInFlightCount == 0) {
           final posMs = pos.inMilliseconds;
+          final pendingTarget = _lastSeekTargetMs;
+          if (_seekVerificationActive && pendingTarget != null) {
+            if (posMs < pendingTarget - WebosSubtitleClock.kKeyframeSnapBackWindowMs - 500 ||
+                posMs > pendingTarget + 4500) {
+              return;
+            }
+          }
           if (_targetResumeStartMs > 2000 && posMs < _targetResumeStartMs - 2000) {
             final elapsedMs = DateTime.now().difference(_openStartedAt ?? DateTime.now()).inMilliseconds;
             if (elapsedMs < 4000) {
@@ -1234,6 +1251,7 @@ class PlayerWebos extends PlayerBase {
     _stopPositionTimer();
     _seekGeneration++;
     _seekVerificationActive = false;
+    _seekToInFlightCount = 0;
     _lastSeekTargetMs = null;
     _lastSeekAt = null;
     WebosSubtitleClock.instance.setPlaying(false);
@@ -1454,6 +1472,15 @@ class PlayerWebos extends PlayerBase {
     }
   }
 
+  /// Speculatively prefetches embedded MKV subtitle clusters around [targetPosition]
+  /// (e.g. during an Intro Auto Skip countdown) without disrupting active playback.
+  void prefetchSubtitlesForMarker(Duration targetPosition, {String? markerKey}) {
+    if (_isClosed) return;
+    final targetMs = sourcePositionFor(targetPosition).inMilliseconds;
+    if (targetMs <= 0) return;
+    _mkvExtractor?.prefetchAroundTime(targetMs, markerKey: markerKey);
+  }
+
   @override
   Future<void> seek(Duration position) async {
     final target = sourcePositionFor(position);
@@ -1479,11 +1506,14 @@ class PlayerWebos extends PlayerBase {
       _seekVerificationActive = true;
       bool seekFailed = false;
       try {
+        _seekToInFlightCount++;
         try {
           await _webosPlatform.seekTo(texId, target);
         } catch (e) {
           appLogger.w('[WebOS-NDL] seekTo(${targetMs}ms) threw exception: $e');
           seekFailed = true;
+        } finally {
+          if (_seekToInFlightCount > 0) _seekToInFlightCount--;
         }
 
         // Normal hardware decoders snap backward up to one GOP (~2-8 s) to the nearest

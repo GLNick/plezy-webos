@@ -28,6 +28,7 @@ import 'package:window_manager/window_manager.dart';
 import '../../mixins/listenable_bindings_mixin.dart';
 import '../../mixins/mounted_set_state_mixin.dart';
 import '../../mpv/mpv.dart';
+import '../../mpv/player/platform/player_webos.dart';
 import '../overlay_sheet.dart';
 import '../../focus/dpad_navigator.dart';
 import '../../focus/focus_navigation_intent.dart';

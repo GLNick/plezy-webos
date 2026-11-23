@@ -12,6 +12,106 @@ import 'package:plezy/mpv/player/platform/webos_libass_engine.dart';
 import 'package:plezy/mpv/player/platform/webos_subtitle_engine.dart';
 import 'package:video_player_platform_interface/video_player_platform_interface.dart';
 
+class _SeekFakeVideoPlayerPlatform extends _FakeVideoPlayerPlatform {
+  Completer<void>? seekGate;
+  bool throwOnSeek = false;
+  Duration reportedPos = Duration.zero;
+  int seekToCalls = 0;
+
+  @override
+  Future<void> seekTo(int textureId, Duration position) async {
+    seekToCalls++;
+    final gate = seekGate;
+    if (gate != null) {
+      await gate.future;
+    }
+    if (throwOnSeek) {
+      throw StateError('simulated seek error');
+    }
+  }
+
+  @override
+  Future<Duration> getPosition(int textureId) async => reportedPos;
+}
+
+({Uint8List bytes, Map<int, int> clusterOffsetsByTimeMs}) _buildSeekAndPrefetchTestMkv() {
+  final out = BytesBuilder();
+  final ebmlHeader = _ebmlEl([0x1A, 0x45, 0xDF, 0xA3], [0x42, 0x86, 0x81, 0x01]);
+  out.add(ebmlHeader);
+  out.add([0x18, 0x53, 0x80, 0x67, 0x01, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF]);
+
+  out.add(_ebmlEl([0x15, 0x49, 0xA9, 0x66], [0x2A, 0xD7, 0xB1, 0x84, ..._uintBytes(1000000, 4)]));
+  final assHeader = utf8.encode(
+    '[Script Info]\nPlayResX: 1920\nPlayResY: 1080\n'
+    '[V4+ Styles]\n'
+    'Format: Name, Fontname, Fontsize, PrimaryColour, SecondaryColour, OutlineColour, BackColour, '
+    'Bold, Italic, Underline, StrikeOut, ScaleX, ScaleY, Spacing, Angle, BorderStyle, Outline, Shadow, '
+    'Alignment, MarginL, MarginR, MarginV, Encoding\n'
+    'Style: Default,sans-serif,48,&H00FFFFFF,&H00FFFFFF,&H00000000,&HAA000000,0,0,0,0,100,100,0,0,1,2,1.5,2,20,20,25,1\n'
+    '[Events]\nFormat: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text\n',
+  );
+  out.add(_ebmlEl([0x16, 0x54, 0xAE, 0x6B], _buildTracksPayload(assCodecPrivate: Uint8List.fromList(assHeader))));
+
+  final clusterTimes = <int>[0, 45000, 85000, 88500, 91000, 92000, 96000, 110000];
+  final clusters = <Uint8List>[];
+  for (final tMs in clusterTimes) {
+    final children = <List<int>>[];
+    if (tMs == 0) {
+      children.add(
+        _buildBlockGroup(
+          trackNumber: 3,
+          relTimeMs: 0,
+          durationMs: 45000,
+          payload: '0,0,Default,,0,0,0,,Long OP Sign',
+        ),
+      );
+    } else if (tMs == 92000) {
+      children.add(
+        _buildBlockGroup(
+          trackNumber: 3,
+          relTimeMs: 0,
+          durationMs: 2000,
+          payload: r'1,0,Default,,0,0,0,,{\fade(200,200)\t(0,2000,\1c&H0000FF&)}Title Card',
+        ),
+      );
+    } else {
+      children.add(
+        _buildBlockGroup(
+          trackNumber: 3,
+          relTimeMs: 0,
+          durationMs: 1500,
+          payload: '2,0,Default,,0,0,0,,Cue ${tMs ~/ 1000}s',
+        ),
+      );
+    }
+    clusters.add(_buildCluster(tMs, children));
+  }
+
+  List<int> buildCuesWithOffsets(int firstClusterRelPos) {
+    final cueEntries = BytesBuilder();
+    int rel = firstClusterRelPos;
+    for (int i = 0; i < clusterTimes.length; i++) {
+      final trackPos = _ebmlEl([0xB7], [0xF1, 0x84, ..._uintBytes(rel, 4)]);
+      cueEntries.add(_ebmlEl([0xBB], [0xB3, 0x84, ..._uintBytes(clusterTimes[i], 4), ...trackPos]));
+      rel += clusters[i].length;
+    }
+    return _ebmlEl([0x1C, 0x53, 0xBB, 0x6B], cueEntries.takeBytes());
+  }
+
+  final segDataStart = ebmlHeader.length + 12;
+  final prefixLen = out.length - segDataStart;
+  final dummyCues = buildCuesWithOffsets(0);
+  final realCues = buildCuesWithOffsets(prefixLen + dummyCues.length);
+  out.add(realCues);
+
+  final offsetsByTimeMs = <int, int>{};
+  for (int i = 0; i < clusterTimes.length; i++) {
+    offsetsByTimeMs[clusterTimes[i]] = out.length;
+    out.add(clusters[i]);
+  }
+  return (bytes: out.takeBytes(), clusterOffsetsByTimeMs: offsetsByTimeMs);
+}
+
 class _RealHttpOverrides extends HttpOverrides {}
 
 class _FakeVideoPlayerPlatform extends VideoPlayerPlatform {
@@ -449,20 +549,22 @@ void main() {
       expect(fontBatchesLoaded, 1);
       expect(WebosMkvSubtitleExtractor.fontGeneration.value, beforeFontGen);
 
-      // Rewind clears dedup + flushes track
+      // Seek rewind keeps libass events cached (does NOT flush) and keeps dedup intact
       extractor.debugApplyRewind(0);
-      expect(flushes, [null]);
+      expect(flushes, isEmpty);
       extractor.debugConsumeBuffer(cluster);
-      expect(rawChunks.length, 4); // Re-forwarded cleanly after rewind!
+      expect(rawChunks.length, 2); // Deduplicated; already in libass RAM!
 
-      // Switching active track away from ASS track flushes only that track, and switching back rewinds
+      // Switching active track away from ASS track flushes only that track, and switching back rewinds & re-feeds
       extractor.setActiveTrackNumber(3);
       extractor.setActiveTrackNumber(4);
-      expect(flushes, [null, 3]);
+      expect(flushes, [3]);
       extractor.debugSetStreamCursorOffset(99999);
       extractor.setActiveTrackNumber(3);
       expect(extractor.debugStreamCursorOffset, 0);
-      expect(flushes, [null, 3, null]);
+      expect(flushes, [3]); // Switching back does not emit an extra flush
+      extractor.debugConsumeBuffer(cluster);
+      expect(rawChunks.length, 4); // Re-forwarded cleanly after track switch back!
     });
   });
 
@@ -987,6 +1089,272 @@ void main() {
       expect(player.debugLastViewRect, const Rect.fromLTWH(0, 0, 1920, 1080));
 
       await tester.runAsync(player.dispose);
+    });
+  });
+
+  group('Seek cache, tight lookback, intro prefetch, and clock snap hardening', () {
+    test('seek rewind preserves libass events and uses tight 3.5s lookback even after a 45s OP cue', () {
+      int posMs = 0;
+      final flushes = <int?>[];
+      final rawChunks = <(int, String, int, int)>[];
+
+      final extractor = WebosMkvSubtitleExtractor(
+        url: 'http://127.0.0.1:1/seek-cache.mkv',
+        headers: null,
+        getCurrentPositionMs: () => posMs,
+        onCuesUpdated: () {},
+        onRawAssChunk: (trackNum, bytes, startMs, durMs) =>
+            rawChunks.add((trackNum, utf8.decode(bytes), startMs, durMs)),
+        onFlushAssTrack: flushes.add,
+        skipDartAssParsing: true,
+        skipFlutterFontLoading: true,
+      );
+      addTearDown(() => extractor.dispose(deferPgsDispose: false));
+
+      final assHeader = Uint8List.fromList(utf8.encode('[Script Info]\nPlayResX: 1920\nPlayResY: 1080\n'));
+      extractor.debugParseTracksElement(_buildTracksPayload(assCodecPrivate: assHeader));
+      extractor.setActiveTrackNumber(3);
+
+      final cluster0 = _buildCluster(0, [
+        _buildBlockGroup(trackNumber: 3, relTimeMs: 0, durationMs: 45000, payload: '0,0,Default,,0,0,0,,Long OP'),
+      ]);
+      final cluster45 = _buildCluster(45000, [
+        _buildBlockGroup(trackNumber: 3, relTimeMs: 0, durationMs: 1000, payload: '1,0,Default,,0,0,0,,Mid OP'),
+      ]);
+      final cluster85 = _buildCluster(85000, [
+        _buildBlockGroup(trackNumber: 3, relTimeMs: 0, durationMs: 1000, payload: '2,0,Default,,0,0,0,,Pre Title'),
+      ]);
+      final cluster92 = _buildCluster(92000, [
+        _buildBlockGroup(
+          trackNumber: 3,
+          relTimeMs: 0,
+          durationMs: 2000,
+          payload: r'1,0,Default,,0,0,0,,{\t(0,2000,\1c&H0000FF&)}Title Card',
+        ),
+      ]);
+
+      extractor.debugConsumeBuffer(cluster0, bufferBaseFileOffset: 1000);
+      extractor.debugConsumeBuffer(cluster45, bufferBaseFileOffset: 2000);
+      extractor.debugConsumeBuffer(cluster85, bufferBaseFileOffset: 3000);
+      expect(extractor.debugMaxSeenCueDurationMs, 45000);
+
+      // Jump straight to Intro End (91s -> lookback 91s - 3.5s = 87.5s -> cluster at 85s, offset 3000).
+      posMs = 91000;
+      extractor.notifySeek(91000);
+      expect(flushes, isEmpty);
+      expect(extractor.debugStreamCursorOffset, 3000);
+
+      // Feed 92s animation, then rewind backward: libass must NOT be flushed and chunk must remain cached.
+      extractor.debugConsumeBuffer(cluster92, bufferBaseFileOffset: 4000);
+      expect(rawChunks.any((c) => c.$2.contains('Title Card') && c.$3 == 92000), isTrue);
+      final countBeforeBackSkip = rawChunks.length;
+
+      posMs = 86000;
+      extractor.notifySeek(86000);
+      expect(flushes, isEmpty);
+      extractor.debugConsumeBuffer(cluster92, bufferBaseFileOffset: 4000);
+      expect(rawChunks.length, countBeforeBackSkip);
+    });
+
+    test('speculative intro prefetch fetches bounded [end-3s, end+15s] range once without disrupting cursor or leaking',
+        () async {
+      await HttpOverrides.runWithHttpOverrides(() async {
+        final mkv = _buildSeekAndPrefetchTestMkv();
+        final server = await HttpServer.bind(InternetAddress.loopbackIPv4, 0);
+        addTearDown(() => server.close(force: true));
+
+        final boundedRanges = <({int start, int? end})>[];
+        final holdOpenEnded = Completer<void>();
+        addTearDown(() {
+          if (!holdOpenEnded.isCompleted) holdOpenEnded.complete();
+        });
+
+        server.listen((HttpRequest req) async {
+          final range = req.headers.value('range');
+          int start = 0;
+          int? end;
+          if (range != null && range.startsWith('bytes=')) {
+            final spec = range.substring(6).split('-');
+            start = int.tryParse(spec[0]) ?? 0;
+            if (spec.length > 1 && spec[1].isNotEmpty) {
+              end = int.tryParse(spec[1]);
+            }
+          }
+
+          if (end != null) {
+            boundedRanges.add((start: start, end: end));
+            final clampedEnd = end.clamp(start, mkv.bytes.length - 1);
+            req.response.statusCode = HttpStatus.partialContent;
+            req.response.headers.set(HttpHeaders.contentRangeHeader, 'bytes $start-$clampedEnd/${mkv.bytes.length}');
+            req.response.headers.set(HttpHeaders.contentLengthHeader, clampedEnd - start + 1);
+            req.response.add(Uint8List.sublistView(mkv.bytes, start, clampedEnd + 1));
+            await req.response.close();
+            return;
+          }
+
+          // Simulate a live WAN main stream stalling right after sending cluster 0.
+          final clampedEnd = mkv.bytes.length - 1;
+          final c0Start = mkv.clusterOffsetsByTimeMs[0]!;
+          final c45Start = mkv.clusterOffsetsByTimeMs[45000]!;
+          final sendLen = (c45Start - start).clamp(0, clampedEnd - start + 1);
+          req.response.statusCode = HttpStatus.partialContent;
+          req.response.headers.set(HttpHeaders.contentRangeHeader, 'bytes $start-$clampedEnd/${mkv.bytes.length}');
+          req.response.headers.set(HttpHeaders.contentLengthHeader, clampedEnd - start + 1);
+          try {
+            if (sendLen > 0) {
+              req.response.add(Uint8List.sublistView(mkv.bytes, start, start + sendLen));
+              await req.response.flush();
+            }
+            if (start < c45Start) {
+              await holdOpenEnded.future;
+            }
+          } catch (_) {}
+          try {
+            await req.response.close();
+          } catch (_) {}
+          // Silence unused variable warning when start != 0
+          expect(c0Start, greaterThan(0));
+        });
+
+        int posMs = 1000;
+        final flushes = <int?>[];
+        final rawChunks = <(int, String, int, int)>[];
+        final extractor = WebosMkvSubtitleExtractor(
+          url: 'http://127.0.0.1:${server.port}/intro-prefetch.mkv',
+          headers: null,
+          getCurrentPositionMs: () => posMs,
+          onCuesUpdated: () {},
+          onRawAssChunk: (trackNum, bytes, startMs, durMs) =>
+              rawChunks.add((trackNum, utf8.decode(bytes), startMs, durMs)),
+          onFlushAssTrack: flushes.add,
+          skipDartAssParsing: true,
+          skipFlutterFontLoading: true,
+        );
+        addTearDown(() => extractor.dispose(deferPgsDispose: false));
+
+        await extractor.start();
+        final initDeadline = DateTime.now().add(const Duration(seconds: 3));
+        while (extractor.debugCuePoints.isEmpty) {
+          if (DateTime.now().isAfter(initDeadline)) fail('Timed out waiting for MKV headers/cues');
+          await Future<void>.delayed(const Duration(milliseconds: 10));
+        }
+        extractor.setActiveTrackNumber(3);
+
+        final cursorBefore = extractor.debugStreamCursorOffset;
+        boundedRanges.clear();
+        extractor.prefetchAroundTime(91000, markerKey: 'intro:0:91000');
+
+        final prefetchDeadline = DateTime.now().add(const Duration(seconds: 3));
+        while (!rawChunks.any((c) => c.$2.contains('Title Card') && c.$3 == 92000)) {
+          if (DateTime.now().isAfter(prefetchDeadline)) fail('Timed out waiting for prefetched 92s Title Card');
+          await Future<void>.delayed(const Duration(milliseconds: 10));
+        }
+
+        expect(extractor.debugPrefetchRequestCount, 1);
+        expect(boundedRanges.length, 1);
+        final sentRange = boundedRanges.single;
+        expect(sentRange.start, mkv.clusterOffsetsByTimeMs[85000]);
+        expect(sentRange.end, mkv.clusterOffsetsByTimeMs[110000]! - 1);
+        expect(sentRange.end! - sentRange.start + 1, lessThanOrEqualTo(WebosMkvSubtitleExtractor.kMaxPrefetchBytes));
+
+        // Did NOT flush libass or corrupt the active main stream cursor.
+        expect(flushes, isEmpty);
+        expect(extractor.debugStreamCursorOffset, lessThanOrEqualTo(mkv.clusterOffsetsByTimeMs[45000]!));
+        if (cursorBefore > 0) {
+          expect(extractor.debugStreamCursorOffset, greaterThanOrEqualTo(cursorBefore));
+        }
+
+        // Duplicate call with same markerKey must be a no-op.
+        extractor.prefetchAroundTime(91000, markerKey: 'intro:0:91000');
+        await Future<void>.delayed(const Duration(milliseconds: 20));
+        expect(extractor.debugPrefetchRequestCount, 1);
+
+        extractor.dispose(deferPgsDispose: false);
+        expect(extractor.debugHasActivePrefetch, isFalse);
+      }, _RealHttpOverrides());
+    });
+
+    test('WebosSubtitleClock & extractor handle post-seek keyframe snap-back without freezing or second rewind', () {
+      final clock = WebosSubtitleClock.instance;
+      clock.debugReset();
+      addTearDown(clock.debugReset);
+
+      clock.reportPlayerPosition(2000, isPlaying: true, rate: 1.0);
+      clock.notifySeek(91000);
+      expect(clock.debugAwaitingPostSeekTick, isTrue);
+      expect(clock.debugWatchRunning, isFalse);
+
+      // Stale pre-seek tick while seekTo() settles must be ignored cleanly.
+      clock.reportPlayerPosition(2050, isPlaying: true, rate: 1.0);
+      expect(clock.debugAwaitingPostSeekTick, isTrue);
+      expect(clock.currentPositionMs, greaterThanOrEqualTo(91000));
+
+      // Hardware decoder lands 6s earlier on preceding keyframe (85s): settles immediately, zero re-freeze!
+      clock.reportPlayerPosition(85000, isPlaying: true, rate: 1.0);
+      expect(clock.debugAwaitingPostSeekTick, isFalse);
+      expect(clock.debugWatchRunning, isTrue);
+      expect(clock.currentPositionMs, lessThan(86000));
+
+      // Extractor effective position guard mirrors 10s snap-back window without spurious second rewind.
+      int hardwarePosMs = 2000;
+      final extractor = WebosMkvSubtitleExtractor(
+        url: 'http://127.0.0.1:1/snap.mkv',
+        headers: null,
+        getCurrentPositionMs: () => hardwarePosMs,
+        onCuesUpdated: () {},
+      );
+      addTearDown(() => extractor.dispose(deferPgsDispose: false));
+      extractor.debugRegisterTrack(trackNumber: 3, codecId: 'S_TEXT/ASS', language: 'jpn');
+      extractor.debugApplyRewind(91000);
+      extractor.notifySeek(91000);
+
+      expect(extractor.debugEffectivePositionMs(), 91000);
+      hardwarePosMs = 85000;
+      expect(extractor.debugEffectivePositionMs(), 85000);
+      expect(extractor.checkNeedsRewind(85000), isFalse);
+    });
+
+    test('PlayerWebos suppresses stale _positionTimer polls while seekTo is in flight and always releases guard',
+        () async {
+      final fakePlatform = _SeekFakeVideoPlayerPlatform();
+      fakePlatform.reportedPos = const Duration(milliseconds: 2000);
+      final gate = Completer<void>();
+      fakePlatform.seekGate = gate;
+
+      final player = PlayerWebos(platformOverride: fakePlatform);
+      addTearDown(player.dispose);
+
+      await player.open(Media('http://127.0.0.1:1/movie.mp4'), play: true);
+      fakePlatform.emitEvent(player.textureId!, VideoEvent(eventType: VideoEventType.initialized));
+      await player.selectSubtitleTrack(const SubtitleTrack(id: 's_1', title: 'English'));
+
+      await Future<void>.delayed(const Duration(milliseconds: 120));
+      WebosSubtitleClock.instance.reportPlayerPosition(2000, isPlaying: true, rate: 1.0);
+
+      final seekFuture = player.seek(const Duration(milliseconds: 91000));
+      // Wait past at least one 90ms position timer period while seekTo() is still in flight.
+      await Future<void>.delayed(const Duration(milliseconds: 150));
+
+      // Clock must stay anchored on 91000 instead of getting corrupted back to stale 2000ms.
+      expect(WebosSubtitleClock.instance.debugAwaitingPostSeekTick, isTrue);
+      expect(WebosSubtitleClock.instance.currentPositionMs, greaterThanOrEqualTo(91000));
+
+      // Complete seekTo with an NDL keyframe snap-back to 88s and verify normal polling resumes.
+      fakePlatform.reportedPos = const Duration(milliseconds: 88000);
+      gate.complete();
+      await seekFuture;
+
+      await Future<void>.delayed(const Duration(milliseconds: 140));
+      expect(WebosSubtitleClock.instance.debugAwaitingPostSeekTick, isFalse);
+      expect(player.currentPosition.inMilliseconds, 88000);
+
+      // Even if seekTo() throws, _seekToInFlightCount is released in finally and timer keeps polling.
+      fakePlatform.seekGate = null;
+      fakePlatform.throwOnSeek = true;
+      fakePlatform.reportedPos = const Duration(milliseconds: 95000);
+      await player.seek(const Duration(milliseconds: 96000));
+      await Future<void>.delayed(const Duration(milliseconds: 140));
+      expect(player.currentPosition.inMilliseconds, 95000);
     });
   });
 }

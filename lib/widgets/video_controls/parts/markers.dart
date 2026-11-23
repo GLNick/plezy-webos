@@ -107,6 +107,16 @@ extension _PlexVideoControlsMarkerMethods on _PlexVideoControlsState {
 
     _startAutoSkipTimer(foundMarker);
 
+    if (!foundMarker.isCredits && _shouldAutoSkipForMarker(foundMarker)) {
+      final player = widget.player;
+      if (player is PlayerWebos) {
+        player.prefetchSubtitlesForMarker(
+          foundMarker.endTime,
+          markerKey: _markerSkipKey(foundMarker),
+        );
+      }
+    }
+
     // Auto-skip OFF: dismiss button after 7s if no interaction
     // Auto-skip ON: button stays until controls hide
     if (!_shouldAutoSkipForMarker(foundMarker)) {

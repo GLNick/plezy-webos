@@ -431,11 +431,11 @@ void main() {
       bool rewound = false;
       for (int p = 110000; p >= 70000; p -= 3000) {
         if (extractor.checkNeedsRewind(p)) {
-          // Should trigger as soon as p < 80s + 10s = 90s (i.e. at p = 89s).
-          expect(p, lessThan(90000));
-          expect(p, greaterThanOrEqualTo(86000));
+          // Should trigger as soon as p < 80s + kSeekRewindLookbackMs (83.5s) -> at p = 83s.
+          expect(p, lessThan(80000 + WebosMkvSubtitleExtractor.kSeekRewindLookbackMs));
+          expect(p, greaterThanOrEqualTo(80000));
           extractor.debugApplyRewind(p);
-          // Lookback uses max(10s, 30s) = 30s -> 89s - 30s = 59s -> cluster offset 5000 (50s).
+          // Tight lookback: 83s - 3.5s = 79.5s -> cluster offset 5000 (50s).
           expect(extractor.debugStreamCursorOffset, 5000);
           rewound = true;
           break;
