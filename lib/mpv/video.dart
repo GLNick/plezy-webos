@@ -8,6 +8,7 @@ import 'models.dart';
 import 'player/player.dart';
 import 'player/video_rect_support.dart';
 import 'player/platform/player_webos.dart';
+import 'player/platform/webos_libass_engine.dart';
 import 'player/platform/webos_subtitle_engine.dart';
 
 /// Video widget for displaying player output.
@@ -179,11 +180,7 @@ class _VideoState extends State<Video> {
                   fit: StackFit.expand,
                   children: [
                     const WebosVideoHole(),
-                    WebosSubtitleOverlay(
-                      activeCues: webosPlayer.activeSubtitleCues,
-                      styleConfig: webosPlayer.subtitleStyleNotifier,
-                      getCurrentPositionMs: () => webosPlayer.currentSourcePositionMs,
-                    ),
+                    _buildWebosSubtitleOverlay(webosPlayer),
                   ],
                 )
               : const SizedBox.expand();
@@ -201,6 +198,34 @@ class _VideoState extends State<Video> {
       );
     }
     return const SizedBox.expand();
+  }
+
+  Widget _buildWebosSubtitleOverlay(PlayerWebos webosPlayer) {
+    final libassActive = webosPlayer.libassActiveListenable;
+    if (libassActive == null) {
+      return WebosSubtitleOverlay(
+        activeCues: webosPlayer.activeSubtitleCues,
+        styleConfig: webosPlayer.subtitleStyleNotifier,
+        getCurrentPositionMs: () => webosPlayer.currentSourcePositionMs,
+      );
+    }
+    return ValueListenableBuilder<bool>(
+      valueListenable: libassActive,
+      builder: (context, useLibass, _) {
+        final ctrl = webosPlayer.libassController;
+        if (useLibass && ctrl != null) {
+          return WebosLibassOverlay(
+            controller: ctrl,
+            getCurrentPositionMs: () => webosPlayer.currentSourcePositionMs,
+          );
+        }
+        return WebosSubtitleOverlay(
+          activeCues: webosPlayer.activeSubtitleCues,
+          styleConfig: webosPlayer.subtitleStyleNotifier,
+          getCurrentPositionMs: () => webosPlayer.currentSourcePositionMs,
+        );
+      },
+    );
   }
 
   void _updateVideoRect(BuildContext context, BoxConstraints _) {

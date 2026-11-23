@@ -1649,13 +1649,18 @@ class WebosSubtitleParser {
     return sb.toString();
   }
 
-  static List<WebosSubtitleCue> parseAuto(String rawContent) {
-    final content = _stripBom(rawContent);
-    final trimmed = content.trimLeft();
-    if (trimmed.contains('[Script Info]') ||
+  /// Returns `true` when [rawContent] looks like an ASS/SSA script rather than SRT/VTT.
+  static bool isAssContent(String rawContent) {
+    final trimmed = _stripBom(rawContent).trimLeft();
+    return trimmed.contains('[Script Info]') ||
         trimmed.contains('[V4+ Styles]') ||
         trimmed.contains('[Events]') ||
-        trimmed.contains('Dialogue:')) {
+        trimmed.contains('Dialogue:');
+  }
+
+  static List<WebosSubtitleCue> parseAuto(String rawContent) {
+    final content = _stripBom(rawContent);
+    if (isAssContent(content)) {
       return parseAss(content).cues;
     }
     return parseSrtOrVtt(content);
@@ -2618,6 +2623,12 @@ class _MkvTrackInfo {
   final String? language;
   final String? name;
   final WebosAssDocument? assHeader;
+  final Uint8List? rawCodecPrivate;
+
+  bool get isAssOrSsa {
+    final upper = codecId.toUpperCase();
+    return upper.contains('ASS') || upper.contains('SSA');
+  }
 
   _MkvTrackInfo({
     required this.trackNumber,
@@ -2626,6 +2637,7 @@ class _MkvTrackInfo {
     this.language,
     this.name,
     this.assHeader,
+    this.rawCodecPrivate,
   });
 }
 
@@ -3023,6 +3035,13 @@ class WebosMkvSubtitleExtractor {
   final int Function() getCurrentPositionMs;
   final VoidCallback onCuesUpdated;
   final WebosPgsPixelDecoder? _pgsPixelDecoder;
+  final void Function(int trackNumber, String codecId, String? language, Uint8List? codecPrivate)? onAssTrackHeader;
+  final void Function(int trackNumber, Uint8List chunkBytes, int startMs, int durationMs)? onRawAssChunk;
+  final void Function(String fileName, Uint8List fontBytes)? onFontAttachment;
+  final VoidCallback? onFontAttachmentsLoaded;
+  final void Function(int? trackNumber)? onFlushAssTrack;
+  final bool skipDartAssParsing;
+  final bool skipFlutterFontLoading;
 
   final HttpClient _httpClient = HttpClient()..connectionTimeout = const Duration(seconds: 10);
   bool _disposed = false;
@@ -3088,15 +3107,29 @@ class WebosMkvSubtitleExtractor {
   StreamSubscription<List<int>>? _activeStreamSub;
   Completer<void>? _activeStreamCompleter;
 
+  final Set<int> _flushedAssTracks = {};
+
   WebosMkvSubtitleExtractor({
     required this.url,
     required this.headers,
     required this.getCurrentPositionMs,
     required this.onCuesUpdated,
     bool initialPaused = false,
+    this.onAssTrackHeader,
+    this.onRawAssChunk,
+    this.onFontAttachment,
+    this.onFontAttachmentsLoaded,
+    this.onFlushAssTrack,
+    this.skipDartAssParsing = false,
+    this.skipFlutterFontLoading = false,
     @visibleForTesting WebosPgsPixelDecoder? pgsPixelDecoder,
   }) : _pgsPixelDecoder = pgsPixelDecoder,
        _isPaused = initialPaused;
+
+  bool isAssTrackNumber(int? trackNum) {
+    if (trackNum == null) return false;
+    return _subTrackByNumber[trackNum]?.isAssOrSsa ?? false;
+  }
 
   bool _isPgsTrack(int? trackNum) {
     if (trackNum == null) return false;
@@ -3154,6 +3187,7 @@ class WebosMkvSubtitleExtractor {
     String? language,
     String? name,
     WebosAssDocument? assHeader,
+    Uint8List? rawCodecPrivate,
   }) {
     final info = _MkvTrackInfo(
       trackNumber: trackNumber,
@@ -3162,12 +3196,22 @@ class WebosMkvSubtitleExtractor {
       language: language,
       name: name,
       assHeader: assHeader,
+      rawCodecPrivate: rawCodecPrivate,
     );
     subtitleTracksInOrder.add(info);
     _subTrackByNumber[trackNumber] = info;
     cuesByTrackNumber[trackNumber] = <WebosSubtitleCue>[];
     _dedupExpiryByTrackNumber[trackNumber] = <String, int>{};
+    if (info.isAssOrSsa) {
+      onAssTrackHeader?.call(trackNumber, codecId, language, rawCodecPrivate);
+    }
   }
+
+  @visibleForTesting
+  Future<void> debugParseAndLoadAttachments(Uint8List data) => _parseAndLoadAttachments(data, 0, data.length);
+
+  @visibleForTesting
+  void debugParseTracksElement(Uint8List data) => _parseTracksElement(data, 0, data.length);
 
   @visibleForTesting
   ({int consumedBytes, int remainingStart, int skipAheadBytes}) debugConsumeBuffer(
@@ -3301,10 +3345,17 @@ class WebosMkvSubtitleExtractor {
     if (prevTrack != null && _isPgsTrack(prevTrack)) {
       _clearPgsTrack(prevTrack);
       _pgsEvictedBeforeMs = -1;
+    } else if (prevTrack != null && isAssTrackNumber(prevTrack) && onFlushAssTrack != null) {
+      _dedupExpiryByTrackNumber[prevTrack]?.clear();
+      _flushedAssTracks.add(prevTrack);
+      onFlushAssTrack!(prevTrack);
     }
 
     if (trackNum != null && _isPgsTrack(trackNum)) {
       _pgsEvictedBeforeMs = -1;
+      final nowPosMs = _effectivePositionMs();
+      notifySeek(nowPosMs, forceRewind: true);
+    } else if (trackNum != null && isAssTrackNumber(trackNum) && skipDartAssParsing && _flushedAssTracks.remove(trackNum)) {
       final nowPosMs = _effectivePositionMs();
       notifySeek(nowPosMs, forceRewind: true);
     }
@@ -3363,6 +3414,15 @@ class WebosMkvSubtitleExtractor {
       _streamCursorOffset = targetOffset;
       for (final dec in _pgsDecoders.values) {
         dec.resetOnSeek();
+      }
+      if (onFlushAssTrack != null) {
+        for (final t in _subTrackByNumber.values) {
+          if (t.isAssOrSsa) {
+            _dedupExpiryByTrackNumber[t.trackNumber]?.clear();
+            _flushedAssTracks.remove(t.trackNumber);
+          }
+        }
+        onFlushAssTrack!(null);
       }
       _catchUpTargetMs = targetPosMs;
     } else if (_catchUpTargetMs != null && targetPosMs > _catchUpTargetMs!) {
@@ -3534,6 +3594,7 @@ class WebosMkvSubtitleExtractor {
     }
     cuesByTrackNumber.clear();
     _dedupExpiryByTrackNumber.clear();
+    _flushedAssTracks.clear();
   }
 
   Future<void> start() async {
@@ -3688,20 +3749,26 @@ class WebosMkvSubtitleExtractor {
             mimeType.contains('opentype');
 
         if (isFont && fileBytes != null && fileBytes.isNotEmpty) {
-          final families = _extractTtfFamilyNames(fileBytes);
-          final baseName = fileName.replaceAll(_attachmentExtRe, '');
-          if (baseName.isNotEmpty) families.add(baseName);
-          for (final f in List<String>.of(families)) {
-            final stripped = f.replaceAll(_attachmentWeightSuffixRe, '').trim();
-            if (stripped.isNotEmpty) families.add(stripped);
+          if (onFontAttachment != null) {
+            onFontAttachment!(fileName, fileBytes);
+            loadedAnyFont = true;
           }
-          for (final fam in families) {
-            if (_loadedFontFamilies.add(fam)) {
-              try {
-                await ui.loadFontFromList(fileBytes, fontFamily: fam);
-                loadedAnyFont = true;
-                appLogger.i('[WebOS-MKV-Font] Loaded embedded font family: "$fam" ($fileName)');
-              } catch (_) {}
+          if (!skipFlutterFontLoading) {
+            final families = _extractTtfFamilyNames(fileBytes);
+            final baseName = fileName.replaceAll(_attachmentExtRe, '');
+            if (baseName.isNotEmpty) families.add(baseName);
+            for (final f in List<String>.of(families)) {
+              final stripped = f.replaceAll(_attachmentWeightSuffixRe, '').trim();
+              if (stripped.isNotEmpty) families.add(stripped);
+            }
+            for (final fam in families) {
+              if (_loadedFontFamilies.add(fam)) {
+                try {
+                  await ui.loadFontFromList(fileBytes, fontFamily: fam);
+                  loadedAnyFont = true;
+                  appLogger.i('[WebOS-MKV-Font] Loaded embedded font family: "$fam" ($fileName)');
+                } catch (_) {}
+              }
             }
           }
         }
@@ -3709,7 +3776,10 @@ class WebosMkvSubtitleExtractor {
       p = bEnd;
     }
     if (loadedAnyFont) {
-      notifyFontsLoaded();
+      onFontAttachmentsLoaded?.call();
+      if (!skipFlutterFontLoading) {
+        notifyFontsLoaded();
+      }
     }
   }
 
@@ -3958,6 +4028,7 @@ class WebosMkvSubtitleExtractor {
         String? lang;
         String? name;
         String? codecPrivStr;
+        Uint8List? codecPrivBytes;
 
         int tp = bStart;
         while (tp < bEnd) {
@@ -3980,14 +4051,21 @@ class WebosMkvSubtitleExtractor {
           } else if (tid.value == 0x536E) {
             name = utf8.decode(data.sublist(tbStart, tbEnd), allowMalformed: true).trim();
           } else if (tid.value == 0x63A2 && tsz.value < 512 * 1024) {
-            codecPrivStr = utf8.decode(data.sublist(tbStart, tbEnd), allowMalformed: true);
+            codecPrivBytes = data.sublist(tbStart, tbEnd);
+            if (!skipDartAssParsing) {
+              codecPrivStr = utf8.decode(codecPrivBytes, allowMalformed: true);
+            }
           }
           tp = tbEnd;
         }
 
         if (trackNum != null && trackType == 0x11 && !_subTrackByNumber.containsKey(trackNum)) {
+          final codecUpper = codecId.toUpperCase();
+          final isAssOrSsa = codecUpper.contains('ASS') || codecUpper.contains('SSA');
+          final retainedCodecPrivate =
+              isAssOrSsa && (onAssTrackHeader != null || skipDartAssParsing) ? codecPrivBytes : null;
           WebosAssDocument? assDoc;
-          if (codecPrivStr != null && (codecId.contains('ASS') || codecId.contains('SSA'))) {
+          if (!skipDartAssParsing && codecPrivStr != null && isAssOrSsa) {
             assDoc = WebosSubtitleParser.parseAss(codecPrivStr);
           }
           final info = _MkvTrackInfo(
@@ -3997,11 +4075,15 @@ class WebosMkvSubtitleExtractor {
             language: lang,
             name: name,
             assHeader: assDoc,
+            rawCodecPrivate: retainedCodecPrivate,
           );
           subtitleTracksInOrder.add(info);
           _subTrackByNumber[trackNum] = info;
           cuesByTrackNumber[trackNum] = <WebosSubtitleCue>[];
           _dedupExpiryByTrackNumber[trackNum] = <String, int>{};
+          if (isAssOrSsa) {
+            onAssTrackHeader?.call(trackNum, codecId, lang, retainedCodecPrivate);
+          }
         }
       }
       p = bEnd;
@@ -4539,6 +4621,36 @@ class WebosMkvSubtitleExtractor {
     }
     if (codecUpper.contains('VOBSUB') || codecUpper.contains('DVDSUB') || codecUpper.contains('DVB')) {
       return false;
+    }
+
+    if (trackInfo.isAssOrSsa && onRawAssChunk != null) {
+      final rawBytes = buf.sublist(headerEnd, end);
+      final effectiveDurMs = durationMs > 0 ? durationMs : 3500;
+      final payloadStr = utf8.decode(rawBytes, allowMalformed: true);
+      final dedupKey = 'ass:$cueStartMs:$effectiveDurMs:$payloadStr';
+      final dedupMap = _dedupExpiryByTrackNumber[trackInfo.trackNumber]!;
+      if (dedupMap.containsKey(dedupKey)) return false;
+
+      onRawAssChunk!(trackInfo.trackNumber, rawBytes, cueStartMs, effectiveDurMs);
+      dedupMap[dedupKey] = cueStartMs + effectiveDurMs;
+      final cueDur = effectiveDurMs.clamp(0, kMaxRewindLookbackMs);
+      if (cueDur > _maxSeenCueDurationMs) _maxSeenCueDurationMs = cueDur;
+
+      if (skipDartAssParsing) {
+        return true;
+      }
+
+      final cue = WebosSubtitleParser.parseMkvBlock(
+        startMs: cueStartMs,
+        durationMs: effectiveDurMs,
+        codecId: trackInfo.codecId,
+        blockText: payloadStr,
+        assHeader: trackInfo.assHeader,
+      );
+      if (cue == null) return false;
+      final list = cuesByTrackNumber[trackInfo.trackNumber]!;
+      list.add(cue);
+      return true;
     }
 
     final payloadStr = utf8.decode(buf.sublist(headerEnd, end), allowMalformed: true);
