@@ -8,6 +8,7 @@ import 'models.dart';
 import 'player/player.dart';
 import 'player/video_rect_support.dart';
 import 'player/platform/player_webos.dart';
+import 'player/platform/webos_libass_engine.dart';
 import 'player/platform/webos_subtitle_engine.dart';
 
 /// Video widget for displaying player output.
@@ -162,15 +163,19 @@ class _VideoState extends State<Video> {
             final renderBox = context.findRenderObject() as RenderBox?;
             if (renderBox != null && renderBox.hasSize) {
               final view = View.of(context);
+              final double viewDpr = view.devicePixelRatio > 0 ? view.devicePixelRatio : 1.0;
+              final Offset topLeft = renderBox.localToGlobal(Offset.zero);
+              final Offset bottomRight = renderBox.localToGlobal(renderBox.size.bottomRight(Offset.zero));
+              final double globalW = (bottomRight.dx - topLeft.dx).abs();
+              final double globalH = (bottomRight.dy - topLeft.dy).abs();
               final double physW = view.physicalSize.width;
-              final double effectiveDpr = physW >= 1800 ? (physW / 1280.0) : view.devicePixelRatio;
-              final pos = renderBox.localToGlobal(Offset.zero);
-              final size = renderBox.size;
+              final double rootLogicalW = physW > 0 ? (physW / viewDpr) : 1920.0;
+              final double scaleTo1080p = rootLogicalW > 0 ? (1920.0 / rootLogicalW) : viewDpr;
               webosPlayer.updateVideoViewRect(
-                pos.dx * effectiveDpr,
-                pos.dy * effectiveDpr,
-                size.width * effectiveDpr,
-                size.height * effectiveDpr,
+                topLeft.dx * scaleTo1080p,
+                topLeft.dy * scaleTo1080p,
+                globalW * scaleTo1080p,
+                globalH * scaleTo1080p,
               );
             }
           });
@@ -179,11 +184,7 @@ class _VideoState extends State<Video> {
                   fit: StackFit.expand,
                   children: [
                     const WebosVideoHole(),
-                    WebosSubtitleOverlay(
-                      activeCues: webosPlayer.activeSubtitleCues,
-                      styleConfig: webosPlayer.subtitleStyleNotifier,
-                      getCurrentPositionMs: () => webosPlayer.currentSourcePositionMs,
-                    ),
+                    _buildWebosSubtitleOverlay(webosPlayer),
                   ],
                 )
               : const SizedBox.expand();
@@ -201,6 +202,34 @@ class _VideoState extends State<Video> {
       );
     }
     return const SizedBox.expand();
+  }
+
+  Widget _buildWebosSubtitleOverlay(PlayerWebos webosPlayer) {
+    final libassActive = webosPlayer.libassActiveListenable;
+    if (libassActive == null) {
+      return WebosSubtitleOverlay(
+        activeCues: webosPlayer.activeSubtitleCues,
+        styleConfig: webosPlayer.subtitleStyleNotifier,
+        getCurrentPositionMs: () => webosPlayer.currentSourcePositionMs,
+      );
+    }
+    return ValueListenableBuilder<bool>(
+      valueListenable: libassActive,
+      builder: (context, useLibass, _) {
+        final ctrl = webosPlayer.libassController;
+        if (useLibass && ctrl != null) {
+          return WebosLibassOverlay(
+            controller: ctrl,
+            getCurrentPositionMs: () => webosPlayer.currentSourcePositionMs,
+          );
+        }
+        return WebosSubtitleOverlay(
+          activeCues: webosPlayer.activeSubtitleCues,
+          styleConfig: webosPlayer.subtitleStyleNotifier,
+          getCurrentPositionMs: () => webosPlayer.currentSourcePositionMs,
+        );
+      },
+    );
   }
 
   void _updateVideoRect(BuildContext context, BoxConstraints _) {

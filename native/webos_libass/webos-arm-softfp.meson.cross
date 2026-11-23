@@ -1,0 +1,22 @@
+[binaries]
+c = 'arm-webosmllib32-linux-gnueabi-gcc'
+cpp = 'arm-webosmllib32-linux-gnueabi-g++'
+ar = 'arm-webosmllib32-linux-gnueabi-ar'
+nm = 'arm-webosmllib32-linux-gnueabi-nm'
+strip = 'arm-webosmllib32-linux-gnueabi-strip'
+pkg-config = 'pkg-config'
+
+[built-in options]
+c_args = ['--sysroot=/usr/local/starfish-sdk-x86_64/sysroots/ca9v1-webosmllib32-linux-gnueabi', '-mthumb', '-mfpu=neon', '-mfloat-abi=softfp', '-mcpu=cortex-a9', '-mtune=cortex-a9', '-D_FILE_OFFSET_BITS=64', '-O2', '-fPIC', '-fvisibility=hidden', '-ffunction-sections', '-fdata-sections', '-ftree-vectorize']
+cpp_args = ['--sysroot=/usr/local/starfish-sdk-x86_64/sysroots/ca9v1-webosmllib32-linux-gnueabi', '-mthumb', '-mfpu=neon', '-mfloat-abi=softfp', '-mcpu=cortex-a9', '-mtune=cortex-a9', '-D_FILE_OFFSET_BITS=64', '-O2', '-fPIC', '-fvisibility=hidden', '-fvisibility-inlines-hidden', '-fno-exceptions', '-fno-rtti', '-fno-threadsafe-statics', '-ffunction-sections', '-fdata-sections', '-ftree-vectorize']
+c_link_args = ['--sysroot=/usr/local/starfish-sdk-x86_64/sysroots/ca9v1-webosmllib32-linux-gnueabi', '-Wl,--hash-style=gnu', '-Wl,--as-needed']
+cpp_link_args = ['--sysroot=/usr/local/starfish-sdk-x86_64/sysroots/ca9v1-webosmllib32-linux-gnueabi', '-Wl,--hash-style=gnu', '-Wl,--as-needed']
+
+[properties]
+needs_exe_wrapper = true
+
+[host_machine]
+system = 'linux'
+cpu_family = 'arm'
+cpu = 'armv7-a'
+endian = 'little'

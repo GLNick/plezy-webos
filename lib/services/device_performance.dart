@@ -30,6 +30,13 @@ class DevicePerformance {
   /// reservations), below 3 GB Shield-class devices (~2.8 GiB).
   static const int _lowMemThresholdBytes = 2252 << 20;
 
+  /// ~1.0 GiB Linux MemTotal on webOS: LG's Starfish kernel carves out a large
+  /// hardware video/graphics BMEM region before boot, so 2–4 GB webOS TVs
+  /// (including OLEDs) report ~1.35–2.5 GiB in /proc/meminfo. Keep those on
+  /// the full visual quality tier (1080p backdrops + bicubic poster filtering)
+  /// while [applyImageCacheBudget] still enforces the 64–96 MB 32-bit RAM tiers.
+  static const int _webosAutoReducedMemThresholdBytes = 1024 << 20;
+
   static bool get _isWebos => Platform.isLinux && !PlatformDetector.isDesktopOS();
 
   @visibleForTesting
@@ -90,7 +97,7 @@ class DevicePerformance {
     if (_isWebos) {
       _is64Bit = false; // webOS targets 32-bit ARM (armv7l).
       _totalMemBytes = await _readLinuxTotalMemBytes();
-      _autoReduced = _totalMemBytes != null && _totalMemBytes! <= _lowMemThresholdBytes;
+      _autoReduced = _totalMemBytes != null && _totalMemBytes! <= _webosAutoReducedMemThresholdBytes;
       // Always cap Skia's GPU resource cache on 32-bit webOS TVs so 4K compositor
       // surfaces do not exhaust the 32-bit address space or trigger OOM kills.
       _capSkiaResourceCache();

@@ -9,6 +9,7 @@ import 'package:plezy/mpv/mpv.dart';
 import 'package:plezy/mpv/player/platform/player_webos.dart';
 import 'package:plezy/mpv/player/platform/webos_subtitle_engine.dart';
 import 'package:plezy/services/device_performance.dart';
+import 'package:plezy/utils/media_image_helper.dart';
 import 'package:plezy/utils/platform_detector.dart';
 import 'package:plezy/widgets/video_controls/widgets/linux_keep_alive.dart';
 
@@ -316,14 +317,59 @@ MemAvailable:     812340 kB
       expect(DevicePerformance.parseMemTotalBytes('MemTotal: 0 kB'), isNull);
     });
 
-    test('scales webOS ImageCache budget cleanly across RAM tiers without exceeding 96MB', () async {
-      // 1. ≤2.2 GiB low-RAM TV (e.g. 1.5 GiB) -> 64 MB / 400 entries, auto-reduced
-      DevicePerformance.debugMemTotalBytesOverride = 1536 << 20;
+    testWidgets(
+        'scales webOS ImageCache budget across RAM tiers (64-96MB) while keeping 1080p backdrops and high filter quality',
+        (tester) async {
+      tester.view.physicalSize = const Size(1920, 1080);
+      tester.view.devicePixelRatio = 1.5;
+      tester.view.display.size = const Size(1920, 1080);
+      addTearDown(() {
+        tester.view.reset();
+        tester.view.display.reset();
+      });
+
+      // 0. Ultra-low ≤1.0 GiB Linux MemTotal TV -> 64 MB / 400 entries, auto-reduced
+      DevicePerformance.debugMemTotalBytesOverride = 1024 << 20;
       await DevicePerformance.getInstance();
       DevicePerformance.applyImageCacheBudget();
       expect(DevicePerformance.isLowEndHardware, isTrue);
       expect(binding.imageCache.maximumSize, 400);
       expect(binding.imageCache.maximumSizeBytes, 64 << 20);
+
+      // 1. Standard 1.5 GiB Linux MemTotal webOS TV (after BMEM video carveout):
+      //    keeps 64 MB / 400 entries 32-bit OOM cap, but stays on full visual quality tier!
+      DevicePerformance.debugReset();
+      DevicePerformance.debugMemTotalBytesOverride = 1536 << 20;
+      await DevicePerformance.getInstance();
+      DevicePerformance.applyImageCacheBudget();
+      expect(DevicePerformance.isLowEndHardware, isFalse);
+      expect(DevicePerformance.isReduced, isFalse);
+      expect(binding.imageCache.maximumSize, 400);
+      expect(binding.imageCache.maximumSizeBytes, 64 << 20);
+      expect(
+        MediaImageHelper.getMemCacheDimensions(displayWidth: 1920, displayHeight: 1080, imageType: ImageType.art),
+        (1920, 1080),
+      );
+
+      late double posterRatio;
+      late double artRatio;
+      late FilterQuality posterFilter;
+      await tester.pumpWidget(
+        MediaQuery(
+          data: const MediaQueryData(size: Size(1280, 720), devicePixelRatio: 1.5),
+          child: Builder(
+            builder: (context) {
+              posterRatio = MediaImageHelper.artworkPixelRatio(context, imageType: ImageType.poster);
+              artRatio = MediaImageHelper.artworkPixelRatio(context, imageType: ImageType.art);
+              posterFilter = MediaImageHelper.artworkFilterQuality(context, ImageType.poster);
+              return const SizedBox.shrink();
+            },
+          ),
+        ),
+      );
+      expect(posterRatio, closeTo(2.25, 1e-6));
+      expect(artRatio, closeTo(1.5, 1e-6));
+      expect(posterFilter, FilterQuality.high);
 
       // 2. Mid-RAM 2.5 GiB TV -> 80 MB / 450 entries, full tier
       DevicePerformance.debugReset();

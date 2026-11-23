@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:io';
 import 'dart:math';
 
 import 'package:cached_network_image_ce/cached_network_image.dart';
@@ -141,7 +142,10 @@ class MediaImageHelper {
     } catch (_) {
       dpr = reportedDpr;
     }
-    if (PlatformDetector.isTV()) dpr = max(dpr, _tvMinDpr);
+    final isWebosTv = Platform.isLinux && !PlatformDetector.isDesktopOS() && !PlatformDetector.isAppleTV();
+    if (PlatformDetector.isTV() && !isWebosTv) {
+      dpr = max(dpr, _tvMinDpr);
+    }
     return dpr;
   }
 

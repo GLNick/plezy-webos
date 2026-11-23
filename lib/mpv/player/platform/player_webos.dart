@@ -14,6 +14,7 @@ import '../../../media/media_source_info.dart';
 import '../../../utils/app_logger.dart';
 import '../../models.dart';
 import '../player_base.dart';
+import 'webos_libass_engine.dart';
 import 'webos_subtitle_engine.dart';
 
 /// Transparent punch-through layer so the hardware NDL video plane underneath
@@ -128,6 +129,9 @@ class PlayerWebos extends PlayerBase {
 
   @visibleForTesting
   int get debugSeekGeneration => _seekGeneration;
+
+  @visibleForTesting
+  Rect get debugLastViewRect => _lastViewRect;
 
   static bool _sameCueIdentityList(List<WebosSubtitleCue> a, List<WebosSubtitleCue> b) {
     if (identical(a, b)) return true;
@@ -277,30 +281,95 @@ class PlayerWebos extends PlayerBase {
   @visibleForTesting
   void debugRefreshActiveSubtitleCues() => _refreshActiveSubtitleCues();
 
+  @visibleForTesting
+  Future<bool> debugInitLibassForTest() async {
+    if (!_libassEnabled || audioOnly) return false;
+    await _initLibassControllerForSource(_currentSourceId);
+    return _libassController?.isAvailable ?? false;
+  }
+
+  @visibleForTesting
+  void debugSetVideoReadyForSubtitles(bool ready) {
+    _videoReadyForSubtitles = ready;
+    _libassController?.setVideoReady(ready);
+    _refreshActiveSubtitleCues();
+  }
+
+  @visibleForTesting
+  void debugSelectSubTrackIdForTest(String? trackId) {
+    _selectedSubTrackId = trackId;
+    _refreshActiveSubtitleCues();
+  }
+
   // Subtitle state
   final ValueNotifier<List<WebosSubtitleCue>> activeSubtitleCues = ValueNotifier<List<WebosSubtitleCue>>(const []);
   final ValueNotifier<WebosSubtitleStyleConfig> subtitleStyleNotifier =
       ValueNotifier<WebosSubtitleStyleConfig>(const WebosSubtitleStyleConfig());
+  final ValueNotifier<bool> _libassActiveNotifier = ValueNotifier<bool>(false);
 
   final Map<String, List<WebosSubtitleCue>> _loadedExternalSubtitles = {};
   final Map<String, List<int>> _loadedExternalPrefixMaxEndMs = {};
+  final Map<String, Completer<void>> _inFlightExternalSubLoads = {};
+  final Map<String, int> _externalAssTrackKeys = {};
+  int _nextExternalAssTrackKey = -1;
   final Map<String, int> _subIdToEmbeddedOrderIndex = {};
   final Map<String, String> _subIdToExternalUri = {};
   final Map<String, int> _audioIdToOrderIndex = {};
   WebosMkvSubtitleExtractor? _mkvExtractor;
+  WebosLibassController? _libassController;
+  bool _subUseMargins = false;
   final VideoPlayerPlatform? _platformOverride;
+  final bool _libassEnabled;
+  final WebosLibassBackendFactory? _libassBackendFactoryOverride;
 
   PlayerWebos({
     this.audioOnly = false,
     @visibleForTesting VideoPlayerPlatform? platformOverride,
-  }) : _platformOverride = platformOverride;
+    @visibleForTesting bool? libassEnabledOverride,
+    @visibleForTesting WebosLibassBackendFactory? libassBackendFactoryOverride,
+  })  : _platformOverride = platformOverride,
+        _libassEnabled = libassEnabledOverride ?? kWebosLibassEnabled,
+        _libassBackendFactoryOverride = libassBackendFactoryOverride;
 
   PlayerWebos.audio()
       : audioOnly = true,
-        _platformOverride = null;
+        _platformOverride = null,
+        _libassEnabled = false,
+        _libassBackendFactoryOverride = null;
 
   int? get textureId => _textureId;
   int get currentSourcePositionMs => sourcePositionFor(currentPosition).inMilliseconds;
+  WebosLibassController? get libassController => _libassController;
+  ValueListenable<bool>? get libassActiveListenable => _libassEnabled ? _libassActiveNotifier : null;
+
+  void _syncLibassActiveNotifier() {
+    final next = _libassEnabled && (_libassController?.activeForOverlay.value ?? false);
+    if (!_isClosed && _libassActiveNotifier.value != next) {
+      _libassActiveNotifier.value = next;
+    }
+  }
+
+  Future<void> _initLibassControllerForSource(int? sourceId) async {
+    if (!_libassEnabled || audioOnly || _isClosed) return;
+    final ctrl = WebosLibassController(backendFactory: _libassBackendFactoryOverride);
+    final ok = await ctrl.initialize();
+    if (_isClosed || _currentSourceId != sourceId) {
+      unawaited(ctrl.dispose());
+      return;
+    }
+    if (!ok) {
+      unawaited(ctrl.dispose());
+      _libassController = null;
+      _syncLibassActiveNotifier();
+      return;
+    }
+    ctrl.setUseMargins(_subUseMargins);
+    ctrl.setHidden(_subtitlesHidden);
+    ctrl.setVideoReady(_videoReadyForSubtitles);
+    ctrl.activeForOverlay.addListener(_syncLibassActiveNotifier);
+    _libassController = ctrl;
+    _syncLibassActiveNotifier();
+  }
 
   /// Called by VideoPlayerScreen before open() so PlayerWebos knows all audio &
   /// subtitle tracks advertised by Plex/Jellyfin for the item.
@@ -528,6 +597,9 @@ class PlayerWebos extends PlayerBase {
     await _teardownActiveTexture();
     if (_isClosed || _currentSourceId != sourceId) return null;
 
+    await _initLibassControllerForSource(sourceId);
+    if (_isClosed || _currentSourceId != sourceId) return null;
+
     WebosSubtitlePreferenceStore.instance.notifyMediaOpened();
 
     final startPosition = media.start ?? timelineOffset;
@@ -633,12 +705,30 @@ class PlayerWebos extends PlayerBase {
           ? resolvedUri
           : WebosDirectStreamFallbackRegistry.instance.lastRawMkvUrl;
       if (mkvUrlForSubs != null && mkvUrlForSubs.isNotEmpty && !isLive && _subIdToEmbeddedOrderIndex.isNotEmpty) {
+        final libass = _libassController;
+        final useLibassForMkv = libass != null && libass.isAvailable;
         _mkvExtractor = WebosMkvSubtitleExtractor(
           url: _resolveUrlWithHeaders(mkvUrlForSubs, media.headers),
           headers: media.headers,
           getCurrentPositionMs: () => sourcePositionFor(currentPosition).inMilliseconds,
           onCuesUpdated: _refreshActiveSubtitleCues,
           initialPaused: !play,
+          onAssTrackHeader: useLibassForMkv
+              ? (trackNum, codecId, lang, codecPrivate) => libass.registerMkvAssTrack(
+                    trackNum,
+                    codecPrivate: codecPrivate,
+                    language: lang,
+                  )
+              : null,
+          onRawAssChunk: useLibassForMkv
+              ? (trackNum, chunkBytes, startMs, durMs) =>
+                  libass.processMkvAssChunk(trackNum, chunkBytes, startMs, durMs)
+              : null,
+          onFontAttachment: useLibassForMkv ? libass.addFontAttachment : null,
+          onFontAttachmentsLoaded: useLibassForMkv ? libass.commitFontsAndRefresh : null,
+          onFlushAssTrack: useLibassForMkv ? libass.flushTrackEvents : null,
+          skipDartAssParsing: useLibassForMkv,
+          skipFlutterFontLoading: useLibassForMkv,
         );
         unawaited(_mkvExtractor!.start());
       }
@@ -654,6 +744,15 @@ class PlayerWebos extends PlayerBase {
           switch (event.eventType) {
             case VideoEventType.initialized:
               _videoReadyForSubtitles = true;
+              final videoSize = event.size;
+              if (videoSize != null && videoSize.width > 0 && videoSize.height > 0) {
+                _libassController?.updateVideoGeometry(
+                  storageWidth: videoSize.width.round(),
+                  storageHeight: videoSize.height.round(),
+                  displayAspectRatio: _pendingMediaInfo?.videoAspectRatio,
+                );
+              }
+              _libassController?.setVideoReady(true);
               final durSec = (event.duration?.inMilliseconds ?? 0) / 1000.0;
               if (durSec > 0) {
                 handlePropertyChange('duration', durSec, sourceId: sourceId);
@@ -813,7 +912,32 @@ class PlayerWebos extends PlayerBase {
 
   Future<void> _ensureSubtitleLoaded(String trackId) async {
     if (_isClosed) return;
-    if (_loadedExternalSubtitles.containsKey(trackId)) {
+    if (_loadedExternalSubtitles.containsKey(trackId) || _externalAssTrackKeys.containsKey(trackId)) {
+      _refreshActiveSubtitleCues();
+      return;
+    }
+    final existing = _inFlightExternalSubLoads[trackId];
+    if (existing != null) {
+      await existing.future;
+      return;
+    }
+    final completer = Completer<void>();
+    _inFlightExternalSubLoads[trackId] = completer;
+    try {
+      await _loadExternalSubtitleInternal(trackId);
+    } finally {
+      if (identical(_inFlightExternalSubLoads[trackId], completer)) {
+        _inFlightExternalSubLoads.remove(trackId);
+      }
+      if (!completer.isCompleted) {
+        completer.complete();
+      }
+    }
+  }
+
+  Future<void> _loadExternalSubtitleInternal(String trackId) async {
+    if (_isClosed) return;
+    if (_loadedExternalSubtitles.containsKey(trackId) || _externalAssTrackKeys.containsKey(trackId)) {
       _refreshActiveSubtitleCues();
       return;
     }
@@ -831,6 +955,23 @@ class PlayerWebos extends PlayerBase {
         final bytes = await consolidateHttpClientResponseBytes(resp).timeout(const Duration(seconds: 15));
         if (_isClosed || _currentSourceId != sourceId) return;
         final content = decodeExternalSubtitleBytes(bytes);
+        final libass = _libassController;
+        if (libass != null &&
+            identical(_libassController, libass) &&
+            libass.isAvailable &&
+            WebosSubtitleParser.isAssContent(content)) {
+          final trackKey = _nextExternalAssTrackKey--;
+          _externalAssTrackKeys[trackId] = trackKey;
+          libass.loadExternalAssTrack(
+            trackKey,
+            Uint8List.fromList(utf8.encode(content)),
+            language: _subIdToLangCode[trackId],
+            decodedText: content,
+          );
+          appLogger.i('[WebOS-libass] Loaded external ASS track for $trackId (key=$trackKey)');
+          _refreshActiveSubtitleCues();
+          return;
+        }
         final cues = WebosSubtitleParser.parseAuto(content);
         if (_isClosed || _currentSourceId != sourceId) return;
         if (cues.isNotEmpty) {
@@ -975,6 +1116,7 @@ class PlayerWebos extends PlayerBase {
       if (activeSubtitleCues.value.isNotEmpty) {
         activeSubtitleCues.value = const [];
       }
+      _libassController?.setActiveTrack(null);
       if (_subtitlesHidden || _selectedSubTrackId == null || _selectedSubTrackId == 'no') {
         _mkvExtractor?.setActiveTrackNumber(null);
       }
@@ -989,6 +1131,17 @@ class PlayerWebos extends PlayerBase {
       rate: state.rate,
     );
 
+    final extAssKey = _externalAssTrackKeys[trackId];
+    final libass = _libassController;
+    if (extAssKey != null && libass != null && libass.isAvailable) {
+      if (activeSubtitleCues.value.isNotEmpty) {
+        activeSubtitleCues.value = const [];
+      }
+      _mkvExtractor?.setActiveTrackNumber(null);
+      libass.setActiveTrack(extAssKey, language: _subIdToLangCode[trackId]);
+      return;
+    }
+
     List<WebosSubtitleCue>? sourceCues = _loadedExternalSubtitles[trackId];
     final bool isExternalSource = sourceCues != null && sourceCues.isNotEmpty;
     if (isExternalSource) {
@@ -996,6 +1149,7 @@ class PlayerWebos extends PlayerBase {
         activeSubtitleCues.value = const [];
       }
       _mkvExtractor?.setActiveTrackNumber(null);
+      libass?.setActiveTrack(null);
     } else {
       final extractor = _mkvExtractor;
       if (extractor != null && extractor.subtitleTracksInOrder.isNotEmpty) {
@@ -1005,13 +1159,24 @@ class PlayerWebos extends PlayerBase {
             activeSubtitleCues.value = const [];
           }
           extractor.setActiveTrackNumber(chosenTrackNum);
+          if (extractor.isAssTrackNumber(chosenTrackNum) && libass != null && libass.isAvailable) {
+            if (activeSubtitleCues.value.isNotEmpty) {
+              activeSubtitleCues.value = const [];
+            }
+            libass.setActiveTrack(chosenTrackNum, language: _subIdToLangCode[trackId]);
+            return;
+          }
+          libass?.setActiveTrack(null);
           sourceCues = extractor.cuesByTrackNumber[chosenTrackNum];
         } else {
           if (extractor.activeTrackNumber != null && activeSubtitleCues.value.isNotEmpty) {
             activeSubtitleCues.value = const [];
           }
           extractor.setActiveTrackNumber(null);
+          libass?.setActiveTrack(null);
         }
+      } else {
+        libass?.setActiveTrack(null);
       }
     }
 
@@ -1073,6 +1238,21 @@ class PlayerWebos extends PlayerBase {
     _lastSeekAt = null;
     WebosSubtitleClock.instance.setPlaying(false);
     activeSubtitleCues.value = const [];
+    for (final pending in _inFlightExternalSubLoads.values) {
+      if (!pending.isCompleted) pending.complete();
+    }
+    _inFlightExternalSubLoads.clear();
+    _externalAssTrackKeys.clear();
+    _nextExternalAssTrackKey = -1;
+    final libass = _libassController;
+    _libassController = null;
+    if (_libassActiveNotifier.value) {
+      _libassActiveNotifier.value = false;
+    }
+    if (libass != null) {
+      libass.activeForOverlay.removeListener(_syncLibassActiveNotifier);
+      unawaited(libass.dispose());
+    }
     _mkvExtractor?.dispose();
     _mkvExtractor = null;
     _loadedExternalSubtitles.clear();
@@ -1137,6 +1317,7 @@ class PlayerWebos extends PlayerBase {
       _targetResumeStartMs = targetPosMs;
       _openStartedAt = DateTime.now();
       WebosSubtitleClock.instance.notifySeek(targetPosMs);
+      _libassController?.notifySeek(targetPosMs);
       // Preserve _mkvExtractor (fed via lastRawMkvUrl) so ASS/PGS extraction continues seamlessly.
       _mkvExtractor?.notifySeek(targetPosMs);
 
@@ -1279,6 +1460,7 @@ class PlayerWebos extends PlayerBase {
     final targetMs = target.inMilliseconds;
     final preSeekMs = sourcePositionFor(currentPosition).inMilliseconds;
     WebosSubtitleClock.instance.notifySeek(targetMs);
+    _libassController?.notifySeek(targetMs);
 
     final texId = _textureId;
     final sourceId = _currentSourceId;
@@ -1384,6 +1566,9 @@ class PlayerWebos extends PlayerBase {
       return;
     }
     _selectedSubTrackId = track.id;
+    if (track.language != null && track.language!.trim().isNotEmpty) {
+      _subIdToLangCode[track.id] ??= track.language!.trim().toLowerCase();
+    }
     updateSelectedSubtitleTrack(track.id);
     if (track.uri != null && track.uri!.isNotEmpty) {
       _subIdToExternalUri[track.id] = _resolveUrlWithHeaders(track.uri!, _lastHeaders);
@@ -1461,7 +1646,12 @@ class PlayerWebos extends PlayerBase {
         break;
       case 'sub-visibility':
         _subtitlesHidden = (value == 'no');
+        _libassController?.setHidden(_subtitlesHidden);
         _refreshActiveSubtitleCues();
+        break;
+      case 'sub-use-margins':
+        _subUseMargins = (value == 'yes');
+        _libassController?.setUseMargins(_subUseMargins);
         break;
     }
   }
@@ -1515,6 +1705,7 @@ class PlayerWebos extends PlayerBase {
     _sourceCounter++;
     _currentSourceId = null;
     await _teardownActiveTexture();
+    _libassActiveNotifier.dispose();
     await super.dispose(preserveDisplayMode: preserveDisplayMode);
   }
 }
