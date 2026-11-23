@@ -740,6 +740,7 @@ void main() {
       expect(positioned.width, 320.0);
       expect(positioned.height, 90.0);
       expect(find.byType(RawImage), findsOneWidget);
+      expect(tester.widget<RawImage>(find.byType(RawImage)).filterQuality, FilterQuality.none);
 
       final activeFirstImg = ctrl.currentFrame.value!.image;
       expect(identical(activeFirstImg, decodedImages.last), isTrue);
@@ -772,6 +773,106 @@ void main() {
       await ctrl.dispose();
       await tester.pump();
       await tester.pump();
+    });
+
+    testWidgets(
+        'WebosLibassOverlay syncs exact 1:1 1920x1080 physical frame size for 1280x720 logical @ 1.5x DPR and clamps >1080p',
+        (tester) async {
+      tester.view.physicalSize = const Size(1920, 1080);
+      tester.view.devicePixelRatio = 1.5;
+      addTearDown(tester.view.reset);
+
+      final fakeBackend = _FakeLibassBackend();
+      fakeBackend.onRender = (trackKey, nowMs, forceRender) async {
+        return WebosLibassRenderedFrame(
+          status: WebosLibassFrameStatus.ready,
+          x: 240,
+          y: 810,
+          width: 480,
+          height: 135,
+          frameWidth: 1920,
+          frameHeight: 1080,
+          rgbaBytes: Uint8List(4 * 4 * 4),
+        );
+      };
+
+      final ctrl = WebosLibassController(
+        backendFactory: () => fakeBackend,
+        pixelDecoder: (bytes, w, h) async => _createTestImageSync(4, 4),
+        assetPathResolver: (_) => null,
+      );
+      addTearDown(ctrl.dispose);
+      await ctrl.initialize();
+      ctrl.setVideoReady(true);
+      ctrl.setActiveTrack(1);
+      WebosSubtitleClock.instance.reportPlayerPosition(1000, isPlaying: false);
+
+      await tester.pumpWidget(
+        MaterialApp(
+          home: Scaffold(
+            body: WebosLibassOverlay(
+              controller: ctrl,
+              getCurrentPositionMs: () => 1000,
+            ),
+          ),
+        ),
+      );
+      await tester.pump();
+      await tester.pump();
+
+      expect(fakeBackend.frameSizes.last, (w: 1920, h: 1080));
+      final positioned = tester.widget<Positioned>(find.byType(Positioned));
+      expect(positioned.left, closeTo(160.0, 1e-6));
+      expect(positioned.top, closeTo(540.0, 1e-6));
+      expect(positioned.width, closeTo(320.0, 1e-6));
+      expect(positioned.height, closeTo(90.0, 1e-6));
+      expect(tester.widget<RawImage>(find.byType(RawImage)).filterQuality, FilterQuality.none);
+
+      // Oversized view metrics (e.g. 2880x1620 @ 1.5 DPR) clamp safely to 1920x1080 for 32-bit safety
+      tester.view.physicalSize = const Size(2880, 1620);
+      tester.view.devicePixelRatio = 1.5;
+      await tester.pump();
+      await tester.pump();
+      expect(fakeBackend.frameSizes.last, (w: 1920, h: 1080));
+
+      // Real webOS TV root shell configuration: 1920x1080 physical @ 1.0 view DPR,
+      // wrapped in main.dart's FractionallySizedBox(1/1.5) -> Transform.scale(1.5) -> MediaQuery(1280x720 @ 1.5 DPR).
+      tester.view.physicalSize = const Size(1920, 1080);
+      tester.view.devicePixelRatio = 1.0;
+      await tester.pumpWidget(
+        MaterialApp(
+          builder: (context, child) {
+            final mq = MediaQuery.of(context);
+            const double uiScale = 1920.0 / 1280.0;
+            return FractionallySizedBox(
+              widthFactor: 1.0 / uiScale,
+              heightFactor: 1.0 / uiScale,
+              alignment: Alignment.topLeft,
+              child: Transform.scale(
+                scale: uiScale,
+                alignment: Alignment.topLeft,
+                child: MediaQuery(
+                  data: mq.copyWith(
+                    size: const Size(1280, 720),
+                    devicePixelRatio: mq.devicePixelRatio * uiScale,
+                  ),
+                  child: child!,
+                ),
+              ),
+            );
+          },
+          home: Scaffold(
+            body: WebosLibassOverlay(
+              controller: ctrl,
+              getCurrentPositionMs: () => 1000,
+            ),
+          ),
+        ),
+      );
+      await tester.pump();
+      await tester.pump();
+      expect(fakeBackend.frameSizes.last, (w: 1920, h: 1080));
+      expect(tester.widget<RawImage>(find.byType(RawImage)).filterQuality, FilterQuality.none);
     });
 
     testWidgets('Video widget switches dynamically between WebosLibassOverlay and WebosSubtitleOverlay',
@@ -823,6 +924,68 @@ void main() {
 
       expect(find.byType(WebosSubtitleOverlay), findsOneWidget);
       expect(find.byType(WebosLibassOverlay), findsNothing);
+      await tester.runAsync(player.dispose);
+    });
+
+    testWidgets('Video widget always updates PlayerWebos viewRect to full 1920x1080 across webOS scaling modes',
+        (tester) async {
+      addTearDown(tester.view.reset);
+      final fakePlatform = _FakeVideoPlayerPlatform();
+      final player = PlayerWebos(platformOverride: fakePlatform);
+
+      // Mode 1: Real webOS TV root shell (1920x1080 physical @ 1.0 view DPR, wrapped in 1.5x Transform.scale)
+      tester.view.physicalSize = const Size(1920, 1080);
+      tester.view.devicePixelRatio = 1.0;
+
+      await tester.pumpWidget(
+        MaterialApp(
+          builder: (context, child) {
+            final mq = MediaQuery.of(context);
+            const double uiScale = 1920.0 / 1280.0;
+            return FractionallySizedBox(
+              widthFactor: 1.0 / uiScale,
+              heightFactor: 1.0 / uiScale,
+              alignment: Alignment.topLeft,
+              child: Transform.scale(
+                scale: uiScale,
+                alignment: Alignment.topLeft,
+                child: MediaQuery(
+                  data: mq.copyWith(
+                    size: const Size(1280, 720),
+                    devicePixelRatio: mq.devicePixelRatio * uiScale,
+                  ),
+                  child: child!,
+                ),
+              ),
+            );
+          },
+          home: Scaffold(
+            body: Video(
+              player: player,
+              hasFirstFrame: ValueNotifier<bool>(true),
+            ),
+          ),
+        ),
+      );
+      await tester.pump();
+      expect(player.debugLastViewRect, const Rect.fromLTWH(0, 0, 1920, 1080));
+
+      // Mode 2: Direct 1920x1080 physical @ 1.5 view DPR without Transform.scale
+      tester.view.physicalSize = const Size(1920, 1080);
+      tester.view.devicePixelRatio = 1.5;
+      await tester.pumpWidget(
+        MaterialApp(
+          home: Scaffold(
+            body: Video(
+              player: player,
+              hasFirstFrame: ValueNotifier<bool>(true),
+            ),
+          ),
+        ),
+      );
+      await tester.pump();
+      expect(player.debugLastViewRect, const Rect.fromLTWH(0, 0, 1920, 1080));
+
       await tester.runAsync(player.dispose);
     });
   });

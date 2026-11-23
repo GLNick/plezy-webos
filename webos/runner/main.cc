@@ -18,8 +18,15 @@ class App : public FlutterWindow {
  protected:
   void OnBuildViewProperties(
       flutter::FlutterViewController::ViewProperties& vp) override {
+    // Request a true 1920x1080 physical wl_egl_window surface matching
+    // webos/meta/appinfo.json ("resolution": "1920x1080"), pinning scale_factor
+    // to 1.0 so wl_output.scale=2 never inflates the buffer to 3840x2160.
+    // Plezy's root shell scales its 1280x720 logical layout by 1.5x onto this
+    // 1920x1080 physical surface while NDL video and libass render at 1920x1080.
+    vp.width = 1920;
+    vp.height = 1080;
     vp.force_scale_factor = true;
-    vp.scale_factor = 1.5;
+    vp.scale_factor = 1.0;
   }
 };
 

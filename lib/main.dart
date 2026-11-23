@@ -1554,6 +1554,24 @@ Future<void> _logEnvironmentDiagnostics() async {
     ' [effects: ${DevicePerformance.describeSync()}]',
   );
   appLogger.i('Display: ${DevicePerformance.describeDisplay()}');
+  if (Platform.isLinux && !PlatformDetector.isDesktopOS()) {
+    final view = ui.PlatformDispatcher.instance.implicitView;
+    if (view != null) {
+      final phys = view.physicalSize;
+      final dpr = view.devicePixelRatio > 0 ? view.devicePixelRatio : 1.0;
+      final rawLogW = phys.width / dpr;
+      final rawLogH = phys.height / dpr;
+      final uiScale = rawLogW >= 1800 ? (rawLogW / 1280.0) : 1.0;
+      final effLogW = rawLogW / uiScale;
+      final effLogH = rawLogH / uiScale;
+      final effDpr = dpr * uiScale;
+      appLogger.i(
+        '[WebOS-Display] physicalSize=${phys.width.round()}x${phys.height.round()} '
+        'logicalSize=${effLogW.round()}x${effLogH.round()} '
+        'devicePixelRatio=${effDpr.toStringAsFixed(2)} (viewDpr=${dpr.toStringAsFixed(2)}, uiScale=${uiScale.toStringAsFixed(2)})',
+      );
+    }
+  }
   appLogger.i('Video decoders: ${VideoDecodeCapabilities.describeSync()}');
   if (Platform.isAndroid || (Platform.isLinux && !PlatformDetector.isDesktopOS())) {
     appLogger.i('Startup RSS: ${ProcessInfo.currentRss >> 20}MB');

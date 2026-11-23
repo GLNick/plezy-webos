@@ -1525,7 +1525,7 @@ class _WebosOwnedLibassImageState extends State<_WebosOwnedLibassImage> {
     return RawImage(
       image: img,
       fit: BoxFit.fill,
-      filterQuality: FilterQuality.medium,
+      filterQuality: FilterQuality.none,
     );
   }
 }
@@ -1657,14 +1657,15 @@ class _WebosLibassOverlayState extends State<WebosLibassOverlay> with SingleTick
           }
 
           final view = View.maybeOf(context);
-          final double effectiveDpr;
-          if (view != null) {
-            final physW = view.physicalSize.width;
-            effectiveDpr = physW >= 1800 ? (physW / 1280.0) : view.devicePixelRatio;
-          } else {
-            effectiveDpr = 1.0;
-          }
-          _scheduleViewportSync((maxW * effectiveDpr).round(), (maxH * effectiveDpr).round());
+          final double viewDpr = (view != null && view.devicePixelRatio > 0) ? view.devicePixelRatio : 1.0;
+          final double mqDpr = MediaQuery.maybeDevicePixelRatioOf(context) ?? 1.0;
+          final double physDpr = (view != null && view.physicalSize.width > 0 && maxW > 0)
+              ? (view.physicalSize.width / maxW)
+              : 1.0;
+          final double effectiveDpr = math.max(math.max(viewDpr, mqDpr), physDpr);
+          final int targetW = (maxW * effectiveDpr).round().clamp(1, 1920);
+          final int targetH = (maxH * effectiveDpr).round().clamp(1, 1080);
+          _scheduleViewportSync(targetW, targetH);
 
           return ValueListenableBuilder<WebosLibassDisplayFrame?>(
             valueListenable: widget.controller.currentFrame,

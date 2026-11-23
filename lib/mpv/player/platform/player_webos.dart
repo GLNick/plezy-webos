@@ -130,6 +130,9 @@ class PlayerWebos extends PlayerBase {
   @visibleForTesting
   int get debugSeekGeneration => _seekGeneration;
 
+  @visibleForTesting
+  Rect get debugLastViewRect => _lastViewRect;
+
   static bool _sameCueIdentityList(List<WebosSubtitleCue> a, List<WebosSubtitleCue> b) {
     if (identical(a, b)) return true;
     if (a.length != b.length) return false;
