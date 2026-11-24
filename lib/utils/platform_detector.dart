@@ -321,7 +321,7 @@ class PlatformDetector {
   }
 
   static bool supportsExternalPlayers() {
-    return Platform.isAndroid || Platform.isIOS || Platform.isMacOS || Platform.isLinux || Platform.isWindows;
+    return Platform.isAndroid || Platform.isIOS || isDesktopOS();
   }
 
   static bool supportsAudioPassthrough() {
@@ -338,11 +338,7 @@ class PlatformDetector {
     // and the AVFoundation fallback in the ao list
     // (shared/apple/MpvPlayer/MpvPlayerCoreBase.swift) takes it. 2.14.0 pinned
     // CoreAudio alone, where a declined bitstream silenced playback instead.
-    return Platform.isIOS ||
-        Platform.isMacOS ||
-        Platform.isWindows ||
-        Platform.isLinux ||
-        (Platform.isAndroid && isTV());
+    return Platform.isIOS || isDesktopOS() || (Platform.isAndroid && isTV());
   }
 
   static bool supportsPictureInPicture() => pictureInPictureAllowed(

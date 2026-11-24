@@ -4,6 +4,7 @@ import 'dart:io';
 import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:plezy/mpv/mpv.dart';
 import 'package:plezy/mpv/player/platform/player_webos.dart';
@@ -12,6 +13,9 @@ import 'package:plezy/services/device_performance.dart';
 import 'package:plezy/utils/media_image_helper.dart';
 import 'package:plezy/utils/platform_detector.dart';
 import 'package:plezy/widgets/video_controls/widgets/linux_keep_alive.dart';
+import 'package:shared_preferences_platform_interface/types.dart';
+import 'package:shared_preferences_webos/shared_preferences_webos.dart';
+import 'package:shared_preferences_webos/src/shared_preferences_async_webos.dart';
 
 class _RealHttpOverrides extends HttpOverrides {}
 
@@ -388,6 +392,112 @@ MemAvailable:     812340 kB
       expect(DevicePerformance.isLowEndHardware, isFalse);
       expect(binding.imageCache.maximumSize, 500);
       expect(binding.imageCache.maximumSizeBytes, 96 << 20);
+    });
+
+    testWidgets(
+        'clamps 4K panel display.size (3840x2160) to 1920x1080 physical surface on webOS (budget=1.0, poster=2.25x, art=1.5x)',
+        (tester) async {
+      tester.view.physicalSize = const Size(1920, 1080);
+      tester.view.devicePixelRatio = 1.0;
+      tester.view.display.size = const Size(3840, 2160);
+      addTearDown(() {
+        tester.view.reset();
+        tester.view.display.reset();
+      });
+
+      DevicePerformance.debugReset();
+      DevicePerformance.debugMemTotalBytesOverride = 3584 << 20;
+      await DevicePerformance.getInstance();
+      DevicePerformance.applyImageCacheBudget();
+
+      expect(DevicePerformance.displayBudgetFactor(), 1.0);
+      expect(
+        MediaImageHelper.getMemCacheDimensions(displayWidth: 3840, displayHeight: 2160, imageType: ImageType.art),
+        (1920, 1080),
+      );
+      expect(MediaImageHelper.roundDimensions(3840, 2160), (1920, 1080));
+
+      late double posterRatio;
+      late double artRatio;
+      late FilterQuality posterFilter;
+      await tester.pumpWidget(
+        MediaQuery(
+          data: const MediaQueryData(size: Size(1280, 720), devicePixelRatio: 1.5),
+          child: Builder(
+            builder: (context) {
+              posterRatio = MediaImageHelper.artworkPixelRatio(context, imageType: ImageType.poster);
+              artRatio = MediaImageHelper.artworkPixelRatio(context, imageType: ImageType.art);
+              posterFilter = MediaImageHelper.artworkFilterQuality(context, ImageType.poster);
+              return const SizedBox.shrink();
+            },
+          ),
+        ),
+      );
+
+      expect(posterRatio, closeTo(2.25, 1e-6));
+      expect(artRatio, closeTo(1.5, 1e-6));
+      expect(posterFilter, FilterQuality.high);
+    });
+  });
+
+  group('SharedPreferencesAsyncWebos serialization & ISO-639-2B normalizeLang', () {
+    test('serializes concurrent SharedPreferencesAsyncWebos & legacy writes without clobbering and preserves quotes',
+        () async {
+      String persistedJson = '';
+      int loadCalls = 0;
+      int saveCalls = 0;
+      const channel = MethodChannel('webos/shared_preferences');
+      TestDefaultBinaryMessengerBinding.instance.defaultBinaryMessenger.setMockMethodCallHandler(
+        channel,
+        (call) async {
+          if (call.method == 'load') {
+            loadCalls++;
+            await Future<void>.delayed(const Duration(milliseconds: 5));
+            return persistedJson;
+          }
+          if (call.method == 'save') {
+            saveCalls++;
+            await Future<void>.delayed(const Duration(milliseconds: 5));
+            final args = call.arguments as Map<dynamic, dynamic>;
+            persistedJson = args['data'] as String;
+            return true;
+          }
+          return null;
+        },
+      );
+      addTearDown(() {
+        TestDefaultBinaryMessengerBinding.instance.defaultBinaryMessenger.setMockMethodCallHandler(channel, null);
+        WebosSharedPreferencesCoordinator.instance.debugResetCache();
+      });
+
+      WebosSharedPreferencesCoordinator.instance.debugResetCache();
+      final asyncPrefs = SharedPreferencesAsyncWebos();
+      final legacyPrefs = SharedPreferencesWebos();
+      const opts = SharedPreferencesOptions();
+
+      await Future.wait(<Future<Object?>>[
+        asyncPrefs.setString('server_name', "Nick's OLED 'Living Room'", opts),
+        asyncPrefs.setInt('resume_ms', 91500, opts),
+        legacyPrefs.setValue('Bool', 'flutter.auto_skip', true),
+      ]);
+
+      expect(loadCalls, 1);
+      expect(saveCalls, 3);
+      expect(await asyncPrefs.getString('server_name', opts), "Nick's OLED 'Living Room'");
+      expect(await asyncPrefs.getInt('resume_ms', opts), 91500);
+      final legacyAll = await legacyPrefs.getAll();
+      expect(legacyAll['flutter.auto_skip'], isTrue);
+    });
+
+    test('WebosSubtitlePreferenceStore.normalizeLang maps ISO-639-2B bibliographic codes and BCP-47 tags', () {
+      expect(WebosSubtitlePreferenceStore.normalizeLang('chi'), 'zh');
+      expect(WebosSubtitlePreferenceStore.normalizeLang('zh-Hant'), 'zh');
+      expect(WebosSubtitlePreferenceStore.normalizeLang('fre'), 'fr');
+      expect(WebosSubtitlePreferenceStore.normalizeLang('ger'), 'de');
+      expect(WebosSubtitlePreferenceStore.normalizeLang('dut'), 'nl');
+      expect(WebosSubtitlePreferenceStore.normalizeLang('cze'), 'cs');
+      expect(WebosSubtitlePreferenceStore.normalizeLang('rum'), 'ro');
+      expect(WebosSubtitlePreferenceStore.normalizeLang('gre'), 'el');
     });
   });
 }

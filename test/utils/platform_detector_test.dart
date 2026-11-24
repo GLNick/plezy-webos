@@ -1,7 +1,9 @@
 import 'dart:async';
+import 'dart:io';
 
 import 'package:flutter/widgets.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:plezy/mpv/player/player_native.dart';
 import 'package:plezy/utils/platform_detector.dart';
 
 void main() {
@@ -203,5 +205,24 @@ void main() {
       expect(await isTabletAt(tester, const Size(820, 1180), 2), isTrue, reason: 'large tablet');
       expect(await isTabletAt(tester, const Size(600, 960), 2), isTrue, reason: 'small tablet at the 7-inch edge');
     });
+  });
+
+  group('webOS vs desktop Linux capability gates', () {
+    tearDown(() {
+      PlatformDetector.debugSetIsDesktopOSOverride(null);
+      PlayerNative.debugUseLinuxVideoPlane = null;
+    });
+
+    test('disables desktop-only capabilities on webOS and enables them on desktop Linux', () {
+      PlatformDetector.debugSetIsDesktopOSOverride(false);
+      expect(PlatformDetector.supportsExternalPlayers(), isFalse);
+      expect(PlatformDetector.supportsAudioPassthrough(), isFalse);
+      expect(PlayerNative.usesLinuxVideoPlane, isFalse);
+
+      PlatformDetector.debugSetIsDesktopOSOverride(true);
+      expect(PlatformDetector.supportsExternalPlayers(), isTrue);
+      expect(PlatformDetector.supportsAudioPassthrough(), isTrue);
+      expect(PlayerNative.usesLinuxVideoPlane, isTrue);
+    }, skip: !Platform.isLinux);
   });
 }

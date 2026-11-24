@@ -5,9 +5,7 @@
 // found in the LICENSE file.
 
 import 'dart:async';
-import 'dart:convert' show json;
 
-import 'package:flutter/services.dart';
 import 'package:shared_preferences_platform_interface/shared_preferences_platform_interface.dart';
 import 'package:shared_preferences_platform_interface/types.dart';
 import 'shared_preferences_async_webos.dart';
@@ -18,77 +16,48 @@ class SharedPreferencesWebos extends SharedPreferencesStorePlatform {
 
   static void registerWith() {
     SharedPreferencesStorePlatform.instance = SharedPreferencesWebos();
-
-    // forced SharedPreferencesAsync registerWith
     SharedPreferencesAsyncWebos.registerWith();
   }
 
-  final _channel = MethodChannel('webos/shared_preferences');
   static const String _defaultPrefix = 'flutter.';
-  Map<String, Object>? _cachedPreferences;
-
-  Future<Map<String, Object>> _readPreferences() async {
-    return _cachedPreferences ?? await _reload();
-  }
-
-  Future<Map<String, Object>> _reload() async {
-    Map<String, Object> preferences = <String, Object>{};
-
-    String? stringMap = await _channel.invokeMethod<String>('load', {});
-    if (stringMap != null && stringMap.isEmpty == false) {
-      final Object? data = json.decode(stringMap);
-      if (data is Map) {
-        preferences = data.cast<String, Object>();
-      }
-    }
-    _cachedPreferences = preferences;
-    return preferences;
-  }
-
-  Future<bool> _writePreferences(Map<String, Object> preferences) async {
-    final String stringMap = json.encode(preferences);
-
-    bool? result = await _channel.invokeMethod<bool>('save', {
-      'data': stringMap,
-    });
-    return result ?? false;
-  }
+  final WebosSharedPreferencesCoordinator _store =
+      WebosSharedPreferencesCoordinator.instance;
 
   @override
-  Future<bool> clear() async {
+  Future<bool> clear() {
     return clearWithParameters(
       ClearParameters(filter: PreferencesFilter(prefix: _defaultPrefix)),
     );
   }
 
   @override
-  Future<bool> clearWithPrefix(String prefix) async {
+  Future<bool> clearWithPrefix(String prefix) {
     return clearWithParameters(
       ClearParameters(filter: PreferencesFilter(prefix: prefix)),
     );
   }
 
   @override
-  Future<bool> clearWithParameters(ClearParameters parameters) async {
+  Future<bool> clearWithParameters(ClearParameters parameters) {
     final PreferencesFilter filter = parameters.filter;
-    final Map<String, Object> preferences = await _readPreferences();
-    preferences.removeWhere(
-      (String key, _) =>
-          key.startsWith(filter.prefix) &&
-          (filter.allowList == null || filter.allowList!.contains(key)),
-    );
-    return _writePreferences(preferences);
+    return _store.mutate((preferences) {
+      preferences.removeWhere(
+        (String key, _) =>
+            key.startsWith(filter.prefix) &&
+            (filter.allowList == null || filter.allowList!.contains(key)),
+      );
+    });
   }
 
   @override
-  Future<Map<String, Object>> getAll() async {
+  Future<Map<String, Object>> getAll() {
     return getAllWithParameters(
       GetAllParameters(filter: PreferencesFilter(prefix: _defaultPrefix)),
     );
   }
 
   @override
-  Future<Map<String, Object>> getAllWithPrefix(String prefix) async {
+  Future<Map<String, Object>> getAllWithPrefix(String prefix) {
     return getAllWithParameters(
       GetAllParameters(filter: PreferencesFilter(prefix: prefix)),
     );
@@ -99,9 +68,7 @@ class SharedPreferencesWebos extends SharedPreferencesStorePlatform {
     GetAllParameters parameters,
   ) async {
     final PreferencesFilter filter = parameters.filter;
-    final Map<String, Object> withPrefix = Map<String, Object>.from(
-      await _readPreferences(),
-    );
+    final Map<String, Object> withPrefix = await _store.readSnapshot();
     withPrefix.removeWhere(
       (String key, _) =>
           !(key.startsWith(filter.prefix) &&
@@ -111,16 +78,17 @@ class SharedPreferencesWebos extends SharedPreferencesStorePlatform {
   }
 
   @override
-  Future<bool> remove(String key) async {
-    final Map<String, Object> preferences = await _readPreferences();
-    preferences.remove(key);
-    return _writePreferences(preferences);
+  Future<bool> remove(String key) {
+    return _store.mutate((preferences) {
+      preferences.remove(key);
+    });
   }
 
   @override
-  Future<bool> setValue(String valueType, String key, Object value) async {
-    final Map<String, Object> preferences = await _readPreferences();
-    preferences[key] = value;
-    return _writePreferences(preferences);
+  Future<bool> setValue(String valueType, String key, Object value) {
+    final Object stored = value is List<String> ? List<String>.from(value) : value;
+    return _store.mutate((preferences) {
+      preferences[key] = stored;
+    });
   }
 }

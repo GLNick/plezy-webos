@@ -5,7 +5,9 @@ import 'dart:typed_data';
 import 'dart:ui' as ui;
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:plezy/media/media_source_info.dart';
 import 'package:plezy/mpv/mpv.dart';
 import 'package:plezy/mpv/player/platform/player_webos.dart';
 import 'package:plezy/mpv/player/platform/webos_libass_engine.dart';
@@ -169,6 +171,10 @@ class _FakeVideoPlayerPlatform extends VideoPlayerPlatform {
   void emitEvent(int texId, VideoEvent event) {
     _events[texId]?.add(event);
   }
+
+  void emitError(int texId, Object error) {
+    _events[texId]?.addError(error);
+  }
 }
 
 class _FakeLibassBackend implements WebosLibassBackend {
@@ -182,6 +188,7 @@ class _FakeLibassBackend implements WebosLibassBackend {
   final List<({int t, int b, int l, int r})> margins = [];
   final List<bool> useMarginsCalls = [];
   final List<({String name, int len})> addedFonts = [];
+  final List<({String path, String? fontName})> addedFontFiles = [];
   int clearFontsCount = 0;
   final List<({String? defaultFontPath, String defaultFamily})> setFontsCalls = [];
   final List<({int key, Uint8List? codecPrivate})> streamTracks = [];
@@ -218,6 +225,10 @@ class _FakeLibassBackend implements WebosLibassBackend {
 
   @override
   void addFont(String name, Uint8List bytes) => addedFonts.add((name: name, len: bytes.length));
+
+  @override
+  void addFontFromFile(String filePath, {String? fontName}) =>
+      addedFontFiles.add((path: filePath, fontName: fontName));
 
   @override
   void clearFonts() => clearFontsCount++;
@@ -511,7 +522,7 @@ void main() {
       // Build Cluster at 1000ms containing:
       // - ASS SimpleBlock (track 3, rel 0, duration=0 -> clamped to 3500ms)
       // - ASS BlockGroup (track 3, rel 200, duration=2250ms)
-      // - SRT BlockGroup (track 4, rel 500, duration=1500ms -> stays on Dart parser)
+      // - SRT BlockGroup (track 4, rel 500, duration=1500ms -> inactive while track 3 is selected)
       final cluster = _buildCluster(1000, [
         _buildSimpleBlock(
           trackNumber: 3,
@@ -531,6 +542,15 @@ void main() {
           payload: 'Plain SRT line',
         ),
       ]);
+
+      // With activeTrackNumber == null (Subtitles Off), neither ASS nor SRT blocks are decoded.
+      extractor.debugConsumeBuffer(cluster);
+      expect(rawChunks, isEmpty);
+      expect(extractor.cuesByTrackNumber[3], isEmpty);
+      expect(extractor.cuesByTrackNumber[4], isEmpty);
+
+      // Select ASS track 3 -> only track 3 chunks are forwarded; inactive track 4 SRT is skipped.
+      extractor.setActiveTrackNumber(3);
       extractor.debugConsumeBuffer(cluster);
 
       expect(rawChunks, [
@@ -538,7 +558,7 @@ void main() {
         (3, '2,0,Default,,0,0,0,,GroupLine', 1200, 2250),
       ]);
       expect(extractor.cuesByTrackNumber[3], isEmpty); // Dart ASS parsing skipped
-      expect(extractor.cuesByTrackNumber[4]!.single.text, 'Plain SRT line');
+      expect(extractor.cuesByTrackNumber[4], isEmpty); // Inactive SRT track skipped!
 
       // Font attachments forwarded without triggering Flutter ui.loadFontFromList
       final beforeFontGen = WebosMkvSubtitleExtractor.fontGeneration.value;
@@ -549,18 +569,25 @@ void main() {
       expect(fontBatchesLoaded, 1);
       expect(WebosMkvSubtitleExtractor.fontGeneration.value, beforeFontGen);
 
-      // Seek rewind keeps libass events cached (does NOT flush) and keeps dedup intact
+      // Seek rewind keeps libass events cached (does NOT flush) and keeps compact FNV-1a dedup intact
       extractor.debugApplyRewind(0);
       expect(flushes, isEmpty);
       extractor.debugConsumeBuffer(cluster);
       expect(rawChunks.length, 2); // Deduplicated; already in libass RAM!
 
-      // Switching active track away from ASS track flushes only that track, and switching back rewinds & re-feeds
-      extractor.setActiveTrackNumber(3);
+      // Switching active track from ASS (3) -> SRT (4) flushes track 3, rewinds, and extracts track 4
+      extractor.debugSetStreamCursorOffset(99999);
       extractor.setActiveTrackNumber(4);
       expect(flushes, [3]);
+      expect(extractor.debugStreamCursorOffset, 0);
+      extractor.debugConsumeBuffer(cluster);
+      expect(extractor.cuesByTrackNumber[4]!.single.text, 'Plain SRT line');
+      expect(rawChunks.length, 2);
+
+      // Switching back from SRT (4) -> ASS (3) clears track 4, rewinds, and re-feeds ASS chunks
       extractor.debugSetStreamCursorOffset(99999);
       extractor.setActiveTrackNumber(3);
+      expect(extractor.cuesByTrackNumber[4], isEmpty);
       expect(extractor.debugStreamCursorOffset, 0);
       expect(flushes, [3]); // Switching back does not emit an extra flush
       extractor.debugConsumeBuffer(cluster);
@@ -675,28 +702,45 @@ void main() {
       }, _RealHttpOverrides());
     });
 
-    test('Korean fallback selects Hangul default font unless MKV attachments are embedded', () async {
+    test('Korean Hangul fallback stays active even when MKV embeds Latin/Japanese sign attachments', () async {
+      expect(webosBytesContainHangul(Uint8List.fromList(utf8.encode('Hello 日本語 カタカナ'))), isFalse);
+      expect(webosBytesContainHangul(Uint8List.fromList(utf8.encode('안녕하세요 한글'))), isTrue);
+      expect(webosBytesContainHangul(Uint8List.fromList(utf8.encode('ㅎㅎ ㅋㅋ'))), isTrue);
+
       final fakeBackend = _FakeLibassBackend();
       final ctrl = WebosLibassController(
         backendFactory: () => fakeBackend,
         assetPathResolver: (rel) => '/app/data/flutter_assets/$rel',
-        fileBytesReader: (_) => Uint8List.fromList([1, 2, 3]),
       );
       addTearDown(ctrl.dispose);
 
       await ctrl.initialize();
+      // Bundled serif fonts are queued by file path inside the worker Isolate (zero UI-thread readAsBytesSync).
+      expect(fakeBackend.addedFonts, isEmpty);
+      expect(fakeBackend.addedFontFiles.length, kWebosAssBundledExtraFonts.length);
       expect(fakeBackend.setFontsCalls.last.defaultFontPath, '/app/data/flutter_assets/$kWebosAssDefaultFontAsset');
 
+      // Embed a Latin/Japanese sign font first, then feed an untagged Korean MKV ASS chunk:
+      // Hangul detection must STILL activate go-noto-kurrent-hangul.ttf as the fallback face!
+      ctrl.addFontAttachment('AnimeSignFont.ttf', Uint8List.fromList([9, 8, 7]));
+      ctrl.commitFontsAndRefresh();
       ctrl.setVideoReady(true);
-      ctrl.loadExternalAssTrack(1, Uint8List.fromList(utf8.encode('Dialogue: 0,0:00:00.00,0:00:01.00,Default,,0,0,0,,안녕')),
-          language: 'ko', decodedText: '안녕');
-      ctrl.setActiveTrack(1, language: 'ko');
+      ctrl.registerMkvAssTrack(3, language: 'und');
+      ctrl.setActiveTrack(3);
+      expect(fakeBackend.setFontsCalls.last.defaultFontPath, '/app/data/flutter_assets/$kWebosAssDefaultFontAsset');
+
+      ctrl.processMkvAssChunk(
+        3,
+        Uint8List.fromList(utf8.encode('1,0,Default,,0,0,0,,안녕하세요')),
+        1000,
+        2500,
+      );
       expect(fakeBackend.setFontsCalls.last.defaultFontPath, '/app/data/flutter_assets/$kWebosAssHangulFontAsset');
 
-      // Adding an MKV font attachment restores primary Noto fallback so embedded font stays authoritative.
-      ctrl.addFontAttachment('AnimeBold.ttf', Uint8List.fromList([9, 8, 7]));
+      // Adding another MKV attachment preserves the Hangul fallback face while keeping embedded fonts in libass.
+      ctrl.addFontAttachment('EpisodeTitle.otf', Uint8List.fromList([5, 4, 3]));
       ctrl.commitFontsAndRefresh();
-      expect(fakeBackend.setFontsCalls.last.defaultFontPath, '/app/data/flutter_assets/$kWebosAssDefaultFontAsset');
+      expect(fakeBackend.setFontsCalls.last.defaultFontPath, '/app/data/flutter_assets/$kWebosAssHangulFontAsset');
     });
   });
 
@@ -1136,7 +1180,7 @@ void main() {
       extractor.debugConsumeBuffer(cluster0, bufferBaseFileOffset: 1000);
       extractor.debugConsumeBuffer(cluster45, bufferBaseFileOffset: 2000);
       extractor.debugConsumeBuffer(cluster85, bufferBaseFileOffset: 3000);
-      expect(extractor.debugMaxSeenCueDurationMs, 45000);
+      expect(rawChunks.first.$4, 45000);
 
       // Jump straight to Intro End (91s -> lookback 91s - 3.5s = 87.5s -> cluster at 85s, offset 3000).
       posMs = 91000;
@@ -1355,6 +1399,260 @@ void main() {
       await player.seek(const Duration(milliseconds: 96000));
       await Future<void>.delayed(const Duration(milliseconds: 140));
       expect(player.currentPosition.inMilliseconds, 95000);
+    });
+  });
+
+  group('Wave 1 — Disjoint 2-region libass rendering, persistent Isolate reuse, and startup 702 hot-swap', () {
+    testWidgets(
+        'WebosLibassOverlay renders 2 disjoint top+bottom tight regions with FilterQuality.none and disposes both post-frame',
+        (tester) async {
+      tester.view.physicalSize = const Size(1920, 1080);
+      tester.view.devicePixelRatio = 1.5;
+      addTearDown(tester.view.reset);
+
+      final fakeBackend = _FakeLibassBackend();
+      final decodedSlices = <({int firstByte, int w, int h, ui.Image image})>[];
+
+      final packedBytes = Uint8List(4 * 2 * 4 + 6 * 3 * 4);
+      packedBytes.fillRange(0, 4 * 2 * 4, 0xAA);
+      packedBytes.fillRange(4 * 2 * 4, packedBytes.length, 0x55);
+
+      fakeBackend.onRender = (trackKey, nowMs, forceRender) async {
+        if (nowMs < 2000) {
+          return WebosLibassRenderedFrame(
+            status: WebosLibassFrameStatus.ready,
+            frameWidth: 1920,
+            frameHeight: 1080,
+            regions: const <WebosLibassRenderedRegion>[
+              WebosLibassRenderedRegion(
+                x: 300,
+                y: 48,
+                width: 4,
+                height: 2,
+                byteOffset: 0,
+                byteLength: 4 * 2 * 4,
+              ),
+              WebosLibassRenderedRegion(
+                x: 240,
+                y: 930,
+                width: 6,
+                height: 3,
+                byteOffset: 4 * 2 * 4,
+                byteLength: 6 * 3 * 4,
+              ),
+            ],
+            rgbaBytes: packedBytes,
+          );
+        }
+        return const WebosLibassRenderedFrame.empty();
+      };
+
+      final ctrl = WebosLibassController(
+        backendFactory: () => fakeBackend,
+        pixelDecoder: (bytes, w, h) async {
+          final img = _createTestImageSync(w, h);
+          decodedSlices.add((firstByte: bytes.first, w: w, h: h, image: img));
+          return img;
+        },
+        assetPathResolver: (_) => null,
+      );
+      await ctrl.initialize();
+      ctrl.setVideoReady(true);
+      ctrl.setActiveTrack(1);
+      WebosSubtitleClock.instance.reportPlayerPosition(1000, isPlaying: false);
+
+      await tester.pumpWidget(
+        MaterialApp(
+          home: Scaffold(
+            body: WebosLibassOverlay(
+              controller: ctrl,
+              getCurrentPositionMs: () => 1000,
+            ),
+          ),
+        ),
+      );
+      await tester.pump();
+      await tester.pump();
+
+      expect(decodedSlices.length, greaterThanOrEqualTo(2));
+      final activeTop = decodedSlices[decodedSlices.length - 2];
+      final activeBottom = decodedSlices[decodedSlices.length - 1];
+      expect(activeTop.firstByte, 0xAA);
+      expect(activeTop.w, 4);
+      expect(activeTop.h, 2);
+      expect(activeBottom.firstByte, 0x55);
+      expect(activeBottom.w, 6);
+      expect(activeBottom.h, 3);
+      for (int i = 0; i < decodedSlices.length - 2; i++) {
+        expect(decodedSlices[i].image.debugDisposed, isTrue);
+      }
+      expect(activeTop.image.debugDisposed, isFalse);
+      expect(activeBottom.image.debugDisposed, isFalse);
+
+      final rawImages = tester.widgetList<RawImage>(find.byType(RawImage)).toList();
+      expect(rawImages, hasLength(2));
+      expect(rawImages[0].filterQuality, FilterQuality.none);
+      expect(rawImages[1].filterQuality, FilterQuality.none);
+      // Verify direct RawImage rendering without redundant clone() wrappers.
+      expect(identical(rawImages[0].image, activeTop.image), isTrue);
+      expect(identical(rawImages[1].image, activeBottom.image), isTrue);
+
+      final positioned = tester.widgetList<Positioned>(find.byType(Positioned)).toList();
+      expect(positioned, hasLength(2));
+      // 1280x720 logical @ 1.5 DPR -> scaleX = scaleY = 1280/1920 = 2/3
+      expect(positioned[0].left, closeTo(200.0, 1e-5));
+      expect(positioned[0].top, closeTo(32.0, 1e-5));
+      expect(positioned[1].left, closeTo(160.0, 1e-5));
+      expect(positioned[1].top, closeTo(620.0, 1e-5));
+
+      // Clear frame -> both region ui.Images dispose safely post-frame.
+      ctrl.requestRender(2500, forceRender: true);
+      await tester.pump();
+      await tester.pump();
+      expect(find.byType(RawImage), findsNothing);
+      expect(activeTop.image.debugDisposed, isTrue);
+      expect(activeBottom.image.debugDisposed, isTrue);
+
+      await ctrl.dispose();
+    });
+
+    test('PlayerWebos reuses a single persistent WebosLibassController across consecutive open() calls', () async {
+      int backendConstructCount = 0;
+      late _FakeLibassBackend singleBackend;
+      final fakePlatform = _FakeVideoPlayerPlatform();
+
+      final player = PlayerWebos(
+        platformOverride: fakePlatform,
+        libassEnabledOverride: true,
+        libassBackendFactoryOverride: () {
+          backendConstructCount++;
+          singleBackend = _FakeLibassBackend();
+          return singleBackend;
+        },
+      );
+
+      await player.open(Media('http://127.0.0.1:1/ep1.mkv'), play: false);
+      final ctrl1 = player.libassController;
+      expect(ctrl1, isNotNull);
+      expect(backendConstructCount, 1);
+      expect(player.debugLibassBackendSpawnCount, 1);
+      fakePlatform.emitEvent(
+        player.textureId!,
+        VideoEvent(eventType: VideoEventType.initialized, size: const Size(1920, 1080)),
+      );
+      await Future<void>.delayed(Duration.zero);
+      expect(singleBackend.disposed, isFalse);
+
+      // Episode 2: reuses exact same controller & worker Isolate while clearing tracks and fonts.
+      await player.open(Media('http://127.0.0.1:1/ep2.mkv'), play: false);
+      expect(identical(player.libassController, ctrl1), isTrue);
+      expect(backendConstructCount, 1);
+      expect(player.debugLibassBackendSpawnCount, 1);
+      expect(singleBackend.freeAllTracksCount, greaterThanOrEqualTo(1));
+      expect(singleBackend.clearFontsCount, greaterThanOrEqualTo(1));
+      expect(singleBackend.disposed, isFalse);
+
+      // Final dispose cleanly shuts down the persistent worker Isolate.
+      await player.dispose();
+      expect(singleBackend.disposed, isTrue);
+    });
+
+    test('startup 702 resume hot-swap emits file-loaded, playback-restart, track-list, and enables libass overlay',
+        () async {
+      final tempDir = await Directory.systemTemp.createTemp('webos_startup_702_');
+      WebosDirectStreamFallbackRegistry.debugStorageDirOverride = tempDir.path;
+      WebosDirectStreamFallbackRegistry.instance.debugReset();
+      WebosSubtitlePreferenceStore.debugStorageDirOverride = tempDir.path;
+      WebosSubtitlePreferenceStore.instance.debugReset();
+
+      final fakeBackend = _FakeLibassBackend();
+      final fakePlatform = _FakeVideoPlayerPlatform();
+      final player = PlayerWebos(
+        platformOverride: fakePlatform,
+        libassEnabledOverride: true,
+        libassBackendFactoryOverride: () => fakeBackend,
+      );
+
+      final playbackRestarts = <int>[];
+      final tracksEvents = <Tracks>[];
+      final durations = <Duration>[];
+      final restartSub = player.streams.playbackRestart.listen((_) => playbackRestarts.add(1));
+      final tracksSub = player.streams.tracks.listen(tracksEvents.add);
+      final durSub = player.streams.duration.listen(durations.add);
+
+      addTearDown(() async {
+        await restartSub.cancel();
+        await tracksSub.cancel();
+        await durSub.cancel();
+        await player.dispose();
+        WebosDirectStreamFallbackRegistry.debugStorageDirOverride = null;
+        WebosDirectStreamFallbackRegistry.instance.debugReset();
+        WebosSubtitlePreferenceStore.debugStorageDirOverride = null;
+        WebosSubtitlePreferenceStore.instance.debugReset();
+        if (await tempDir.exists()) await tempDir.delete(recursive: true);
+      });
+
+      WebosDirectStreamFallbackRegistry.instance.registerActiveSession(
+        ratingKey: 'rk_startup_702',
+        rawMkvUrl: 'http://127.0.0.1:9/unindexed_resume.mkv',
+        headers: null,
+        buildDirectStreamUrl: () async => 'http://127.0.0.1:9/start.m3u8',
+      );
+      player.setPendingMediaSourceInfo(
+        MediaSourceInfo(
+          videoUrl: 'http://127.0.0.1:9/unindexed_resume.mkv',
+          audioTracks: const [],
+          subtitleTracks: [
+            MediaSubtitleTrack(
+              id: 301,
+              codec: 'ass',
+              language: 'Japanese',
+              languageCode: 'jpn',
+              selected: true,
+              forced: false,
+            ),
+          ],
+          chapters: const [],
+        ),
+      );
+
+      await player.open(
+        Media('http://127.0.0.1:9/unindexed_resume.mkv', start: const Duration(minutes: 12)),
+        play: true,
+      );
+      expect(player.textureId, 1);
+
+      // Register embedded ASS track on libass before initialized (simulating MKV header read on rawMkvUrl).
+      player.libassController!.registerMkvAssTrack(3, language: 'jpn');
+
+      // Emit 702 BEFORE texture 1 ever emits VideoEventType.initialized!
+      fakePlatform.emitError(1, PlatformException(code: '702', message: '702 Resume failed on unindexed MKV'));
+      for (int i = 0; i < 20 && player.textureId == 1; i++) {
+        await Future<void>.delayed(const Duration(milliseconds: 10));
+      }
+      expect(player.textureId, 2);
+      expect(fakePlatform.disposedTextureIds, contains(1));
+
+      // Now Direct Stream texture 2 initializes: must fire track-list, duration, playback-restart, and arm libass!
+      fakePlatform.emitEvent(
+        2,
+        VideoEvent(
+          eventType: VideoEventType.initialized,
+          duration: const Duration(minutes: 24),
+          size: const Size(1920, 800),
+        ),
+      );
+      await Future<void>.delayed(Duration.zero);
+
+      expect(durations, contains(const Duration(minutes: 24)));
+      expect(tracksEvents, isNotEmpty);
+      expect(tracksEvents.last.subtitle.any((t) => t.id == 's_301'), isTrue);
+      expect(playbackRestarts, isNotEmpty);
+      expect(fakeBackend.storageSizes.last, (w: 1920, h: 800));
+
+      // Activate loaded ASS track -> overlay immediately lights up because setVideoReady(true) ran!
+      player.libassController!.setActiveTrack(3, language: 'jpn');
+      expect(player.libassActiveListenable!.value, isTrue);
     });
   });
 }

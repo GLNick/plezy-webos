@@ -11,6 +11,7 @@ import '../services/settings_service.dart' as settings;
 import '../services/supporter/supporter_service.dart';
 import '../theme/mono_theme.dart';
 import '../utils/app_logger.dart';
+import '../utils/platform_detector.dart';
 
 /// What the app paints: the effective theme [mode] and its [palette], null for
 /// System, which follows the platform between Light and Dark.
@@ -190,7 +191,7 @@ class ThemeProvider extends ChangeNotifier with DisposableChangeNotifierMixin, W
   /// Static so startup can theme the frame as soon as settings load, before this provider exists.
   static void applyWindowChromeBrightness(bool dark) {
     final Future<void> applied;
-    if (Platform.isLinux) {
+    if (Platform.isLinux && PlatformDetector.isDesktopOS()) {
       applied = windowManager.setBrightness(dark ? Brightness.dark : Brightness.light);
     } else if (Platform.isWindows) {
       applied = NativeWindowService.setDarkMode(dark);

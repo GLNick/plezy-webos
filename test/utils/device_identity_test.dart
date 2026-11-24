@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:device_info_plus_webos/device_info_plus_webos.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:plezy/utils/device_identity.dart';
 import 'package:plezy/utils/platform_detector.dart';
@@ -80,6 +81,24 @@ void main() {
       final identity = await DeviceIdentityService.resolve();
       expect(identity.platform, 'Linux');
       expect(identity.deviceModel, 'Linux');
+    }, skip: !Platform.isLinux);
+
+    test('reads WebOSDeviceInfo modelName without casting to LinuxDeviceInfo', () async {
+      addTearDown(() {
+        DeviceIdentityService.debugWebosInfoLoader = null;
+      });
+      DeviceIdentityService.debugWebosInfoLoader = () async => WebOSDeviceInfo(<String, dynamic>{
+            'modelName': 'OLED65G45LW',
+            'sdkVersion': '25.0.0',
+          });
+      PlatformDetector.debugSetIsDesktopOSOverride(false);
+      DeviceIdentityService.debugOverride(null);
+
+      final identity = await DeviceIdentityService.resolve();
+      expect(identity.platform, 'webOS');
+      expect(identity.deviceModel, 'OLED65G45LW');
+      expect(identity.deviceName, 'OLED65G45LW');
+      expect(identity.isTv, isTrue);
     }, skip: !Platform.isLinux);
   });
 }

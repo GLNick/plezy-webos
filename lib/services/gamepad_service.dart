@@ -233,7 +233,8 @@ class GamepadService with WindowListener {
   /// Steam Input emulates keyboard keys alongside the physical controller on
   /// these platforms; macOS reads gamepads through GameController and is not
   /// affected.
-  static bool _steamInputInjectsKeys() => Platform.isWindows || Platform.isLinux;
+  static bool _steamInputInjectsKeys() =>
+      Platform.isWindows || (Platform.isLinux && PlatformDetector.isDesktopOS());
 
   /// Standalone instance for tests; never wired to the platform stream.
   @visibleForTesting

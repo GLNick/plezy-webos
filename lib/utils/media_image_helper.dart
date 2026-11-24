@@ -133,16 +133,22 @@ class MediaImageHelper {
   /// decodes artwork wants [artworkPixelRatio].
   static double _displayPixelRatio(BuildContext context) {
     final reportedDpr = MediaQuery.devicePixelRatioOf(context);
+    final isWebosTv = Platform.isLinux && !PlatformDetector.isDesktopOS() && !PlatformDetector.isAppleTV();
     double dpr;
     try {
-      final displayWidth = View.of(context).display.size.width;
+      final view = View.of(context);
+      var displayWidth = view.display.size.width;
+      if (isWebosTv && view.physicalSize.width > 0) {
+        // Clamp to the actual 1920x1080 Wayland surface on webOS so 4K panel
+        // metadata does not inflate poster/backdrop fetches to 3.0x / 2816x1584.
+        displayWidth = min(displayWidth, view.physicalSize.width);
+      }
       // Scale quality with display resolution: 1920px = baseline (1.0x)
       final displayBasedDpr = (displayWidth / 1920).clamp(1.0, 3.0);
       dpr = max(reportedDpr, displayBasedDpr);
     } catch (_) {
       dpr = reportedDpr;
     }
-    final isWebosTv = Platform.isLinux && !PlatformDetector.isDesktopOS() && !PlatformDetector.isAppleTV();
     if (PlatformDetector.isTV() && !isWebosTv) {
       dpr = max(dpr, _tvMinDpr);
     }

@@ -30,6 +30,45 @@ final RegExp _kHangulCharRe = RegExp(r'[\uAC00-\uD7AF\u1100-\u11FF\u3130-\u318F]
 /// Returns `true` when [text] contains Korean Hangul syllables or Jamo.
 bool webosTextContainsHangul(String text) => _kHangulCharRe.hasMatch(text);
 
+/// Zero-allocation raw UTF-8 scan for Korean Hangul syllables (`U+AC00..U+D7AF`),
+/// Hangul Jamo (`U+1100..U+11FF`, `U+D7B0..U+D7FF`), and Compatibility Jamo
+/// (`U+3130..U+318F`).
+bool webosBytesContainHangul(Uint8List bytes) {
+  final int end = bytes.length - 2;
+  for (int i = 0; i < end; i++) {
+    final int b0 = bytes[i];
+    if (b0 < 0xE1 || b0 > 0xED) continue;
+    final int b1 = bytes[i + 1];
+    final int b2 = bytes[i + 2];
+    if ((b1 & 0xC0) != 0x80 || (b2 & 0xC0) != 0x80) continue;
+
+    // Hangul Syllables (U+AC00..U+D7AF) + Jamo Extended-B (U+D7B0..U+D7FF):
+    //   0xEA 0xB0..0xBF 0x80..0xBF
+    //   0xEB..0xEC 0x80..0xBF 0x80..0xBF
+    //   0xED 0x80..0x9F 0x80..0xBF
+    if (b0 == 0xEA) {
+      if (b1 >= 0xB0) return true;
+    } else if (b0 == 0xEB || b0 == 0xEC) {
+      return true;
+    } else if (b0 == 0xED) {
+      if (b1 <= 0x9F) return true;
+    } else if (b0 == 0xE1) {
+      // Hangul Jamo (U+1100..U+11FF): 0xE1 0x84..0x87 0x80..0xBF
+      if (b1 >= 0x84 && b1 <= 0x87) return true;
+    } else if (b0 == 0xE3) {
+      // Hangul Compatibility Jamo (U+3130..U+318F):
+      //   0xE3 0x84 0xB0..0xBF
+      //   0xE3 0x85 0x80..0xBF
+      //   0xE3 0x86 0x80..0x8F
+      if ((b1 == 0x84 && b2 >= 0xB0) || b1 == 0x85 || (b1 == 0x86 && b2 <= 0x8F)) {
+        return true;
+      }
+    }
+    i += 2;
+  }
+  return false;
+}
+
 /// Resolves a bundled Flutter asset path next to [Platform.resolvedExecutable]
 /// on webOS (checking `data/flutter_assets/` then `flutter_assets/`).
 @visibleForTesting
@@ -53,35 +92,61 @@ String? resolveWebosAssetPath(String assetRelPath, {String? executablePath}) {
 
 enum WebosLibassFrameStatus { unchanged, empty, ready, error }
 
-class WebosLibassRenderedFrame {
-  final WebosLibassFrameStatus status;
+/// One tight bounding-box region inside a packed [WebosLibassRenderedFrame].
+class WebosLibassRenderedRegion {
   final int x;
   final int y;
   final int width;
   final int height;
+  final int byteOffset;
+  final int byteLength;
+
+  const WebosLibassRenderedRegion({
+    required this.x,
+    required this.y,
+    required this.width,
+    required this.height,
+    required this.byteOffset,
+    required this.byteLength,
+  });
+}
+
+class WebosLibassRenderedFrame {
+  final WebosLibassFrameStatus status;
+  final List<WebosLibassRenderedRegion> regions;
   final int frameWidth;
   final int frameHeight;
   final TransferableTypedData? rgbaTransferable;
   final Uint8List? rgbaBytes;
 
-  const WebosLibassRenderedFrame({
+  WebosLibassRenderedFrame({
     required this.status,
-    this.x = 0,
-    this.y = 0,
-    this.width = 0,
-    this.height = 0,
+    List<WebosLibassRenderedRegion>? regions,
+    int x = 0,
+    int y = 0,
+    int width = 0,
+    int height = 0,
     this.frameWidth = 0,
     this.frameHeight = 0,
     this.rgbaTransferable,
     this.rgbaBytes,
-  });
+  }) : regions = regions ??
+            ((width > 0 && height > 0)
+                ? <WebosLibassRenderedRegion>[
+                    WebosLibassRenderedRegion(
+                      x: x,
+                      y: y,
+                      width: width,
+                      height: height,
+                      byteOffset: 0,
+                      byteLength: width * height * 4,
+                    ),
+                  ]
+                : const <WebosLibassRenderedRegion>[]);
 
   const WebosLibassRenderedFrame.unchanged()
       : status = WebosLibassFrameStatus.unchanged,
-        x = 0,
-        y = 0,
-        width = 0,
-        height = 0,
+        regions = const <WebosLibassRenderedRegion>[],
         frameWidth = 0,
         frameHeight = 0,
         rgbaTransferable = null,
@@ -89,10 +154,7 @@ class WebosLibassRenderedFrame {
 
   const WebosLibassRenderedFrame.empty()
       : status = WebosLibassFrameStatus.empty,
-        x = 0,
-        y = 0,
-        width = 0,
-        height = 0,
+        regions = const <WebosLibassRenderedRegion>[],
         frameWidth = 0,
         frameHeight = 0,
         rgbaTransferable = null,
@@ -100,38 +162,71 @@ class WebosLibassRenderedFrame {
 
   const WebosLibassRenderedFrame.error()
       : status = WebosLibassFrameStatus.error,
-        x = 0,
-        y = 0,
-        width = 0,
-        height = 0,
+        regions = const <WebosLibassRenderedRegion>[],
         frameWidth = 0,
         frameHeight = 0,
         rgbaTransferable = null,
         rgbaBytes = null;
 
+  int get x => regions.isNotEmpty ? regions.first.x : 0;
+  int get y => regions.isNotEmpty ? regions.first.y : 0;
+  int get width => regions.isNotEmpty ? regions.first.width : 0;
+  int get height => regions.isNotEmpty ? regions.first.height : 0;
+
   Uint8List? materializeBytes() => rgbaBytes ?? rgbaTransferable?.materialize().asUint8List();
 }
 
-class WebosLibassDisplayFrame {
+/// Decoded Skia [ui.Image] for one tight subtitle region on screen.
+class WebosLibassDisplayRegion {
   final ui.Image image;
   final int x;
   final int y;
   final int width;
   final int height;
-  final int frameWidth;
-  final int frameHeight;
-  final int sequence;
 
-  const WebosLibassDisplayFrame({
+  const WebosLibassDisplayRegion({
     required this.image,
     required this.x,
     required this.y,
     required this.width,
     required this.height,
+  });
+}
+
+class WebosLibassDisplayFrame {
+  final List<WebosLibassDisplayRegion> regions;
+  final int frameWidth;
+  final int frameHeight;
+  final int sequence;
+
+  WebosLibassDisplayFrame({
+    List<WebosLibassDisplayRegion>? regions,
+    ui.Image? image,
+    int x = 0,
+    int y = 0,
+    int width = 0,
+    int height = 0,
     required this.frameWidth,
     required this.frameHeight,
     required this.sequence,
-  });
+  }) : regions = regions ??
+            (image != null
+                ? <WebosLibassDisplayRegion>[
+                    WebosLibassDisplayRegion(
+                      image: image,
+                      x: x,
+                      y: y,
+                      width: width,
+                      height: height,
+                    ),
+                  ]
+                : const <WebosLibassDisplayRegion>[]);
+
+  ui.Image get image => regions.first.image;
+  int get x => regions.isNotEmpty ? regions.first.x : 0;
+  int get y => regions.isNotEmpty ? regions.first.y : 0;
+  int get width => regions.isNotEmpty ? regions.first.width : 0;
+  int get height => regions.isNotEmpty ? regions.first.height : 0;
 }
 
 typedef WebosLibassBackendFactory = WebosLibassBackend Function();
@@ -160,6 +255,7 @@ abstract class WebosLibassBackend {
   void setMargins(int top, int bottom, int left, int right);
   void setUseMargins(bool useMargins);
   void addFont(String name, Uint8List bytes);
+  void addFontFromFile(String filePath, {String? fontName});
   void clearFonts();
   void setFonts({String? defaultFontPath, String defaultFamily = 'sans-serif'});
   void createStreamTrack(int trackKey, Uint8List? codecPrivate);
@@ -217,27 +313,23 @@ typedef _LoadTrackMemNative = Pointer<Void> Function(Pointer<Void> ctx, Pointer<
 typedef _LoadTrackMemDart = Pointer<Void> Function(Pointer<Void> ctx, Pointer<Uint8> data, int size);
 typedef _FreeTrackNative = Void Function(Pointer<Void> track);
 typedef _FreeTrackDart = void Function(Pointer<Void> track);
-typedef _RenderFrameRgbaNative = Int32 Function(
+typedef _RenderFrameRegionsNative = Int32 Function(
   Pointer<Void> ctx,
   Pointer<Void> track,
   Int64 nowMs,
   Int32 forceRender,
-  Pointer<Int32> outX,
-  Pointer<Int32> outY,
-  Pointer<Int32> outW,
-  Pointer<Int32> outH,
+  Pointer<Int32> outRegionCount,
+  Pointer<Int32> outRects,
   Pointer<Pointer<Uint8>> outPixels,
   Pointer<Int32> outByteLen,
 );
-typedef _RenderFrameRgbaDart = int Function(
+typedef _RenderFrameRegionsDart = int Function(
   Pointer<Void> ctx,
   Pointer<Void> track,
   int nowMs,
   int forceRender,
-  Pointer<Int32> outX,
-  Pointer<Int32> outY,
-  Pointer<Int32> outW,
-  Pointer<Int32> outH,
+  Pointer<Int32> outRegionCount,
+  Pointer<Int32> outRects,
   Pointer<Pointer<Uint8>> outPixels,
   Pointer<Int32> outByteLen,
 );
@@ -301,7 +393,7 @@ void _webosLibassWorkerMain(Map<String, Object?> initArgs) {
   late final _FlushEventsDart flushEventsFn;
   late final _LoadTrackMemDart loadTrackMemFn;
   late final _FreeTrackDart freeTrackFn;
-  late final _RenderFrameRgbaDart renderFrameRgbaFn;
+  late final _RenderFrameRegionsDart renderFrameRegionsFn;
 
   try {
     allocFn = lib.lookupFunction<_AllocNative, _AllocDart>('plezy_ass_alloc');
@@ -326,8 +418,8 @@ void _webosLibassWorkerMain(Map<String, Object?> initArgs) {
     flushEventsFn = lib.lookupFunction<_FlushEventsNative, _FlushEventsDart>('plezy_ass_flush_events');
     loadTrackMemFn = lib.lookupFunction<_LoadTrackMemNative, _LoadTrackMemDart>('plezy_ass_load_track_memory');
     freeTrackFn = lib.lookupFunction<_FreeTrackNative, _FreeTrackDart>('plezy_ass_free_track');
-    renderFrameRgbaFn = lib.lookupFunction<_RenderFrameRgbaNative, _RenderFrameRgbaDart>(
-      'plezy_ass_render_frame_rgba',
+    renderFrameRegionsFn = lib.lookupFunction<_RenderFrameRegionsNative, _RenderFrameRegionsDart>(
+      'plezy_ass_render_frame_regions',
     );
   } catch (e) {
     replyPort.send(<String, Object?>{
@@ -348,8 +440,9 @@ void _webosLibassWorkerMain(Map<String, Object?> initArgs) {
     return;
   }
 
+  // Scratch layout: [outRegionCount (1), outRects (8), outByteLen (1)] = 10 * Int32
   final int32Size = sizeOf<Int32>();
-  final rawInt32Scratch = allocFn(5 * int32Size);
+  final rawInt32Scratch = allocFn(10 * int32Size);
   final rawPixelsScratch = allocFn(sizeOf<Pointer<Uint8>>());
   if (rawInt32Scratch == nullptr || rawPixelsScratch == nullptr) {
     if (rawInt32Scratch != nullptr) freeFn(rawInt32Scratch);
@@ -364,11 +457,9 @@ void _webosLibassWorkerMain(Map<String, Object?> initArgs) {
   }
 
   final baseAddr = rawInt32Scratch.address;
-  final outX = Pointer<Int32>.fromAddress(baseAddr);
-  final outY = Pointer<Int32>.fromAddress(baseAddr + int32Size);
-  final outW = Pointer<Int32>.fromAddress(baseAddr + 2 * int32Size);
-  final outH = Pointer<Int32>.fromAddress(baseAddr + 3 * int32Size);
-  final outByteLen = Pointer<Int32>.fromAddress(baseAddr + 4 * int32Size);
+  final outRegionCount = Pointer<Int32>.fromAddress(baseAddr);
+  final outRects = Pointer<Int32>.fromAddress(baseAddr + int32Size);
+  final outByteLen = Pointer<Int32>.fromAddress(baseAddr + 9 * int32Size);
   final outPixelsPtr = rawPixelsScratch.cast<Pointer<Uint8>>();
 
   Pointer<Uint8> allocCString(String value) {
@@ -389,6 +480,20 @@ void _webosLibassWorkerMain(Map<String, Object?> initArgs) {
     final ptr = raw.cast<Uint8>();
     ptr.asTypedList(bytes.length).setAll(0, bytes);
     return ptr;
+  }
+
+  void addFontBytesNative(String name, Uint8List bytes) {
+    if (name.isEmpty || bytes.isEmpty) return;
+    final namePtr = allocCString(name);
+    final dataPtr = allocBytes(bytes);
+    try {
+      if (namePtr != nullptr && dataPtr != nullptr) {
+        addFontFn(ctx, namePtr, dataPtr, bytes.length);
+      }
+    } finally {
+      if (namePtr != nullptr) freeFn(namePtr.cast<Void>());
+      if (dataPtr != nullptr) freeFn(dataPtr.cast<Void>());
+    }
   }
 
   final tracks = <int, Pointer<Void>>{};
@@ -461,17 +566,21 @@ void _webosLibassWorkerMain(Map<String, Object?> initArgs) {
         final name = rawMsg['name'] as String;
         final ttd = rawMsg['data'] as TransferableTypedData;
         final bytes = ttd.materialize().asUint8List();
-        if (bytes.isEmpty) break;
-        final namePtr = allocCString(name);
-        final dataPtr = allocBytes(bytes);
+        addFontBytesNative(name, bytes);
+        break;
+
+      case 'addFontFromFile':
+        final filePath = rawMsg['path'] as String?;
+        if (filePath == null || filePath.isEmpty) break;
+        final explicitName = rawMsg['name'] as String?;
+        final slash = filePath.lastIndexOf('/');
+        final resolvedName = (explicitName != null && explicitName.isNotEmpty)
+            ? explicitName
+            : (slash >= 0 ? filePath.substring(slash + 1) : filePath);
         try {
-          if (namePtr != nullptr && dataPtr != nullptr) {
-            addFontFn(ctx, namePtr, dataPtr, bytes.length);
-          }
-        } finally {
-          if (namePtr != nullptr) freeFn(namePtr.cast<Void>());
-          if (dataPtr != nullptr) freeFn(dataPtr.cast<Void>());
-        }
+          final bytes = File(filePath).readAsBytesSync();
+          addFontBytesNative(resolvedName, bytes);
+        } catch (_) {}
         break;
 
       case 'clearFonts':
@@ -591,33 +700,29 @@ void _webosLibassWorkerMain(Map<String, Object?> initArgs) {
           });
           break;
         }
-        final status = renderFrameRgbaFn(
+        final status = renderFrameRegionsFn(
           ctx,
           track,
           nowMs,
           forceRender,
-          outX,
-          outY,
-          outW,
-          outH,
+          outRegionCount,
+          outRects,
           outPixelsPtr,
           outByteLen,
         );
         if (status == 2) {
-          final w = outW.value;
-          final h = outH.value;
+          final regionCount = outRegionCount.value;
           final byteLen = outByteLen.value;
           final pxPtr = outPixelsPtr.value;
-          if (w > 0 && h > 0 && byteLen > 0 && pxPtr != nullptr) {
+          if (regionCount >= 1 && regionCount <= 2 && byteLen > 0 && pxPtr != nullptr) {
+            final rectInts = Int32List.fromList(outRects.asTypedList(regionCount * 4));
             final copy = TransferableTypedData.fromList(<Uint8List>[pxPtr.asTypedList(byteLen)]);
             replyPort.send(<String, Object?>{
               'kind': 'frame',
               'reqId': reqId,
               'status': 2,
-              'x': outX.value,
-              'y': outY.value,
-              'w': w,
-              'h': h,
+              'regionCount': regionCount,
+              'rects': rectInts,
               'frameW': frameW,
               'frameH': frameH,
               'data': copy,
@@ -653,6 +758,10 @@ void _webosLibassWorkerMain(Map<String, Object?> initArgs) {
 
 /// Long-lived FFI worker [Isolate] implementation of [WebosLibassBackend].
 class WebosLibassIsolateBackend implements WebosLibassBackend {
+  /// Clean shutdown window before forcing isolate termination so
+  /// `plezy_ass_destroy()` can release HarfBuzz/FreeType/libass C heaps.
+  static const Duration kCleanShutdownTimeout = Duration(milliseconds: 2000);
+
   final String? _executablePathOverride;
 
   Isolate? _isolate;
@@ -767,13 +876,41 @@ class WebosLibassIsolateBackend implements WebosLibassBackend {
             comp.complete(const WebosLibassRenderedFrame.empty());
             break;
           case 2:
+            final regionCount = rawMsg['regionCount'] as int? ?? 0;
+            final rects = rawMsg['rects'] as List<int>?;
+            final parsedRegions = <WebosLibassRenderedRegion>[];
+            if (rects != null && regionCount >= 1 && rects.length >= regionCount * 4) {
+              int byteOffset = 0;
+              for (int i = 0; i < regionCount; i++) {
+                final base = i * 4;
+                final rx = rects[base];
+                final ry = rects[base + 1];
+                final rw = rects[base + 2];
+                final rh = rects[base + 3];
+                if (rw > 0 && rh > 0) {
+                  final byteLen = rw * rh * 4;
+                  parsedRegions.add(
+                    WebosLibassRenderedRegion(
+                      x: rx,
+                      y: ry,
+                      width: rw,
+                      height: rh,
+                      byteOffset: byteOffset,
+                      byteLength: byteLen,
+                    ),
+                  );
+                  byteOffset += byteLen;
+                }
+              }
+            }
+            if (parsedRegions.isEmpty) {
+              comp.complete(const WebosLibassRenderedFrame.empty());
+              break;
+            }
             comp.complete(
               WebosLibassRenderedFrame(
                 status: WebosLibassFrameStatus.ready,
-                x: rawMsg['x'] as int? ?? 0,
-                y: rawMsg['y'] as int? ?? 0,
-                width: rawMsg['w'] as int? ?? 0,
-                height: rawMsg['h'] as int? ?? 0,
+                regions: parsedRegions,
                 frameWidth: rawMsg['frameW'] as int? ?? 1920,
                 frameHeight: rawMsg['frameH'] as int? ?? 1080,
                 rgbaTransferable: rawMsg['data'] as TransferableTypedData?,
@@ -834,6 +971,16 @@ class WebosLibassIsolateBackend implements WebosLibassBackend {
       'op': 'addFont',
       'name': name,
       'data': TransferableTypedData.fromList(<Uint8List>[bytes]),
+    });
+  }
+
+  @override
+  void addFontFromFile(String filePath, {String? fontName}) {
+    if (_disposed || filePath.isEmpty) return;
+    _send(<String, Object?>{
+      'op': 'addFontFromFile',
+      'path': filePath,
+      'name': fontName,
     });
   }
 
@@ -938,7 +1085,7 @@ class WebosLibassIsolateBackend implements WebosLibassBackend {
       _shutdownCompleter = sc;
       port.send(<String, Object?>{'op': 'shutdown'});
       try {
-        await sc.future.timeout(const Duration(milliseconds: 500));
+        await sc.future.timeout(kCleanShutdownTimeout);
       } catch (_) {}
     }
 
@@ -955,7 +1102,7 @@ class WebosLibassController {
   final WebosLibassBackend _backend;
   final WebosLibassPixelDecoder _pixelDecoder;
   final String? Function(String assetRelPath) _assetPathResolver;
-  final Uint8List? Function(String filePath) _fileBytesReader;
+  final Uint8List? Function(String filePath)? _customFileBytesReader;
 
   final ValueNotifier<bool> activeForOverlay = ValueNotifier<bool>(false);
   final ValueNotifier<WebosLibassDisplayFrame?> currentFrame = ValueNotifier<WebosLibassDisplayFrame?>(null);
@@ -969,11 +1116,10 @@ class WebosLibassController {
   int? _activeTrackKey;
   String? _activeLanguage;
   final Map<int, String?> _trackLanguages = {};
+  final Set<int> _hangulTracks = {};
 
   String? _defaultNotoFontPath;
   String? _hangulFontPath;
-  bool _hasEmbeddedAttachments = false;
-  bool _hangulDetected = false;
   bool _fontsApplied = false;
   String? _appliedDefaultFontPath;
 
@@ -1004,15 +1150,7 @@ class WebosLibassController {
   })  : _backend = (backendFactory ?? (() => WebosLibassIsolateBackend()))(),
         _pixelDecoder = pixelDecoder ?? _defaultDecodePremulRgba,
         _assetPathResolver = assetPathResolver ?? resolveWebosAssetPath,
-        _fileBytesReader = fileBytesReader ?? _defaultReadFileBytes;
-
-  static Uint8List? _defaultReadFileBytes(String path) {
-    try {
-      return File(path).readAsBytesSync();
-    } catch (_) {
-      return null;
-    }
-  }
+        _customFileBytesReader = fileBytesReader;
 
   bool get isAvailable => _available && !_disposed;
   bool get isDisposed => _disposed;
@@ -1021,6 +1159,7 @@ class WebosLibassController {
 
   Future<bool> initialize() async {
     if (_disposed) return false;
+    if (_available) return true;
     final ok = await _backend.initialize();
     if (_disposed) return false;
     if (!ok) {
@@ -1043,14 +1182,20 @@ class WebosLibassController {
 
   void _registerBundledExtraFonts() {
     if (!isAvailable) return;
+    final customReader = _customFileBytesReader;
     for (final rel in kWebosAssBundledExtraFonts) {
       final path = _assetPathResolver(rel);
       if (path == null) continue;
-      final bytes = _fileBytesReader(path);
-      if (bytes != null && bytes.isNotEmpty) {
-        final slash = rel.lastIndexOf('/');
-        final name = slash >= 0 ? rel.substring(slash + 1) : rel;
-        _backend.addFont(name, bytes);
+      final slash = rel.lastIndexOf('/');
+      final name = slash >= 0 ? rel.substring(slash + 1) : rel;
+      if (customReader != null) {
+        final bytes = customReader(path);
+        if (bytes != null && bytes.isNotEmpty) {
+          _backend.addFont(name, bytes);
+        }
+      } else {
+        // Read bundled serif fonts inside the worker Isolate off the UI thread.
+        _backend.addFontFromFile(path, fontName: name);
       }
     }
   }
@@ -1062,8 +1207,12 @@ class WebosLibassController {
   }
 
   String? _resolveDefaultFontPath() {
-    final useHangulFallback =
-        !_hasEmbeddedAttachments && (_isKoreanLanguage(_activeLanguage) || _hangulDetected);
+    // Embedded MKV attachments added via `ass_add_font` always take precedence
+    // in libass when matching style font families; `default_font_path` is only
+    // the fallback face, so Hangul fallback must stay active even when an MKV
+    // embeds Latin/Japanese sign fonts.
+    final activeHasHangul = _activeTrackKey != null && _hangulTracks.contains(_activeTrackKey);
+    final useHangulFallback = _isKoreanLanguage(_activeLanguage) || activeHasHangul;
     if (useHangulFallback && _hangulFontPath != null) {
       return _hangulFontPath;
     }
@@ -1084,7 +1233,6 @@ class WebosLibassController {
 
   void addFontAttachment(String fileName, Uint8List bytes) {
     if (!isAvailable || fileName.isEmpty || bytes.isEmpty) return;
-    _hasEmbeddedAttachments = true;
     _backend.addFont(fileName, bytes);
   }
 
@@ -1097,8 +1245,7 @@ class WebosLibassController {
   void clearMediaFonts() {
     if (!isAvailable) return;
     _backend.clearFonts();
-    _hasEmbeddedAttachments = false;
-    _hangulDetected = false;
+    _hangulTracks.clear();
     _fontsApplied = false;
     _appliedDefaultFontPath = null;
     _registerBundledExtraFonts();
@@ -1106,9 +1253,43 @@ class WebosLibassController {
     _requestForcedRefreshIfActive();
   }
 
+  /// Resets all per-media tracks, embedded fonts, video geometry, and overlay
+  /// state while keeping the persistent native worker Isolate alive across
+  /// consecutive episodes.
+  void resetForNewMedia() {
+    if (_disposed) return;
+    _renderEpoch++;
+    _pendingRender = null;
+    _replaceCurrentFrame(null);
+    _videoReady = false;
+    _activeTrackKey = null;
+    _activeLanguage = null;
+    _trackLanguages.clear();
+    _hangulTracks.clear();
+    _storageW = 0;
+    _storageH = 0;
+    _displayAspectRatio = null;
+    _lastRequestedPosMs = 0;
+    _syncActiveForOverlay();
+
+    if (!isAvailable) return;
+    _backend.freeAllTracks();
+    _backend.clearFonts();
+    _fontsApplied = false;
+    _appliedDefaultFontPath = null;
+    _registerBundledExtraFonts();
+    _applyFontsIfNeeded(force: true);
+    _backend.setMargins(0, 0, 0, 0);
+  }
+
   void registerMkvAssTrack(int trackNumber, {Uint8List? codecPrivate, String? language}) {
     if (!isAvailable) return;
     _trackLanguages[trackNumber] = language;
+    if (codecPrivate != null &&
+        !_hangulTracks.contains(trackNumber) &&
+        webosBytesContainHangul(codecPrivate)) {
+      _hangulTracks.add(trackNumber);
+    }
     _backend.createStreamTrack(trackNumber, codecPrivate);
     if (trackNumber == _activeTrackKey) {
       if (language != null && language.isNotEmpty) {
@@ -1121,14 +1302,15 @@ class WebosLibassController {
 
   void processMkvAssChunk(int trackNumber, Uint8List chunkBytes, int startMs, int durationMs) {
     if (!isAvailable || chunkBytes.isEmpty) return;
+    final newlyDetectedHangul =
+        !_hangulTracks.contains(trackNumber) && webosBytesContainHangul(chunkBytes);
+    if (newlyDetectedHangul) {
+      _hangulTracks.add(trackNumber);
+    }
     _backend.processChunk(trackNumber, chunkBytes, startMs, durationMs);
     if (trackNumber == _activeTrackKey) {
-      if (!_hasEmbeddedAttachments && !_hangulDetected) {
-        final decoded = utf8.decode(chunkBytes, allowMalformed: true);
-        if (webosTextContainsHangul(decoded)) {
-          _hangulDetected = true;
-          _applyFontsIfNeeded();
-        }
+      if (newlyDetectedHangul) {
+        _applyFontsIfNeeded();
       }
       final endMs = startMs + durationMs;
       final nearPlayhead = _lastRequestedPosMs >= startMs - 500 && _lastRequestedPosMs <= endMs + 500;
@@ -1159,11 +1341,12 @@ class WebosLibassController {
   }) {
     if (!isAvailable || utf8Bytes.isEmpty) return;
     _trackLanguages[trackKey] = language;
-    if (!_hasEmbeddedAttachments &&
-        !_hangulDetected &&
-        decodedText != null &&
-        webosTextContainsHangul(decodedText)) {
-      _hangulDetected = true;
+    if (!_hangulTracks.contains(trackKey)) {
+      final hasHangul = webosBytesContainHangul(utf8Bytes) ||
+          (decodedText != null && webosTextContainsHangul(decodedText));
+      if (hasHangul) {
+        _hangulTracks.add(trackKey);
+      }
     }
     _backend.loadMemoryTrack(trackKey, utf8Bytes);
     if (trackKey == _activeTrackKey) {
@@ -1365,32 +1548,65 @@ class WebosLibassController {
 
             case WebosLibassFrameStatus.ready:
               final pixels = rendered.materializeBytes();
-              if (pixels == null || rendered.width <= 0 || rendered.height <= 0) {
+              if (pixels == null || rendered.regions.isEmpty) {
                 _replaceCurrentFrame(null);
                 break;
               }
-              ui.Image? decoded;
-              try {
-                decoded = await _pixelDecoder(pixels, rendered.width, rendered.height);
-              } catch (e) {
-                appLogger.w('[WebOS-libass] Pixel decode failed: $e');
-                decoded = null;
+
+              final decodedRegions = <WebosLibassDisplayRegion>[];
+              bool decodeFailed = false;
+              for (int i = 0; i < rendered.regions.length; i++) {
+                final reg = rendered.regions[i];
+                if (reg.width <= 0 || reg.height <= 0) {
+                  decodeFailed = true;
+                  break;
+                }
+                final Uint8List regionPixels;
+                if (rendered.regions.length == 1 && reg.byteOffset == 0 && pixels.length < reg.byteLength) {
+                  // Supports unit-test mocks that supply a compact placeholder buffer with custom pixelDecoder.
+                  regionPixels = pixels;
+                } else if (reg.byteOffset >= 0 &&
+                    reg.byteLength > 0 &&
+                    reg.byteOffset + reg.byteLength <= pixels.length) {
+                  regionPixels = Uint8List.sublistView(
+                    pixels,
+                    reg.byteOffset,
+                    reg.byteOffset + reg.byteLength,
+                  );
+                } else {
+                  decodeFailed = true;
+                  break;
+                }
+
+                try {
+                  final img = await _pixelDecoder(regionPixels, reg.width, reg.height);
+                  decodedRegions.add(
+                    WebosLibassDisplayRegion(
+                      image: img,
+                      x: reg.x,
+                      y: reg.y,
+                      width: reg.width,
+                      height: reg.height,
+                    ),
+                  );
+                } catch (e) {
+                  appLogger.w('[WebOS-libass] Pixel decode failed: $e');
+                  decodeFailed = true;
+                  break;
+                }
               }
-              if (decoded == null) break;
 
               final staleAfterDecode =
                   _disposed || epoch != _renderEpoch || !activeForOverlay.value || _activeTrackKey != trackKey;
-              if (staleAfterDecode) {
-                decoded.dispose();
+              if (decodeFailed || decodedRegions.isEmpty || staleAfterDecode) {
+                for (final dr in decodedRegions) {
+                  dr.image.dispose();
+                }
               } else {
                 debugDecodeCount++;
                 _replaceCurrentFrame(
                   WebosLibassDisplayFrame(
-                    image: decoded,
-                    x: rendered.x,
-                    y: rendered.y,
-                    width: rendered.width,
-                    height: rendered.height,
+                    regions: decodedRegions,
                     frameWidth: rendered.frameWidth > 0 ? rendered.frameWidth : _frameW,
                     frameHeight: rendered.frameHeight > 0 ? rendered.frameHeight : _frameH,
                     sequence: ++_frameSeq,
@@ -1428,9 +1644,14 @@ class WebosLibassController {
     if (!_disposed) {
       currentFrame.value = next;
     }
-    final prevImg = prev?.image;
-    if (prevImg != null && !identical(prevImg, next?.image)) {
-      _disposeImageSafely(prevImg);
+    if (prev != null) {
+      for (final prevReg in prev.regions) {
+        final keptInNext =
+            next != null && next.regions.any((nextReg) => identical(nextReg.image, prevReg.image));
+        if (!keptInNext) {
+          _disposeImageSafely(prevReg.image);
+        }
+      }
     }
   }
 
@@ -1457,12 +1678,14 @@ class WebosLibassController {
     activeForOverlay.value = false;
     final prev = currentFrame.value;
     currentFrame.value = null;
-    final prevImg = prev?.image;
-    if (prevImg != null) {
-      _disposeImageSafely(prevImg);
+    if (prev != null) {
+      for (final prevReg in prev.regions) {
+        _disposeImageSafely(prevReg.image);
+      }
     }
 
     _trackLanguages.clear();
+    _hangulTracks.clear();
     _backend.clearFonts();
     _backend.freeAllTracks();
     await _backend.dispose();
@@ -1471,67 +1694,13 @@ class WebosLibassController {
   }
 }
 
-class _WebosOwnedLibassImage extends StatefulWidget {
-  final ui.Image image;
-
-  const _WebosOwnedLibassImage({required this.image});
-
-  @override
-  State<_WebosOwnedLibassImage> createState() => _WebosOwnedLibassImageState();
-}
-
-class _WebosOwnedLibassImageState extends State<_WebosOwnedLibassImage> {
-  ui.Image? _ownedClone;
-
-  @override
-  void initState() {
-    super.initState();
-    _acquireClone(widget.image);
-  }
-
-  @override
-  void didUpdateWidget(covariant _WebosOwnedLibassImage oldWidget) {
-    super.didUpdateWidget(oldWidget);
-    if (!identical(oldWidget.image, widget.image)) {
-      _releaseClone();
-      _acquireClone(widget.image);
-    }
-  }
-
-  void _acquireClone(ui.Image source) {
-    try {
-      _ownedClone = source.clone();
-    } catch (_) {
-      _ownedClone = null;
-    }
-  }
-
-  void _releaseClone() {
-    final img = _ownedClone;
-    _ownedClone = null;
-    img?.dispose();
-  }
-
-  @override
-  void dispose() {
-    _releaseClone();
-    super.dispose();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    final img = _ownedClone;
-    if (img == null) return const SizedBox.shrink();
-    return RawImage(
-      image: img,
-      fit: BoxFit.fill,
-      filterQuality: FilterQuality.none,
-    );
-  }
-}
-
-/// Renders native libass subtitle frames at tight bounding boxes using a 60 Hz
-/// VSync ticker while playing and 0 Hz while paused / awaiting seek settle.
+/// Renders native libass subtitle frames at 1–2 tight bounding boxes using a
+/// 60 Hz VSync ticker while playing and 0 Hz while paused / awaiting seek settle.
+///
+/// Images are rendered directly via [RawImage] (`FilterQuality.none`) without
+/// cloning; [WebosLibassController._replaceCurrentFrame] defers [ui.Image.dispose]
+/// to a post-frame callback whenever a frame is scheduled or active so Skia
+/// never touches a disposed handle.
 class WebosLibassOverlay extends StatefulWidget {
   @visibleForTesting
   static int debugVsyncTickCount = 0;
@@ -1670,7 +1839,10 @@ class _WebosLibassOverlayState extends State<WebosLibassOverlay> with SingleTick
           return ValueListenableBuilder<WebosLibassDisplayFrame?>(
             valueListenable: widget.controller.currentFrame,
             builder: (context, frame, _) {
-              if (frame == null || frame.frameWidth <= 0 || frame.frameHeight <= 0) {
+              if (frame == null ||
+                  frame.regions.isEmpty ||
+                  frame.frameWidth <= 0 ||
+                  frame.frameHeight <= 0) {
                 return const SizedBox.shrink();
               }
               final scaleX = maxW / frame.frameWidth;
@@ -1679,13 +1851,18 @@ class _WebosLibassOverlayState extends State<WebosLibassOverlay> with SingleTick
                 fit: StackFit.expand,
                 clipBehavior: Clip.none,
                 children: [
-                  Positioned(
-                    left: frame.x * scaleX,
-                    top: frame.y * scaleY,
-                    width: frame.width * scaleX,
-                    height: frame.height * scaleY,
-                    child: _WebosOwnedLibassImage(image: frame.image),
-                  ),
+                  for (final region in frame.regions)
+                    Positioned(
+                      left: region.x * scaleX,
+                      top: region.y * scaleY,
+                      width: region.width * scaleX,
+                      height: region.height * scaleY,
+                      child: RawImage(
+                        image: region.image,
+                        fit: BoxFit.fill,
+                        filterQuality: FilterQuality.none,
+                      ),
+                    ),
                 ],
               );
             },

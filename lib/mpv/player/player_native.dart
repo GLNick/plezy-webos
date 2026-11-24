@@ -8,6 +8,7 @@ import 'package:flutter/services.dart';
 import '../../models/audio_channel_limit.dart';
 import '../../services/settings_service.dart';
 import '../../utils/app_logger.dart';
+import '../../utils/platform_detector.dart';
 import '../models.dart';
 import 'audio_rendering_mode.dart';
 import 'player_base.dart';
@@ -84,7 +85,8 @@ class PlayerNative extends PlayerBase {
   ///
   /// The one place the test override is resolved, so production code and host
   /// tests agree on which path is live without reading a test-only field.
-  static bool get usesLinuxVideoPlane => debugUseLinuxVideoPlane ?? Platform.isLinux;
+  static bool get usesLinuxVideoPlane =>
+      debugUseLinuxVideoPlane ?? (Platform.isLinux && PlatformDetector.isDesktopOS());
 
   /// Overrides the Apple audio-output detection in host tests.
   @visibleForTesting

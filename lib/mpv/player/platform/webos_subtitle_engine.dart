@@ -637,7 +637,10 @@ class WebosSubtitlePreferenceStore {
     if (raw == null) return null;
     final s = raw.trim().toLowerCase();
     if (s.isEmpty || s == 'und' || s == 'unk') return null;
-    return switch (s) {
+    final base = s.contains('-')
+        ? s.split('-').first
+        : (s.contains('_') ? s.split('_').first : s);
+    return switch (base) {
       'de' || 'deu' || 'ger' || 'german' || 'deutsch' => 'de',
       'en' || 'eng' || 'english' || 'englisch' => 'en',
       'ja' || 'jpn' || 'jap' || 'japanese' => 'ja',
@@ -648,6 +651,23 @@ class WebosSubtitlePreferenceStore {
       'ru' || 'rus' || 'russian' => 'ru',
       'zh' || 'zho' || 'chi' || 'chinese' => 'zh',
       'ko' || 'kor' || 'korean' => 'ko',
+      'nl' || 'nld' || 'dut' || 'dutch' => 'nl',
+      'cs' || 'ces' || 'cze' || 'czech' => 'cs',
+      'pl' || 'pol' || 'polish' => 'pl',
+      'tr' || 'tur' || 'turkish' => 'tr',
+      'ar' || 'ara' || 'arabic' => 'ar',
+      'he' || 'heb' || 'iw' || 'hebrew' => 'he',
+      'th' || 'tha' || 'thai' => 'th',
+      'vi' || 'vie' || 'vietnamese' => 'vi',
+      'id' || 'ind' || 'indonesian' => 'id',
+      'sv' || 'swe' || 'swedish' => 'sv',
+      'no' || 'nor' || 'nob' || 'nno' || 'norwegian' => 'no',
+      'da' || 'dan' || 'danish' => 'da',
+      'fi' || 'fin' || 'finnish' => 'fi',
+      'hu' || 'hun' || 'hungarian' => 'hu',
+      'ro' || 'ron' || 'rum' || 'romanian' => 'ro',
+      'el' || 'ell' || 'gre' || 'greek' => 'el',
+      'uk' || 'ukr' || 'ukrainian' => 'uk',
       _ => s,
     };
   }
@@ -3070,9 +3090,9 @@ class WebosMkvSubtitleExtractor {
   static const int kPgsLookaheadMs = 30000;
   static const int kPausedLookaheadMs = 5000;
   static const int kSeekRewindLookbackMs = 3500;
-  static const int kMinRewindLookbackMs = kSeekRewindLookbackMs;
-  static const int kMaxRewindLookbackMs = 60000;
   static const int kDynamicCuePointIntervalMs = 5000;
+  static const int _fnv64OffsetBasis = -0x340d631b7bdddcdb; // 0xcbf29ce484222325
+  static const int _fnv64Prime = 0x100000001b3;
   static const int kExplicitSeekGuardMs = 5000;
   static const int kKeyframeSnapToleranceMs = 10000;
   static const int kPrefetchLookbehindMs = 3000;
@@ -3126,6 +3146,22 @@ class WebosMkvSubtitleExtractor {
     fontGeneration.value = fontGeneration.value + 1;
   }
 
+  @visibleForTesting
+  static int get debugLoadedFontKeyCount => _loadedFontFamilies.length;
+
+  @visibleForTesting
+  static void debugClearLoadedFonts() {
+    _loadedFontFamilies.clear();
+  }
+
+  static int _fnv1a64(Uint8List bytes) {
+    int hash = _fnv64OffsetBasis;
+    for (int i = 0; i < bytes.length; i++) {
+      hash = (hash ^ bytes[i]) * _fnv64Prime;
+    }
+    return hash;
+  }
+
   /// Incremented whenever async PGS RLE->RGBA->ui.Image bitmap decode finishes
   /// or an open PGS cue's `endMs` is shortened in place so [WebosSubtitleOverlay]
   /// wakes / reschedules its boundary timer immediately.
@@ -3144,7 +3180,6 @@ class WebosMkvSubtitleExtractor {
   int _lastSeekCheckMs = -1;
   int _textEvictedBeforeMs = -1;
   int _pgsEvictedBeforeMs = -1;
-  int _maxSeenCueDurationMs = 0;
   int? _pendingRewindTargetMs;
   int? _catchUpTargetMs;
   int _streamGeneration = 0;
@@ -3165,8 +3200,6 @@ class WebosMkvSubtitleExtractor {
   StreamSubscription<List<int>>? _activePrefetchSub;
   Completer<void>? _activePrefetchCompleter;
   ({int targetMs, String dedupKey})? _deferredPrefetch;
-
-  final Set<int> _flushedAssTracks = {};
 
   WebosMkvSubtitleExtractor({
     required this.url,
@@ -3226,9 +3259,6 @@ class WebosMkvSubtitleExtractor {
 
   @visibleForTesting
   int get debugPgsEvictedBeforeMs => _pgsEvictedBeforeMs;
-
-  @visibleForTesting
-  int get debugMaxSeenCueDurationMs => _maxSeenCueDurationMs;
 
   @visibleForTesting
   int get debugStreamRequestCount => _streamRequestCount;
@@ -3433,30 +3463,45 @@ class WebosMkvSubtitleExtractor {
 
   /// Updates the currently selected embedded subtitle track number (or `null` when
   /// subtitles are disabled or an external subtitle file is active).
-  /// Disposes bitmaps of any previously active PGS track and triggers an immediate
-  /// stream rewind when switching to a PGS track so it extracts from the current playhead.
+  /// Only the active track is extracted/decoded; switching tracks cleans up the
+  /// previous track and rewinds to the current playhead to populate the newly
+  /// selected track immediately.
   void setActiveTrackNumber(int? trackNum) {
     if (_disposed || trackNum == _activeTrackNumber) return;
     _cancelActivePrefetch();
     final prevTrack = _activeTrackNumber;
     _activeTrackNumber = trackNum;
 
-    if (prevTrack != null && _isPgsTrack(prevTrack)) {
-      _clearPgsTrack(prevTrack);
-      _pgsEvictedBeforeMs = -1;
-    } else if (prevTrack != null && isAssTrackNumber(prevTrack) && onFlushAssTrack != null) {
-      _dedupExpiryByTrackNumber[prevTrack]?.clear();
-      _flushedAssTracks.add(prevTrack);
-      onFlushAssTrack!(prevTrack);
+    if (prevTrack != null) {
+      if (_isPgsTrack(prevTrack)) {
+        _clearPgsTrack(prevTrack);
+        _pgsEvictedBeforeMs = -1;
+      } else {
+        cuesByTrackNumber[prevTrack]?.clear();
+        _dedupExpiryByTrackNumber[prevTrack]?.clear();
+        _textEvictedBeforeMs = -1;
+        if (isAssTrackNumber(prevTrack) && onFlushAssTrack != null) {
+          onFlushAssTrack!(prevTrack);
+        }
+      }
     }
 
-    if (trackNum != null && _isPgsTrack(trackNum)) {
-      _pgsEvictedBeforeMs = -1;
-      final nowPosMs = _effectivePositionMs();
-      notifySeek(nowPosMs, forceRewind: true);
-    } else if (trackNum != null && isAssTrackNumber(trackNum) && skipDartAssParsing && _flushedAssTracks.remove(trackNum)) {
-      final nowPosMs = _effectivePositionMs();
-      notifySeek(nowPosMs, forceRewind: true);
+    if (trackNum != null) {
+      if (_isPgsTrack(trackNum)) {
+        _pgsEvictedBeforeMs = -1;
+      } else {
+        _textEvictedBeforeMs = -1;
+      }
+      final hasConsumedClusters = _mainParseState.clusterFileOffset >= 0 ||
+          _streamCursorOffset > _firstClusterOffset ||
+          _maxBufferedTimeMs > 0 ||
+          _lastSeekCheckMs >= 0;
+      if (hasConsumedClusters) {
+        final nowPosMs = _effectivePositionMs();
+        _pendingRewindTargetMs = nowPosMs;
+        _applyRewind(nowPosMs, forceRewind: true);
+        _cancelActiveStreamForRewind();
+      }
     }
   }
 
@@ -3685,7 +3730,6 @@ class WebosMkvSubtitleExtractor {
     }
     cuesByTrackNumber.clear();
     _dedupExpiryByTrackNumber.clear();
-    _flushedAssTracks.clear();
   }
 
   Future<void> start() async {
@@ -3851,6 +3895,7 @@ class WebosMkvSubtitleExtractor {
             loadedAnyFont = true;
           }
           if (!skipFlutterFontLoading) {
+            final fontContentHash = _fnv1a64(fileBytes).toUnsigned(64).toRadixString(16);
             final families = _extractTtfFamilyNames(fileBytes);
             final baseName = fileName.replaceAll(_attachmentExtRe, '');
             if (baseName.isNotEmpty) families.add(baseName);
@@ -3859,7 +3904,7 @@ class WebosMkvSubtitleExtractor {
               if (stripped.isNotEmpty) families.add(stripped);
             }
             for (final fam in families) {
-              if (_loadedFontFamilies.add(fam)) {
+              if (_loadedFontFamilies.add('$fam#$fontContentHash')) {
                 try {
                   await ui.loadFontFromList(fileBytes, fontFamily: fam);
                   loadedAnyFont = true;
@@ -4715,11 +4760,11 @@ class WebosMkvSubtitleExtractor {
       final int bEnd = bStart + elSz.value;
 
       // Fast-path for SimpleBlock (0xA3): check track number in the first 4 bytes of the body!
-      // If it's a video/audio track (99.9% of blocks), we can skip it even if bEnd > buf.length!
+      // Skip video/audio blocks AND inactive subtitle tracks without buffering or copying!
       if (elId.value == 0xA3 && bStart + 4 <= buf.length) {
         final tNumVint = _readVint(buf, bStart, keepMarkerBit: false);
-        if (tNumVint != null && !_subTrackByNumber.containsKey(tNumVint.value)) {
-          // Video or audio block! Skip directly to bEnd without buffering the whole frame!
+        if (tNumVint != null &&
+            (!_subTrackByNumber.containsKey(tNumVint.value) || _activeTrackNumber != tNumVint.value)) {
           if (bEnd <= buf.length) {
             pos = bEnd;
             continue;
@@ -4731,12 +4776,12 @@ class WebosMkvSubtitleExtractor {
         }
       }
 
-      // Fast-path for BlockGroup (0xA0): inspect child Block (0xA1) track number so large
-      // non-subtitle video/audio BlockGroups are skipped via skipAheadBytes without O(N^2) buffering.
+      // Fast-path for BlockGroup (0xA0): inspect child Block (0xA1) track number so non-subtitle
+      // and inactive-track BlockGroups are skipped via skipAheadBytes without buffering.
       if (elId.value == 0xA0 && bStart < buf.length) {
         final int availEnd = math.min(bEnd, buf.length);
         int gp = bStart;
-        bool isNonSubtitleBlockGroup = false;
+        bool isSkippableBlockGroup = false;
         while (gp < availEnd) {
           final gid = _readVint(buf, gp, keepMarkerBit: true);
           if (gid == null) break;
@@ -4747,8 +4792,9 @@ class WebosMkvSubtitleExtractor {
           if (gid.value == 0xA1) {
             if (gbStart + 4 <= availEnd) {
               final tNumVint = _readVint(buf, gbStart, keepMarkerBit: false);
-              if (tNumVint != null && !_subTrackByNumber.containsKey(tNumVint.value)) {
-                isNonSubtitleBlockGroup = true;
+              if (tNumVint != null &&
+                  (!_subTrackByNumber.containsKey(tNumVint.value) || _activeTrackNumber != tNumVint.value)) {
+                isSkippableBlockGroup = true;
               }
             }
             break;
@@ -4756,7 +4802,7 @@ class WebosMkvSubtitleExtractor {
           if (gbEnd > availEnd) break;
           gp = gbEnd;
         }
-        if (isNonSubtitleBlockGroup) {
+        if (isSkippableBlockGroup) {
           if (bEnd <= buf.length) {
             pos = bEnd;
             continue;
@@ -4853,7 +4899,9 @@ class WebosMkvSubtitleExtractor {
     final tNumVint = _readVint(buf, start, keepMarkerBit: false);
     if (tNumVint == null) return false;
     final trackInfo = _subTrackByNumber[tNumVint.value];
-    if (trackInfo == null) return false;
+    if (trackInfo == null || _activeTrackNumber != trackInfo.trackNumber) {
+      return false;
+    }
 
     final headerEnd = start + tNumVint.length + 3;
     if (headerEnd >= end) return false;
@@ -4864,8 +4912,7 @@ class WebosMkvSubtitleExtractor {
 
     final codecUpper = trackInfo.codecId.toUpperCase();
     if (codecUpper.contains('PGS')) {
-      // Only decode PGS RLE/RGBA bitmaps sequentially on the active PGS track.
-      if (!allowPgs || _activeTrackNumber != trackInfo.trackNumber) {
+      if (!allowPgs) {
         return false;
       }
       final rawBytes = Uint8List.sublistView(buf, headerEnd, end);
@@ -4896,8 +4943,6 @@ class WebosMkvSubtitleExtractor {
         int maxNewEndMs = cueStartMs;
         for (int idx = beforeLen; idx < list.length; idx++) {
           if (list[idx].endMs > maxNewEndMs) maxNewEndMs = list[idx].endMs;
-          final dur = (list[idx].endMs - list[idx].startMs).clamp(0, kMaxRewindLookbackMs);
-          if (dur > _maxSeenCueDurationMs) _maxSeenCueDurationMs = dur;
         }
         dedupMap[dedupKey] = maxNewEndMs;
       } else {
@@ -4909,23 +4954,24 @@ class WebosMkvSubtitleExtractor {
       return false;
     }
 
+    final rawView = Uint8List.sublistView(buf, headerEnd, end);
+    final payloadHash = _fnv1a64(rawView);
+    final dedupMap = _dedupExpiryByTrackNumber[trackInfo.trackNumber]!;
+
     if (trackInfo.isAssOrSsa && onRawAssChunk != null) {
-      final rawBytes = buf.sublist(headerEnd, end);
       final effectiveDurMs = durationMs > 0 ? durationMs : 3500;
-      final payloadStr = utf8.decode(rawBytes, allowMalformed: true);
-      final dedupKey = 'ass:$cueStartMs:$effectiveDurMs:$payloadStr';
-      final dedupMap = _dedupExpiryByTrackNumber[trackInfo.trackNumber]!;
+      final dedupKey = 'ass:$cueStartMs:$effectiveDurMs:${rawView.length}:$payloadHash';
       if (dedupMap.containsKey(dedupKey)) return false;
 
+      final rawBytes = Uint8List.fromList(rawView);
       onRawAssChunk!(trackInfo.trackNumber, rawBytes, cueStartMs, effectiveDurMs);
       dedupMap[dedupKey] = cueStartMs + effectiveDurMs;
-      final cueDur = effectiveDurMs.clamp(0, kMaxRewindLookbackMs);
-      if (cueDur > _maxSeenCueDurationMs) _maxSeenCueDurationMs = cueDur;
 
       if (skipDartAssParsing) {
         return true;
       }
 
+      final payloadStr = utf8.decode(rawView, allowMalformed: true);
       final cue = WebosSubtitleParser.parseMkvBlock(
         startMs: cueStartMs,
         durationMs: effectiveDurMs,
@@ -4939,11 +4985,10 @@ class WebosMkvSubtitleExtractor {
       return true;
     }
 
-    final payloadStr = utf8.decode(buf.sublist(headerEnd, end), allowMalformed: true);
-    final dedupKey = '$cueStartMs:$durationMs:$payloadStr';
-    final dedupMap = _dedupExpiryByTrackNumber[trackInfo.trackNumber]!;
+    final dedupKey = 'txt:$cueStartMs:$durationMs:${rawView.length}:$payloadHash';
     if (dedupMap.containsKey(dedupKey)) return false;
 
+    final payloadStr = utf8.decode(rawView, allowMalformed: true);
     final cue = WebosSubtitleParser.parseMkvBlock(
       startMs: cueStartMs,
       durationMs: durationMs,
@@ -4956,8 +5001,6 @@ class WebosMkvSubtitleExtractor {
       return false;
     }
     dedupMap[dedupKey] = cue.endMs;
-    final cueDur = (cue.endMs - cue.startMs).clamp(0, kMaxRewindLookbackMs);
-    if (cueDur > _maxSeenCueDurationMs) _maxSeenCueDurationMs = cueDur;
     final list = cuesByTrackNumber[trackInfo.trackNumber]!;
     list.add(cue);
     return true;
@@ -6184,7 +6227,7 @@ class _WebosOwnedPgsImageState extends State<_WebosOwnedPgsImage> {
     return RawImage(
       image: img,
       fit: BoxFit.fill,
-      filterQuality: FilterQuality.medium,
+      filterQuality: FilterQuality.low,
     );
   }
 }
@@ -6895,9 +6938,8 @@ class _WebosSubtitleOverlayState extends State<WebosSubtitleOverlay>
         : (an == 3 || an == 6 || an == 9)
             ? -1.0
             : -0.5;
-    // In libass, bottom-aligned (\an1..\an3) \pos(x,y) places the font descent bottom at y,
-    // whereas Flutter's RichText box includes extra bottom descender padding below the baseline.
-    // Shifting dy from -1.0 to -0.84 aligns the glyph cap-center with libass \clip coordinates!
+    // Bottom-aligned (\an1..\an3) translates by -1.0 * height so the box bottom
+    // anchors directly at the target \pos / margin coordinate.
     final double dy = (an >= 7)
         ? 0.0
         : (an >= 4)

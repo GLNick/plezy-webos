@@ -309,13 +309,13 @@ void main() {
         );
         addTearDown(() => extractor.dispose(deferPgsDispose: false));
 
+        extractor.setActiveTrackNumber(2);
         await extractor.start();
         final initDeadline = DateTime.now().add(const Duration(seconds: 3));
-        while (extractor.debugMaxSeenCueDurationMs < 40000) {
+        while (!(extractor.cuesByTrackNumber[2]?.any((c) => c.endMs - c.startMs >= 40000) ?? false)) {
           if (DateTime.now().isAfter(initDeadline)) fail('Timed out waiting for 40s sign cue');
           await Future<void>.delayed(const Duration(milliseconds: 20));
         }
-        extractor.setActiveTrackNumber(2);
 
         final reqsBeforeSeek = extractor.debugStreamRequestCount;
         reportedPosMs = 120000;
@@ -427,6 +427,7 @@ void main() {
         );
         addTearDown(() => extractor.dispose(deferPgsDispose: false));
 
+        extractor.setActiveTrackNumber(2);
         await extractor.start();
         await firstHeadersSent.future.timeout(const Duration(seconds: 3));
 
@@ -715,6 +716,7 @@ void main() {
       );
       addTearDown(() => extractor.dispose(deferPgsDispose: false));
       extractor.debugRegisterTrack(trackNumber: 2, codecId: 'S_TEXT/ASS', language: 'eng');
+      extractor.setActiveTrackNumber(2);
 
       // 1) Truncated non-subtitle BlockGroup (track 1) with 0xA1 first.
       const int bigBlockLen = 8192;

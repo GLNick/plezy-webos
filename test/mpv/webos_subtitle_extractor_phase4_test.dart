@@ -265,23 +265,24 @@ void main() {
         _buildSimpleBlock(trackNumber: 4, relTimeMs: 0, payload: _buildMinimalPgsDisplaySet(objectId: 6)),
       ]);
 
-      // 1) Subtitles Off (activeTrackNumber == null): ASS extracts, PGS tracks are skipped completely.
+      // 1) Subtitles Off (activeTrackNumber == null): BOTH ASS and PGS tracks are skipped completely.
       extractor.debugConsumeBuffer(c40, bufferBaseFileOffset: 4000);
       extractor.debugConsumeBuffer(c50, bufferBaseFileOffset: 5000);
       extractor.debugConsumeBuffer(c60, bufferBaseFileOffset: 6000);
-      expect(extractor.cuesByTrackNumber[2]!.length, 1);
+      expect(extractor.cuesByTrackNumber[2], isEmpty);
       expect(extractor.cuesByTrackNumber[3], isEmpty);
       expect(extractor.cuesByTrackNumber[4], isEmpty);
       expect(decodeCount, 0);
 
-      // 2) Off -> PGS A (track 3): rewinds stream cursor to cluster <= 60s - 10s = 50s (offset 5000).
+      // 2) Off -> PGS A (track 3): rewinds stream cursor to cluster <= 60s - 3.5s = 50s (offset 5000).
       extractor.setActiveTrackNumber(3);
       expect(extractor.activeTrackNumber, 3);
       expect(extractor.debugStreamCursorOffset, 5000);
 
-      // Stream re-feeds c50 & c60: only track 3 decodes; track 4 stays skipped.
+      // Stream re-feeds c50 & c60: only track 3 decodes; track 2 & track 4 stay skipped.
       extractor.debugConsumeBuffer(c50, bufferBaseFileOffset: 5000);
       extractor.debugConsumeBuffer(c60, bufferBaseFileOffset: 6000);
+      expect(extractor.cuesByTrackNumber[2], isEmpty);
       expect(extractor.cuesByTrackNumber[3]!.length, 2);
       expect(extractor.cuesByTrackNumber[4], isEmpty);
       expect(decodeCount, 2);
@@ -302,14 +303,19 @@ void main() {
       final track4Images = [for (final c in extractor.cuesByTrackNumber[4]!) c.pgsImage!];
       expect(track4Images.every((img) => !img.debugDisposed), isTrue);
 
-      // 4) PGS B (track 4) -> ASS (track 2): disposes track 4 bitmaps, keeps ASS cues intact.
+      // 4) PGS B (track 4) -> ASS (track 2): disposes track 4 bitmaps, rewinds and extracts ASS track 2.
+      posMs = 42000;
       extractor.setActiveTrackNumber(2);
       expect(extractor.cuesByTrackNumber[4], isEmpty);
       expect(track4Images.every((img) => img.debugDisposed), isTrue);
+      expect(extractor.debugStreamCursorOffset, 4000);
+      extractor.debugConsumeBuffer(c40, bufferBaseFileOffset: 4000);
       expect(extractor.cuesByTrackNumber[2]!.length, 1);
 
-      // 5) ASS -> PGS A (track 3): rewinds immediately and decodes track 3 again.
+      // 5) ASS (track 2) -> PGS A (track 3): clears ASS track 2, rewinds immediately, and decodes track 3 again.
+      posMs = 60000;
       extractor.setActiveTrackNumber(3);
+      expect(extractor.cuesByTrackNumber[2], isEmpty);
       expect(extractor.debugStreamCursorOffset, 5000);
       extractor.debugConsumeBuffer(c60, bufferBaseFileOffset: 6000);
       expect(extractor.cuesByTrackNumber[3]!.length, 1);
@@ -328,16 +334,26 @@ void main() {
   group('Phase 4.2 — Sliding-window eviction, dynamic index & backwards seek', () {
     test('evicts far-past ASS & PGS cues + dedup entries, preserves active 30s sign, allows seek-back re-extraction', () {
       int posMs = 0;
-      final extractor = WebosMkvSubtitleExtractor(
-        url: 'http://127.0.0.1/test.mkv',
+      final assExtractor = WebosMkvSubtitleExtractor(
+        url: 'http://127.0.0.1/test-ass.mkv',
+        headers: null,
+        getCurrentPositionMs: () => posMs,
+        onCuesUpdated: () {},
+      );
+      final pgsExtractor = WebosMkvSubtitleExtractor(
+        url: 'http://127.0.0.1/test-pgs.mkv',
         headers: null,
         getCurrentPositionMs: () => posMs,
         onCuesUpdated: () {},
         pgsPixelDecoder: (_, __, ___, cb) => cb(_createTestImage()),
       );
-      extractor.debugRegisterTrack(trackNumber: 2, codecId: 'S_TEXT/ASS', language: 'eng');
-      extractor.debugRegisterTrack(trackNumber: 3, codecId: 'S_HDMV/PGS', language: 'eng');
-      extractor.setActiveTrackNumber(3);
+      assExtractor.debugRegisterTrack(trackNumber: 2, codecId: 'S_TEXT/ASS', language: 'eng');
+      assExtractor.debugRegisterTrack(trackNumber: 3, codecId: 'S_HDMV/PGS', language: 'eng');
+      assExtractor.setActiveTrackNumber(2);
+
+      pgsExtractor.debugRegisterTrack(trackNumber: 2, codecId: 'S_TEXT/ASS', language: 'eng');
+      pgsExtractor.debugRegisterTrack(trackNumber: 3, codecId: 'S_HDMV/PGS', language: 'eng');
+      pgsExtractor.setActiveTrackNumber(3);
 
       final c10 = _buildCluster(10000, [
         _buildTextBlockGroup(trackNumber: 2, relTimeMs: 0, durationMs: 2000, payload: '0,0,Default,,0,0,0,,Old line'),
@@ -352,38 +368,47 @@ void main() {
         _buildSimpleBlock(trackNumber: 3, relTimeMs: 0, payload: _buildMinimalPgsDisplaySet(objectId: 2)),
       ]);
 
-      extractor.debugConsumeBuffer(c10, bufferBaseFileOffset: 1000);
-      extractor.debugConsumeBuffer(c175, bufferBaseFileOffset: 17500);
-      extractor.debugConsumeBuffer(c190, bufferBaseFileOffset: 19000);
+      for (final ext in [assExtractor, pgsExtractor]) {
+        ext.debugConsumeBuffer(c10, bufferBaseFileOffset: 1000);
+        ext.debugConsumeBuffer(c175, bufferBaseFileOffset: 17500);
+        ext.debugConsumeBuffer(c190, bufferBaseFileOffset: 19000);
+      }
 
-      expect(extractor.cuesByTrackNumber[2]!.length, 3);
-      expect(extractor.cuesByTrackNumber[3]!.length, 2);
-      final oldPgsImg = extractor.cuesByTrackNumber[3]!.first.pgsImage!;
-      final recentPgsImg = extractor.cuesByTrackNumber[3]!.last.pgsImage!;
+      expect(assExtractor.cuesByTrackNumber[2]!.length, 3);
+      expect(assExtractor.cuesByTrackNumber[3], isEmpty);
+      expect(pgsExtractor.cuesByTrackNumber[3]!.length, 2);
+      expect(pgsExtractor.cuesByTrackNumber[2], isEmpty);
+      final oldPgsImg = pgsExtractor.cuesByTrackNumber[3]!.first.pgsImage!;
+      final recentPgsImg = pgsExtractor.cuesByTrackNumber[3]!.last.pgsImage!;
 
       // Advance playhead to 200s -> text cutoff = 80s, PGS cutoff = 185s.
       posMs = 200000;
-      extractor.evictExpiredCues(posMs, clockPosMs: posMs, deferPgsDispose: false);
+      assExtractor.evictExpiredCues(posMs, clockPosMs: posMs, deferPgsDispose: false);
+      pgsExtractor.evictExpiredCues(posMs, clockPosMs: posMs, deferPgsDispose: false);
 
       // Old ASS line (end 12s < 80s) evicted; 30s sign (end 205s) and recent line (end 192s) preserved!
-      final remainingAss = extractor.cuesByTrackNumber[2]!;
+      final remainingAss = assExtractor.cuesByTrackNumber[2]!;
       expect(remainingAss.map((c) => c.text).toList(), ['30s Sign', 'Recent line']);
-      expect(extractor.debugDedupCountForTrack(2), 2);
+      expect(assExtractor.debugDedupCountForTrack(2), 2);
 
       // Old PGS cue (end 20s < 185s) evicted & image disposed; recent PGS (end 200s) kept alive!
-      expect(extractor.cuesByTrackNumber[3]!.length, 1);
+      expect(pgsExtractor.cuesByTrackNumber[3]!.length, 1);
       expect(oldPgsImg.debugDisposed, isTrue);
       expect(recentPgsImg.debugDisposed, isFalse);
 
       // Seek backwards to 10s -> re-feeding c10 MUST re-extract both ASS & PGS without dedup blocking!
       posMs = 10000;
-      extractor.notifySeek(posMs);
-      expect(extractor.debugStreamCursorOffset, 1000);
-      extractor.debugConsumeBuffer(c10, bufferBaseFileOffset: 1000);
-      expect(extractor.cuesByTrackNumber[2]!.any((c) => c.text == 'Old line'), isTrue);
-      expect(extractor.cuesByTrackNumber[3]!.any((c) => c.startMs == 10000), isTrue);
+      assExtractor.notifySeek(posMs);
+      pgsExtractor.notifySeek(posMs);
+      expect(assExtractor.debugStreamCursorOffset, 1000);
+      expect(pgsExtractor.debugStreamCursorOffset, 1000);
+      assExtractor.debugConsumeBuffer(c10, bufferBaseFileOffset: 1000);
+      pgsExtractor.debugConsumeBuffer(c10, bufferBaseFileOffset: 1000);
+      expect(assExtractor.cuesByTrackNumber[2]!.any((c) => c.text == 'Old line'), isTrue);
+      expect(pgsExtractor.cuesByTrackNumber[3]!.any((c) => c.startMs == 10000), isTrue);
 
-      extractor.dispose(deferPgsDispose: false);
+      assExtractor.dispose(deferPgsDispose: false);
+      pgsExtractor.dispose(deferPgsDispose: false);
     });
 
     test('repeated small -3s backwards skips trigger rewind when entering evicted window', () {
@@ -420,8 +445,6 @@ void main() {
         _buildCluster(200000, []),
         bufferBaseFileOffset: 20000,
       );
-
-      expect(extractor.debugMaxSeenCueDurationMs, 30000);
 
       // Evict at 200s -> textEvictedBeforeMs = 80s (200s - 120s).
       extractor.evictExpiredCues(200000, clockPosMs: 200000, deferPgsDispose: false);
@@ -482,6 +505,40 @@ void main() {
       expect(res.skipAheadBytes, greaterThan(4000));
 
       extractor.dispose(deferPgsDispose: false);
+    });
+
+    test('subsetted MKV fonts with identical family names across episodes do not collide on _loadedFontFamilies',
+        () async {
+      WebosMkvSubtitleExtractor.debugClearLoadedFonts();
+      addTearDown(WebosMkvSubtitleExtractor.debugClearLoadedFonts);
+
+      Uint8List buildFontAttachment(String fileName, List<int> bytes) {
+        final attached = <int>[
+          0x46, 0x6E, ..._vintSize(fileName.length), ...utf8.encode(fileName),
+          0x46, 0x60, ..._vintSize('application/x-truetype-font'.length), ...utf8.encode('application/x-truetype-font'),
+          0x46, 0x5C, ..._vintSize(bytes.length), ...bytes,
+        ];
+        return Uint8List.fromList([0x61, 0xA7, ..._vintSize(attached.length), ...attached]);
+      }
+
+      final extractor = WebosMkvSubtitleExtractor(
+        url: 'http://127.0.0.1/fonts.mkv',
+        headers: null,
+        getCurrentPositionMs: () => 0,
+        onCuesUpdated: () {},
+      );
+      addTearDown(() => extractor.dispose(deferPgsDispose: false));
+
+      await extractor.debugParseAndLoadAttachments(buildFontAttachment('Arial.ttf', [1, 2, 3, 4]));
+      expect(WebosMkvSubtitleExtractor.debugLoadedFontKeyCount, 1);
+
+      // Identical subset bytes are deduplicated.
+      await extractor.debugParseAndLoadAttachments(buildFontAttachment('Arial.ttf', [1, 2, 3, 4]));
+      expect(WebosMkvSubtitleExtractor.debugLoadedFontKeyCount, 1);
+
+      // Episode 2's distinct subsetted Arial.ttf registers under its own content hash instead of being skipped!
+      await extractor.debugParseAndLoadAttachments(buildFontAttachment('Arial.ttf', [9, 8, 7, 6, 5]));
+      expect(WebosMkvSubtitleExtractor.debugLoadedFontKeyCount, 2);
     });
   });
 }

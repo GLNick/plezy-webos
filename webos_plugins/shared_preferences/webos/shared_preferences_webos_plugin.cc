@@ -111,8 +111,12 @@ void SharedPreferencesWebosPlugin::HandleMethodCall(
 }
 
 bool SharedPreferencesWebosPlugin::open() {
-  std::string appId = ::getenv("FLUTTER_APP_ID");
-  std::string path = ::getenv("FLUTTER_APPDATA_HOME");
+  const char* raw_app_id = ::getenv("FLUTTER_APP_ID");
+  const char* raw_appdata = ::getenv("FLUTTER_APPDATA_HOME");
+  std::string appId = (raw_app_id && raw_app_id[0]) ? raw_app_id : "com.edde746.plezy";
+  std::string path = (raw_appdata && raw_appdata[0])
+      ? raw_appdata
+      : "/media/developer/apps/usr/palm/applications";
   path += "/";
   path += appId;
   std::filesystem::create_directories(path);
@@ -145,15 +149,17 @@ bool SharedPreferencesWebosPlugin::open() {
 }
 
 bool SharedPreferencesWebosPlugin::isEmpty() {
+  if (!db_) {
+    return true;
+  }
   bool empty = true;
-
-  sqlite3_stmt* res;
-  std::string sql = "SELECT Data FROM SharedPreferences WHERE Key = ";
-  sql += "'" + db_key_ + "'";
-  if (SQLITE_OK != sqlite3_prepare_v2(db_, sql.c_str(), -1, &res, 0)) {
+  sqlite3_stmt* res = nullptr;
+  const char* sql = "SELECT Data FROM SharedPreferences WHERE Key = ?;";
+  if (SQLITE_OK != sqlite3_prepare_v2(db_, sql, -1, &res, nullptr)) {
     LogError(TAG) << __func__ << " error : " << sqlite3_errmsg(db_);
     return empty;
   }
+  sqlite3_bind_text(res, 1, db_key_.c_str(), static_cast<int>(db_key_.size()), SQLITE_STATIC);
 
   if (SQLITE_ROW == sqlite3_step(res)) {
     if (sqlite3_column_text(res, 0)) {
@@ -167,18 +173,24 @@ bool SharedPreferencesWebosPlugin::isEmpty() {
 
 std::string SharedPreferencesWebosPlugin::load() {
   std::string data;
-
-  sqlite3_stmt* res;
-  std::string sql = "SELECT Data FROM SharedPreferences WHERE Key = ";
-  sql += "'" + db_key_ + "'";
-  if (SQLITE_OK != sqlite3_prepare_v2(db_, sql.c_str(), -1, &res, 0)) {
-    LogError(TAG) << __func__ << " error : " << sqlite3_errmsg(db_);
+  if (!db_) {
     return data;
   }
 
+  sqlite3_stmt* res = nullptr;
+  const char* sql = "SELECT Data FROM SharedPreferences WHERE Key = ?;";
+  if (SQLITE_OK != sqlite3_prepare_v2(db_, sql, -1, &res, nullptr)) {
+    LogError(TAG) << __func__ << " error : " << sqlite3_errmsg(db_);
+    return data;
+  }
+  sqlite3_bind_text(res, 1, db_key_.c_str(), static_cast<int>(db_key_.size()), SQLITE_STATIC);
+
   if (SQLITE_ROW == sqlite3_step(res)) {
     const unsigned char* raw = sqlite3_column_text(res, 0);
-    data = raw ? (char*)raw : std::string();
+    const int byte_len = sqlite3_column_bytes(res, 0);
+    if (raw && byte_len > 0) {
+      data.assign(reinterpret_cast<const char*>(raw), static_cast<size_t>(byte_len));
+    }
   }
   sqlite3_finalize(res);
   sqlite3_db_release_memory(db_);
@@ -186,21 +198,25 @@ std::string SharedPreferencesWebosPlugin::load() {
 }
 
 bool SharedPreferencesWebosPlugin::insert(const std::string& data) {
-  sqlite3_stmt* res;
-  std::string sql = "INSERT INTO SharedPreferences(Key,Data) VALUES(";
-  sql += "'" + db_key_ + "'" + ",";
-  sql += "'" + data + "');";
-  if (SQLITE_OK != sqlite3_prepare_v2(db_, sql.c_str(), -1, &res, 0)) {
+  if (!db_) {
+    return false;
+  }
+  sqlite3_stmt* res = nullptr;
+  const char* sql = "INSERT INTO SharedPreferences(Key, Data) VALUES(?, ?);";
+  if (SQLITE_OK != sqlite3_prepare_v2(db_, sql, -1, &res, nullptr)) {
     LogError(TAG) << __func__ << " error0 : " << sqlite3_errmsg(db_);
     return false;
   }
+  sqlite3_bind_text(res, 1, db_key_.c_str(), static_cast<int>(db_key_.size()), SQLITE_STATIC);
+  sqlite3_bind_text(res, 2, data.c_str(), static_cast<int>(data.size()), SQLITE_STATIC);
 
-  if (SQLITE_DONE != sqlite3_step(res)) {
+  const int rc = sqlite3_step(res);
+  sqlite3_finalize(res);
+  if (SQLITE_DONE != rc) {
     LogError(TAG) << __func__ << " error1 : " << sqlite3_errmsg(db_);
     return false;
   }
 
-  sqlite3_finalize(res);
   sqlite3_db_release_memory(db_);
   sqlite3_db_cacheflush(db_);
   db_empty_ = false;
@@ -208,15 +224,25 @@ bool SharedPreferencesWebosPlugin::insert(const std::string& data) {
 }
 
 bool SharedPreferencesWebosPlugin::update(const std::string& data) {
-  char *err_msg = 0;
-  std::string sql = "UPDATE SharedPreferences SET Data = ";
-  sql += "'" + data + "' WHERE Key = ";
-  sql += "'" + db_key_ + "'";
-  if (SQLITE_OK != sqlite3_exec(db_, sql.c_str(), 0, 0, &err_msg)) {
-    LogError(TAG) << __func__ << " error :" << err_msg;
-    sqlite3_free(err_msg);
+  if (!db_) {
     return false;
   }
+  sqlite3_stmt* res = nullptr;
+  const char* sql = "UPDATE SharedPreferences SET Data = ? WHERE Key = ?;";
+  if (SQLITE_OK != sqlite3_prepare_v2(db_, sql, -1, &res, nullptr)) {
+    LogError(TAG) << __func__ << " error0 : " << sqlite3_errmsg(db_);
+    return false;
+  }
+  sqlite3_bind_text(res, 1, data.c_str(), static_cast<int>(data.size()), SQLITE_STATIC);
+  sqlite3_bind_text(res, 2, db_key_.c_str(), static_cast<int>(db_key_.size()), SQLITE_STATIC);
+
+  const int rc = sqlite3_step(res);
+  sqlite3_finalize(res);
+  if (SQLITE_DONE != rc) {
+    LogError(TAG) << __func__ << " error1 : " << sqlite3_errmsg(db_);
+    return false;
+  }
+
   sqlite3_db_release_memory(db_);
   sqlite3_db_cacheflush(db_);
   return true;

@@ -215,6 +215,7 @@ void main() {
         );
         addTearDown(() => extractor.dispose(deferPgsDispose: false));
 
+        extractor.setActiveTrackNumber(2);
         await extractor.start();
         // Wait until initial headers + first buffer window around 0s are parsed.
         final initDeadline = DateTime.now().add(const Duration(seconds: 3));
@@ -222,7 +223,6 @@ void main() {
           if (DateTime.now().isAfter(initDeadline)) fail('Timed out waiting for initial MKV extraction');
           await Future<void>.delayed(const Duration(milliseconds: 20));
         }
-        extractor.setActiveTrackNumber(2);
 
         // Fire 15 rapid consecutive +20s forward seeks (20s -> 300s) while hardware position lags behind!
         for (int step = 1; step <= 15; step++) {

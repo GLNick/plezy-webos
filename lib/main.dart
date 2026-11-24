@@ -455,11 +455,6 @@ void _installWebosBackAndNavigationHooks() {
         phys == 0x19c ||
         (phys == 0 && logi == 0); // Ungemappter webOS Remote Back-Key in XKB!
 
-    appLogger.i(
-      '[WebOS-KeyData] type=${data.type} phys=0x${phys.toRadixString(16)} '
-      'logi=0x${logi.toRadixString(16)} isBack=$isBackData',
-    );
-
     if (isBackData && !isTextEditingFocused() && _canAppHandleBackInternally()) {
       if (data.type == ui.KeyEventType.up) {
         unawaited(_triggerInternalWebosBack());
@@ -481,7 +476,6 @@ void _installWebosBackAndNavigationHooks() {
     final keyId = event.logicalKey.keyId;
     final usbHid = event.physicalKey.usbHidUsage;
     if (event.logicalKey.isBackKey || _isWebosBackKeyCode(keyId, usbHid, keyId)) {
-      appLogger.i('[WebOS-HWKey] event=${event.runtimeType} keyId=0x${keyId.toRadixString(16)}');
       if (!isTextEditingFocused() && _canAppHandleBackInternally()) {
         if (event is KeyUpEvent) {
           unawaited(_triggerInternalWebosBack());
@@ -494,7 +488,6 @@ void _installWebosBackAndNavigationHooks() {
 
   // 3. SystemChannels.navigation (popRoute)
   SystemChannels.navigation.setMethodCallHandler((MethodCall call) async {
-    appLogger.i('[WebOS-NavChannel] method=${call.method}');
     if (call.method == 'popRoute') {
       if (_canAppHandleBackInternally()) {
         await _triggerInternalWebosBack();
@@ -516,7 +509,6 @@ void _installWebosBackAndNavigationHooks() {
       final type = message['type']?.toString().toLowerCase() ?? '';
       isKeyUp = type.contains('up');
       isBack = _isWebosBackKeyCode(keyCode, scanCode, logical);
-      appLogger.i('[WebOS-KeyChannel] msg=$message isBack=$isBack');
     }
 
     if (!isBack) {
@@ -553,38 +545,6 @@ KeyEventResult _handleWebosRootBackKey(FocusNode node, KeyEvent event) {
     return KeyEventResult.handled;
   }
   return KeyEventResult.ignored;
-}
-
-
-
-class PlezyWebosFlutterBinding extends WidgetsFlutterBinding {
-  static WidgetsBinding ensureInitialized() {
-    if (_instance == null) {
-      PlezyWebosFlutterBinding();
-    }
-    return WidgetsBinding.instance;
-  }
-
-  static PlezyWebosFlutterBinding? _instance;
-
-  @override
-  void initInstances() {
-    super.initInstances();
-    _instance = this;
-  }
-
-  @override
-  ViewConfiguration createViewConfigurationFor(RenderView renderView) {
-    final view = renderView.flutterView;
-    final physicalConstraints = BoxConstraints.fromViewConstraints(view.physicalConstraints);
-    final double physWidth = view.physicalSize.width;
-    final double effectiveDpr = physWidth >= 1800 ? (physWidth / 1280.0) : view.devicePixelRatio;
-    return ViewConfiguration(
-      physicalConstraints: physicalConstraints,
-      logicalConstraints: physicalConstraints / effectiveDpr,
-      devicePixelRatio: effectiveDpr,
-    );
-  }
 }
 
 void _registerTvosPlatformPlugins() {

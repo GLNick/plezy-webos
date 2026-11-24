@@ -468,6 +468,7 @@ void main() {
         );
         addTearDown(extractor.dispose);
 
+        extractor.setActiveTrackNumber(1);
         await extractor.start();
         for (int i = 0; i < 40; i++) {
           if ((extractor.cuesByTrackNumber[1]?.length ?? 0) >= 3) break;

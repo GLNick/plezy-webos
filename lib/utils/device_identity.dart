@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:device_info_plus/device_info_plus.dart';
+import 'package:device_info_plus_webos/device_info_plus_webos.dart';
 import 'package:flutter/foundation.dart';
 import 'package:unorm_dart/unorm_dart.dart';
 
@@ -40,6 +41,9 @@ class DeviceIdentityService {
   static Future<DeviceIdentity>? _cached;
 
   static Future<DeviceIdentity> resolve() => _cached ??= _resolve();
+
+  @visibleForTesting
+  static Future<WebOSDeviceInfo> Function()? debugWebosInfoLoader;
 
   @visibleForTesting
   static void debugOverride(DeviceIdentity? identity) {
@@ -89,10 +93,28 @@ class DeviceIdentityService {
       }
       if (Platform.isLinux) {
         final host = Platform.localHostname.trim();
-        final name = (host.isNotEmpty && host != 'localhost') ? host : (await deviceInfo.linuxInfo).name;
+        final validHost = (host.isNotEmpty && host != 'localhost') ? host : null;
         if (isWebos) {
-          return DeviceIdentity(platform: 'webOS', deviceModel: 'LG webOS TV', deviceName: name, isTv: true);
+          String? webosModel;
+          try {
+            // Query DeviceInfoWebOSPlugin.webosInfo directly: DeviceInfoPlugin.linuxInfo
+            // casts DeviceInfoPlatform.instance.deviceInfo() to LinuxDeviceInfo, which
+            // throws a TypeError on webOS where WebOSDeviceInfo is returned.
+            final loader = debugWebosInfoLoader;
+            final webosInfo = loader != null ? await loader() : await DeviceInfoWebOSPlugin().webosInfo;
+            final rawModel = webosInfo.modelName?.trim();
+            if (rawModel != null && rawModel.isNotEmpty) {
+              webosModel = rawModel;
+            }
+          } catch (_) {}
+          return DeviceIdentity(
+            platform: 'webOS',
+            deviceModel: webosModel ?? 'LG webOS TV',
+            deviceName: webosModel ?? validHost,
+            isTv: true,
+          );
         }
+        final name = validHost ?? (await deviceInfo.linuxInfo).name;
         return DeviceIdentity(platform: 'Linux', deviceModel: 'Linux', deviceName: name, isTv: isTv);
       }
     } catch (e) {

@@ -2,8 +2,8 @@ import 'dart:io';
 import 'dart:math' as math;
 
 import 'package:flutter/foundation.dart';
-import 'package:flutter/painting.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter/widgets.dart';
 
 import '../utils/async_singleton.dart';
 import '../utils/device_channel.dart';
@@ -183,7 +183,26 @@ class DevicePerformance {
 
   static double? _displayShortestSide() {
     try {
-      return PlatformDispatcher.instance.implicitView?.display.size.shortestSide;
+      dynamic view;
+      try {
+        view = WidgetsBinding.instance.platformDispatcher.implicitView;
+      } catch (_) {
+        view = null;
+      }
+      view ??= PlatformDispatcher.instance.implicitView;
+      if (view == null) return null;
+      final double displayShortest = (view.display.size.shortestSide as num).toDouble();
+      if (_isWebos) {
+        // webOS Flutter renders into a fixed 1920x1080 Wayland surface even on
+        // 4K panels; clamp to view.physicalSize so 4K display.size never
+        // inflates 32-bit artwork/backdrop decode budgets above 1080p.
+        final double physicalShortest = (view.physicalSize.shortestSide as num).toDouble();
+        if (physicalShortest <= 0) return null;
+        return displayShortest > 0
+            ? math.min(displayShortest, physicalShortest)
+            : physicalShortest;
+      }
+      return displayShortest;
     } catch (_) {
       return null;
     }
