@@ -102,9 +102,9 @@ All Dart and C++ source changes for the webOS port are **already committed** in 
 # 1. Load the flutter-webos and Starfish NDK environment
 source scripts/webos/env.sh
 
-# 2. Fetch dependencies and build the release IPK (webOS 25 / 26+)
-flutter pub get
-flutter-webos build webos --release
+# 2. Fetch dependencies and build the release IPK (with native libass enabled)
+flutter-webos pub get
+flutter-webos build webos --release --dart-define=WEBOS_LIBASS=true
 
 # 3. Package both the modern (webos25-26) and compatibility (webos6-24, POSIX ustar) IPKs into ./dist/
 ./scripts/webos/build_32bit_ipk.sh

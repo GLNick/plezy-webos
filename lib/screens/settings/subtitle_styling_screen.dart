@@ -4,7 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:material_symbols_icons/symbols.dart';
 
 import '../../i18n/strings.g.dart';
+import '../../mpv/player/platform/webos_libass_engine.dart' show kWebosLibassEnabled;
 import '../../services/settings_service.dart';
+import '../../utils/platform_detector.dart';
 import '../../widgets/setting_tile.dart';
 import '../../widgets/settings_page.dart';
 import '../../widgets/settings_section.dart';
@@ -50,6 +52,13 @@ class SubtitleStylingScreen extends StatelessWidget {
         SettingsGroup(
           title: t.subtitlingStyling.text,
           children: [
+            if (Platform.isLinux && !PlatformDetector.isDesktopOS() && kWebosLibassEnabled)
+              SettingSwitchTile(
+                pref: SettingsService.useWebosLibass,
+                icon: Symbols.hardware_rounded,
+                title: t.subtitlingStyling.nativeAssRendering,
+                subtitle: t.subtitlingStyling.nativeAssRenderingDescription,
+              ),
             SettingSelectionTile<SubAssOverride>(
               pref: SettingsService.subAssOverride,
               icon: Symbols.subtitles_rounded,

@@ -864,6 +864,11 @@ class SettingsService extends BaseSharedPreferencesService {
   /// need the new backend on the old one. Dropping it ([onInit]) puts every
   /// install on mpv; choosing ExoPlayer again writes this key and sticks.
   static const useExoPlayer = BoolPref('android_use_exoplayer');
+
+  /// Whether LG webOS uses native `libass` (`libplezy_ass.so`) for ASS/SSA
+  /// subtitle rendering. Enabled by default; disabling falls back to the
+  /// built-in Dart ASS renderer on slower TVs or edge-case scripts.
+  static const useWebosLibass = BoolPref('webos_use_libass', defaultValue: true);
   static const startupSection = EnumPref<NavigationTabId>(
     'startup_section',
     values: NavigationTabId.values,
@@ -1537,6 +1542,7 @@ class SettingsService extends BaseSharedPreferencesService {
     playerAlwaysOnTop,
     specialsOrdering,
     useExoPlayer,
+    useWebosLibass,
     startupSection,
     showExploreTab,
     alwaysKeepSidebarOpen,
@@ -1766,4 +1772,8 @@ class SettingsService extends BaseSharedPreferencesService {
     PaintingBinding.instance.imageCache.clearLiveImages();
     await PlexImageCacheManager.instance.emptyCache();
   }
+
+  bool getUseWebosLibass() => read(useWebosLibass);
+
+  Future<void> setUseWebosLibass(bool value) => write(useWebosLibass, value);
 }

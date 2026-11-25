@@ -20,10 +20,11 @@ The workflow only calls scripts, so the same steps run on any Ubuntu x86_64 mach
 
 ## Workflow
 
+Active development branch: `webos`.
+
 Triggers:
 
-- push to `webos-native-working`: build and upload artifacts
-- push of a tag matching `v*-webos*`: build, upload artifacts and publish a release
+- push of a tag matching `v*` (e.g. `v2.26.0-webos.6`): build, upload artifacts and publish a release
 - manual run (`workflow_dispatch`): build and upload artifacts
 
 Steps, on `ubuntu-24.04`:
@@ -73,14 +74,13 @@ into `$WORK_DIR/flutter-webos`.
 
 ## `build.sh`
 
-1. Sources `scripts/webos/env.sh` and puts `$WORK_DIR/node/bin` on `PATH`.
-2. `flutter-webos --version` (first run downloads Flutter 3.38.10 and Dart 3.10.9).
-3. `flutter-webos pub get`. This rewrites 7 entries in `pubspec.lock` until a lock file resolved
-   with Flutter 3.38.10 is committed.
-4. `flutter-webos build webos --release`, producing
-   `build/webos/arm/release/ipk/com.edde746.plezy_<ver>_arm.ipk`.
-5. `scripts/webos/build_32bit_ipk.sh`, which writes `dist/com.edde746.plezy_<ver>_arm_webos25-26.ipk`
-   (the unpatched IPK) and `dist/com.edde746.plezy_<ver>_arm_webos6-24.ipk`.
+1. Sources `scripts/webos/env.sh`, puts `$WORK_DIR/node/bin` on `PATH`, and derives the 3-part numeric `WEBOS_PKG_VERSION` via `scripts/webos/ci/webos_version.py` (`PATCH_FINAL = PATCH * 100 + REV` for `v<MAJOR>.<MINOR>.<PATCH>-webos.<REV>` tags).
+2. Builds `build/webos_libass/libplezy_ass.so` via `scripts/webos/build_libass_so.sh` if not already cached.
+3. `flutter-webos --version` (first run downloads Flutter 3.38.10 and Dart 3.10.9).
+4. `flutter-webos pub get`.
+5. `flutter-webos build webos --release --dart-define=WEBOS_LIBASS=true`, producing
+   `build/webos/arm/release/ipk/com.edde746.plezy_<base_ver>_arm.ipk`.
+6. `scripts/webos/build_32bit_ipk.sh --version "$WEBOS_PKG_VERSION"`, which stamps `WEBOS_PKG_VERSION` into staged `appinfo.json`, `packageinfo.json`, and `control` and writes `dist/com.edde746.plezy_<pkg_ver>_arm_webos25-26.ipk` and `dist/com.edde746.plezy_<pkg_ver>_arm_webos6-24.ipk` (both bundling `libplezy_ass.so`).
 
 ## Cache
 

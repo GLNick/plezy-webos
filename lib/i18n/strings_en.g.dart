@@ -2809,6 +2809,12 @@ class Translations$subtitlingStyling$en {
 	/// en: 'Allow text subtitles in the space outside the video. Styled subtitles may keep their original placement.'
 	String get useMarginsDescription => 'Allow text subtitles in the space outside the video. Styled subtitles may keep their original placement.';
 
+	/// en: 'Native ASS rendering (libass)'
+	String get nativeAssRendering => 'Native ASS rendering (libass)';
+
+	/// en: 'Uses native libass for full ASS/SSA typesetting. Disable to fall back to the built-in Dart ASS renderer on slower TVs.'
+	String get nativeAssRenderingDescription => 'Uses native libass for full ASS/SSA typesetting. Disable to fall back to the built-in Dart ASS renderer on slower TVs.';
+
 	/// en: 'Anchor to Screen'
 	String get anchorToScreen => 'Anchor to Screen';
 
@@ -9056,6 +9062,8 @@ extension on Translations {
 			'subtitlingStyling.positionBottom' => 'Bottom',
 			'subtitlingStyling.useMargins' => 'Use margins',
 			'subtitlingStyling.useMarginsDescription' => 'Allow text subtitles in the space outside the video. Styled subtitles may keep their original placement.',
+			'subtitlingStyling.nativeAssRendering' => 'Native ASS rendering (libass)',
+			'subtitlingStyling.nativeAssRenderingDescription' => 'Uses native libass for full ASS/SSA typesetting. Disable to fall back to the built-in Dart ASS renderer on slower TVs.',
 			'subtitlingStyling.anchorToScreen' => 'Anchor to Screen',
 			'subtitlingStyling.anchorToScreenDescription' => 'Show text subtitles in the black bars below widescreen video',
 			'subtitlingStyling.bold' => 'Bold',

@@ -11,6 +11,7 @@ import 'package:video_player_platform_interface/video_player_platform_interface.
 import 'package:video_player_webos/video_player_webos.dart';
 
 import '../../../media/media_source_info.dart';
+import '../../../services/settings_service.dart';
 import '../../../utils/app_logger.dart';
 import '../../models.dart';
 import '../player_base.dart';
@@ -297,7 +298,7 @@ class PlayerWebos extends PlayerBase {
 
   @visibleForTesting
   Future<bool> debugInitLibassForTest() async {
-    if (!_libassEnabled || audioOnly) return false;
+    if (!_effectiveLibassEnabled) return false;
     await _initLibassControllerForSource(_currentSourceId);
     return _libassController?.isAvailable ?? false;
   }
@@ -340,25 +341,39 @@ class PlayerWebos extends PlayerBase {
   bool _subUseMargins = false;
   final VideoPlayerPlatform? _platformOverride;
   final bool _libassEnabled;
+  final bool? _useWebosLibassOverride;
+  bool _userLibassEnabled;
   final WebosLibassBackendFactory? _libassBackendFactoryOverride;
 
   @visibleForTesting
   int get debugLibassBackendSpawnCount => _debugLibassBackendSpawnCount;
 
+  @visibleForTesting
+  bool? get debugLastMkvSkipDartAssParsing => _debugLastMkvSkipDartAssParsing;
+  bool? _debugLastMkvSkipDartAssParsing;
+
   PlayerWebos({
     this.audioOnly = false,
     @visibleForTesting VideoPlayerPlatform? platformOverride,
     @visibleForTesting bool? libassEnabledOverride,
+    @visibleForTesting bool? useWebosLibassOverride,
     @visibleForTesting WebosLibassBackendFactory? libassBackendFactoryOverride,
   })  : _platformOverride = platformOverride,
         _libassEnabled = libassEnabledOverride ?? kWebosLibassEnabled,
+        _useWebosLibassOverride = useWebosLibassOverride,
+        _userLibassEnabled =
+            useWebosLibassOverride ?? (SettingsService.instanceOrNull?.getUseWebosLibass() ?? true),
         _libassBackendFactoryOverride = libassBackendFactoryOverride;
 
   PlayerWebos.audio()
       : audioOnly = true,
         _platformOverride = null,
         _libassEnabled = false,
+        _useWebosLibassOverride = false,
+        _userLibassEnabled = false,
         _libassBackendFactoryOverride = null;
+
+  bool get _effectiveLibassEnabled => _libassEnabled && _userLibassEnabled && !audioOnly;
 
   int? get textureId => _textureId;
   int get currentSourcePositionMs => sourcePositionFor(currentPosition).inMilliseconds;
@@ -366,14 +381,49 @@ class PlayerWebos extends PlayerBase {
   ValueListenable<bool>? get libassActiveListenable => _libassEnabled ? _libassActiveNotifier : null;
 
   void _syncLibassActiveNotifier() {
-    final next = _libassEnabled && (_libassController?.activeForOverlay.value ?? false);
+    final next = _effectiveLibassEnabled && (_libassController?.activeForOverlay.value ?? false);
     if (!_isClosed && _libassActiveNotifier.value != next) {
       _libassActiveNotifier.value = next;
     }
   }
 
+  Future<void> _disposeLibassController() async {
+    final ctrl = _libassController;
+    _libassController = null;
+    _libassInitInFlight = null;
+    if (ctrl != null) {
+      ctrl.activeForOverlay.removeListener(_syncLibassActiveNotifier);
+      await ctrl.dispose();
+    }
+    if (!_isClosed && _libassActiveNotifier.value) {
+      _libassActiveNotifier.value = false;
+    }
+  }
+
+  Future<void> setUseWebosLibass(bool enabled) async {
+    if (_isClosed) return;
+    _userLibassEnabled = enabled;
+    if (!enabled) {
+      await _disposeLibassController();
+      _refreshActiveSubtitleCues();
+    } else {
+      _syncLibassActiveNotifier();
+    }
+  }
+
   Future<void> _initLibassControllerForSource(int? sourceId) async {
-    if (!_libassEnabled || audioOnly || _isClosed) return;
+    if (_useWebosLibassOverride == null) {
+      final fromSettings = SettingsService.instanceOrNull?.getUseWebosLibass();
+      if (fromSettings != null) {
+        _userLibassEnabled = fromSettings;
+      }
+    }
+    if (!_effectiveLibassEnabled || _isClosed) {
+      if (_libassController != null) {
+        await _disposeLibassController();
+      }
+      return;
+    }
 
     final existing = _libassController;
     if (existing != null && existing.isAvailable) {
@@ -402,7 +452,7 @@ class PlayerWebos extends PlayerBase {
       _debugLibassBackendSpawnCount++;
       final ctrl = WebosLibassController(backendFactory: _libassBackendFactoryOverride);
       final ok = await ctrl.initialize();
-      if (_isClosed) {
+      if (_isClosed || !_effectiveLibassEnabled) {
         await ctrl.dispose();
         return;
       }
@@ -807,7 +857,8 @@ class PlayerWebos extends PlayerBase {
           : WebosDirectStreamFallbackRegistry.instance.lastRawMkvUrl;
       if (mkvUrlForSubs != null && mkvUrlForSubs.isNotEmpty && !isLive && _subIdToEmbeddedOrderIndex.isNotEmpty) {
         final libass = _libassController;
-        final useLibassForMkv = libass != null && libass.isAvailable;
+        final useLibassForMkv = _effectiveLibassEnabled && libass != null && libass.isAvailable;
+        _debugLastMkvSkipDartAssParsing = useLibassForMkv;
         _mkvExtractor = WebosMkvSubtitleExtractor(
           url: _resolveUrlWithHeaders(mkvUrlForSubs, media.headers),
           headers: media.headers,
@@ -1019,7 +1070,8 @@ class PlayerWebos extends PlayerBase {
         final decoded = _decodeExternalSubtitleWithUtf8(bytes);
         final content = decoded.text;
         final libass = _libassController;
-        if (libass != null &&
+        if (_effectiveLibassEnabled &&
+            libass != null &&
             identical(_libassController, libass) &&
             libass.isAvailable &&
             WebosSubtitleParser.isAssContent(content)) {
@@ -1229,7 +1281,7 @@ class PlayerWebos extends PlayerBase {
     );
 
     final extAssKey = _externalAssTrackKeys[trackId];
-    final libass = _libassController;
+    final libass = _effectiveLibassEnabled ? _libassController : null;
     if (extAssKey != null && libass != null && libass.isAvailable) {
       if (activeSubtitleCues.value.isNotEmpty) {
         activeSubtitleCues.value = const [];
@@ -1894,6 +1946,9 @@ class PlayerWebos extends PlayerBase {
       case 'sub-use-margins':
         _subUseMargins = (value == 'yes');
         _libassController?.setUseMargins(_subUseMargins);
+        break;
+      case 'webos-use-libass':
+        await setUseWebosLibass(value == 'yes' || value == 'true');
         break;
     }
   }

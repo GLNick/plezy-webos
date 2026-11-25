@@ -8,6 +8,7 @@ import '../../models/audio_channel_limit.dart';
 import '../../models/audio_quality_preset.dart';
 import '../../models/transcode_quality_preset.dart';
 import '../../models/player_setting_scope.dart';
+import '../../mpv/player/platform/webos_libass_engine.dart' show kWebosLibassEnabled;
 import '../../utils/audio_channel_limit_labels.dart';
 import '../../utils/quality_preset_labels.dart';
 import '../../services/settings_service.dart';
@@ -140,6 +141,13 @@ class PlaybackSettingsScreen extends StatelessWidget {
                   subtitle: t.settings.subtitleStylingDescription,
                   destinationBuilder: (_) => const SubtitleStylingScreen(),
                 ),
+                if (Platform.isLinux && !PlatformDetector.isDesktopOS() && kWebosLibassEnabled)
+                  SettingSwitchTile(
+                    pref: SettingsService.useWebosLibass,
+                    icon: Symbols.hardware_rounded,
+                    title: t.subtitlingStyling.nativeAssRendering,
+                    subtitle: t.subtitlingStyling.nativeAssRenderingDescription,
+                  ),
               ],
             ),
 

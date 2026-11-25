@@ -5,7 +5,7 @@
 #   2. dist/com.edde746.plezy_<ver>_arm_webos6-24.ipk  (compat-patched webOS 22-24 / Re:New, glibc 2.35, wl_webos_shell v1)
 #
 # Usage:
-#   ./scripts/webos/build_32bit_ipk.sh [--target all|webos25-26|webos6-24] [--side-by-side] [--orig-ipk <path>]
+#   ./scripts/webos/build_32bit_ipk.sh [--target all|webos25-26|webos6-24] [--version <x.y.z>] [--side-by-side] [--orig-ipk <path>]
 set -euo pipefail
 
 REPO_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)"
@@ -20,6 +20,7 @@ fi
 TARGET_MODE="all"
 SIDE_BY_SIDE=0
 ORIG_IPK_ARG="${ORIG_IPK:-}"
+PKG_VERSION_ARG="${WEBOS_PKG_VERSION:-}"
 
 while [ $# -gt 0 ]; do
   case "$1" in
@@ -33,6 +34,18 @@ while [ $# -gt 0 ]; do
       ;;
     --target=*)
       TARGET_MODE="${1#*=}"
+      shift
+      ;;
+    --version)
+      if [ $# -lt 2 ]; then
+        echo "ERROR: --version requires a 3-part SemVer argument (MAJOR.MINOR.PATCH)" >&2
+        exit 2
+      fi
+      PKG_VERSION_ARG="$2"
+      shift 2
+      ;;
+    --version=*)
+      PKG_VERSION_ARG="${1#*=}"
       shift
       ;;
     --side-by-side)
@@ -52,12 +65,12 @@ while [ $# -gt 0 ]; do
       shift
       ;;
     -h|--help)
-      echo "Usage: $0 [--target all|webos25-26|webos6-24] [--side-by-side] [--orig-ipk <path>]"
+      echo "Usage: $0 [--target all|webos25-26|webos6-24] [--version <x.y.z>] [--side-by-side] [--orig-ipk <path>]"
       exit 0
       ;;
     *)
       echo "ERROR: Unknown option: $1" >&2
-      echo "Usage: $0 [--target all|webos25-26|webos6-24] [--side-by-side] [--orig-ipk <path>]" >&2
+      echo "Usage: $0 [--target all|webos25-26|webos6-24] [--version <x.y.z>] [--side-by-side] [--orig-ipk <path>]" >&2
       exit 2
       ;;
   esac
@@ -73,8 +86,9 @@ case "$TARGET_MODE" in
     ;;
 esac
 
-APP_VER="$(grep -E '^version:' "$REPO_ROOT/pubspec.yaml" | head -n 1 | awk '{print $2}' | cut -d'+' -f1)"
-APP_VER="${APP_VER:-2.26.0}"
+BASE_APP_VER="$(python3 -c 'import json,sys; print(json.load(open(sys.argv[1], encoding="utf-8"))["version"])' "$REPO_ROOT/webos/meta/appinfo.json")"
+APP_VER="$(python3 "$REPO_ROOT/scripts/webos/ci/webos_version.py" --version "$PKG_VERSION_ARG" --ref-name "${GITHUB_REF_NAME:-}" --appinfo "$REPO_ROOT/webos/meta/appinfo.json")"
+echo "=== [version] Stamping webOS 3-part SemVer: $APP_VER (base appinfo: $BASE_APP_VER, ref: ${GITHUB_REF_NAME:-<local>}) ==="
 
 LIBASS_WORK="$REPO_ROOT/build/webos_libass"
 LIBASS_SO="$LIBASS_WORK/libplezy_ass.so"
@@ -99,6 +113,9 @@ if [ -z "$ORIG_IPK" ] || [ ! -f "$ORIG_IPK" ]; then
 fi
 if [ -z "$ORIG_IPK" ] || [ ! -f "$ORIG_IPK" ]; then
   ORIG_IPK="$OUT_DIR/com.edde746.plezy_${APP_VER}_arm_webos25-26.ipk"
+fi
+if [ ! -f "$ORIG_IPK" ] && [ -f "$OUT_DIR/com.edde746.plezy_${BASE_APP_VER}_arm_webos25-26.ipk" ]; then
+  ORIG_IPK="$OUT_DIR/com.edde746.plezy_${BASE_APP_VER}_arm_webos25-26.ipk"
 fi
 
 if [ ! -f "$ORIG_IPK" ]; then
@@ -206,31 +223,65 @@ package_target() {
   fi
 
   local app_dir="$orig_app_dir"
+  local orig_pkg_dir="$stage_dir/data_extract/usr/palm/packages/$(basename "$orig_app_dir")"
+  local pkg_dir="$orig_pkg_dir"
   if [ "$SIDE_BY_SIDE" -eq 1 ]; then
     app_dir="$(dirname "$orig_app_dir")/$TARGET_APP_ID"
     if [ "$orig_app_dir" != "$app_dir" ]; then
       mv "$orig_app_dir" "$app_dir"
     fi
-    python3 - "$app_dir/appinfo.json" "$stage_dir/ctrl_extract/control" "$TARGET_APP_ID" << 'PYEOF'
+    pkg_dir="$stage_dir/data_extract/usr/palm/packages/$TARGET_APP_ID"
+    if [ -d "$orig_pkg_dir" ] && [ "$orig_pkg_dir" != "$pkg_dir" ]; then
+      mv "$orig_pkg_dir" "$pkg_dir"
+    fi
+  fi
+
+  # Stamp derived 3-part SemVer (and optional side-by-side App ID) consistently into
+  # staged appinfo.json, packageinfo.json, and control without modifying git-tracked files.
+  python3 - "$app_dir/appinfo.json" "$pkg_dir/packageinfo.json" "$stage_dir/ctrl_extract/control" "$TARGET_APP_ID" "$APP_VER" "$SIDE_BY_SIDE" << 'PYEOF'
 import json
 import re
 import sys
 from pathlib import Path
 
 appinfo_path = Path(sys.argv[1])
-control_path = Path(sys.argv[2])
-target_id = sys.argv[3]
+packageinfo_path = Path(sys.argv[2])
+control_path = Path(sys.argv[3])
+target_id = sys.argv[4]
+pkg_ver = sys.argv[5]
+side_by_side = sys.argv[6] == "1"
+
+if not appinfo_path.is_file():
+    print(f"ERROR: Missing staged appinfo.json at {appinfo_path}", file=sys.stderr)
+    sys.exit(1)
+if not packageinfo_path.is_file():
+    print(f"ERROR: Missing staged packageinfo.json at {packageinfo_path}", file=sys.stderr)
+    sys.exit(1)
+if not control_path.is_file():
+    print(f"ERROR: Missing staged control at {control_path}", file=sys.stderr)
+    sys.exit(1)
 
 info = json.loads(appinfo_path.read_text(encoding="utf-8"))
 info["id"] = target_id
-info["title"] = "Plezy (libass)"
+info["version"] = pkg_ver
+if side_by_side:
+    info["title"] = "Plezy (libass)"
 appinfo_path.write_text(json.dumps(info, indent=2) + "\n", encoding="utf-8")
+
+pkg_info = json.loads(packageinfo_path.read_text(encoding="utf-8"))
+pkg_info["id"] = target_id
+pkg_info["version"] = pkg_ver
+pkg_info["app"] = target_id
+packageinfo_path.write_text(json.dumps(pkg_info, indent=2) + "\n", encoding="utf-8")
 
 ctrl = control_path.read_text(encoding="utf-8")
 ctrl = re.sub(r"^Package:\s*.*$", f"Package: {target_id}", ctrl, flags=re.MULTILINE)
+if re.search(r"^Version:\s*.*$", ctrl, flags=re.MULTILINE):
+    ctrl = re.sub(r"^Version:\s*.*$", f"Version: {pkg_ver}", ctrl, flags=re.MULTILINE)
+else:
+    ctrl = ctrl.rstrip("\n") + f"\nVersion: {pkg_ver}\n"
 control_path.write_text(ctrl, encoding="utf-8")
 PYEOF
-  fi
 
   # Bundle native libplezy_ass.so and strip unreachable desktop assets
   cp -f "$LIBASS_SO" "$app_dir/lib/libplezy_ass.so"

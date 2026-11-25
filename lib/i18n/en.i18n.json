@@ -1002,6 +1002,8 @@
     "positionBottom": "Bottom",
     "useMargins": "Use margins",
     "useMarginsDescription": "Allow text subtitles in the space outside the video. Styled subtitles may keep their original placement.",
+    "nativeAssRendering": "Native ASS rendering (libass)",
+    "nativeAssRenderingDescription": "Uses native libass for full ASS/SSA typesetting. Disable to fall back to the built-in Dart ASS renderer on slower TVs.",
     "anchorToScreen": "Anchor to Screen",
     "anchorToScreenDescription": "Show text subtitles in the black bars below widescreen video",
     "bold": "Bold",

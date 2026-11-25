@@ -19,6 +19,8 @@ import sys
 import tarfile
 from pathlib import Path
 
+from webos_version import normalize_3part_semver, parse_tag_metadata
+
 
 def ar_members(data: bytes) -> dict:
     if not data.startswith(b"!<arch>\n"):
@@ -48,10 +50,26 @@ def manifest_for(ipk: Path, icon_uri: str, source_url: str, ipk_url: str) -> dic
     appinfo = json.loads(read_tar_file(
         members["data.tar.gz"],
         lambda n: re.fullmatch(r"usr/palm/applications/[^/]+/appinfo\.json", n) is not None))
+    packageinfo = json.loads(read_tar_file(
+        members["data.tar.gz"],
+        lambda n: re.fullmatch(r"usr/palm/packages/[^/]+/packageinfo\.json", n) is not None))
+
+    appinfo_ver = normalize_3part_semver(str(appinfo["version"]))
+    packageinfo_ver = normalize_3part_semver(str(packageinfo["version"]))
+    control_ver_match = re.search(r"^Version:\s*(\S+)", control, re.MULTILINE)
+    if not control_ver_match:
+        raise ValueError(f"{ipk.name}: missing Version field in control")
+    control_ver = normalize_3part_semver(control_ver_match.group(1))
+    if not (appinfo_ver == packageinfo_ver == control_ver):
+        raise ValueError(
+            f"{ipk.name}: version mismatch across metadata "
+            f"(appinfo={appinfo_ver}, packageinfo={packageinfo_ver}, control={control_ver})"
+        )
+
     installed = re.search(r"^Installed-Size:\s*(\d+)", control, re.MULTILINE)
     manifest = {
         "id": appinfo["id"],
-        "version": appinfo["version"],
+        "version": appinfo_ver,
         "type": appinfo["type"],
         "title": appinfo["title"],
         "iconUri": icon_uri,
@@ -80,6 +98,14 @@ def main() -> int:
         print(f"no *_arm_*.ipk files in {args.dist}", file=sys.stderr)
         return 1
 
+    _, upstream_ver, webos_rev = parse_tag_metadata(args.tag)
+    if upstream_ver is not None and webos_rev is not None:
+        release_prefix = f"Plezy {upstream_ver} (webOS rev {webos_rev}) — "
+    elif upstream_ver is not None:
+        release_prefix = f"Plezy {upstream_ver} — "
+    else:
+        release_prefix = ""
+
     base = f"https://github.com/{args.repo}"
     icon_uri = f"https://raw.githubusercontent.com/{args.repo}/{args.tag}/webos/meta/icon.png"
     seen_slugs = set()
@@ -99,9 +125,13 @@ def main() -> int:
         title = f"{manifest['title']} ({os_label})"
         manifest["title"] = title
         manifest["appDescription"] = (
-            f"Plex & Jellyfin client for LG webOS TVs ({os_label} build, native libass 0.17.4 ASS/SSA subtitles)"
+            f"{release_prefix}Plex & Jellyfin client for LG webOS TVs "
+            f"({os_label} build, native libass 0.17.4 ASS/SSA subtitles)"
         )
-        short_desc = f"Plex & Jellyfin client for LG webOS TVs ({os_label} build, native libass ASS/SSA)"
+        short_desc = (
+            f"{release_prefix}Plex & Jellyfin client for LG webOS TVs "
+            f"({os_label} build, native libass ASS/SSA)"
+        )
 
         # The manifest is embedded as well as linked: Glasshouse only lists entries carrying it inline.
         index = {

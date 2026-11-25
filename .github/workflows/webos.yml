@@ -17,6 +17,7 @@ jobs:
     env:
       # Under $HOME so actions/cache can restore it; the NDK bakes this path in at install time.
       WEBOS_SDK_DIR: /home/runner/starfish-sdk-x86_64
+      GITHUB_REF_NAME: ${{ github.ref_name }}
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
 
@@ -37,6 +38,8 @@ jobs:
 
       - name: Build IPKs
         run: |
+          WEBOS_PKG_VERSION="$(python3 scripts/webos/ci/webos_version.py --ref-name "$GITHUB_REF_NAME")"
+          export WEBOS_PKG_VERSION
           scripts/webos/ci/build.sh
           rm -rf build/webos_libass/base_* \
                  build/webos_libass/src \

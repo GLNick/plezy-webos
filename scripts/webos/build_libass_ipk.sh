@@ -4,7 +4,7 @@
 # patching, and packaging to scripts/webos/build_32bit_ipk.sh.
 #
 # Usage:
-#   ./scripts/webos/build_libass_ipk.sh [--target all|webos25-26|webos6-24] [--side-by-side] [--skip-flutter-build]
+#   ./scripts/webos/build_libass_ipk.sh [--target all|webos25-26|webos6-24] [--version <x.y.z>] [--side-by-side] [--skip-flutter-build]
 set -euo pipefail
 
 REPO_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)"
@@ -18,6 +18,7 @@ if [ -d "$WORK_DIR/node/bin" ]; then
 fi
 
 TARGET_MODE="all"
+PKG_VERSION_ARG="${WEBOS_PKG_VERSION:-}"
 SIDE_BY_SIDE=0
 SKIP_FLUTTER_BUILD=0
 
@@ -35,6 +36,18 @@ while [ $# -gt 0 ]; do
       TARGET_MODE="${1#*=}"
       shift
       ;;
+    --version)
+      if [ $# -lt 2 ]; then
+        echo "ERROR: --version requires a 3-part SemVer argument (MAJOR.MINOR.PATCH)" >&2
+        exit 2
+      fi
+      PKG_VERSION_ARG="$2"
+      shift 2
+      ;;
+    --version=*)
+      PKG_VERSION_ARG="${1#*=}"
+      shift
+      ;;
     --side-by-side)
       SIDE_BY_SIDE=1
       shift
@@ -44,12 +57,12 @@ while [ $# -gt 0 ]; do
       shift
       ;;
     -h|--help)
-      echo "Usage: $0 [--target all|webos25-26|webos6-24] [--side-by-side] [--skip-flutter-build]"
+      echo "Usage: $0 [--target all|webos25-26|webos6-24] [--version <x.y.z>] [--side-by-side] [--skip-flutter-build]"
       exit 0
       ;;
     *)
       echo "ERROR: Unknown option: $1" >&2
-      echo "Usage: $0 [--target all|webos25-26|webos6-24] [--side-by-side] [--skip-flutter-build]" >&2
+      echo "Usage: $0 [--target all|webos25-26|webos6-24] [--version <x.y.z>] [--side-by-side] [--skip-flutter-build]" >&2
       exit 2
       ;;
   esac
@@ -74,6 +87,9 @@ if [ "$SKIP_FLUTTER_BUILD" -eq 0 ]; then
 fi
 
 FORWARD_ARGS=(--target "$TARGET_MODE")
+if [ -n "$PKG_VERSION_ARG" ]; then
+  FORWARD_ARGS+=(--version "$PKG_VERSION_ARG")
+fi
 if [ "$SIDE_BY_SIDE" -eq 1 ]; then
   FORWARD_ARGS+=(--side-by-side)
 fi
