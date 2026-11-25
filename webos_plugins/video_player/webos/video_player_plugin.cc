@@ -282,6 +282,13 @@ void VideoPlayerPlugin::OnVideoPlayerError(int64_t texture_id) {
 
 VideoPlayerPlugin::~VideoPlayerPlugin() {
   disposeAllPlayers();
+  for (auto& kv : pending_dispose_sources_) {
+    if (kv.second) {
+      g_source_destroy(kv.second);
+    }
+  }
+  pending_dispose_sources_.clear();
+  disposed_players_.clear();
 }
 
 void VideoPlayerPlugin::disposeAllPlayers() {
@@ -354,29 +361,39 @@ ErrorOr<TextureMessage> VideoPlayerPlugin::Create(
 }
 
 void VideoPlayerPlugin::dispose(int64_t texture_id) {
-  if (players_.find(texture_id) != players_.end()) {
-    VideoPlayer* pplayer = players_[texture_id].get();
-    disposed_players_[texture_id] = std::move(players_[texture_id]);
-    players_.erase(texture_id);
+  auto it = players_.find(texture_id);
+  if (it != players_.end()) {
+    VideoPlayer* pplayer = it->second.get();
+    disposed_players_[texture_id] = std::move(it->second);
+    players_.erase(it);
     historyErase(texture_id);
 
-    pplayer->Dispose([this](int64_t texture_id) -> void {
-      disposed_texture_ids_.push_back(texture_id);
+    pplayer->Dispose([this](int64_t disposed_id) -> void {
+      auto existing = pending_dispose_sources_.find(disposed_id);
+      if (existing != pending_dispose_sources_.end() && existing->second) {
+        g_source_destroy(existing->second);
+        pending_dispose_sources_.erase(existing);
+      }
 
-      // Delay actual destruction so any in-flight Luna messages from the
-      // platform media subsystem can drain before the underlying media
-      // client is torn down — otherwise the message thread dereferences a
-      // freed vtable on the just-destroyed client. 500ms proved insufficient
-      // under tab-switch load; 2000ms gives a wider margin during
-      // verification.
-      WebOSPlayer::attachToGMainLoop([](void* data) -> int {
-        VideoPlayerPlugin* self = (VideoPlayerPlugin*)data;
-        for (int64_t& texture_id : self->disposed_texture_ids_) {
-          self->disposed_players_.erase(texture_id);
-        }
-        self->disposed_texture_ids_.clear();
-        return G_SOURCE_REMOVE;
-      }, this, 150);
+      struct PendingDisposeContext {
+        VideoPlayerPlugin* plugin;
+        int64_t texture_id;
+      };
+      auto* ctx = new PendingDisposeContext{this, disposed_id};
+      GSource* src = g_timeout_source_new(150);
+      g_source_set_callback(
+          src,
+          [](gpointer data) -> gboolean {
+            auto* c = static_cast<PendingDisposeContext*>(data);
+            c->plugin->pending_dispose_sources_.erase(c->texture_id);
+            c->plugin->disposed_players_.erase(c->texture_id);
+            return G_SOURCE_REMOVE;
+          },
+          ctx,
+          [](gpointer data) { delete static_cast<PendingDisposeContext*>(data); });
+      g_source_attach(src, g_main_context_get_thread_default());
+      g_source_unref(src);
+      pending_dispose_sources_[disposed_id] = src;
     });
   }
 

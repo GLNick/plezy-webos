@@ -210,35 +210,37 @@ WebOSPlayer::WebOSPlayer(PluginPlayerDelegate* delegate, const std::string& wind
 }
 
 WebOSPlayer::~WebOSPlayer() {
-  if (slot_ >= 0) {
-    if (NDL_MediaSetPlayer(slot_) == 0) {
-      // Drop the platform event subscription so the uMediaClient callback
-      // thread cannot dispatch into a freshly-destroyed instance. The race
-      // window that produced the SEGV in libumedia_api.so closes here.
-      NDL_MediaUnsubscribeEvents();
-      // NDL_MediaUnload is intentionally skipped: VideoPlayer::Dispose
-      // already drove the pipeline to UNLOADED via player_.unload() before
-      // releasing this instance, and issuing Unload again would emit an
-      // unloadCompleted event that races teardown.
-      // NDL_MediaQuit is intentionally skipped: it deletes the underlying
-      // uMediaClient (player[pId]) without joining the callback thread,
-      // and additionally unregisters a global HRegisterAppState hook with
-      // cross-plugin side effects. The corresponding ctor reuses the
-      // per-slot init for the rest of the process lifetime.
+  releaseSlotForDispose();
+}
+
+void WebOSPlayer::releaseSlotForDispose() {
+  {
+    std::lock_guard<std::recursive_mutex> autoLock(mutex_);
+    run_ = false;
+    if (idle_source_) {
+      g_source_destroy(idle_source_);
+      idle_source_ = nullptr;
     }
-    releaseSlot(slot_);
+    if (timer_source_) {
+      g_source_destroy(timer_source_);
+      timer_source_ = nullptr;
+    }
+    callbacks_.clear();
   }
-  std::lock_guard<std::recursive_mutex> autoLock(mutex_);
-  run_ = false;
-  if (idle_source_) {
-    g_source_destroy(idle_source_);
-    idle_source_ = nullptr;
+  if (slot_ >= 0) {
+    const int old_slot = slot_;
+    if (NDL_MediaSetPlayer(old_slot) == 0) {
+      // Drop the platform event subscription immediately so the uMediaClient
+      // callback thread cannot dispatch into a disposing instance, then free
+      // the slot so an immediate episode transition or Direct Stream hot-swap
+      // reuses slot 0 instead of contending on slot 1 (AVProxy error 104).
+      // NDL_MediaQuit is intentionally skipped so the underlying uMediaClient
+      // remains valid for the process lifetime.
+      NDL_MediaUnsubscribeEvents();
+    }
+    releaseSlot(old_slot);
+    slot_ = -1;
   }
-  if (timer_source_) {
-    g_source_destroy(timer_source_);
-    timer_source_ = nullptr;
-  }
-  callbacks_.clear();
 }
 
 bool WebOSPlayer::load(const std::string& appId,

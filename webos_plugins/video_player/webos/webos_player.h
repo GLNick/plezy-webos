@@ -35,6 +35,7 @@ public:
           const std::string& webos_format = "",
           int64_t start_position = 0);
   bool unload(bool reset = false);
+  void releaseSlotForDispose();
   bool play();
   bool pause();
   bool seek(int64_t position,bool update_position = false);

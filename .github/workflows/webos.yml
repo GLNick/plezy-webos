@@ -27,21 +27,18 @@ jobs:
             /home/runner/plezy-webos-workspace
           key: webos-toolchain-${{ runner.os }}-${{ hashFiles('scripts/webos/ci/setup-toolchain.sh') }}
 
-      - name: Install toolchain
-        run: scripts/webos/ci/setup-toolchain.sh
-
-      - name: Build IPKs
-        run: scripts/webos/ci/build.sh
-
       - uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6
         with:
           path: build/webos_libass
           key: webos-libass-${{ runner.os }}-${{ hashFiles('scripts/webos/build_libass_so.sh', 'native/webos_libass/**') }}
 
-      - name: Build libass IPK (webOS 25-26)
+      - name: Install toolchain
+        run: scripts/webos/ci/setup-toolchain.sh
+
+      - name: Build IPKs
         run: |
-          ./scripts/webos/build_libass_ipk.sh --target webos25-26
-          rm -rf build/webos_libass/base_libass_bundle.orig \
+          scripts/webos/ci/build.sh
+          rm -rf build/webos_libass/base_* \
                  build/webos_libass/src \
                  build/webos_libass/build \
                  build/webos_libass/downloads \
@@ -58,12 +55,6 @@ jobs:
         with:
           name: plezy-webos6-24
           path: dist/*_arm_webos6-24.ipk
-          if-no-files-found: error
-
-      - uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7
-        with:
-          name: plezy-webos25-26-libass
-          path: dist/*_arm_webos25-26_libass.ipk
           if-no-files-found: error
 
       - name: Publish release with Homebrew Channel repositories

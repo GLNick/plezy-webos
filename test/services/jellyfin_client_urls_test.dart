@@ -16,11 +16,13 @@ import 'package:plezy/media/media_playlist.dart';
 import 'package:plezy/media/media_server_client.dart';
 import 'package:plezy/models/transcode_quality_preset.dart';
 import 'package:plezy/mpv/mpv.dart';
+import 'package:plezy/mpv/player/platform/webos_subtitle_engine.dart';
 import 'package:plezy/services/jellyfin_client.dart';
 import 'package:plezy/services/playback_initialization_types.dart';
 import 'package:plezy/services/subtitle_preference.dart';
 import 'package:plezy/utils/device_identity.dart';
 import 'package:plezy/utils/media_server_http_client.dart';
+import 'package:plezy/utils/platform_detector.dart';
 import 'package:plezy/services/video_decode_capabilities.dart';
 import 'package:plezy/services/settings_service.dart';
 
@@ -2623,6 +2625,8 @@ void main() {
     });
 
     test('getPlaybackInfo advertises embedded delivery for every format, external for text only', () async {
+      PlatformDetector.debugSetIsDesktopOSOverride(true);
+      addTearDown(() => PlatformDetector.debugSetIsDesktopOSOverride(null));
       Uri? capturedUri;
       String? capturedBody;
       final scoped = JellyfinClient.forTesting(
@@ -2687,6 +2691,8 @@ void main() {
     });
 
     test('getPlaybackInfo negotiates video transcodes as fMP4 HLS with a ts fallback', () async {
+      PlatformDetector.debugSetIsDesktopOSOverride(true);
+      addTearDown(() => PlatformDetector.debugSetIsDesktopOSOverride(null));
       String? capturedBody;
       final scoped = JellyfinClient.forTesting(
         connection: _conn(),
@@ -2751,6 +2757,130 @@ void main() {
       // av1 cannot ride in a TS segment; flac and truehd cannot either.
       expect(tsTranscode['VideoCodec'], 'hevc,h264');
       expect(tsTranscode['AudioCodec'], 'aac,mp3,ac3,eac3,opus,dts');
+    });
+
+    test('getPlaybackInfo on webOS restricts DirectPlay and Transcoding audio codecs (no DTS/TrueHD)', () async {
+      PlatformDetector.debugSetIsDesktopOSOverride(false);
+      addTearDown(() => PlatformDetector.debugSetIsDesktopOSOverride(null));
+
+      String? capturedBody;
+      final scoped = JellyfinClient.forTesting(
+        connection: _conn(),
+        httpClient: MockClient((request) async {
+          capturedBody = request.body;
+          return jsonResponse({'MediaSources': []});
+        }),
+      );
+      addTearDown(scoped.close);
+
+      await scoped.getPlaybackInfo('item-1');
+
+      final body = jsonDecode(capturedBody!) as Map<String, dynamic>;
+      final profile = body['DeviceProfile'] as Map<String, dynamic>;
+
+      final directPlayProfile = (profile['DirectPlayProfiles'] as List<dynamic>).first as Map<String, dynamic>;
+      expect(directPlayProfile['AudioCodec'], 'aac,ac3,eac3,mp3,flac,opus,vorbis,pcm');
+      expect((directPlayProfile['AudioCodec'] as String).length, lessThanOrEqualTo(40));
+      expect(directPlayProfile['AudioCodec'], matches(RegExp(r'^[a-zA-Z0-9\-\._,|]{0,40}$')));
+
+      final videoProfiles = (profile['TranscodingProfiles'] as List<dynamic>)
+          .map((entry) => entry as Map<String, dynamic>)
+          .where((entry) => entry['Type'] == 'Video')
+          .toList();
+      expect(videoProfiles, hasLength(2));
+      final mp4Transcode = videoProfiles.first;
+      final tsTranscode = videoProfiles.last;
+      expect(mp4Transcode['AudioCodec'], 'aac,mp3,ac3,eac3,flac,opus');
+      expect(tsTranscode['AudioCodec'], 'aac,mp3,ac3,eac3,opus');
+      expect(
+        (mp4Transcode['AudioCodec'] as String).split(','),
+        containsAll((tsTranscode['AudioCodec'] as String).split(',')),
+      );
+      expect(
+        (tsTranscode['AudioCodec'] as String).split(',').length,
+        lessThan((mp4Transcode['AudioCodec'] as String).split(',').length),
+      );
+    });
+
+    test('getPlaybackInitialization on webOS uses TranscodingUrl at Original quality when audio is DTS/TrueHD', () async {
+      PlatformDetector.debugSetIsDesktopOSOverride(false);
+      addTearDown(() {
+        PlatformDetector.debugSetIsDesktopOSOverride(null);
+        WebosDirectStreamFallbackRegistry.instance.debugReset();
+      });
+
+      final scoped = JellyfinClient.forTesting(
+        connection: _conn(),
+        httpClient: MockClient((request) async {
+          if (request.url.path == '/Users/user-1/Items/item-dts') {
+            return jsonResponse({
+              'Id': 'item-dts',
+              'Type': 'Movie',
+              'Name': 'DTS Movie',
+              'MediaSources': [
+                {
+                  'Id': 'src-dts',
+                  'Container': 'mkv',
+                  'MediaStreams': [
+                    {'Index': 0, 'Type': 'Video', 'Codec': 'hevc'},
+                    {'Index': 1, 'Type': 'Audio', 'Codec': 'dts', 'IsDefault': true, 'DisplayTitle': 'DTS-HD MA 5.1'},
+                    {'Index': 2, 'Type': 'Audio', 'Codec': 'ac3', 'IsDefault': false, 'DisplayTitle': 'AC3 5.1'},
+                  ],
+                },
+              ],
+            });
+          }
+          if (request.url.path == '/Items/item-dts/PlaybackInfo') {
+            final reqBody = jsonDecode(request.body) as Map<String, dynamic>;
+            final audioIdx = reqBody['AudioStreamIndex'] ?? 1;
+            return jsonResponse({
+              'PlaySessionId': 'jf-ds-$audioIdx',
+              'MediaSources': [
+                {
+                  'Id': 'src-dts',
+                  'Container': 'mkv',
+                  'SupportsDirectPlay': false,
+                  'SupportsTranscoding': true,
+                  'TranscodingUrl':
+                      '/Videos/item-dts/master.m3u8?MediaSourceId=src-dts&AudioStreamIndex=$audioIdx&PlaySessionId=jf-ds-$audioIdx',
+                  'MediaStreams': [
+                    {'Index': 0, 'Type': 'Video', 'Codec': 'hevc'},
+                    {'Index': 1, 'Type': 'Audio', 'Codec': 'dts', 'IsDefault': true, 'DisplayTitle': 'DTS-HD MA 5.1'},
+                    {'Index': 2, 'Type': 'Audio', 'Codec': 'ac3', 'IsDefault': false, 'DisplayTitle': 'AC3 5.1'},
+                  ],
+                },
+              ],
+            });
+          }
+          return http.Response('{}', 404);
+        }),
+      );
+      addTearDown(scoped.close);
+
+      final result = await scoped.getPlaybackInitialization(
+        PlaybackInitializationOptions(
+          metadata: testMediaItem(
+            id: 'item-dts',
+            backend: MediaBackend.jellyfin,
+            kind: MediaKind.movie,
+            serverId: 'srv-1',
+          ),
+          selectedMediaIndex: 0,
+        ),
+      );
+
+      expect(result.isTranscoding, isTrue);
+      expect(result.playMethod, 'Transcode');
+      expect(result.videoUrl, contains('/Videos/item-dts/master.m3u8'));
+      expect(result.videoUrl, contains('AudioStreamIndex=1'));
+      expect(WebosDirectStreamFallbackRegistry.instance.lastRawMkvUrl, contains('/Videos/item-dts/stream'));
+
+      final swappedUrl = await WebosDirectStreamFallbackRegistry.instance.obtainDirectStreamUrl(
+        audioStreamId: 2,
+        markUnseekable: false,
+      );
+      expect(swappedUrl, contains('AudioStreamIndex=2'));
+      expect(WebosDirectStreamFallbackRegistry.instance.isKnownUnseekable('item-dts'), isFalse);
     });
 
     test('the hardware decoder probe narrows both video codec lists', () async {

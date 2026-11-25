@@ -1,10 +1,10 @@
 #!/usr/bin/env python3
 """Writes a webOS Homebrew Channel manifest and repository index for each IPK in a directory.
 
-All IPKs share one app id, and a Homebrew Channel repository lists an id once, so every IPK
-gets its own repository: <prefix>-<slug>.repo.json, where the slug is derived from the IPK
-name's suffix after "_arm_" with underscores normalized to hyphens (webos6-24, webos25-26,
-webos25-26-libass).
+Both unified IPKs (webos25-26 and webos6-24) share one app id, and a Homebrew Channel
+repository lists an id once, so every IPK gets its own repository: <prefix>-<slug>.repo.json,
+where the slug is derived from the IPK name's suffix after "_arm_" with underscores normalized
+to hyphens (webos6-24, webos25-26).
 
 The manifest fields match webosbrew-gen-manifest. URLs point at the GitHub release <tag> of
 <repo>; the repository's manifestUrl uses releases/latest so a channel subscription follows
@@ -95,22 +95,13 @@ def main() -> int:
                                 f"{base}/releases/download/{args.tag}/{ipk.name}")
         manifest_name = f"{args.prefix}-{slug}.manifest.json"
 
-        if variant.endswith("_libass"):
-            base_variant = variant[:-len("_libass")]
-            os_label = base_variant.replace("webos", "webOS ")
-            slash_label = os_label.replace("-", "/")
-            title = f"{manifest['title']} ({os_label}, native libass)"
-            manifest["title"] = title
-            manifest["appDescription"] = (
-                f"Plex client for factory {slash_label} TVs with native libass 0.17.4 ASS/SSA subtitle rendering"
-            )
-            short_desc = (
-                f"Plex client for factory {slash_label} TVs with native libass ASS/SSA subtitle rendering"
-            )
-        else:
-            os_label = variant.replace("webos", "webOS ")
-            title = f"{manifest['title']} ({os_label})"
-            short_desc = f"Plex client for webOS TVs, {os_label} build"
+        os_label = variant.replace("webos", "webOS ")
+        title = f"{manifest['title']} ({os_label})"
+        manifest["title"] = title
+        manifest["appDescription"] = (
+            f"Plex & Jellyfin client for LG webOS TVs ({os_label} build, native libass 0.17.4 ASS/SSA subtitles)"
+        )
+        short_desc = f"Plex & Jellyfin client for LG webOS TVs ({os_label} build, native libass ASS/SSA)"
 
         # The manifest is embedded as well as linked: Glasshouse only lists entries carrying it inline.
         index = {

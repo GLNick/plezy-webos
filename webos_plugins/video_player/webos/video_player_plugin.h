@@ -90,7 +90,7 @@ private:
 
   std::map<int64_t, std::unique_ptr<VideoPlayer>> players_;
   std::map<int64_t, std::unique_ptr<VideoPlayer>> disposed_players_;
-  std::vector<int64_t> disposed_texture_ids_;
+  std::map<int64_t, GSource*> pending_dispose_sources_;
   std::vector<int64_t> create_history_;
   flutter::PluginRegistrar* plugin_registrar_;
   FlutterDesktopViewRef view_ = nullptr;

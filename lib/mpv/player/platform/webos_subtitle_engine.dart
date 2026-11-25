@@ -57,7 +57,9 @@ class WebosDirectStreamFallbackRegistry {
   String? activeRatingKey;
   String? lastRawMkvUrl;
   Map<String, String>? lastHeaders;
+  int? activeAudioStreamId;
   Future<String?> Function()? _buildDirectStreamUrlCallback;
+  Future<String?> Function(int? audioStreamId)? _buildDirectStreamUrlWithAudioCallback;
 
   static File get _cacheFile =>
       File('${debugStorageDirOverride ?? resolveWebosAppdataDir()}/webos_unseekable_mkvs.json');
@@ -94,7 +96,9 @@ class WebosDirectStreamFallbackRegistry {
     activeRatingKey = null;
     lastRawMkvUrl = null;
     lastHeaders = null;
+    activeAudioStreamId = null;
     _buildDirectStreamUrlCallback = null;
+    _buildDirectStreamUrlWithAudioCallback = null;
     if (reloadFromDisk) _loadFromDisk();
   }
 
@@ -102,12 +106,16 @@ class WebosDirectStreamFallbackRegistry {
     required String ratingKey,
     required String? rawMkvUrl,
     required Map<String, String>? headers,
-    required Future<String?> Function() buildDirectStreamUrl,
+    Future<String?> Function()? buildDirectStreamUrl,
+    Future<String?> Function(int? audioStreamId)? buildDirectStreamUrlWithAudio,
+    int? initialAudioStreamId,
   }) {
     activeRatingKey = ratingKey;
     lastRawMkvUrl = rawMkvUrl;
     lastHeaders = headers;
+    activeAudioStreamId = initialAudioStreamId;
     _buildDirectStreamUrlCallback = buildDirectStreamUrl;
+    _buildDirectStreamUrlWithAudioCallback = buildDirectStreamUrlWithAudio;
   }
 
   bool isKnownUnseekable(String? ratingKey) {
@@ -125,8 +133,23 @@ class WebosDirectStreamFallbackRegistry {
     }
   }
 
-  Future<String?> obtainDirectStreamUrl() async {
-    markActiveSessionUnseekable();
+  Future<String?> obtainDirectStreamUrl({int? audioStreamId, bool markUnseekable = true}) async {
+    if (markUnseekable) {
+      markActiveSessionUnseekable();
+    }
+    final effectiveAudioId = audioStreamId ?? activeAudioStreamId;
+    if (audioStreamId != null) {
+      activeAudioStreamId = audioStreamId;
+    }
+    final audioCb = _buildDirectStreamUrlWithAudioCallback;
+    if (audioCb != null) {
+      try {
+        return await audioCb(effectiveAudioId);
+      } catch (e, st) {
+        appLogger.e('[WebOS-DirectStream] Failed to build fallback Direct Stream URL: $e', error: e, stackTrace: st);
+        return null;
+      }
+    }
     final cb = _buildDirectStreamUrlCallback;
     if (cb == null) return null;
     try {

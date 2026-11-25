@@ -3756,27 +3756,34 @@ class PlexClient
       // (resolution/videoQuality) and is ignored for audio.
       final isTrack = options.metadata.kind == MediaKind.track;
       final audioPreset = options.audioQualityPreset ?? AudioQualityPreset.original;
+      final defaultResolvedAudioId = carriedAudioTrack == null
+          ? _resolveAudioStreamId(options.selectedAudioStreamId, data.mediaInfo)
+          : carriedAudioStreamId;
       if (!isTrack) {
         final rawMkvUrl = _trackStreamUrl(data.videoUrl, options);
+        var dsTranscodeCounter = 0;
         WebosDirectStreamFallbackRegistry.instance.registerActiveSession(
           ratingKey: options.metadata.id,
           rawMkvUrl: rawMkvUrl,
           headers: config.token != null ? {'X-Plex-Token': config.token!} : null,
-          buildDirectStreamUrl: () async {
-            final resolvedAudioId = carriedAudioTrack == null
-                ? _resolveAudioStreamId(options.selectedAudioStreamId, data.mediaInfo)
-                : carriedAudioStreamId;
+          initialAudioStreamId: defaultResolvedAudioId,
+          buildDirectStreamUrlWithAudio: (overrideAudioStreamId) async {
+            final resolvedAudioId = overrideAudioStreamId ?? defaultResolvedAudioId;
             final requestedSubtitleTrack = _resolveTranscodeSubtitleTrack(
               data.mediaInfo,
               options.preferredSubtitleTrack,
             );
+            final seq = ++dsTranscodeCounter;
+            final nowMs = DateTime.now().millisecondsSinceEpoch;
             final res = await buildTranscodeStartPath(
               ratingKey: options.metadata.id,
               mediaIndex: data.selectedMediaIndex,
               partIndex: data.selectedPartIndex,
               preset: options.qualityPreset,
-              sessionIdentifier: options.sessionIdentifier ?? 'webos-ds-sess-${DateTime.now().millisecondsSinceEpoch}',
-              transcodeSessionId: options.transcodeSessionId ?? 'webos-ds-trans-${DateTime.now().millisecondsSinceEpoch}',
+              sessionIdentifier: options.sessionIdentifier ?? 'webos-ds-sess-$nowMs-$seq',
+              transcodeSessionId: seq == 1 && options.transcodeSessionId != null
+                  ? options.transcodeSessionId!
+                  : 'webos-ds-trans-$nowMs-$seq',
               audioStreamId: resolvedAudioId,
               selectedSubtitleTrack: requestedSubtitleTrack,
               partId: data.mediaInfo?.partId,
@@ -3939,11 +3946,17 @@ class PlexClient
     }
     final audioTracks = data.mediaInfo?.audioTracks ?? const <MediaAudioTrack>[];
     if (audioTracks.isNotEmpty) {
-      final selectedAudio = audioTracks.where((a) => a.selected).firstOrNull ?? audioTracks.first;
-      if (_isWebosUnsupportedAudioCodec(selectedAudio.codec) ||
-          _isWebosUnsupportedAudioCodec(selectedAudio.displayTitle)) {
+      final carriedAudioTrack = options.selectedAudioStreamId == null ? options.preferredAudioTrack : null;
+      final targetAudioId = carriedAudioTrack == null
+          ? _resolveAudioStreamId(options.selectedAudioStreamId, data.mediaInfo)
+          : findSourceAudioTrackForIntent(carriedAudioTrack, audioTracks)?.id;
+      final targetAudio = (targetAudioId != null ? audioTracks.where((a) => a.id == targetAudioId).firstOrNull : null) ??
+          audioTracks.where((a) => a.selected).firstOrNull ??
+          audioTracks.first;
+      if (_isWebosUnsupportedAudioCodec(targetAudio.codec) ||
+          _isWebosUnsupportedAudioCodec(targetAudio.displayTitle)) {
         appLogger.i(
-          '[WebOS-Audio] Audio codec "${selectedAudio.codec}" (${selectedAudio.displayTitle}) is unsupported by webOS NDL Direct Play; using Direct Stream (Video Copy + AAC Audio)',
+          '[WebOS-Audio] Audio codec "${targetAudio.codec}" (${targetAudio.displayTitle}) is unsupported by webOS NDL Direct Play; using Direct Stream (Video Copy + AAC Audio)',
         );
         return true;
       }

@@ -68,6 +68,7 @@ private:
   void SetNetworkBuffering();
   void PushBufferingEnd();
   void PushDispose(int64_t timeout);
+  void NotifyDisposedOnce();
   void PushEvent(const flutter::EncodableValue& value);
   void FlushPendingEvents();
 

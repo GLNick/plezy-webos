@@ -1,5 +1,13 @@
 part of '../../jellyfin_client.dart';
 
+bool _isJellyfinWebosRuntime() => Platform.isLinux && !PlatformDetector.isDesktopOS();
+
+bool _isJellyfinWebosUnsupportedAudio(String? raw) {
+  if (raw == null || raw.isEmpty) return false;
+  final lower = raw.trim().toLowerCase();
+  return lower.contains('dts') || lower == 'dca' || lower.contains('truehd') || lower == 'mlp';
+}
+
 bool _canUseJellyfinStaticStreamFallback(Object error) {
   if (error is MediaServerAuthException) return false;
   if (error is MediaServerHttpException) {
@@ -324,6 +332,15 @@ mixin _JellyfinPlaybackMethods on _JellyfinClientInternals {
               track.isExternalFile &&
               CodecUtils.isTextSubtitleCodec(track.codec),
         );
+    final preNegotiationAudioId = _resolveJellyfinAudioStreamId(requestedAudioStreamId, mediaInfo);
+    final targetPreAudio = preNegotiationAudioId != null
+        ? mediaInfo.audioTracks.where((a) => a.id == preNegotiationAudioId).firstOrNull
+        : (mediaInfo.audioTracks.where((a) => a.selected).firstOrNull ?? mediaInfo.audioTracks.firstOrNull);
+    final webosAudioRequiresTranscode = !isTrack &&
+        _isJellyfinWebosRuntime() &&
+        targetPreAudio != null &&
+        (_isJellyfinWebosUnsupportedAudio(targetPreAudio.codec) ||
+            _isJellyfinWebosUnsupportedAudio(targetPreAudio.displayTitle));
     final int? maxStreamingBitrate = wantsOriginal
         ? null
         : isTrack
@@ -331,7 +348,8 @@ mixin _JellyfinPlaybackMethods on _JellyfinClientInternals {
         ? audioPreset.bitrateKbps! * 1000
         : (preset.videoBitrateKbps ?? 100_000) * 1000;
     final resumeOffsetMs = metadata.viewOffsetMs;
-    final int? transcodeStartTimeTicks = !wantsOriginal && resumeOffsetMs != null && resumeOffsetMs > 0
+    final int? transcodeStartTimeTicks =
+        (!wantsOriginal || webosAudioRequiresTranscode) && resumeOffsetMs != null && resumeOffsetMs > 0
         ? msToJellyfinTicks(resumeOffsetMs)
         : null;
     Map<String, dynamic>? negotiation;
@@ -380,8 +398,11 @@ mixin _JellyfinPlaybackMethods on _JellyfinClientInternals {
         );
       }
 
+      final forceWebosDirectStream = !isTrack &&
+          _isJellyfinWebosRuntime() &&
+          (webosAudioRequiresTranscode || chosenSource['SupportsDirectPlay'] == false);
       final transcodingUrl = chosenSource['TranscodingUrl'];
-      if (!wantsOriginal && transcodingUrl is String && transcodingUrl.isNotEmpty) {
+      if ((!wantsOriginal || forceWebosDirectStream) && transcodingUrl is String && transcodingUrl.isNotEmpty) {
         // TranscodingUrl is server-relative and already encodes container,
         // codecs, MediaSourceId, and PlaySessionId; we just append the
         // dialect's token query parameter for auth.
@@ -403,6 +424,38 @@ mixin _JellyfinPlaybackMethods on _JellyfinClientInternals {
 
     final effectiveAudioStreamId = _resolveJellyfinAudioStreamId(requestedAudioStreamId, mediaInfo);
     mediaInfo = _withSelectedJellyfinAudioStream(mediaInfo, effectiveAudioStreamId);
+    if (!isTrack && _isJellyfinWebosRuntime()) {
+      final rawStaticUrl = buildDirectStreamUrl(
+        metadata.id,
+        container: effectiveContainer,
+        mediaSourceId: _normalizedSourceId(effectiveSourceId),
+      );
+      WebosDirectStreamFallbackRegistry.instance.registerActiveSession(
+        ratingKey: metadata.id,
+        rawMkvUrl: rawStaticUrl,
+        headers: streamHeaders,
+        initialAudioStreamId: effectiveAudioStreamId,
+        buildDirectStreamUrlWithAudio: (overrideAudioId) async {
+          final targetAudioIdx = overrideAudioId ?? effectiveAudioStreamId;
+          final dsNegotiation = await getPlaybackInfo(
+            metadata.id,
+            maxStreamingBitrate: maxStreamingBitrate,
+            mediaSourceId: effectiveSourceId,
+            audioStreamIndex: targetAudioIdx,
+            subtitleStreamIndex: requestedSubtitleStreamId,
+            enableDirectPlay: false,
+            allowVideoStreamCopy: true,
+            burnSubtitles: !wantsOriginal && !requestedSubtitleIsExternalFile,
+          );
+          final dsSource = _selectNegotiatedMediaSource(dsNegotiation['MediaSources'], effectiveSourceId);
+          final dsTranscodingUrl = dsSource?['TranscodingUrl'];
+          if (dsTranscodingUrl is String && dsTranscodingUrl.isNotEmpty) {
+            return _withApiKey(dsTranscodingUrl);
+          }
+          return null;
+        },
+      );
+    }
     // Tracks have no subtitle streams to assemble (a `Lyric` stream may be
     // present, but lyrics flow through fetchLyrics, not the subtitle path).
     //
@@ -934,33 +987,20 @@ mixin _JellyfinPlaybackMethods on _JellyfinClientInternals {
                 // Every audio codec Jellyfin can put in an fMP4 segment, so a
                 // transcode forced by the video stream can still copy the audio
                 // instead of re-encoding it; AAC leads because it is the only
-                // entry the server can reliably encode to. Two silent traps:
-                // the server validates this against `^[a-zA-Z0-9\-\._,|]{0,40}$`
-                // when it echoes the list into the transcode URL, so `alac` does
-                // not fit and `*` is not a wildcard; and omitting the key is not
-                // "accept everything" the way it is for a direct-play profile —
-                // the server substitutes the source codec, filters it against
-                // the same fMP4 set, and ships no audio at all for a source it
-                // cannot carry.
-                'AudioCodec': 'aac,mp3,ac3,eac3,flac,opus,dts,truehd',
+                // entry the server can reliably encode to. On webOS, DTS and
+                // TrueHD are excluded because Starfish NDL_media rejects them.
+                'AudioCodec': _isJellyfinWebosRuntime()
+                    ? 'aac,mp3,ac3,eac3,flac,opus'
+                    : 'aac,mp3,ac3,eac3,flac,opus,dts,truehd',
               },
             // MPEG-TS is the only Emby Live TV target (#2273); otherwise it
-            // stays second as Jellyfin's fallback (#2198). Jellyfin drops every
-            // non-ts transcoding profile for a live source with
-            // `UseMostCompatibleTranscodingProfile` — hardcoded true for
-            // HDHomeRun tuners, default true for M3U tuners — so with fMP4
-            // alone Live TV negotiates no HLS URL at all. Both codec lists
-            // are strict subsets of the fMP4 entry's, and the server ranks
-            // profiles with a stable sort, so ts can only win when the fMP4
-            // entry has been filtered out: VOD keeps negotiating fMP4
-            // (jellyfin-web ships the same mp4-then-ts pair). flac and
-            // truehd are omitted because TS cannot carry them.
+            // stays second as Jellyfin's fallback (#2198).
             {
               'Type': 'Video',
               'Container': 'ts',
               'Protocol': 'hls',
               'VideoCodec': _jellyfinTranscodeVideoCodecsTs(),
-              'AudioCodec': 'aac,mp3,ac3,eac3,opus,dts',
+              'AudioCodec': _isJellyfinWebosRuntime() ? 'aac,mp3,ac3,eac3,opus' : 'aac,mp3,ac3,eac3,opus,dts',
             },
             // Track playback transcode target: stereo mp3 over plain http.
             // Appended after the video profile so the first-entry-wins
@@ -980,10 +1020,11 @@ mixin _JellyfinPlaybackMethods on _JellyfinClientInternals {
               'Type': 'Video',
               'Container': 'mp4,mkv,m4v,webm,mov,ts,mpegts',
               'VideoCodec': _jellyfinDirectPlayVideoCodecs(),
-              // No `AudioCodec`: an omitted list means "any codec" to
-              // Jellyfin. mpv decodes every audio codec these containers can
-              // carry and an audio decode is cheap everywhere, so an audio
-              // stream must never be the reason a file cannot direct-play.
+              // On mpv backends, omitting `AudioCodec` means "any codec". On LG
+              // webOS NDL_media, DTS and TrueHD cannot be decoded directly, so
+              // restrict DirectPlayProfiles to supported webOS audio codecs so
+              // Jellyfin/Emby Direct-Streams video + transcodes audio instead.
+              if (_isJellyfinWebosRuntime()) 'AudioCodec': 'aac,ac3,eac3,mp3,flac,opus,vorbis,pcm',
             },
             // Music containers/codecs mpv plays natively everywhere. This one
             // keeps its `AudioCodec` because Jellyfin falls back to the

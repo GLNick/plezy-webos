@@ -329,6 +329,10 @@ class PlayerWebos extends PlayerBase {
   final Map<String, int> _subIdToEmbeddedOrderIndex = {};
   final Map<String, String> _subIdToExternalUri = {};
   final Map<String, int> _audioIdToOrderIndex = {};
+  final Map<String, int> _audioIdToStreamId = {};
+  final Map<String, ({String? codec, String? title})> _audioIdToMeta = {};
+  int? _activeHlsAudioStreamId;
+  int? _pendingAudioHotSwapStreamId;
   WebosMkvSubtitleExtractor? _mkvExtractor;
   WebosLibassController? _libassController;
   Future<void>? _libassInitInFlight;
@@ -484,11 +488,23 @@ class PlayerWebos extends PlayerBase {
   String? _initialPlexSelectedSubId;
   final Map<String, String?> _subIdToLangCode = {};
 
+  static bool _isWebosUnsupportedAudio(String? codec, String? title) {
+    bool matchesUnsupported(String? raw) {
+      if (raw == null || raw.isEmpty) return false;
+      final lower = raw.trim().toLowerCase();
+      return lower.contains('dts') || lower == 'dca' || lower.contains('truehd') || lower == 'mlp';
+    }
+
+    return matchesUnsupported(codec) || matchesUnsupported(title);
+  }
+
   List<Map<String, dynamic>> _buildTrackListEntries(List<SubtitleTrack>? externalSubtitles) {
     _subIdToEmbeddedOrderIndex.clear();
     _subIdToExternalUri.clear();
     _subIdToLangCode.clear();
     _audioIdToOrderIndex.clear();
+    _audioIdToStreamId.clear();
+    _audioIdToMeta.clear();
     _cachedMkvSubTrackId = null;
     _cachedMkvTrackListLen = -1;
     _cachedMkvTrackNum = null;
@@ -502,10 +518,25 @@ class PlayerWebos extends PlayerBase {
     final info = _pendingMediaInfo;
     final audioTracks = info?.audioTracks ?? const <MediaAudioTrack>[];
     if (audioTracks.isNotEmpty) {
+      int selectedHlsIndex = 0;
+      if (_isCurrentStreamHls) {
+        final registryAudioId = _activeHlsAudioStreamId ?? WebosDirectStreamFallbackRegistry.instance.activeAudioStreamId;
+        final byRegistry = registryAudioId != null
+            ? audioTracks.indexWhere((a) => a.id == registryAudioId)
+            : -1;
+        if (byRegistry >= 0) {
+          selectedHlsIndex = byRegistry;
+        } else {
+          final byFlag = audioTracks.indexWhere((a) => a.selected);
+          if (byFlag >= 0) selectedHlsIndex = byFlag;
+        }
+        _activeHlsAudioStreamId = audioTracks[selectedHlsIndex].id;
+      }
       for (var i = 0; i < audioTracks.length; i++) {
         final a = audioTracks[i];
         final tid = 'a_${a.id}';
         _audioIdToOrderIndex[tid] = i;
+        _audioIdToStreamId[tid] = a.id;
         if (a.selected && _initialAudioOrderIdx == null) {
           _initialAudioOrderIdx = i;
         }
@@ -517,6 +548,7 @@ class PlayerWebos extends PlayerBase {
             : ((a.displayTitle != null && a.displayTitle!.trim().isNotEmpty)
                 ? a.displayTitle!.trim()
                 : a.language?.trim());
+        _audioIdToMeta[tid] = (codec: a.codec, title: a.displayTitle ?? titleStr);
 
         entries.add({
           'id': tid,
@@ -526,9 +558,10 @@ class PlayerWebos extends PlayerBase {
           'codec': a.codec,
           'demux-channel-count': a.channels,
           'default': a.selected,
-          // NDL_media startet physisch immer auf Spur 0; dadurch erkennt TrackManager
-          // zuverlässig, wenn eine andere Spur (z.B. Deutsch) gewählt werden muss!
-          'selected': i == 0,
+          // On Direct Play, NDL_media starts on physical track 0 so TrackSelectionService
+          // switches to the preferred track. On HLS Direct Stream, the server already
+          // muxed only the active audioStreamId into the single-audio HLS stream.
+          'selected': _isCurrentStreamHls ? (i == selectedHlsIndex) : (i == 0),
         });
       }
     } else {
@@ -690,6 +723,8 @@ class PlayerWebos extends PlayerBase {
     _lastResolvedUri = resolvedUri;
     var isHls = resolvedUri.contains('.m3u8') || resolvedUri.contains('start.m3u8');
     _isCurrentStreamHls = isHls;
+    _activeHlsAudioStreamId = isHls ? WebosDirectStreamFallbackRegistry.instance.activeAudioStreamId : null;
+    _pendingAudioHotSwapStreamId = null;
     _saw702Error = false;
 
     final payloadJson = sourceStart.inMilliseconds > 0
@@ -739,6 +774,7 @@ class PlayerWebos extends PlayerBase {
             _lastResolvedUri = resolvedUri;
             isHls = true;
             _isCurrentStreamHls = true;
+            _activeHlsAudioStreamId = WebosDirectStreamFallbackRegistry.instance.activeAudioStreamId;
             texId = await _webosPlatform.create(
               DataSource(
                 sourceType: DataSourceType.network,
@@ -1316,6 +1352,8 @@ class PlayerWebos extends PlayerBase {
     _mkvExtractor = null;
     _loadedExternalSubtitles.clear();
     _loadedExternalPrefixMaxEndMs.clear();
+    _activeHlsAudioStreamId = null;
+    _pendingAudioHotSwapStreamId = null;
     _cachedMkvSubTrackId = null;
     _cachedMkvTrackListLen = -1;
     _cachedMkvTrackNum = null;
@@ -1390,7 +1428,7 @@ class PlayerWebos extends PlayerBase {
     if (!_emittedFileLoadedForSource) {
       _emittedFileLoadedForSource = true;
       handlePropertyChange('track-list', _currentTrackEntries, sourceId: sourceId);
-      if (_initialAudioOrderIdx != null && _initialAudioOrderIdx! > 0) {
+      if (!_isCurrentStreamHls && _initialAudioOrderIdx != null && _initialAudioOrderIdx! > 0) {
         unawaited(_auxWebosChannel.invokeMethod<void>('selectTrack', {
           'textureId': texId,
           'type': 'audio',
@@ -1411,7 +1449,7 @@ class PlayerWebos extends PlayerBase {
     } else {
       final selectedAudioId = state.track.audio?.id;
       final audioIdx = selectedAudioId != null ? _audioIdToOrderIndex[selectedAudioId] : _initialAudioOrderIdx;
-      if (audioIdx != null && audioIdx > 0) {
+      if (!_isCurrentStreamHls && audioIdx != null && audioIdx > 0) {
         unawaited(_auxWebosChannel.invokeMethod<void>('selectTrack', {
           'textureId': texId,
           'type': 'audio',
@@ -1426,8 +1464,19 @@ class PlayerWebos extends PlayerBase {
     _refreshActiveSubtitleCues();
   }
 
-  Future<bool> _hotSwapToDirectStream(int targetPosMs, {bool emitErrorOnFailure = true}) async {
-    if (_isClosed || _isHotSwapping) return false;
+  Future<bool> _hotSwapToDirectStream(
+    int targetPosMs, {
+    bool emitErrorOnFailure = true,
+    int? audioStreamIdOverride,
+    bool markUnseekable = true,
+  }) async {
+    if (_isClosed) return false;
+    if (_isHotSwapping) {
+      if (audioStreamIdOverride != null) {
+        _pendingAudioHotSwapStreamId = audioStreamIdOverride;
+      }
+      return false;
+    }
     final sourceId = _currentSourceId;
     if (sourceId == null) return false;
 
@@ -1435,7 +1484,12 @@ class PlayerWebos extends PlayerBase {
     bool oldTextureDisposed = false;
     String? failureMessage;
     try {
-      final dsUrl = await WebosDirectStreamFallbackRegistry.instance.obtainDirectStreamUrl();
+      final effectiveAudioStreamId =
+          audioStreamIdOverride ?? _activeHlsAudioStreamId ?? WebosDirectStreamFallbackRegistry.instance.activeAudioStreamId;
+      final dsUrl = await WebosDirectStreamFallbackRegistry.instance.obtainDirectStreamUrl(
+        audioStreamId: effectiveAudioStreamId,
+        markUnseekable: markUnseekable,
+      );
       if (_isClosed || dsUrl == null || dsUrl.isEmpty || _currentSourceId != sourceId) {
         return false;
       }
@@ -1443,6 +1497,7 @@ class PlayerWebos extends PlayerBase {
       final resolvedDsUri = _resolveUrlWithHeaders(dsUrl, _lastHeaders);
       _lastResolvedUri = resolvedDsUri;
       _isCurrentStreamHls = true;
+      _activeHlsAudioStreamId = WebosDirectStreamFallbackRegistry.instance.activeAudioStreamId ?? effectiveAudioStreamId;
       _saw702Error = false;
       _targetResumeStartMs = targetPosMs;
       _openStartedAt = DateTime.now();
@@ -1575,6 +1630,22 @@ class PlayerWebos extends PlayerBase {
             'sourceId': sourceId,
           });
         }
+      } else if (!_isClosed &&
+          _currentSourceId == sourceId &&
+          _pendingAudioHotSwapStreamId != null &&
+          _pendingAudioHotSwapStreamId != _activeHlsAudioStreamId) {
+        final nextAudioId = _pendingAudioHotSwapStreamId!;
+        _pendingAudioHotSwapStreamId = null;
+        unawaited(
+          _hotSwapToDirectStream(
+            currentSourcePositionMs,
+            emitErrorOnFailure: false,
+            audioStreamIdOverride: nextAudioId,
+            markUnseekable: false,
+          ),
+        );
+      } else {
+        _pendingAudioHotSwapStreamId = null;
       }
     }
   }
@@ -1679,6 +1750,40 @@ class PlayerWebos extends PlayerBase {
   Future<void> selectAudioTrack(AudioTrack track) async {
     if (_isClosed) return;
     updateSelectedAudioTrack(track.id);
+    final streamId = _audioIdToStreamId[track.id];
+    if (streamId != null) {
+      WebosDirectStreamFallbackRegistry.instance.activeAudioStreamId = streamId;
+    }
+
+    if (_isCurrentStreamHls) {
+      if (streamId != null && streamId != _activeHlsAudioStreamId) {
+        appLogger.i(
+          '[WebOS-Audio] Switching HLS Direct Stream audio to streamId=$streamId (${track.title ?? track.language ?? track.id}) at ${currentSourcePositionMs}ms',
+        );
+        await _hotSwapToDirectStream(
+          currentSourcePositionMs,
+          emitErrorOnFailure: false,
+          audioStreamIdOverride: streamId,
+          markUnseekable: false,
+        );
+      }
+      return;
+    }
+
+    final meta = _audioIdToMeta[track.id];
+    if (streamId != null && _isWebosUnsupportedAudio(meta?.codec ?? track.codec, meta?.title ?? track.title)) {
+      appLogger.i(
+        '[WebOS-Audio] Selected unsupported Direct Play audio "${meta?.codec ?? track.codec}" (${meta?.title ?? track.title}); hot-swapping to Direct Stream (streamId=$streamId)',
+      );
+      final swapped = await _hotSwapToDirectStream(
+        currentSourcePositionMs,
+        emitErrorOnFailure: false,
+        audioStreamIdOverride: streamId,
+        markUnseekable: false,
+      );
+      if (swapped) return;
+    }
+
     final texId = _textureId;
     final orderIdx = _audioIdToOrderIndex[track.id];
     if (texId != null && orderIdx != null) {

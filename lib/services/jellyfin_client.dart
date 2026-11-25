@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:convert';
+import 'dart:io' show Platform;
 import 'dart:typed_data';
 
 import 'package:flutter/foundation.dart' show visibleForTesting;
@@ -86,7 +87,9 @@ import 'subtitle_preference.dart';
 import 'track_selection_service.dart';
 import 'video_decode_capabilities.dart';
 import '../mpv/mpv.dart';
+import '../mpv/player/platform/webos_subtitle_engine.dart';
 import '../utils/codec_utils.dart';
+import '../utils/platform_detector.dart';
 
 part 'jellyfin_client/parts/account_preferences.dart';
 part 'jellyfin_client/parts/browse.dart';

@@ -161,7 +161,10 @@ void VideoPlayer::Dispose(const DisposedCallback disposed_cb) {
   event_channel_->SetStreamHandler(nullptr);
 
   Unload();
-  PushDispose(50);
+  player_.releaseSlotForDispose();
+  if (disposed_cb_) {
+    PushDispose(50);
+  }
 }
 
 void VideoPlayer::SetUpEventChannel(flutter::BinaryMessenger *messenger) {
@@ -228,11 +231,7 @@ void VideoPlayer::OnStateChanged(int state) {
     if (state == WebOSPlayer::UNLOADED) {
       LogInfo(TAG) << "media pipeline unloaded("
                    << texture_id_ << ") !!!";
-      if (dispose_timeout_source_) {
-        g_source_destroy(dispose_timeout_source_);
-        dispose_timeout_source_ = nullptr;
-      }
-      disposed_cb_(texture_id_);
+      NotifyDisposedOnce();
     }
     return;
   }
@@ -431,9 +430,21 @@ void VideoPlayer::PushDispose(int64_t timeout) {
     LogError(TAG) << "Dispose timeout.. forced_dispose..";
     VideoPlayer* self = (VideoPlayer*)data;
     self->dispose_timeout_source_ = nullptr;
-    self->disposed_cb_(self->texture_id_);
+    self->NotifyDisposedOnce();
     return G_SOURCE_REMOVE;
   }, this, timeout);
+}
+
+void VideoPlayer::NotifyDisposedOnce() {
+  if (dispose_timeout_source_) {
+    g_source_destroy(dispose_timeout_source_);
+    dispose_timeout_source_ = nullptr;
+  }
+  if (disposed_cb_) {
+    auto cb = std::move(disposed_cb_);
+    disposed_cb_ = nullptr;
+    cb(texture_id_);
+  }
 }
 
 void VideoPlayer::PushEvent(const flutter::EncodableValue& value) {
