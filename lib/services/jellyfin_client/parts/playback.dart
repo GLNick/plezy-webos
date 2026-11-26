@@ -1,6 +1,16 @@
 part of '../../jellyfin_client.dart';
 
-bool _isJellyfinWebosRuntime() => Platform.isLinux && !PlatformDetector.isDesktopOS();
+@visibleForTesting
+bool? debugForceJellyfinWebosRuntime;
+
+bool _isJellyfinWebosRuntime() =>
+    debugForceJellyfinWebosRuntime ?? (Platform.isLinux && !PlatformDetector.isDesktopOS());
+
+bool _isJellyfinMkvContainer(String? container) {
+  if (container == null || container.isEmpty) return false;
+  final lower = container.trim().toLowerCase();
+  return lower.contains('mkv') || lower.contains('matroska') || lower.contains('webm');
+}
 
 bool _isJellyfinWebosUnsupportedAudio(String? raw) {
   if (raw == null || raw.isEmpty) return false;
@@ -352,6 +362,7 @@ mixin _JellyfinPlaybackMethods on _JellyfinClientInternals {
         (!wantsOriginal || webosAudioRequiresTranscode) && resumeOffsetMs != null && resumeOffsetMs > 0
         ? msToJellyfinTicks(resumeOffsetMs)
         : null;
+    final didBurnSubtitles = !wantsOriginal && !requestedSubtitleIsExternalFile;
     Map<String, dynamic>? negotiation;
     Map<String, dynamic>? chosenSource;
     try {
@@ -367,7 +378,7 @@ mixin _JellyfinPlaybackMethods on _JellyfinClientInternals {
         // burns the selected embedded stream in rather than serving it as a file the client
         // would fetch as well. A selected external *file* keeps `External`, so it is still
         // delivered as a file - the one case where the client genuinely holds it.
-        burnSubtitles: !wantsOriginal && !requestedSubtitleIsExternalFile,
+        burnSubtitles: didBurnSubtitles,
       );
       chosenSource = _selectNegotiatedMediaSource(negotiation['MediaSources'], bundle.selectedSourceId);
     } catch (error, stackTrace) {
@@ -432,7 +443,7 @@ mixin _JellyfinPlaybackMethods on _JellyfinClientInternals {
       );
       WebosDirectStreamFallbackRegistry.instance.registerActiveSession(
         ratingKey: metadata.id,
-        rawMkvUrl: rawStaticUrl,
+        rawMkvUrl: wantsOriginal && _isJellyfinMkvContainer(effectiveContainer) ? rawStaticUrl : null,
         headers: streamHeaders,
         initialAudioStreamId: effectiveAudioStreamId,
         buildDirectStreamUrlWithAudio: (overrideAudioId) async {
@@ -445,7 +456,7 @@ mixin _JellyfinPlaybackMethods on _JellyfinClientInternals {
             subtitleStreamIndex: requestedSubtitleStreamId,
             enableDirectPlay: false,
             allowVideoStreamCopy: true,
-            burnSubtitles: !wantsOriginal && !requestedSubtitleIsExternalFile,
+            burnSubtitles: didBurnSubtitles,
           );
           final dsSource = _selectNegotiatedMediaSource(dsNegotiation['MediaSources'], effectiveSourceId);
           final dsTranscodingUrl = dsSource?['TranscodingUrl'];
@@ -469,14 +480,20 @@ mixin _JellyfinPlaybackMethods on _JellyfinClientInternals {
     final negotiatedSubtitleStreamId = requestedSubtitleStreamId == -1
         ? null
         : requestedSubtitleStreamId ?? mediaInfo.defaultSubtitleStreamIndex;
-    final burnedSourceStreamId = isTranscoding && !requestedSubtitleIsExternalFile ? negotiatedSubtitleStreamId : null;
+    final burnedSourceStreamId = isTranscoding && didBurnSubtitles ? negotiatedSubtitleStreamId : null;
+    // On webOS Original-quality MKV DirectStream (e.g. DTS/TrueHD audio transcode
+    // with video stream-copy), subtitles are not burned and `rawStaticUrl` is
+    // registered in WebosDirectStreamFallbackRegistry so `_mkvExtractor` demuxes
+    // embedded ASS + MKV font attachments directly instead of fontless `.ass` sidecars.
+    final keepEmbeddedMkvSubtitlesNativeOnWebos =
+        _isJellyfinWebosRuntime() && wantsOriginal && _isJellyfinMkvContainer(effectiveContainer);
     final subtitleSidecars = isTrack
         ? const <PlaybackSubtitleSidecar>[]
         : _buildExternalSubtitles(
             metadata.id,
             effectiveSourceId,
             mediaInfo,
-            isTranscoding: isTranscoding,
+            isTranscoding: isTranscoding && !keepEmbeddedMkvSubtitlesNativeOnWebos,
             burnedSourceStreamId: burnedSourceStreamId,
           );
     mediaInfo = _withSidecarBackedSubtitleIdentity(mediaInfo, subtitleSidecars);

@@ -38,6 +38,10 @@ class MediaSourceInfo {
   /// Display aspect ratio of the video stream (width / height).
   final double? videoAspectRatio;
 
+  /// Coded pixel dimensions of the primary video stream, when known.
+  final int? videoWidth;
+  final int? videoHeight;
+
   MediaSourceInfo({
     required this.videoUrl,
     required this.audioTracks,
@@ -53,6 +57,8 @@ class MediaSourceInfo {
     this.defaultSubtitleStreamIndex,
     this.trickplayByWidth,
     this.videoAspectRatio,
+    this.videoWidth,
+    this.videoHeight,
   });
 
   /// Field-preserving rebuild. Track lists are the only members that the
@@ -74,6 +80,8 @@ class MediaSourceInfo {
       defaultSubtitleStreamIndex: defaultSubtitleStreamIndex,
       trickplayByWidth: trickplayByWidth,
       videoAspectRatio: videoAspectRatio,
+      videoWidth: videoWidth,
+      videoHeight: videoHeight,
     );
   }
 }

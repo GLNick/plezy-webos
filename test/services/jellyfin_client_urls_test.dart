@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:fake_async/fake_async.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -5979,6 +5980,128 @@ void main() {
 
       expect(page.items, isEmpty);
       expect(requestCount, 0);
+    });
+  });
+
+  group('webOS Jellyfin MKV embedded ASS & coded video dimensions', () {
+    tearDown(() {
+      debugForceJellyfinWebosRuntime = null;
+      WebosDirectStreamFallbackRegistry.debugStorageDirOverride = null;
+      WebosDirectStreamFallbackRegistry.instance.debugReset();
+    });
+
+    test('Original-quality MKV with TrueHD audio on webOS keeps embedded ASS native, registers rawMkvUrl, and populates videoWidth/videoHeight', () async {
+      final tempDir = await Directory.systemTemp.createTemp('jf_webos_ass_');
+      addTearDown(() async {
+        if (await tempDir.exists()) {
+          await tempDir.delete(recursive: true);
+        }
+      });
+      WebosDirectStreamFallbackRegistry.debugStorageDirOverride = tempDir.path;
+      WebosDirectStreamFallbackRegistry.instance.debugReset();
+      debugForceJellyfinWebosRuntime = true;
+
+      const mediaSource = {
+        'Id': 'src-1',
+        'Container': 'mkv',
+        'SupportsDirectPlay': true,
+        'DefaultAudioStreamIndex': 1,
+        'DefaultSubtitleStreamIndex': 2,
+        'MediaStreams': [
+          {
+            'Index': 0,
+            'Type': 'Video',
+            'Codec': 'hevc',
+            'Width': 1920,
+            'Height': 800,
+          },
+          {
+            'Index': 1,
+            'Type': 'Audio',
+            'Codec': 'truehd',
+            'Language': 'jpn',
+            'DisplayTitle': 'Japanese TrueHD 7.1',
+            'IsDefault': true,
+          },
+          {
+            'Index': 2,
+            'Type': 'Subtitle',
+            'Codec': 'ass',
+            'Language': 'eng',
+            'DisplayTitle': 'English Full Subs',
+            'IsDefault': true,
+            'IsExternal': false,
+            'DeliveryMethod': 'External',
+            'DeliveryUrl': '/Videos/item-1/src-1/Subtitles/2/Stream.ass',
+          },
+          {
+            'Index': 3,
+            'Type': 'Subtitle',
+            'Codec': 'srt',
+            'Language': 'deu',
+            'DisplayTitle': 'German External SRT',
+            'IsExternal': true,
+            'DeliveryMethod': 'External',
+            'DeliveryUrl': '/Videos/item-1/src-1/Subtitles/3/Stream.srt',
+          },
+        ],
+      };
+
+      final client = JellyfinClient.forTesting(
+        connection: _conn(),
+        httpClient: MockClient((request) async {
+          if (request.url.path == '/Users/user-1/Items/item-1') {
+            return jsonResponse({
+              'Id': 'item-1',
+              'Type': 'Movie',
+              'Name': 'Anime Movie',
+              'MediaSources': [mediaSource],
+            });
+          }
+          if (request.url.path == '/Items/item-1/PlaybackInfo') {
+            return jsonResponse({
+              'PlaySessionId': 'ps-webos-1',
+              'MediaSources': [
+                {
+                  ...mediaSource,
+                  'TranscodingUrl': '/Videos/item-1/master.m3u8?MediaSourceId=src-1&PlaySessionId=ps-webos-1',
+                },
+              ],
+            });
+          }
+          return http.Response('not used', 500);
+        }),
+      );
+      addTearDown(client.close);
+
+      final result = await client.getPlaybackInitialization(
+        PlaybackInitializationOptions(
+          metadata: testMediaItem(
+            id: 'item-1',
+            backend: MediaBackend.jellyfin,
+            kind: MediaKind.movie,
+            serverId: 'srv-1',
+          ),
+          selectedMediaIndex: 0,
+          qualityPreset: TranscodeQualityPreset.original,
+        ),
+      );
+
+      expect(result.isTranscoding, isTrue);
+      // Real external SRT file stays a sidecar, while embedded MKV ASS is NOT turned into a fontless sidecar
+      expect(result.subtitleSidecars.map((s) => s.sourceStreamId), [3]);
+      final embeddedAss = result.mediaInfo!.subtitleTracks.firstWhere((t) => t.id == 2);
+      expect(embeddedAss.isExternalFile, isFalse);
+      expect(embeddedAss.usesExternalDelivery, isFalse);
+      expect(embeddedAss.key, isNull);
+      expect(embeddedAss.isExternal, isFalse);
+
+      // Coded video dimensions (1920x800, DAR 2.40) and rawMkvUrl are populated for frame-0 PAR=1.0 & MKV font extraction
+      expect(result.mediaInfo!.videoWidth, 1920);
+      expect(result.mediaInfo!.videoHeight, 800);
+      expect(result.mediaInfo!.videoAspectRatio, closeTo(2.40, 1e-4));
+      expect(WebosDirectStreamFallbackRegistry.instance.lastRawMkvUrl, contains('/Videos/item-1/stream'));
+      expect(WebosDirectStreamFallbackRegistry.instance.lastRawMkvUrl, contains('Static=true'));
     });
   });
 }

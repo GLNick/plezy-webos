@@ -338,7 +338,9 @@ class PlayerWebos extends PlayerBase {
   WebosLibassController? _libassController;
   Future<void>? _libassInitInFlight;
   int _debugLibassBackendSpawnCount = 0;
-  bool _subUseMargins = false;
+  bool _subUseMargins;
+  double _subFontSize;
+  String _subAssOverrideMode;
   final VideoPlayerPlatform? _platformOverride;
   final bool _libassEnabled;
   final bool? _useWebosLibassOverride;
@@ -363,6 +365,12 @@ class PlayerWebos extends PlayerBase {
         _useWebosLibassOverride = useWebosLibassOverride,
         _userLibassEnabled =
             useWebosLibassOverride ?? (SettingsService.instanceOrNull?.getUseWebosLibass() ?? true),
+        _subUseMargins =
+            SettingsService.instanceOrNull?.read(SettingsService.subtitleUseMargins) ?? true,
+        _subFontSize =
+            (SettingsService.instanceOrNull?.read(SettingsService.subtitleFontSize) ?? 38).toDouble(),
+        _subAssOverrideMode =
+            SettingsService.instanceOrNull?.read(SettingsService.subAssOverride).name ?? 'no',
         _libassBackendFactoryOverride = libassBackendFactoryOverride;
 
   PlayerWebos.audio()
@@ -371,6 +379,9 @@ class PlayerWebos extends PlayerBase {
         _libassEnabled = false,
         _useWebosLibassOverride = false,
         _userLibassEnabled = false,
+        _subUseMargins = true,
+        _subFontSize = 38.0,
+        _subAssOverrideMode = 'no',
         _libassBackendFactoryOverride = null;
 
   bool get _effectiveLibassEnabled => _libassEnabled && _userLibassEnabled && !audioOnly;
@@ -411,6 +422,30 @@ class PlayerWebos extends PlayerBase {
     }
   }
 
+  void _applyLibassFontScale([WebosLibassController? target]) {
+    final ctrl = target ?? _libassController;
+    if (ctrl == null || !ctrl.isAvailable) return;
+    final scale = (_subFontSize / 38.0).clamp(0.5, 2.5);
+    final selective = _subAssOverrideMode != 'force' && _subAssOverrideMode != 'strip';
+    ctrl.setFontScale(scale, selective: selective);
+  }
+
+  void _applyPendingMediaVideoGeometry([WebosLibassController? target]) {
+    final ctrl = target ?? _libassController;
+    final info = _pendingMediaInfo;
+    if (ctrl == null || !ctrl.isAvailable || info == null) return;
+    final w = info.videoWidth ?? 0;
+    final h = info.videoHeight ?? 0;
+    final dar = info.videoAspectRatio;
+    if ((w > 0 && h > 0) || (dar != null && dar > 0.1)) {
+      ctrl.updateVideoGeometry(
+        storageWidth: w,
+        storageHeight: h,
+        displayAspectRatio: dar,
+      );
+    }
+  }
+
   Future<void> _initLibassControllerForSource(int? sourceId) async {
     if (_useWebosLibassOverride == null) {
       final fromSettings = SettingsService.instanceOrNull?.getUseWebosLibass();
@@ -428,6 +463,7 @@ class PlayerWebos extends PlayerBase {
     final existing = _libassController;
     if (existing != null && existing.isAvailable) {
       existing.setUseMargins(_subUseMargins);
+      _applyLibassFontScale(existing);
       existing.setHidden(_subtitlesHidden);
       existing.setVideoReady(_videoReadyForSubtitles);
       _syncLibassActiveNotifier();
@@ -441,6 +477,7 @@ class PlayerWebos extends PlayerBase {
       final ready = _libassController;
       if (ready != null && ready.isAvailable) {
         ready.setUseMargins(_subUseMargins);
+        _applyLibassFontScale(ready);
         ready.setHidden(_subtitlesHidden);
         ready.setVideoReady(_videoReadyForSubtitles);
         _syncLibassActiveNotifier();
@@ -478,6 +515,7 @@ class PlayerWebos extends PlayerBase {
     final ctrl = _libassController;
     if (ctrl != null && ctrl.isAvailable) {
       ctrl.setUseMargins(_subUseMargins);
+      _applyLibassFontScale(ctrl);
       ctrl.setHidden(_subtitlesHidden);
       ctrl.setVideoReady(_videoReadyForSubtitles);
     }
@@ -488,6 +526,7 @@ class PlayerWebos extends PlayerBase {
   /// subtitle tracks advertised by Plex/Jellyfin for the item.
   void setPendingMediaSourceInfo(MediaSourceInfo? info) {
     _pendingMediaInfo = info;
+    _applyPendingMediaVideoGeometry();
   }
 
   VideoPlayerPlatform get _webosPlatform {
@@ -620,15 +659,26 @@ class PlayerWebos extends PlayerBase {
 
     final subTracks = info?.subtitleTracks ?? const <MediaSubtitleTrack>[];
     int embeddedTextIdx = 0;
+    final bool hasMkvDemuxSource = !_currentSourceIsLive &&
+        (!_isCurrentStreamHls ||
+            (WebosDirectStreamFallbackRegistry.instance.lastRawMkvUrl?.isNotEmpty ?? false));
 
     for (var i = 0; i < subTracks.length; i++) {
       final s = subTracks[i];
       final tid = 's_${s.id}';
       final codecUpper = (s.codec ?? '').toUpperCase();
       final isBitmapSub = codecUpper.contains('PGS') || codecUpper.contains('VOBSUB') || codecUpper.contains('DVB');
+      // Jellyfin tags embedded MKV text streams with `usesExternalDelivery: true`
+      // (`isExternalFile == false`). When we can demux the MKV container directly,
+      // prefer `_mkvExtractor` so embedded MKV fonts are preserved instead of
+      // loading a fontless `.ass` sidecar.
+      final preferEmbeddedMkvDemux = s.usesExternalDelivery &&
+          !s.isExternalFile &&
+          hasMkvDemuxSource &&
+          (!isBitmapSub || codecUpper.contains('PGS'));
       String? extUri;
 
-      if (s.isExternal && s.key != null && s.key!.isNotEmpty && _lastResolvedUri != null) {
+      if (!preferEmbeddedMkvDemux && s.isExternal && s.key != null && s.key!.isNotEmpty && _lastResolvedUri != null) {
         final baseUri = Uri.tryParse(_lastResolvedUri!);
         if (baseUri != null) {
           final origin = '${baseUri.scheme}://${baseUri.authority}';
@@ -652,7 +702,7 @@ class PlayerWebos extends PlayerBase {
 
       if (extUri != null) {
         _subIdToExternalUri[tid] = extUri;
-      } else if (!s.isExternal) {
+      } else if (!s.isExternal || preferEmbeddedMkvDemux) {
         if (!isBitmapSub || codecUpper.contains('PGS')) {
           _subIdToEmbeddedOrderIndex[tid] = embeddedTextIdx++;
         } else {
@@ -741,6 +791,7 @@ class PlayerWebos extends PlayerBase {
 
     await _initLibassControllerForSource(sourceId);
     if (_isClosed || _currentSourceId != sourceId) return null;
+    _applyPendingMediaVideoGeometry();
 
     WebosSubtitlePreferenceStore.instance.notifyMediaOpened();
 
@@ -931,6 +982,10 @@ class PlayerWebos extends PlayerBase {
               break;
 
             case VideoEventType.unknown:
+              final updatedSize = event.size;
+              if (updatedSize != null && updatedSize.width > 0 && updatedSize.height > 0) {
+                _handleTextureVideoSizeChanged(updatedSize);
+              }
               break;
           }
         },
@@ -1445,6 +1500,23 @@ class PlayerWebos extends PlayerBase {
     setSeekable(false);
   }
 
+  void _handleTextureVideoSizeChanged(Size videoSize) {
+    if (_isClosed || videoSize.width <= 0 || videoSize.height <= 0) return;
+    _libassController?.updateVideoGeometry(
+      storageWidth: videoSize.width.round(),
+      storageHeight: videoSize.height.round(),
+      displayAspectRatio: _pendingMediaInfo?.videoAspectRatio,
+    );
+    unawaited(
+      updateVideoViewRect(
+        _lastViewRect.left,
+        _lastViewRect.top,
+        _lastViewRect.width,
+        _lastViewRect.height,
+      ),
+    );
+  }
+
   void _handleTextureInitialized({
     required int sourceId,
     required int texId,
@@ -1459,6 +1531,8 @@ class PlayerWebos extends PlayerBase {
         storageHeight: videoSize.height.round(),
         displayAspectRatio: _pendingMediaInfo?.videoAspectRatio,
       );
+    } else {
+      _applyPendingMediaVideoGeometry();
     }
     _libassController?.setVideoReady(true);
 
@@ -1641,6 +1715,10 @@ class PlayerWebos extends PlayerBase {
               handlePlayerEvent('end-file', {'reason': 'eof', 'sourceId': sourceId});
               break;
             case VideoEventType.unknown:
+              final updatedSize = event.size;
+              if (updatedSize != null && updatedSize.width > 0 && updatedSize.height > 0) {
+                _handleTextureVideoSizeChanged(updatedSize);
+              }
               break;
           }
         },
@@ -1884,6 +1962,8 @@ class PlayerWebos extends PlayerBase {
     bool italic = false,
     bool anchorToScreen = false,
   }) async {
+    _subFontSize = fontSize;
+    _applyLibassFontScale();
     subtitleStyleNotifier.value = WebosSubtitleStyleConfig(
       fontSize: fontSize,
       textColor: WebosSubtitleStyleConfig.parseHexColor(textColor, Colors.white),
@@ -1946,6 +2026,29 @@ class PlayerWebos extends PlayerBase {
       case 'sub-use-margins':
         _subUseMargins = (value == 'yes');
         _libassController?.setUseMargins(_subUseMargins);
+        break;
+      case 'sub-font-size':
+        final parsed = double.tryParse(value);
+        if (parsed != null && parsed > 0) {
+          _subFontSize = parsed;
+          _applyLibassFontScale();
+          final prev = subtitleStyleNotifier.value;
+          subtitleStyleNotifier.value = WebosSubtitleStyleConfig(
+            fontSize: parsed,
+            textColor: prev.textColor,
+            borderSize: prev.borderSize,
+            borderColor: prev.borderColor,
+            bgColor: prev.bgColor,
+            bgOpacity: prev.bgOpacity,
+            subtitlePosition: prev.subtitlePosition,
+            bold: prev.bold,
+            italic: prev.italic,
+          );
+        }
+        break;
+      case 'sub-ass-override':
+        _subAssOverrideMode = value.trim().toLowerCase();
+        _applyLibassFontScale();
         break;
       case 'webos-use-libass':
         await setUseWebosLibass(value == 'yes' || value == 'true');

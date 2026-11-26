@@ -187,6 +187,7 @@ class _FakeLibassBackend implements WebosLibassBackend {
   final List<double> pixelAspects = [];
   final List<({int t, int b, int l, int r})> margins = [];
   final List<bool> useMarginsCalls = [];
+  final List<({double scale, bool selective})> fontScaleCalls = [];
   final List<({String name, int len})> addedFonts = [];
   final List<({String path, String? fontName})> addedFontFiles = [];
   int clearFontsCount = 0;
@@ -222,6 +223,10 @@ class _FakeLibassBackend implements WebosLibassBackend {
 
   @override
   void setUseMargins(bool useMargins) => useMarginsCalls.add(useMargins);
+
+  @override
+  void setFontScale(double scale, {bool selective = true}) =>
+      fontScaleCalls.add((scale: scale, selective: selective));
 
   @override
   void addFont(String name, Uint8List bytes) => addedFonts.add((name: name, len: bytes.length));

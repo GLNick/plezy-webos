@@ -75,6 +75,8 @@ MediaSourceInfo jellyfinMediaSourceToMediaSourceInfo(
     defaultSubtitleStreamIndex: defaultSubtitleStreamIndex,
     trickplayByWidth: trickplayByWidth,
     videoAspectRatio: videoAspectRatio,
+    videoWidth: videoWidth,
+    videoHeight: videoHeight,
   );
 }
 

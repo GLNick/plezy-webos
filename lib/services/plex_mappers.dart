@@ -1409,6 +1409,8 @@ MediaSourceInfo? plexMediaSourceInfoForSelection(
     ),
     displayCriteria: PlexMappers.displayCriteriaFromJson(Map<String, dynamic>.from(media), streams.videoStream),
     videoAspectRatio: flexibleDouble(media['aspectRatio']),
+    videoWidth: flexibleInt(streams.videoStream?['width']) ?? flexibleInt(media['width']),
+    videoHeight: flexibleInt(streams.videoStream?['height']) ?? flexibleInt(media['height']),
   );
 }
 

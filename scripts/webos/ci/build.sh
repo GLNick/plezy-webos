@@ -16,7 +16,8 @@ WEBOS_PKG_VERSION="$(python3 "$REPO_ROOT/scripts/webos/ci/webos_version.py" \
 export WEBOS_PKG_VERSION
 echo "=== [ci/build] Resolved WEBOS_PKG_VERSION=${WEBOS_PKG_VERSION} (GITHUB_REF_NAME=${GITHUB_REF_NAME:-<unset>}) ==="
 
-if [ ! -f "$REPO_ROOT/build/webos_libass/libplezy_ass.so" ]; then
+if [ ! -f "$REPO_ROOT/build/webos_libass/libplezy_ass.so" ] || \
+   [ "$REPO_ROOT/native/webos_libass/plezy_ass_bridge.c" -nt "$REPO_ROOT/build/webos_libass/libplezy_ass.so" ]; then
   ./scripts/webos/build_libass_so.sh
 fi
 

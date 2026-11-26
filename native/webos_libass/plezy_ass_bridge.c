@@ -96,6 +96,9 @@ PLEZY_ASS_EXPORT PlezyAssContext* plezy_ass_create(void) {
   ctx->frame_h = 1080;
   ass_set_frame_size(ctx->renderer, ctx->frame_w, ctx->frame_h);
   ass_set_shaper(ctx->renderer, ASS_SHAPING_COMPLEX);
+  ass_set_selective_style_override_enabled(
+      ctx->renderer, ASS_OVERRIDE_BIT_SELECTIVE_FONT_SCALE);
+  ass_set_font_scale(ctx->renderer, 1.0);
   ass_set_cache_limits(
       ctx->renderer, PLEZY_DEFAULT_GLYPH_MAX, PLEZY_DEFAULT_BITMAP_MAX_MB);
 
@@ -169,6 +172,25 @@ PLEZY_ASS_EXPORT void plezy_ass_set_use_margins(
   ass_set_use_margins(ctx->renderer, use_margins ? 1 : 0);
 }
 
+PLEZY_ASS_EXPORT void plezy_ass_set_font_scale(
+    PlezyAssContext* ctx, double scale, int32_t selective) {
+  if (!ctx || !ctx->renderer) {
+    return;
+  }
+  double clamped = scale;
+  if (!(clamped > 0.0)) {
+    clamped = 1.0;
+  } else if (clamped < 0.2) {
+    clamped = 0.2;
+  } else if (clamped > 5.0) {
+    clamped = 5.0;
+  }
+  ass_set_selective_style_override_enabled(
+      ctx->renderer,
+      selective ? ASS_OVERRIDE_BIT_SELECTIVE_FONT_SCALE : ASS_OVERRIDE_DEFAULT);
+  ass_set_font_scale(ctx->renderer, clamped);
+}
+
 PLEZY_ASS_EXPORT void plezy_ass_set_cache_limits(
     PlezyAssContext* ctx, int32_t glyph_max, int32_t bitmap_max_mb) {
   if (!ctx || !ctx->renderer) {
@@ -205,7 +227,7 @@ PLEZY_ASS_EXPORT void plezy_ass_set_fonts(
   const char* font_path =
       (default_font_path && default_font_path[0]) ? default_font_path : NULL;
   const char* family =
-      (default_family && default_family[0]) ? default_family : "sans-serif";
+      (default_family && default_family[0]) ? default_family : "Liberation Sans";
   ass_set_fonts(
       ctx->renderer, font_path, family, ASS_FONTPROVIDER_NONE, NULL, 0);
 }

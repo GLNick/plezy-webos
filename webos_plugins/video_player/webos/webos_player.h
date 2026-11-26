@@ -197,8 +197,8 @@ private:
   bool seekable_;
   bool has_video_;
   bool has_audio_;
-  int videoW_;
-  int videoH_;
+  std::atomic<int> videoW_{0};
+  std::atomic<int> videoH_{0};
   bool buffering_;
   int pending_audio_track_ = -1;
   int64_t buffering_start_;

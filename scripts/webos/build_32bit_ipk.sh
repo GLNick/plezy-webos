@@ -95,9 +95,9 @@ LIBASS_SO="$LIBASS_WORK/libplezy_ass.so"
 
 mkdir -p "$OUT_DIR" "$LIBASS_WORK"
 
-# 1. Ensure native libplezy_ass.so is built
-if [ ! -f "$LIBASS_SO" ]; then
-  echo "=== [libass] libplezy_ass.so not found; building via build_libass_so.sh ==="
+# 1. Ensure native libplezy_ass.so is built and up to date with plezy_ass_bridge.c
+if [ ! -f "$LIBASS_SO" ] || [ "$REPO_ROOT/native/webos_libass/plezy_ass_bridge.c" -nt "$LIBASS_SO" ]; then
+  echo "=== [libass] Building/updating libplezy_ass.so via build_libass_so.sh ==="
   "$REPO_ROOT/scripts/webos/build_libass_so.sh"
 fi
 

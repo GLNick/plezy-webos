@@ -310,16 +310,30 @@ class VideoPlayerWebOs extends VideoPlayerPlatform {
       final Map<dynamic, dynamic> map = event as Map<dynamic, dynamic>;
       switch (map['event']) {
         case 'initialized':
+          final bool isFallbackSize = map['isFallbackSize'] == true;
           Size size = Size((map['width'] as num?)?.toDouble() ?? 0.0,
               (map['height'] as num?)?.toDouble() ?? 0.0);
-          // exported window set Size
+          // exported window set Size (keep fallback 1920x1080 so isReady == true immediately)
           _srcSizes[textureId] = size;
           _widgetStates[textureId]?.reExport();
           return VideoEvent(
             eventType: VideoEventType.initialized,
             duration: Duration(milliseconds: map['duration'] as int),
-            size: size,
+            size: isFallbackSize ? Size.zero : size,
             rotationCorrection: map['rotationCorrection'] as int? ?? 0,
+          );
+        case 'videoSizeChanged':
+          final Size size = Size(
+            (map['width'] as num?)?.toDouble() ?? 0.0,
+            (map['height'] as num?)?.toDouble() ?? 0.0,
+          );
+          if (size.width > 0 && size.height > 0) {
+            _srcSizes[textureId] = size;
+            _widgetStates[textureId]?.reExport();
+          }
+          return VideoEvent(
+            eventType: VideoEventType.unknown,
+            size: size,
           );
         case 'completed':
           return VideoEvent(

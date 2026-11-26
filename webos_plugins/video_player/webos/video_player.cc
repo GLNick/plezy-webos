@@ -67,6 +67,8 @@ void VideoPlayer::Unload() {
   removed_at_playing_ = false;
   reload_ = false;
   buffering_ = false;
+  reported_width_ = 0;
+  reported_height_ = 0;
   seek_position_ = player_.getCurrentPosition();
   window_id_.clear();
 
@@ -278,16 +280,20 @@ void VideoPlayer::OnInitialized() {
   }
 
   int64_t duration = player_.getDuration();
-  int width = player_.getVideoWidth();
-  int height = player_.getVideoHeight();
-  if (width <= 0) width = 1920;
-  if (height <= 0) height = 1080;
+  int raw_width = player_.getVideoWidth();
+  int raw_height = player_.getVideoHeight();
+  bool has_real_size = raw_width > 0 && raw_height > 0;
+  int width = has_real_size ? raw_width : 1920;
+  int height = has_real_size ? raw_height : 1080;
   if (!is_initialized_) {
     is_initialized_ = true;
+    reported_width_ = has_real_size ? raw_width : 0;
+    reported_height_ = has_real_size ? raw_height : 0;
     LogInfo(TAG) << "OnInitialized(" << texture_id_
         << ",duration:" << duration
         << ",video width:" << width
-        << ",height:" << height << ")";
+        << ",height:" << height
+        << ",fallback:" << (!has_real_size) << ")";
 
     flutter::EncodableMap result = {
         {flutter::EncodableValue("event"),
@@ -295,7 +301,23 @@ void VideoPlayer::OnInitialized() {
         {flutter::EncodableValue("duration"),
          flutter::EncodableValue(duration)},
         {flutter::EncodableValue("width"), flutter::EncodableValue(width)},
-        {flutter::EncodableValue("height"), flutter::EncodableValue(height)}};
+        {flutter::EncodableValue("height"), flutter::EncodableValue(height)},
+        {flutter::EncodableValue("isFallbackSize"),
+         flutter::EncodableValue(!has_real_size)}};
+    PushEvent(flutter::EncodableValue(result));
+  } else if (has_real_size &&
+             (raw_width != reported_width_ || raw_height != reported_height_)) {
+    reported_width_ = raw_width;
+    reported_height_ = raw_height;
+    LogInfo(TAG) << "OnVideoSizeChanged(" << texture_id_
+        << ",video width:" << raw_width
+        << ",height:" << raw_height << ")";
+
+    flutter::EncodableMap result = {
+        {flutter::EncodableValue("event"),
+         flutter::EncodableValue("videoSizeChanged")},
+        {flutter::EncodableValue("width"), flutter::EncodableValue(raw_width)},
+        {flutter::EncodableValue("height"), flutter::EncodableValue(raw_height)}};
     PushEvent(flutter::EncodableValue(result));
   }
 }

@@ -20,7 +20,10 @@ const bool kWebosLibassEnabled = bool.fromEnvironment('WEBOS_LIBASS', defaultVal
 
 const String kWebosAssDefaultFontAsset = 'assets/go-noto-current-regular.ttf';
 const String kWebosAssHangulFontAsset = 'assets/go-noto-kurrent-hangul.ttf';
+const String kWebosAssDefaultFontFamily = 'Liberation Sans';
 const List<String> kWebosAssBundledExtraFonts = <String>[
+  'assets/webos-sans-regular.ttf',
+  'assets/webos-sans-bold.ttf',
   'assets/webos-serif-regular.ttf',
   'assets/webos-serif-bold.ttf',
 ];
@@ -254,6 +257,7 @@ abstract class WebosLibassBackend {
   void setPixelAspect(double par);
   void setMargins(int top, int bottom, int left, int right);
   void setUseMargins(bool useMargins);
+  void setFontScale(double scale, {bool selective = true});
   void addFont(String name, Uint8List bytes);
   void addFontFromFile(String filePath, {String? fontName});
   void clearFonts();
@@ -295,6 +299,8 @@ typedef _SetMarginsNative = Void Function(Pointer<Void> ctx, Int32 t, Int32 b, I
 typedef _SetMarginsDart = void Function(Pointer<Void> ctx, int t, int b, int l, int r);
 typedef _SetUseMarginsNative = Void Function(Pointer<Void> ctx, Int32 useMargins);
 typedef _SetUseMarginsDart = void Function(Pointer<Void> ctx, int useMargins);
+typedef _SetFontScaleNative = Void Function(Pointer<Void> ctx, Double scale, Int32 selective);
+typedef _SetFontScaleDart = void Function(Pointer<Void> ctx, double scale, int selective);
 typedef _AddFontNative = Void Function(Pointer<Void> ctx, Pointer<Uint8> name, Pointer<Uint8> data, Int32 size);
 typedef _AddFontDart = void Function(Pointer<Void> ctx, Pointer<Uint8> name, Pointer<Uint8> data, int size);
 typedef _ClearFontsNative = Void Function(Pointer<Void> ctx);
@@ -384,6 +390,7 @@ void _webosLibassWorkerMain(Map<String, Object?> initArgs) {
   late final _SetParDart setParFn;
   late final _SetMarginsDart setMarginsFn;
   late final _SetUseMarginsDart setUseMarginsFn;
+  late final _SetFontScaleDart setFontScaleFn;
   late final _AddFontDart addFontFn;
   late final _ClearFontsDart clearFontsFn;
   late final _SetFontsDart setFontsFn;
@@ -406,6 +413,7 @@ void _webosLibassWorkerMain(Map<String, Object?> initArgs) {
     setParFn = lib.lookupFunction<_SetParNative, _SetParDart>('plezy_ass_set_pixel_aspect');
     setMarginsFn = lib.lookupFunction<_SetMarginsNative, _SetMarginsDart>('plezy_ass_set_margins');
     setUseMarginsFn = lib.lookupFunction<_SetUseMarginsNative, _SetUseMarginsDart>('plezy_ass_set_use_margins');
+    setFontScaleFn = lib.lookupFunction<_SetFontScaleNative, _SetFontScaleDart>('plezy_ass_set_font_scale');
     addFontFn = lib.lookupFunction<_AddFontNative, _AddFontDart>('plezy_ass_add_font');
     clearFontsFn = lib.lookupFunction<_ClearFontsNative, _ClearFontsDart>('plezy_ass_clear_fonts');
     setFontsFn = lib.lookupFunction<_SetFontsNative, _SetFontsDart>('plezy_ass_set_fonts');
@@ -560,6 +568,14 @@ void _webosLibassWorkerMain(Map<String, Object?> initArgs) {
 
       case 'setUseMargins':
         setUseMarginsFn(ctx, (rawMsg['v'] as bool) ? 1 : 0);
+        break;
+
+      case 'setFontScale':
+        setFontScaleFn(
+          ctx,
+          rawMsg['scale'] as double,
+          (rawMsg['selective'] as bool) ? 1 : 0,
+        );
         break;
 
       case 'addFont':
@@ -965,6 +981,10 @@ class WebosLibassIsolateBackend implements WebosLibassBackend {
   void setUseMargins(bool useMargins) => _send(<String, Object?>{'op': 'setUseMargins', 'v': useMargins});
 
   @override
+  void setFontScale(double scale, {bool selective = true}) =>
+      _send(<String, Object?>{'op': 'setFontScale', 'scale': scale, 'selective': selective});
+
+  @override
   void addFont(String name, Uint8List bytes) {
     if (_disposed || name.isEmpty || bytes.isEmpty) return;
     _send(<String, Object?>{
@@ -1112,6 +1132,8 @@ class WebosLibassController {
   bool _videoReady = false;
   bool _hidden = false;
   bool _useMargins = false;
+  double _fontScale = 1.0;
+  bool _selectiveFontScale = true;
 
   int? _activeTrackKey;
   String? _activeLanguage;
@@ -1156,6 +1178,10 @@ class WebosLibassController {
   bool get isDisposed => _disposed;
   int? get activeTrackKey => _activeTrackKey;
   int? get libraryVersion => _backend.libraryVersion;
+  @visibleForTesting
+  double get fontScale => _fontScale;
+  @visibleForTesting
+  bool get selectiveFontScale => _selectiveFontScale;
 
   Future<bool> initialize() async {
     if (_disposed) return false;
@@ -1176,6 +1202,7 @@ class WebosLibassController {
     _applyFontsIfNeeded(force: true);
     _backend.setFrameSize(_frameW, _frameH);
     _backend.setUseMargins(_useMargins);
+    _backend.setFontScale(_fontScale, selective: _selectiveFontScale);
     appLogger.i('[WebOS-libass] Initialized native libass version=${_backend.libraryVersion}');
     return true;
   }
@@ -1227,7 +1254,7 @@ class WebosLibassController {
     }
     _fontsApplied = true;
     _appliedDefaultFontPath = targetPath;
-    _backend.setFonts(defaultFontPath: targetPath, defaultFamily: 'sans-serif');
+    _backend.setFonts(defaultFontPath: targetPath, defaultFamily: kWebosAssDefaultFontFamily);
     return true;
   }
 
@@ -1438,10 +1465,22 @@ class WebosLibassController {
     required int storageHeight,
     double? displayAspectRatio,
   }) {
-    if (!isAvailable || storageWidth <= 0 || storageHeight <= 0) return;
+    if (!isAvailable) return;
     final cleanDar = (displayAspectRatio != null && displayAspectRatio.isFinite && displayAspectRatio > 0.1)
         ? displayAspectRatio
         : null;
+    if (storageWidth <= 0 || storageHeight <= 0) {
+      if (cleanDar == null || _displayAspectRatio == cleanDar) return;
+      _displayAspectRatio = cleanDar;
+      if (_storageW > 0 && _storageH > 0) {
+        _backend.setPixelAspect(cleanDar / (_storageW / _storageH));
+      } else {
+        _backend.setPixelAspect(1.0);
+      }
+      _recomputeMargins();
+      _requestForcedRefreshIfActive();
+      return;
+    }
     if (_storageW == storageWidth && _storageH == storageHeight && _displayAspectRatio == cleanDar) {
       return;
     }
@@ -1462,6 +1501,19 @@ class WebosLibassController {
     _useMargins = useMargins;
     if (!isAvailable) return;
     _backend.setUseMargins(useMargins);
+    _requestForcedRefreshIfActive();
+  }
+
+  void setFontScale(double scale, {bool selective = true}) {
+    if (_disposed || !scale.isFinite || scale <= 0) return;
+    final clamped = scale.clamp(0.5, 2.5);
+    if ((clamped - _fontScale).abs() < 1e-4 && selective == _selectiveFontScale) {
+      return;
+    }
+    _fontScale = clamped;
+    _selectiveFontScale = selective;
+    if (!isAvailable) return;
+    _backend.setFontScale(clamped, selective: selective);
     _requestForcedRefreshIfActive();
   }
 

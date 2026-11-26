@@ -91,6 +91,8 @@ private:
   WebOSPlayer player_;
 
   bool is_initialized_ = false;
+  int reported_width_ = 0;
+  int reported_height_ = 0;
   int64_t seek_position_ = 0;
   std::unique_ptr<flutter::EventChannel<flutter::EncodableValue>>
       event_channel_;

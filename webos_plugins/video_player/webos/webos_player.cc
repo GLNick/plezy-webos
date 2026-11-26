@@ -270,6 +270,8 @@ bool WebOSPlayer::load(const std::string& appId,
   }
   has_pending_seek_.store(false);
   current_ = start_position;
+  videoW_ = 0;
+  videoH_ = 0;
 
   std::string media_transport_type;
   if (webos_format.find("MPEG-DASH") != std::string::npos) {
@@ -703,10 +705,9 @@ void WebOSPlayer::execSourceInfo(const SourceInfoCb& info) {
   if (duration_ == 0 && !has_audio_ && !has_video_) {
     return;
   }
-  if (has_video_ && (videoW_ == 0 || videoH_ == 0)) {
-    videoW_ = 1920;
-    videoH_ = 1080;
-  }
+  // Keep videoW_ / videoH_ == 0 until NDL's real videoInfo callback arrives so
+  // VideoPlayer can distinguish placeholder dimensions from real stream geometry
+  // and emit videoSizeChanged when videoInfo lands after sourceInfo.
   delegate_->OnInitialized();
 }
 
