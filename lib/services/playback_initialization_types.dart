@@ -150,6 +150,12 @@ class PlaybackInitializationResult {
   /// `true` when [videoUrl] points at a backend transcoding stream.
   final bool isTranscoding;
 
+  /// When non-null, explicitly records whether the backend burned the primary
+  /// subtitle stream into [videoUrl]'s video pixels (e.g. `false` on webOS
+  /// Direct Stream MKVs where server burn-in was suppressed in favor of local
+  /// subtitle rendering, and `true` when the server burned an embedded track).
+  final bool? primarySubtitleBurnedByServer;
+
   /// Non-null when a non-original preset was requested but fallback kicked in.
   final TranscodeFallbackReason? fallbackReason;
 
@@ -194,6 +200,7 @@ class PlaybackInitializationResult {
     this.subtitleSidecars = const [],
     this.isOffline = false,
     this.isTranscoding = false,
+    this.primarySubtitleBurnedByServer,
     this.fallbackReason,
     this.activeAudioStreamId,
     this.playSessionId,

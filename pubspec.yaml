@@ -192,6 +192,11 @@ flutter:
   # Registered as UI font families so the Linux build, whose fontconfig may
   # lack CJK fonts, can fall back to the bundled subtitle fonts (mono_theme).
   fonts:
+    - family: Liberation Sans
+      fonts:
+        - asset: assets/webos-sans-regular.ttf
+        - asset: assets/webos-sans-bold.ttf
+          weight: 700
     - family: Times New Roman
       fonts:
         - asset: assets/webos-serif-regular.ttf

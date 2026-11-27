@@ -97,6 +97,7 @@ class PerformanceStats {
 
   final int? appMemoryBytes;
   final double? uiFps;
+  final String? subtitleRenderer;
 
   const PerformanceStats({
     this.playerType = 'unknown',
@@ -148,6 +149,7 @@ class PerformanceStats {
     this.dvRoute,
     this.appMemoryBytes,
     this.uiFps,
+    this.subtitleRenderer,
   });
 
   /// Creates an empty stats object (used as initial state).
@@ -418,6 +420,7 @@ class PerformanceStats {
     return switch (playerType.toLowerCase()) {
       'mpv' => 'MPV',
       'exoplayer' => 'ExoPlayer',
+      'webos' => 'NDL Media (webOS)',
       _ => playerType,
     };
   }

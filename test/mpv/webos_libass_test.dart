@@ -973,11 +973,18 @@ void main() {
 
       expect(fakeBackend.frameSizes.last, (w: 1920, h: 1080));
       final positioned = tester.widget<Positioned>(find.byType(Positioned));
-      expect(positioned.left, closeTo(160.0, 1e-6));
-      expect(positioned.top, closeTo(540.0, 1e-6));
-      expect(positioned.width, closeTo(320.0, 1e-6));
-      expect(positioned.height, closeTo(90.0, 1e-6));
-      expect(tester.widget<RawImage>(find.byType(RawImage)).filterQuality, FilterQuality.none);
+      expect(positioned.left, 240.0);
+      expect(positioned.top, 810.0);
+      expect(positioned.width, 480.0);
+      expect(positioned.height, 135.0);
+      final rawImage = tester.widget<RawImage>(find.byType(RawImage));
+      expect(rawImage.fit, BoxFit.none);
+      expect(rawImage.filterQuality, FilterQuality.none);
+      final logicalRect = tester.getRect(find.byType(RawImage));
+      expect(logicalRect.left, closeTo(160.0, 1e-5));
+      expect(logicalRect.top, closeTo(540.0, 1e-5));
+      expect(logicalRect.width, closeTo(320.0, 1e-5));
+      expect(logicalRect.height, closeTo(90.0, 1e-5));
 
       // Oversized view metrics (e.g. 2880x1620 @ 1.5 DPR) clamp safely to 1920x1080 for 32-bit safety
       tester.view.physicalSize = const Size(2880, 1620);
@@ -1504,11 +1511,18 @@ void main() {
 
       final positioned = tester.widgetList<Positioned>(find.byType(Positioned)).toList();
       expect(positioned, hasLength(2));
-      // 1280x720 logical @ 1.5 DPR -> scaleX = scaleY = 1280/1920 = 2/3
-      expect(positioned[0].left, closeTo(200.0, 1e-5));
-      expect(positioned[0].top, closeTo(32.0, 1e-5));
-      expect(positioned[1].left, closeTo(160.0, 1e-5));
-      expect(positioned[1].top, closeTo(620.0, 1e-5));
+      expect(rawImages[0].fit, BoxFit.none);
+      expect(rawImages[1].fit, BoxFit.none);
+      expect(positioned[0].left, 300.0);
+      expect(positioned[0].top, 48.0);
+      expect(positioned[1].left, 240.0);
+      expect(positioned[1].top, 930.0);
+      // 1280x720 logical @ 1.5 DPR -> Transform(2/3) places regions at exact logical coordinates
+      final rawImageFinder = find.byType(RawImage);
+      expect(tester.getTopLeft(rawImageFinder.at(0)).dx, closeTo(200.0, 1e-5));
+      expect(tester.getTopLeft(rawImageFinder.at(0)).dy, closeTo(32.0, 1e-5));
+      expect(tester.getTopLeft(rawImageFinder.at(1)).dx, closeTo(160.0, 1e-5));
+      expect(tester.getTopLeft(rawImageFinder.at(1)).dy, closeTo(620.0, 1e-5));
 
       // Clear frame -> both region ui.Images dispose safely post-frame.
       ctrl.requestRender(2500, forceRender: true);

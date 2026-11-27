@@ -38,6 +38,7 @@ class BackKeyCoordinator {
 
   static void markHandled() {
     _handledThisFrame = true;
+    WebosBackKeyGate.instance.notifyExternalBackHandled();
     if (_clearScheduled) return;
 
     _clearScheduled = true;
@@ -284,6 +285,7 @@ class BackKeySuppressorObserver extends NavigatorObserver {
     if (!PlatformDetector.isAppleTV() && BackKeyPressTracker.isBackKeyDown) {
       BackKeyUpSuppressor.suppressBackUntilKeyUp();
     }
+    WebosBackKeyGate.instance.notifyRoutePopped();
     onNavigationChanged?.call();
   }
 
@@ -295,5 +297,194 @@ class BackKeySuppressorObserver extends NavigatorObserver {
   @override
   void didReplace({Route<dynamic>? newRoute, Route<dynamic>? oldRoute}) {
     onNavigationChanged?.call();
+  }
+}
+
+const Set<int> _kWebosRawBackKeyCodes = <int>{
+  1,           // evdev KEY_ESC
+  9,           // XKB ESC scanCode (evdev 1 + 8)
+  27,          // ASCII Escape
+  158,         // Linux KEY_BACK (evdev)
+  166,         // X11 XF86Back scanCode (evdev 158 + 8)
+  404,         // webOS evdev KEY_BACK / IR_KEY_BACK (0x194)
+  412,         // webOS XKB IR_KEY_BACK (0x19C; also 404 + 8)
+  420,         // XKB 412 + 8 (0x1A4)
+  461,         // webOS / HDMI-CEC Back (0x1CD)
+  469,         // XKB 461 + 8 (0x1D5)
+  10009,       // Smart TV Back
+  0xff1b,      // XKB_KEY_Escape
+  0x1008ff26,  // XKB_KEY_XF86Back
+  0x1008ff27,  // XKB_KEY_XF86Forward (paired nav table)
+  0x70029,     // USB HID Keyboard Escape
+  0xc0224,     // USB HID Consumer AC Back
+  0xc0196,     // USB HID Consumer Internet Browser
+  0x10000001b, // LogicalKeyboardKey.escape
+  0x100000504, // LogicalKeyboardKey.goBack
+  0x100000c01, // LogicalKeyboardKey.browserBack (mapped XF86Back in libflutter_webos_media.so)
+  0x100000306, // Legacy browserBack plane alias
+  0x1000001cd, // Flutter webOS Back logical
+};
+
+bool _matchesSingleWebosBackCode(int? code) {
+  if (code == null || code == 0) return false;
+  if (_kWebosRawBackKeyCodes.contains(code)) return true;
+  final int plane = (code >> 32) & 0xFF;
+  // `libflutter_webos_media.so` encodes unmapped RCU keycodes with plane 0x17
+  // (`kLinuxPlane` for physical = keycode + 8) and plane 0x18 (`kWebosPlane`
+  // for logical = raw keycode / keysym).
+  if (plane == 0x17 || plane == 0x18) {
+    final int low32 = code & 0xFFFFFFFF;
+    if (_kWebosRawBackKeyCodes.contains(low32)) return true;
+  }
+  return false;
+}
+
+/// Returns `true` when any of [keyCode], [scanCode], or [logicalKey] represents
+/// an LG webOS Magic Remote / CEC / keyboard Back or Escape key, including
+/// 64-bit `0x1700000000` / `0x1800000000` plane-tagged IDs from `libflutter_webos_media.so`.
+bool isWebosBackKeyCode(int? keyCode, int? scanCode, int? logicalKey) {
+  return _matchesSingleWebosBackCode(keyCode) ||
+      _matchesSingleWebosBackCode(scanCode) ||
+      _matchesSingleWebosBackCode(logicalKey);
+}
+
+/// Returns `true` when raw `ui.KeyData` (`physical` + `logical`) represents an
+/// LG webOS Back press (including unmapped `physical == 0 && logical == 0`).
+bool isWebosBackKeyData({required int physical, required int logical}) {
+  if (physical == 0 && logical == 0) return true;
+  return isWebosBackKeyCode(logical, physical, logical);
+}
+
+/// Deduplicates LG webOS Magic Remote Back-button notifications across
+/// `PlatformDispatcher.onKeyData`, `HardwareKeyboard`, `SystemChannels.keyEvent`,
+/// and `SystemChannels.navigation` (`popRoute` / `didPopRoute`), and serializes
+/// in-flight asynchronous route pops so a single physical click never pops two
+/// navigation layers.
+class WebosBackKeyGate {
+  static final WebosBackKeyGate instance = WebosBackKeyGate();
+
+  final int Function() _nowMs;
+
+  bool _inFlight = false;
+  bool _keyDataDownActive = false;
+  bool _firedForCurrentKeyDataPress = false;
+  int _lastKeyDataEventMs = -1000000;
+  int _lastLegacyKeyEventMs = -1000000;
+  int _lastStartedMs = -1000000;
+  int _lastCompletedMs = -1000000;
+
+  WebosBackKeyGate({int Function()? nowMs})
+      : _nowMs = nowMs ?? (() => DateTime.now().millisecondsSinceEpoch);
+
+  @visibleForTesting
+  bool get isInFlight => _inFlight;
+
+  @visibleForTesting
+  void reset() {
+    _inFlight = false;
+    _keyDataDownActive = false;
+    _firedForCurrentKeyDataPress = false;
+    _lastKeyDataEventMs = -1000000;
+    _lastLegacyKeyEventMs = -1000000;
+    _lastStartedMs = -1000000;
+    _lastCompletedMs = -1000000;
+  }
+
+  bool _withinCooldown(int now, int windowMs) =>
+      _inFlight || (now - _lastCompletedMs) < windowMs || (now - _lastStartedMs) < windowMs;
+
+  /// Evaluates a raw `PlatformDispatcher.onKeyData` Back key event (`down`/`repeat`/`up`).
+  /// Consumes `down` and `repeat` silently and returns `true` at most once on `up`
+  /// for each physical press.
+  bool shouldFireOnKeyData({
+    required bool isDown,
+    required bool isUp,
+  }) {
+    final now = _nowMs();
+    _lastKeyDataEventMs = now;
+    if (isDown) {
+      if (!_keyDataDownActive) {
+        _keyDataDownActive = true;
+        _firedForCurrentKeyDataPress = false;
+      }
+      return false;
+    }
+    if (!isUp) {
+      // KeyRepeat: keep press active, never trigger navigation.
+      return false;
+    }
+    _keyDataDownActive = false;
+    if (_firedForCurrentKeyDataPress || _withinCooldown(now, 180)) {
+      return false;
+    }
+    _firedForCurrentKeyDataPress = true;
+    return true;
+  }
+
+  /// Evaluates a `HardwareKeyboard`, `FocusScope.onKeyEvent`, or `SystemChannels.keyEvent`
+  /// Back event. When `PlatformDispatcher.onKeyData` already delivered the same physical
+  /// press (even if Pop #1 stalled the UI thread for several hundred ms before the queued
+  /// `flutter/keyevent` message ran), this returns `false` so Back never fires twice.
+  bool shouldFireOnLegacyKeyChannel({required bool isKeyUp}) {
+    final now = _nowMs();
+    if (!isKeyUp) {
+      _lastLegacyKeyEventMs = now;
+      return false;
+    }
+    if (_keyDataDownActive || (now - _lastKeyDataEventMs) < 1200) {
+      return false;
+    }
+    _lastLegacyKeyEventMs = now;
+    if (_withinCooldown(now, 180)) {
+      return false;
+    }
+    return true;
+  }
+
+  /// Evaluates a `SystemChannels.navigation` `popRoute` or `WidgetsBindingObserver.didPopRoute`
+  /// signal, suppressing duplicate system pops that accompany a physical Back key press.
+  bool shouldFireOnSystemPopRoute() {
+    final now = _nowMs();
+    if (_keyDataDownActive ||
+        (now - _lastKeyDataEventMs) < 500 ||
+        (now - _lastLegacyKeyEventMs) < 500 ||
+        _withinCooldown(now, 240)) {
+      return false;
+    }
+    return true;
+  }
+
+  /// Records that a widget-level Back handler (`BackKeyCoordinator.markHandled`)
+  /// already consumed the current Back press so trailing global webOS hooks or
+  /// `popRoute` messages are suppressed.
+  void notifyExternalBackHandled() {
+    final now = _nowMs();
+    _firedForCurrentKeyDataPress = true;
+    _keyDataDownActive = false;
+    _lastCompletedMs = now;
+  }
+
+  /// Refreshes completion cooldown whenever any Navigator route finishes popping
+  /// (including asynchronous teardown pops triggered via `PopScope(canPop: false)`).
+  void notifyRoutePopped() {
+    _lastCompletedMs = _nowMs();
+  }
+
+  /// Executes [action] under a single-flight lock and stamps completion time AFTER
+  /// the asynchronous route pop / teardown finishes, preventing delayed duplicate
+  /// messages from slipping past the debounce window during heavy frame work.
+  Future<bool> runSingleFlight(Future<bool> Function() action) async {
+    final now = _nowMs();
+    if (_withinCooldown(now, 160)) {
+      return true;
+    }
+    _inFlight = true;
+    _lastStartedMs = now;
+    try {
+      return await action();
+    } finally {
+      _inFlight = false;
+      _lastCompletedMs = _nowMs();
+    }
   }
 }

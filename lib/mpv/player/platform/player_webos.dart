@@ -11,6 +11,7 @@ import 'package:video_player_platform_interface/video_player_platform_interface.
 import 'package:video_player_webos/video_player_webos.dart';
 
 import '../../../media/media_source_info.dart';
+import '../../../media/media_version.dart';
 import '../../../services/settings_service.dart';
 import '../../../utils/app_logger.dart';
 import '../../models.dart';
@@ -97,6 +98,15 @@ class PlayerWebos extends PlayerBase {
   Rect _lastViewRect = const Rect.fromLTWH(0, 0, 1920, 1080);
 
   MediaSourceInfo? _pendingMediaInfo;
+  MediaVersion? _pendingSelectedVersion;
+  bool _primarySubtitleServerRendered = false;
+  bool _didTriggerSubtitleBurnFallbackForSource = false;
+  String? _mkvInitialFailureErrorCode;
+  String? _burnedEmbeddedSubtitleId;
+  int _debugSubtitleBurnFallbackCount = 0;
+  int? _lastKnownVideoWidth;
+  int? _lastKnownVideoHeight;
+  int _lastBufferedEndMs = 0;
   Map<String, String>? _lastHeaders;
   String? _lastResolvedUri;
   bool _subtitlesHidden = false;
@@ -316,10 +326,13 @@ class PlayerWebos extends PlayerBase {
     _refreshActiveSubtitleCues();
   }
 
+  @visibleForTesting
+  int? debugResolveMkvTrackNumber(WebosMkvSubtitleExtractor extractor, String trackId) =>
+      _resolveMkvTrackNumber(extractor, trackId);
+
   // Subtitle state
   final ValueNotifier<List<WebosSubtitleCue>> activeSubtitleCues = ValueNotifier<List<WebosSubtitleCue>>(const []);
-  final ValueNotifier<WebosSubtitleStyleConfig> subtitleStyleNotifier =
-      ValueNotifier<WebosSubtitleStyleConfig>(const WebosSubtitleStyleConfig());
+  final ValueNotifier<WebosSubtitleStyleConfig> subtitleStyleNotifier;
   final ValueNotifier<bool> _libassActiveNotifier = ValueNotifier<bool>(false);
 
   final Map<String, List<WebosSubtitleCue>> _loadedExternalSubtitles = {};
@@ -334,6 +347,7 @@ class PlayerWebos extends PlayerBase {
   final Map<String, ({String? codec, String? title})> _audioIdToMeta = {};
   int? _activeHlsAudioStreamId;
   int? _pendingAudioHotSwapStreamId;
+  final Map<String, String> _externalSubLoadErrors = {};
   WebosMkvSubtitleExtractor? _mkvExtractor;
   WebosLibassController? _libassController;
   Future<void>? _libassInitInFlight;
@@ -354,13 +368,40 @@ class PlayerWebos extends PlayerBase {
   bool? get debugLastMkvSkipDartAssParsing => _debugLastMkvSkipDartAssParsing;
   bool? _debugLastMkvSkipDartAssParsing;
 
+  static WebosSubtitleStyleConfig _initialSubtitleStyleFromSettings() {
+    final s = SettingsService.instanceOrNull;
+    if (s == null) return const WebosSubtitleStyleConfig();
+    return WebosSubtitleStyleConfig(
+      fontSize: s.read(SettingsService.subtitleFontSize).toDouble(),
+      textColor: WebosSubtitleStyleConfig.parseHexColor(
+        s.read(SettingsService.subtitleTextColor),
+        Colors.white,
+      ),
+      borderSize: s.read(SettingsService.subtitleBorderSize).toDouble(),
+      borderColor: WebosSubtitleStyleConfig.parseHexColor(
+        s.read(SettingsService.subtitleBorderColor),
+        Colors.black,
+      ),
+      bgColor: WebosSubtitleStyleConfig.parseHexColor(
+        s.read(SettingsService.subtitleBackgroundColor),
+        Colors.black,
+      ),
+      bgOpacity: s.read(SettingsService.subtitleBackgroundOpacity),
+      subtitlePosition: s.read(SettingsService.subtitlePosition),
+      bold: s.read(SettingsService.subtitleBold),
+      italic: s.read(SettingsService.subtitleItalic),
+    );
+  }
+
   PlayerWebos({
     this.audioOnly = false,
     @visibleForTesting VideoPlayerPlatform? platformOverride,
     @visibleForTesting bool? libassEnabledOverride,
     @visibleForTesting bool? useWebosLibassOverride,
     @visibleForTesting WebosLibassBackendFactory? libassBackendFactoryOverride,
-  })  : _platformOverride = platformOverride,
+  })  : subtitleStyleNotifier =
+            ValueNotifier<WebosSubtitleStyleConfig>(_initialSubtitleStyleFromSettings()),
+        _platformOverride = platformOverride,
         _libassEnabled = libassEnabledOverride ?? kWebosLibassEnabled,
         _useWebosLibassOverride = useWebosLibassOverride,
         _userLibassEnabled =
@@ -375,6 +416,7 @@ class PlayerWebos extends PlayerBase {
 
   PlayerWebos.audio()
       : audioOnly = true,
+        subtitleStyleNotifier = ValueNotifier<WebosSubtitleStyleConfig>(const WebosSubtitleStyleConfig()),
         _platformOverride = null,
         _libassEnabled = false,
         _useWebosLibassOverride = false,
@@ -523,11 +565,41 @@ class PlayerWebos extends PlayerBase {
   }
 
   /// Called by VideoPlayerScreen before open() so PlayerWebos knows all audio &
-  /// subtitle tracks advertised by Plex/Jellyfin for the item.
-  void setPendingMediaSourceInfo(MediaSourceInfo? info) {
+  /// subtitle tracks advertised by Plex/Jellyfin for the item, and whether the
+  /// backend already burned the primary subtitle stream into the video pixels.
+  void setPendingMediaSourceInfo(
+    MediaSourceInfo? info, {
+    MediaVersion? selectedVersion,
+    bool primarySubtitleServerRendered = false,
+  }) {
     _pendingMediaInfo = info;
+    _pendingSelectedVersion = selectedVersion;
+    _primarySubtitleServerRendered = primarySubtitleServerRendered;
+    _mkvInitialFailureErrorCode = null;
+    if (!primarySubtitleServerRendered) {
+      _burnedEmbeddedSubtitleId = null;
+    }
+    if (primarySubtitleServerRendered) {
+      WebosDirectStreamFallbackRegistry.instance.lastRawMkvUrl = null;
+      if (_selectedSubTrackId != null && !_subIdToExternalUri.containsKey(_selectedSubTrackId)) {
+        _burnedEmbeddedSubtitleId = _selectedSubTrackId;
+        _selectedSubTrackId = null;
+      }
+      _mkvExtractor?.dispose();
+      _mkvExtractor = null;
+      _refreshActiveSubtitleCues();
+    }
     _applyPendingMediaVideoGeometry();
   }
+
+  @visibleForTesting
+  bool get debugPrimarySubtitleServerRendered => _primarySubtitleServerRendered;
+
+  @visibleForTesting
+  int get debugSubtitleBurnFallbackCount => _debugSubtitleBurnFallbackCount;
+
+  @visibleForTesting
+  bool get debugHasMkvExtractor => _mkvExtractor != null;
 
   VideoPlayerPlatform get _webosPlatform {
     if (_platformOverride != null) return _platformOverride;
@@ -547,13 +619,16 @@ class PlayerWebos extends PlayerBase {
   String get logPrefix => audioOnly ? 'WebOS-audio' : 'WebOS-NDL';
 
   @override
-  String get playerType => 'exoplayer';
+  String get playerType => 'webos';
+
+  @override
+  Future<String> runtimePlayerType() async => 'webos';
 
   @override
   bool get supportsSecondarySubtitles => false;
 
   @override
-  bool get providesNativeStats => false;
+  bool get providesNativeStats => true;
 
   Future<void> _ensureInitialized() async {
     if (initialized) return;
@@ -576,6 +651,7 @@ class PlayerWebos extends PlayerBase {
   int? _initialAudioOrderIdx;
   String? _initialPlexSelectedSubId;
   final Map<String, String?> _subIdToLangCode = {};
+  final Map<String, ({int? streamIndex, String? lang, String? title, bool forced, String? codec})> _subIdToSubMeta = {};
 
   static bool _isWebosUnsupportedAudio(String? codec, String? title) {
     bool matchesUnsupported(String? raw) {
@@ -591,6 +667,7 @@ class PlayerWebos extends PlayerBase {
     _subIdToEmbeddedOrderIndex.clear();
     _subIdToExternalUri.clear();
     _subIdToLangCode.clear();
+    _subIdToSubMeta.clear();
     _audioIdToOrderIndex.clear();
     _audioIdToStreamId.clear();
     _audioIdToMeta.clear();
@@ -660,6 +737,7 @@ class PlayerWebos extends PlayerBase {
     final subTracks = info?.subtitleTracks ?? const <MediaSubtitleTrack>[];
     int embeddedTextIdx = 0;
     final bool hasMkvDemuxSource = !_currentSourceIsLive &&
+        !_primarySubtitleServerRendered &&
         (!_isCurrentStreamHls ||
             (WebosDirectStreamFallbackRegistry.instance.lastRawMkvUrl?.isNotEmpty ?? false));
 
@@ -710,7 +788,7 @@ class PlayerWebos extends PlayerBase {
         }
       }
 
-      if (s.selected && _initialPlexSelectedSubId == null) {
+      if (!_primarySubtitleServerRendered && s.selected && _initialPlexSelectedSubId == null) {
         _initialPlexSelectedSubId = tid;
       }
 
@@ -725,6 +803,13 @@ class PlayerWebos extends PlayerBase {
         trackTitle = s.displayTitle!.trim();
       }
       // Falls nur der Sprachname existiert, stelle sicher, dass langLabel gesetzt ist
+      _subIdToSubMeta[tid] = (
+        streamIndex: s.index,
+        lang: langCode?.toLowerCase(),
+        title: trackTitle ?? s.displayTitle,
+        forced: s.forced,
+        codec: s.codec,
+      );
       entries.add({
         'id': tid,
         'type': 'sub',
@@ -747,7 +832,7 @@ class PlayerWebos extends PlayerBase {
         if (_subIdToExternalUri.values.contains(uri)) continue;
         final tid = 'ext_${i + 1}';
         _subIdToExternalUri[tid] = uri;
-        if (ext.isDefault && _initialPlexSelectedSubId == null) {
+        if (!_primarySubtitleServerRendered && ext.isDefault && _initialPlexSelectedSubId == null) {
           _initialPlexSelectedSubId = tid;
         }
         entries.add({
@@ -816,6 +901,7 @@ class PlayerWebos extends PlayerBase {
     _targetResumeStartMs = sourceStart.inMilliseconds;
     _openStartedAt = DateTime.now();
     WebosSubtitleClock.instance.notifySeek(sourceStart.inMilliseconds);
+    _libassController?.notifySeek(sourceStart.inMilliseconds);
 
     handlePlayerEvent('start-file', {'sourceId': sourceId});
 
@@ -826,6 +912,11 @@ class PlayerWebos extends PlayerBase {
     _isCurrentStreamHls = isHls;
     _activeHlsAudioStreamId = isHls ? WebosDirectStreamFallbackRegistry.instance.activeAudioStreamId : null;
     _pendingAudioHotSwapStreamId = null;
+    _didTriggerSubtitleBurnFallbackForSource = false;
+    _mkvInitialFailureErrorCode = null;
+    if (!_primarySubtitleServerRendered) {
+      _burnedEmbeddedSubtitleId = null;
+    }
     _saw702Error = false;
 
     final payloadJson = sourceStart.inMilliseconds > 0
@@ -902,20 +993,33 @@ class PlayerWebos extends PlayerBase {
       final trackEntries = _buildTrackListEntries(externalSubtitles);
       _currentTrackEntries = trackEntries;
 
+      if (isHls && _primarySubtitleServerRendered) {
+        WebosDirectStreamFallbackRegistry.instance.lastRawMkvUrl = null;
+      }
+
       // Start MKV embedded subtitle extractor (works both for Direct Play and Direct Stream via raw MKV URL!)
-      final mkvUrlForSubs = !isHls
-          ? resolvedUri
-          : WebosDirectStreamFallbackRegistry.instance.lastRawMkvUrl;
+      final mkvUrlForSubs = _primarySubtitleServerRendered
+          ? null
+          : (!isHls ? resolvedUri : WebosDirectStreamFallbackRegistry.instance.lastRawMkvUrl);
       if (mkvUrlForSubs != null && mkvUrlForSubs.isNotEmpty && !isLive && _subIdToEmbeddedOrderIndex.isNotEmpty) {
         final libass = _libassController;
         final useLibassForMkv = _effectiveLibassEnabled && libass != null && libass.isAvailable;
         _debugLastMkvSkipDartAssParsing = useLibassForMkv;
+        final mergedMkvHeaders = <String, String>{
+          ...?WebosDirectStreamFallbackRegistry.instance.lastHeaders,
+          ...?media.headers,
+        };
+        if (mergedMkvHeaders['Accept']?.trim().toLowerCase() == 'application/json') {
+          mergedMkvHeaders['Accept'] = '*/*';
+        }
+        final effectiveMkvHeaders = mergedMkvHeaders.isEmpty ? null : mergedMkvHeaders;
         _mkvExtractor = WebosMkvSubtitleExtractor(
-          url: _resolveUrlWithHeaders(mkvUrlForSubs, media.headers),
-          headers: media.headers,
+          url: _resolveUrlWithHeaders(mkvUrlForSubs, effectiveMkvHeaders),
+          headers: effectiveMkvHeaders,
           getCurrentPositionMs: () => sourcePositionFor(currentPosition).inMilliseconds,
           onCuesUpdated: _refreshActiveSubtitleCues,
           initialPaused: !play,
+          fallbackDurationMs: timelineDuration?.inMilliseconds,
           onAssTrackHeader: useLibassForMkv
               ? (trackNum, codecId, lang, codecPrivate) => libass.registerMkvAssTrack(
                     trackNum,
@@ -930,6 +1034,11 @@ class PlayerWebos extends PlayerBase {
           onFontAttachment: useLibassForMkv ? libass.addFontAttachment : null,
           onFontAttachmentsLoaded: useLibassForMkv ? libass.commitFontsAndRefresh : null,
           onFlushAssTrack: useLibassForMkv ? libass.flushTrackEvents : null,
+          onInitialUnavailable: (errorCode) {
+            if (_isClosed || _currentSourceId != sourceId) return;
+            _mkvInitialFailureErrorCode = errorCode;
+            unawaited(_maybeFallbackToServerBurnedSubtitles(sourceId, errorCode));
+          },
           skipDartAssParsing: useLibassForMkv,
           skipFlutterFontLoading: useLibassForMkv,
         );
@@ -970,7 +1079,9 @@ class PlayerWebos extends PlayerBase {
 
             case VideoEventType.bufferingUpdate:
               if (event.buffered != null && event.buffered!.isNotEmpty) {
-                final endSec = event.buffered!.last.end.inMilliseconds / 1000.0;
+                final endMs = event.buffered!.last.end.inMilliseconds;
+                _lastBufferedEndMs = endMs;
+                final endSec = endMs / 1000.0;
                 handlePropertyChange('demuxer-cache-time', endSec, sourceId: sourceId);
               }
               break;
@@ -1115,10 +1226,14 @@ class PlayerWebos extends PlayerBase {
 
     HttpClient? client;
     try {
-      client = HttpClient()..connectionTimeout = const Duration(seconds: 8);
-      final req = await client.getUrl(Uri.parse(extUri));
-      _lastHeaders?.forEach((k, v) => req.headers.set(k, v));
-      final resp = await req.close().timeout(const Duration(seconds: 12));
+      client = createWebosSubtitleHttpClient(connectionTimeout: const Duration(seconds: 8));
+      final resp = await openWebosHttpGetWithRedirects(
+        client,
+        extUri,
+        headers: _lastHeaders,
+        timeout: const Duration(seconds: 12),
+        isCancelled: () => _isClosed || _currentSourceId != sourceId,
+      );
       if (resp.statusCode == 200) {
         final bytes = await consolidateHttpClientResponseBytes(resp).timeout(const Duration(seconds: 15));
         if (_isClosed || _currentSourceId != sourceId) return;
@@ -1130,6 +1245,7 @@ class PlayerWebos extends PlayerBase {
             identical(_libassController, libass) &&
             libass.isAvailable &&
             WebosSubtitleParser.isAssContent(content)) {
+          _externalSubLoadErrors.remove(trackId);
           final trackKey = _nextExternalAssTrackKey--;
           _externalAssTrackKeys[trackId] = trackKey;
           final utf8Payload = decoded.rawUtf8 ?? Uint8List.fromList(utf8.encode(content));
@@ -1146,15 +1262,24 @@ class PlayerWebos extends PlayerBase {
         final cues = WebosSubtitleParser.parseAuto(content);
         if (_isClosed || _currentSourceId != sourceId) return;
         if (cues.isNotEmpty) {
+          _externalSubLoadErrors.remove(trackId);
           _loadedExternalSubtitles[trackId] = cues;
           _loadedExternalPrefixMaxEndMs[trackId] = buildPrefixMaxEndMs(cues);
           appLogger.i('[WebOS-Sub] Loaded ${cues.length} subtitle cues from URL for $trackId');
           _refreshActiveSubtitleCues();
         }
       } else {
+        _externalSubLoadErrors[trackId] = '${resp.statusCode}';
         await resp.drain<void>().catchError((Object _) {});
       }
-    } catch (_) {
+    } catch (e) {
+      if (e is TimeoutException) {
+        _externalSubLoadErrors[trackId] = 'to';
+      } else if (e is HandshakeException || e is TlsException) {
+        _externalSubLoadErrors[trackId] = 'tls';
+      } else {
+        _externalSubLoadErrors[trackId] = 'net';
+      }
     } finally {
       try {
         client?.close(force: true);
@@ -1238,23 +1363,37 @@ class PlayerWebos extends PlayerBase {
     }
   }
 
+  static bool _isSignsOrForcedTitle(String? rawTitle) {
+    if (rawTitle == null || rawTitle.isEmpty) return false;
+    final lower = rawTitle.toLowerCase();
+    return lower.contains('sign') || lower.contains('song') || lower.contains('forced');
+  }
+
   int? _resolveMkvTrackNumber(WebosMkvSubtitleExtractor extractor, String trackId) {
     final tracks = extractor.subtitleTracksInOrder;
     if (_cachedMkvSubTrackId == trackId && _cachedMkvTrackListLen == tracks.length) {
       return _cachedMkvTrackNum;
     }
-    final textTracks = tracks
-        .where((t) =>
-            t.codecId.contains('ASS') ||
-            t.codecId.contains('SSA') ||
-            t.codecId.contains('UTF8') ||
-            t.codecId.contains('TEXT') ||
-            t.codecId.contains('PGS'))
-        .toList();
+    final textTracks = tracks.where((t) {
+      final upper = t.codecId.toUpperCase();
+      return upper.contains('ASS') ||
+          upper.contains('SSA') ||
+          upper.contains('UTF8') ||
+          upper.contains('TEXT') ||
+          upper.contains('SUBRIP') ||
+          upper.contains('SRT') ||
+          upper.contains('WEBVTT') ||
+          upper.contains('VTT') ||
+          upper.contains('PGS');
+    }).toList();
     final candidates = textTracks.isNotEmpty ? textTracks : tracks;
     final embIdx = _subIdToEmbeddedOrderIndex[trackId];
-    final wantedLang = _subIdToLangCode[trackId];
+    final meta = _subIdToSubMeta[trackId];
+    final wantedLang = _subIdToLangCode[trackId] ?? meta?.lang;
     final wantedNorm = WebosSubtitlePreferenceStore.normalizeLang(wantedLang);
+    final bool? wantedSignsOrForced = meta != null ? (meta.forced || _isSignsOrForcedTitle(meta.title)) : null;
+    final String? wantedTitleLower = meta?.title?.trim().toLowerCase();
+    final String? wantedCodecUpper = meta?.codec?.trim().toUpperCase();
 
     bool langMatches(String? candRaw) {
       if (wantedNorm == null || candRaw == null) return false;
@@ -1267,23 +1406,89 @@ class PlayerWebos extends PlayerBase {
       return false;
     }
 
-    int? chosenTrackNum;
-    if (embIdx != null && embIdx < candidates.length) {
-      final cand = candidates[embIdx];
-      if (wantedNorm == null || cand.language == null || langMatches(cand.language)) {
-        chosenTrackNum = cand.trackNumber;
+    bool codecCompatible(String mkvCodecId) {
+      if (wantedCodecUpper == null || wantedCodecUpper.isEmpty) return true;
+      final mUpper = mkvCodecId.toUpperCase();
+      if (wantedCodecUpper.contains('ASS') || wantedCodecUpper.contains('SSA')) {
+        return mUpper.contains('ASS') || mUpper.contains('SSA');
       }
+      if (wantedCodecUpper.contains('PGS')) return mUpper.contains('PGS');
+      if (wantedCodecUpper.contains('VTT')) return mUpper.contains('VTT');
+      if (wantedCodecUpper.contains('SRT') || wantedCodecUpper.contains('SUBRIP') || wantedCodecUpper.contains('UTF8')) {
+        return mUpper.contains('UTF8') || mUpper.contains('TEXT') || mUpper.contains('SUBRIP') || mUpper.contains('SRT');
+      }
+      return true;
     }
-    if (chosenTrackNum == null && wantedNorm != null) {
+
+    int? chosenTrackNum;
+
+    // 1. Exact Matroska TrackNumber match via FFmpeg/Plex 0-based `Stream.index` (`TrackNumber == index + 1`)
+    //    verified against language, codec family, and Forced / Signs & Songs parity.
+    if (meta?.streamIndex != null) {
+      final expectedTrackNum = meta!.streamIndex! + 1;
       for (final cand in candidates) {
-        if (langMatches(cand.language)) {
-          chosenTrackNum = cand.trackNumber;
+        if (cand.trackNumber == expectedTrackNum) {
+          final langOk = wantedNorm == null || cand.language == null || langMatches(cand.language);
+          final forcedOk = wantedSignsOrForced == null || cand.isSignsOrForced == wantedSignsOrForced;
+          if (langOk && forcedOk && codecCompatible(cand.codecId)) {
+            chosenTrackNum = cand.trackNumber;
+          }
           break;
         }
       }
     }
-    if (chosenTrackNum == null && embIdx != null && embIdx < candidates.length) {
-      chosenTrackNum = candidates[embIdx].trackNumber;
+
+    // 2. Multi-criteria scoring across all subtitle tracks so a `Full` dialogue track
+    //    (`English`, forced=false) NEVER resolves to `English [Signs & Songs]` (forced=true).
+    if (chosenTrackNum == null && candidates.isNotEmpty) {
+      int bestScore = -1000000;
+      for (int idx = 0; idx < candidates.length; idx++) {
+        final cand = candidates[idx];
+        int score = 0;
+
+        if (wantedNorm != null) {
+          if (langMatches(cand.language)) {
+            score += 100;
+          } else if (cand.language != null && cand.language!.trim().isNotEmpty) {
+            score -= 120;
+          }
+        }
+
+        if (wantedSignsOrForced != null) {
+          if (cand.isSignsOrForced == wantedSignsOrForced) {
+            score += 70;
+          } else {
+            score -= 70;
+          }
+        }
+
+        if (wantedTitleLower != null && wantedTitleLower.isNotEmpty && cand.name != null && cand.name!.isNotEmpty) {
+          final candTitleLower = cand.name!.trim().toLowerCase();
+          if (candTitleLower == wantedTitleLower) {
+            score += 50;
+          } else if (wantedTitleLower.contains(candTitleLower) || candTitleLower.contains(wantedTitleLower)) {
+            score += 25;
+          }
+        }
+
+        if (codecCompatible(cand.codecId)) {
+          score += 25;
+        } else {
+          score -= 40;
+        }
+
+        if (meta?.streamIndex != null && cand.trackNumber == meta!.streamIndex! + 1) {
+          score += 35;
+        }
+        if (embIdx != null && idx == embIdx) {
+          score += 20;
+        }
+
+        if (score > bestScore) {
+          bestScore = score;
+          chosenTrackNum = cand.trackNumber;
+        }
+      }
     }
 
     _cachedMkvSubTrackId = trackId;
@@ -1294,16 +1499,18 @@ class PlayerWebos extends PlayerBase {
 
   void _refreshActiveSubtitleCues() {
     if (_isClosed) return;
-    final autoSub = WebosSubtitlePreferenceStore.instance.checkAutoSelect<SubtitleTrack>(
-      currentTrack: state.track.subtitle,
-      availableTracks: state.tracks.subtitle,
-      getId: (t) => t.id,
-      getLanguage: (t) => t.language,
-      getTitle: (t) => t.title,
-    );
-    if (autoSub != null) {
-      unawaited(selectSubtitleTrack(autoSub));
-      return;
+    if (!_primarySubtitleServerRendered) {
+      final autoSub = WebosSubtitlePreferenceStore.instance.checkAutoSelect<SubtitleTrack>(
+        currentTrack: state.track.subtitle,
+        availableTracks: state.tracks.subtitle,
+        getId: (t) => t.id,
+        getLanguage: (t) => t.language,
+        getTitle: (t) => t.title,
+      );
+      if (autoSub != null) {
+        unawaited(selectSubtitleTrack(autoSub));
+        return;
+      }
     }
 
     if (!_videoReadyForSubtitles || _subtitlesHidden || _selectedSubTrackId == null || _selectedSubTrackId == 'no') {
@@ -1447,6 +1654,7 @@ class PlayerWebos extends PlayerBase {
       if (!pending.isCompleted) pending.complete();
     }
     _inFlightExternalSubLoads.clear();
+    _externalSubLoadErrors.clear();
     _externalAssTrackKeys.clear();
     _nextExternalAssTrackKey = -1;
     // Keep the persistent WebosLibassController worker Isolate alive across
@@ -1461,6 +1669,11 @@ class PlayerWebos extends PlayerBase {
     _loadedExternalPrefixMaxEndMs.clear();
     _activeHlsAudioStreamId = null;
     _pendingAudioHotSwapStreamId = null;
+    _mkvInitialFailureErrorCode = null;
+    _burnedEmbeddedSubtitleId = null;
+    _lastKnownVideoWidth = null;
+    _lastKnownVideoHeight = null;
+    _lastBufferedEndMs = 0;
     _cachedMkvSubTrackId = null;
     _cachedMkvTrackListLen = -1;
     _cachedMkvTrackNum = null;
@@ -1496,15 +1709,21 @@ class PlayerWebos extends PlayerBase {
   Future<void> stop() async {
     _sourceCounter++;
     _currentSourceId = null;
+    _primarySubtitleServerRendered = false;
+    _didTriggerSubtitleBurnFallbackForSource = false;
+    _mkvInitialFailureErrorCode = null;
+    _burnedEmbeddedSubtitleId = null;
     await _teardownActiveTexture();
     setSeekable(false);
   }
 
   void _handleTextureVideoSizeChanged(Size videoSize) {
     if (_isClosed || videoSize.width <= 0 || videoSize.height <= 0) return;
+    _lastKnownVideoWidth = videoSize.width.round();
+    _lastKnownVideoHeight = videoSize.height.round();
     _libassController?.updateVideoGeometry(
-      storageWidth: videoSize.width.round(),
-      storageHeight: videoSize.height.round(),
+      storageWidth: _lastKnownVideoWidth!,
+      storageHeight: _lastKnownVideoHeight!,
       displayAspectRatio: _pendingMediaInfo?.videoAspectRatio,
     );
     unawaited(
@@ -1526,9 +1745,11 @@ class PlayerWebos extends PlayerBase {
     _videoReadyForSubtitles = true;
     final videoSize = event.size;
     if (videoSize != null && videoSize.width > 0 && videoSize.height > 0) {
+      _lastKnownVideoWidth = videoSize.width.round();
+      _lastKnownVideoHeight = videoSize.height.round();
       _libassController?.updateVideoGeometry(
-        storageWidth: videoSize.width.round(),
-        storageHeight: videoSize.height.round(),
+        storageWidth: _lastKnownVideoWidth!,
+        storageHeight: _lastKnownVideoHeight!,
         displayAspectRatio: _pendingMediaInfo?.videoAspectRatio,
       );
     } else {
@@ -1536,8 +1757,10 @@ class PlayerWebos extends PlayerBase {
     }
     _libassController?.setVideoReady(true);
 
-    final durSec = (event.duration?.inMilliseconds ?? 0) / 1000.0;
+    final durMs = event.duration?.inMilliseconds ?? 0;
+    final durSec = durMs / 1000.0;
     if (durSec > 0) {
+      _mkvExtractor?.updateFallbackDurationMs(durMs);
       handlePropertyChange('duration', durSec, sourceId: sourceId);
     }
     setSeekable(!_currentSourceIsLive);
@@ -1561,7 +1784,7 @@ class PlayerWebos extends PlayerBase {
           'index': _initialAudioOrderIdx,
         }));
       }
-      if (_initialPlexSelectedSubId != null) {
+      if (!_primarySubtitleServerRendered && _initialPlexSelectedSubId != null) {
         updateSelectedSubtitleTrack(_initialPlexSelectedSubId);
       }
       handlePlayerEvent('file-loaded', {'sourceId': sourceId});
@@ -1590,15 +1813,105 @@ class PlayerWebos extends PlayerBase {
     _refreshActiveSubtitleCues();
   }
 
+  static bool _isBurnFallbackEligibleMkvError(String? errorCode) {
+    if (errorCode == null || errorCode.isEmpty) return false;
+    if (errorCode == '200noR') return true;
+    final status = int.tryParse(errorCode);
+    return status != null && status >= 400 && status < 600;
+  }
+
+  /// One-shot runtime safety net: when raw MKV subtitle Range extraction fails
+  /// (`503`/`5xx`/`4xx`/`200noR`, `p == 0`) while playing a Plex HLS Direct Stream
+  /// that suppressed server burn-in (`subtitles=none`), rebuilds and hot-swaps to
+  /// the HLS Direct Stream with `subtitles=burn` so embedded subtitles render
+  /// cleanly without retry loops or duplicate local overlays.
+  Future<bool> _maybeFallbackToServerBurnedSubtitles(
+    int? sourceId,
+    String errorCode,
+  ) async {
+    if (_isClosed || sourceId == null || _currentSourceId != sourceId) return false;
+    if (!_isBurnFallbackEligibleMkvError(errorCode)) return false;
+    if (!_isCurrentStreamHls || _currentSourceIsLive || _primarySubtitleServerRendered) return false;
+    if (_didTriggerSubtitleBurnFallbackForSource) return false;
+    if ((_lastResolvedUri ?? '').contains('subtitles=burn')) return false;
+    if (!WebosDirectStreamFallbackRegistry.instance.hasBurnInDirectStreamCallback) return false;
+
+    final subId = _selectedSubTrackId;
+    if (_subtitlesHidden || subId == null || subId == 'no' || subId == SubtitleTrack.off.id) {
+      return false;
+    }
+    if (_subIdToExternalUri.containsKey(subId) ||
+        _externalAssTrackKeys.containsKey(subId) ||
+        _loadedExternalSubtitles.containsKey(subId)) {
+      return false;
+    }
+
+    int? subtitleStreamId;
+    if (subId.startsWith('s_')) {
+      subtitleStreamId = int.tryParse(subId.substring(2));
+    }
+    final subMeta = _subIdToSubMeta[subId];
+    final codecLower = subMeta?.codec?.trim().toLowerCase();
+    if (codecLower == 'dvb_teletext') {
+      return false;
+    }
+
+    _didTriggerSubtitleBurnFallbackForSource = true;
+    while (_isHotSwapping && !_isClosed && _currentSourceId == sourceId) {
+      await Future<void>.delayed(const Duration(milliseconds: 40));
+    }
+    if (_isClosed || _currentSourceId != sourceId) return false;
+
+    final targetPosMs = currentSourcePositionMs;
+    final effectiveAudioId =
+        _activeHlsAudioStreamId ?? WebosDirectStreamFallbackRegistry.instance.activeAudioStreamId;
+    appLogger.w(
+      '[WebOS-Sub] Raw MKV subtitle extraction failed (e:$errorCode) on HLS Direct Stream; '
+      'falling back once to subtitles=burn (subStreamId=$subtitleStreamId, pos=${targetPosMs}ms)',
+    );
+    final burnUrl = await WebosDirectStreamFallbackRegistry.instance.obtainBurnInDirectStreamUrl(
+      audioStreamId: effectiveAudioId,
+      subtitleStreamId: subtitleStreamId,
+    );
+    if (_isClosed || _currentSourceId != sourceId || burnUrl == null || burnUrl.isEmpty) {
+      return false;
+    }
+
+    _debugSubtitleBurnFallbackCount++;
+    _primarySubtitleServerRendered = true;
+    _mkvInitialFailureErrorCode = null;
+    _burnedEmbeddedSubtitleId = subId;
+    _initialPlexSelectedSubId = null;
+    WebosDirectStreamFallbackRegistry.instance.lastRawMkvUrl = null;
+    _mkvExtractor?.dispose();
+    _mkvExtractor = null;
+    _selectedSubTrackId = null;
+    _libassController?.setActiveTrack(null);
+    if (activeSubtitleCues.value.isNotEmpty) {
+      activeSubtitleCues.value = const [];
+    }
+
+    return _hotSwapToDirectStream(
+      targetPosMs,
+      emitErrorOnFailure: false,
+      audioStreamIdOverride: effectiveAudioId,
+      markUnseekable: false,
+      directStreamUrlOverride: burnUrl,
+      preservePausedState: true,
+    );
+  }
+
   Future<bool> _hotSwapToDirectStream(
     int targetPosMs, {
     bool emitErrorOnFailure = true,
     int? audioStreamIdOverride,
     bool markUnseekable = true,
+    String? directStreamUrlOverride,
+    bool preservePausedState = false,
   }) async {
     if (_isClosed) return false;
     if (_isHotSwapping) {
-      if (audioStreamIdOverride != null) {
+      if (audioStreamIdOverride != null && directStreamUrlOverride == null) {
         _pendingAudioHotSwapStreamId = audioStreamIdOverride;
       }
       return false;
@@ -1606,16 +1919,21 @@ class PlayerWebos extends PlayerBase {
     final sourceId = _currentSourceId;
     if (sourceId == null) return false;
 
+    final bool shouldPlayAfterSwap = !preservePausedState ||
+        state.playing ||
+        (!_emittedFileLoadedForSource && _currentSourceAutoPlay);
+
     _isHotSwapping = true;
     bool oldTextureDisposed = false;
     String? failureMessage;
     try {
       final effectiveAudioStreamId =
           audioStreamIdOverride ?? _activeHlsAudioStreamId ?? WebosDirectStreamFallbackRegistry.instance.activeAudioStreamId;
-      final dsUrl = await WebosDirectStreamFallbackRegistry.instance.obtainDirectStreamUrl(
-        audioStreamId: effectiveAudioStreamId,
-        markUnseekable: markUnseekable,
-      );
+      final dsUrl = directStreamUrlOverride ??
+          await WebosDirectStreamFallbackRegistry.instance.obtainDirectStreamUrl(
+            audioStreamId: effectiveAudioStreamId,
+            markUnseekable: markUnseekable,
+          );
       if (_isClosed || dsUrl == null || dsUrl.isEmpty || _currentSourceId != sourceId) {
         return false;
       }
@@ -1705,7 +2023,9 @@ class PlayerWebos extends PlayerBase {
               break;
             case VideoEventType.bufferingUpdate:
               if (event.buffered != null && event.buffered!.isNotEmpty) {
-                final endSec = event.buffered!.last.end.inMilliseconds / 1000.0;
+                final endMs = event.buffered!.last.end.inMilliseconds;
+                _lastBufferedEndMs = endMs;
+                final endSec = endMs / 1000.0;
                 handlePropertyChange('demuxer-cache-time', endSec, sourceId: sourceId);
               }
               break;
@@ -1728,20 +2048,22 @@ class PlayerWebos extends PlayerBase {
         },
       );
 
-      try {
-        await _webosPlatform.play(newTexId);
-      } catch (playErr) {
-        failureMessage = playErr.toString();
-        _textureId = null;
-        final sub = _videoEventSub;
-        _videoEventSub = null;
-        await sub?.cancel();
-        await _disposeOrphanTexture(newTexId);
-        rethrow;
+      if (shouldPlayAfterSwap) {
+        try {
+          await _webosPlatform.play(newTexId);
+        } catch (playErr) {
+          failureMessage = playErr.toString();
+          _textureId = null;
+          final sub = _videoEventSub;
+          _videoEventSub = null;
+          await sub?.cancel();
+          await _disposeOrphanTexture(newTexId);
+          rethrow;
+        }
       }
 
       if (_isClosed || _currentSourceId != sourceId || _textureId != newTexId) return false;
-      _syncPlaybackRunningState(true, sourceId: sourceId);
+      _syncPlaybackRunningState(shouldPlayAfterSwap, sourceId: sourceId);
       handlePropertyChange('time-pos', targetPosMs / 1000.0, sourceId: sourceId);
       _refreshActiveSubtitleCues();
       return true;
@@ -1930,22 +2252,53 @@ class PlayerWebos extends PlayerBase {
   @override
   Future<void> selectSubtitleTrack(SubtitleTrack track) async {
     if (_isClosed) return;
-    WebosSubtitlePreferenceStore.instance.onSelectSubtitleTrack(id: track.id, language: track.language, title: track.title);
-    if (track.id == SubtitleTrack.off.id || track.id == 'no') {
+    String effectiveId = track.id;
+    if (effectiveId.startsWith('source:')) {
+      final candidateEmbeddedId = 's_${effectiveId.substring(7)}';
+      if (_subIdToSubMeta.containsKey(candidateEmbeddedId) ||
+          _subIdToEmbeddedOrderIndex.containsKey(candidateEmbeddedId)) {
+        effectiveId = candidateEmbeddedId;
+      }
+    }
+    WebosSubtitlePreferenceStore.instance.onSelectSubtitleTrack(
+      id: effectiveId,
+      language: track.language,
+      title: track.title,
+    );
+    if (effectiveId == SubtitleTrack.off.id || effectiveId == 'no') {
       _selectedSubTrackId = null;
       updateSelectedSubtitleTrack('no');
       _refreshActiveSubtitleCues();
       return;
     }
-    _selectedSubTrackId = track.id;
+    if (_primarySubtitleServerRendered &&
+        effectiveId == _burnedEmbeddedSubtitleId &&
+        !_subIdToExternalUri.containsKey(effectiveId) &&
+        (track.uri == null || track.uri!.isEmpty)) {
+      _selectedSubTrackId = null;
+      _refreshActiveSubtitleCues();
+      return;
+    }
+    _selectedSubTrackId = effectiveId;
     if (track.language != null && track.language!.trim().isNotEmpty) {
-      _subIdToLangCode[track.id] ??= track.language!.trim().toLowerCase();
+      _subIdToLangCode[effectiveId] ??= track.language!.trim().toLowerCase();
     }
-    updateSelectedSubtitleTrack(track.id);
+    _subIdToSubMeta[effectiveId] ??= (
+      streamIndex: null,
+      lang: track.language?.trim().toLowerCase(),
+      title: track.title,
+      forced: track.isForced,
+      codec: track.codec,
+    );
+    _cachedMkvSubTrackId = null;
+    updateSelectedSubtitleTrack(effectiveId);
     if (track.uri != null && track.uri!.isNotEmpty) {
-      _subIdToExternalUri[track.id] = _resolveUrlWithHeaders(track.uri!, _lastHeaders);
+      _subIdToExternalUri[effectiveId] = _resolveUrlWithHeaders(track.uri!, _lastHeaders);
     }
-    unawaited(_ensureSubtitleLoaded(track.id));
+    unawaited(_ensureSubtitleLoaded(effectiveId));
+    if (_mkvInitialFailureErrorCode != null) {
+      unawaited(_maybeFallbackToServerBurnedSubtitles(_currentSourceId, _mkvInitialFailureErrorCode!));
+    }
     _refreshActiveSubtitleCues();
   }
 
@@ -2032,17 +2385,58 @@ class PlayerWebos extends PlayerBase {
         if (parsed != null && parsed > 0) {
           _subFontSize = parsed;
           _applyLibassFontScale();
-          final prev = subtitleStyleNotifier.value;
-          subtitleStyleNotifier.value = WebosSubtitleStyleConfig(
-            fontSize: parsed,
-            textColor: prev.textColor,
-            borderSize: prev.borderSize,
-            borderColor: prev.borderColor,
-            bgColor: prev.bgColor,
-            bgOpacity: prev.bgOpacity,
-            subtitlePosition: prev.subtitlePosition,
-            bold: prev.bold,
-            italic: prev.italic,
+          subtitleStyleNotifier.value = subtitleStyleNotifier.value.copyWith(fontSize: parsed);
+        }
+        break;
+      case 'sub-bold':
+        final bold = value == 'yes' || value == 'true' || value == '1';
+        subtitleStyleNotifier.value = subtitleStyleNotifier.value.copyWith(bold: bold);
+        break;
+      case 'sub-italic':
+        final italic = value == 'yes' || value == 'true' || value == '1';
+        subtitleStyleNotifier.value = subtitleStyleNotifier.value.copyWith(italic: italic);
+        break;
+      case 'sub-color':
+        final prev = subtitleStyleNotifier.value;
+        subtitleStyleNotifier.value = prev.copyWith(
+          textColor: WebosSubtitleStyleConfig.parseHexColor(value, prev.textColor),
+        );
+        break;
+      case 'sub-border-size':
+        final parsed = double.tryParse(value);
+        if (parsed != null && parsed >= 0) {
+          subtitleStyleNotifier.value = subtitleStyleNotifier.value.copyWith(borderSize: parsed);
+        }
+        break;
+      case 'sub-border-color':
+        final prev = subtitleStyleNotifier.value;
+        subtitleStyleNotifier.value = prev.copyWith(
+          borderColor: WebosSubtitleStyleConfig.parseHexColor(value, prev.borderColor),
+        );
+        break;
+      case 'sub-back-color':
+        final prev = subtitleStyleNotifier.value;
+        final cleaned = value.replaceFirst('#', '').trim();
+        if (cleaned.length == 8) {
+          final argb = int.tryParse(cleaned, radix: 16);
+          if (argb != null) {
+            final alphaByte = (argb >> 24) & 0xFF;
+            final opacityPct = ((alphaByte * 100.0) / 255.0).round().clamp(0, 100);
+            final rgbColor = Color(0xFF000000 | (argb & 0x00FFFFFF));
+            subtitleStyleNotifier.value = prev.copyWith(bgColor: rgbColor, bgOpacity: opacityPct);
+          }
+        } else if (cleaned.length == 6) {
+          final rgb = int.tryParse('FF$cleaned', radix: 16);
+          if (rgb != null) {
+            subtitleStyleNotifier.value = prev.copyWith(bgColor: Color(rgb));
+          }
+        }
+        break;
+      case 'sub-pos':
+        final parsed = int.tryParse(value) ?? double.tryParse(value)?.round();
+        if (parsed != null) {
+          subtitleStyleNotifier.value = subtitleStyleNotifier.value.copyWith(
+            subtitlePosition: parsed.clamp(0, 150),
           );
         }
         break;
@@ -2054,6 +2448,189 @@ class PlayerWebos extends PlayerBase {
         await setUseWebosLibass(value == 'yes' || value == 'true');
         break;
     }
+  }
+
+  String _resolveBaseSubtitleRendererName(String trackId) {
+    if (_libassActiveNotifier.value || _externalAssTrackKeys.containsKey(trackId)) {
+      return 'ASS (libass 0.17.4)';
+    }
+    final extCues = _loadedExternalSubtitles[trackId];
+    if (extCues != null && extCues.isNotEmpty) {
+      if (extCues.first.isPgs) return 'PGS (Bitmap)';
+      if (extCues.first.isAss) return 'ASS (Dart)';
+      final extUri = (_subIdToExternalUri[trackId] ?? '').toLowerCase();
+      if (extUri.contains('.vtt') || extUri.contains('webvtt')) return 'VTT (Dart)';
+      return 'SRT (Dart)';
+    }
+    final extractor = _mkvExtractor;
+    if (extractor != null &&
+        extractor.subtitleTracksInOrder.isNotEmpty &&
+        !_subIdToExternalUri.containsKey(trackId)) {
+      final num = _resolveMkvTrackNumber(extractor, trackId);
+      if (num != null) {
+        if (extractor.isAssTrackNumber(num)) {
+          final libass = _libassController;
+          if (_effectiveLibassEnabled && libass != null && libass.isAvailable) {
+            return 'ASS (libass 0.17.4)';
+          }
+          return 'ASS (Dart)';
+        }
+        final tInfo = extractor.subtitleTracksInOrder.where((t) => t.trackNumber == num).firstOrNull;
+        final codecUpper = (tInfo?.codecId ?? '').toUpperCase();
+        if (codecUpper.contains('PGS')) return 'PGS (Bitmap)';
+        if (codecUpper.contains('VTT')) return 'VTT (Dart)';
+        return 'SRT (Dart)';
+      }
+    }
+    String? codec;
+    for (final entry in _currentTrackEntries) {
+      if (entry['type'] == 'sub' && entry['id'] == trackId) {
+        codec = (entry['codec'] as String?)?.toLowerCase();
+        break;
+      }
+    }
+    if (codec != null) {
+      if (codec.contains('ass') || codec.contains('ssa')) {
+        return _effectiveLibassEnabled && (_libassController?.isAvailable ?? false)
+            ? 'ASS (libass 0.17.4)'
+            : 'ASS (Dart)';
+      }
+      if (codec.contains('pgs')) return 'PGS (Bitmap)';
+      if (codec.contains('vtt')) return 'VTT (Dart)';
+    }
+    return 'SRT (Dart)';
+  }
+
+  String _resolveActiveSubtitleRendererLabel() {
+    if (_primarySubtitleServerRendered &&
+        (_selectedSubTrackId == null || _selectedSubTrackId == 'no')) {
+      return 'Burned-in (Server)';
+    }
+    if (_subtitlesHidden || _selectedSubTrackId == null || _selectedSubTrackId == 'no') {
+      return 'Off';
+    }
+    final trackId = _selectedSubTrackId!;
+    final baseLabel = _resolveBaseSubtitleRendererName(trackId);
+    final bool isExt = _subIdToExternalUri.containsKey(trackId) ||
+        _externalAssTrackKeys.containsKey(trackId) ||
+        _loadedExternalSubtitles.containsKey(trackId);
+    final extractor = _mkvExtractor;
+    final String? sourceUrl = isExt ? _subIdToExternalUri[trackId] : extractor?.url;
+    if (sourceUrl == null || sourceUrl.isEmpty) {
+      return '$baseLabel [u:N]';
+    }
+
+    final parts = <String>['u:Y'];
+    final int nowSec = (currentSourcePositionMs / 1000).round();
+
+    if (baseLabel.startsWith('ASS (libass')) {
+      final libass = _libassController;
+      final int? mkvTrackNum = !isExt && extractor != null && extractor.subtitleTracksInOrder.isNotEmpty
+          ? _resolveMkvTrackNumber(extractor, trackId)
+          : null;
+      final int? trackKey = isExt ? _externalAssTrackKeys[trackId] : mkvTrackNum;
+      final bool hasHdr = trackKey != null && (libass?.hasTrackHeader(trackKey) ?? false);
+      final int pktCount = isExt
+          ? (libass?.chunksForTrack(trackKey) ?? 0)
+          : (extractor?.packetsDeliveredForTrack(mkvTrackNum) ?? libass?.chunksForTrack(trackKey) ?? 0);
+      final int regCount = libass?.renderedRegionCount ?? 0;
+
+      parts.add('h:${hasHdr ? "Y" : "N"}');
+      parts.add('p:$pktCount');
+      parts.add('r:$regCount');
+
+      if (regCount == 0) {
+        final int? minMs = !isExt
+            ? (extractor?.minPtsMsForTrack(mkvTrackNum) ?? libass?.minPtsMsForTrack(trackKey))
+            : libass?.minPtsMsForTrack(trackKey);
+        final int? maxMs = !isExt
+            ? (extractor?.maxPtsMsForTrack(mkvTrackNum) ?? libass?.maxPtsMsForTrack(trackKey))
+            : libass?.maxPtsMsForTrack(trackKey);
+        if (pktCount > 0 && minMs != null && maxMs != null) {
+          parts.add('t:${nowSec}s/${(minMs / 1000).floor()}-${(maxMs / 1000).ceil()}s');
+        } else if (!isExt && extractor != null) {
+          parts.add('t:${nowSec}s');
+        }
+      }
+
+      final String? err = (isExt ? _externalSubLoadErrors[trackId] : extractor?.lastErrorCode) ?? libass?.lastErrorCode;
+      if (err != null && err.isNotEmpty) {
+        parts.add('e:$err');
+      }
+    } else {
+      final extCues = _loadedExternalSubtitles[trackId];
+      final int? mkvTrackNum = !isExt && extractor != null && extractor.subtitleTracksInOrder.isNotEmpty
+          ? _resolveMkvTrackNumber(extractor, trackId)
+          : null;
+      final bool hasHdr =
+          isExt ? (extCues != null) : (mkvTrackNum != null && (extractor?.headersInitialized ?? false));
+      final int pktCount = isExt
+          ? (extCues?.length ?? 0)
+          : (extractor?.packetsDeliveredForTrack(mkvTrackNum) ?? 0);
+      final int activeCount = activeSubtitleCues.value.length;
+
+      parts.add('h:${hasHdr ? "Y" : "N"}');
+      parts.add('p:$pktCount');
+      parts.add('r:$activeCount');
+
+      final String? err = isExt ? _externalSubLoadErrors[trackId] : extractor?.lastErrorCode;
+      if (err != null && err.isNotEmpty) {
+        parts.add('e:$err');
+      }
+    }
+
+    return '$baseLabel [${parts.join(' ')}]';
+  }
+
+  @override
+  Future<Map<String, dynamic>> getStats() async {
+    final info = _pendingMediaInfo;
+    final version = _pendingSelectedVersion;
+    final criteria = info?.displayCriteria;
+    final int? videoW = _lastKnownVideoWidth ?? info?.videoWidth ?? criteria?.width ?? version?.width;
+    final int? videoH = _lastKnownVideoHeight ?? info?.videoHeight ?? criteria?.height ?? version?.height;
+
+    MediaAudioTrack? activeAudio;
+    final audioTracks = info?.audioTracks ?? const <MediaAudioTrack>[];
+    if (audioTracks.isNotEmpty) {
+      final selectedIdStr = state.track.audio?.id;
+      final streamId = (selectedIdStr != null ? _audioIdToStreamId[selectedIdStr] : null) ??
+          _activeHlsAudioStreamId;
+      if (streamId != null) {
+        activeAudio = audioTracks.where((a) => a.id == streamId).firstOrNull;
+      }
+      activeAudio ??= audioTracks.where((a) => a.selected).firstOrNull ?? audioTracks.first;
+    }
+
+    final bool audioServerTranscoded = _isCurrentStreamHls &&
+        activeAudio != null &&
+        _isWebosUnsupportedAudio(activeAudio.codec, activeAudio.displayTitle);
+
+    final int posMs = currentSourcePositionMs;
+    final int? bufferedDurationMs = _lastBufferedEndMs > posMs
+        ? (_lastBufferedEndMs - posMs)
+        : (_lastBufferedEndMs > 0 ? 0 : null);
+
+    return <String, dynamic>{
+      'playerType': 'webos',
+      'hwdecCurrent': _isCurrentStreamHls ? 'NDL Hardware (HLS)' : 'NDL Hardware',
+      if (version?.videoCodec != null) 'videoCodec': version!.videoCodec,
+      if (videoW != null && videoW > 0) 'videoWidth': videoW,
+      if (videoH != null && videoH > 0) 'videoHeight': videoH,
+      if (criteria?.fps != null && criteria!.fps! > 0) 'videoFps': criteria.fps,
+      if (version?.bitrate != null && version!.bitrate! > 0) 'videoBitrate': version.bitrate! * 1000,
+      if (criteria?.doviProfile != null && criteria!.doviProfile! > 0) ...{
+        'dvSourceProfile': criteria.doviProfile,
+        'dvPlaybackPath': 'NDL Dolby Vision',
+      },
+      if (activeAudio != null) ...{
+        'audioCodec': audioServerTranscoded ? 'aac' : activeAudio.codec,
+        if (!audioServerTranscoded && activeAudio.channels != null) 'audioChannels': activeAudio.channels,
+        if (audioServerTranscoded) 'audioDecoderName': 'Server Transcode (AAC)',
+      },
+      'totalBufferedDurationMs': ?bufferedDurationMs,
+      'subtitleRenderer': _resolveActiveSubtitleRendererLabel(),
+    };
   }
 
   @override

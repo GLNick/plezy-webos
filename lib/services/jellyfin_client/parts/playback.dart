@@ -513,6 +513,7 @@ mixin _JellyfinPlaybackMethods on _JellyfinClientInternals {
       subtitleSidecars: subtitleSidecars,
       isOffline: false,
       isTranscoding: isTranscoding,
+      primarySubtitleBurnedByServer: burnedSourceStreamId != null,
       fallbackReason: fallbackReason,
       activeAudioStreamId: requestedAudioStreamId,
       playSessionId: playSessionId,

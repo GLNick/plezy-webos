@@ -55,6 +55,17 @@ static inline int32_t plezy_clamp_i64_to_i32(int64_t v, int32_t lo, int32_t hi) 
   return (int32_t)v;
 }
 
+static inline int32_t plezy_snap_down_3(int32_t v) {
+  return v <= 0 ? 0 : (v - (v % 3));
+}
+
+static inline int32_t plezy_snap_up_3(int32_t v, int32_t limit) {
+  if (v <= 0) return 0;
+  int32_t rem = v % 3;
+  int32_t up = (rem == 0) ? v : (v + (3 - rem));
+  return up > limit ? limit : up;
+}
+
 PLEZY_ASS_EXPORT void* plezy_ass_alloc(int32_t size) {
   if (size <= 0) {
     return NULL;
@@ -242,10 +253,25 @@ PLEZY_ASS_EXPORT ASS_Track* plezy_ass_create_stream_track(
 
 PLEZY_ASS_EXPORT void plezy_ass_process_codec_private(
     ASS_Track* track, const uint8_t* data, int32_t size) {
-  if (!track || !data || size <= 0) {
+  if (!track) {
+    return;
+  }
+  if (!data || size <= 0) {
+    ass_process_codec_private(track, "", 0);
     return;
   }
   ass_process_codec_private(track, (char*)data, size);
+}
+
+static int plezy_starts_with_ascii_ci(
+    const uint8_t* buf, int32_t len, const char* prefix, int32_t prefix_len) {
+  if (len < prefix_len) return 0;
+  for (int32_t i = 0; i < prefix_len; i++) {
+    uint8_t c = buf[i];
+    if (c >= 'A' && c <= 'Z') c = (uint8_t)(c + ('a' - 'A'));
+    if (c != (uint8_t)prefix[i]) return 0;
+  }
+  return 1;
 }
 
 PLEZY_ASS_EXPORT void plezy_ass_process_chunk(
@@ -257,8 +283,26 @@ PLEZY_ASS_EXPORT void plezy_ass_process_chunk(
   if (!track || !data || size <= 0) {
     return;
   }
+  const uint8_t* p = data;
+  int32_t rem = size;
+  if (rem >= 3 && p[0] == 0xEF && p[1] == 0xBB && p[2] == 0xBF) {
+    p += 3;
+    rem -= 3;
+  }
+  while (rem > 0 && (*p == ' ' || *p == '\t' || *p == '\r' || *p == '\n')) {
+    p++;
+    rem--;
+  }
+  if (rem <= 0) {
+    return;
+  }
+  if (plezy_starts_with_ascii_ci(p, rem, "dialogue:", 9) ||
+      plezy_starts_with_ascii_ci(p, rem, "comment:", 8)) {
+    ass_process_data(track, (char*)p, rem);
+    return;
+  }
   ass_process_chunk(
-      track, (char*)data, size, (long long)start_ms, (long long)duration_ms);
+      track, (char*)p, rem, (long long)start_ms, (long long)duration_ms);
 }
 
 PLEZY_ASS_EXPORT void plezy_ass_flush_events(ASS_Track* track) {
@@ -650,6 +694,32 @@ PLEZY_ASS_EXPORT int32_t plezy_ass_render_frame_regions(
     }
   }
 
+  /*
+   * Snap region bounds outward to multiples of 3 physical pixels so that when
+   * Plezy's 1280x720 logical root (1.5x _AppShell scale -> 1920x1080 physical)
+   * maps frame coordinates by 2/3, every region origin and size lands on an
+   * exact integer in both logical and physical space with zero resampling.
+   */
+  r0_x0 = plezy_snap_down_3(r0_x0);
+  r0_y0 = plezy_snap_down_3(r0_y0);
+  r0_x1 = plezy_snap_up_3(r0_x1, ctx->frame_w);
+  r0_y1 = plezy_snap_up_3(r0_y1, ctx->frame_h);
+  if (region_count == 2) {
+    r1_x0 = plezy_snap_down_3(r1_x0);
+    r1_y0 = plezy_snap_down_3(r1_y0);
+    r1_x1 = plezy_snap_up_3(r1_x1, ctx->frame_w);
+    r1_y1 = plezy_snap_up_3(r1_y1, ctx->frame_h);
+    if (r0_y1 >= r1_y0) {
+      /* Snapping closed the 1-2px vertical gap; merge into a single region
+       * so neither region can clip glyph rows or collapse to zero height. */
+      region_count = 1;
+      if (r1_x0 < r0_x0) r0_x0 = r1_x0;
+      if (r1_y0 < r0_y0) r0_y0 = r1_y0;
+      if (r1_x1 > r0_x1) r0_x1 = r1_x1;
+      if (r1_y1 > r0_y1) r0_y1 = r1_y1;
+    }
+  }
+
   int32_t w0 = r0_x1 - r0_x0;
   int32_t h0 = r0_y1 - r0_y0;
   int32_t w1 = (region_count == 2) ? (r1_x1 - r1_x0) : 0;
@@ -806,6 +876,11 @@ PLEZY_ASS_EXPORT int32_t plezy_ass_render_frame_rgba(
   if (!has_visible) {
     return 1;
   }
+
+  min_x = plezy_snap_down_3(min_x);
+  min_y = plezy_snap_down_3(min_y);
+  max_x = plezy_snap_up_3(max_x, ctx->frame_w);
+  max_y = plezy_snap_up_3(max_y, ctx->frame_h);
 
   int32_t bw = max_x - min_x;
   int32_t bh = max_y - min_y;

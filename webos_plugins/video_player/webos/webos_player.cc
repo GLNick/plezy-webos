@@ -587,12 +587,14 @@ void WebOSPlayer::execLoadCompleted() {
   state_ = LOADED;
 
   notifyVisibility(visibility_);
-  if (pending_audio_track_ >= 0 && slot_ >= 0 && NDL_MediaSetPlayer(slot_) == 0) {
-    NDL_MediaSelectTrack("audio", pending_audio_track_);
-  }
-  if (speed_ != 1.0 ||
-      audio_out_ != true) {
-    if (slot_ >= 0 && NDL_MediaSetPlayer(slot_) == 0) {
+  if (slot_ >= 0 && NDL_MediaSetPlayer(slot_) == 0) {
+    // Always disable Starfish/uMediaServer internal subtitle rendering so
+    // FlagDefault=1 MKV tracks or slot-0 reuse never paint underneath Flutter.
+    NDL_MediaSetSubtitleEnable(false);
+    if (pending_audio_track_ >= 0) {
+      NDL_MediaSelectTrack("audio", pending_audio_track_);
+    }
+    if (speed_ != 1.0 || audio_out_ != true) {
       NDL_MediaSetPlaybackRate(speed_);
     }
   }
@@ -601,8 +603,11 @@ void WebOSPlayer::execLoadCompleted() {
 
 void WebOSPlayer::execPlaying() {
   state_ = PLAYING;
-  if (pending_audio_track_ >= 0 && slot_ >= 0 && NDL_MediaSetPlayer(slot_) == 0) {
-    NDL_MediaSelectTrack("audio", pending_audio_track_);
+  if (slot_ >= 0 && NDL_MediaSetPlayer(slot_) == 0) {
+    NDL_MediaSetSubtitleEnable(false);
+    if (pending_audio_track_ >= 0) {
+      NDL_MediaSelectTrack("audio", pending_audio_track_);
+    }
   }
   delegate_->OnStateChanged(PLAYING);
 }

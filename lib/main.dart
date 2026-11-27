@@ -156,29 +156,8 @@ void _absorbZeroOffsetPointerEvent(PointerEvent event) {
 /// also needs to call the plugin's Swift register(with:) to attach its
 /// message channels.
 
-bool _isWebosBackKeyCode(int? keyCode, int? scanCode, int? logicalKey) {
-  const backCodes = <int>{
-    1,           // evdev KEY_ESC
-    9,           // XKB ESC scanCode
-    27,          // ASCII Escape
-    158,         // Linux KEY_BACK (evdev)
-    166,         // X11 XF86Back scanCode
-    404,         // webOS evdev KEY_BACK / IR_KEY_BACK
-    412,         // webOS XKB IR_KEY_BACK (0x19C)
-    461,         // webOS / HDMI-CEC Back (0x1CD)
-    469,         // XKB 461 + 8
-    10009,       // Smart TV Back
-    0xff1b,      // XKB_KEY_Escape
-    0x1008ff26,  // XKB_KEY_XF86Back
-    0x1008ff27,
-    0x1000001cd, // Flutter webOS Back logical
-    0x10000001b, // Flutter Escape logical
-  };
-  if (keyCode != null && backCodes.contains(keyCode)) return true;
-  if (scanCode != null && backCodes.contains(scanCode)) return true;
-  if (logicalKey != null && backCodes.contains(logicalKey)) return true;
-  return false;
-}
+bool _isWebosBackKeyCode(int? keyCode, int? scanCode, int? logicalKey) =>
+    isWebosBackKeyCode(keyCode, scanCode, logicalKey);
 
 /// Findet alle aktiven NavigatorStates im gesamten Widget-Baum (vom innersten bis zum Root-Navigator).
 List<NavigatorState> _collectAllActiveNavigators() {
@@ -230,13 +209,11 @@ bool _canAppHandleBackInternally() {
   return false;
 }
 
-DateTime _lastWebosBackHandledAt = DateTime.fromMillisecondsSinceEpoch(0);
+Future<bool> _triggerInternalWebosBack() {
+  return WebosBackKeyGate.instance.runSingleFlight(_executeInternalWebosBack);
+}
 
-Future<bool> _triggerInternalWebosBack() async {
-  final now = DateTime.now();
-  if (now.difference(_lastWebosBackHandledAt).inMilliseconds < 180) return true;
-  _lastWebosBackHandledAt = now;
-
+Future<bool> _executeInternalWebosBack() async {
   try {
     if (BackKeyCoordinator.consumeIfHandled()) {
       _refreshVisibleImagesAfterPlayerExit();
@@ -308,8 +285,10 @@ class _WebosBackNavigationObserver with WidgetsBindingObserver {
   Future<bool> didPopRoute() async {
     if (!Platform.isLinux) return false;
     if (_canAppHandleBackInternally()) {
-      _triggerInternalWebosBack();
-      return true; // Verhindert SystemNavigator.pop()!
+      if (WebosBackKeyGate.instance.shouldFireOnSystemPopRoute()) {
+        await _triggerInternalWebosBack();
+      }
+      return true; // Prevent SystemNavigator.pop()
     }
     return false;
   }
@@ -446,17 +425,14 @@ void _installWebosBackAndNavigationHooks() {
     if (data.type == ui.KeyEventType.down) {
       _clearFrozenWebosMouseHover();
     }
-    final int phys = data.physical;
-    final int logi = data.logical;
-    final bool isBackData = _isWebosBackKeyCode(logi, phys, logi) ||
-        phys == 0x70029 || // USB HID Escape
-        phys == 0xc0224 || // USB HID AC Back
-        phys == 0x194 ||
-        phys == 0x19c ||
-        (phys == 0 && logi == 0); // Ungemappter webOS Remote Back-Key in XKB!
+    final bool isBackData = isWebosBackKeyData(physical: data.physical, logical: data.logical);
 
     if (isBackData && !isTextEditingFocused() && _canAppHandleBackInternally()) {
-      if (data.type == ui.KeyEventType.up) {
+      final shouldFire = WebosBackKeyGate.instance.shouldFireOnKeyData(
+        isDown: data.type == ui.KeyEventType.down,
+        isUp: data.type == ui.KeyEventType.up,
+      );
+      if (shouldFire) {
         unawaited(_triggerInternalWebosBack());
       }
       return true;
@@ -477,7 +453,7 @@ void _installWebosBackAndNavigationHooks() {
     final usbHid = event.physicalKey.usbHidUsage;
     if (event.logicalKey.isBackKey || _isWebosBackKeyCode(keyId, usbHid, keyId)) {
       if (!isTextEditingFocused() && _canAppHandleBackInternally()) {
-        if (event is KeyUpEvent) {
+        if (WebosBackKeyGate.instance.shouldFireOnLegacyKeyChannel(isKeyUp: event is KeyUpEvent)) {
           unawaited(_triggerInternalWebosBack());
         }
         return true;
@@ -490,7 +466,9 @@ void _installWebosBackAndNavigationHooks() {
   SystemChannels.navigation.setMethodCallHandler((MethodCall call) async {
     if (call.method == 'popRoute') {
       if (_canAppHandleBackInternally()) {
-        await _triggerInternalWebosBack();
+        if (WebosBackKeyGate.instance.shouldFireOnSystemPopRoute()) {
+          await _triggerInternalWebosBack();
+        }
         return true;
       }
     }
@@ -511,22 +489,20 @@ void _installWebosBackAndNavigationHooks() {
       isBack = _isWebosBackKeyCode(keyCode, scanCode, logical);
     }
 
-    if (!isBack) {
+    if (!isBack || isTextEditingFocused() || !_canAppHandleBackInternally()) {
       return originalKeyMessageHandler(message);
     }
 
-    final canPopBefore = _canAppHandleBackInternally();
-    final res = await originalKeyMessageHandler(message);
-    final flutterHandled = (res is Map && res['handled'] == true);
-
-    if (canPopBefore) {
-      if (isKeyUp && !flutterHandled) {
-        await _triggerInternalWebosBack();
-      }
-      return <String, dynamic>{'handled': true};
+    // `libflutter_webos_media.so` (`KeyeventPlugin::OnKey`) unconditionally emits BOTH
+    // `SendEmbedderEvent` (`onKeyData`) AND `SendKeyEvent` (`flutter/keyevent`) for every
+    // physical RCU press. Because `onKeyData` already consumed the embedder event (hiding
+    // it from `KeyEventManager`), forwarding this raw JSON message to `originalKeyMessageHandler`
+    // would make `KeyEventManager` synthesize a second `KeyDownEvent`/`KeyUpEvent` into
+    // `FocusManager` and `DismissIntent` — popping a second screen right after Pop #1!
+    if (WebosBackKeyGate.instance.shouldFireOnLegacyKeyChannel(isKeyUp: isKeyUp)) {
+      await _triggerInternalWebosBack();
     }
-
-    return <String, dynamic>{'handled': false};
+    return <String, dynamic>{'handled': true};
   });
 }
 
@@ -539,8 +515,8 @@ KeyEventResult _handleWebosRootBackKey(FocusNode node, KeyEvent event) {
     return KeyEventResult.handled;
   }
   if (_canAppHandleBackInternally()) {
-    if (event is KeyUpEvent) {
-      _triggerInternalWebosBack();
+    if (WebosBackKeyGate.instance.shouldFireOnLegacyKeyChannel(isKeyUp: event is KeyUpEvent)) {
+      unawaited(_triggerInternalWebosBack());
     }
     return KeyEventResult.handled;
   }
@@ -2384,6 +2360,10 @@ class _AppShell extends StatelessWidget {
               return Listener(
                 onPointerDown: (event) {
                   if ((event.buttons & kBackMouseButton) != 0) {
+                    if (Platform.isLinux && !PlatformDetector.isDesktopOS()) {
+                      unawaited(_triggerInternalWebosBack());
+                      return;
+                    }
                     unawaited(() async {
                       final rootNavigator = rootNavigatorKey.currentState;
                       if (rootNavigator?.canPop() ?? false) {

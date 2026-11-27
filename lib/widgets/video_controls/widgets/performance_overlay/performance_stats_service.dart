@@ -199,6 +199,36 @@ class PerformanceStatsService {
         uiFps: _currentUiFps,
       );
       _emit(stats);
+    } else if (playerType == 'webos') {
+      final stats = PerformanceStats(
+        playerType: 'webos',
+        videoCodec: _formatVideoCodecName(statsMap['videoCodec'] as String?),
+        videoWidth: statsMap['videoWidth'] as int?,
+        videoHeight: statsMap['videoHeight'] as int?,
+        videoFps: (statsMap['videoFps'] as num?)?.toDouble(),
+        videoBitrate: statsMap['videoBitrate'] as int?,
+        hwdecCurrent: statsMap['hwdecCurrent'] as String?,
+        videoDecoderName: statsMap['videoDecoderName'] as String?,
+        aspectName: statsMap['aspectName'] as String?,
+        colormatrix: statsMap['colormatrix'] as String?,
+        primaries: statsMap['primaries'] as String?,
+        gamma: statsMap['gamma'] as String?,
+        dvSourceProfile: (statsMap['dvSourceProfile'] as num?)?.toInt(),
+        dvPlaybackPath: statsMap['dvPlaybackPath'] as String?,
+        audioCodec: _formatAudioCodecName(statsMap['audioCodec'] as String?),
+        audioSamplerate: statsMap['audioSampleRate'] as int?,
+        audioChannels: CodecUtils.formatAudioChannels(statsMap['audioChannels'] as int?),
+        audioBitrate: statsMap['audioBitrate'] as int?,
+        audioDecoderName: statsMap['audioDecoderName'] as String?,
+        frameDropCount: statsMap['videoDroppedFrames'] as int?,
+        cacheDuration: statsMap['totalBufferedDurationMs'] != null
+            ? (statsMap['totalBufferedDurationMs'] as int) / 1000.0
+            : null,
+        subtitleRenderer: statsMap['subtitleRenderer'] as String?,
+        appMemoryBytes: appMemory,
+        uiFps: _currentUiFps,
+      );
+      _emit(stats);
     } else {
       // Parse ExoPlayer stats format
       final stats = PerformanceStats(
@@ -234,6 +264,7 @@ class PerformanceStatsService {
         dvAvgSampleProcessingUs: (statsMap['dvAvgSampleProcessingUs'] as num?)?.toInt(),
         dvSourceProfile: (statsMap['dvSourceProfile'] as num?)?.toInt(),
         dvPlaybackPath: statsMap['dvPlaybackPath'] as String?,
+        subtitleRenderer: statsMap['subtitleRenderer'] as String?,
         // App metrics
         appMemoryBytes: appMemory,
         uiFps: _currentUiFps,

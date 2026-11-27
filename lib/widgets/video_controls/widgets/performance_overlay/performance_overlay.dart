@@ -72,6 +72,7 @@ class _PlayerPerformanceOverlayState extends State<PlayerPerformanceOverlay> {
   @override
   Widget build(BuildContext context) {
     final isMpv = _stats.playerType == 'mpv';
+    final isWebos = _stats.playerType == 'webos';
 
     final sections = <Widget>[
       _buildSection(Symbols.videocam_rounded, t.fileInfo.video, [
@@ -81,7 +82,7 @@ class _PlayerPerformanceOverlayState extends State<PlayerPerformanceOverlay> {
         if (_stats.hasValidVideoBitrate) _metric(t.fileInfo.bitrate, _stats.videoBitrateFormatted),
         _metric(t.performanceOverlay.decoder, _stats.hwdecFormatted),
         if (!isMpv && _stats.videoDecoderName != null) _metric(t.performanceOverlay.rawDecoder, _stats.videoDecoderRaw),
-        if (!isMpv) _metric(t.performanceOverlay.tunneling, _stats.tunneledPlaybackFormatted),
+        if (!isMpv && !isWebos) _metric(t.performanceOverlay.tunneling, _stats.tunneledPlaybackFormatted),
         if (_stats.aspectName != null && _stats.aspectName!.isNotEmpty)
           _metric(t.performanceOverlay.aspect, _stats.aspectName!),
         if (_stats.rotate != null && _stats.rotate != 0) _metric(t.performanceOverlay.rotation, _stats.rotateFormatted),
@@ -136,6 +137,7 @@ class _PlayerPerformanceOverlayState extends State<PlayerPerformanceOverlay> {
         _metric(t.performanceOverlay.player, _stats.playerTypeFormatted),
         if (widget.isTranscoding case final transcoding?)
           _metric(t.performanceOverlay.playMethod, transcoding ? t.fileInfo.transcoding : t.fileInfo.directPlay),
+        if (_stats.subtitleRenderer != null) _metric(t.fileInfo.subtitles, _stats.subtitleRenderer!),
         _metric(t.performanceOverlay.memory, _stats.appMemoryFormatted),
         _metric(t.performanceOverlay.uiFps, _stats.uiFpsFormatted),
       ]),

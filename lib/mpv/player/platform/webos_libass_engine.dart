@@ -596,7 +596,12 @@ void _webosLibassWorkerMain(Map<String, Object?> initArgs) {
         try {
           final bytes = File(filePath).readAsBytesSync();
           addFontBytesNative(resolvedName, bytes);
-        } catch (_) {}
+        } catch (e) {
+          replyPort.send(<String, Object?>{
+            'kind': 'logWarning',
+            'message': 'Failed to load font file "$filePath" ($resolvedName): $e',
+          });
+        }
         break;
 
       case 'clearFonts':
@@ -626,18 +631,21 @@ void _webosLibassWorkerMain(Map<String, Object?> initArgs) {
         tracks[key] = track;
         streamTrackKeys.add(key);
         final ttd = rawMsg['codecPrivate'] as TransferableTypedData?;
-        if (ttd != null) {
-          final cpBytes = ttd.materialize().asUint8List();
-          if (cpBytes.isNotEmpty) {
-            final cpPtr = allocBytes(cpBytes);
-            try {
-              if (cpPtr != nullptr) {
-                processCodecPrivateFn(track, cpPtr, cpBytes.length);
-              }
-            } finally {
-              if (cpPtr != nullptr) freeFn(cpPtr.cast<Void>());
+        final cpBytes = ttd?.materialize().asUint8List();
+        if (cpBytes != null && cpBytes.isNotEmpty) {
+          final cpPtr = allocBytes(cpBytes);
+          try {
+            if (cpPtr != nullptr) {
+              processCodecPrivateFn(track, cpPtr, cpBytes.length);
+            } else {
+              processCodecPrivateFn(track, nullptr, 0);
             }
+          } finally {
+            if (cpPtr != nullptr) freeFn(cpPtr.cast<Void>());
           }
+        } else {
+          // Initialize fallback `track->event_format` even when CodecPrivate is absent/empty.
+          processCodecPrivateFn(track, nullptr, 0);
         }
         break;
 
@@ -875,6 +883,13 @@ class WebosLibassIsolateBackend implements WebosLibassBackend {
         final comp = _initCompleter;
         if (comp != null && !comp.isCompleted) {
           comp.complete(ok && _cmdPort != null);
+        }
+        break;
+
+      case 'logWarning':
+        final msg = rawMsg['message'] as String?;
+        if (msg != null && msg.isNotEmpty) {
+          appLogger.w('[WebOS-libass] $msg');
         }
         break;
 
@@ -1139,6 +1154,11 @@ class WebosLibassController {
   String? _activeLanguage;
   final Map<int, String?> _trackLanguages = {};
   final Set<int> _hangulTracks = {};
+  final Set<int> _registeredTracks = {};
+  final Map<int, int> _chunksByTrack = {};
+  final Map<int, int> _minStartMsByTrack = {};
+  final Map<int, int> _maxEndMsByTrack = {};
+  String? _lastErrorCode;
 
   String? _defaultNotoFontPath;
   String? _hangulFontPath;
@@ -1178,6 +1198,12 @@ class WebosLibassController {
   bool get isDisposed => _disposed;
   int? get activeTrackKey => _activeTrackKey;
   int? get libraryVersion => _backend.libraryVersion;
+  bool hasTrackHeader(int? trackKey) => trackKey != null && _registeredTracks.contains(trackKey);
+  int chunksForTrack(int? trackKey) => trackKey != null ? (_chunksByTrack[trackKey] ?? 0) : 0;
+  int? minPtsMsForTrack(int? trackKey) => trackKey != null ? _minStartMsByTrack[trackKey] : null;
+  int? maxPtsMsForTrack(int? trackKey) => trackKey != null ? _maxEndMsByTrack[trackKey] : null;
+  int get renderedRegionCount => currentFrame.value?.regions.length ?? 0;
+  String? get lastErrorCode => _lastErrorCode;
   @visibleForTesting
   double get fontScale => _fontScale;
   @visibleForTesting
@@ -1293,6 +1319,11 @@ class WebosLibassController {
     _activeLanguage = null;
     _trackLanguages.clear();
     _hangulTracks.clear();
+    _registeredTracks.clear();
+    _chunksByTrack.clear();
+    _minStartMsByTrack.clear();
+    _maxEndMsByTrack.clear();
+    _lastErrorCode = null;
     _storageW = 0;
     _storageH = 0;
     _displayAspectRatio = null;
@@ -1311,6 +1342,7 @@ class WebosLibassController {
 
   void registerMkvAssTrack(int trackNumber, {Uint8List? codecPrivate, String? language}) {
     if (!isAvailable) return;
+    _registeredTracks.add(trackNumber);
     _trackLanguages[trackNumber] = language;
     if (codecPrivate != null &&
         !_hangulTracks.contains(trackNumber) &&
@@ -1329,6 +1361,17 @@ class WebosLibassController {
 
   void processMkvAssChunk(int trackNumber, Uint8List chunkBytes, int startMs, int durationMs) {
     if (!isAvailable || chunkBytes.isEmpty) return;
+    _registeredTracks.add(trackNumber);
+    _chunksByTrack[trackNumber] = (_chunksByTrack[trackNumber] ?? 0) + 1;
+    final prevMin = _minStartMsByTrack[trackNumber];
+    if (prevMin == null || startMs < prevMin) {
+      _minStartMsByTrack[trackNumber] = startMs;
+    }
+    final endMs = startMs + durationMs;
+    final prevMax = _maxEndMsByTrack[trackNumber];
+    if (prevMax == null || endMs > prevMax) {
+      _maxEndMsByTrack[trackNumber] = endMs;
+    }
     final newlyDetectedHangul =
         !_hangulTracks.contains(trackNumber) && webosBytesContainHangul(chunkBytes);
     if (newlyDetectedHangul) {
@@ -1339,10 +1382,12 @@ class WebosLibassController {
       if (newlyDetectedHangul) {
         _applyFontsIfNeeded();
       }
-      final endMs = startMs + durationMs;
-      final nearPlayhead = _lastRequestedPosMs >= startMs - 500 && _lastRequestedPosMs <= endMs + 500;
-      final emptyInitialWindow =
-          currentFrame.value == null && (_lastRequestedPosMs - startMs).abs() <= 4000;
+      final clockPosMs = WebosSubtitleClock.instance.currentPositionMs;
+      final refPosMs = _lastRequestedPosMs > 0 ? _lastRequestedPosMs : clockPosMs;
+      final nearPlayhead = (refPosMs >= startMs - 500 && refPosMs <= endMs + 500) ||
+          (clockPosMs >= startMs - 500 && clockPosMs <= endMs + 500);
+      final emptyInitialWindow = currentFrame.value == null &&
+          ((refPosMs - startMs).abs() <= 4000 || (clockPosMs - startMs).abs() <= 4000);
       if (nearPlayhead || emptyInitialWindow) {
         _requestForcedRefreshIfActive();
       }
@@ -1351,6 +1396,15 @@ class WebosLibassController {
 
   void flushTrackEvents(int? trackNumber) {
     if (!isAvailable) return;
+    if (trackNumber == null) {
+      _chunksByTrack.clear();
+      _minStartMsByTrack.clear();
+      _maxEndMsByTrack.clear();
+    } else {
+      _chunksByTrack.remove(trackNumber);
+      _minStartMsByTrack.remove(trackNumber);
+      _maxEndMsByTrack.remove(trackNumber);
+    }
     _backend.flushEvents(trackNumber);
     if (trackNumber == null || trackNumber == _activeTrackKey) {
       _renderEpoch++;
@@ -1367,6 +1421,8 @@ class WebosLibassController {
     String? decodedText,
   }) {
     if (!isAvailable || utf8Bytes.isEmpty) return;
+    _registeredTracks.add(trackKey);
+    _chunksByTrack[trackKey] = (_chunksByTrack[trackKey] ?? 0) + 1;
     _trackLanguages[trackKey] = language;
     if (!_hangulTracks.contains(trackKey)) {
       final hasHangul = webosBytesContainHangul(utf8Bytes) ||
@@ -1456,8 +1512,30 @@ class WebosLibassController {
     _frameW = w;
     _frameH = h;
     _backend.setFrameSize(_frameW, _frameH);
+    if (_storageW > 0 && _storageH > 0) {
+      _applyStorageGeometry();
+    }
     _recomputeMargins();
     _requestForcedRefreshIfActive();
+  }
+
+  void _applyStorageGeometry() {
+    if (!isAvailable || _storageW <= 0 || _storageH <= 0) return;
+    int effW = _storageW;
+    int effH = _storageH;
+    // Normalize >1080p (e.g. 4K 3840x2160 or 3840x1606) storage_size into the
+    // 1080p frame ceiling so libass's `frame_h / storage_h` blur/unscaled-border
+    // factor stays 1.0 instead of 0.5, matching mpv on a 1080p viewport.
+    if (_frameW > 0 && _frameH > 0 && (effW > _frameW || effH > _frameH)) {
+      final downscale = math.min(_frameW / effW, _frameH / effH);
+      effW = (effW * downscale).round().clamp(1, _frameW);
+      effH = (effH * downscale).round().clamp(1, _frameH);
+    }
+    _backend.setStorageSize(effW, effH);
+    final storageAspect = _storageW / _storageH;
+    final cleanDar = _displayAspectRatio;
+    final par = cleanDar != null ? (cleanDar / storageAspect) : 1.0;
+    _backend.setPixelAspect(par);
   }
 
   void updateVideoGeometry({
@@ -1488,10 +1566,7 @@ class WebosLibassController {
     _storageH = storageHeight;
     _displayAspectRatio = cleanDar;
 
-    _backend.setStorageSize(storageWidth, storageHeight);
-    final storageAspect = storageWidth / storageHeight;
-    final par = cleanDar != null ? (cleanDar / storageAspect) : 1.0;
-    _backend.setPixelAspect(par);
+    _applyStorageGeometry();
     _recomputeMargins();
     _requestForcedRefreshIfActive();
   }
@@ -1651,10 +1726,14 @@ class WebosLibassController {
               final staleAfterDecode =
                   _disposed || epoch != _renderEpoch || !activeForOverlay.value || _activeTrackKey != trackKey;
               if (decodeFailed || decodedRegions.isEmpty || staleAfterDecode) {
+                if (decodeFailed) {
+                  _lastErrorCode = 'dec';
+                }
                 for (final dr in decodedRegions) {
                   dr.image.dispose();
                 }
               } else {
+                _lastErrorCode = null;
                 debugDecodeCount++;
                 _replaceCurrentFrame(
                   WebosLibassDisplayFrame(
@@ -1668,6 +1747,7 @@ class WebosLibassController {
               break;
 
             case WebosLibassFrameStatus.error:
+              _lastErrorCode = 'err';
               break;
           }
         }
@@ -1899,23 +1979,38 @@ class _WebosLibassOverlayState extends State<WebosLibassOverlay> with SingleTick
               }
               final scaleX = maxW / frame.frameWidth;
               final scaleY = maxH / frame.frameHeight;
-              return Stack(
-                fit: StackFit.expand,
-                clipBehavior: Clip.none,
-                children: [
-                  for (final region in frame.regions)
-                    Positioned(
-                      left: region.x * scaleX,
-                      top: region.y * scaleY,
-                      width: region.width * scaleX,
-                      height: region.height * scaleY,
-                      child: RawImage(
-                        image: region.image,
-                        fit: BoxFit.fill,
-                        filterQuality: FilterQuality.none,
-                      ),
+              return SizedBox(
+                width: maxW,
+                height: maxH,
+                child: Transform(
+                  alignment: Alignment.topLeft,
+                  transform: Matrix4.diagonal3Values(scaleX, scaleY, 1.0),
+                  child: OverflowBox(
+                    alignment: Alignment.topLeft,
+                    minWidth: frame.frameWidth.toDouble(),
+                    maxWidth: frame.frameWidth.toDouble(),
+                    minHeight: frame.frameHeight.toDouble(),
+                    maxHeight: frame.frameHeight.toDouble(),
+                    child: Stack(
+                      clipBehavior: Clip.none,
+                      children: [
+                        for (final region in frame.regions)
+                          Positioned(
+                            left: region.x.toDouble(),
+                            top: region.y.toDouble(),
+                            width: region.width.toDouble(),
+                            height: region.height.toDouble(),
+                            child: RawImage(
+                              image: region.image,
+                              fit: BoxFit.none,
+                              scale: 1.0,
+                              filterQuality: FilterQuality.none,
+                            ),
+                          ),
+                      ],
                     ),
-                ],
+                  ),
+                ),
               );
             },
           );

@@ -1059,8 +1059,20 @@ extension _VideoPlayerOpenMethods on VideoPlayerScreenState {
     void Function()? onOpened,
     void Function(bool available)? onMediaAvailabilityChanged,
   }) async {
+    bool isWebosServerBurned(PlaybackSubtitleSelection sel) {
+      if (sel.primarySidecar != null) return false;
+      if (result.primarySubtitleBurnedByServer != null) {
+        return result.primarySubtitleBurnedByServer!;
+      }
+      return primarySubtitleTranscoding() && sel.primarySourceStreamId != null;
+    }
+
     if (currentPlayer is PlayerWebos) {
-      currentPlayer.setPendingMediaSourceInfo(result.mediaInfo);
+      currentPlayer.setPendingMediaSourceInfo(
+        result.mediaInfo,
+        selectedVersion: result.selectedVersion,
+        primarySubtitleServerRendered: isWebosServerBurned(subtitleSelection),
+      );
     }
     final displayCriteria = result.mediaInfo?.displayCriteria;
 
@@ -1141,6 +1153,13 @@ extension _VideoPlayerOpenMethods on VideoPlayerScreenState {
       if (openResult.sidecarFallbackUsed) {
         openSession = _commitSidecarFallbackSession(openSession);
         openSubtitleSelection = openSession.subtitleSelection;
+        if (currentPlayer is PlayerWebos) {
+          currentPlayer.setPendingMediaSourceInfo(
+            result.mediaInfo,
+            selectedVersion: result.selectedVersion,
+            primarySubtitleServerRendered: isWebosServerBurned(openSubtitleSelection),
+          );
+        }
       }
 
       if (!await afterMediaOpened(shouldAutoPlay, frameRatePlan.holdPlaybackStart, wtOwnsStart)) return false;
@@ -1169,9 +1188,9 @@ extension _VideoPlayerOpenMethods on VideoPlayerScreenState {
       // server burned into the picture: it is already visible, and no native
       // track will ever arrive to match it.
       primarySubtitleIsServerRendered:
-          primarySubtitleTranscoding() &&
+          openSubtitleSelection.primarySidecar == null &&
           openSubtitleSelection.primarySourceStreamId != null &&
-          openSubtitleSelection.primarySidecar == null,
+          (result.primarySubtitleBurnedByServer ?? primarySubtitleTranscoding()),
       // A declined carry is still the viewer's choice: a late native pass may
       // yet serve it, and that pick belongs on the server (#2323).
       persistAutomaticSubtitleSelection:

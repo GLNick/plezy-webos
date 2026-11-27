@@ -11,6 +11,194 @@ import 'package:flutter/rendering.dart';
 import 'package:flutter/scheduler.dart';
 
 import '../../../utils/app_logger.dart';
+import '../../../utils/happy_eyeballs.dart';
+
+/// Creates an [HttpClient] for webOS subtitle/MKV HTTP Range requests that uses
+/// [happyEyeballsConnectionFactory] (IPv4/IPv6 racing + [CertificateTrust] for
+/// `*.plex.direct` / custom TLS certificates) whenever no test [HttpOverrides] is active.
+HttpClient createWebosSubtitleHttpClient({
+  Duration connectionTimeout = const Duration(seconds: 10),
+}) {
+  final client = HttpClient()
+    ..connectionTimeout = connectionTimeout
+    ..idleTimeout = const Duration(seconds: 15)
+    ..userAgent = 'Plezy/webOS';
+  if (HttpOverrides.current == null) {
+    client.connectionFactory = happyEyeballsConnectionFactory;
+  }
+  return client;
+}
+
+({bool shouldRetry, Duration delay}) _resolveTransientRetryDelay(
+  HttpClientResponse resp,
+  Duration defaultBackoff,
+) {
+  final rawRetryAfter = resp.headers.value(HttpHeaders.retryAfterHeader)?.trim();
+  if (rawRetryAfter == null || rawRetryAfter.isEmpty) {
+    return (shouldRetry: true, delay: defaultBackoff);
+  }
+  final parsedSeconds = int.tryParse(rawRetryAfter);
+  int? delayMs;
+  if (parsedSeconds != null) {
+    delayMs = parsedSeconds * 1000;
+  } else {
+    try {
+      final targetDate = HttpDate.parse(rawRetryAfter);
+      delayMs = targetDate.difference(DateTime.now().toUtc()).inMilliseconds;
+    } catch (_) {}
+  }
+  if (delayMs == null) {
+    return (shouldRetry: true, delay: defaultBackoff);
+  }
+  if (delayMs > 5000) {
+    return (shouldRetry: false, delay: Duration.zero);
+  }
+  return (shouldRetry: true, delay: Duration(milliseconds: delayMs.clamp(100, 2500)));
+}
+
+Future<void> _defaultCancelableRetryDelay(
+  Duration delay,
+  bool Function()? isCancelled,
+) async {
+  int remainingMs = delay.inMilliseconds;
+  while (remainingMs > 0) {
+    if (isCancelled != null && isCancelled()) return;
+    final stepMs = math.min(remainingMs, 50);
+    final completer = Completer<void>();
+    final timer = Timer(Duration(milliseconds: stepMs), () {
+      if (!completer.isCompleted) completer.complete();
+    });
+    try {
+      await completer.future;
+    } finally {
+      timer.cancel();
+    }
+    remainingMs -= stepMs;
+  }
+}
+
+/// Opens a GET request while manually following up to [maxRedirects] HTTP
+/// `301`/`302`/`303`/`307`/`308` redirects so `Range` headers (and auth headers
+/// when same-origin or targeting a storage redirect) are never stripped by `dart:io`.
+///
+/// Automatically performs up to [maxTransientRetries] bounded retries on transient
+/// HTTP `503` / `429` responses (honoring small `Retry-After` headers and cancelling
+/// immediately when [isCancelled] turns `true`).
+Future<HttpClientResponse> openWebosHttpGetWithRedirects(
+  HttpClient client,
+  String initialUrl, {
+  Map<String, String>? headers,
+  String? rangeHeader,
+  required Duration timeout,
+  int maxRedirects = 5,
+  int maxTransientRetries = 2,
+  List<Duration> retryBackoffs = const <Duration>[
+    Duration(milliseconds: 350),
+    Duration(milliseconds: 900),
+  ],
+  void Function(HttpClientRequest req)? onRequestCreated,
+  bool Function()? isCancelled,
+  Future<void> Function(Duration delay)? onRetryDelay,
+}) async {
+  final initialParsedUri = Uri.parse(initialUrl);
+  final initialOrigin = '${initialParsedUri.scheme}://${initialParsedUri.authority}';
+  final initialPlexToken = initialParsedUri.queryParameters['X-Plex-Token'] ?? headers?['X-Plex-Token'];
+
+  for (int retryAttempt = 0; retryAttempt <= maxTransientRetries; retryAttempt++) {
+    Uri currentUri = initialParsedUri;
+    for (int hop = 0; hop <= maxRedirects; hop++) {
+      if (isCancelled != null && isCancelled()) {
+        throw const SocketException('Cancelled webOS subtitle HTTP request');
+      }
+      final req = await client.getUrl(currentUri);
+      onRequestCreated?.call(req);
+      if (isCancelled != null && isCancelled()) {
+        try {
+          req.abort();
+        } catch (_) {}
+        throw const SocketException('Cancelled webOS subtitle HTTP request');
+      }
+      req.followRedirects = false;
+      final isSameOrigin = '${currentUri.scheme}://${currentUri.authority}' == initialOrigin;
+      final isPlexPathOrHost =
+          isSameOrigin || currentUri.path.contains('/library/') || currentUri.host.endsWith('.plex.direct');
+      headers?.forEach((k, v) {
+        final lower = k.toLowerCase();
+        final isSensitiveAuth = lower == 'authorization' || lower == 'cookie' || lower == 'x-plex-token';
+        if (isSensitiveAuth && !isSameOrigin) return;
+        if (lower.startsWith('x-plex-') && !isSensitiveAuth && !isPlexPathOrHost) return;
+        if (lower == 'accept' && v.trim().toLowerCase() == 'application/json') {
+          req.headers.set(HttpHeaders.acceptHeader, '*/*');
+          return;
+        }
+        req.headers.set(k, v);
+      });
+      if (rangeHeader != null && rangeHeader.isNotEmpty) {
+        req.headers.set(HttpHeaders.rangeHeader, rangeHeader);
+      }
+      final resp = await req.close().timeout(timeout);
+      final code = resp.statusCode;
+      final isRedirect = code == 301 || code == 302 || code == 303 || code == 307 || code == 308;
+      if (!isRedirect || hop == maxRedirects) {
+        if ((code == 503 || code == 429) && retryAttempt < maxTransientRetries) {
+          final defaultBackoff = retryBackoffs.isEmpty
+              ? const Duration(milliseconds: 350)
+              : retryBackoffs[math.min(retryAttempt, retryBackoffs.length - 1)];
+          final retryPlan = _resolveTransientRetryDelay(resp, defaultBackoff);
+          if (retryPlan.shouldRetry) {
+            try {
+              await resp.drain<void>().timeout(const Duration(seconds: 1));
+            } catch (_) {}
+            if (isCancelled != null && isCancelled()) {
+              throw const SocketException('Cancelled webOS subtitle HTTP request');
+            }
+            appLogger.w(
+              '[WebOS-Sub-HTTP] Transient HTTP $code on ${currentUri.path} '
+              '(retry ${retryAttempt + 1}/$maxTransientRetries after ${retryPlan.delay.inMilliseconds}ms)',
+            );
+            if (onRetryDelay != null) {
+              await onRetryDelay(retryPlan.delay);
+            } else {
+              await _defaultCancelableRetryDelay(retryPlan.delay, isCancelled);
+            }
+            if (isCancelled != null && isCancelled()) {
+              throw const SocketException('Cancelled webOS subtitle HTTP request');
+            }
+            break;
+          }
+        }
+        return resp;
+      }
+      final loc = resp.headers.value(HttpHeaders.locationHeader);
+      try {
+        await resp.drain<void>().timeout(const Duration(seconds: 2));
+      } catch (_) {}
+      if (loc == null || loc.isEmpty) {
+        return resp;
+      }
+      var nextUri = currentUri.resolve(loc);
+      // If a reverse proxy redirects `/library/parts/...` across ports/hosts on the
+      // same Plex server (`X-Plex-Token` was in the initial query/header and omitted
+      // from Location), preserve `X-Plex-Token` when redirecting to a `/library/` path.
+      if (initialPlexToken != null &&
+          initialPlexToken.isNotEmpty &&
+          !nextUri.queryParameters.containsKey('X-Plex-Token') &&
+          nextUri.path.contains('/library/')) {
+        nextUri = nextUri.replace(
+          queryParameters: <String, String>{
+            ...nextUri.queryParameters,
+            'X-Plex-Token': initialPlexToken,
+          },
+        );
+      }
+      currentUri = nextUri;
+      if (hop == maxRedirects - 1) {
+        // Allow the final redirect target to be fetched on `hop == maxRedirects`.
+      }
+    }
+  }
+  throw const HttpException('Too many HTTP redirects');
+}
 
 /// High-precision monotonic subtitle clock.
 /// Runs freely on the system monotonic crystal during normal playback so 24fps frame-by-frame
@@ -60,6 +248,62 @@ class WebosDirectStreamFallbackRegistry {
   int? activeAudioStreamId;
   Future<String?> Function()? _buildDirectStreamUrlCallback;
   Future<String?> Function(int? audioStreamId)? _buildDirectStreamUrlWithAudioCallback;
+  Future<String?> Function({int? audioStreamId, int? subtitleStreamId})? _buildBurnInDirectStreamUrlCallback;
+  ({
+    String cacheKey,
+    Uint8List bytes,
+    int totalFileSize,
+    bool supportsRange,
+    int timestampMs,
+  })? _cachedHeaderPrefix;
+
+  static const int _kProbeHeaderWindowBytes = 128 * 1024;
+  static const int _kCachedPrefixTtlMs = 30000;
+
+  static String _normalizeMkvCacheKey(String rawUrl) {
+    final uri = Uri.tryParse(rawUrl);
+    if (uri == null) return rawUrl;
+    if (uri.queryParameters.isEmpty) {
+      return '${uri.scheme}://${uri.authority}${uri.path}';
+    }
+    final filtered = Map<String, String>.of(uri.queryParameters)
+      ..remove('X-Plex-Token')
+      ..remove('x-plex-token')
+      ..remove('api_key');
+    if (filtered.isEmpty) {
+      return '${uri.scheme}://${uri.authority}${uri.path}';
+    }
+    return uri.replace(queryParameters: filtered).toString();
+  }
+
+  /// Consumes the initial EBML header prefix already fetched by [inspectMkvForPlayback]
+  /// so [WebosMkvSubtitleExtractor] does not immediately hit the remote server with a
+  /// duplicate `bytes=0-131071` request while PMS `ffmpeg` is opening the file.
+  ({Uint8List bytes, int totalFileSize, bool supportsRange})? takeCachedHeaderPrefix(
+    String url, {
+    required int minUsableBytes,
+  }) {
+    final entry = _cachedHeaderPrefix;
+    if (entry == null) return null;
+    final ageMs = DateTime.now().millisecondsSinceEpoch - entry.timestampMs;
+    if (ageMs < 0 || ageMs > _kCachedPrefixTtlMs) {
+      _cachedHeaderPrefix = null;
+      return null;
+    }
+    if (entry.cacheKey != _normalizeMkvCacheKey(url)) {
+      return null;
+    }
+    _cachedHeaderPrefix = null;
+    final coversFullFile = entry.totalFileSize > 0 && entry.bytes.length >= entry.totalFileSize;
+    if (entry.bytes.length < minUsableBytes && !coversFullFile) {
+      return null;
+    }
+    return (
+      bytes: entry.bytes,
+      totalFileSize: entry.totalFileSize,
+      supportsRange: entry.supportsRange,
+    );
+  }
 
   static File get _cacheFile =>
       File('${debugStorageDirOverride ?? resolveWebosAppdataDir()}/webos_unseekable_mkvs.json');
@@ -99,6 +343,8 @@ class WebosDirectStreamFallbackRegistry {
     activeAudioStreamId = null;
     _buildDirectStreamUrlCallback = null;
     _buildDirectStreamUrlWithAudioCallback = null;
+    _buildBurnInDirectStreamUrlCallback = null;
+    _cachedHeaderPrefix = null;
     if (reloadFromDisk) _loadFromDisk();
   }
 
@@ -108,6 +354,7 @@ class WebosDirectStreamFallbackRegistry {
     required Map<String, String>? headers,
     Future<String?> Function()? buildDirectStreamUrl,
     Future<String?> Function(int? audioStreamId)? buildDirectStreamUrlWithAudio,
+    Future<String?> Function({int? audioStreamId, int? subtitleStreamId})? buildBurnInDirectStreamUrl,
     int? initialAudioStreamId,
   }) {
     activeRatingKey = ratingKey;
@@ -116,6 +363,44 @@ class WebosDirectStreamFallbackRegistry {
     activeAudioStreamId = initialAudioStreamId;
     _buildDirectStreamUrlCallback = buildDirectStreamUrl;
     _buildDirectStreamUrlWithAudioCallback = buildDirectStreamUrlWithAudio;
+    _buildBurnInDirectStreamUrlCallback = buildBurnInDirectStreamUrl;
+    if (rawMkvUrl == null || rawMkvUrl.isEmpty) {
+      _cachedHeaderPrefix = null;
+    } else if (_cachedHeaderPrefix != null && _cachedHeaderPrefix!.cacheKey != _normalizeMkvCacheKey(rawMkvUrl)) {
+      _cachedHeaderPrefix = null;
+    }
+  }
+
+  bool get hasBurnInDirectStreamCallback => _buildBurnInDirectStreamUrlCallback != null;
+
+  Future<String?> obtainBurnInDirectStreamUrl({
+    int? audioStreamId,
+    int? subtitleStreamId,
+  }) async {
+    final burnCb = _buildBurnInDirectStreamUrlCallback;
+    if (burnCb == null) return null;
+    final effectiveAudioId = audioStreamId ?? activeAudioStreamId;
+    if (audioStreamId != null) {
+      activeAudioStreamId = audioStreamId;
+    }
+    try {
+      final url = await burnCb(
+        audioStreamId: effectiveAudioId,
+        subtitleStreamId: subtitleStreamId,
+      );
+      if (url != null && url.isNotEmpty) {
+        lastRawMkvUrl = null;
+        _cachedHeaderPrefix = null;
+      }
+      return url;
+    } catch (e, st) {
+      appLogger.e(
+        '[WebOS-DirectStream] Failed to build burn-in Direct Stream URL: $e',
+        error: e,
+        stackTrace: st,
+      );
+      return null;
+    }
   }
 
   bool isKnownUnseekable(String? ratingKey) {
@@ -160,65 +445,147 @@ class WebosDirectStreamFallbackRegistry {
     }
   }
 
-  /// Fast pre-flight check: returns true if the item is cached as unseekable or if its MKV
-  /// header lacks a valid SeekHead->Cues index or Segment Duration required by webOS NDL_media.
-  Future<bool> shouldForceDirectStream({
+  /// Fast pre-flight MKV inspection: checks both whether NDL_media needs HLS Direct Stream
+  /// (`forceDirectStream`: cached unseekable, unknown Segment size, missing Cues, or missing Duration)
+  /// AND whether [rawUrl] actually supports HTTP Range reads of a valid EBML MKV (`canDemuxMkvSubtitles`).
+  ///
+  /// Crucially, even when [ratingKey] is cached in `_unseekableKeys`, we still probe `bytes=0-65535`
+  /// so a remote server / Relay / proxy that refuses raw MKV Range access (`500`, `403`, `401`, `404`,
+  /// `200` without Range, or timeout) sets `canDemuxMkvSubtitles: false` and lets Plex fall back to
+  /// `subtitles=burn` instead of suppressing burn-in with an unreachable local MKV demuxer.
+  Future<({bool forceDirectStream, bool canDemuxMkvSubtitles})> inspectMkvForPlayback({
     required String ratingKey,
     required String? rawUrl,
     Map<String, String>? headers,
   }) async {
-    if (isKnownUnseekable(ratingKey)) {
-      appLogger.i('[WebOS-DirectStream] ratingKey=$ratingKey is cached as unseekable MKV; using Direct Stream');
-      return true;
+    final cachedUnseekable = isKnownUnseekable(ratingKey);
+    if (cachedUnseekable) {
+      appLogger.i('[WebOS-DirectStream] ratingKey=$ratingKey is cached as unseekable MKV; verifying Range demuxability');
     }
-    if (rawUrl == null || rawUrl.isEmpty) return false;
+    if (rawUrl == null || rawUrl.isEmpty) {
+      return (forceDirectStream: cachedUnseekable, canDemuxMkvSubtitles: false);
+    }
     final lower = rawUrl.toLowerCase();
-    if (!lower.contains('.mkv') && !lower.contains('/parts/')) return false;
+    if (!lower.contains('.mkv') && !lower.contains('/parts/')) {
+      return (forceDirectStream: cachedUnseekable, canDemuxMkvSubtitles: false);
+    }
 
-    final client = HttpClient()..connectionTimeout = const Duration(seconds: 4);
+    final client = createWebosSubtitleHttpClient(connectionTimeout: const Duration(seconds: 4));
     try {
-      final req = await client.getUrl(Uri.parse(rawUrl));
-      headers?.forEach((k, v) => req.headers.set(k, v));
-      req.headers.set('Range', 'bytes=0-65535');
-      final resp = await req.close().timeout(const Duration(seconds: 4));
+      final resp = await openWebosHttpGetWithRedirects(
+        client,
+        rawUrl,
+        headers: headers,
+        rangeHeader: 'bytes=0-${_kProbeHeaderWindowBytes - 1}',
+        timeout: const Duration(seconds: 4),
+      );
       if (resp.statusCode != 200 && resp.statusCode != 206) {
-        await resp.drain<void>();
-        return false;
+        _cachedHeaderPrefix = null;
+        appLogger.w(
+          '[WebOS-DirectStream] Raw MKV probe returned HTTP ${resp.statusCode} for ratingKey=$ratingKey; '
+          'local MKV subtitle demux unavailable',
+        );
+        await resp.drain<void>().catchError((Object _) {});
+        return (forceDirectStream: cachedUnseekable, canDemuxMkvSubtitles: false);
       }
+
+      final acceptRanges = (resp.headers.value(HttpHeaders.acceptRangesHeader) ?? '').toLowerCase();
+      final supportsRange = resp.statusCode == 206 ||
+          (resp.statusCode == 200 &&
+              acceptRanges.contains('bytes') &&
+              resp.contentLength > 0 &&
+              resp.contentLength <= _kProbeHeaderWindowBytes);
+      int parsedTotalSize = 0;
+      if (resp.statusCode == 206) {
+        final contentRange = resp.headers.value(HttpHeaders.contentRangeHeader);
+        if (contentRange != null) {
+          final slashIdx = contentRange.lastIndexOf('/');
+          if (slashIdx >= 0 && slashIdx + 1 < contentRange.length) {
+            parsedTotalSize = int.tryParse(contentRange.substring(slashIdx + 1).trim()) ?? 0;
+          }
+        }
+      } else if (resp.statusCode == 200 && resp.contentLength > 0) {
+        parsedTotalSize = resp.contentLength;
+      }
+
+      final int maxReadBytes = supportsRange ? _kProbeHeaderWindowBytes : 65536;
       final builder = BytesBuilder(copy: false);
       await for (final chunk in resp) {
+        if (builder.length + chunk.length > maxReadBytes) {
+          final takeLen = maxReadBytes - builder.length;
+          if (takeLen > 0) {
+            builder.add(
+              chunk is Uint8List ? Uint8List.sublistView(chunk, 0, takeLen) : chunk.sublist(0, takeLen),
+            );
+          }
+          WebosMkvSubtitleExtractor._abortHttpResponse(resp);
+          break;
+        }
         builder.add(chunk);
-        if (builder.length >= 65536) break;
+        if (!supportsRange && builder.length >= maxReadBytes) {
+          WebosMkvSubtitleExtractor._abortHttpResponse(resp);
+          break;
+        }
       }
       final head = builder.takeBytes();
-      if (head.length < 64) return false;
+      if (head.length < 64) {
+        _cachedHeaderPrefix = null;
+        return (forceDirectStream: cachedUnseekable, canDemuxMkvSubtitles: false);
+      }
 
       // Check EBML signature (0x1A45DFA3)
       if (head[0] != 0x1A || head[1] != 0x45 || head[2] != 0xDF || head[3] != 0xA3) {
-        return false; // Not an MKV file
+        _cachedHeaderPrefix = null;
+        return (forceDirectStream: cachedUnseekable, canDemuxMkvSubtitles: false);
+      }
+
+      if (!supportsRange) {
+        _cachedHeaderPrefix = null;
+        appLogger.w(
+          '[WebOS-DirectStream] Server ignored HTTP Range (status=${resp.statusCode}) on raw MKV for ratingKey=$ratingKey; '
+          'disabling local MKV demux so subtitles can burn in',
+        );
+        return (forceDirectStream: cachedUnseekable, canDemuxMkvSubtitles: false);
+      }
+
+      _cachedHeaderPrefix = (
+        cacheKey: _normalizeMkvCacheKey(rawUrl),
+        bytes: head,
+        totalFileSize: parsedTotalSize,
+        supportsRange: true,
+        timestampMs: DateTime.now().millisecondsSinceEpoch,
+      );
+
+      if (cachedUnseekable) {
+        return (forceDirectStream: true, canDemuxMkvSubtitles: true);
       }
 
       int pos = 0;
       final ebmlId = WebosMkvSubtitleExtractor._readVint(head, pos, keepMarkerBit: true);
-      if (ebmlId == null) return false;
+      if (ebmlId == null) return (forceDirectStream: false, canDemuxMkvSubtitles: true);
       pos += ebmlId.length;
       final ebmlSz = WebosMkvSubtitleExtractor._readVint(head, pos, keepMarkerBit: false);
-      if (ebmlSz == null) return false;
+      if (ebmlSz == null) return (forceDirectStream: false, canDemuxMkvSubtitles: true);
       pos += ebmlSz.length + ebmlSz.value;
 
       final segId = WebosMkvSubtitleExtractor._readVint(head, pos, keepMarkerBit: true);
-      if (segId == null || segId.value != 0x18538067) return false;
+      if (segId == null || segId.value != 0x18538067) {
+        return (forceDirectStream: false, canDemuxMkvSubtitles: false);
+      }
       pos += segId.length;
       final segSzRaw = WebosMkvSubtitleExtractor._readVint(head, pos, keepMarkerBit: true);
       final segSz = WebosMkvSubtitleExtractor._readVint(head, pos, keepMarkerBit: false);
-      if (segSz == null || segSzRaw == null) return false;
+      if (segSz == null || segSzRaw == null) {
+        return (forceDirectStream: false, canDemuxMkvSubtitles: true);
+      }
 
       // Unknown Segment size (all 1s in VINT payload) -> live/unfinalized MKV, cannot seek in NDL_media
-      final maxUnsignedForLen = (1 << (segSz.length * 7)) - 1;
-      if (segSz.value == maxUnsignedForLen) {
+      final maxUnsignedForLen = segSz.length == 8 ? -1 : ((1 << (segSz.length * 7)) - 1);
+      if ((maxUnsignedForLen >= 0 && segSz.value == maxUnsignedForLen) ||
+          (segSz.length == 8 && segSz.value == 0x00FFFFFFFFFFFFFF)) {
         appLogger.w('[WebOS-DirectStream] MKV has unknown Segment size; forcing Direct Stream for ratingKey=$ratingKey');
         markActiveSessionUnseekable();
-        return true;
+        return (forceDirectStream: true, canDemuxMkvSubtitles: true);
       }
 
       pos += segSz.length;
@@ -304,31 +671,46 @@ class WebosDirectStreamFallbackRegistry {
       if (!foundCuesInHeader && cuesOffset == null) {
         appLogger.w('[WebOS-DirectStream] MKV lacks Cues index in SeekHead; forcing Direct Stream for ratingKey=$ratingKey');
         markActiveSessionUnseekable();
-        return true;
+        return (forceDirectStream: true, canDemuxMkvSubtitles: true);
       }
 
       if (!hasDurationInSegmentInfo) {
         appLogger.w('[WebOS-DirectStream] MKV lacks Duration in SegmentInfo; forcing Direct Stream for ratingKey=$ratingKey');
         markActiveSessionUnseekable();
-        return true;
+        return (forceDirectStream: true, canDemuxMkvSubtitles: true);
       }
 
       if (cuesOffset != null && !foundCuesInHeader) {
         // Verify that the Cues element at cuesOffset actually exists and is reachable via Range request
-        final reqCues = await client.getUrl(Uri.parse(rawUrl));
-        headers?.forEach((k, v) => reqCues.headers.set(k, v));
-        reqCues.headers.set('Range', 'bytes=$cuesOffset-${cuesOffset + 31}');
-        final respCues = await reqCues.close().timeout(const Duration(seconds: 3));
-        if (respCues.statusCode != 206 && respCues.statusCode != 200) {
-          await respCues.drain<void>();
-          appLogger.w('[WebOS-DirectStream] MKV Cues at $cuesOffset unreachable; forcing Direct Stream');
+        final respCues = await openWebosHttpGetWithRedirects(
+          client,
+          rawUrl,
+          headers: headers,
+          rangeHeader: 'bytes=$cuesOffset-${cuesOffset + 31}',
+          timeout: const Duration(seconds: 3),
+        );
+        if (respCues.statusCode == 416) {
+          await respCues.drain<void>().catchError((Object _) {});
+          appLogger.w('[WebOS-DirectStream] MKV Cues at $cuesOffset past EOF (416); forcing Direct Stream');
           markActiveSessionUnseekable();
-          return true;
+          return (forceDirectStream: true, canDemuxMkvSubtitles: true);
+        }
+        if (respCues.statusCode != 206 && !(respCues.statusCode == 200 && cuesOffset == 0)) {
+          _cachedHeaderPrefix = null;
+          await respCues.drain<void>().catchError((Object _) {});
+          appLogger.w(
+            '[WebOS-DirectStream] MKV Cues Range probe at $cuesOffset returned HTTP ${respCues.statusCode} '
+            'for ratingKey=$ratingKey; local MKV subtitle demux unavailable',
+          );
+          return (forceDirectStream: cachedUnseekable, canDemuxMkvSubtitles: false);
         }
         final cBuilder = BytesBuilder(copy: false);
         await for (final chunk in respCues) {
           cBuilder.add(chunk);
-          if (cBuilder.length >= 16) break;
+          if (cBuilder.length >= 32) {
+            WebosMkvSubtitleExtractor._abortHttpResponse(respCues);
+            break;
+          }
         }
         final cBytes = cBuilder.takeBytes();
         if (cBytes.length < 8 ||
@@ -338,15 +720,32 @@ class WebosDirectStreamFallbackRegistry {
             cBytes[3] != 0x6B) {
           appLogger.w('[WebOS-DirectStream] MKV Cues signature invalid at $cuesOffset; forcing Direct Stream');
           markActiveSessionUnseekable();
-          return true;
+          return (forceDirectStream: true, canDemuxMkvSubtitles: true);
         }
       }
-      return false;
-    } catch (_) {
-      return false;
+      return (forceDirectStream: false, canDemuxMkvSubtitles: true);
+    } catch (e) {
+      _cachedHeaderPrefix = null;
+      appLogger.w('[WebOS-DirectStream] Raw MKV pre-flight probe failed for ratingKey=$ratingKey: $e');
+      return (forceDirectStream: cachedUnseekable, canDemuxMkvSubtitles: false);
     } finally {
       client.close(force: true);
     }
+  }
+
+  /// Fast pre-flight check: returns true if the item is cached as unseekable or if its MKV
+  /// header lacks a valid SeekHead->Cues index or Segment Duration required by webOS NDL_media.
+  Future<bool> shouldForceDirectStream({
+    required String ratingKey,
+    required String? rawUrl,
+    Map<String, String>? headers,
+  }) async {
+    final res = await inspectMkvForPlayback(
+      ratingKey: ratingKey,
+      rawUrl: rawUrl,
+      headers: headers,
+    );
+    return res.forceDirectStream;
   }
 }
 
@@ -724,7 +1123,7 @@ class WebosSubtitlePreferenceStore {
   }) {
     if (isOffId(id)) {
       final sinceOpenMs = DateTime.now().difference(_lastMediaOpenTime).inMilliseconds;
-      if (sinceOpenMs > 2500) {
+      if (sinceOpenMs > 2500 || _autoSelectDoneForCurrentMedia) {
         explicitlyDisabled = true;
         _autoSelectDoneForCurrentMedia = true;
         _saveToDisk();
@@ -1030,7 +1429,7 @@ class WebosSubtitleStyleConfig {
   final bool italic;
 
   const WebosSubtitleStyleConfig({
-    this.fontSize = 52.0,
+    this.fontSize = 38.0,
     this.textColor = Colors.white,
     this.borderSize = 2.5,
     this.borderColor = Colors.black,
@@ -1040,6 +1439,30 @@ class WebosSubtitleStyleConfig {
     this.bold = false,
     this.italic = false,
   });
+
+  WebosSubtitleStyleConfig copyWith({
+    double? fontSize,
+    Color? textColor,
+    double? borderSize,
+    Color? borderColor,
+    Color? bgColor,
+    int? bgOpacity,
+    int? subtitlePosition,
+    bool? bold,
+    bool? italic,
+  }) {
+    return WebosSubtitleStyleConfig(
+      fontSize: fontSize ?? this.fontSize,
+      textColor: textColor ?? this.textColor,
+      borderSize: borderSize ?? this.borderSize,
+      borderColor: borderColor ?? this.borderColor,
+      bgColor: bgColor ?? this.bgColor,
+      bgOpacity: bgOpacity ?? this.bgOpacity,
+      subtitlePosition: subtitlePosition ?? this.subtitlePosition,
+      bold: bold ?? this.bold,
+      italic: italic ?? this.italic,
+    );
+  }
 
   static Color parseHexColor(String hex, Color fallback) {
     final cleaned = hex.replaceFirst('#', '').trim();
@@ -2706,12 +3129,43 @@ class _MkvTrackInfo {
   final String codecId;
   final String? language;
   final String? name;
+  final bool isDefault;
+  final bool isForced;
   final WebosAssDocument? assHeader;
   final Uint8List? rawCodecPrivate;
+  final int? contentCompAlgo;
+  final Uint8List? contentCompSettings;
 
   bool get isAssOrSsa {
     final upper = codecId.toUpperCase();
     return upper.contains('ASS') || upper.contains('SSA');
+  }
+
+  bool get isSignsOrForced {
+    if (isForced) return true;
+    final lowerName = name?.toLowerCase();
+    if (lowerName == null || lowerName.isEmpty) return false;
+    return lowerName.contains('sign') || lowerName.contains('song') || lowerName.contains('forced');
+  }
+
+  Uint8List decodePayload(Uint8List raw) {
+    if (raw.isEmpty) return raw;
+    if (contentCompAlgo == 3) {
+      final prefix = contentCompSettings;
+      if (prefix == null || prefix.isEmpty) return raw;
+      final out = Uint8List(prefix.length + raw.length);
+      out.setRange(0, prefix.length, prefix);
+      out.setRange(prefix.length, out.length, raw);
+      return out;
+    }
+    if (contentCompAlgo == 0) {
+      try {
+        return Uint8List.fromList(zlib.decode(raw));
+      } catch (_) {
+        return raw;
+      }
+    }
+    return raw;
   }
 
   _MkvTrackInfo({
@@ -2720,8 +3174,12 @@ class _MkvTrackInfo {
     required this.codecId,
     this.language,
     this.name,
+    this.isDefault = false,
+    this.isForced = false,
     this.assHeader,
     this.rawCodecPrivate,
+    this.contentCompAlgo,
+    this.contentCompSettings,
   });
 }
 
@@ -3111,7 +3569,7 @@ class WebosMkvSubtitleExtractor {
   static const int kPgsKeepBehindMs = 15000;
   static const int kTextLookaheadMs = 90000;
   static const int kPgsLookaheadMs = 30000;
-  static const int kPausedLookaheadMs = 5000;
+  static const int kPausedLookaheadMs = 15000;
   static const int kSeekRewindLookbackMs = 3500;
   static const int kDynamicCuePointIntervalMs = 5000;
   static const int _fnv64OffsetBasis = -0x340d631b7bdddcdb; // 0xcbf29ce484222325
@@ -3122,7 +3580,9 @@ class WebosMkvSubtitleExtractor {
   static const int kPrefetchLookaheadMs = 15000;
   static const int kMaxPrefetchBytes = 14 * 1024 * 1024;
   static const int kMaxCuesFetchBytes = 2 * 1024 * 1024;
+  static const int kMaxTracksFetchBytes = 8 * 1024 * 1024;
   static const int kMaxAttachmentsFetchBytes = 16 * 1024 * 1024;
+  static const int kMaxRangeProbeScanBytes = 6 * 1024 * 1024;
 
   final String url;
   final Map<String, String>? headers;
@@ -3134,20 +3594,38 @@ class WebosMkvSubtitleExtractor {
   final void Function(String fileName, Uint8List fontBytes)? onFontAttachment;
   final VoidCallback? onFontAttachmentsLoaded;
   final void Function(int? trackNumber)? onFlushAssTrack;
+  final void Function(String errorCode)? onInitialUnavailable;
   final bool skipDartAssParsing;
   final bool skipFlutterFontLoading;
 
-  final HttpClient _httpClient = HttpClient()..connectionTimeout = const Duration(seconds: 10);
+  final HttpClient _httpClient = createWebosSubtitleHttpClient(connectionTimeout: const Duration(seconds: 10));
   bool _disposed = false;
+  bool _notifiedInitialUnavailable = false;
+  int _consecutiveStreamFailures = 0;
+  bool _lastRangeProbeFailedWithHttpError = false;
+  final Map<Timer, Completer<void>> _activeRetryTimers = {};
 
   int _segmentDataOffset = 0;
   int _timestampScaleNs = 1000000;
+  int _segmentDurationMs;
+  int _totalFileSize = 0;
+  bool _serverSupportsRange = false;
   int? _tracksOffset;
+  int? _tracksTotalSize;
   int? _cuesOffset;
   int? _cuesTotalSize;
   int? _attachmentsOffset;
   int? _attachmentsTotalSize;
+  int? _secondarySeekHeadOffset;
+  final List<int> _pendingSeekHeadOffsets = [];
+  final Set<int> _visitedSeekHeadOffsets = {};
   int _firstClusterOffset = 0;
+  int? _pendingBinarySeekTargetMs;
+  int _rangeProbeRequestCount = 0;
+  String? _lastErrorCode;
+  final Map<int, int> _packetsDeliveredByTrack = {};
+  final Map<int, int> _minPtsMsByTrack = {};
+  final Map<int, int> _maxPtsMsByTrack = {};
 
   final List<_MkvTrackInfo> subtitleTracksInOrder = [];
   final Map<int, _MkvTrackInfo> _subTrackByNumber = {};
@@ -3230,16 +3708,25 @@ class WebosMkvSubtitleExtractor {
     required this.getCurrentPositionMs,
     required this.onCuesUpdated,
     bool initialPaused = false,
+    int? fallbackDurationMs,
     this.onAssTrackHeader,
     this.onRawAssChunk,
     this.onFontAttachment,
     this.onFontAttachmentsLoaded,
     this.onFlushAssTrack,
+    this.onInitialUnavailable,
     this.skipDartAssParsing = false,
     this.skipFlutterFontLoading = false,
     @visibleForTesting WebosPgsPixelDecoder? pgsPixelDecoder,
   }) : _pgsPixelDecoder = pgsPixelDecoder,
-       _isPaused = initialPaused;
+       _isPaused = initialPaused,
+       _segmentDurationMs = (fallbackDurationMs != null && fallbackDurationMs > 0) ? fallbackDurationMs : 0;
+
+  void updateFallbackDurationMs(int durationMs) {
+    if (durationMs > 0 && _segmentDurationMs <= 0) {
+      _segmentDurationMs = durationMs;
+    }
+  }
 
   bool isAssTrackNumber(int? trackNum) {
     if (trackNum == null) return false;
@@ -3290,6 +3777,12 @@ class WebosMkvSubtitleExtractor {
   int get debugPrefetchRequestCount => _prefetchRequestCount;
 
   @visibleForTesting
+  int get debugRangeProbeRequestCount => _rangeProbeRequestCount;
+
+  @visibleForTesting
+  int get debugTotalFileSize => _totalFileSize;
+
+  @visibleForTesting
   bool get debugHasActivePrefetch => _activePrefetchSub != null || _activePrefetchRequest != null;
 
   @visibleForTesting
@@ -3304,6 +3797,8 @@ class WebosMkvSubtitleExtractor {
     required String codecId,
     String? language,
     String? name,
+    bool isDefault = false,
+    bool isForced = false,
     WebosAssDocument? assHeader,
     Uint8List? rawCodecPrivate,
   }) {
@@ -3313,6 +3808,8 @@ class WebosMkvSubtitleExtractor {
       codecId: codecId,
       language: language,
       name: name,
+      isDefault: isDefault,
+      isForced: isForced,
       assHeader: assHeader,
       rawCodecPrivate: rawCodecPrivate,
     );
@@ -3344,6 +3841,56 @@ class WebosMkvSubtitleExtractor {
   @visibleForTesting
   int debugEffectivePositionMs() => _effectivePositionMs();
 
+  bool get headersInitialized => _headersInitialized;
+  String? get lastErrorCode => _lastErrorCode;
+  int get maxBufferedTimeMs => _maxBufferedTimeMs;
+  int packetsDeliveredForTrack(int? trackNum) =>
+      trackNum != null ? (_packetsDeliveredByTrack[trackNum] ?? 0) : 0;
+  int? minPtsMsForTrack(int? trackNum) => trackNum != null ? _minPtsMsByTrack[trackNum] : null;
+  int? maxPtsMsForTrack(int? trackNum) => trackNum != null ? _maxPtsMsByTrack[trackNum] : null;
+
+  static String _classifyHttpException(Object error) {
+    if (error is TimeoutException) return 'to';
+    if (error is HandshakeException || error is TlsException) return 'tls';
+    if (error is SocketException || error is HttpException) return 'net';
+    return 'err';
+  }
+
+  bool get _hasDeliveredAnyPackets => _packetsDeliveredByTrack.values.any((c) => c > 0);
+
+  void _notifyInitialUnavailableIfNeeded(String? errorCode) {
+    if (_disposed || _notifiedInitialUnavailable || _hasDeliveredAnyPackets) return;
+    if (errorCode == null || errorCode.isEmpty) return;
+    _notifiedInitialUnavailable = true;
+    onInitialUnavailable?.call(errorCode);
+  }
+
+  void _cancelRetryTimers() {
+    if (_activeRetryTimers.isEmpty) return;
+    final entries = _activeRetryTimers.entries.toList(growable: false);
+    _activeRetryTimers.clear();
+    for (final entry in entries) {
+      entry.key.cancel();
+      if (!entry.value.isCompleted) {
+        entry.value.complete();
+      }
+    }
+  }
+
+  Future<void> _waitCancelable(Duration delay) async {
+    if (_disposed || delay <= Duration.zero) return;
+    final completer = Completer<void>();
+    late final Timer timer;
+    timer = Timer(delay, () {
+      _activeRetryTimers.remove(timer);
+      if (!completer.isCompleted) {
+        completer.complete();
+      }
+    });
+    _activeRetryTimers[timer] = completer;
+    await completer.future;
+  }
+
   void _wakeExtractionLoop() {
     final wake = _loopWakeCompleter;
     _loopWakeCompleter = null;
@@ -3356,12 +3903,14 @@ class WebosMkvSubtitleExtractor {
     if (_disposed || _pendingRewindTargetMs != null) return;
     final wake = Completer<void>();
     _loopWakeCompleter = wake;
+    late final Timer timer;
+    timer = Timer(duration, () {
+      if (!wake.isCompleted) wake.complete();
+    });
     try {
-      await Future.any<void>([
-        Future<void>.delayed(duration),
-        wake.future,
-      ]);
+      await wake.future;
     } finally {
+      timer.cancel();
       if (identical(_loopWakeCompleter, wake)) {
         _loopWakeCompleter = null;
       }
@@ -3383,6 +3932,7 @@ class WebosMkvSubtitleExtractor {
 
   void _interruptActiveStream() {
     _streamGeneration++;
+    _cancelRetryTimers();
     final req = _activeRequest;
     _activeRequest = null;
     if (req != null) {
@@ -3405,6 +3955,7 @@ class WebosMkvSubtitleExtractor {
   void _cancelActivePrefetch() {
     _prefetchGeneration++;
     _deferredPrefetch = null;
+    _cancelRetryTimers();
     final req = _activePrefetchRequest;
     _activePrefetchRequest = null;
     if (req != null) {
@@ -3496,6 +4047,9 @@ class WebosMkvSubtitleExtractor {
     _activeTrackNumber = trackNum;
 
     if (prevTrack != null) {
+      _packetsDeliveredByTrack.remove(prevTrack);
+      _minPtsMsByTrack.remove(prevTrack);
+      _maxPtsMsByTrack.remove(prevTrack);
       if (_isPgsTrack(prevTrack)) {
         _clearPgsTrack(prevTrack);
         _pgsEvictedBeforeMs = -1;
@@ -3556,21 +4110,53 @@ class WebosMkvSubtitleExtractor {
       return false;
     }
 
-    // Only abort the active stream if jumping ahead actually advances _streamCursorOffset;
+    // Only abort the active stream if jumping ahead actually advances _streamCursorOffset
+    // (or if we can binary-search ahead via HTTP Range probes on a Cue-less MKV);
     // otherwise we'd abort only to rewind backwards to an already-passed cluster (livelock).
     final rewindToMs = (nowPosMs - kSeekRewindLookbackMs).clamp(0, 1 << 30);
     final targetOffset = _findClusterOffsetForTime(rewindToMs);
-    return targetOffset > _streamCursorOffset;
+    if (targetOffset > _streamCursorOffset) return true;
+    return _canBinarySeekAhead(rewindToMs) && rewindToMs > _maxBufferedTimeMs + 15000;
   }
 
   @visibleForTesting
   bool checkNeedsRewind(int nowPosMs) => _positionNeedsRewind(nowPosMs);
 
+  bool get _canRangeProbeClusters {
+    final baseOffset = _firstClusterOffset > 0 ? _firstClusterOffset : _segmentDataOffset;
+    return _serverSupportsRange && _totalFileSize > baseOffset + 256 * 1024;
+  }
+
+  int _bestCueTimeBeforeOrAt(int targetMs) {
+    int best = 0;
+    for (final pt in _cuePoints) {
+      if (pt.timeMs <= targetMs) {
+        best = pt.timeMs;
+      } else {
+        break;
+      }
+    }
+    return best;
+  }
+
+  bool _canBinarySeekAhead(int rewindToMs) {
+    return _canRangeProbeClusters &&
+        rewindToMs >= 10000 &&
+        (rewindToMs - _bestCueTimeBeforeOrAt(rewindToMs)) > 20000;
+  }
+
   bool _applyRewind(int targetPosMs, {bool forceRewind = false}) {
     final rewindToMs = (targetPosMs - kSeekRewindLookbackMs).clamp(0, 1 << 30);
     final targetOffset = _findClusterOffsetForTime(rewindToMs);
+    final needsBinarySeek = _canBinarySeekAhead(rewindToMs);
+    if (needsBinarySeek) {
+      _pendingBinarySeekTargetMs = rewindToMs;
+    } else {
+      _pendingBinarySeekTargetMs = null;
+    }
     final isForwardJump = targetPosMs > _maxBufferedTimeMs;
     final keepForwardCursor = !forceRewind &&
+        !needsBinarySeek &&
         isForwardJump &&
         _streamCursorOffset > 0 &&
         targetOffset <= _streamCursorOffset;
@@ -3734,6 +4320,7 @@ class WebosMkvSubtitleExtractor {
 
   void dispose({bool deferPgsDispose = true}) {
     _disposed = true;
+    _cancelRetryTimers();
     _cancelActivePrefetch();
     _cancelActiveStreamForRewind();
     _wakeExtractionLoop();
@@ -3758,7 +4345,24 @@ class WebosMkvSubtitleExtractor {
   Future<void> start() async {
     try {
       await _initializeMkvHeaders();
-      if (_disposed || subtitleTracksInOrder.isEmpty) return;
+      if (_disposed) return;
+      if (subtitleTracksInOrder.isEmpty) {
+        _lastErrorCode ??= 'noTrk';
+        appLogger.w(
+          '[WebOS-MKV-Sub] No embedded subtitle tracks found in MKV header '
+          '(fileSize=$_totalFileSize, range=$_serverSupportsRange, firstCluster=$_firstClusterOffset)',
+        );
+        _notifyInitialUnavailableIfNeeded(_lastErrorCode);
+        return;
+      }
+      final trackSummary = subtitleTracksInOrder
+          .map((t) => '#${t.trackNumber}:${t.codecId}:${t.language ?? "?"}'
+              '${t.isForced ? "[forced]" : ""}${t.name != null ? "(${t.name})" : ""}')
+          .join(', ');
+      appLogger.i(
+        '[WebOS-MKV-Sub] Initialized ${subtitleTracksInOrder.length} track(s) [$trackSummary], '
+        'cues=${_cuePoints.length}, durMs=$_segmentDurationMs, size=$_totalFileSize, range=$_serverSupportsRange',
+      );
       _headersInitialized = true;
       final deferred = _deferredPrefetch;
       _deferredPrefetch = null;
@@ -3768,31 +4372,110 @@ class WebosMkvSubtitleExtractor {
       onCuesUpdated();
       unawaited(_runExtractionLoop());
     } catch (e, st) {
+      _lastErrorCode ??= _classifyHttpException(e);
       appLogger.w('[WebOS-MKV-Sub] Header init error: $e', error: e, stackTrace: st);
+      _notifyInitialUnavailableIfNeeded(_lastErrorCode);
+    }
+  }
+
+  void _recordTotalSizeFromHeaders(HttpClientResponse resp) {
+    if (resp.statusCode == 206) {
+      _serverSupportsRange = true;
+      final contentRange = resp.headers.value(HttpHeaders.contentRangeHeader);
+      if (contentRange != null) {
+        final slashIdx = contentRange.lastIndexOf('/');
+        if (slashIdx >= 0 && slashIdx + 1 < contentRange.length) {
+          final totalStr = contentRange.substring(slashIdx + 1).trim();
+          final parsedTotal = int.tryParse(totalStr);
+          if (parsedTotal != null && parsedTotal > 0) {
+            _totalFileSize = parsedTotal;
+          }
+        }
+      }
+    } else if (resp.statusCode == 200 && resp.contentLength > 0) {
+      _totalFileSize = resp.contentLength;
     }
   }
 
   Future<Uint8List?> _fetchRange(int start, int length) async {
     if (_disposed || start < 0 || length <= 0) return null;
-    try {
-      final req = await _httpClient.getUrl(Uri.parse(url));
-      headers?.forEach((k, v) => req.headers.set(k, v));
-      req.headers.set('Range', 'bytes=$start-${start + length - 1}');
-      final resp = await req.close().timeout(const Duration(seconds: 12));
-      if (resp.statusCode != 200 && resp.statusCode != 206) {
-        await resp.drain<void>();
+    for (int attempt = 0; attempt < 2 && !_disposed; attempt++) {
+      try {
+        final resp = await openWebosHttpGetWithRedirects(
+          _httpClient,
+          url,
+          headers: headers,
+          rangeHeader: 'bytes=$start-${start + length - 1}',
+          timeout: const Duration(seconds: 12),
+          isCancelled: () => _disposed,
+          onRetryDelay: _waitCancelable,
+        );
+        if (resp.statusCode != 200 && resp.statusCode != 206) {
+          _lastErrorCode = '${resp.statusCode}';
+          appLogger.w('[WebOS-MKV-Sub] Range bytes=$start-${start + length - 1} returned HTTP ${resp.statusCode}');
+          await resp.drain<void>().catchError((Object _) {});
+          if (attempt == 0 && (resp.statusCode == 502 || resp.statusCode == 504)) {
+            await _waitCancelable(const Duration(milliseconds: 250));
+            continue;
+          }
+          return null;
+        }
+        if (_lastErrorCode != null && _lastErrorCode != 'noTrk' && _lastErrorCode != 'noEBML') {
+          _lastErrorCode = null;
+        }
+        _recordTotalSizeFromHeaders(resp);
+        int skipPrefix = 0;
+        if (resp.statusCode == 200 && start > 0) {
+          _serverSupportsRange = false;
+          _lastErrorCode = '200noR';
+          if (start > 512 * 1024) {
+            _abortHttpResponse(resp);
+            return null;
+          }
+          skipPrefix = start;
+        }
+        final builder = BytesBuilder(copy: false);
+        await for (final chunk in resp) {
+          if (_disposed) return null;
+          int offset = 0;
+          if (skipPrefix > 0) {
+            final skipHere = math.min(skipPrefix, chunk.length);
+            skipPrefix -= skipHere;
+            offset += skipHere;
+          }
+          if (offset < chunk.length) {
+            final needed = length - builder.length;
+            final takeLen = math.min(needed, chunk.length - offset);
+            if (takeLen > 0) {
+              builder.add(
+                offset == 0 && takeLen == chunk.length
+                    ? chunk
+                    : (chunk is Uint8List
+                        ? Uint8List.sublistView(chunk, offset, offset + takeLen)
+                        : chunk.sublist(offset, offset + takeLen)),
+              );
+            }
+          }
+          if (builder.length >= length) {
+            _abortHttpResponse(resp);
+            break;
+          }
+        }
+        return builder.takeBytes();
+      } catch (e) {
+        if (_disposed) return null;
+        if (attempt == 0) {
+          await _waitCancelable(const Duration(milliseconds: 200));
+          continue;
+        }
+        if (start == 0) {
+          _lastErrorCode = _classifyHttpException(e);
+          appLogger.w('[WebOS-MKV-Sub] Initial header Range fetch failed: $e');
+        }
         return null;
       }
-      final builder = BytesBuilder(copy: false);
-      await for (final chunk in resp) {
-        if (_disposed) return null;
-        builder.add(chunk);
-        if (builder.length >= length) break;
-      }
-      return builder.takeBytes();
-    } catch (_) {
-      return null;
     }
+    return null;
   }
 
   static ({int value, int length})? _readVint(Uint8List data, int pos, {required bool keepMarkerBit}) {
@@ -3984,12 +4667,29 @@ class WebosMkvSubtitleExtractor {
   }
 
   Future<void> _initializeMkvHeaders() async {
-    final head = await _fetchRange(0, 128 * 1024);
+    const int kHeaderWindowBytes = 128 * 1024;
+    final cachedPrefix = WebosDirectStreamFallbackRegistry.instance.takeCachedHeaderPrefix(
+      url,
+      minUsableBytes: kHeaderWindowBytes,
+    );
+    final Uint8List? head;
+    if (cachedPrefix != null) {
+      head = cachedPrefix.bytes;
+      _serverSupportsRange = cachedPrefix.supportsRange;
+      if (cachedPrefix.totalFileSize > 0) {
+        _totalFileSize = cachedPrefix.totalFileSize;
+      }
+    } else {
+      head = await _fetchRange(0, kHeaderWindowBytes);
+    }
     if (head == null || head.length < 64) return;
 
     int pos = 0;
     final ebmlId = _readVint(head, pos, keepMarkerBit: true);
-    if (ebmlId == null || ebmlId.value != 0x1A45DFA3) return;
+    if (ebmlId == null || ebmlId.value != 0x1A45DFA3) {
+      _lastErrorCode = 'noEBML';
+      return;
+    }
     pos += ebmlId.length;
     final ebmlSize = _readVint(head, pos, keepMarkerBit: false);
     if (ebmlSize == null) return;
@@ -4002,83 +4702,222 @@ class WebosMkvSubtitleExtractor {
     if (segSize == null) return;
     pos += segSize.length;
     _segmentDataOffset = pos;
+    final maxSegForLen = segSize.length == 8 ? -1 : ((1 << (segSize.length * 7)) - 1);
+    if (_totalFileSize <= 0 &&
+        !(maxSegForLen >= 0 && segSize.value == maxSegForLen) &&
+        !(segSize.length == 8 && segSize.value == 0x00FFFFFFFFFFFFFF) &&
+        segSize.value > 0) {
+      _totalFileSize = _segmentDataOffset + segSize.value;
+    }
 
     Uint8List? inlineAttachmentsBuf;
+    Uint8List window = head;
+    int windowFileOffset = 0;
+    int filePos = pos;
+    int headerHops = 0;
 
-    while (pos < head.length - 12) {
-      final elId = _readVint(head, pos, keepMarkerBit: true);
+    while (!_disposed) {
+      if (filePos - windowFileOffset >= window.length - 12 || filePos < windowFileOffset) {
+        final needMoreTopLevel = (subtitleTracksInOrder.isEmpty && _tracksOffset == null) || _firstClusterOffset == 0;
+        final withinBounds = headerHops < 16 &&
+            filePos > windowFileOffset &&
+            filePos < 250 * 1024 * 1024 &&
+            (_totalFileSize <= 0 || filePos < _totalFileSize - 16);
+        if (!needMoreTopLevel || !withinBounds) break;
+        final nextWin = await _fetchRange(filePos, kHeaderWindowBytes);
+        if (nextWin == null || nextWin.length < 16) break;
+        window = nextWin;
+        windowFileOffset = filePos;
+        headerHops++;
+      }
+
+      final relPos = filePos - windowFileOffset;
+      final elId = _readVint(window, relPos, keepMarkerBit: true);
       if (elId == null) break;
-      final elSize = _readVint(head, pos + elId.length, keepMarkerBit: false);
+      final elSize = _readVint(window, relPos + elId.length, keepMarkerBit: false);
       if (elSize == null) break;
-      final bodyStart = pos + elId.length + elSize.length;
-      final bodyEnd = bodyStart + elSize.value;
+      final bodyStartRel = relPos + elId.length + elSize.length;
+      final bodyEndRel = bodyStartRel + elSize.value;
+      final bodyEndFile = windowFileOffset + bodyEndRel;
 
       if (elId.value == 0x1F43B675) {
-        _firstClusterOffset = pos;
+        _firstClusterOffset = filePos;
         break;
       }
 
-      if (bodyEnd <= head.length) {
+      if (bodyEndRel <= window.length) {
         if (elId.value == 0x114D9B74) {
-          _parseSeekHead(head, bodyStart, bodyEnd);
+          _parseSeekHead(window, bodyStartRel, bodyEndRel);
         } else if (elId.value == 0x1549A966) {
-          _parseSegmentInfo(head, bodyStart, bodyEnd);
+          _parseSegmentInfo(window, bodyStartRel, bodyEndRel);
         } else if (elId.value == 0x1654AE6B) {
-          _parseTracksElement(head, bodyStart, bodyEnd);
+          _parseTracksElement(window, bodyStartRel, bodyEndRel);
         } else if (elId.value == 0x1C53BB6B) {
-          _parseCuesElement(head, bodyStart, bodyEnd);
+          _parseCuesElement(window, bodyStartRel, bodyEndRel);
         } else if (elId.value == 0x1941A469) {
-          _attachmentsOffset ??= pos;
-          inlineAttachmentsBuf ??= Uint8List.fromList(Uint8List.sublistView(head, bodyStart, bodyEnd));
+          _attachmentsOffset ??= filePos;
+          inlineAttachmentsBuf ??= Uint8List.fromList(Uint8List.sublistView(window, bodyStartRel, bodyEndRel));
         }
       } else {
-        if (elId.value == 0x1654AE6B) _tracksOffset ??= pos;
+        if (elId.value == 0x1654AE6B) {
+          _tracksOffset ??= filePos;
+          if (_tracksOffset == filePos) _tracksTotalSize = bodyEndFile - filePos;
+        }
         if (elId.value == 0x1C53BB6B) {
-          _cuesOffset ??= pos;
-          if (_cuesOffset == pos) _cuesTotalSize = bodyEnd - pos;
+          _cuesOffset ??= filePos;
+          if (_cuesOffset == filePos) _cuesTotalSize = bodyEndFile - filePos;
         }
         if (elId.value == 0x1941A469) {
-          _attachmentsOffset ??= pos;
-          if (_attachmentsOffset == pos) _attachmentsTotalSize = bodyEnd - pos;
-          if (_firstClusterOffset == 0 && elSize.value < 150 * 1024 * 1024) {
-            _firstClusterOffset = bodyEnd;
-          }
+          _attachmentsOffset ??= filePos;
+          if (_attachmentsOffset == filePos) _attachmentsTotalSize = bodyEndFile - filePos;
         }
       }
-      pos = bodyEnd;
+      if (bodyEndFile <= filePos) break;
+      filePos = bodyEndFile;
     }
 
-    if (subtitleTracksInOrder.isEmpty && _tracksOffset != null) {
-      final tracksBuf = await _fetchRange(_tracksOffset!, 256 * 1024);
-      if (tracksBuf != null) {
-        final tid = _readVint(tracksBuf, 0, keepMarkerBit: true);
-        if (tid != null && tid.value == 0x1654AE6B) {
-          final tsize = _readVint(tracksBuf, tid.length, keepMarkerBit: false);
-          if (tsize != null) {
-            final bStart = tid.length + tsize.length;
-            final bEnd = (bStart + tsize.value).clamp(0, tracksBuf.length);
-            _parseTracksElement(tracksBuf, bStart, bEnd);
-          }
-        }
-      }
+    // Follow up to 4 chained secondary SeekHead (0x114D9B74) pointers when Tracks or Cues
+    // were not listed in the primary SeekHead (e.g. FFmpeg / mkvpropedit post-processed files).
+    if (_secondarySeekHeadOffset != null && !_visitedSeekHeadOffsets.contains(_secondarySeekHeadOffset!)) {
+      _pendingSeekHeadOffsets.add(_secondarySeekHeadOffset!);
+      _secondarySeekHeadOffset = null;
     }
-
-    if (_cuePoints.isEmpty && _cuesOffset != null) {
-      final cuesBuf = await _fetchExactEbmlElement(
-        _cuesOffset!,
-        expectedId: 0x1C53BB6B,
-        maxBytes: kMaxCuesFetchBytes,
-        knownTotalSize: _cuesTotalSize,
+    int seekHeadHops = 0;
+    while (_pendingSeekHeadOffsets.isNotEmpty &&
+        seekHeadHops < 4 &&
+        !_disposed &&
+        ((subtitleTracksInOrder.isEmpty && _tracksOffset == null) || (_cuePoints.isEmpty && _cuesOffset == null))) {
+      final secOffset = _pendingSeekHeadOffsets.removeAt(0);
+      if (!_visitedSeekHeadOffsets.add(secOffset)) continue;
+      seekHeadHops++;
+      final secBuf = await _fetchExactEbmlElement(
+        secOffset,
+        expectedId: 0x114D9B74,
+        maxBytes: 64 * 1024,
       );
-      if (cuesBuf != null) {
-        final cid = _readVint(cuesBuf, 0, keepMarkerBit: true);
-        if (cid != null && cid.value == 0x1C53BB6B) {
-          final csize = _readVint(cuesBuf, cid.length, keepMarkerBit: false);
-          if (csize != null) {
-            final bStart = cid.length + csize.length;
-            final bEnd = (bStart + csize.value).clamp(0, cuesBuf.length);
-            _parseCuesElement(cuesBuf, bStart, bEnd);
+      if (secBuf != null) {
+        final sid = _readVint(secBuf, 0, keepMarkerBit: true);
+        if (sid != null && sid.value == 0x114D9B74) {
+          final ssz = _readVint(secBuf, sid.length, keepMarkerBit: false);
+          if (ssz != null) {
+            final bStart = sid.length + ssz.length;
+            final bEnd = (bStart + ssz.value).clamp(0, secBuf.length);
+            _parseSeekHead(secBuf, bStart, bEnd);
           }
+        }
+      }
+    }
+
+    Future<void> fetchIndexedTracksAndCues() async {
+      if (subtitleTracksInOrder.isEmpty && _tracksOffset != null) {
+        final tracksBuf = await _fetchExactEbmlElement(
+          _tracksOffset!,
+          expectedId: 0x1654AE6B,
+          maxBytes: kMaxTracksFetchBytes,
+          knownTotalSize: _tracksTotalSize,
+        );
+        if (tracksBuf != null) {
+          final tid = _readVint(tracksBuf, 0, keepMarkerBit: true);
+          if (tid != null && tid.value == 0x1654AE6B) {
+            final tsize = _readVint(tracksBuf, tid.length, keepMarkerBit: false);
+            if (tsize != null) {
+              final bStart = tid.length + tsize.length;
+              final bEnd = (bStart + tsize.value).clamp(0, tracksBuf.length);
+              _parseTracksElement(tracksBuf, bStart, bEnd);
+              if (_firstClusterOffset == 0 && _tracksOffset! < 32 * 1024 * 1024) {
+                _firstClusterOffset = _tracksOffset! + bStart + tsize.value;
+              }
+            }
+          }
+        }
+      }
+
+      if (_cuePoints.isEmpty && _cuesOffset != null) {
+        final cuesBuf = await _fetchExactEbmlElement(
+          _cuesOffset!,
+          expectedId: 0x1C53BB6B,
+          maxBytes: kMaxCuesFetchBytes,
+          knownTotalSize: _cuesTotalSize,
+        );
+        if (cuesBuf != null) {
+          final cid = _readVint(cuesBuf, 0, keepMarkerBit: true);
+          if (cid != null && cid.value == 0x1C53BB6B) {
+            final csize = _readVint(cuesBuf, cid.length, keepMarkerBit: false);
+            if (csize != null) {
+              final bStart = cid.length + csize.length;
+              final bEnd = (bStart + csize.value).clamp(0, cuesBuf.length);
+              _parseCuesElement(cuesBuf, bStart, bEnd);
+            }
+          }
+        }
+      }
+    }
+
+    await fetchIndexedTracksAndCues();
+
+    // Tail probe fallback: tools like mkvpropedit void header elements and append relocated
+    // SeekHead (0x114D9B74), Tracks (0x1654AE6B), and/or Cues (0x1C53BB6B) at EOF.
+    final bool missingTracks = subtitleTracksInOrder.isEmpty && _tracksOffset == null;
+    final bool missingCues = _cuePoints.isEmpty && _cuesOffset == null;
+    if ((missingTracks || missingCues) &&
+        _serverSupportsRange &&
+        _totalFileSize > (_firstClusterOffset > 0 ? _firstClusterOffset : _segmentDataOffset) + 64 * 1024) {
+      final baseOff = _firstClusterOffset > 0 ? _firstClusterOffset : _segmentDataOffset;
+      final maxTailWindow = missingTracks ? 1024 * 1024 : 256 * 1024;
+      final tailLen = math.min(maxTailWindow, _totalFileSize - baseOff);
+      final tailStart = _totalFileSize - tailLen;
+      final tailBuf = await _fetchRange(tailStart, tailLen);
+      if (tailBuf != null && tailBuf.length >= 16) {
+        for (int i = 0; i <= tailBuf.length - 12; i++) {
+          final b0 = tailBuf[i];
+          if (b0 == 0x11 &&
+              tailBuf[i + 1] == 0x4D &&
+              tailBuf[i + 2] == 0x9B &&
+              tailBuf[i + 3] == 0x74) {
+            final ssz = _readVint(tailBuf, i + 4, keepMarkerBit: false);
+            if (ssz == null) continue;
+            final bStart = i + 4 + ssz.length;
+            final bEnd = bStart + ssz.value;
+            if (bStart + 1 < tailBuf.length &&
+                bEnd <= tailBuf.length &&
+                tailBuf[bStart] == 0x4D &&
+                tailBuf[bStart + 1] == 0xBB) {
+              _parseSeekHead(tailBuf, bStart, bEnd);
+            }
+          } else if (subtitleTracksInOrder.isEmpty &&
+              b0 == 0x16 &&
+              tailBuf[i + 1] == 0x54 &&
+              tailBuf[i + 2] == 0xAE &&
+              tailBuf[i + 3] == 0x6B) {
+            final tsz = _readVint(tailBuf, i + 4, keepMarkerBit: false);
+            if (tsz == null) continue;
+            final bStart = i + 4 + tsz.length;
+            final bEnd = bStart + tsz.value;
+            if (bStart < tailBuf.length && tailBuf[bStart] == 0xAE) {
+              _tracksOffset ??= tailStart + i;
+              if (bEnd <= tailBuf.length) {
+                _parseTracksElement(tailBuf, bStart, bEnd);
+              }
+            }
+          } else if (_cuePoints.isEmpty &&
+              b0 == 0x1C &&
+              tailBuf[i + 1] == 0x53 &&
+              tailBuf[i + 2] == 0xBB &&
+              tailBuf[i + 3] == 0x6B) {
+            final csz = _readVint(tailBuf, i + 4, keepMarkerBit: false);
+            if (csz == null) continue;
+            final bStart = i + 4 + csz.length;
+            final bEnd = bStart + csz.value;
+            if (bStart < tailBuf.length && tailBuf[bStart] == 0xBB) {
+              _cuesOffset ??= tailStart + i;
+              if (bEnd <= tailBuf.length) {
+                _parseCuesElement(tailBuf, bStart, bEnd);
+              }
+            }
+          }
+        }
+        if ((subtitleTracksInOrder.isEmpty && _tracksOffset != null) || (_cuePoints.isEmpty && _cuesOffset != null)) {
+          await fetchIndexedTracksAndCues();
         }
       }
     }
@@ -4152,6 +4991,12 @@ class WebosMkvSubtitleExtractor {
           _attachmentsOffset = _segmentDataOffset + seekPos;
         } else if (seekId == 0x1F43B675 && seekPos != null && _firstClusterOffset == 0) {
           _firstClusterOffset = _segmentDataOffset + seekPos;
+        } else if (seekId == 0x114D9B74 && seekPos != null && seekPos > 0) {
+          final candOff = _segmentDataOffset + seekPos;
+          if (!_visitedSeekHeadOffsets.contains(candOff) && !_pendingSeekHeadOffsets.contains(candOff)) {
+            _pendingSeekHeadOffsets.add(candOff);
+          }
+          _secondarySeekHeadOffset ??= candOff;
         }
       }
       p = bEnd;
@@ -4159,6 +5004,7 @@ class WebosMkvSubtitleExtractor {
   }
 
   void _parseSegmentInfo(Uint8List data, int start, int end) {
+    double? rawDurationTicks;
     int p = start;
     while (p < end) {
       final id = _readVint(data, p, keepMarkerBit: true);
@@ -4168,11 +5014,68 @@ class WebosMkvSubtitleExtractor {
       final bStart = p + id.length + sz.length;
       final bEnd = bStart + sz.value;
       if (bEnd > end) break;
-      if (id.value == 0x2AD7B1) {
+      if (id.value == 0x2AD7B1 && sz.value > 0) {
         _timestampScaleNs = _readUint(data, bStart, sz.value);
+      } else if (id.value == 0x4489 && (sz.value == 4 || sz.value == 8)) {
+        final bd = ByteData.sublistView(data, bStart, bEnd);
+        rawDurationTicks = sz.value == 4 ? bd.getFloat32(0, Endian.big) : bd.getFloat64(0, Endian.big);
       }
       p = bEnd;
     }
+    if (rawDurationTicks != null && rawDurationTicks.isFinite && rawDurationTicks > 0) {
+      _segmentDurationMs = ((rawDurationTicks * _timestampScaleNs) / 1000000.0).round();
+    }
+  }
+
+  static ({int? algo, Uint8List? settings}) _parseContentEncodings(Uint8List data, int start, int end) {
+    int? compAlgo;
+    Uint8List? compSettings;
+    int p = start;
+    while (p < end) {
+      final id = _readVint(data, p, keepMarkerBit: true);
+      if (id == null) break;
+      final sz = _readVint(data, p + id.length, keepMarkerBit: false);
+      if (sz == null) break;
+      final bStart = p + id.length + sz.length;
+      final bEnd = bStart + sz.value;
+      if (bEnd > end) break;
+      if (id.value == 0x6240) {
+        // ContentEncoding
+        int ep = bStart;
+        while (ep < bEnd) {
+          final eid = _readVint(data, ep, keepMarkerBit: true);
+          if (eid == null) break;
+          final esz = _readVint(data, ep + eid.length, keepMarkerBit: false);
+          if (esz == null) break;
+          final ebStart = ep + eid.length + esz.length;
+          final ebEnd = ebStart + esz.value;
+          if (ebEnd > bEnd) break;
+          if (eid.value == 0x5034) {
+            // ContentCompression (Matroska default ContentCompAlgo is 0 = zlib)
+            compAlgo ??= 0;
+            int cp = ebStart;
+            while (cp < ebEnd) {
+              final cid = _readVint(data, cp, keepMarkerBit: true);
+              if (cid == null) break;
+              final csz = _readVint(data, cp + cid.length, keepMarkerBit: false);
+              if (csz == null) break;
+              final cbStart = cp + cid.length + csz.length;
+              final cbEnd = cbStart + csz.value;
+              if (cbEnd > ebEnd) break;
+              if (cid.value == 0x4254) {
+                compAlgo = _readUint(data, cbStart, csz.value);
+              } else if (cid.value == 0x4255 && csz.value <= 4096) {
+                compSettings = data.sublist(cbStart, cbEnd);
+              }
+              cp = cbEnd;
+            }
+          }
+          ep = ebEnd;
+        }
+      }
+      p = bEnd;
+    }
+    return (algo: compAlgo, settings: compSettings);
   }
 
   void _parseTracksElement(Uint8List data, int start, int end) {
@@ -4192,8 +5095,12 @@ class WebosMkvSubtitleExtractor {
         String codecId = '';
         String? lang;
         String? name;
+        bool isDefault = true; // Matroska FlagDefault (0x88) defaults to 1 when omitted
+        bool isForced = false; // Matroska FlagForced (0x55AA) defaults to 0 when omitted
         String? codecPrivStr;
         Uint8List? codecPrivBytes;
+        int? contentCompAlgo;
+        Uint8List? contentCompSettings;
 
         int tp = bStart;
         while (tp < bEnd) {
@@ -4209,19 +5116,33 @@ class WebosMkvSubtitleExtractor {
             trackNum = _readUint(data, tbStart, tsz.value);
           } else if (tid.value == 0x83) {
             trackType = _readUint(data, tbStart, tsz.value);
+          } else if (tid.value == 0x88) {
+            isDefault = _readUint(data, tbStart, tsz.value) != 0;
+          } else if (tid.value == 0x55AA) {
+            isForced = _readUint(data, tbStart, tsz.value) != 0;
           } else if (tid.value == 0x86) {
             codecId = utf8.decode(data.sublist(tbStart, tbEnd), allowMalformed: true).trim();
           } else if (tid.value == 0x22B59C || tid.value == 0x22B59D) {
             lang = utf8.decode(data.sublist(tbStart, tbEnd), allowMalformed: true).trim();
           } else if (tid.value == 0x536E) {
             name = utf8.decode(data.sublist(tbStart, tbEnd), allowMalformed: true).trim();
-          } else if (tid.value == 0x63A2 && tsz.value < 512 * 1024) {
+          } else if (tid.value == 0x63A2 && tsz.value < kMaxTracksFetchBytes) {
             codecPrivBytes = data.sublist(tbStart, tbEnd);
-            if (!skipDartAssParsing) {
-              codecPrivStr = utf8.decode(codecPrivBytes, allowMalformed: true);
-            }
+          } else if (tid.value == 0x6D80) {
+            final comp = _parseContentEncodings(data, tbStart, tbEnd);
+            contentCompAlgo = comp.algo;
+            contentCompSettings = comp.settings;
           }
           tp = tbEnd;
+        }
+
+        if (codecPrivBytes != null && contentCompAlgo == 0) {
+          try {
+            codecPrivBytes = Uint8List.fromList(zlib.decode(codecPrivBytes));
+          } catch (_) {}
+        }
+        if (codecPrivBytes != null && !skipDartAssParsing) {
+          codecPrivStr = utf8.decode(codecPrivBytes, allowMalformed: true);
         }
 
         if (trackNum != null && trackType == 0x11 && !_subTrackByNumber.containsKey(trackNum)) {
@@ -4239,8 +5160,12 @@ class WebosMkvSubtitleExtractor {
             codecId: codecId,
             language: lang,
             name: name,
+            isDefault: isDefault,
+            isForced: isForced,
             assHeader: assDoc,
             rawCodecPrivate: retainedCodecPrivate,
+            contentCompAlgo: contentCompAlgo,
+            contentCompSettings: contentCompSettings,
           );
           subtitleTracksInOrder.add(info);
           _subTrackByNumber[trackNum] = info;
@@ -4371,17 +5296,19 @@ class WebosMkvSubtitleExtractor {
 
     try {
       _prefetchRequestCount++;
-      req = await _httpClient.getUrl(Uri.parse(url));
-      if (_disposed || gen != _prefetchGeneration) {
-        try {
-          req.abort();
-        } catch (_) {}
-        return;
-      }
-      _activePrefetchRequest = req;
-      headers?.forEach((k, v) => req!.headers.set(k, v));
-      req.headers.set('Range', 'bytes=$startOffset-$endOffset');
-      resp = await req.close().timeout(const Duration(seconds: 8));
+      resp = await openWebosHttpGetWithRedirects(
+        _httpClient,
+        url,
+        headers: headers,
+        rangeHeader: 'bytes=$startOffset-$endOffset',
+        timeout: const Duration(seconds: 8),
+        onRequestCreated: (r) {
+          req = r;
+          _activePrefetchRequest = r;
+        },
+        isCancelled: () => _disposed || gen != _prefetchGeneration,
+        onRetryDelay: _waitCancelable,
+      );
       if (identical(_activePrefetchRequest, req)) {
         _activePrefetchRequest = null;
       }
@@ -4479,9 +5406,9 @@ class WebosMkvSubtitleExtractor {
 
       await completer.future;
     } catch (_) {
-      if (resp == null && req != null) {
+      if (resp == null) {
         try {
-          req.abort();
+          req?.abort();
         } catch (_) {}
       }
     } finally {
@@ -4500,9 +5427,236 @@ class WebosMkvSubtitleExtractor {
     }
   }
 
+  static ({int timeMs, int relOffset})? _tryParseClusterTimestampInBuffer(
+    Uint8List buf,
+    int timestampScaleNs,
+  ) {
+    for (int i = 0; i <= buf.length - 12; i++) {
+      if (buf[i] != 0x1F || buf[i + 1] != 0x43 || buf[i + 2] != 0xB6 || buf[i + 3] != 0x75) {
+        continue;
+      }
+      final cSize = _readVint(buf, i + 4, keepMarkerBit: false);
+      if (cSize == null) return null; // Wait for more bytes at tail
+      int cp = i + 4 + cSize.length;
+      final maxChildEnd = math.min(buf.length, cp + 96);
+      bool sawIncompleteHeader = false;
+      while (cp < maxChildEnd) {
+        final cid = _readVint(buf, cp, keepMarkerBit: true);
+        if (cid == null) {
+          sawIncompleteHeader = (buf.length - cp) < 12;
+          break;
+        }
+        final csz = _readVint(buf, cp + cid.length, keepMarkerBit: false);
+        if (csz == null) {
+          sawIncompleteHeader = (buf.length - cp) < 16;
+          break;
+        }
+        final cbStart = cp + cid.length + csz.length;
+        final cbEnd = cbStart + csz.value;
+        if (cid.value == 0xE7) {
+          if (cbEnd > buf.length) return null; // Wait for Timestamp payload
+          if (csz.value > 8) break;
+          final rawTs = _readUint(buf, cbStart, csz.value);
+          final timeMs = (rawTs * timestampScaleNs) ~/ 1000000;
+          return (timeMs: timeMs, relOffset: i);
+        }
+        // Optional metadata children allowed before Timestamp (0xE7) inside a Matroska Cluster:
+        // CRC-32 (0xBF), Void (0xEC), PrevSize (0xAB), Position (0xA7), SilentTracks (0x5854).
+        if (cid.value == 0xBF ||
+            cid.value == 0xEC ||
+            cid.value == 0xAB ||
+            cid.value == 0xA7 ||
+            cid.value == 0x5854) {
+          if (cbEnd > buf.length) return null;
+          cp = cbEnd;
+          continue;
+        }
+        break;
+      }
+      if (sawIncompleteHeader && buf.length - i < 112) {
+        return null;
+      }
+    }
+    return null;
+  }
+
+  Future<({int timeMs, int clusterFileOffset})?> _probeClusterAtOrAfter(
+    int probeOffset,
+    int maxEndOffset,
+    int expectedGen,
+  ) async {
+    if (_disposed || expectedGen != _streamGeneration || probeOffset >= maxEndOffset) return null;
+    final endExclusive = math.min(maxEndOffset, probeOffset + kMaxRangeProbeScanBytes);
+    if (endExclusive - probeOffset < 16) return null;
+
+    HttpClientRequest? req;
+    HttpClientResponse? resp;
+    try {
+      _lastRangeProbeFailedWithHttpError = false;
+      _rangeProbeRequestCount++;
+      resp = await openWebosHttpGetWithRedirects(
+        _httpClient,
+        url,
+        headers: headers,
+        rangeHeader: 'bytes=$probeOffset-${endExclusive - 1}',
+        timeout: const Duration(seconds: 6),
+        onRequestCreated: (r) => req = r,
+        isCancelled: () => _disposed || expectedGen != _streamGeneration,
+        onRetryDelay: _waitCancelable,
+      );
+      if (_disposed || expectedGen != _streamGeneration) {
+        _abortHttpResponse(resp);
+        return null;
+      }
+      if (resp.statusCode != 206) {
+        _lastErrorCode = resp.statusCode == 200 ? '200noR' : '${resp.statusCode}';
+        _lastRangeProbeFailedWithHttpError = true;
+        _abortHttpResponse(resp);
+        return null;
+      }
+      _recordTotalSizeFromHeaders(resp);
+
+      Uint8List tail = Uint8List(0);
+      int streamConsumed = 0;
+      await for (final chunk in resp) {
+        if (_disposed || expectedGen != _streamGeneration) {
+          _abortHttpResponse(resp);
+          return null;
+        }
+        final incoming = chunk is Uint8List ? chunk : Uint8List.fromList(chunk);
+        final int bufBaseRel = streamConsumed - tail.length;
+        final Uint8List buf;
+        if (tail.isEmpty) {
+          buf = incoming;
+        } else {
+          buf = Uint8List(tail.length + incoming.length);
+          buf.setRange(0, tail.length, tail);
+          buf.setRange(tail.length, buf.length, incoming);
+        }
+        streamConsumed += incoming.length;
+
+        final parsed = _tryParseClusterTimestampInBuffer(buf, _timestampScaleNs);
+        if (parsed != null) {
+          _abortHttpResponse(resp);
+          final foundOffset = probeOffset + bufBaseRel + parsed.relOffset;
+          _recordDynamicCuePoint(parsed.timeMs, foundOffset);
+          return (timeMs: parsed.timeMs, clusterFileOffset: foundOffset);
+        }
+
+        final keepLen = math.min(buf.length, 128);
+        tail = Uint8List.fromList(Uint8List.sublistView(buf, buf.length - keepLen));
+        if (streamConsumed >= endExclusive - probeOffset) {
+          _abortHttpResponse(resp);
+          break;
+        }
+      }
+      return null;
+    } catch (_) {
+      if (resp == null) {
+        try {
+          req?.abort();
+        } catch (_) {}
+      }
+      return null;
+    }
+  }
+
+  /// Binary-searches Cluster timestamps via bounded HTTP Range requests when an MKV
+  /// lacks a `Cues` index (or has very sparse cues), jumping straight to [targetMs]
+  /// in O(log N) tiny probes instead of streaming hundreds of MBs from byte 0.
+  Future<int?> _seekClusterOffsetByRangeProbe(int targetMs, int expectedGen) async {
+    if (_disposed || !_canRangeProbeClusters || targetMs < 10000) return null;
+    int loByte = _firstClusterOffset > 0 ? _firstClusterOffset : _segmentDataOffset;
+    int hiByte = _totalFileSize;
+    int bestOffset = loByte;
+    int bestTimeMs = 0;
+
+    for (final pt in _cuePoints) {
+      if (pt.timeMs <= targetMs) {
+        if (pt.clusterFileOffset >= loByte) {
+          loByte = pt.clusterFileOffset;
+          bestOffset = pt.clusterFileOffset;
+          bestTimeMs = pt.timeMs;
+        }
+      } else {
+        if (pt.clusterFileOffset > loByte && pt.clusterFileOffset < hiByte) {
+          hiByte = pt.clusterFileOffset;
+        }
+        break;
+      }
+    }
+
+    if (targetMs - bestTimeMs <= 20000 || hiByte - loByte <= 256 * 1024) {
+      return bestOffset;
+    }
+
+    for (int iter = 0; iter < 12 && !_disposed && expectedGen == _streamGeneration; iter++) {
+      final span = hiByte - loByte;
+      if (span <= 256 * 1024) break;
+
+      int probeOffset;
+      if (iter == 0 && _segmentDurationMs > targetMs && bestTimeMs == 0 && hiByte == _totalFileSize) {
+        final baseOff = _firstClusterOffset > 0 ? _firstClusterOffset : _segmentDataOffset;
+        final biasedTargetMs = math.max(0, targetMs - 10000);
+        final frac = (biasedTargetMs / _segmentDurationMs).clamp(0.02, 0.95);
+        final est = baseOff + ((_totalFileSize - baseOff) * frac).round();
+        final margin = span ~/ 20;
+        probeOffset = est.clamp(loByte + margin, hiByte - margin);
+      } else {
+        probeOffset = loByte + (span >> 1);
+      }
+
+      var found = await _probeClusterAtOrAfter(probeOffset, hiByte, expectedGen);
+      if (_disposed || expectedGen != _streamGeneration) return null;
+      if (_lastRangeProbeFailedWithHttpError) {
+        _notifyInitialUnavailableIfNeeded(_lastErrorCode);
+        return null;
+      }
+      if (found == null) {
+        // Large high-bitrate Cluster (>6 MB) with no Cluster header inside the initial
+        // window: step forward once before narrowing `hiByte`, never aborting to byte 0!
+        final steppedOffset = probeOffset + kMaxRangeProbeScanBytes;
+        if (steppedOffset < hiByte - 64 * 1024) {
+          found = await _probeClusterAtOrAfter(steppedOffset, hiByte, expectedGen);
+          if (_disposed || expectedGen != _streamGeneration) return null;
+          if (_lastRangeProbeFailedWithHttpError) {
+            _notifyInitialUnavailableIfNeeded(_lastErrorCode);
+            return null;
+          }
+        }
+        if (found == null) {
+          hiByte = probeOffset;
+          continue;
+        }
+      }
+
+      if (found.timeMs <= targetMs) {
+        if (found.clusterFileOffset > bestOffset) {
+          bestOffset = found.clusterFileOffset;
+          bestTimeMs = found.timeMs;
+        }
+        loByte = found.clusterFileOffset + 16;
+        if (targetMs - found.timeMs <= 12000) {
+          break;
+        }
+      } else {
+        hiByte = probeOffset;
+      }
+    }
+    appLogger.i(
+      '[WebOS-MKV-Sub] Range binary-seek target=${targetMs}ms -> offset=$bestOffset '
+      '(clusterTime=${bestTimeMs}ms, probes=$_rangeProbeRequestCount)',
+    );
+    return bestOffset;
+  }
+
   Future<void> _runExtractionLoop() async {
     final initialPosMs = _effectivePositionMs();
-    _streamCursorOffset = _findClusterOffsetForTime((initialPosMs - 3000).clamp(0, 1 << 30));
+    final initialRewindMs = (initialPosMs - kSeekRewindLookbackMs).clamp(0, 1 << 30);
+    _streamCursorOffset = _findClusterOffsetForTime(initialRewindMs);
+    if (_canBinarySeekAhead(initialRewindMs)) {
+      _pendingBinarySeekTargetMs = initialRewindMs;
+    }
     _lastSeekCheckMs = initialPosMs;
     _maxBufferedTimeMs = initialPosMs;
 
@@ -4518,6 +5672,18 @@ class WebosMkvSubtitleExtractor {
         _lastSeekCheckMs = nowPosMs;
       }
 
+      if (_pendingBinarySeekTargetMs != null) {
+        final seekTargetMs = _pendingBinarySeekTargetMs!;
+        _pendingBinarySeekTargetMs = null;
+        final seekGen = _streamGeneration;
+        final probedOffset = await _seekClusterOffsetByRangeProbe(seekTargetMs, seekGen);
+        if (_disposed) break;
+        if (seekGen != _streamGeneration) continue;
+        if (probedOffset != null && probedOffset > 0) {
+          _streamCursorOffset = probedOffset;
+        }
+      }
+
       if (_isPaused && _maxBufferedTimeMs > nowPosMs + kPausedLookaheadMs) {
         await _sleepUntilWake();
         continue;
@@ -4531,7 +5697,15 @@ class WebosMkvSubtitleExtractor {
       final streamGen = _streamGeneration;
       await _streamClustersFromOffset(_streamCursorOffset, streamGen);
       if (!_disposed && streamGen == _streamGeneration) {
-        if (_isPaused && _maxBufferedTimeMs > _effectivePositionMs() + kPausedLookaheadMs) {
+        if (_consecutiveStreamFailures > 0) {
+          final statusInt = int.tryParse(_lastErrorCode ?? '');
+          if (statusInt != null && statusInt >= 400 && statusInt < 500 && statusInt != 429) {
+            await _sleepUntilWake();
+          } else {
+            final backoffMs = math.min(5000, 600 * (1 << math.min(_consecutiveStreamFailures - 1, 3)));
+            await _sleepInterruptible(Duration(milliseconds: backoffMs));
+          }
+        } else if (_isPaused && _maxBufferedTimeMs > _effectivePositionMs() + kPausedLookaheadMs) {
           await _sleepUntilWake();
         } else {
           await _sleepInterruptible(const Duration(milliseconds: 120));
@@ -4558,17 +5732,19 @@ class WebosMkvSubtitleExtractor {
 
     try {
       _streamRequestCount++;
-      req = await _httpClient.getUrl(Uri.parse(url));
-      if (_disposed || gen != _streamGeneration) {
-        try {
-          req.abort();
-        } catch (_) {}
-        return;
-      }
-      _activeRequest = req;
-      headers?.forEach((k, v) => req!.headers.set(k, v));
-      req.headers.set('Range', 'bytes=$startOffset-');
-      resp = await req.close().timeout(const Duration(seconds: 8));
+      resp = await openWebosHttpGetWithRedirects(
+        _httpClient,
+        url,
+        headers: headers,
+        rangeHeader: 'bytes=$startOffset-',
+        timeout: const Duration(seconds: 8),
+        onRequestCreated: (r) {
+          req = r;
+          _activeRequest = r;
+        },
+        isCancelled: () => _disposed || gen != _streamGeneration,
+        onRetryDelay: _waitCancelable,
+      );
       if (identical(_activeRequest, req)) {
         _activeRequest = null;
       }
@@ -4577,12 +5753,26 @@ class WebosMkvSubtitleExtractor {
         return;
       }
       if (resp.statusCode != 200 && resp.statusCode != 206) {
+        _lastErrorCode = '${resp.statusCode}';
+        _consecutiveStreamFailures++;
         _abortHttpResponse(resp);
+        _notifyInitialUnavailableIfNeeded(_lastErrorCode);
         return;
       }
+      _consecutiveStreamFailures = 0;
+      _recordTotalSizeFromHeaders(resp);
 
+      final bool serverIgnoredRange = resp.statusCode == 200 && startOffset > 0;
+      if (serverIgnoredRange) {
+        _serverSupportsRange = false;
+        _lastErrorCode = '200noR';
+        _notifyInitialUnavailableIfNeeded(_lastErrorCode);
+      } else if (_lastErrorCode != null && _lastErrorCode != 'noTrk' && _lastErrorCode != 'noEBML') {
+        _lastErrorCode = null;
+      }
+      final int effectiveStartOffset = serverIgnoredRange ? 0 : startOffset;
       Uint8List carry = Uint8List(0);
-      int skipBytesRemaining = 0;
+      int skipBytesRemaining = serverIgnoredRange ? startOffset : 0;
       int bytesProcessedFromStart = 0;
       int lastYieldMs = DateTime.now().millisecondsSinceEpoch;
       int lastEvictMs = lastYieldMs;
@@ -4620,10 +5810,12 @@ class WebosMkvSubtitleExtractor {
             bytesProcessedFromStart += canSkip;
             if (chunkOffset >= chunk.length) {
               if (gen == _streamGeneration) {
-                _streamCursorOffset = startOffset + bytesProcessedFromStart;
+                _streamCursorOffset = effectiveStartOffset + bytesProcessedFromStart;
                 _activeStreamSafeResumeOffset = (skipBytesRemaining == 0)
                     ? _streamCursorOffset
-                    : (_mainParseState.clusterFileOffset >= startOffset ? _mainParseState.clusterFileOffset : startOffset);
+                    : (_mainParseState.clusterFileOffset >= effectiveStartOffset
+                        ? _mainParseState.clusterFileOffset
+                        : effectiveStartOffset);
               }
               return;
             }
@@ -4634,7 +5826,7 @@ class WebosMkvSubtitleExtractor {
               : Uint8List.sublistView(chunk is Uint8List ? chunk : Uint8List.fromList(chunk), chunkOffset);
 
           final Uint8List buf;
-          final int bufferBaseFileOffset = startOffset + bytesProcessedFromStart - carry.length;
+          final int bufferBaseFileOffset = effectiveStartOffset + bytesProcessedFromStart - carry.length;
           if (carry.isEmpty) {
             buf = incoming;
           } else {
@@ -4650,7 +5842,7 @@ class WebosMkvSubtitleExtractor {
             return;
           }
           bytesProcessedFromStart += res.consumedBytes - carry.length;
-          _streamCursorOffset = startOffset + bytesProcessedFromStart;
+          _streamCursorOffset = effectiveStartOffset + bytesProcessedFromStart;
           skipBytesRemaining = res.skipAheadBytes;
 
           if (res.remainingStart < buf.length && skipBytesRemaining == 0) {
@@ -4663,7 +5855,9 @@ class WebosMkvSubtitleExtractor {
           final bool aligned = skipBytesRemaining == 0 && carry.isEmpty;
           _activeStreamSafeResumeOffset = aligned
               ? _streamCursorOffset
-              : (_mainParseState.clusterFileOffset >= startOffset ? _mainParseState.clusterFileOffset : startOffset);
+              : (_mainParseState.clusterFileOffset >= effectiveStartOffset
+                  ? _mainParseState.clusterFileOffset
+                  : effectiveStartOffset);
 
           // Stop streaming cleanly while paused past 5 s so we return to interruptible sleep;
           // during active playback keep the TCP stream open and throttle with 600 ms pauses.
@@ -4700,10 +5894,13 @@ class WebosMkvSubtitleExtractor {
       _activeStreamSub = sub;
 
       await completer.future;
-    } catch (_) {
-      if (resp == null && req != null) {
+    } catch (e) {
+      if (!_disposed && gen == _streamGeneration) {
+        _lastErrorCode ??= _classifyHttpException(e);
+      }
+      if (resp == null) {
         try {
-          req.abort();
+          req?.abort();
         } catch (_) {}
       }
     } finally {
@@ -4910,6 +6107,91 @@ class WebosMkvSubtitleExtractor {
     return (consumedBytes: pos, remainingStart: pos, skipAheadBytes: 0);
   }
 
+  static List<Uint8List> _splitMatroskaBlockFrames(
+    Uint8List buf,
+    int headerEnd,
+    int end,
+    int lacingBits,
+  ) {
+    if (headerEnd >= end) return const <Uint8List>[];
+    if (lacingBits == 0) {
+      return <Uint8List>[Uint8List.sublistView(buf, headerEnd, end)];
+    }
+    final int numFrames = buf[headerEnd] + 1;
+    int p = headerEnd + 1;
+    if (p >= end || numFrames <= 1) {
+      return p < end ? <Uint8List>[Uint8List.sublistView(buf, p, end)] : const <Uint8List>[];
+    }
+
+    if (lacingBits == 0x04) {
+      // Fixed-size lacing
+      final int rem = end - p;
+      final int frameSize = rem ~/ numFrames;
+      if (frameSize <= 0) return const <Uint8List>[];
+      final out = <Uint8List>[];
+      for (int i = 0; i < numFrames; i++) {
+        final int fEnd = (i == numFrames - 1) ? end : (p + frameSize);
+        if (fEnd > end || fEnd <= p) break;
+        out.add(Uint8List.sublistView(buf, p, fEnd));
+        p = fEnd;
+      }
+      return out;
+    }
+
+    final sizes = List<int>.filled(numFrames, 0);
+    int sumFirst = 0;
+    if (lacingBits == 0x02) {
+      // Xiph lacing
+      for (int i = 0; i < numFrames - 1; i++) {
+        int sz = 0;
+        while (p < end) {
+          final b = buf[p++];
+          sz += b;
+          if (b < 255) break;
+        }
+        sizes[i] = sz;
+        sumFirst += sz;
+      }
+    } else if (lacingBits == 0x06) {
+      // EBML lacing
+      final firstV = _readVint(buf, p, keepMarkerBit: false);
+      if (firstV == null) {
+        return <Uint8List>[Uint8List.sublistView(buf, headerEnd, end)];
+      }
+      p += firstV.length;
+      sizes[0] = firstV.value;
+      sumFirst = firstV.value;
+      for (int i = 1; i < numFrames - 1; i++) {
+        final dv = _readVint(buf, p, keepMarkerBit: false);
+        if (dv == null) {
+          return <Uint8List>[Uint8List.sublistView(buf, headerEnd, end)];
+        }
+        p += dv.length;
+        final int bias = (1 << (dv.length * 7 - 1)) - 1;
+        final int nextSz = sizes[i - 1] + (dv.value - bias);
+        if (nextSz < 0) {
+          return <Uint8List>[Uint8List.sublistView(buf, headerEnd, end)];
+        }
+        sizes[i] = nextSz;
+        sumFirst += nextSz;
+      }
+    }
+
+    if (p + sumFirst > end) {
+      return <Uint8List>[Uint8List.sublistView(buf, headerEnd, end)];
+    }
+    sizes[numFrames - 1] = (end - p) - sumFirst;
+    final out = <Uint8List>[];
+    for (int i = 0; i < numFrames; i++) {
+      final sz = sizes[i];
+      if (sz > 0 && p + sz <= end) {
+        out.add(Uint8List.sublistView(buf, p, p + sz));
+      }
+      p += sz;
+    }
+    return out;
+  }
+
   bool _extractFromBlock(
     Uint8List buf,
     int start,
@@ -4930,15 +6212,49 @@ class WebosMkvSubtitleExtractor {
     if (headerEnd >= end) return false;
     int relTime = (buf[start + tNumVint.length] << 8) | buf[start + tNumVint.length + 1];
     if (relTime & 0x8000 != 0) relTime -= 0x10000;
+    final int flags = buf[start + tNumVint.length + 2];
+    final int lacingBits = flags & 0x06;
     final relTimeMs = (relTime * _timestampScaleNs) ~/ 1000000;
     final cueStartMs = clusterTimeMs + relTimeMs;
 
+    final frames = _splitMatroskaBlockFrames(buf, headerEnd, end, lacingBits);
+    if (frames.isEmpty) return false;
+    bool extractedAny = false;
+    for (final frameSlice in frames) {
+      if (_extractSingleSubtitleFrame(trackInfo, frameSlice, cueStartMs, durationMs, allowPgs: allowPgs)) {
+        extractedAny = true;
+      }
+    }
+    return extractedAny;
+  }
+
+  void _recordTrackPacketTelemetry(int trackNumber, int startMs, int endMs) {
+    _packetsDeliveredByTrack[trackNumber] = (_packetsDeliveredByTrack[trackNumber] ?? 0) + 1;
+    final prevMin = _minPtsMsByTrack[trackNumber];
+    if (prevMin == null || startMs < prevMin) {
+      _minPtsMsByTrack[trackNumber] = startMs;
+    }
+    final safeEnd = endMs > startMs ? endMs : startMs;
+    final prevMax = _maxPtsMsByTrack[trackNumber];
+    if (prevMax == null || safeEnd > prevMax) {
+      _maxPtsMsByTrack[trackNumber] = safeEnd;
+    }
+  }
+
+  bool _extractSingleSubtitleFrame(
+    _MkvTrackInfo trackInfo,
+    Uint8List rawSlice,
+    int cueStartMs,
+    int durationMs, {
+    bool allowPgs = true,
+  }) {
+    if (rawSlice.isEmpty) return false;
     final codecUpper = trackInfo.codecId.toUpperCase();
     if (codecUpper.contains('PGS')) {
       if (!allowPgs) {
         return false;
       }
-      final rawBytes = Uint8List.sublistView(buf, headerEnd, end);
+      final rawBytes = trackInfo.decodePayload(rawSlice);
       final sig = rawBytes.length >= 6
           ? '${rawBytes[0]}:${rawBytes[1]}:${rawBytes[2]}:${rawBytes[rawBytes.length - 2]}'
           : '${rawBytes.length}';
@@ -4968,6 +6284,7 @@ class WebosMkvSubtitleExtractor {
           if (list[idx].endMs > maxNewEndMs) maxNewEndMs = list[idx].endMs;
         }
         dedupMap[dedupKey] = maxNewEndMs;
+        _recordTrackPacketTelemetry(trackInfo.trackNumber, cueStartMs, maxNewEndMs);
       } else {
         dedupMap[dedupKey] = cueStartMs;
       }
@@ -4977,7 +6294,7 @@ class WebosMkvSubtitleExtractor {
       return false;
     }
 
-    final rawView = Uint8List.sublistView(buf, headerEnd, end);
+    final rawView = trackInfo.decodePayload(rawSlice);
     final payloadHash = _fnv1a64(rawView);
     final dedupMap = _dedupExpiryByTrackNumber[trackInfo.trackNumber]!;
 
@@ -4986,9 +6303,10 @@ class WebosMkvSubtitleExtractor {
       final dedupKey = 'ass:$cueStartMs:$effectiveDurMs:${rawView.length}:$payloadHash';
       if (dedupMap.containsKey(dedupKey)) return false;
 
-      final rawBytes = Uint8List.fromList(rawView);
+      final rawBytes = identical(rawView, rawSlice) ? Uint8List.fromList(rawView) : rawView;
       onRawAssChunk!(trackInfo.trackNumber, rawBytes, cueStartMs, effectiveDurMs);
       dedupMap[dedupKey] = cueStartMs + effectiveDurMs;
+      _recordTrackPacketTelemetry(trackInfo.trackNumber, cueStartMs, cueStartMs + effectiveDurMs);
 
       if (skipDartAssParsing) {
         return true;
@@ -5024,6 +6342,7 @@ class WebosMkvSubtitleExtractor {
       return false;
     }
     dedupMap[dedupKey] = cue.endMs;
+    _recordTrackPacketTelemetry(trackInfo.trackNumber, cue.startMs, cue.endMs);
     final list = cuesByTrackNumber[trackInfo.trackNumber]!;
     list.add(cue);
     return true;
@@ -5195,6 +6514,7 @@ List<WebosSubtitleCue> selectWebosVisibleCues(
 class WebosAssResolvedSpan {
   final String text;
   final String? fontFamily;
+  final List<String>? fontFamilyFallback;
   final double fontSize;
   final FontWeight fontWeight;
   final FontStyle fontStyle;
@@ -5212,6 +6532,7 @@ class WebosAssResolvedSpan {
   const WebosAssResolvedSpan({
     required this.text,
     required this.fontFamily,
+    this.fontFamilyFallback,
     required this.fontSize,
     required this.fontWeight,
     required this.fontStyle,
@@ -5230,6 +6551,7 @@ class WebosAssResolvedSpan {
   bool layoutEquals(WebosAssResolvedSpan other) =>
       text == other.text &&
       fontFamily == other.fontFamily &&
+      listEquals(fontFamilyFallback, other.fontFamilyFallback) &&
       fontSize == other.fontSize &&
       fontWeight == other.fontWeight &&
       fontStyle == other.fontStyle &&
@@ -5241,6 +6563,7 @@ class WebosAssResolvedSpan {
       other is WebosAssResolvedSpan &&
       text == other.text &&
       fontFamily == other.fontFamily &&
+      listEquals(fontFamilyFallback, other.fontFamilyFallback) &&
       fontSize == other.fontSize &&
       fontWeight == other.fontWeight &&
       fontStyle == other.fontStyle &&
@@ -5259,6 +6582,7 @@ class WebosAssResolvedSpan {
   int get hashCode => Object.hash(
         text,
         fontFamily,
+        fontFamilyFallback == null ? null : Object.hashAll(fontFamilyFallback!),
         fontSize,
         fontWeight,
         fontStyle,
@@ -5582,6 +6906,7 @@ class _RenderAssTextBlock extends RenderBox {
           text: sp.text,
           style: TextStyle(
             fontFamily: sp.fontFamily,
+            fontFamilyFallback: sp.fontFamilyFallback,
             fontSize: sp.fontSize,
             fontWeight: sp.fontWeight,
             fontStyle: sp.fontStyle,
@@ -5624,6 +6949,7 @@ class _RenderAssTextBlock extends RenderBox {
             text: sp.text,
             style: TextStyle(
               fontFamily: sp.fontFamily,
+              fontFamilyFallback: sp.fontFamilyFallback,
               fontSize: sp.fontSize,
               fontWeight: sp.fontWeight,
               fontStyle: sp.fontStyle,
@@ -7312,7 +8638,7 @@ class _WebosSubtitleOverlayState extends State<WebosSubtitleOverlay>
           : baseRawFs;
       final fontSize = cue.isAss
           ? (rawFs * resScaleY * assFontCalibration).clamp(14.0, 180.0)
-          : (rawFs * (screenH / 1080.0) * 0.72).clamp(18.0, 80.0);
+          : (rawFs * (screenH / 720.0) * 1.12).clamp(10.0, 120.0);
 
       final baseFill = cue.isAss ? (sp.primaryColor ?? cue.style?.primaryColor ?? Colors.white) : cfg.textColor;
       final baseOutline = cue.isAss ? (sp.outlineColor ?? cue.style?.outlineColor ?? Colors.black) : cfg.borderColor;
@@ -7400,7 +8726,15 @@ class _WebosSubtitleOverlayState extends State<WebosSubtitleOverlay>
       ]);
 
       String? fontFamily;
-      if (rawFontLower.contains('times new roman') || rawFontLower == 'times' || rawFontLower.contains('georgia') || rawFontLower.contains('garamond') || rawFontLower.contains('serif')) {
+      List<String>? fontFamilyFallback;
+      if (!cue.isAss) {
+        fontFamily = 'Liberation Sans';
+        fontFamilyFallback = const ['Go Noto Current', 'Go Noto Current Hangul'];
+      } else if (rawFontLower.contains('times new roman') ||
+          rawFontLower == 'times' ||
+          rawFontLower.contains('georgia') ||
+          rawFontLower.contains('garamond') ||
+          rawFontLower.contains('serif')) {
         fontFamily = 'Times New Roman';
       } else if (rawFontName.isNotEmpty) {
         fontFamily = rawFontName.replaceAll(_fontWeightSuffixRe, '').trim();
@@ -7415,8 +8749,11 @@ class _WebosSubtitleOverlayState extends State<WebosSubtitleOverlay>
         WebosAssResolvedSpan(
           text: sp.text,
           fontFamily: fontFamily,
+          fontFamilyFallback: fontFamilyFallback,
           fontSize: fontSize,
-          fontWeight: isBold ? FontWeight.bold : FontWeight.w600,
+          fontWeight: cue.isAss
+              ? (isBold ? FontWeight.bold : FontWeight.w600)
+              : (isBold ? FontWeight.w700 : FontWeight.w400),
           fontStyle: isItalic ? FontStyle.italic : FontStyle.normal,
           letterSpacing: letterSpacing,
           decoration: decoration,

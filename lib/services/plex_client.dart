@@ -1,6 +1,8 @@
 import '../mpv/player/platform/webos_subtitle_engine.dart';
 import 'dart:async';
+import 'dart:io' show Platform;
 import '../utils/isolate_helper.dart';
+import '../utils/platform_detector.dart';
 import '../utils/json_utils.dart';
 import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
@@ -3759,13 +3761,33 @@ class PlexClient
       final defaultResolvedAudioId = carriedAudioTrack == null
           ? _resolveAudioStreamId(options.selectedAudioStreamId, data.mediaInfo)
           : carriedAudioStreamId;
+      final selectedVersion = _selectedVersion(data);
+      final rawMkvUrl = _trackStreamUrl(data.videoUrl, options);
+      final isMkvContainer = _isPlexMkvContainer(selectedVersion?.container, rawVideoUrl: rawMkvUrl);
+      final presetNeedsTranscode = !isTrack && _presetNeedsTranscode(options.qualityPreset, data);
+      final rawStreamHeaders = _webosRawStreamHeaders();
+      final ({bool forceDirectStream, bool canDemuxMkvSubtitles})? webosMkvInspection =
+          (!isTrack && _isPlexWebosRuntime() && isMkvContainer && rawMkvUrl != null && rawMkvUrl.isNotEmpty)
+              ? await WebosDirectStreamFallbackRegistry.instance.inspectMkvForPlayback(
+                  ratingKey: options.metadata.id,
+                  rawUrl: rawMkvUrl,
+                  headers: rawStreamHeaders,
+                )
+              : null;
+      var localMkvDemuxAllowed = !isTrack &&
+          options.qualityPreset.isOriginal &&
+          !presetNeedsTranscode &&
+          !options.forceTranscode &&
+          isMkvContainer &&
+          rawMkvUrl != null &&
+          rawMkvUrl.isNotEmpty &&
+          (webosMkvInspection?.canDemuxMkvSubtitles ?? true);
       if (!isTrack) {
-        final rawMkvUrl = _trackStreamUrl(data.videoUrl, options);
         var dsTranscodeCounter = 0;
         WebosDirectStreamFallbackRegistry.instance.registerActiveSession(
           ratingKey: options.metadata.id,
-          rawMkvUrl: rawMkvUrl,
-          headers: config.token != null ? {'X-Plex-Token': config.token!} : null,
+          rawMkvUrl: localMkvDemuxAllowed ? rawMkvUrl : null,
+          headers: rawStreamHeaders,
           initialAudioStreamId: defaultResolvedAudioId,
           buildDirectStreamUrlWithAudio: (overrideAudioStreamId) async {
             final resolvedAudioId = overrideAudioStreamId ?? defaultResolvedAudioId;
@@ -3773,6 +3795,12 @@ class PlexClient
               data.mediaInfo,
               options.preferredSubtitleTrack,
             );
+            final suppressBurn = _isPlexWebosRuntime() &&
+                localMkvDemuxAllowed &&
+                canRenderPlexSubtitleLocallyOnWebos(
+                  requestedSubtitleTrack,
+                  isMkvContainer: isMkvContainer,
+                );
             final seq = ++dsTranscodeCounter;
             final nowMs = DateTime.now().millisecondsSinceEpoch;
             final res = await buildTranscodeStartPath(
@@ -3785,7 +3813,41 @@ class PlexClient
                   ? options.transcodeSessionId!
                   : 'webos-ds-trans-$nowMs-$seq',
               audioStreamId: resolvedAudioId,
-              selectedSubtitleTrack: requestedSubtitleTrack,
+              selectedSubtitleTrack: suppressBurn ? null : requestedSubtitleTrack,
+              partId: data.mediaInfo?.partId,
+              withholdDirectPlay: true,
+            );
+            if (res.startPath != null) {
+              return '${config.baseUrl}${res.startPath}'.withPlexToken(config.token);
+            }
+            return null;
+          },
+          buildBurnInDirectStreamUrl: ({audioStreamId, subtitleStreamId}) async {
+            localMkvDemuxAllowed = false;
+            WebosDirectStreamFallbackRegistry.instance.lastRawMkvUrl = null;
+            final resolvedAudioId = audioStreamId ?? defaultResolvedAudioId;
+            final MediaSubtitleTrack? explicitTrack = subtitleStreamId != null
+                ? data.mediaInfo?.subtitleTracks.where((t) => t.id == subtitleStreamId).firstOrNull
+                : null;
+            final burnTrack = explicitTrack ??
+                _resolveTranscodeSubtitleTrack(
+                  data.mediaInfo,
+                  options.preferredSubtitleTrack,
+                );
+            if (_selectedInternalSubtitleForHls(burnTrack) == null) {
+              return null;
+            }
+            final seq = ++dsTranscodeCounter;
+            final nowMs = DateTime.now().millisecondsSinceEpoch;
+            final res = await buildTranscodeStartPath(
+              ratingKey: options.metadata.id,
+              mediaIndex: data.selectedMediaIndex,
+              partIndex: data.selectedPartIndex,
+              preset: options.qualityPreset,
+              sessionIdentifier: options.sessionIdentifier ?? 'webos-burn-sess-$nowMs-$seq',
+              transcodeSessionId: 'webos-burn-trans-$nowMs-$seq',
+              audioStreamId: resolvedAudioId,
+              selectedSubtitleTrack: burnTrack,
               partId: data.mediaInfo?.partId,
               withholdDirectPlay: true,
             );
@@ -3796,10 +3858,15 @@ class PlexClient
           },
         );
       }
-      final sourceCodecRefused = !isTrack && await _sourceCodecRefused(data, options);
+      final sourceCodecRefused = !isTrack &&
+          await _sourceCodecRefused(
+            data,
+            options,
+            precomputedForceDirectStream: webosMkvInspection?.forceDirectStream,
+          );
       final wantTranscode = isTrack
           ? !audioPreset.isOriginal
-          : sourceCodecRefused || options.forceTranscode || _presetNeedsTranscode(options.qualityPreset, data);
+          : sourceCodecRefused || options.forceTranscode || presetNeedsTranscode;
       if (wantTranscode && options.sessionIdentifier != null && options.transcodeSessionId != null) {
         if (isTrack) {
           final result = await buildMusicTranscodeStartPath(
@@ -3832,6 +3899,13 @@ class PlexClient
             ? _resolveAudioStreamId(options.selectedAudioStreamId, data.mediaInfo)
             : carriedAudioStreamId;
         final requestedSubtitleTrack = _resolveTranscodeSubtitleTrack(data.mediaInfo, options.preferredSubtitleTrack);
+        final suppressWebosSubtitleBurn = _isPlexWebosRuntime() &&
+            localMkvDemuxAllowed &&
+            canRenderPlexSubtitleLocallyOnWebos(
+              requestedSubtitleTrack,
+              isMkvContainer: isMkvContainer,
+            );
+        final effectiveSubtitleForTranscode = suppressWebosSubtitleBurn ? null : requestedSubtitleTrack;
         final result = await buildTranscodeStartPath(
           ratingKey: options.metadata.id,
           mediaIndex: data.selectedMediaIndex,
@@ -3840,7 +3914,7 @@ class PlexClient
           sessionIdentifier: options.sessionIdentifier!,
           transcodeSessionId: options.transcodeSessionId!,
           audioStreamId: resolvedAudioId,
-          selectedSubtitleTrack: requestedSubtitleTrack,
+          selectedSubtitleTrack: effectiveSubtitleForTranscode,
           partId: data.mediaInfo?.partId,
           withholdDirectPlay: sourceCodecRefused || options.forceTranscode,
         );
@@ -3851,9 +3925,14 @@ class PlexClient
         // it and no sidecar to fall back on. Falling through reports the refusal and direct play
         // delivers it, which is what the burn-refusal fallback below already does.
         final burnUndeliverable =
+            !suppressWebosSubtitleBurn &&
             _requestsSubtitleBurn(requestedSubtitleTrack) &&
             _selectedInternalSubtitleForHls(requestedSubtitleTrack) == null;
         if (!burnUndeliverable && result.outcome == TranscodeDecisionOutcome.transcodeOk && result.startPath != null) {
+          final didBurnSubtitle = _selectedInternalSubtitleForHls(effectiveSubtitleForTranscode) != null;
+          if (didBurnSubtitle) {
+            WebosDirectStreamFallbackRegistry.instance.lastRawMkvUrl = null;
+          }
           final transcodeUrl = '${config.baseUrl}${result.startPath}'.withPlexToken(config.token);
           final subtitleSidecars = _buildTranscodeSidecarSubtitles(data.mediaInfo);
           return PlaybackInitializationResult(
@@ -3863,6 +3942,7 @@ class PlexClient
             subtitleSidecars: subtitleSidecars,
             isOffline: false,
             isTranscoding: true,
+            primarySubtitleBurnedByServer: didBurnSubtitle,
             activeAudioStreamId: resolvedAudioId,
             playMethod: 'Transcode',
             playSessionId: options.sessionIdentifier,
@@ -3924,22 +4004,84 @@ class PlexClient
   /// option. Only an explicit refusal gates Plex direct play; a device the
   /// hardware probe reports without a decoder still direct-plays, as it
   /// always has on Plex.
+  @visibleForTesting
+  static bool? debugForcePlexWebosRuntime;
+
+  static bool _isPlexWebosRuntime() {
+    final override = debugForcePlexWebosRuntime;
+    if (override != null) return override;
+    return Platform.isLinux && !PlatformDetector.isDesktopOS();
+  }
+
+  static bool _isPlexMkvContainer(String? container, {String? rawVideoUrl}) {
+    if (container != null && container.trim().isNotEmpty) {
+      final c = container.trim().toLowerCase();
+      return c == 'mkv' || c == 'matroska' || c == 'webm';
+    }
+    if (rawVideoUrl != null && rawVideoUrl.isNotEmpty) {
+      final path = (Uri.tryParse(rawVideoUrl)?.path ?? rawVideoUrl).toLowerCase();
+      if (path.endsWith('.mkv') || path.endsWith('.webm')) return true;
+    }
+    return false;
+  }
+
+  static const Set<String> _kWebosLocalMkvSubtitleCodecs = <String>{
+    'ass',
+    'ssa',
+    'srt',
+    'subrip',
+    'utf8',
+    'text',
+    'webvtt',
+    'vtt',
+    'pgs',
+    'pgssub',
+    'hdmv_pgs_subtitle',
+  };
+
+  /// Whether [track] can be rendered locally by Plezy on LG webOS without
+  /// asking PMS for `subtitles=burn` (which forces CPU video re-encode and
+  /// overlaps with `WebosMkvSubtitleExtractor`).
+  @visibleForTesting
+  static bool canRenderPlexSubtitleLocallyOnWebos(
+    MediaSubtitleTrack? track, {
+    required bool isMkvContainer,
+  }) {
+    if (track == null) return true;
+    if (track.key != null && track.key!.isNotEmpty) return true;
+    if (!isMkvContainer) return false;
+    final codec = track.codec?.trim().toLowerCase();
+    if (codec == null || codec.isEmpty) return false;
+    return _kWebosLocalMkvSubtitleCodecs.contains(codec);
+  }
+
   static bool _isWebosUnsupportedAudioCodec(String? rawCodec) {
     if (rawCodec == null) return false;
     final c = rawCodec.trim().toLowerCase();
     return c.contains('dts') || c == 'dca' || c.contains('truehd') || c == 'mlp';
   }
 
+  Map<String, String> _webosRawStreamHeaders() {
+    final h = Map<String, String>.of(config.headers)
+      ..remove('Accept')
+      ..remove('Accept-Charset');
+    h['Accept'] = '*/*';
+    h['User-Agent'] = '${config.product}/${config.version} (${config.platform})';
+    return h;
+  }
+
   Future<bool> _sourceCodecRefused(
     PlexVideoPlaybackData data,
-    PlaybackInitializationOptions options,
-  ) async {
+    PlaybackInitializationOptions options, {
+    bool? precomputedForceDirectStream,
+  }) async {
     final rawDirectUrl = _trackStreamUrl(data.videoUrl, options);
-    final forceDirectStreamForMkv = await WebosDirectStreamFallbackRegistry.instance.shouldForceDirectStream(
-      ratingKey: options.metadata.id,
-      rawUrl: rawDirectUrl,
-      headers: config.token != null ? {'X-Plex-Token': config.token!} : null,
-    );
+    final forceDirectStreamForMkv = precomputedForceDirectStream ??
+        await WebosDirectStreamFallbackRegistry.instance.shouldForceDirectStream(
+          ratingKey: options.metadata.id,
+          rawUrl: rawDirectUrl,
+          headers: _webosRawStreamHeaders(),
+        );
     if (forceDirectStreamForMkv) {
       appLogger.i('[WebOS-DirectStream] Switching ratingKey=${options.metadata.id} to Direct Stream (start.m3u8) for reliable seeking/resuming');
       return true;

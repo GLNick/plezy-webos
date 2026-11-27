@@ -335,4 +335,32 @@ void main() {
       expect(stats.hasDvPlaybackPath, isFalse);
     });
   });
+
+  group('PerformanceStatsService webOS NDL & subtitle renderer stats', () {
+    test('maps webOS NDL hardware stats and active subtitleRenderer', () async {
+      final stats = await _firstStats(
+        _NativeStatsPlayer({
+          'playerType': 'webos',
+          'videoCodec': 'hevc',
+          'videoWidth': 3840,
+          'videoHeight': 2160,
+          'videoFps': 23.976,
+          'videoBitrate': 25000000,
+          'hwdecCurrent': 'NDL Hardware',
+          'audioCodec': 'eac3',
+          'audioChannels': 6,
+          'totalBufferedDurationMs': 12500,
+          'subtitleRenderer': 'ASS (libass 0.17.4) [u:Y h:Y p:142 r:1]',
+        }),
+      );
+
+      expect(stats.playerType, 'webos');
+      expect(stats.playerTypeFormatted, 'NDL Media (webOS)');
+      expect(stats.hwdecFormatted, 'NDL Hardware');
+      expect(stats.resolution, '3840x2160');
+      expect(stats.audioChannels, '5.1');
+      expect(stats.cacheDurationFormatted, '12.5s');
+      expect(stats.subtitleRenderer, 'ASS (libass 0.17.4) [u:Y h:Y p:142 r:1]');
+    });
+  });
 }
