@@ -3,7 +3,6 @@
 ///
 // coverage:ignore-file
 // ignore_for_file: type=lint, unused_import
-// dart format off
 
 import 'package:flutter/widgets.dart';
 import 'package:intl/intl.dart';
@@ -11,7 +10,7 @@ import 'package:slang/generated.dart';
 import 'strings.g.dart';
 
 // Path: <root>
-class TranslationsZh extends Translations with BaseTranslations<AppLocale, Translations> {
+class TranslationsZh extends Translations {
 	/// You can call this constructor and build your own translation instance of this locale.
 	/// Constructing via the enum [AppLocale.build] is preferred.
 	TranslationsZh({Map<String, Node>? overrides, PluralResolver? cardinalResolver, PluralResolver? ordinalResolver, TranslationMetadata<AppLocale, Translations>? meta})
@@ -39,65 +38,67 @@ class TranslationsZh extends Translations with BaseTranslations<AppLocale, Trans
 	TranslationsZh $copyWith({TranslationMetadata<AppLocale, Translations>? meta}) => TranslationsZh(meta: meta ?? this.$meta);
 
 	// Translations
-	@override late final Translations$app$zh app = Translations$app$zh.internal(_root);
-	@override late final Translations$appIcon$zh appIcon = Translations$appIcon$zh.internal(_root);
-	@override late final Translations$auth$zh auth = Translations$auth$zh.internal(_root);
-	@override late final Translations$common$zh common = Translations$common$zh.internal(_root);
-	@override late final Translations$screens$zh screens = Translations$screens$zh.internal(_root);
-	@override late final Translations$update$zh update = Translations$update$zh.internal(_root);
-	@override late final Translations$supporter$zh supporter = Translations$supporter$zh.internal(_root);
-	@override late final Translations$settings$zh settings = Translations$settings$zh.internal(_root);
-	@override late final Translations$themeEditor$zh themeEditor = Translations$themeEditor$zh.internal(_root);
-	@override late final Translations$search$zh search = Translations$search$zh.internal(_root);
-	@override late final Translations$hotkeys$zh hotkeys = Translations$hotkeys$zh.internal(_root);
-	@override late final Translations$fileInfo$zh fileInfo = Translations$fileInfo$zh.internal(_root);
-	@override late final Translations$mediaMenu$zh mediaMenu = Translations$mediaMenu$zh.internal(_root);
-	@override late final Translations$rateSheet$zh rateSheet = Translations$rateSheet$zh.internal(_root);
-	@override late final Translations$accessibility$zh accessibility = Translations$accessibility$zh.internal(_root);
-	@override late final Translations$tooltips$zh tooltips = Translations$tooltips$zh.internal(_root);
-	@override late final Translations$audioTracks$zh audioTracks = Translations$audioTracks$zh.internal(_root);
-	@override late final Translations$videoControls$zh videoControls = Translations$videoControls$zh.internal(_root);
-	@override late final Translations$messages$zh messages = Translations$messages$zh.internal(_root);
-	@override late final Translations$subtitlingStyling$zh subtitlingStyling = Translations$subtitlingStyling$zh.internal(_root);
-	@override late final Translations$mpvConfig$zh mpvConfig = Translations$mpvConfig$zh.internal(_root);
-	@override late final Translations$dialog$zh dialog = Translations$dialog$zh.internal(_root);
-	@override late final Translations$profiles$zh profiles = Translations$profiles$zh.internal(_root);
-	@override late final Translations$connections$zh connections = Translations$connections$zh.internal(_root);
-	@override late final Translations$accountPreferences$zh accountPreferences = Translations$accountPreferences$zh.internal(_root);
-	@override late final Translations$discover$zh discover = Translations$discover$zh.internal(_root);
-	@override late final Translations$errors$zh errors = Translations$errors$zh.internal(_root);
-	@override late final Translations$libraries$zh libraries = Translations$libraries$zh.internal(_root);
-	@override late final Translations$about$zh about = Translations$about$zh.internal(_root);
-	@override late final Translations$serverSelection$zh serverSelection = Translations$serverSelection$zh.internal(_root);
-	@override late final Translations$hubDetail$zh hubDetail = Translations$hubDetail$zh.internal(_root);
-	@override late final Translations$logs$zh logs = Translations$logs$zh.internal(_root);
-	@override late final Translations$startup$zh startup = Translations$startup$zh.internal(_root);
-	@override late final Translations$licenses$zh licenses = Translations$licenses$zh.internal(_root);
-	@override late final Translations$navigation$zh navigation = Translations$navigation$zh.internal(_root);
-	@override late final Translations$explore$zh explore = Translations$explore$zh.internal(_root);
-	@override late final Translations$liveTv$zh liveTv = Translations$liveTv$zh.internal(_root);
-	@override late final Translations$collections$zh collections = Translations$collections$zh.internal(_root);
-	@override late final Translations$playlists$zh playlists = Translations$playlists$zh.internal(_root);
-	@override late final Translations$music$zh music = Translations$music$zh.internal(_root);
-	@override late final Translations$watchTogether$zh watchTogether = Translations$watchTogether$zh.internal(_root);
-	@override late final Translations$downloads$zh downloads = Translations$downloads$zh.internal(_root);
-	@override late final Translations$shaders$zh shaders = Translations$shaders$zh.internal(_root);
-	@override late final Translations$companionRemote$zh companionRemote = Translations$companionRemote$zh.internal(_root);
-	@override late final Translations$videoSettings$zh videoSettings = Translations$videoSettings$zh.internal(_root);
-	@override late final Translations$performanceOverlay$zh performanceOverlay = Translations$performanceOverlay$zh.internal(_root);
-	@override late final Translations$externalPlayer$zh externalPlayer = Translations$externalPlayer$zh.internal(_root);
-	@override late final Translations$metadataEdit$zh metadataEdit = Translations$metadataEdit$zh.internal(_root);
-	@override late final Translations$matchScreen$zh matchScreen = Translations$matchScreen$zh.internal(_root);
-	@override late final Translations$serverTasks$zh serverTasks = Translations$serverTasks$zh.internal(_root);
-	@override late final Translations$trakt$zh trakt = Translations$trakt$zh.internal(_root);
-	@override late final Translations$seerr$zh seerr = Translations$seerr$zh.internal(_root);
-	@override late final Translations$services$zh services = Translations$services$zh.internal(_root);
-	@override late final Translations$addServer$zh addServer = Translations$addServer$zh.internal(_root);
+	@override late final _TranslationsAppZh app = _TranslationsAppZh._(_root);
+	@override late final _TranslationsAppIconZh appIcon = _TranslationsAppIconZh._(_root);
+	@override late final _TranslationsAuthZh auth = _TranslationsAuthZh._(_root);
+	@override late final _TranslationsCommonZh common = _TranslationsCommonZh._(_root);
+	@override late final _TranslationsScreensZh screens = _TranslationsScreensZh._(_root);
+	@override late final _TranslationsUpdateZh update = _TranslationsUpdateZh._(_root);
+	@override late final _TranslationsSupporterZh supporter = _TranslationsSupporterZh._(_root);
+	@override late final _TranslationsSettingsZh settings = _TranslationsSettingsZh._(_root);
+	@override late final _TranslationsThemeEditorZh themeEditor = _TranslationsThemeEditorZh._(_root);
+	@override late final _TranslationsSearchZh search = _TranslationsSearchZh._(_root);
+	@override late final _TranslationsHotkeysZh hotkeys = _TranslationsHotkeysZh._(_root);
+	@override late final _TranslationsFileInfoZh fileInfo = _TranslationsFileInfoZh._(_root);
+	@override late final _TranslationsMediaMenuZh mediaMenu = _TranslationsMediaMenuZh._(_root);
+	@override late final _TranslationsRateSheetZh rateSheet = _TranslationsRateSheetZh._(_root);
+	@override late final _TranslationsAccessibilityZh accessibility = _TranslationsAccessibilityZh._(_root);
+	@override late final _TranslationsTooltipsZh tooltips = _TranslationsTooltipsZh._(_root);
+	@override late final _TranslationsAudioTracksZh audioTracks = _TranslationsAudioTracksZh._(_root);
+	@override late final _TranslationsVideoControlsZh videoControls = _TranslationsVideoControlsZh._(_root);
+	@override late final _TranslationsUserStatusZh userStatus = _TranslationsUserStatusZh._(_root);
+	@override late final _TranslationsMessagesZh messages = _TranslationsMessagesZh._(_root);
+	@override late final _TranslationsSubtitlingStylingZh subtitlingStyling = _TranslationsSubtitlingStylingZh._(_root);
+	@override late final _TranslationsMpvConfigZh mpvConfig = _TranslationsMpvConfigZh._(_root);
+	@override late final _TranslationsDialogZh dialog = _TranslationsDialogZh._(_root);
+	@override late final _TranslationsProfilesZh profiles = _TranslationsProfilesZh._(_root);
+	@override late final _TranslationsConnectionsZh connections = _TranslationsConnectionsZh._(_root);
+	@override late final _TranslationsAccountPreferencesZh accountPreferences = _TranslationsAccountPreferencesZh._(_root);
+	@override late final _TranslationsDiscoverZh discover = _TranslationsDiscoverZh._(_root);
+	@override late final _TranslationsErrorsZh errors = _TranslationsErrorsZh._(_root);
+	@override late final _TranslationsLibrariesZh libraries = _TranslationsLibrariesZh._(_root);
+	@override late final _TranslationsAboutZh about = _TranslationsAboutZh._(_root);
+	@override late final _TranslationsServerSelectionZh serverSelection = _TranslationsServerSelectionZh._(_root);
+	@override late final _TranslationsHubDetailZh hubDetail = _TranslationsHubDetailZh._(_root);
+	@override late final _TranslationsLogsZh logs = _TranslationsLogsZh._(_root);
+	@override late final _TranslationsStartupZh startup = _TranslationsStartupZh._(_root);
+	@override late final _TranslationsLicensesZh licenses = _TranslationsLicensesZh._(_root);
+	@override late final _TranslationsNavigationZh navigation = _TranslationsNavigationZh._(_root);
+	@override late final _TranslationsExploreZh explore = _TranslationsExploreZh._(_root);
+	@override late final _TranslationsLiveTvZh liveTv = _TranslationsLiveTvZh._(_root);
+	@override late final _TranslationsCollectionsZh collections = _TranslationsCollectionsZh._(_root);
+	@override late final _TranslationsPlaylistsZh playlists = _TranslationsPlaylistsZh._(_root);
+	@override late final _TranslationsMusicZh music = _TranslationsMusicZh._(_root);
+	@override late final _TranslationsWatchTogetherZh watchTogether = _TranslationsWatchTogetherZh._(_root);
+	@override late final _TranslationsDownloadsZh downloads = _TranslationsDownloadsZh._(_root);
+	@override late final _TranslationsShadersZh shaders = _TranslationsShadersZh._(_root);
+	@override late final _TranslationsCompanionRemoteZh companionRemote = _TranslationsCompanionRemoteZh._(_root);
+	@override late final _TranslationsVideoSettingsZh videoSettings = _TranslationsVideoSettingsZh._(_root);
+	@override late final _TranslationsPerformanceOverlayZh performanceOverlay = _TranslationsPerformanceOverlayZh._(_root);
+	@override late final _TranslationsExternalPlayerZh externalPlayer = _TranslationsExternalPlayerZh._(_root);
+	@override late final _TranslationsMetadataEditZh metadataEdit = _TranslationsMetadataEditZh._(_root);
+	@override late final _TranslationsMatchScreenZh matchScreen = _TranslationsMatchScreenZh._(_root);
+	@override late final _TranslationsServerTasksZh serverTasks = _TranslationsServerTasksZh._(_root);
+	@override late final _TranslationsTraktZh trakt = _TranslationsTraktZh._(_root);
+	@override late final _TranslationsSeerrZh seerr = _TranslationsSeerrZh._(_root);
+	@override late final _TranslationsServicesZh services = _TranslationsServicesZh._(_root);
+	@override late final _TranslationsAddServerZh addServer = _TranslationsAddServerZh._(_root);
+	@override late final _TranslationsDeepLinksZh deepLinks = _TranslationsDeepLinksZh._(_root);
 }
 
 // Path: app
-class Translations$app$zh extends Translations$app$en {
-	Translations$app$zh.internal(TranslationsZh root) : this._root = root, super.internal(root);
+class _TranslationsAppZh extends TranslationsAppEn {
+	_TranslationsAppZh._(TranslationsZh root) : this._root = root, super.internal(root);
 
 	final TranslationsZh _root; // ignore: unused_field
 
@@ -106,8 +107,8 @@ class Translations$app$zh extends Translations$app$en {
 }
 
 // Path: appIcon
-class Translations$appIcon$zh extends Translations$appIcon$en {
-	Translations$appIcon$zh.internal(TranslationsZh root) : this._root = root, super.internal(root);
+class _TranslationsAppIconZh extends TranslationsAppIconEn {
+	_TranslationsAppIconZh._(TranslationsZh root) : this._root = root, super.internal(root);
 
 	final TranslationsZh _root; // ignore: unused_field
 
@@ -120,12 +121,12 @@ class Translations$appIcon$zh extends Translations$appIcon$en {
 	@override String get changeFailed => '无法更改应用图标';
 	@override String get launcherHint => '离开 Plezy 后，新图标将显示在主屏幕上。';
 	@override String get tvLauncherHint => '离开 Plezy 后将显示新横幅。在电视重启之前，Android TV 可能仍会显示旧横幅。';
-	@override late final Translations$appIcon$names$zh names = Translations$appIcon$names$zh.internal(_root);
+	@override late final _TranslationsAppIconNamesZh names = _TranslationsAppIconNamesZh._(_root);
 }
 
 // Path: auth
-class Translations$auth$zh extends Translations$auth$en {
-	Translations$auth$zh.internal(TranslationsZh root) : this._root = root, super.internal(root);
+class _TranslationsAuthZh extends TranslationsAuthEn {
+	_TranslationsAuthZh._(TranslationsZh root) : this._root = root, super.internal(root);
 
 	final TranslationsZh _root; // ignore: unused_field
 
@@ -150,8 +151,8 @@ class Translations$auth$zh extends Translations$auth$en {
 }
 
 // Path: common
-class Translations$common$zh extends Translations$common$en {
-	Translations$common$zh.internal(TranslationsZh root) : this._root = root, super.internal(root);
+class _TranslationsCommonZh extends TranslationsCommonEn {
+	_TranslationsCommonZh._(TranslationsZh root) : this._root = root, super.internal(root);
 
 	final TranslationsZh _root; // ignore: unused_field
 
@@ -202,16 +203,16 @@ class Translations$common$zh extends Translations$common$en {
 	@override String get fullscreen => '全屏';
 	@override String get exitFullscreen => '退出全屏';
 	@override String get pressBackAgainToExit => '再按一次返回键退出';
-	@override late final Translations$common$ratingSource$zh ratingSource = Translations$common$ratingSource$zh.internal(_root);
+	@override late final _TranslationsCommonRatingSourceZh ratingSource = _TranslationsCommonRatingSourceZh._(_root);
 	@override String get notAvailable => 'N/A';
 	@override String get url => 'URL';
 	@override String get letterKeys => 'ABC';
-	@override late final Translations$common$mediaKind$zh mediaKind = Translations$common$mediaKind$zh.internal(_root);
+	@override late final _TranslationsCommonMediaKindZh mediaKind = _TranslationsCommonMediaKindZh._(_root);
 }
 
 // Path: screens
-class Translations$screens$zh extends Translations$screens$en {
-	Translations$screens$zh.internal(TranslationsZh root) : this._root = root, super.internal(root);
+class _TranslationsScreensZh extends TranslationsScreensEn {
+	_TranslationsScreensZh._(TranslationsZh root) : this._root = root, super.internal(root);
 
 	final TranslationsZh _root; // ignore: unused_field
 
@@ -224,8 +225,8 @@ class Translations$screens$zh extends Translations$screens$en {
 }
 
 // Path: update
-class Translations$update$zh extends Translations$update$en {
-	Translations$update$zh.internal(TranslationsZh root) : this._root = root, super.internal(root);
+class _TranslationsUpdateZh extends TranslationsUpdateEn {
+	_TranslationsUpdateZh._(TranslationsZh root) : this._root = root, super.internal(root);
 
 	final TranslationsZh _root; // ignore: unused_field
 
@@ -240,8 +241,8 @@ class Translations$update$zh extends Translations$update$en {
 }
 
 // Path: supporter
-class Translations$supporter$zh extends Translations$supporter$en {
-	Translations$supporter$zh.internal(TranslationsZh root) : this._root = root, super.internal(root);
+class _TranslationsSupporterZh extends TranslationsSupporterEn {
+	_TranslationsSupporterZh._(TranslationsZh root) : this._root = root, super.internal(root);
 
 	final TranslationsZh _root; // ignore: unused_field
 
@@ -263,12 +264,12 @@ class Translations$supporter$zh extends Translations$supporter$en {
 	@override String get tileSubtitle => '一次性购买即可解锁主题和应用图标';
 	@override String get tileSubtitleThemesOnly => '一次性购买即可解锁主题';
 	@override String get tileUnlocked => '已解锁 — 感谢你的购买';
-	@override late final Translations$supporter$errors$zh errors = Translations$supporter$errors$zh.internal(_root);
+	@override late final _TranslationsSupporterErrorsZh errors = _TranslationsSupporterErrorsZh._(_root);
 }
 
 // Path: settings
-class Translations$settings$zh extends Translations$settings$en {
-	Translations$settings$zh.internal(TranslationsZh root) : this._root = root, super.internal(root);
+class _TranslationsSettingsZh extends TranslationsSettingsEn {
+	_TranslationsSettingsZh._(TranslationsZh root) : this._root = root, super.internal(root);
 
 	final TranslationsZh _root; // ignore: unused_field
 
@@ -612,8 +613,8 @@ class Translations$settings$zh extends Translations$settings$en {
 }
 
 // Path: themeEditor
-class Translations$themeEditor$zh extends Translations$themeEditor$en {
-	Translations$themeEditor$zh.internal(TranslationsZh root) : this._root = root, super.internal(root);
+class _TranslationsThemeEditorZh extends TranslationsThemeEditorEn {
+	_TranslationsThemeEditorZh._(TranslationsZh root) : this._root = root, super.internal(root);
 
 	final TranslationsZh _root; // ignore: unused_field
 
@@ -631,12 +632,12 @@ class Translations$themeEditor$zh extends Translations$themeEditor$en {
 	@override String get startFromDescription => '从其他主题复制所有颜色';
 	@override String get colors => '颜色';
 	@override String get preview => '预览';
-	@override late final Translations$themeEditor$slots$zh slots = Translations$themeEditor$slots$zh.internal(_root);
+	@override late final _TranslationsThemeEditorSlotsZh slots = _TranslationsThemeEditorSlotsZh._(_root);
 	@override String get opacity => '不透明度';
 	@override String get hexHint => '#RRGGBB 或 #AARRGGBB';
 	@override String get fromOtherThemes => '来自其他主题';
 	@override String swatchLabel({required Object theme, required Object color}) => '${theme} · ${color}';
-	@override late final Translations$themeEditor$contrast$zh contrast = Translations$themeEditor$contrast$zh.internal(_root);
+	@override late final _TranslationsThemeEditorContrastZh contrast = _TranslationsThemeEditorContrastZh._(_root);
 	@override String lowContrast({required Object pair, required Object ratio, required Object minimum}) => '${pair}：${ratio}:1，低于建议的 ${minimum}:1';
 	@override String get discardTitle => '放弃更改？';
 	@override String get discardMessage => '未保存的颜色更改将会丢失。';
@@ -648,8 +649,8 @@ class Translations$themeEditor$zh extends Translations$themeEditor$en {
 }
 
 // Path: search
-class Translations$search$zh extends Translations$search$en {
-	Translations$search$zh.internal(TranslationsZh root) : this._root = root, super.internal(root);
+class _TranslationsSearchZh extends TranslationsSearchEn {
+	_TranslationsSearchZh._(TranslationsZh root) : this._root = root, super.internal(root);
 
 	final TranslationsZh _root; // ignore: unused_field
 
@@ -662,8 +663,8 @@ class Translations$search$zh extends Translations$search$en {
 }
 
 // Path: hotkeys
-class Translations$hotkeys$zh extends Translations$hotkeys$en {
-	Translations$hotkeys$zh.internal(TranslationsZh root) : this._root = root, super.internal(root);
+class _TranslationsHotkeysZh extends TranslationsHotkeysEn {
+	_TranslationsHotkeysZh._(TranslationsZh root) : this._root = root, super.internal(root);
 
 	final TranslationsZh _root; // ignore: unused_field
 
@@ -674,12 +675,12 @@ class Translations$hotkeys$zh extends Translations$hotkeys$en {
 	@override String get currentShortcut => '当前快捷键：';
 	@override String get pressToRecord => '点击后录入快捷键';
 	@override String get recordingShortcut => '请按下快捷键';
-	@override late final Translations$hotkeys$actions$zh actions = Translations$hotkeys$actions$zh.internal(_root);
+	@override late final _TranslationsHotkeysActionsZh actions = _TranslationsHotkeysActionsZh._(_root);
 }
 
 // Path: fileInfo
-class Translations$fileInfo$zh extends Translations$fileInfo$en {
-	Translations$fileInfo$zh.internal(TranslationsZh root) : this._root = root, super.internal(root);
+class _TranslationsFileInfoZh extends TranslationsFileInfoEn {
+	_TranslationsFileInfoZh._(TranslationsZh root) : this._root = root, super.internal(root);
 
 	final TranslationsZh _root; // ignore: unused_field
 
@@ -802,8 +803,8 @@ class Translations$fileInfo$zh extends Translations$fileInfo$en {
 }
 
 // Path: mediaMenu
-class Translations$mediaMenu$zh extends Translations$mediaMenu$en {
-	Translations$mediaMenu$zh.internal(TranslationsZh root) : this._root = root, super.internal(root);
+class _TranslationsMediaMenuZh extends TranslationsMediaMenuEn {
+	_TranslationsMediaMenuZh._(TranslationsZh root) : this._root = root, super.internal(root);
 
 	final TranslationsZh _root; // ignore: unused_field
 
@@ -850,8 +851,8 @@ class Translations$mediaMenu$zh extends Translations$mediaMenu$en {
 }
 
 // Path: rateSheet
-class Translations$rateSheet$zh extends Translations$rateSheet$en {
-	Translations$rateSheet$zh.internal(TranslationsZh root) : this._root = root, super.internal(root);
+class _TranslationsRateSheetZh extends TranslationsRateSheetEn {
+	_TranslationsRateSheetZh._(TranslationsZh root) : this._root = root, super.internal(root);
 
 	final TranslationsZh _root; // ignore: unused_field
 
@@ -866,8 +867,8 @@ class Translations$rateSheet$zh extends Translations$rateSheet$en {
 }
 
 // Path: accessibility
-class Translations$accessibility$zh extends Translations$accessibility$en {
-	Translations$accessibility$zh.internal(TranslationsZh root) : this._root = root, super.internal(root);
+class _TranslationsAccessibilityZh extends TranslationsAccessibilityEn {
+	_TranslationsAccessibilityZh._(TranslationsZh root) : this._root = root, super.internal(root);
 
 	final TranslationsZh _root; // ignore: unused_field
 
@@ -902,8 +903,8 @@ class Translations$accessibility$zh extends Translations$accessibility$en {
 }
 
 // Path: tooltips
-class Translations$tooltips$zh extends Translations$tooltips$en {
-	Translations$tooltips$zh.internal(TranslationsZh root) : this._root = root, super.internal(root);
+class _TranslationsTooltipsZh extends TranslationsTooltipsEn {
+	_TranslationsTooltipsZh._(TranslationsZh root) : this._root = root, super.internal(root);
 
 	final TranslationsZh _root; // ignore: unused_field
 
@@ -915,8 +916,8 @@ class Translations$tooltips$zh extends Translations$tooltips$en {
 }
 
 // Path: audioTracks
-class Translations$audioTracks$zh extends Translations$audioTracks$en {
-	Translations$audioTracks$zh.internal(TranslationsZh root) : this._root = root, super.internal(root);
+class _TranslationsAudioTracksZh extends TranslationsAudioTracksEn {
+	_TranslationsAudioTracksZh._(TranslationsZh root) : this._root = root, super.internal(root);
 
 	final TranslationsZh _root; // ignore: unused_field
 
@@ -925,8 +926,8 @@ class Translations$audioTracks$zh extends Translations$audioTracks$en {
 }
 
 // Path: videoControls
-class Translations$videoControls$zh extends Translations$videoControls$en {
-	Translations$videoControls$zh.internal(TranslationsZh root) : this._root = root, super.internal(root);
+class _TranslationsVideoControlsZh extends TranslationsVideoControlsEn {
+	_TranslationsVideoControlsZh._(TranslationsZh root) : this._root = root, super.internal(root);
 
 	final TranslationsZh _root; // ignore: unused_field
 
@@ -993,7 +994,7 @@ class Translations$videoControls$zh extends Translations$videoControls$en {
 	@override String get screenshotFailed => '无法截图';
 	@override String zoomPercent({required Object percent}) => '缩放 ${percent}%';
 	@override String volumePercent({required Object percent}) => '音量 ${percent}%';
-	@override late final Translations$videoControls$pipErrors$zh pipErrors = Translations$videoControls$pipErrors$zh.internal(_root);
+	@override late final _TranslationsVideoControlsPipErrorsZh pipErrors = _TranslationsVideoControlsPipErrorsZh._(_root);
 	@override String get chapters => '章节';
 	@override String get noChaptersAvailable => '没有可用的章节';
 	@override String get queue => '播放队列';
@@ -1018,9 +1019,18 @@ class Translations$videoControls$zh extends Translations$videoControls$en {
 	@override String osdAudio({required Object track}) => '音频：${track}';
 }
 
+// Path: userStatus
+class _TranslationsUserStatusZh extends TranslationsUserStatusEn {
+	_TranslationsUserStatusZh._(TranslationsZh root) : this._root = root, super.internal(root);
+
+	final TranslationsZh _root; // ignore: unused_field
+
+	// Translations
+}
+
 // Path: messages
-class Translations$messages$zh extends Translations$messages$en {
-	Translations$messages$zh.internal(TranslationsZh root) : this._root = root, super.internal(root);
+class _TranslationsMessagesZh extends TranslationsMessagesEn {
+	_TranslationsMessagesZh._(TranslationsZh root) : this._root = root, super.internal(root);
 
 	final TranslationsZh _root; // ignore: unused_field
 
@@ -1097,8 +1107,8 @@ class Translations$messages$zh extends Translations$messages$en {
 }
 
 // Path: subtitlingStyling
-class Translations$subtitlingStyling$zh extends Translations$subtitlingStyling$en {
-	Translations$subtitlingStyling$zh.internal(TranslationsZh root) : this._root = root, super.internal(root);
+class _TranslationsSubtitlingStylingZh extends TranslationsSubtitlingStylingEn {
+	_TranslationsSubtitlingStylingZh._(TranslationsZh root) : this._root = root, super.internal(root);
 
 	final TranslationsZh _root; // ignore: unused_field
 
@@ -1131,8 +1141,8 @@ class Translations$subtitlingStyling$zh extends Translations$subtitlingStyling$e
 }
 
 // Path: mpvConfig
-class Translations$mpvConfig$zh extends Translations$mpvConfig$en {
-	Translations$mpvConfig$zh.internal(TranslationsZh root) : this._root = root, super.internal(root);
+class _TranslationsMpvConfigZh extends TranslationsMpvConfigEn {
+	_TranslationsMpvConfigZh._(TranslationsZh root) : this._root = root, super.internal(root);
 
 	final TranslationsZh _root; // ignore: unused_field
 
@@ -1158,8 +1168,8 @@ class Translations$mpvConfig$zh extends Translations$mpvConfig$en {
 }
 
 // Path: dialog
-class Translations$dialog$zh extends Translations$dialog$en {
-	Translations$dialog$zh.internal(TranslationsZh root) : this._root = root, super.internal(root);
+class _TranslationsDialogZh extends TranslationsDialogEn {
+	_TranslationsDialogZh._(TranslationsZh root) : this._root = root, super.internal(root);
 
 	final TranslationsZh _root; // ignore: unused_field
 
@@ -1168,8 +1178,8 @@ class Translations$dialog$zh extends Translations$dialog$en {
 }
 
 // Path: profiles
-class Translations$profiles$zh extends Translations$profiles$en {
-	Translations$profiles$zh.internal(TranslationsZh root) : this._root = root, super.internal(root);
+class _TranslationsProfilesZh extends TranslationsProfilesEn {
+	_TranslationsProfilesZh._(TranslationsZh root) : this._root = root, super.internal(root);
 
 	final TranslationsZh _root; // ignore: unused_field
 
@@ -1242,8 +1252,8 @@ class Translations$profiles$zh extends Translations$profiles$en {
 }
 
 // Path: connections
-class Translations$connections$zh extends Translations$connections$en {
-	Translations$connections$zh.internal(TranslationsZh root) : this._root = root, super.internal(root);
+class _TranslationsConnectionsZh extends TranslationsConnectionsEn {
+	_TranslationsConnectionsZh._(TranslationsZh root) : this._root = root, super.internal(root);
 
 	final TranslationsZh _root; // ignore: unused_field
 
@@ -1262,8 +1272,8 @@ class Translations$connections$zh extends Translations$connections$en {
 }
 
 // Path: accountPreferences
-class Translations$accountPreferences$zh extends Translations$accountPreferences$en {
-	Translations$accountPreferences$zh.internal(TranslationsZh root) : this._root = root, super.internal(root);
+class _TranslationsAccountPreferencesZh extends TranslationsAccountPreferencesEn {
+	_TranslationsAccountPreferencesZh._(TranslationsZh root) : this._root = root, super.internal(root);
 
 	final TranslationsZh _root; // ignore: unused_field
 
@@ -1279,17 +1289,17 @@ class Translations$accountPreferences$zh extends Translations$accountPreferences
 	@override String get loadFailed => '无法加载这些偏好设置';
 	@override String get noPreference => '无偏好';
 	@override String get notSet => '未设置';
-	@override late final Translations$accountPreferences$groups$zh groups = Translations$accountPreferences$groups$zh.internal(_root);
+	@override late final _TranslationsAccountPreferencesGroupsZh groups = _TranslationsAccountPreferencesGroupsZh._(_root);
 	@override String get preferredAudioLanguage => '首选音频语言';
 	@override String get autoSelectAudio => '按语言选择音频';
 	@override String get autoSelectAudioDescription => '关闭后保留文件标记为默认的音轨。';
 	@override String get preferredSubtitleLanguage => '首选字幕语言';
 	@override String get subtitleMode => '开启字幕';
-	@override late final Translations$accountPreferences$subtitleModes$zh subtitleModes = Translations$accountPreferences$subtitleModes$zh.internal(_root);
+	@override late final _TranslationsAccountPreferencesSubtitleModesZh subtitleModes = _TranslationsAccountPreferencesSubtitleModesZh._(_root);
 	@override String get subtitleAccessibility => 'SDH 字幕';
-	@override late final Translations$accountPreferences$subtitleAccessibilityOptions$zh subtitleAccessibilityOptions = Translations$accountPreferences$subtitleAccessibilityOptions$zh.internal(_root);
+	@override late final _TranslationsAccountPreferencesSubtitleAccessibilityOptionsZh subtitleAccessibilityOptions = _TranslationsAccountPreferencesSubtitleAccessibilityOptionsZh._(_root);
 	@override String get forcedSubtitles => '强制字幕';
-	@override late final Translations$accountPreferences$forcedSubtitleOptions$zh forcedSubtitleOptions = Translations$accountPreferences$forcedSubtitleOptions$zh.internal(_root);
+	@override late final _TranslationsAccountPreferencesForcedSubtitleOptionsZh forcedSubtitleOptions = _TranslationsAccountPreferencesForcedSubtitleOptionsZh._(_root);
 	@override String get displayMissingEpisodes => '显示缺失剧集';
 	@override String get displayMissingEpisodesDescription => '列出服务器知道但没有对应文件的剧集。';
 	@override String get hidePlayedInLatest => '在“最新”中隐藏已观看项目';
@@ -1299,14 +1309,14 @@ class Translations$accountPreferences$zh extends Translations$accountPreferences
 	@override String get rewatchingInNextUp => '在“接下来”中保留重看的剧集';
 	@override String get rewatchingInNextUpDescription => '看完一部剧集后再次开始观看时，“接下来”会跟随重看进度，而不是将剧集移除。';
 	@override String get watchedIndicator => '已观看标记';
-	@override late final Translations$accountPreferences$watchedIndicatorOptions$zh watchedIndicatorOptions = Translations$accountPreferences$watchedIndicatorOptions$zh.internal(_root);
+	@override late final _TranslationsAccountPreferencesWatchedIndicatorOptionsZh watchedIndicatorOptions = _TranslationsAccountPreferencesWatchedIndicatorOptionsZh._(_root);
 	@override String get mediaReviewsVisibility => '评分与评论';
-	@override late final Translations$accountPreferences$mediaReviewsOptions$zh mediaReviewsOptions = Translations$accountPreferences$mediaReviewsOptions$zh.internal(_root);
+	@override late final _TranslationsAccountPreferencesMediaReviewsOptionsZh mediaReviewsOptions = _TranslationsAccountPreferencesMediaReviewsOptionsZh._(_root);
 }
 
 // Path: discover
-class Translations$discover$zh extends Translations$discover$en {
-	Translations$discover$zh.internal(TranslationsZh root) : this._root = root, super.internal(root);
+class _TranslationsDiscoverZh extends TranslationsDiscoverEn {
+	_TranslationsDiscoverZh._(TranslationsZh root) : this._root = root, super.internal(root);
 
 	final TranslationsZh _root; // ignore: unused_field
 
@@ -1338,12 +1348,12 @@ class Translations$discover$zh extends Translations$discover$en {
 	@override String titleCount({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('zh'))(n,
 		other: '${n} 个标题',
 	);
-	@override late final Translations$discover$person$zh person = Translations$discover$person$zh.internal(_root);
+	@override late final _TranslationsDiscoverPersonZh person = _TranslationsDiscoverPersonZh._(_root);
 }
 
 // Path: errors
-class Translations$errors$zh extends Translations$errors$en {
-	Translations$errors$zh.internal(TranslationsZh root) : this._root = root, super.internal(root);
+class _TranslationsErrorsZh extends TranslationsErrorsEn {
+	_TranslationsErrorsZh._(TranslationsZh root) : this._root = root, super.internal(root);
 
 	final TranslationsZh _root; // ignore: unused_field
 
@@ -1370,8 +1380,8 @@ class Translations$errors$zh extends Translations$errors$en {
 }
 
 // Path: libraries
-class Translations$libraries$zh extends Translations$libraries$en {
-	Translations$libraries$zh.internal(TranslationsZh root) : this._root = root, super.internal(root);
+class _TranslationsLibrariesZh extends TranslationsLibrariesEn {
+	_TranslationsLibrariesZh._(TranslationsZh root) : this._root = root, super.internal(root);
 
 	final TranslationsZh _root; // ignore: unused_field
 
@@ -1417,16 +1427,16 @@ class Translations$libraries$zh extends Translations$libraries$en {
 	@override String get noCollections => '此媒体库中没有合集';
 	@override String get noFoldersFound => '未找到文件夹';
 	@override String get folders => '文件夹';
-	@override late final Translations$libraries$tabs$zh tabs = Translations$libraries$tabs$zh.internal(_root);
-	@override late final Translations$libraries$groupings$zh groupings = Translations$libraries$groupings$zh.internal(_root);
-	@override late final Translations$libraries$filterCategories$zh filterCategories = Translations$libraries$filterCategories$zh.internal(_root);
-	@override late final Translations$libraries$sortLabels$zh sortLabels = Translations$libraries$sortLabels$zh.internal(_root);
-	@override late final Translations$libraries$advancedFilters$zh advancedFilters = Translations$libraries$advancedFilters$zh.internal(_root);
+	@override late final _TranslationsLibrariesTabsZh tabs = _TranslationsLibrariesTabsZh._(_root);
+	@override late final _TranslationsLibrariesGroupingsZh groupings = _TranslationsLibrariesGroupingsZh._(_root);
+	@override late final _TranslationsLibrariesFilterCategoriesZh filterCategories = _TranslationsLibrariesFilterCategoriesZh._(_root);
+	@override late final _TranslationsLibrariesSortLabelsZh sortLabels = _TranslationsLibrariesSortLabelsZh._(_root);
+	@override late final _TranslationsLibrariesAdvancedFiltersZh advancedFilters = _TranslationsLibrariesAdvancedFiltersZh._(_root);
 }
 
 // Path: about
-class Translations$about$zh extends Translations$about$en {
-	Translations$about$zh.internal(TranslationsZh root) : this._root = root, super.internal(root);
+class _TranslationsAboutZh extends TranslationsAboutEn {
+	_TranslationsAboutZh._(TranslationsZh root) : this._root = root, super.internal(root);
 
 	final TranslationsZh _root; // ignore: unused_field
 
@@ -1439,8 +1449,8 @@ class Translations$about$zh extends Translations$about$en {
 }
 
 // Path: serverSelection
-class Translations$serverSelection$zh extends Translations$serverSelection$en {
-	Translations$serverSelection$zh.internal(TranslationsZh root) : this._root = root, super.internal(root);
+class _TranslationsServerSelectionZh extends TranslationsServerSelectionEn {
+	_TranslationsServerSelectionZh._(TranslationsZh root) : this._root = root, super.internal(root);
 
 	final TranslationsZh _root; // ignore: unused_field
 
@@ -1451,8 +1461,8 @@ class Translations$serverSelection$zh extends Translations$serverSelection$en {
 }
 
 // Path: hubDetail
-class Translations$hubDetail$zh extends Translations$hubDetail$en {
-	Translations$hubDetail$zh.internal(TranslationsZh root) : this._root = root, super.internal(root);
+class _TranslationsHubDetailZh extends TranslationsHubDetailEn {
+	_TranslationsHubDetailZh._(TranslationsZh root) : this._root = root, super.internal(root);
 
 	final TranslationsZh _root; // ignore: unused_field
 
@@ -1465,8 +1475,8 @@ class Translations$hubDetail$zh extends Translations$hubDetail$en {
 }
 
 // Path: logs
-class Translations$logs$zh extends Translations$logs$en {
-	Translations$logs$zh.internal(TranslationsZh root) : this._root = root, super.internal(root);
+class _TranslationsLogsZh extends TranslationsLogsEn {
+	_TranslationsLogsZh._(TranslationsZh root) : this._root = root, super.internal(root);
 
 	final TranslationsZh _root; // ignore: unused_field
 
@@ -1477,8 +1487,8 @@ class Translations$logs$zh extends Translations$logs$en {
 }
 
 // Path: startup
-class Translations$startup$zh extends Translations$startup$en {
-	Translations$startup$zh.internal(TranslationsZh root) : this._root = root, super.internal(root);
+class _TranslationsStartupZh extends TranslationsStartupEn {
+	_TranslationsStartupZh._(TranslationsZh root) : this._root = root, super.internal(root);
 
 	final TranslationsZh _root; // ignore: unused_field
 
@@ -1516,8 +1526,8 @@ class Translations$startup$zh extends Translations$startup$en {
 }
 
 // Path: licenses
-class Translations$licenses$zh extends Translations$licenses$en {
-	Translations$licenses$zh.internal(TranslationsZh root) : this._root = root, super.internal(root);
+class _TranslationsLicensesZh extends TranslationsLicensesEn {
+	_TranslationsLicensesZh._(TranslationsZh root) : this._root = root, super.internal(root);
 
 	final TranslationsZh _root; // ignore: unused_field
 
@@ -1529,8 +1539,8 @@ class Translations$licenses$zh extends Translations$licenses$en {
 }
 
 // Path: navigation
-class Translations$navigation$zh extends Translations$navigation$en {
-	Translations$navigation$zh.internal(TranslationsZh root) : this._root = root, super.internal(root);
+class _TranslationsNavigationZh extends TranslationsNavigationEn {
+	_TranslationsNavigationZh._(TranslationsZh root) : this._root = root, super.internal(root);
 
 	final TranslationsZh _root; // ignore: unused_field
 
@@ -1542,16 +1552,16 @@ class Translations$navigation$zh extends Translations$navigation$en {
 }
 
 // Path: explore
-class Translations$explore$zh extends Translations$explore$en {
-	Translations$explore$zh.internal(TranslationsZh root) : this._root = root, super.internal(root);
+class _TranslationsExploreZh extends TranslationsExploreEn {
+	_TranslationsExploreZh._(TranslationsZh root) : this._root = root, super.internal(root);
 
 	final TranslationsZh _root; // ignore: unused_field
 
 	// Translations
 	@override String get title => '探索';
 	@override String get selectSource => '选择来源';
-	@override late final Translations$explore$rows$zh rows = Translations$explore$rows$zh.internal(_root);
-	@override late final Translations$explore$status$zh status = Translations$explore$status$zh.internal(_root);
+	@override late final _TranslationsExploreRowsZh rows = _TranslationsExploreRowsZh._(_root);
+	@override late final _TranslationsExploreStatusZh status = _TranslationsExploreStatusZh._(_root);
 	@override String episodeCount({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('zh'))(n,
 		other: '${n} 集',
 	);
@@ -1575,24 +1585,24 @@ class Translations$explore$zh extends Translations$explore$en {
 	@override String searchEmpty({required Object query}) => '没有“${query}”的结果';
 	@override String searchPrompt({required Object source}) => '在 ${source} 上搜索电影和剧集。';
 	@override String get searchFailed => '搜索失败。请检查网络连接后重试。';
-	@override late final Translations$explore$badge$zh badge = Translations$explore$badge$zh.internal(_root);
-	@override late final Translations$explore$stats$zh stats = Translations$explore$stats$zh.internal(_root);
-	@override late final Translations$explore$season$zh season = Translations$explore$season$zh.internal(_root);
-	@override late final Translations$explore$format$zh format = Translations$explore$format$zh.internal(_root);
-	@override late final Translations$explore$sourceMaterial$zh sourceMaterial = Translations$explore$sourceMaterial$zh.internal(_root);
-	@override late final Translations$explore$creditRole$zh creditRole = Translations$explore$creditRole$zh.internal(_root);
-	@override late final Translations$explore$relation$zh relation = Translations$explore$relation$zh.internal(_root);
+	@override late final _TranslationsExploreBadgeZh badge = _TranslationsExploreBadgeZh._(_root);
+	@override late final _TranslationsExploreStatsZh stats = _TranslationsExploreStatsZh._(_root);
+	@override late final _TranslationsExploreSeasonZh season = _TranslationsExploreSeasonZh._(_root);
+	@override late final _TranslationsExploreFormatZh format = _TranslationsExploreFormatZh._(_root);
+	@override late final _TranslationsExploreSourceMaterialZh sourceMaterial = _TranslationsExploreSourceMaterialZh._(_root);
+	@override late final _TranslationsExploreCreditRoleZh creditRole = _TranslationsExploreCreditRoleZh._(_root);
+	@override late final _TranslationsExploreRelationZh relation = _TranslationsExploreRelationZh._(_root);
 	@override String broadcast({required Object day, required Object time}) => '每周${day} ${time}播出';
 	@override String broadcastWithZone({required Object day, required Object time, required Object timezone}) => '每周${day} ${time} ${timezone}播出';
-	@override late final Translations$explore$detail$zh detail = Translations$explore$detail$zh.internal(_root);
+	@override late final _TranslationsExploreDetailZh detail = _TranslationsExploreDetailZh._(_root);
 	@override String totalResults({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('zh'))(n,
 		other: '${n} 条结果',
 	);
 }
 
 // Path: liveTv
-class Translations$liveTv$zh extends Translations$liveTv$en {
-	Translations$liveTv$zh.internal(TranslationsZh root) : this._root = root, super.internal(root);
+class _TranslationsLiveTvZh extends TranslationsLiveTvEn {
+	_TranslationsLiveTvZh._(TranslationsZh root) : this._root = root, super.internal(root);
 
 	final TranslationsZh _root; // ignore: unused_field
 
@@ -1674,7 +1684,7 @@ class Translations$liveTv$zh extends Translations$liveTv$en {
 	@override String get rulesProcessRequested => '已请求重新评估规则';
 	@override String get rulesProcessFailed => '无法重新评估录制规则';
 	@override String get recordShow => '录制节目';
-	@override late final Translations$liveTv$recordSettings$zh recordSettings = Translations$liveTv$recordSettings$zh.internal(_root);
+	@override late final _TranslationsLiveTvRecordSettingsZh recordSettings = _TranslationsLiveTvRecordSettingsZh._(_root);
 	@override String startingInMinutes({required Object minutes}) => '${minutes} 分钟后开始';
 	@override String dayAtTime({required Object day, required Object time}) => '${day} ${time}';
 	@override String invalidPlaybackData({required Object product}) => '${product} 返回了无效的直播电视播放数据';
@@ -1685,8 +1695,8 @@ class Translations$liveTv$zh extends Translations$liveTv$en {
 }
 
 // Path: collections
-class Translations$collections$zh extends Translations$collections$en {
-	Translations$collections$zh.internal(TranslationsZh root) : this._root = root, super.internal(root);
+class _TranslationsCollectionsZh extends TranslationsCollectionsEn {
+	_TranslationsCollectionsZh._(TranslationsZh root) : this._root = root, super.internal(root);
 
 	final TranslationsZh _root; // ignore: unused_field
 
@@ -1714,8 +1724,8 @@ class Translations$collections$zh extends Translations$collections$en {
 }
 
 // Path: playlists
-class Translations$playlists$zh extends Translations$playlists$en {
-	Translations$playlists$zh.internal(TranslationsZh root) : this._root = root, super.internal(root);
+class _TranslationsPlaylistsZh extends TranslationsPlaylistsEn {
+	_TranslationsPlaylistsZh._(TranslationsZh root) : this._root = root, super.internal(root);
 
 	final TranslationsZh _root; // ignore: unused_field
 
@@ -1749,8 +1759,8 @@ class Translations$playlists$zh extends Translations$playlists$en {
 }
 
 // Path: music
-class Translations$music$zh extends Translations$music$en {
-	Translations$music$zh.internal(TranslationsZh root) : this._root = root, super.internal(root);
+class _TranslationsMusicZh extends TranslationsMusicEn {
+	_TranslationsMusicZh._(TranslationsZh root) : this._root = root, super.internal(root);
 
 	final TranslationsZh _root; // ignore: unused_field
 
@@ -1783,12 +1793,12 @@ class Translations$music$zh extends Translations$music$en {
 	@override String get instantMixFailed => '加载即时混合失败';
 	@override String get instantMixEmpty => '即时混合没有生成任何曲目';
 	@override String noAudioUrl({required Object track}) => '没有可供 ${track} 使用的音频 URL';
-	@override late final Translations$music$discography$zh discography = Translations$music$discography$zh.internal(_root);
+	@override late final _TranslationsMusicDiscographyZh discography = _TranslationsMusicDiscographyZh._(_root);
 }
 
 // Path: watchTogether
-class Translations$watchTogether$zh extends Translations$watchTogether$en {
-	Translations$watchTogether$zh.internal(TranslationsZh root) : this._root = root, super.internal(root);
+class _TranslationsWatchTogetherZh extends TranslationsWatchTogetherEn {
+	_TranslationsWatchTogetherZh._(TranslationsZh root) : this._root = root, super.internal(root);
 
 	final TranslationsZh _root; // ignore: unused_field
 
@@ -1897,15 +1907,15 @@ class Translations$watchTogether$zh extends Translations$watchTogether$en {
 	@override String get end => '结束';
 	@override String get playBlockedTitle => '播放未开始';
 	@override String get playBlockedDescription => '按下播放，开始与房间成员一起观看。';
-	@override late final Translations$watchTogether$notices$zh notices = Translations$watchTogether$notices$zh.internal(_root);
-	@override late final Translations$watchTogether$ended$zh ended = Translations$watchTogether$ended$zh.internal(_root);
-	@override late final Translations$watchTogether$errors$zh errors = Translations$watchTogether$errors$zh.internal(_root);
+	@override late final _TranslationsWatchTogetherNoticesZh notices = _TranslationsWatchTogetherNoticesZh._(_root);
+	@override late final _TranslationsWatchTogetherEndedZh ended = _TranslationsWatchTogetherEndedZh._(_root);
+	@override late final _TranslationsWatchTogetherErrorsZh errors = _TranslationsWatchTogetherErrorsZh._(_root);
 	@override String untitledEpisode({required Object number}) => '第${number}集';
 }
 
 // Path: downloads
-class Translations$downloads$zh extends Translations$downloads$en {
-	Translations$downloads$zh.internal(TranslationsZh root) : this._root = root, super.internal(root);
+class _TranslationsDownloadsZh extends TranslationsDownloadsEn {
+	_TranslationsDownloadsZh._(TranslationsZh root) : this._root = root, super.internal(root);
 
 	final TranslationsZh _root; // ignore: unused_field
 
@@ -1991,9 +2001,9 @@ class Translations$downloads$zh extends Translations$downloads$en {
 	@override String get syncRuleNotAvailableForProfile => '当前用户资料不可用';
 	@override String get syncRuleUnknownServer => '未知服务器';
 	@override String get syncRuleListCreated => '同步规则已创建';
-	@override late final Translations$downloads$backgroundWarning$zh backgroundWarning = Translations$downloads$backgroundWarning$zh.internal(_root);
+	@override late final _TranslationsDownloadsBackgroundWarningZh backgroundWarning = _TranslationsDownloadsBackgroundWarningZh._(_root);
 	@override String get options => '下载选项';
-	@override late final Translations$downloads$groupings$zh groupings = Translations$downloads$groupings$zh.internal(_root);
+	@override late final _TranslationsDownloadsGroupingsZh groupings = _TranslationsDownloadsGroupingsZh._(_root);
 	@override String get unknownLibrary => '未知媒体库';
 	@override String get unknownShow => '未知节目';
 	@override String get unknownSeason => '未知季';
@@ -2014,8 +2024,8 @@ class Translations$downloads$zh extends Translations$downloads$en {
 }
 
 // Path: shaders
-class Translations$shaders$zh extends Translations$shaders$en {
-	Translations$shaders$zh.internal(TranslationsZh root) : this._root = root, super.internal(root);
+class _TranslationsShadersZh extends TranslationsShadersEn {
+	_TranslationsShadersZh._(TranslationsZh root) : this._root = root, super.internal(root);
 
 	final TranslationsZh _root; // ignore: unused_field
 
@@ -2038,8 +2048,8 @@ class Translations$shaders$zh extends Translations$shaders$en {
 }
 
 // Path: companionRemote
-class Translations$companionRemote$zh extends Translations$companionRemote$en {
-	Translations$companionRemote$zh.internal(TranslationsZh root) : this._root = root, super.internal(root);
+class _TranslationsCompanionRemoteZh extends TranslationsCompanionRemoteEn {
+	_TranslationsCompanionRemoteZh._(TranslationsZh root) : this._root = root, super.internal(root);
 
 	final TranslationsZh _root; // ignore: unused_field
 
@@ -2047,16 +2057,16 @@ class Translations$companionRemote$zh extends Translations$companionRemote$en {
 	@override String get title => '遥控器';
 	@override String connectedTo({required Object name}) => '已连接到 ${name}';
 	@override String get unknownDevice => '未知设备';
-	@override late final Translations$companionRemote$session$zh session = Translations$companionRemote$session$zh.internal(_root);
-	@override late final Translations$companionRemote$pairing$zh pairing = Translations$companionRemote$pairing$zh.internal(_root);
-	@override late final Translations$companionRemote$remote$zh remote = Translations$companionRemote$remote$zh.internal(_root);
-	@override late final Translations$companionRemote$errors$zh errors = Translations$companionRemote$errors$zh.internal(_root);
+	@override late final _TranslationsCompanionRemoteSessionZh session = _TranslationsCompanionRemoteSessionZh._(_root);
+	@override late final _TranslationsCompanionRemotePairingZh pairing = _TranslationsCompanionRemotePairingZh._(_root);
+	@override late final _TranslationsCompanionRemoteRemoteZh remote = _TranslationsCompanionRemoteRemoteZh._(_root);
+	@override late final _TranslationsCompanionRemoteErrorsZh errors = _TranslationsCompanionRemoteErrorsZh._(_root);
 	@override String get closedBeforeAuth => '连接在身份验证前已关闭';
 }
 
 // Path: videoSettings
-class Translations$videoSettings$zh extends Translations$videoSettings$en {
-	Translations$videoSettings$zh.internal(TranslationsZh root) : this._root = root, super.internal(root);
+class _TranslationsVideoSettingsZh extends TranslationsVideoSettingsEn {
+	_TranslationsVideoSettingsZh._(TranslationsZh root) : this._root = root, super.internal(root);
 
 	final TranslationsZh _root; // ignore: unused_field
 
@@ -2088,8 +2098,8 @@ class Translations$videoSettings$zh extends Translations$videoSettings$en {
 }
 
 // Path: performanceOverlay
-class Translations$performanceOverlay$zh extends Translations$performanceOverlay$en {
-	Translations$performanceOverlay$zh.internal(TranslationsZh root) : this._root = root, super.internal(root);
+class _TranslationsPerformanceOverlayZh extends TranslationsPerformanceOverlayEn {
+	_TranslationsPerformanceOverlayZh._(TranslationsZh root) : this._root = root, super.internal(root);
 
 	final TranslationsZh _root; // ignore: unused_field
 
@@ -2150,8 +2160,8 @@ class Translations$performanceOverlay$zh extends Translations$performanceOverlay
 }
 
 // Path: externalPlayer
-class Translations$externalPlayer$zh extends Translations$externalPlayer$en {
-	Translations$externalPlayer$zh.internal(TranslationsZh root) : this._root = root, super.internal(root);
+class _TranslationsExternalPlayerZh extends TranslationsExternalPlayerEn {
+	_TranslationsExternalPlayerZh._(TranslationsZh root) : this._root = root, super.internal(root);
 
 	final TranslationsZh _root; // ignore: unused_field
 
@@ -2175,8 +2185,8 @@ class Translations$externalPlayer$zh extends Translations$externalPlayer$en {
 }
 
 // Path: metadataEdit
-class Translations$metadataEdit$zh extends Translations$metadataEdit$en {
-	Translations$metadataEdit$zh.internal(TranslationsZh root) : this._root = root, super.internal(root);
+class _TranslationsMetadataEditZh extends TranslationsMetadataEditEn {
+	_TranslationsMetadataEditZh._(TranslationsZh root) : this._root = root, super.internal(root);
 
 	final TranslationsZh _root; // ignore: unused_field
 
@@ -2259,8 +2269,8 @@ class Translations$metadataEdit$zh extends Translations$metadataEdit$en {
 }
 
 // Path: matchScreen
-class Translations$matchScreen$zh extends Translations$matchScreen$en {
-	Translations$matchScreen$zh.internal(TranslationsZh root) : this._root = root, super.internal(root);
+class _TranslationsMatchScreenZh extends TranslationsMatchScreenEn {
+	_TranslationsMatchScreenZh._(TranslationsZh root) : this._root = root, super.internal(root);
 
 	final TranslationsZh _root; // ignore: unused_field
 
@@ -2280,8 +2290,8 @@ class Translations$matchScreen$zh extends Translations$matchScreen$en {
 }
 
 // Path: serverTasks
-class Translations$serverTasks$zh extends Translations$serverTasks$en {
-	Translations$serverTasks$zh.internal(TranslationsZh root) : this._root = root, super.internal(root);
+class _TranslationsServerTasksZh extends TranslationsServerTasksEn {
+	_TranslationsServerTasksZh._(TranslationsZh root) : this._root = root, super.internal(root);
 
 	final TranslationsZh _root; // ignore: unused_field
 
@@ -2292,8 +2302,8 @@ class Translations$serverTasks$zh extends Translations$serverTasks$en {
 }
 
 // Path: trakt
-class Translations$trakt$zh extends Translations$trakt$en {
-	Translations$trakt$zh.internal(TranslationsZh root) : this._root = root, super.internal(root);
+class _TranslationsTraktZh extends TranslationsTraktEn {
+	_TranslationsTraktZh._(TranslationsZh root) : this._root = root, super.internal(root);
 
 	final TranslationsZh _root; // ignore: unused_field
 
@@ -2310,8 +2320,8 @@ class Translations$trakt$zh extends Translations$trakt$en {
 }
 
 // Path: seerr
-class Translations$seerr$zh extends Translations$seerr$en {
-	Translations$seerr$zh.internal(TranslationsZh root) : this._root = root, super.internal(root);
+class _TranslationsSeerrZh extends TranslationsSeerrEn {
+	_TranslationsSeerrZh._(TranslationsZh root) : this._root = root, super.internal(root);
 
 	final TranslationsZh _root; // ignore: unused_field
 
@@ -2369,8 +2379,8 @@ class Translations$seerr$zh extends Translations$seerr$en {
 }
 
 // Path: services
-class Translations$services$zh extends Translations$services$en {
-	Translations$services$zh.internal(TranslationsZh root) : this._root = root, super.internal(root);
+class _TranslationsServicesZh extends TranslationsServicesEn {
+	_TranslationsServicesZh._(TranslationsZh root) : this._root = root, super.internal(root);
 
 	final TranslationsZh _root; // ignore: unused_field
 
@@ -2385,17 +2395,17 @@ class Translations$services$zh extends Translations$services$en {
 	@override String disconnectConfirm({required Object service}) => '断开 ${service} 连接？';
 	@override String disconnectConfirmBody({required Object service}) => 'Plezy 将停止更新 ${service}。可随时重新连接。';
 	@override String connectFailed({required Object service}) => '无法连接到 ${service}。请重试。';
-	@override late final Translations$services$names$zh names = Translations$services$names$zh.internal(_root);
-	@override late final Translations$services$simklReconnect$zh simklReconnect = Translations$services$simklReconnect$zh.internal(_root);
-	@override late final Translations$services$deviceCode$zh deviceCode = Translations$services$deviceCode$zh.internal(_root);
-	@override late final Translations$services$oauthProxy$zh oauthProxy = Translations$services$oauthProxy$zh.internal(_root);
-	@override late final Translations$services$pendingAuth$zh pendingAuth = Translations$services$pendingAuth$zh.internal(_root);
-	@override late final Translations$services$libraryFilter$zh libraryFilter = Translations$services$libraryFilter$zh.internal(_root);
+	@override late final _TranslationsServicesNamesZh names = _TranslationsServicesNamesZh._(_root);
+	@override late final _TranslationsServicesSimklReconnectZh simklReconnect = _TranslationsServicesSimklReconnectZh._(_root);
+	@override late final _TranslationsServicesDeviceCodeZh deviceCode = _TranslationsServicesDeviceCodeZh._(_root);
+	@override late final _TranslationsServicesOauthProxyZh oauthProxy = _TranslationsServicesOauthProxyZh._(_root);
+	@override late final _TranslationsServicesPendingAuthZh pendingAuth = _TranslationsServicesPendingAuthZh._(_root);
+	@override late final _TranslationsServicesLibraryFilterZh libraryFilter = _TranslationsServicesLibraryFilterZh._(_root);
 }
 
 // Path: addServer
-class Translations$addServer$zh extends Translations$addServer$en {
-	Translations$addServer$zh.internal(TranslationsZh root) : this._root = root, super.internal(root);
+class _TranslationsAddServerZh extends TranslationsAddServerEn {
+	_TranslationsAddServerZh._(TranslationsZh root) : this._root = root, super.internal(root);
 
 	final TranslationsZh _root; // ignore: unused_field
 
@@ -2449,9 +2459,18 @@ class Translations$addServer$zh extends Translations$addServer$en {
 	@override String redirectUnsupportedEnterFinal({required Object product}) => '服务器重定向到了不受支持的 URL。请直接输入最终的 ${product} URL。';
 }
 
+// Path: deepLinks
+class _TranslationsDeepLinksZh extends TranslationsDeepLinksEn {
+	_TranslationsDeepLinksZh._(TranslationsZh root) : this._root = root, super.internal(root);
+
+	final TranslationsZh _root; // ignore: unused_field
+
+	// Translations
+}
+
 // Path: appIcon.names
-class Translations$appIcon$names$zh extends Translations$appIcon$names$en {
-	Translations$appIcon$names$zh.internal(TranslationsZh root) : this._root = root, super.internal(root);
+class _TranslationsAppIconNamesZh extends TranslationsAppIconNamesEn {
+	_TranslationsAppIconNamesZh._(TranslationsZh root) : this._root = root, super.internal(root);
 
 	final TranslationsZh _root; // ignore: unused_field
 
@@ -2482,8 +2501,8 @@ class Translations$appIcon$names$zh extends Translations$appIcon$names$en {
 }
 
 // Path: common.ratingSource
-class Translations$common$ratingSource$zh extends Translations$common$ratingSource$en {
-	Translations$common$ratingSource$zh.internal(TranslationsZh root) : this._root = root, super.internal(root);
+class _TranslationsCommonRatingSourceZh extends TranslationsCommonRatingSourceEn {
+	_TranslationsCommonRatingSourceZh._(TranslationsZh root) : this._root = root, super.internal(root);
 
 	final TranslationsZh _root; // ignore: unused_field
 
@@ -2504,8 +2523,8 @@ class Translations$common$ratingSource$zh extends Translations$common$ratingSour
 }
 
 // Path: common.mediaKind
-class Translations$common$mediaKind$zh extends Translations$common$mediaKind$en {
-	Translations$common$mediaKind$zh.internal(TranslationsZh root) : this._root = root, super.internal(root);
+class _TranslationsCommonMediaKindZh extends TranslationsCommonMediaKindEn {
+	_TranslationsCommonMediaKindZh._(TranslationsZh root) : this._root = root, super.internal(root);
 
 	final TranslationsZh _root; // ignore: unused_field
 
@@ -2525,8 +2544,8 @@ class Translations$common$mediaKind$zh extends Translations$common$mediaKind$en 
 }
 
 // Path: supporter.errors
-class Translations$supporter$errors$zh extends Translations$supporter$errors$en {
-	Translations$supporter$errors$zh.internal(TranslationsZh root) : this._root = root, super.internal(root);
+class _TranslationsSupporterErrorsZh extends TranslationsSupporterErrorsEn {
+	_TranslationsSupporterErrorsZh._(TranslationsZh root) : this._root = root, super.internal(root);
 
 	final TranslationsZh _root; // ignore: unused_field
 
@@ -2540,8 +2559,8 @@ class Translations$supporter$errors$zh extends Translations$supporter$errors$en 
 }
 
 // Path: themeEditor.slots
-class Translations$themeEditor$slots$zh extends Translations$themeEditor$slots$en {
-	Translations$themeEditor$slots$zh.internal(TranslationsZh root) : this._root = root, super.internal(root);
+class _TranslationsThemeEditorSlotsZh extends TranslationsThemeEditorSlotsEn {
+	_TranslationsThemeEditorSlotsZh._(TranslationsZh root) : this._root = root, super.internal(root);
 
 	final TranslationsZh _root; // ignore: unused_field
 
@@ -2555,8 +2574,8 @@ class Translations$themeEditor$slots$zh extends Translations$themeEditor$slots$e
 }
 
 // Path: themeEditor.contrast
-class Translations$themeEditor$contrast$zh extends Translations$themeEditor$contrast$en {
-	Translations$themeEditor$contrast$zh.internal(TranslationsZh root) : this._root = root, super.internal(root);
+class _TranslationsThemeEditorContrastZh extends TranslationsThemeEditorContrastEn {
+	_TranslationsThemeEditorContrastZh._(TranslationsZh root) : this._root = root, super.internal(root);
 
 	final TranslationsZh _root; // ignore: unused_field
 
@@ -2571,8 +2590,8 @@ class Translations$themeEditor$contrast$zh extends Translations$themeEditor$cont
 }
 
 // Path: hotkeys.actions
-class Translations$hotkeys$actions$zh extends Translations$hotkeys$actions$en {
-	Translations$hotkeys$actions$zh.internal(TranslationsZh root) : this._root = root, super.internal(root);
+class _TranslationsHotkeysActionsZh extends TranslationsHotkeysActionsEn {
+	_TranslationsHotkeysActionsZh._(TranslationsZh root) : this._root = root, super.internal(root);
 
 	final TranslationsZh _root; // ignore: unused_field
 
@@ -2605,8 +2624,8 @@ class Translations$hotkeys$actions$zh extends Translations$hotkeys$actions$en {
 }
 
 // Path: videoControls.pipErrors
-class Translations$videoControls$pipErrors$zh extends Translations$videoControls$pipErrors$en {
-	Translations$videoControls$pipErrors$zh.internal(TranslationsZh root) : this._root = root, super.internal(root);
+class _TranslationsVideoControlsPipErrorsZh extends TranslationsVideoControlsPipErrorsEn {
+	_TranslationsVideoControlsPipErrorsZh._(TranslationsZh root) : this._root = root, super.internal(root);
 
 	final TranslationsZh _root; // ignore: unused_field
 
@@ -2622,8 +2641,8 @@ class Translations$videoControls$pipErrors$zh extends Translations$videoControls
 }
 
 // Path: accountPreferences.groups
-class Translations$accountPreferences$groups$zh extends Translations$accountPreferences$groups$en {
-	Translations$accountPreferences$groups$zh.internal(TranslationsZh root) : this._root = root, super.internal(root);
+class _TranslationsAccountPreferencesGroupsZh extends TranslationsAccountPreferencesGroupsEn {
+	_TranslationsAccountPreferencesGroupsZh._(TranslationsZh root) : this._root = root, super.internal(root);
 
 	final TranslationsZh _root; // ignore: unused_field
 
@@ -2634,8 +2653,8 @@ class Translations$accountPreferences$groups$zh extends Translations$accountPref
 }
 
 // Path: accountPreferences.subtitleModes
-class Translations$accountPreferences$subtitleModes$zh extends Translations$accountPreferences$subtitleModes$en {
-	Translations$accountPreferences$subtitleModes$zh.internal(TranslationsZh root) : this._root = root, super.internal(root);
+class _TranslationsAccountPreferencesSubtitleModesZh extends TranslationsAccountPreferencesSubtitleModesEn {
+	_TranslationsAccountPreferencesSubtitleModesZh._(TranslationsZh root) : this._root = root, super.internal(root);
 
 	final TranslationsZh _root; // ignore: unused_field
 
@@ -2653,8 +2672,8 @@ class Translations$accountPreferences$subtitleModes$zh extends Translations$acco
 }
 
 // Path: accountPreferences.subtitleAccessibilityOptions
-class Translations$accountPreferences$subtitleAccessibilityOptions$zh extends Translations$accountPreferences$subtitleAccessibilityOptions$en {
-	Translations$accountPreferences$subtitleAccessibilityOptions$zh.internal(TranslationsZh root) : this._root = root, super.internal(root);
+class _TranslationsAccountPreferencesSubtitleAccessibilityOptionsZh extends TranslationsAccountPreferencesSubtitleAccessibilityOptionsEn {
+	_TranslationsAccountPreferencesSubtitleAccessibilityOptionsZh._(TranslationsZh root) : this._root = root, super.internal(root);
 
 	final TranslationsZh _root; // ignore: unused_field
 
@@ -2666,8 +2685,8 @@ class Translations$accountPreferences$subtitleAccessibilityOptions$zh extends Tr
 }
 
 // Path: accountPreferences.forcedSubtitleOptions
-class Translations$accountPreferences$forcedSubtitleOptions$zh extends Translations$accountPreferences$forcedSubtitleOptions$en {
-	Translations$accountPreferences$forcedSubtitleOptions$zh.internal(TranslationsZh root) : this._root = root, super.internal(root);
+class _TranslationsAccountPreferencesForcedSubtitleOptionsZh extends TranslationsAccountPreferencesForcedSubtitleOptionsEn {
+	_TranslationsAccountPreferencesForcedSubtitleOptionsZh._(TranslationsZh root) : this._root = root, super.internal(root);
 
 	final TranslationsZh _root; // ignore: unused_field
 
@@ -2679,8 +2698,8 @@ class Translations$accountPreferences$forcedSubtitleOptions$zh extends Translati
 }
 
 // Path: accountPreferences.watchedIndicatorOptions
-class Translations$accountPreferences$watchedIndicatorOptions$zh extends Translations$accountPreferences$watchedIndicatorOptions$en {
-	Translations$accountPreferences$watchedIndicatorOptions$zh.internal(TranslationsZh root) : this._root = root, super.internal(root);
+class _TranslationsAccountPreferencesWatchedIndicatorOptionsZh extends TranslationsAccountPreferencesWatchedIndicatorOptionsEn {
+	_TranslationsAccountPreferencesWatchedIndicatorOptionsZh._(TranslationsZh root) : this._root = root, super.internal(root);
 
 	final TranslationsZh _root; // ignore: unused_field
 
@@ -2692,8 +2711,8 @@ class Translations$accountPreferences$watchedIndicatorOptions$zh extends Transla
 }
 
 // Path: accountPreferences.mediaReviewsOptions
-class Translations$accountPreferences$mediaReviewsOptions$zh extends Translations$accountPreferences$mediaReviewsOptions$en {
-	Translations$accountPreferences$mediaReviewsOptions$zh.internal(TranslationsZh root) : this._root = root, super.internal(root);
+class _TranslationsAccountPreferencesMediaReviewsOptionsZh extends TranslationsAccountPreferencesMediaReviewsOptionsEn {
+	_TranslationsAccountPreferencesMediaReviewsOptionsZh._(TranslationsZh root) : this._root = root, super.internal(root);
 
 	final TranslationsZh _root; // ignore: unused_field
 
@@ -2705,8 +2724,8 @@ class Translations$accountPreferences$mediaReviewsOptions$zh extends Translation
 }
 
 // Path: discover.person
-class Translations$discover$person$zh extends Translations$discover$person$en {
-	Translations$discover$person$zh.internal(TranslationsZh root) : this._root = root, super.internal(root);
+class _TranslationsDiscoverPersonZh extends TranslationsDiscoverPersonEn {
+	_TranslationsDiscoverPersonZh._(TranslationsZh root) : this._root = root, super.internal(root);
 
 	final TranslationsZh _root; // ignore: unused_field
 
@@ -2719,8 +2738,8 @@ class Translations$discover$person$zh extends Translations$discover$person$en {
 }
 
 // Path: libraries.tabs
-class Translations$libraries$tabs$zh extends Translations$libraries$tabs$en {
-	Translations$libraries$tabs$zh.internal(TranslationsZh root) : this._root = root, super.internal(root);
+class _TranslationsLibrariesTabsZh extends TranslationsLibrariesTabsEn {
+	_TranslationsLibrariesTabsZh._(TranslationsZh root) : this._root = root, super.internal(root);
 
 	final TranslationsZh _root; // ignore: unused_field
 
@@ -2732,8 +2751,8 @@ class Translations$libraries$tabs$zh extends Translations$libraries$tabs$en {
 }
 
 // Path: libraries.groupings
-class Translations$libraries$groupings$zh extends Translations$libraries$groupings$en {
-	Translations$libraries$groupings$zh.internal(TranslationsZh root) : this._root = root, super.internal(root);
+class _TranslationsLibrariesGroupingsZh extends TranslationsLibrariesGroupingsEn {
+	_TranslationsLibrariesGroupingsZh._(TranslationsZh root) : this._root = root, super.internal(root);
 
 	final TranslationsZh _root; // ignore: unused_field
 
@@ -2751,8 +2770,8 @@ class Translations$libraries$groupings$zh extends Translations$libraries$groupin
 }
 
 // Path: libraries.filterCategories
-class Translations$libraries$filterCategories$zh extends Translations$libraries$filterCategories$en {
-	Translations$libraries$filterCategories$zh.internal(TranslationsZh root) : this._root = root, super.internal(root);
+class _TranslationsLibrariesFilterCategoriesZh extends TranslationsLibrariesFilterCategoriesEn {
+	_TranslationsLibrariesFilterCategoriesZh._(TranslationsZh root) : this._root = root, super.internal(root);
 
 	final TranslationsZh _root; // ignore: unused_field
 
@@ -2768,8 +2787,8 @@ class Translations$libraries$filterCategories$zh extends Translations$libraries$
 }
 
 // Path: libraries.sortLabels
-class Translations$libraries$sortLabels$zh extends Translations$libraries$sortLabels$en {
-	Translations$libraries$sortLabels$zh.internal(TranslationsZh root) : this._root = root, super.internal(root);
+class _TranslationsLibrariesSortLabelsZh extends TranslationsLibrariesSortLabelsEn {
+	_TranslationsLibrariesSortLabelsZh._(TranslationsZh root) : this._root = root, super.internal(root);
 
 	final TranslationsZh _root; // ignore: unused_field
 
@@ -2800,8 +2819,8 @@ class Translations$libraries$sortLabels$zh extends Translations$libraries$sortLa
 }
 
 // Path: libraries.advancedFilters
-class Translations$libraries$advancedFilters$zh extends Translations$libraries$advancedFilters$en {
-	Translations$libraries$advancedFilters$zh.internal(TranslationsZh root) : this._root = root, super.internal(root);
+class _TranslationsLibrariesAdvancedFiltersZh extends TranslationsLibrariesAdvancedFiltersEn {
+	_TranslationsLibrariesAdvancedFiltersZh._(TranslationsZh root) : this._root = root, super.internal(root);
 
 	final TranslationsZh _root; // ignore: unused_field
 
@@ -2835,8 +2854,8 @@ class Translations$libraries$advancedFilters$zh extends Translations$libraries$a
 }
 
 // Path: explore.rows
-class Translations$explore$rows$zh extends Translations$explore$rows$en {
-	Translations$explore$rows$zh.internal(TranslationsZh root) : this._root = root, super.internal(root);
+class _TranslationsExploreRowsZh extends TranslationsExploreRowsEn {
+	_TranslationsExploreRowsZh._(TranslationsZh root) : this._root = root, super.internal(root);
 
 	final TranslationsZh _root; // ignore: unused_field
 
@@ -2858,8 +2877,8 @@ class Translations$explore$rows$zh extends Translations$explore$rows$en {
 }
 
 // Path: explore.status
-class Translations$explore$status$zh extends Translations$explore$status$en {
-	Translations$explore$status$zh.internal(TranslationsZh root) : this._root = root, super.internal(root);
+class _TranslationsExploreStatusZh extends TranslationsExploreStatusEn {
+	_TranslationsExploreStatusZh._(TranslationsZh root) : this._root = root, super.internal(root);
 
 	final TranslationsZh _root; // ignore: unused_field
 
@@ -2871,8 +2890,8 @@ class Translations$explore$status$zh extends Translations$explore$status$en {
 }
 
 // Path: explore.badge
-class Translations$explore$badge$zh extends Translations$explore$badge$en {
-	Translations$explore$badge$zh.internal(TranslationsZh root) : this._root = root, super.internal(root);
+class _TranslationsExploreBadgeZh extends TranslationsExploreBadgeEn {
+	_TranslationsExploreBadgeZh._(TranslationsZh root) : this._root = root, super.internal(root);
 
 	final TranslationsZh _root; // ignore: unused_field
 
@@ -2901,8 +2920,8 @@ class Translations$explore$badge$zh extends Translations$explore$badge$en {
 }
 
 // Path: explore.stats
-class Translations$explore$stats$zh extends Translations$explore$stats$en {
-	Translations$explore$stats$zh.internal(TranslationsZh root) : this._root = root, super.internal(root);
+class _TranslationsExploreStatsZh extends TranslationsExploreStatsEn {
+	_TranslationsExploreStatsZh._(TranslationsZh root) : this._root = root, super.internal(root);
 
 	final TranslationsZh _root; // ignore: unused_field
 
@@ -2927,8 +2946,8 @@ class Translations$explore$stats$zh extends Translations$explore$stats$en {
 }
 
 // Path: explore.season
-class Translations$explore$season$zh extends Translations$explore$season$en {
-	Translations$explore$season$zh.internal(TranslationsZh root) : this._root = root, super.internal(root);
+class _TranslationsExploreSeasonZh extends TranslationsExploreSeasonEn {
+	_TranslationsExploreSeasonZh._(TranslationsZh root) : this._root = root, super.internal(root);
 
 	final TranslationsZh _root; // ignore: unused_field
 
@@ -2941,8 +2960,8 @@ class Translations$explore$season$zh extends Translations$explore$season$en {
 }
 
 // Path: explore.format
-class Translations$explore$format$zh extends Translations$explore$format$en {
-	Translations$explore$format$zh.internal(TranslationsZh root) : this._root = root, super.internal(root);
+class _TranslationsExploreFormatZh extends TranslationsExploreFormatEn {
+	_TranslationsExploreFormatZh._(TranslationsZh root) : this._root = root, super.internal(root);
 
 	final TranslationsZh _root; // ignore: unused_field
 
@@ -2958,8 +2977,8 @@ class Translations$explore$format$zh extends Translations$explore$format$en {
 }
 
 // Path: explore.sourceMaterial
-class Translations$explore$sourceMaterial$zh extends Translations$explore$sourceMaterial$en {
-	Translations$explore$sourceMaterial$zh.internal(TranslationsZh root) : this._root = root, super.internal(root);
+class _TranslationsExploreSourceMaterialZh extends TranslationsExploreSourceMaterialEn {
+	_TranslationsExploreSourceMaterialZh._(TranslationsZh root) : this._root = root, super.internal(root);
 
 	final TranslationsZh _root; // ignore: unused_field
 
@@ -2976,8 +2995,8 @@ class Translations$explore$sourceMaterial$zh extends Translations$explore$source
 }
 
 // Path: explore.creditRole
-class Translations$explore$creditRole$zh extends Translations$explore$creditRole$en {
-	Translations$explore$creditRole$zh.internal(TranslationsZh root) : this._root = root, super.internal(root);
+class _TranslationsExploreCreditRoleZh extends TranslationsExploreCreditRoleEn {
+	_TranslationsExploreCreditRoleZh._(TranslationsZh root) : this._root = root, super.internal(root);
 
 	final TranslationsZh _root; // ignore: unused_field
 
@@ -2991,8 +3010,8 @@ class Translations$explore$creditRole$zh extends Translations$explore$creditRole
 }
 
 // Path: explore.relation
-class Translations$explore$relation$zh extends Translations$explore$relation$en {
-	Translations$explore$relation$zh.internal(TranslationsZh root) : this._root = root, super.internal(root);
+class _TranslationsExploreRelationZh extends TranslationsExploreRelationEn {
+	_TranslationsExploreRelationZh._(TranslationsZh root) : this._root = root, super.internal(root);
 
 	final TranslationsZh _root; // ignore: unused_field
 
@@ -3009,8 +3028,8 @@ class Translations$explore$relation$zh extends Translations$explore$relation$en 
 }
 
 // Path: explore.detail
-class Translations$explore$detail$zh extends Translations$explore$detail$en {
-	Translations$explore$detail$zh.internal(TranslationsZh root) : this._root = root, super.internal(root);
+class _TranslationsExploreDetailZh extends TranslationsExploreDetailEn {
+	_TranslationsExploreDetailZh._(TranslationsZh root) : this._root = root, super.internal(root);
 
 	final TranslationsZh _root; // ignore: unused_field
 
@@ -3051,8 +3070,8 @@ class Translations$explore$detail$zh extends Translations$explore$detail$en {
 }
 
 // Path: liveTv.recordSettings
-class Translations$liveTv$recordSettings$zh extends Translations$liveTv$recordSettings$en {
-	Translations$liveTv$recordSettings$zh.internal(TranslationsZh root) : this._root = root, super.internal(root);
+class _TranslationsLiveTvRecordSettingsZh extends TranslationsLiveTvRecordSettingsEn {
+	_TranslationsLiveTvRecordSettingsZh._(TranslationsZh root) : this._root = root, super.internal(root);
 
 	final TranslationsZh _root; // ignore: unused_field
 
@@ -3068,8 +3087,8 @@ class Translations$liveTv$recordSettings$zh extends Translations$liveTv$recordSe
 }
 
 // Path: music.discography
-class Translations$music$discography$zh extends Translations$music$discography$en {
-	Translations$music$discography$zh.internal(TranslationsZh root) : this._root = root, super.internal(root);
+class _TranslationsMusicDiscographyZh extends TranslationsMusicDiscographyEn {
+	_TranslationsMusicDiscographyZh._(TranslationsZh root) : this._root = root, super.internal(root);
 
 	final TranslationsZh _root; // ignore: unused_field
 
@@ -3080,8 +3099,8 @@ class Translations$music$discography$zh extends Translations$music$discography$e
 }
 
 // Path: watchTogether.notices
-class Translations$watchTogether$notices$zh extends Translations$watchTogether$notices$en {
-	Translations$watchTogether$notices$zh.internal(TranslationsZh root) : this._root = root, super.internal(root);
+class _TranslationsWatchTogetherNoticesZh extends TranslationsWatchTogetherNoticesEn {
+	_TranslationsWatchTogetherNoticesZh._(TranslationsZh root) : this._root = root, super.internal(root);
 
 	final TranslationsZh _root; // ignore: unused_field
 
@@ -3114,8 +3133,8 @@ class Translations$watchTogether$notices$zh extends Translations$watchTogether$n
 }
 
 // Path: watchTogether.ended
-class Translations$watchTogether$ended$zh extends Translations$watchTogether$ended$en {
-	Translations$watchTogether$ended$zh.internal(TranslationsZh root) : this._root = root, super.internal(root);
+class _TranslationsWatchTogetherEndedZh extends TranslationsWatchTogetherEndedEn {
+	_TranslationsWatchTogetherEndedZh._(TranslationsZh root) : this._root = root, super.internal(root);
 
 	final TranslationsZh _root; // ignore: unused_field
 
@@ -3128,8 +3147,8 @@ class Translations$watchTogether$ended$zh extends Translations$watchTogether$end
 }
 
 // Path: watchTogether.errors
-class Translations$watchTogether$errors$zh extends Translations$watchTogether$errors$en {
-	Translations$watchTogether$errors$zh.internal(TranslationsZh root) : this._root = root, super.internal(root);
+class _TranslationsWatchTogetherErrorsZh extends TranslationsWatchTogetherErrorsEn {
+	_TranslationsWatchTogetherErrorsZh._(TranslationsZh root) : this._root = root, super.internal(root);
 
 	final TranslationsZh _root; // ignore: unused_field
 
@@ -3151,8 +3170,8 @@ class Translations$watchTogether$errors$zh extends Translations$watchTogether$er
 }
 
 // Path: downloads.backgroundWarning
-class Translations$downloads$backgroundWarning$zh extends Translations$downloads$backgroundWarning$en {
-	Translations$downloads$backgroundWarning$zh.internal(TranslationsZh root) : this._root = root, super.internal(root);
+class _TranslationsDownloadsBackgroundWarningZh extends TranslationsDownloadsBackgroundWarningEn {
+	_TranslationsDownloadsBackgroundWarningZh._(TranslationsZh root) : this._root = root, super.internal(root);
 
 	final TranslationsZh _root; // ignore: unused_field
 
@@ -3186,8 +3205,8 @@ class Translations$downloads$backgroundWarning$zh extends Translations$downloads
 }
 
 // Path: downloads.groupings
-class Translations$downloads$groupings$zh extends Translations$downloads$groupings$en {
-	Translations$downloads$groupings$zh.internal(TranslationsZh root) : this._root = root, super.internal(root);
+class _TranslationsDownloadsGroupingsZh extends TranslationsDownloadsGroupingsEn {
+	_TranslationsDownloadsGroupingsZh._(TranslationsZh root) : this._root = root, super.internal(root);
 
 	final TranslationsZh _root; // ignore: unused_field
 
@@ -3197,8 +3216,8 @@ class Translations$downloads$groupings$zh extends Translations$downloads$groupin
 }
 
 // Path: companionRemote.session
-class Translations$companionRemote$session$zh extends Translations$companionRemote$session$en {
-	Translations$companionRemote$session$zh.internal(TranslationsZh root) : this._root = root, super.internal(root);
+class _TranslationsCompanionRemoteSessionZh extends TranslationsCompanionRemoteSessionEn {
+	_TranslationsCompanionRemoteSessionZh._(TranslationsZh root) : this._root = root, super.internal(root);
 
 	final TranslationsZh _root; // ignore: unused_field
 
@@ -3218,8 +3237,8 @@ class Translations$companionRemote$session$zh extends Translations$companionRemo
 }
 
 // Path: companionRemote.pairing
-class Translations$companionRemote$pairing$zh extends Translations$companionRemote$pairing$en {
-	Translations$companionRemote$pairing$zh.internal(TranslationsZh root) : this._root = root, super.internal(root);
+class _TranslationsCompanionRemotePairingZh extends TranslationsCompanionRemotePairingEn {
+	_TranslationsCompanionRemotePairingZh._(TranslationsZh root) : this._root = root, super.internal(root);
 
 	final TranslationsZh _root; // ignore: unused_field
 
@@ -3242,8 +3261,8 @@ class Translations$companionRemote$pairing$zh extends Translations$companionRemo
 }
 
 // Path: companionRemote.remote
-class Translations$companionRemote$remote$zh extends Translations$companionRemote$remote$en {
-	Translations$companionRemote$remote$zh.internal(TranslationsZh root) : this._root = root, super.internal(root);
+class _TranslationsCompanionRemoteRemoteZh extends TranslationsCompanionRemoteRemoteEn {
+	_TranslationsCompanionRemoteRemoteZh._(TranslationsZh root) : this._root = root, super.internal(root);
 
 	final TranslationsZh _root; // ignore: unused_field
 
@@ -3278,8 +3297,8 @@ class Translations$companionRemote$remote$zh extends Translations$companionRemot
 }
 
 // Path: companionRemote.errors
-class Translations$companionRemote$errors$zh extends Translations$companionRemote$errors$en {
-	Translations$companionRemote$errors$zh.internal(TranslationsZh root) : this._root = root, super.internal(root);
+class _TranslationsCompanionRemoteErrorsZh extends TranslationsCompanionRemoteErrorsEn {
+	_TranslationsCompanionRemoteErrorsZh._(TranslationsZh root) : this._root = root, super.internal(root);
 
 	final TranslationsZh _root; // ignore: unused_field
 
@@ -3295,8 +3314,8 @@ class Translations$companionRemote$errors$zh extends Translations$companionRemot
 }
 
 // Path: services.names
-class Translations$services$names$zh extends Translations$services$names$en {
-	Translations$services$names$zh.internal(TranslationsZh root) : this._root = root, super.internal(root);
+class _TranslationsServicesNamesZh extends TranslationsServicesNamesEn {
+	_TranslationsServicesNamesZh._(TranslationsZh root) : this._root = root, super.internal(root);
 
 	final TranslationsZh _root; // ignore: unused_field
 
@@ -3309,8 +3328,8 @@ class Translations$services$names$zh extends Translations$services$names$en {
 }
 
 // Path: services.simklReconnect
-class Translations$services$simklReconnect$zh extends Translations$services$simklReconnect$en {
-	Translations$services$simklReconnect$zh.internal(TranslationsZh root) : this._root = root, super.internal(root);
+class _TranslationsServicesSimklReconnectZh extends TranslationsServicesSimklReconnectEn {
+	_TranslationsServicesSimklReconnectZh._(TranslationsZh root) : this._root = root, super.internal(root);
 
 	final TranslationsZh _root; // ignore: unused_field
 
@@ -3320,8 +3339,8 @@ class Translations$services$simklReconnect$zh extends Translations$services$simk
 }
 
 // Path: services.deviceCode
-class Translations$services$deviceCode$zh extends Translations$services$deviceCode$en {
-	Translations$services$deviceCode$zh.internal(TranslationsZh root) : this._root = root, super.internal(root);
+class _TranslationsServicesDeviceCodeZh extends TranslationsServicesDeviceCodeEn {
+	_TranslationsServicesDeviceCodeZh._(TranslationsZh root) : this._root = root, super.internal(root);
 
 	final TranslationsZh _root; // ignore: unused_field
 
@@ -3335,8 +3354,8 @@ class Translations$services$deviceCode$zh extends Translations$services$deviceCo
 }
 
 // Path: services.oauthProxy
-class Translations$services$oauthProxy$zh extends Translations$services$oauthProxy$en {
-	Translations$services$oauthProxy$zh.internal(TranslationsZh root) : this._root = root, super.internal(root);
+class _TranslationsServicesOauthProxyZh extends TranslationsServicesOauthProxyEn {
+	_TranslationsServicesOauthProxyZh._(TranslationsZh root) : this._root = root, super.internal(root);
 
 	final TranslationsZh _root; // ignore: unused_field
 
@@ -3347,8 +3366,8 @@ class Translations$services$oauthProxy$zh extends Translations$services$oauthPro
 }
 
 // Path: services.pendingAuth
-class Translations$services$pendingAuth$zh extends Translations$services$pendingAuth$en {
-	Translations$services$pendingAuth$zh.internal(TranslationsZh root) : this._root = root, super.internal(root);
+class _TranslationsServicesPendingAuthZh extends TranslationsServicesPendingAuthEn {
+	_TranslationsServicesPendingAuthZh._(TranslationsZh root) : this._root = root, super.internal(root);
 
 	final TranslationsZh _root; // ignore: unused_field
 
@@ -3358,8 +3377,8 @@ class Translations$services$pendingAuth$zh extends Translations$services$pending
 }
 
 // Path: services.libraryFilter
-class Translations$services$libraryFilter$zh extends Translations$services$libraryFilter$en {
-	Translations$services$libraryFilter$zh.internal(TranslationsZh root) : this._root = root, super.internal(root);
+class _TranslationsServicesLibraryFilterZh extends TranslationsServicesLibraryFilterEn {
+	_TranslationsServicesLibraryFilterZh._(TranslationsZh root) : this._root = root, super.internal(root);
 
 	final TranslationsZh _root; // ignore: unused_field
 
@@ -3378,2326 +3397,2340 @@ class Translations$services$libraryFilter$zh extends Translations$services$libra
 	@override String get noLibraries => '没有可用的媒体库';
 }
 
-/// The flat map containing all translations for locale <zh>.
+/// Flat map(s) containing all translations.
 /// Only for edge cases! For simple maps, use the map function of this library.
-///
-/// The Dart AOT compiler has issues with very large switch statements,
-/// so the map is split into smaller functions (512 entries each).
 extension on TranslationsZh {
 	dynamic _flatMapFunction(String path) {
-		return switch (path) {
-			'app.title' => 'Plezy',
-			'appIcon.title' => '应用图标',
-			'appIcon.defaultIcon' => '默认',
-			'appIcon.current' => '当前图标',
-			'appIcon.locked' => '包含在主题与图标包中',
-			'appIcon.lockedHint' => '备用图标包含在主题与图标包中。',
-			'appIcon.changeFailed' => '无法更改应用图标',
-			'appIcon.launcherHint' => '离开 Plezy 后，新图标将显示在主屏幕上。',
-			'appIcon.tvLauncherHint' => '离开 Plezy 后将显示新横幅。在电视重启之前，Android TV 可能仍会显示旧横幅。',
-			'appIcon.names.midnight' => '午夜',
-			'appIcon.names.ember' => '余烬',
-			'appIcon.names.paper' => '纸张',
-			'appIcon.names.oled' => 'OLED',
-			'appIcon.names.line' => '线条',
-			'appIcon.names.ocean' => '海洋',
-			'appIcon.names.ultraviolet' => '紫外',
-			'appIcon.names.matcha' => '抹茶',
-			'appIcon.names.sunset' => '日落',
-			'appIcon.names.gold' => '金色',
-			'appIcon.names.titanium' => '钛金',
-			'appIcon.names.glass' => '玻璃',
-			'appIcon.names.crt' => 'CRT',
-			'appIcon.names.vhs' => 'VHS',
-			'appIcon.names.synthwave' => '合成波',
-			'appIcon.names.pixel' => '像素',
-			'appIcon.names.neon' => '霓虹',
-			'appIcon.names.sticker' => '贴纸',
-			'appIcon.names.ticket' => '票根',
-			'appIcon.names.pop' => '波普',
-			'appIcon.names.strata' => '地层',
-			'appIcon.names.facet' => '切面',
-			'appIcon.names.tilde' => '波浪号',
-			'auth.signInWithPlex' => '使用 Plex 登录',
-			'auth.showQRCode' => '显示二维码',
-			'auth.authenticate' => '验证',
-			'auth.authenticationTimeout' => '验证超时。请重试。',
-			'auth.scanQRToSignIn' => '扫描二维码登录',
-			'auth.waitingForAuth' => '正在等待身份验证…\n请在浏览器中登录。',
-			'auth.useBrowser' => '使用浏览器',
-			'auth.or' => '或',
-			'auth.connectToMediaBrowser' => ({required Object product}) => '连接到 ${product}',
-			'auth.quickConnect' => 'Quick Connect',
-			'auth.useQuickConnect' => '使用 Quick Connect',
-			'auth.quickConnectInstructions' => '在 Jellyfin 中打开 Quick Connect 并输入此代码。',
-			'auth.quickConnectWaiting' => '等待批准…',
-			'auth.quickConnectCancel' => '取消',
-			'auth.quickConnectExpired' => 'Quick Connect 已过期。请重试。',
-			'auth.localDataRecoveryRequired' => 'Plezy 无法安全恢复本地登录状态和待处理的播放数据。请重新登录。',
-			'auth.pinCheckRejected' => 'Plex PIN 检查被拒绝',
-			'common.cancel' => '取消',
-			'common.save' => '保存',
-			'common.close' => '关闭',
-			'common.clear' => '清除',
-			'common.reset' => '重置',
-			'common.later' => '稍后',
-			'common.submit' => '提交',
-			'common.confirm' => '确认',
-			'common.retry' => '重试',
-			'common.logout' => '退出登录',
-			'common.unknown' => '未知',
-			'common.refresh' => '刷新',
-			'common.yes' => '是',
-			'common.no' => '否',
-			'common.delete' => '删除',
-			'common.edit' => '编辑',
-			'common.shuffle' => '随机播放',
-			'common.addTo' => '添加到…',
-			'common.createNew' => '新建',
-			'common.connect' => '连接',
-			'common.disconnect' => '断开连接',
-			'common.play' => '播放',
-			'common.pause' => '暂停',
-			'common.resume' => '继续',
-			'common.error' => '错误',
-			'common.search' => '搜索',
-			'common.home' => '首页',
-			'common.back' => '返回',
-			'common.settings' => '设置',
-			'common.mute' => '静音',
-			'common.ok' => '确定',
-			'common.off' => '关闭',
-			'common.options' => '选项',
-			'common.seasonNumber' => ({required Object number}) => '第${number}季',
-			'common.episodeNumberTitle' => ({required Object number, required Object title}) => '第${number}集 — ${title}',
-			'common.chapterNumber' => ({required Object number}) => '第${number}章',
-			'common.reconnect' => '重新连接',
-			'common.viewAll' => '查看全部',
-			'common.checkingNetwork' => '正在检查网络…',
-			'common.loadingServers' => '正在加载服务器…',
-			'common.connectingToServers' => '正在连接服务器…',
-			'common.startingOfflineMode' => '正在启动离线模式…',
-			'common.loading' => '加载中…',
-			'common.fullscreen' => '全屏',
-			'common.exitFullscreen' => '退出全屏',
-			'common.pressBackAgainToExit' => '再按一次返回键退出',
-			'common.ratingSource.critic' => '影评人',
-			'common.ratingSource.audience' => '观众',
-			'common.ratingSource.imdb' => 'IMDb',
-			'common.ratingSource.tmdb' => 'TMDB',
-			'common.ratingSource.rottenTomatoes' => 'Rotten Tomatoes',
-			'common.ratingSource.simkl' => 'Simkl',
-			'common.ratingSource.mal' => 'MyAnimeList',
-			'common.ratingSource.anilist' => 'AniList',
-			'common.ratingSource.trakt' => 'Trakt',
-			'common.ratingSource.rottenTomatoesCritic' => 'Rotten Tomatoes 影评人',
-			'common.ratingSource.rottenTomatoesAudience' => 'Rotten Tomatoes 观众',
-			'common.ratingSource.metacritic' => 'Metacritic',
-			'common.ratingSource.letterboxd' => 'Letterboxd',
-			'common.notAvailable' => 'N/A',
-			'common.url' => 'URL',
-			'common.letterKeys' => 'ABC',
-			'common.mediaKind.movie' => '电影',
-			'common.mediaKind.show' => '剧集',
-			'common.mediaKind.season' => '季',
-			'common.mediaKind.episode' => '单集',
-			'common.mediaKind.artist' => '艺术家',
-			'common.mediaKind.album' => '专辑',
-			'common.mediaKind.track' => '曲目',
-			'common.mediaKind.collection' => '合集',
-			'common.mediaKind.playlist' => '播放列表',
-			'common.mediaKind.clip' => '短片',
-			'common.mediaKind.photo' => '照片',
-			'common.mediaKind.folder' => '文件夹',
-			'screens.licenses' => '许可证',
-			'screens.switchProfile' => '切换用户',
-			'screens.subtitleStyling' => '字幕样式',
-			'screens.mpvConfig' => 'mpv.conf',
-			'screens.logs' => '日志',
-			'update.available' => '有可用更新',
-			'update.versionAvailable' => ({required Object version}) => '版本 ${version} 已发布',
-			'update.currentVersion' => ({required Object version}) => '当前版本：${version}',
-			'update.skipVersion' => '跳过此版本',
-			'update.viewRelease' => '查看发布详情',
-			'update.latestVersion' => '当前已是最新版本',
-			'update.checkFailed' => '无法检查更新',
-			'supporter.title' => '主题与图标包',
-			'supporter.intro' => '可选的一次性购买，提供以下外观类附加内容：',
-			'supporter.presetThemes' => '预设主题',
-			'supporter.presetThemesDescription' => '余烬、冰川、森林、梅子和纸张',
-			'supporter.customTheme' => '自定义主题',
-			'supporter.customThemeDescription' => '自行挑选每种颜色',
-			'supporter.appIcons' => '应用图标',
-			'supporter.appIconsDescription' => '选择备用 Plezy 图标',
-			'supporter.buy' => ({required Object price}) => '以 ${price} 购买',
-			'supporter.loadingPrice' => '正在加载价格…',
-			'supporter.restore' => '恢复购买',
-			'supporter.pending' => '你的购买正在等待付款或批准。商店完成处理后，附加内容将立即解锁。',
-			'supporter.thankYouTitle' => '感谢你的购买',
-			'supporter.thankYouBody' => '主题与图标包已解锁。',
-			'supporter.tileSubtitle' => '一次性购买即可解锁主题和应用图标',
-			'supporter.tileSubtitleThemesOnly' => '一次性购买即可解锁主题',
-			'supporter.tileUnlocked' => '已解锁 — 感谢你的购买',
-			'supporter.errors.storeUnavailable' => '无法进行购买。请确认你已登录商店，且此设备允许购买。',
-			'supporter.errors.productNotFound' => '你的商店目前无法购买主题与图标包。',
-			'supporter.errors.productQueryFailed' => '无法加载价格。请检查网络连接后重试。',
-			'supporter.errors.purchaseFailed' => '购买未完成。请重试。',
-			'supporter.errors.restoreFailed' => '无法连接到商店以恢复你的购买。请重试。',
-			'supporter.errors.nothingToRestore' => '未在此商店账户中找到主题与图标包购买记录。',
-			'settings.title' => '设置',
-			'settings.supportDeveloper' => '支持 Plezy',
-			'settings.supportDeveloperDescription' => '通过 Liberapay 捐赠支持开发',
-			'settings.language' => '语言',
-			'settings.theme' => '主题',
-			'settings.appearance' => '外观',
-			'settings.videoPlayback' => '视频播放',
-			'settings.videoPlaybackDescription' => '配置播放行为',
-			'settings.advanced' => '高级',
-			'settings.episodePosterMode' => '剧集海报样式',
-			'settings.seriesPoster' => '剧集海报',
-			'settings.seasonPoster' => '季海报',
-			'settings.episodeThumbnail' => '缩略图',
-			'settings.showHeroSectionDescription' => '在主屏幕上显示精选内容轮播区',
-			'settings.secondsLabel' => '秒',
-			'settings.minutesLabel' => '分钟',
-			'settings.secondsShort' => '秒',
-			'settings.minutesShort' => '分钟',
-			'settings.durationHint' => ({required Object min, required Object max}) => '输入时长（${min}–${max}）',
-			'settings.systemTheme' => '系统',
-			'settings.lightTheme' => '浅色',
-			'settings.darkTheme' => '深色',
-			'settings.oledTheme' => 'OLED',
-			'settings.emberTheme' => '余烬',
-			'settings.glacierTheme' => '冰川',
-			'settings.forestTheme' => '森林',
-			'settings.plumTheme' => '梅子',
-			'settings.paperTheme' => '纸张',
-			'settings.libraryDensity' => '媒体库密度',
-			'settings.displayScale' => '界面缩放',
-			'settings.compact' => '紧凑',
-			'settings.comfortable' => '舒适',
-			'settings.gridSpacing' => '网格间距',
-			'settings.gridSpacingTight' => '紧密',
-			'settings.gridSpacingNormal' => '标准',
-			'settings.gridSpacingSpacious' => '宽松',
-			'settings.tvCornerSpotlightBackdrop' => '右上角聚焦背景图',
-			'settings.tvCornerSpotlightBackdropDescription' => '在右上角显示精选内容图片，而不是铺满整个屏幕',
-			'settings.viewMode' => '视图模式',
-			'settings.gridView' => '网格视图',
-			'settings.listView' => '列表视图',
-			'settings.showHeroSection' => '显示精选内容区',
-			'settings.continueWatchingAction' => '继续观看操作',
-			'settings.continueWatchingPlay' => '播放',
-			'settings.continueWatchingDetails' => '打开详情',
-			'settings.episodeAction' => '剧集操作',
-			'settings.episodePlay' => '播放',
-			'settings.episodeDetails' => '打开详情',
-			'settings.useGlobalHubs' => '使用主页布局',
-			'settings.useGlobalHubsDescription' => '显示统一主页内容；否则使用各媒体库的推荐内容。',
-			'settings.showServerNameOnHubs' => '在推荐栏显示服务器名称',
-			'settings.showServerNameOnHubsDescription' => '始终在推荐栏标题中显示服务器名称。',
-			'settings.groupLibrariesByServer' => '按服务器分组媒体库',
-			'settings.groupLibrariesByServerDescription' => '在侧边栏中按媒体服务器分组媒体库。',
-			'settings.alwaysKeepSidebarOpen' => '始终保持侧边栏展开',
-			'settings.alwaysKeepSidebarOpenDescription' => '侧边栏保持展开状态，内容区域自动调整',
-			'settings.showUnwatchedCount' => '显示未观看数量',
-			'settings.showUnwatchedCountDescription' => '在剧集和季上显示未观看集数',
-			'settings.showWatchedIndicators' => '显示已观看标记',
-			'settings.showWatchedIndicatorsDescription' => '在已观看的电影、剧集和单集上显示对勾标记',
-			'settings.showEpisodeNumberOnCards' => '在卡片上显示集数',
-			'settings.showEpisodeNumberOnCardsDescription' => '在剧集卡片上显示季和集编号',
-			'settings.showSeasonPostersOnTabs' => '在选项卡上显示季海报',
-			'settings.showSeasonPostersOnTabsDescription' => '在每季标签上方显示该季海报',
-			'settings.tvFullCardLayout' => '完整电视卡片',
-			'settings.tvFullCardLayoutDescription' => '使用仅显示图片的电视卡片，并在图片上叠加演员姓名',
-			'settings.focusGlow' => '焦点光晕',
-			'settings.focusGlowDescription' => '在获得焦点的卡片周围显示柔和的光晕',
-			'settings.visualEffects' => '视觉效果',
-			'settings.visualEffectsAuto' => '自动',
-			'settings.visualEffectsAutoDescription' => '在性能较低的设备上自动减少效果',
-			'settings.visualEffectsFull' => '完整效果',
-			'settings.visualEffectsReduced' => '简化',
-			'settings.visualEffectsReducedDescription' => '减少动画并使用较低分辨率的封面图片',
-			'settings.hideSpoilers' => '隐藏未看剧集的剧透内容',
-			'settings.hideSpoilersDescription' => '模糊未观看剧集的缩略图和描述',
-			'settings.playerBackend' => '播放器引擎',
-			'settings.exoPlayer' => 'ExoPlayer',
-			'settings.mpv' => 'mpv',
-			'settings.hardwareDecoding' => '硬件解码',
-			'settings.hardwareDecodingDescription' => '如果可用，使用硬件加速',
-			'settings.playbackBuffer' => '播放缓冲',
-			'settings.playbackBufferAuto' => '自动（推荐）',
-			'settings.playbackBufferLarge' => '大',
-			'settings.playbackBufferExtraLarge' => '特大',
-			'settings.playbackBufferDescription' => '针对不稳定的连接缓冲更多内容。也受缓冲大小限制。',
-			'settings.defaultQualityTitle' => '默认画质',
-			'settings.cellularQualityTitle' => '移动网络默认画质',
-			'settings.cellularQualitySameAsDefault' => '与默认画质相同',
-			'settings.directPlayCoveredQuality' => '以原始画质播放较小视频',
-			'settings.directPlayCoveredQualityDescription' => '已在画质限制内的视频直接播放，而非转码',
-			'settings.videoCodecs' => '视频编解码器',
-			'settings.videoCodecsDescription' => '未勾选的编解码器将由服务器转码',
-			'settings.videoCodecsAlwaysAccepted' => '始终接受',
-			'settings.musicQualityTitle' => '音乐音质',
-			'settings.subtitleStyling' => '字幕样式',
-			'settings.subtitleStylingDescription' => '调整字幕外观',
-			'settings.smallSkipDuration' => '短跳过时长',
-			'settings.largeSkipDuration' => '长跳过时长',
-			'settings.rewindOnResume' => '恢复时回退',
-			'settings.secondsUnit' => ({required Object seconds}) => '${seconds} 秒',
-			'settings.defaultSleepTimer' => '默认睡眠定时器',
-			'settings.minutesUnit' => ({required Object minutes}) => '${minutes} 分钟',
-			'settings.rememberTrackSelections' => '记住每部剧集或电影的音轨选择',
-			'settings.rememberTrackSelectionsDescription' => '分别记住每部内容的音频和字幕选择',
-			'settings.rememberTrackSelectionsBackendRule' => 'Plex 会按文件将每个选择保存在服务器上；Jellyfin 还会开启账户的“记住选择”；Emby 不支持',
-			'settings.followServerTrackSelections' => '使用服务器为每集选择的轨道',
-			'settings.followServerTrackSelectionsDescription' => '切换剧集时，应用服务器上为该集选择的音频和字幕，而不是沿用当前选择',
-			'settings.resumeMusicOnLaunch' => '记住音乐会话',
-			'settings.resumeMusicOnLaunchDescription' => '应用启动时，将上次播放的歌曲在停止位置以暂停状态打开',
-			'settings.showChapterMarkersOnTimeline' => '在进度条上显示章节标记',
-			'settings.showChapterMarkersOnTimelineDescription' => '按章节边界分段显示进度条',
-			'settings.specialsOrdering' => '特别篇按剧集顺序',
-			'settings.specialsOrderingDescription' => '特别篇在剧集观看顺序中的播放位置',
-			'settings.specialsOrderingServer' => '遵循服务器顺序',
-			'settings.specialsOrderingAirDate' => '按播出日期穿插',
-			'settings.specialsOrderingLast' => '常规季之后',
-			'settings.clickVideoTogglesPlayback' => '点击视频可切换播放/暂停',
-			'settings.clickVideoTogglesPlaybackDescription' => '点击视频即可播放或暂停，而不是显示控制项。',
-			'settings.videoPlayerControls' => '视频播放器控制',
-			'settings.keyboardShortcuts' => '键盘快捷键',
-			'settings.keyboardShortcutsDescription' => '自定义键盘快捷键',
-			'settings.videoPlayerNavigation' => '视频播放器导航',
-			'settings.videoPlayerNavigationDescription' => '使用方向键导航视频播放器控件',
-			'settings.watchTogetherRelay' => '一起看中继服务器',
-			'settings.watchTogetherRelayDescription' => '除非自行设置，否则使用公共 Open Watch Party 中继服务器',
-			'settings.watchTogetherRelayHint' => 'https://my-relay.example.com',
-			'settings.watchTogetherRelayInvalid' => '请输入有效的 HTTP 或 HTTPS 中继服务器基础 URL。',
-			'settings.crashReporting' => '崩溃报告',
-			'settings.crashReportingDescription' => '发送崩溃报告以帮助改进应用',
-			'settings.debugLogging' => '调试日志',
-			'settings.debugLoggingDescription' => '启用详细日志记录以便故障排除',
-			'settings.viewLogs' => '查看日志',
-			'settings.viewLogsDescription' => '查看应用日志',
-			'settings.clearImageCache' => '清除图片缓存',
-			'settings.clearImageCacheDescription' => '清除缓存的封面与缩略图。图片在重新下载前加载速度可能会变慢。',
-			'settings.clearImageCacheSuccess' => '图片缓存已成功清除',
-			'settings.resetSettings' => '重置设置',
-			'settings.resetSettingsDescription' => '恢复默认设置。此操作无法撤销。',
-			'settings.resetSettingsSuccess' => '设置重置成功',
-			'settings.backup' => '备份',
-			'settings.exportSettings' => '导出设置',
-			'settings.exportSettingsDescription' => '将偏好设置保存到文件',
-			'settings.exportSettingsSuccess' => '设置已导出',
-			'settings.importSettings' => '导入设置',
-			'settings.importSettingsDescription' => '从文件恢复偏好设置',
-			'settings.importSettingsConfirm' => '这将替换您当前的设置。继续吗？',
-			'settings.importSettingsSuccess' => '设置已导入',
-			'settings.importSettingsInvalidFile' => '此文件不是有效的 Plezy 设置导出',
-			'settings.importSettingsNoUser' => '导入设置前请先登录',
-			'settings.shortcutsReset' => '快捷键已重置为默认值',
-			'settings.resetShortcutsConfirm' => '这将用默认快捷键替换你的自定义快捷键。继续吗？',
-			'settings.about' => '关于',
-			'settings.aboutDescription' => '应用程序信息和许可证',
-			'settings.updates' => '更新',
-			'settings.updateAvailable' => '有可用更新',
-			'settings.checkForUpdates' => '检查更新',
-			'settings.autoCheckUpdatesOnStartup' => '启动时自动检查更新',
-			'settings.autoCheckUpdatesOnStartupDescription' => '启动时有可用更新则通知',
-			'settings.validationErrorEnterNumber' => '请输入有效数字',
-			'settings.validationErrorDuration' => ({required Object min, required Object max, required Object unit}) => '时长必须介于 ${min} 和 ${max} ${unit} 之间',
-			'settings.shortcutAlreadyAssigned' => ({required Object action}) => '快捷键已被分配给 ${action}',
-			'settings.shortcutUpdated' => ({required Object action}) => '快捷键已为 ${action} 更新',
-			'settings.saveFailed' => '无法保存更改。请重试。',
-			'settings.autoPlayAndSkip' => '自动播放与跳过',
-			'settings.autoPlayNextEpisode' => '自动播放下一集',
-			'settings.autoPlayNextEpisodeDescription' => '当前剧集结束时自动播放下一集',
-			'settings.shuffleStartsFromBeginning' => '随机播放从头开始',
-			'settings.shuffleStartsFromBeginningDescription' => '随机播放时每集从头开始播放，而非续播',
-			'settings.playNextCountdown' => '播放下一集倒计时',
-			'settings.playNextCountdownImmediate' => '立即播放',
-			'settings.skipIntroMode' => '跳过片头',
-			'settings.skipIntroModeOffDescription' => '正常播放片头，不显示跳过按钮',
-			'settings.skipIntroModeButtonDescription' => '片头开始时显示跳过按钮',
-			'settings.skipIntroModeAutoDescription' => '在下方设定的延迟后自动跳过片头',
-			'settings.skipCreditsMode' => '跳过片尾',
-			'settings.skipCreditsModeOffDescription' => '正常播放片尾，不显示跳过按钮',
-			'settings.skipCreditsModeButtonDescription' => '片尾开始时显示跳过按钮',
-			'settings.skipCreditsModeAutoDescription' => '自动跳过片尾并播放下一集',
-			'settings.skipMarkerModeOff' => '关闭',
-			'settings.skipMarkerModeButton' => '显示按钮',
-			'settings.skipMarkerModeAuto' => '自动',
-			'settings.forceSkipMarkerFallback' => '强制使用备用标记',
-			'settings.forceSkipMarkerFallbackDescription' => '即使 Plex 有标记，也使用章节标题模式',
-			'settings.autoSkipDelay' => '自动跳过延迟',
-			'settings.autoSkipDelayDescription' => ({required Object seconds}) => '自动跳过前等待 ${seconds} 秒',
-			'settings.introPattern' => '片头标记模式',
-			'settings.introPatternDescription' => '用于匹配章节标题中片头标记的正则表达式',
-			'settings.creditsPattern' => '片尾标记模式',
-			'settings.creditsPatternDescription' => '用于匹配章节标题中片尾标记的正则表达式',
-			'settings.invalidRegex' => '无效的正则表达式',
-			'settings.regex' => '正则表达式',
-			'settings.downloads' => '下载',
-			'settings.downloadLocationDescription' => '选择下载内容的存储位置',
-			'settings.downloadLocationDefault' => '默认（应用存储）',
-			'settings.downloadLocationCustom' => '自定义位置',
-			'settings.selectFolder' => '选择文件夹',
-			'settings.resetToDefault' => '重置为默认',
-			'settings.currentPath' => ({required Object path}) => '当前路径：${path}',
-			'settings.downloadLocationChanged' => '下载位置已更改',
-			'settings.downloadLocationReset' => '下载位置已重置为默认',
-			'settings.downloadLocationInvalid' => '所选文件夹不可写入',
-			'settings.downloadLocationPickerUnavailable' => '此设备不支持选择文件夹',
-			'settings.downloadOnWifiOnly' => '仅通过 Wi-Fi 下载',
-			'settings.downloadOnWifiOnlyDescription' => '使用移动数据时不允许下载',
-			'settings.autoRemoveWatchedDownloads' => '自动移除已观看的下载',
-			'settings.autoRemoveWatchedDownloadsDescription' => '自动删除已观看的下载',
-			'settings.cellularDownloadBlocked' => '已阻止通过移动网络下载。请连接 Wi-Fi 或更改设置。',
-			'settings.maxVolume' => '最大音量',
-			'settings.maxVolumeDescription' => '允许音量超过 100%，以便播放音量较低的内容',
-			'settings.maxVolumePercent' => ({required Object percent}) => '${percent}%',
-			'settings.discordRichPresence' => 'Discord 动态状态',
-			'settings.discordRichPresenceDescription' => '在 Discord 上显示您正在观看的内容',
-			'settings.services' => '服务',
-			'settings.servicesDescription' => '连接 Trakt、MyAnimeList、Seerr 等',
-			'settings.manageLibrariesDescription' => '重新排序和隐藏媒体库',
-			'settings.companionRemoteServer' => '远程控制服务器',
-			'settings.companionRemoteServerDescription' => '允许同一网络中的移动设备控制此应用',
-			'settings.companionRemoteServerStartFailed' => '无法启动远程控制服务器',
-			'settings.companionRemoteServerStopFailed' => '无法停止远程控制服务器',
-			'settings.autoPip' => '自动画中画',
-			'settings.autoPipDescription' => '播放期间离开应用时自动进入画中画模式',
-			'settings.matchContentFrameRate' => '匹配内容帧率',
-			'settings.matchContentFrameRateDescription' => '使显示器刷新率与视频帧率匹配',
-			'settings.matchContentResolution' => '匹配内容分辨率',
-			'settings.matchContentResolutionDescription' => '将显示切换为视频的原生分辨率，由电视负责放大。播放期间菜单和字幕也会一并放大',
-			'settings.matchRefreshRate' => '匹配刷新率',
-			'settings.matchRefreshRateDescription' => '全屏时匹配显示刷新率',
-			'settings.matchDynamicRange' => '匹配动态范围',
-			'settings.matchDynamicRangeDescription' => 'HDR 内容切换到 HDR，随后切回 SDR',
-			'settings.displaySwitchDelay' => '显示切换延迟',
-			'settings.tunneledPlayback' => '隧道播放',
-			'settings.tunneledPlaybackDescription' => '使用视频隧道模式。若播放 HDR 内容时出现黑屏或画面卡顿，请将其关闭。',
-			'settings.audioPassthrough' => '音频直通',
-			'settings.audioPassthroughDescription' => '将 Dolby/DTS 音频不经重新编码直接发送到功放或电视，保留环绕声。如果没有声音，请关闭。',
-			'settings.audioPassthroughDescriptionApple' => '对 Dolby Digital Plus（含 Atmos）使用 Apple 原生 Dolby 解码器。DTS 和 TrueHD 仍以多声道 PCM 播放。如果没有声音，请关闭。',
-			'settings.audioPassthroughDescriptionAppleSpatial' => '对 Dolby Digital Plus（含 Atmos）使用 Apple 原生 Dolby 解码器。在 iOS、iPadOS 和 tvOS 26 或更高版本上，TrueHD Atmos 和 DTS:X 以空间音频播放。其他 DTS 和 TrueHD 音轨以多声道 PCM 播放。如果没有声音，请关闭。',
-			'settings.audioPassthroughOverriddenByNormalization' => '响度标准化开启时停用',
-			'settings.audioChannelLimit' => '音频声道',
-			'settings.audioChannelLimitDescription' => '为无法播放所有声道的扬声器、耳机或 HDMI 设备下混解码后的音频',
-			'settings.audioChannelLimitOriginal' => '原始',
-			'settings.audioChannelLimitOriginalDescription' => '播放音轨中的所有声道',
-			'settings.audioChannelLimitSurround51' => '最多 5.1',
-			'settings.audioChannelLimitSurround51Description' => '为仅支持 5.1 PCM 的电视和功放将 7.1 下混为 5.1。不影响直通。',
-			'settings.audioChannelLimitStereo' => '立体声',
-			'settings.audioChannelLimitStereoDescription' => '下混为双声道，适用于立体声扬声器或耳机。将关闭直通。',
-			'settings.downmixCenterBoost' => '中置声道增强',
-			'settings.downmixCenterBoostValue' => ({required Object db}) => '${db} dB',
-			'settings.downmixCenterBoostLabel' => '增强（dB）',
-			'settings.downmixCenterBoostShort' => 'dB',
-			'settings.audioDownmixNormalize' => '下混时音量标准化',
-			'settings.audioDownmixNormalizeDescription' => '降低混音电平以防止削波。关闭可保持原始音量（大音量场景可能失真）。',
-			'settings.dvConversionMode' => 'Dolby Vision 转换',
-			'settings.dvConversionModeDescription' => '选择如何处理 Dolby Vision Profile 7 文件。',
-			'settings.dvConversionAuto' => '自动',
-			'settings.dvConversionNative' => '原生 / 禁用',
-			'settings.dvConversionDv81' => 'P7 → P8.1',
-			'settings.dvConversionHevcStrip' => 'P7 → HEVC',
-			'settings.dvConversionAutoDescription' => '使用设备能力检测和常规回退机制',
-			'settings.dvConversionNativeDescription' => '强制原生 DV7 并禁止重试 DV 转换',
-			'settings.dvConversionDv81Description' => '强制内联 RPU 转换为 Dolby Vision Profile 8.1',
-			'settings.dvConversionHevcStripDescription' => '移除 Dolby Vision RPU/EL 层并呈现普通 HEVC',
-			'settings.disableDolbyVision' => '禁用 Dolby Vision',
-			'settings.disableDolbyVisionDescription' => '文件包含 HDR10 或 HLG 层时，改为播放该层而非 Dolby Vision',
-			'settings.hdrSdrConversion' => 'HDR 转 SDR',
-			'settings.hdrSdrConversionDescription' => '选择在显示器无法显示 HDR 时由谁转换 HDR 视频。',
-			'settings.hdrSdrConversionAuto' => '自动',
-			'settings.hdrSdrConversionAutoDescription' => 'Android 9 及更高版本使用设备，更早版本使用播放器',
-			'settings.hdrSdrConversionDevice' => '设备',
-			'settings.hdrSdrConversionDeviceDescription' => '由设备的视频硬件转换。速度最快，但色彩取决于设备',
-			'settings.hdrSdrConversionPlayer' => '播放器',
-			'settings.hdrSdrConversionPlayerDescription' => '由播放器转换。色彩一致，但在低端电视盒上 4K 可能卡顿',
-			'settings.deinterlace' => '去隔行',
-			'settings.deinterlaceDescription' => '消除隔行扫描视频中的梳状伪影（仅 mpv 播放器）',
-			'settings.deinterlaceOff' => '关闭',
-			'settings.deinterlaceOffDescription' => '按解码原样显示隔行扫描视频',
-			'settings.deinterlaceVideo' => '视频',
-			'settings.deinterlaceVideoDescription' => '将每一场转换为完整的一帧。适用于为电视拍摄的视频，如体育、新闻和音乐会',
-			'settings.deinterlaceFilm' => '电影',
-			'settings.deinterlaceFilmDescription' => '还原经胶转磁（telecine）处理为 29.97 fps 的电影和动画的原始帧，常见于 NTSC DVD。为电视拍摄的视频会出现卡顿。直播电视使用“视频”模式',
-			'settings.requireProfileSelectionOnOpen' => '打开应用时选择用户资料',
-			'settings.requireProfileSelectionOnOpenDescription' => '每次打开应用时都显示用户资料选择界面',
-			'settings.forceTvMode' => '强制 TV 模式',
-			'settings.forceTvModeDescription' => '强制 TV 布局。适用于无法自动检测的设备。需要重启。',
-			'settings.startInFullscreen' => '以全屏模式启动',
-			'settings.startInFullscreenDescription' => '启动时以全屏模式打开 Plezy',
-			'settings.exitFullscreenOnPlayerClose' => '关闭播放器时退出全屏',
-			'settings.exitFullscreenOnPlayerCloseDescription' => '关闭视频播放器时自动退出全屏模式',
-			'settings.autoHidePerformanceOverlay' => '自动隐藏性能叠加层',
-			'settings.autoHidePerformanceOverlayDescription' => '性能叠加层随播放控件一起淡入淡出',
-			'settings.showNavBarLabels' => '显示导航栏标签',
-			'settings.showNavBarLabelsDescription' => '在导航栏图标下方显示文字标签',
-			'settings.startupSection' => '启动页面',
-			'settings.showExploreTab' => '显示“探索”标签页',
-			'settings.showExploreTabDescription' => '显示“探索”标签页，其中包含来自 Plex Discover 和已连接追踪服务的内容',
-			'settings.liveTvDefaultFavorites' => '默认显示收藏频道',
-			'settings.liveTvDefaultFavoritesDescription' => '打开直播电视时仅显示收藏频道',
-			'settings.general' => '通用',
-			'settings.generalDescription' => '语言、启动和窗口行为',
-			'settings.languageAndRegion' => '语言与地区',
-			'settings.startup' => '启动',
-			'settings.display' => '显示',
-			'settings.libraryAndCards' => '媒体库与卡片',
-			'settings.homeScreen' => '主屏幕',
-			'settings.navigation' => '导航',
-			'settings.window' => '窗口',
-			'settings.liveTv' => '直播电视',
-			'settings.player' => '播放器',
-			'settings.videoAndDisplay' => '视频与显示',
-			'settings.audio' => '音频',
-			'settings.quality' => '画质',
-			'settings.subtitles' => '字幕',
-			'settings.seekAndTiming' => '跳转与计时',
-			'settings.behavior' => '行为',
-			'settings.gestures' => '手势',
-			'settings.gestureBrightnessSwipe' => '亮度滑动',
-			'settings.gestureBrightnessSwipeDescription' => '在屏幕左边缘上下滑动以调节亮度',
-			'settings.gestureVolumeSwipe' => '音量滑动',
-			'settings.gestureVolumeSwipeDescription' => '在屏幕右边缘上下滑动以调节音量',
-			'settings.gesturePinchToZoom' => '双指缩放',
-			'settings.gesturePinchToZoomDescription' => '在视频上双指捏合以放大或缩小',
-			'settings.rememberBrightnessLevel' => '记住亮度',
-			'settings.rememberBrightnessLevelDescription' => '以上次滑动设置的亮度开始播放',
-			'settings.controls' => '控制',
-			'settings.rememberPlayerChanges' => '记住播放器更改',
-			'settings.rememberPlayerChangesDescription' => '播放期间所做的更改保存并重新应用的位置',
-			'settings.scopePlaybackSpeed' => '播放速度',
-			'settings.scopeShaderPreset' => '着色器预设',
-			'settings.scopeAspectRatio' => '宽高比',
-			'settings.scopeZoom' => '缩放',
-			'settings.scopeSyncOffsets' => '音频和字幕同步',
-			'settings.playerScopeOff' => '不保存',
-			'settings.playerScopeGlobal' => '所有位置',
-			'settings.playerScopeLibrary' => '按媒体库',
-			'settings.playerScopeTitle' => '按剧集或电影',
-			'settings.exportDialogTitle' => '导出 Plezy 设置',
-			'themeEditor.builtIn' => '内置',
-			'themeEditor.presets' => '预设',
-			'themeEditor.custom' => '自定义',
-			'themeEditor.customEmpty' => '尚未创建',
-			'themeEditor.editCustom' => '编辑自定义主题',
-			'themeEditor.editCustomDescription' => '自行选择每种颜色',
-			'themeEditor.locked' => '通过主题与图标包解锁',
-			'themeEditor.savedLocked' => '已保存 — 通过主题与图标包解锁',
-			'themeEditor.title' => '自定义主题',
-			'themeEditor.startFrom' => '从现有主题开始',
-			'themeEditor.startFromDescription' => '从其他主题复制所有颜色',
-			'themeEditor.colors' => '颜色',
-			'themeEditor.preview' => '预览',
-			'themeEditor.slots.bg' => '背景',
-			'themeEditor.slots.surface' => '表面',
-			'themeEditor.slots.outline' => '描边',
-			'themeEditor.slots.text' => '文字',
-			'themeEditor.slots.textMuted' => '次要文字',
-			_ => null,
-		} ?? switch (path) {
-			'themeEditor.slots.accent' => '强调色',
-			'themeEditor.opacity' => '不透明度',
-			'themeEditor.hexHint' => '#RRGGBB 或 #AARRGGBB',
-			'themeEditor.fromOtherThemes' => '来自其他主题',
-			'themeEditor.swatchLabel' => ({required Object theme, required Object color}) => '${theme} · ${color}',
-			'themeEditor.contrast.textOnBg' => '背景上的文字',
-			'themeEditor.contrast.textOnSurface' => '表面上的文字',
-			'themeEditor.contrast.textMutedOnBg' => '背景上的次要文字',
-			'themeEditor.contrast.textMutedOnSurface' => '表面上的次要文字',
-			'themeEditor.contrast.accentOnBg' => '背景上的强调色',
-			'themeEditor.contrast.accentOnSurface' => '表面上的强调色',
-			'themeEditor.contrast.labelOnAccent' => '强调色上的按钮文字',
-			'themeEditor.lowContrast' => ({required Object pair, required Object ratio, required Object minimum}) => '${pair}：${ratio}:1，低于建议的 ${minimum}:1',
-			'themeEditor.discardTitle' => '放弃更改？',
-			'themeEditor.discardMessage' => '未保存的颜色更改将会丢失。',
-			'themeEditor.discard' => '放弃',
-			'themeEditor.previewCardTitle' => ({required Object number}) => '第${number}集',
-			'themeEditor.previewCardSubtitle' => ({required Object minutes}) => '剩余 ${minutes} 分钟',
-			'themeEditor.previewSwitch' => '自动播放',
-			'themeEditor.previewMutedText' => '次要文字看起来是这样的',
-			'search.hint' => '搜索电影、剧集、音乐…',
-			'search.tryDifferentTerm' => '尝试不同的搜索词',
-			'search.searchYourMedia' => '搜索媒体',
-			'search.enterTitleActorOrKeyword' => '输入标题、演员或关键词',
-			'search.people' => '人物',
-			'hotkeys.setShortcutFor' => ({required Object actionName}) => '为 ${actionName} 设置快捷键',
-			'hotkeys.clearShortcut' => '清除快捷键',
-			'hotkeys.noShortcutSet' => '未设置快捷键',
-			'hotkeys.currentShortcut' => '当前快捷键：',
-			'hotkeys.pressToRecord' => '点击后录入快捷键',
-			'hotkeys.recordingShortcut' => '请按下快捷键',
-			'hotkeys.actions.playPause' => '播放/暂停',
-			'hotkeys.actions.volumeUp' => '增大音量',
-			'hotkeys.actions.volumeDown' => '减小音量',
-			'hotkeys.actions.seekForward' => ({required Object seconds}) => '快进 (${seconds}秒)',
-			'hotkeys.actions.seekBackward' => ({required Object seconds}) => '快退 (${seconds}秒)',
-			'hotkeys.actions.fullscreenToggle' => '切换全屏',
-			'hotkeys.actions.muteToggle' => '切换静音',
-			'hotkeys.actions.subtitleToggle' => '切换字幕',
-			'hotkeys.actions.audioTrackNext' => '下一音轨',
-			'hotkeys.actions.subtitleTrackNext' => '下一字幕轨',
-			'hotkeys.actions.chapterNext' => '下一章节',
-			'hotkeys.actions.chapterPrevious' => '上一章节',
-			'hotkeys.actions.episodeNext' => '下一集',
-			'hotkeys.actions.episodePrevious' => '上一集',
-			'hotkeys.actions.speedIncrease' => '加速',
-			'hotkeys.actions.speedDecrease' => '减速',
-			'hotkeys.actions.speedReset' => '重置速度',
-			'hotkeys.actions.zoomIn' => '放大',
-			'hotkeys.actions.zoomOut' => '缩小',
-			'hotkeys.actions.zoomReset' => '重置缩放',
-			'hotkeys.actions.subSeekNext' => '跳转到下一条字幕',
-			'hotkeys.actions.subSeekPrev' => '跳转到上一条字幕',
-			'hotkeys.actions.shaderToggle' => '切换着色器',
-			'hotkeys.actions.skipMarker' => '跳过片头/片尾',
-			'hotkeys.actions.screenshot' => '截图',
-			'fileInfo.title' => '文件信息',
-			'fileInfo.overview' => '简介',
-			'fileInfo.video' => '视频',
-			'fileInfo.audio' => '音频',
-			'fileInfo.subtitles' => '字幕',
-			'fileInfo.images' => '内嵌图片',
-			'fileInfo.dataStreams' => '数据流',
-			'fileInfo.lyrics' => '歌词',
-			'fileInfo.file' => '文件',
-			'fileInfo.attachments' => '附件',
-			'fileInfo.delivery' => '传输方式',
-			'fileInfo.versionCounter' => ({required Object index, required Object count}) => '第 ${index} 个版本，共 ${count} 个',
-			'fileInfo.fileCounter' => ({required Object index, required Object count}) => '第 ${index} 个文件，共 ${count} 个',
-			'fileInfo.noStreams' => '服务器报告此文件没有媒体流。',
-			'fileInfo.copyPath' => '复制路径',
-			'fileInfo.pathCopied' => '文件路径已复制',
-			'fileInfo.codec' => '编解码器',
-			'fileInfo.codecTag' => '编码器标签',
-			'fileInfo.resolution' => '分辨率',
-			'fileInfo.codedResolution' => '编码分辨率',
-			'fileInfo.bitrate' => '比特率',
-			'fileInfo.frameRate' => '帧率',
-			'fileInfo.rotation' => '旋转',
-			'fileInfo.comment' => '注释',
-			'fileInfo.audioDescription' => '音频描述',
-			'fileInfo.headerCompression' => '头部压缩',
-			'fileInfo.sidecarFile' => '外挂文件',
-			'fileInfo.transportTimestamp' => '传输时间戳',
-			'fileInfo.displayOffset' => '显示偏移',
-			'fileInfo.previewFailureCode' => '预览失败代码',
-			'fileInfo.previewRetries' => '预览重试次数',
-			'fileInfo.aspectRatio' => '宽高比',
-			'fileInfo.pixelAspectRatio' => '像素宽高比',
-			'fileInfo.profile' => '编码配置',
-			'fileInfo.level' => '级别',
-			'fileInfo.bitDepth' => '位深度',
-			'fileInfo.pixelFormat' => '像素格式',
-			'fileInfo.colorSpace' => '色彩空间',
-			'fileInfo.colorRange' => '色彩范围',
-			'fileInfo.colorPrimaries' => '色彩基色',
-			'fileInfo.colorTransfer' => '色彩转换',
-			'fileInfo.chromaSubsampling' => '色度子采样',
-			'fileInfo.chromaLocation' => '色度位置',
-			'fileInfo.scanType' => '扫描类型',
-			'fileInfo.interlaced' => '隔行扫描',
-			'fileInfo.anamorphic' => '变形宽银幕',
-			'fileInfo.referenceFrames' => '参考帧',
-			'fileInfo.dynamicRange' => '动态范围',
-			'fileInfo.dolbyVision' => 'Dolby Vision',
-			'fileInfo.dolbyVisionLevel' => 'Dolby Vision 级别',
-			'fileInfo.dolbyVisionVersion' => 'Dolby Vision 版本',
-			'fileInfo.dolbyVisionLayers' => 'Dolby Vision 图层',
-			'fileInfo.baseLayerCompatibility' => '基础层兼容性',
-			'fileInfo.avcBitstream' => 'AVC 比特流',
-			'fileInfo.nalLengthSize' => 'NAL 长度',
-			'fileInfo.scalingMatrix' => '自定义缩放矩阵',
-			'fileInfo.streamIdentifier' => '流标识符',
-			'fileInfo.streamIndex' => '流索引',
-			'fileInfo.streamId' => '流 ID',
-			'fileInfo.language' => '语言',
-			'fileInfo.languageCode' => '语言代码',
-			'fileInfo.streamTitle' => '轨道标题',
-			'fileInfo.channels' => '声道',
-			'fileInfo.sampleRate' => '采样率',
-			'fileInfo.spatialAudio' => '空间音频',
-			'fileInfo.textBased' => '基于文本',
-			'fileInfo.subtitleFormat' => '外挂文件格式',
-			'fileInfo.provider' => '提供方',
-			'fileInfo.matchScore' => '匹配分数',
-			'fileInfo.externalDelivery' => '可单独提供',
-			'fileInfo.sidecarPath' => '外挂文件路径',
-			'fileInfo.sourceStream' => '复制来源',
-			'fileInfo.temporary' => '临时',
-			'fileInfo.timeBase' => '时间基准',
-			'fileInfo.overallBitrate' => '总比特率',
-			'fileInfo.path' => '路径',
-			'fileInfo.fileName' => '文件名',
-			'fileInfo.size' => '大小',
-			'fileInfo.totalSize' => '总大小',
-			'fileInfo.container' => '容器',
-			'fileInfo.duration' => '时长',
-			'fileInfo.previewThumbnails' => '预览缩略图',
-			'fileInfo.previewIndex' => '预览索引',
-			'fileInfo.packetLength' => '数据包长度',
-			'fileInfo.filePresent' => '文件存在',
-			'fileInfo.fileReadable' => '服务器可读',
-			'fileInfo.streamPath' => '流路径',
-			'fileInfo.optimizedForStreaming' => '已针对流式传输优化',
-			'fileInfo.has64bitOffsets' => '64 位偏移量',
-			'fileInfo.protocol' => '协议',
-			'fileInfo.mediaType' => '媒体类型',
-			'fileInfo.sourceKind' => '来源类型',
-			'fileInfo.optimizedVersion' => '优化版本',
-			'fileInfo.optimizationTarget' => '优化目标',
-			'fileInfo.deletedAt' => '已删除',
-			'fileInfo.remoteSource' => '远程来源',
-			'fileInfo.infiniteStream' => '无限流',
-			'fileInfo.directPlay' => '直接播放',
-			'fileInfo.directStream' => '直接串流',
-			'fileInfo.transcoding' => '转码',
-			'fileInfo.etag' => 'ETag',
-			'fileInfo.versionId' => '版本 ID',
-			'fileInfo.fileId' => '文件 ID',
-			'fileInfo.defaultAudioTrack' => '默认音轨',
-			'fileInfo.defaultSubtitleTrack' => '默认字幕轨道',
-			'fileInfo.subtitlesOff' => '关闭',
-			'fileInfo.flagDefault' => '默认',
-			'fileInfo.flagForced' => '强制',
-			'fileInfo.flagSelected' => '已选',
-			'fileInfo.flagExternal' => '外部',
-			'fileInfo.flagHearingImpaired' => '听障辅助',
-			'fileInfo.flagDub' => '配音',
-			'fileInfo.flagOriginal' => '原声',
-			'fileInfo.channelsMono' => '单声道',
-			'fileInfo.dolbyVisionProfile' => ({required Object profile}) => '编码配置 ${profile}',
-			'mediaMenu.markAsWatched' => '标记为已观看',
-			'mediaMenu.markAsUnwatched' => '标记为未观看',
-			'mediaMenu.removeFromContinueWatching' => '从继续观看中移除',
-			'mediaMenu.viewDetails' => '查看详情',
-			'mediaMenu.goToSeries' => '前往剧集',
-			'mediaMenu.shufflePlay' => '随机播放',
-			'mediaMenu.shuffleNotAvailableOffline' => '离线时无法随机播放',
-			'mediaMenu.fileInfo' => '文件信息',
-			'mediaMenu.deleteEpisodeFromServer' => '从服务器删除单集',
-			'mediaMenu.deleteSeasonFromServer' => '从服务器删除季度',
-			'mediaMenu.deleteShowFromServer' => '从服务器删除剧集',
-			'mediaMenu.deleteMovieFromServer' => '从服务器删除电影',
-			'mediaMenu.deleteEpisodeTitle' => '删除这个单集？',
-			'mediaMenu.deleteSeasonTitle' => '删除这一季度？',
-			'mediaMenu.deleteShowTitle' => '删除这部剧集？',
-			'mediaMenu.deleteMovieTitle' => '删除这部电影？',
-			'mediaMenu.deleteEpisodeConfirm' => '删除单集',
-			'mediaMenu.deleteSeasonConfirm' => '删除季度',
-			'mediaMenu.deleteShowConfirm' => '删除剧集',
-			'mediaMenu.deleteMovieConfirm' => '删除电影',
-			'mediaMenu.deleteAnyway' => '仍然删除',
-			'mediaMenu.confirmDeleteTarget' => ({required Object title}) => '从你的服务器永久删除 ${title}？',
-			'mediaMenu.deleteMultipleWarning' => '这包括所有剧集及其文件。',
-			'mediaMenu.deleteEpisodeCountWarning' => ({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('zh'))(n, other: '这将删除其中全部 ${n} 集以及它们的文件。', ), 
-			'mediaMenu.deleteMultiPartWarning' => ({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('zh'))(n, other: '此项目存储在 ${n} 个文件中，所有这些文件都会被删除。', ), 
-			'mediaMenu.deleteSharedFileHeading' => ({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('zh'))(n, other: '另外 ${n} 集存储在同一个文件中，也会一并删除：', ), 
-			'mediaMenu.deleteScopeUnverifiedProbeFailed' => 'Plezy 无法确认此操作会删除哪些文件，因此删除范围可能超出上面提到的项目。请取消后重试，或仍然删除。',
-			'mediaMenu.deleteScopeUnverifiedNoFileInfo' => '你的服务器没有提供此项目的文件详情，因此 Plezy 无法确认此操作会删除哪些文件。删除范围可能超出上面提到的项目。',
-			'mediaMenu.mediaDeletedSuccessfully' => '媒体项已成功删除',
-			'mediaMenu.mediaFailedToDelete' => '删除媒体项失败',
-			'mediaMenu.rate' => '评分',
-			'mediaMenu.playFromBeginning' => '从头播放',
-			'mediaMenu.playVersion' => '播放版本…',
-			'rateSheet.title' => '评分',
-			'rateSheet.server' => '服务器',
-			'rateSheet.favorite' => '收藏',
-			'rateSheet.favorited' => '已收藏',
-			'rateSheet.saved' => '已保存',
-			'rateSheet.notAvailable' => '未找到匹配项',
-			'rateSheet.noConnectedServices' => '在设置中连接服务，即可在此评分。',
-			'accessibility.mediaCardMovie' => ({required Object title}) => '${title}, 电影',
-			'accessibility.mediaCardShow' => ({required Object title}) => '${title}, 电视剧',
-			'accessibility.mediaCardEpisode' => ({required Object title, required Object episodeInfo}) => '${title}, ${episodeInfo}',
-			'accessibility.mediaCardSeason' => ({required Object title, required Object seasonInfo}) => '${title}, ${seasonInfo}',
-			'accessibility.mediaCardWatched' => '已观看',
-			'accessibility.mediaCardPartiallyWatched' => ({required Object percent}) => '已观看 ${percent}%',
-			'accessibility.mediaCardUnwatched' => '未观看',
-			'accessibility.tapToPlay' => '点击播放',
-			'accessibility.decrease' => '减小',
-			'accessibility.increase' => '增大',
-			'accessibility.decreaseValue' => ({required Object label}) => '减小${label}',
-			'accessibility.increaseValue' => ({required Object label}) => '增大${label}',
-			'accessibility.hue' => '色相',
-			'accessibility.saturation' => '饱和度',
-			'accessibility.brightness' => '亮度',
-			'accessibility.hexColor' => '十六进制颜色',
-			'accessibility.expandText' => '展开文本',
-			'accessibility.collapseText' => '折叠文本',
-			'accessibility.alphabetNavigation' => '字母导航',
-			'accessibility.alphabetScrollHint' => '上下滑动以按字母移动',
-			'accessibility.rowColumnPosition' => ({required Object row, required Object rowCount, required Object column, required Object columnCount}) => '第 ${row} 行，共 ${rowCount} 行；第 ${column} 列，共 ${columnCount} 列',
-			'accessibility.rowPosition' => ({required Object row, required Object rowCount}) => '第 ${row} 行，共 ${rowCount} 行',
-			'accessibility.autoScrollPlay' => '开始自动滚动',
-			'accessibility.autoScrollPause' => '暂停自动滚动',
-			'accessibility.hueShort' => 'H',
-			'accessibility.saturationShort' => 'S',
-			'accessibility.valueShort' => 'V',
-			'tooltips.shufflePlay' => '随机播放',
-			'tooltips.playTrailer' => '播放预告片',
-			'tooltips.markAsWatched' => '标记为已观看',
-			'tooltips.markAsUnwatched' => '标记为未观看',
-			'audioTracks.track' => ({required Object n}) => '音轨 ${n}',
-			'videoControls.audioLabel' => '音频',
-			'videoControls.subtitlesLabel' => '字幕',
-			'videoControls.addTime' => ({required Object amount, required Object unit}) => '+${amount}${unit}',
-			'videoControls.letterbox' => '黑边模式',
-			'videoControls.fillScreen' => '填充屏幕',
-			'videoControls.stretch' => '拉伸',
-			'videoControls.lockRotation' => '锁定旋转',
-			'videoControls.unlockRotation' => '解锁旋转',
-			'videoControls.timerActive' => '定时器已激活',
-			'videoControls.playbackWillPauseIn' => ({required Object duration}) => '播放将在 ${duration} 后暂停',
-			'videoControls.sleepTimerEndOfVideo' => '当前视频结束时',
-			'videoControls.sleepTimerStopAtHeader' => '停止于',
-			'videoControls.sleepTimerDurationHeader' => '定时器',
-			'videoControls.playbackWillPauseAtEnd' => '播放将在此视频结束时暂停',
-			'videoControls.stillWatching' => '还在看吗？',
-			'videoControls.pausingIn' => ({required Object seconds}) => '${seconds} 秒后暂停',
-			'videoControls.continueWatching' => '继续',
-			'videoControls.autoPlayNext' => '自动播放下一集',
-			'videoControls.playNext' => '播放下一集',
-			'videoControls.playButton' => '播放',
-			'videoControls.pauseButton' => '暂停',
-			'videoControls.playbackPaused' => '已暂停',
-			'videoControls.playbackResumed' => '正在播放',
-			'videoControls.loadingVideo' => '正在加载视频',
-			'videoControls.showPlaybackControls' => '显示播放控制项',
-			'videoControls.hidePlaybackControls' => '隐藏播放控制项',
-			'videoControls.seekBackwardButton' => ({required Object seconds}) => '快退 ${seconds} 秒',
-			'videoControls.seekForwardButton' => ({required Object seconds}) => '快进 ${seconds} 秒',
-			'videoControls.previousButton' => '上一集',
-			'videoControls.nextButton' => '下一集',
-			'videoControls.previousChapterButton' => '上一章节',
-			'videoControls.nextChapterButton' => '下一章节',
-			'videoControls.muteButton' => '静音',
-			'videoControls.unmuteButton' => '取消静音',
-			'videoControls.settingsButton' => '播放设置',
-			'videoControls.tracksButton' => '音频和字幕',
-			'videoControls.chaptersButton' => '章节',
-			'videoControls.versionQualityButton' => '版本与画质',
-			'videoControls.versionColumnHeader' => '版本',
-			'videoControls.qualityColumnHeader' => '画质',
-			'videoControls.qualityOriginal' => '原始',
-			'videoControls.qualityPresetLabel' => ({required Object resolution, required Object bitrate}) => '${resolution}p ${bitrate} Mbps',
-			'videoControls.transcodeUnavailableFallback' => '转码不可用 — 以原始画质播放',
-			'videoControls.subtitleUnavailableFallback' => '无法加载所选字幕 — 将继续无字幕播放',
-			'videoControls.pipButton' => '画中画',
-			'videoControls.aspectRatioButton' => '宽高比',
-			'videoControls.ambientLighting' => '氛围灯光',
-			'videoControls.fullscreenButton' => '进入全屏',
-			'videoControls.exitFullscreenButton' => '退出全屏',
-			'videoControls.alwaysOnTopButton' => '窗口置顶',
-			'videoControls.rotationLockButton' => '旋转锁定',
-			'videoControls.lockScreen' => '锁定屏幕',
-			'videoControls.screenLockButton' => '屏幕锁定',
-			'videoControls.timelineSlider' => '视频时间轴',
-			'videoControls.volumeSlider' => '音量滑块',
-			'videoControls.endsAt' => ({required Object time}) => '结束时间：${time}',
-			'videoControls.pipActive' => '正在以画中画模式播放',
-			'videoControls.pipFailed' => '画中画启动失败',
-			'videoControls.screenshotSaved' => '截图已保存',
-			'videoControls.screenshotFailed' => '无法截图',
-			'videoControls.zoomPercent' => ({required Object percent}) => '缩放 ${percent}%',
-			'videoControls.volumePercent' => ({required Object percent}) => '音量 ${percent}%',
-			'videoControls.pipErrors.androidVersion' => '需要 Android 8.0 或更高版本',
-			'videoControls.pipErrors.iosVersion' => '需要 iOS 15.0 或更高版本',
-			'videoControls.pipErrors.permissionDisabled' => '画中画已禁用。请在系统设置中启用。',
-			'videoControls.pipErrors.notSupported' => '此设备不支持画中画模式',
-			'videoControls.pipErrors.voSwitchFailed' => '无法切换画中画的视频输出',
-			'videoControls.pipErrors.failed' => '画中画启动失败',
-			'videoControls.pipErrors.prepareFailed' => '无法准备画中画',
-			'videoControls.pipErrors.unknown' => ({required Object error}) => '发生错误：${error}',
-			'videoControls.chapters' => '章节',
-			'videoControls.noChaptersAvailable' => '没有可用的章节',
-			'videoControls.queue' => '播放队列',
-			'videoControls.noQueueItems' => '队列中没有项目',
-			'videoControls.noAudioDevicesAvailable' => '没有可用的音频设备',
-			'videoControls.searchSubtitles' => '搜索字幕',
-			'videoControls.language' => '语言',
-			'videoControls.noSubtitlesFound' => '未找到字幕',
-			'videoControls.subtitleDownloaded' => '字幕已下载',
-			'videoControls.subtitleDownloadedNotApplied' => '字幕已下载，但无法选择',
-			'videoControls.subtitleDownloadFailed' => '字幕下载失败',
-			'videoControls.subtitleDownloadTimedOut' => '字幕未及时出现，下载可能已失败',
-			'videoControls.searchLanguages' => '搜索语言…',
-			'videoControls.skipIntro' => '跳过片头',
-			'videoControls.skipCredits' => '跳过片尾',
-			'videoControls.nextEpisode' => '下一集',
-			'videoControls.subtitleTrack' => ({required Object n}) => '轨道 ${n}',
-			'videoControls.subtitleFile' => ({required Object name}) => '字幕 ${name}',
-			'videoControls.forcedTrack' => ({required Object label}) => '${label}（强制）',
-			'videoControls.osdSubtitlesOff' => '字幕：关闭',
-			'videoControls.osdSubtitles' => ({required Object track}) => '字幕：${track}',
-			'videoControls.osdAudio' => ({required Object track}) => '音频：${track}',
-			'messages.markedAsWatched' => '已标记为已观看',
-			'messages.markedAsUnwatched' => '已标记为未观看',
-			'messages.markedAsWatchedOffline' => '已标记为已观看（将在联网时同步）',
-			'messages.markedAsUnwatchedOffline' => '已标记为未观看（将在联网时同步）',
-			'messages.autoRemovedWatchedDownload' => ({required Object title}) => '已自动移除：${title}',
-			'messages.autoRemovedWatchedDownloads' => ({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('zh'))(n, other: '已自动移除 ${n} 个看过的下载', ), 
-			'messages.removedFromContinueWatching' => '已从继续观看中移除',
-			'messages.errorLoading' => ({required Object error}) => '出错：${error}',
-			'messages.searchPartialResults' => '部分媒体服务器无法搜索。正在显示可用的结果。',
-			'messages.streamInterrupted' => '视频流已中断。按播放键或拖动进度条重试。',
-			'messages.liveStreamInterrupted' => '直播流已中断。按播放键重试。',
-			'messages.fileInfoNotAvailable' => '文件信息不可用',
-			'messages.playbackAuthenticationRequired' => '请重新登录媒体服务器以播放此项目。',
-			'messages.playbackServerUnavailable' => '媒体服务器不可用。请稍后重试。',
-			'messages.playbackDataInvalid' => '服务器返回了无效的播放信息。',
-			'messages.playbackCancelled' => '播放已取消。',
-			'messages.playbackFailed' => '无法开始播放。',
-			'messages.playbackFailedDetail' => ({required Object error}) => '无法开始播放：${error}',
-			'messages.audioOutputFailed' => '音频输出停止响应。请检查电视或功放的音频连接；如果其他应用也没有声音，请重启设备。',
-			'messages.mediaUnavailable' => '此内容不再可用。',
-			'messages.errorLoadingFileInfo' => ({required Object error}) => '加载文件信息时出错：${error}',
-			'messages.errorLoadingSeries' => '加载剧集时出错',
-			'messages.musicNotSupported' => '尚不支持播放音乐',
-			'messages.noDescriptionAvailable' => '暂无描述',
-			'messages.noProfilesAvailable' => '没有可用的用户资料',
-			'messages.contactAdminForProfiles' => '请联系服务器管理员添加用户资料',
-			'messages.unableToDetermineLibrarySection' => '无法确定此项目所属的媒体库',
-			'messages.logsCleared' => '日志已清除',
-			'messages.logsCopied' => '日志已复制到剪贴板',
-			'messages.noLogsAvailable' => '没有可用日志',
-			'messages.libraryScanning' => ({required Object title}) => '正在扫描“${title}”…',
-			'messages.libraryScanStarted' => ({required Object title}) => '已开始扫描“${title}”媒体库',
-			'messages.libraryScanFailed' => ({required Object error}) => '无法扫描媒体库：${error}',
-			'messages.metadataRefreshing' => ({required Object title}) => '正在刷新“${title}”的元数据…',
-			'messages.metadataRefreshStarted' => ({required Object title}) => '已开始刷新“${title}”的元数据',
-			'messages.metadataRefreshFailed' => ({required Object error}) => '无法刷新元数据：${error}',
-			'messages.logoutConfirm' => '确定要退出登录吗？',
-			'messages.noSeasonsFound' => '未找到季',
-			'messages.seasonsLoadFailed' => '无法加载季',
-			'messages.noEpisodesFound' => '在第一季中未找到剧集',
-			'messages.noEpisodesFoundGeneral' => '未找到剧集',
-			'messages.episodesLoadFailed' => '无法加载剧集',
-			'messages.noResultsFound' => '未找到结果',
-			'messages.sleepTimerSet' => ({required Object label}) => '睡眠定时器已设置为 ${label}',
-			'messages.noItemsAvailable' => '没有可用的项目',
-			'messages.failedToCreatePlayQueueNoItems' => '创建播放队列失败：没有可用项目',
-			'messages.failedPlayback' => ({required Object action, required Object error}) => '无法执行“${action}”：${error}',
-			'messages.switchingToCompatiblePlayer' => '正在切换到兼容的播放器…',
-			'messages.serverLimitTitle' => '播放失败',
-			'messages.serverLimitBody' => '服务器错误（HTTP 500）。此次会话可能因带宽或转码限制而被拒绝。请联系服务器所有者调整限制。',
-			'messages.mediaUnreadableTitle' => '文件不可用',
-			'messages.mediaUnreadableBody' => '服务器找到了此项目，但无法读取其文件（HTTP 404）。文件可能已被移动、删除，或其存储已离线。请联系服务器管理员检查文件并重新扫描媒体库。',
-			'messages.serverBusyTitle' => '视频流不可用',
-			'messages.serverBusyBody' => '服务器持续拒绝传输此文件（HTTP 503）。服务器可能正在重启或正忙，也可能是文件所在的存储设备已离线。请稍后重试；如果问题持续出现，请联系服务器所有者检查服务器和文件存储设备。',
-			'messages.playbackNotAllowedTitle' => '不允许播放',
-			'messages.playbackNotAllowedBody' => '服务器拒绝传输此项目（HTTP 403）。此账户可能没有播放权限，或服务器可能仅允许在其局域网内播放。',
-			'messages.logsUploaded' => '日志已上传',
-			'messages.logsUploadFailed' => '上传日志失败',
-			'messages.logId' => '日志 ID',
-			'messages.burnedSubtitlesUseMenu' => '字幕已烧录到此视频流中。请从字幕菜单中更改。',
-			'messages.noVideoUrl' => '没有可用的视频 URL',
-			'messages.playbackNoMediaSources' => '服务器未返回可播放的媒体源',
-			'messages.playbackDataNotPrepared' => '播放数据尚未准备就绪时便开始了播放',
-			'messages.streamSelectionUnavailable' => '此媒体源不支持选择视频流',
-			'messages.streamSelectionFailed' => '无法应用所选视频流',
-			'messages.trackSelectionNotRemembered' => '此轨道选择仅对当前播放生效。',
-			'messages.serverUnavailableForProfile' => '没有可供当前用户资料使用的服务器',
-			'subtitlingStyling.text' => '文本',
-			'subtitlingStyling.border' => '边框',
-			'subtitlingStyling.background' => '背景',
-			'subtitlingStyling.fontSize' => '字号',
-			'subtitlingStyling.textColor' => '文本颜色',
-			'subtitlingStyling.borderSize' => '边框大小',
-			'subtitlingStyling.borderColor' => '边框颜色',
-			'subtitlingStyling.backgroundOpacity' => '背景不透明度',
-			'subtitlingStyling.backgroundColor' => '背景颜色',
-			'subtitlingStyling.position' => '位置',
-			'subtitlingStyling.assOverride' => 'ASS 样式覆盖',
-			'subtitlingStyling.overrideScale' => '缩放',
-			'subtitlingStyling.overrideForce' => '强制',
-			'subtitlingStyling.overrideStrip' => '移除样式',
-			'subtitlingStyling.positionTop' => '顶部',
-			'subtitlingStyling.positionBottom' => '底部',
-			'subtitlingStyling.useMargins' => '使用边距',
-			'subtitlingStyling.useMarginsDescription' => '允许文字字幕显示在视频画面之外的区域。样式字幕可能保留其原始位置。',
-			'subtitlingStyling.anchorToScreen' => '锚定到屏幕',
-			'subtitlingStyling.anchorToScreenDescription' => '在宽屏视频下方的黑边中显示文本字幕',
-			'subtitlingStyling.bold' => '粗体',
-			'subtitlingStyling.italic' => '斜体',
-			'subtitlingStyling.renderResolution' => '渲染分辨率',
-			'subtitlingStyling.renderResolutionScreen' => '屏幕分辨率',
-			'subtitlingStyling.renderResolutionVideo' => '视频分辨率',
-			'mpvConfig.title' => 'mpv 配置',
-			'mpvConfig.description' => '高级视频播放器设置',
-			'mpvConfig.presets' => '预设',
-			'mpvConfig.noPresets' => '没有保存的预设',
-			'mpvConfig.saveAsPreset' => '保存为预设…',
-			'mpvConfig.presetName' => '预设名称',
-			'mpvConfig.presetNameHint' => '输入此预设的名称',
-			'mpvConfig.loadPreset' => '加载',
-			'mpvConfig.deletePreset' => '删除',
-			'mpvConfig.presetSaved' => '预设已保存',
-			'mpvConfig.presetLoaded' => '预设已加载',
-			'mpvConfig.presetDeleted' => '预设已删除',
-			'mpvConfig.confirmDeletePreset' => '确定要删除此预设吗？',
-			'mpvConfig.configPlaceholder' => 'gpu-api=vulkan\nhwdec=auto\n# comment',
-			'mpvConfig.lineHint' => 'option=value',
-			'mpvConfig.addLine' => '添加行',
-			'mpvConfig.removeLine' => '移除行',
-			'mpvConfig.embeddedVoHint' => 'Linux 上会忽略 vo、gpu-context 和 gpu-api：嵌入式视频始终通过视频平面上的 vo=libmpv 渲染，而 gpu-next（ArtCNN 等计算着色器需要它）无法以嵌入式方式运行。',
-			'dialog.confirmAction' => '确认操作',
-			'profiles.addPlezyProfile' => '添加 Plezy 用户资料',
-			'profiles.switchingProfile' => '正在切换用户资料…',
-			'profiles.deleteThisProfileTitle' => '删除此用户资料？',
-			'profiles.deleteThisProfileMessage' => ({required Object displayName}) => '移除 ${displayName}。连接不会受影响。',
-			'profiles.active' => '当前使用',
-			'profiles.manage' => '管理',
-			'profiles.delete' => '删除',
-			'profiles.signOut' => '退出登录',
-			'profiles.signOutPlexTitle' => '退出 Plex 登录？',
-			'profiles.signOutPlexMessage' => ({required Object displayName}) => '要移除 ${displayName} 和所有 Plex Home 用户吗？可随时重新登录。',
-			'profiles.signOutPlexDeleteDownloads' => '同时删除下载内容',
-			'profiles.signOutPlexDeleteDownloadsDescription' => '否则下载内容将保留在此设备上，并在你重新登录此账户时恢复。',
-			'profiles.signedOutPlex' => '已退出 Plex 登录。',
-			'profiles.signOutFailed' => '退出登录失败。',
-			'profiles.sectionTitle' => '用户资料',
-			'profiles.summarySingle' => '添加用户资料，以便同时使用受管理用户和本地用户身份',
-			'profiles.summaryMultipleWithActive' => ({required Object count, required Object activeName}) => '${count} 个用户资料 · 当前：${activeName}',
-			'profiles.summaryMultiple' => ({required Object count}) => '${count} 个用户资料',
-			'profiles.removeConnectionTitle' => '移除连接？',
-			'profiles.removeConnectionMessage' => ({required Object displayName, required Object connectionLabel}) => '移除 ${displayName} 对 ${connectionLabel} 的访问权限。其他用户资料仍可使用此连接。',
-			'profiles.deleteProfileTitle' => '删除用户资料？',
-			'profiles.deleteProfileMessage' => ({required Object displayName}) => '移除 ${displayName} 及其连接。服务器仍可供其他用户资料使用。',
-			'profiles.profileNameLabel' => '用户资料名称',
-			'profiles.pinProtectionLabel' => 'PIN 保护',
-			'profiles.pinManagedByPlex' => 'PIN 由 Plex 管理。在 plex.tv 上编辑。',
-			'profiles.noPinSetEditOnPlex' => '未设置 PIN。如需设置，请在 plex.tv 上编辑 Plex Home 用户。',
-			'profiles.setPin' => '设置 PIN',
-			'profiles.setPinTitle' => '设置 PIN',
-			'profiles.confirmPinTitle' => '确认 PIN',
-			'profiles.pinSet' => '已设置 PIN',
-			'profiles.changePin' => '更改',
-			'profiles.removePin' => '移除',
-			'profiles.connectionsLabel' => '连接',
-			'profiles.add' => '添加',
-			'profiles.deleteProfileButton' => '删除用户资料',
-			'profiles.noConnectionsHint' => '没有连接 — 请添加连接以使用此用户资料。',
-			'profiles.noConnections' => '没有连接',
-			'profiles.plexHomeAccount' => 'Plex Home 账户',
-			'profiles.plexAccountChip' => ({required Object account}) => 'Plex 账户：${account}',
-			'profiles.plexAccountUserChip' => ({required Object account, required Object user}) => '${account} 账户下的 ${user}',
-			'profiles.connectionDefault' => '默认',
-			'profiles.connectionAs' => ({required Object displayName}) => '以 ${displayName} 身份',
-			'profiles.makeDefault' => '设为默认',
-			'profiles.removeConnection' => '移除',
-			'profiles.profileRenamed' => '用户资料已重命名。',
-			'profiles.borrowAddTo' => ({required Object displayName}) => '添加到 ${displayName}',
-			'profiles.borrowExplain' => '使用另一个用户资料的连接。受 PIN 保护的用户资料需要输入 PIN。',
-			'profiles.borrowEmpty' => '暂无可用连接。',
-			'profiles.borrowEmptySubtitle' => '请先将 Plex、Jellyfin 或 Emby 连接到另一个用户资料。',
-			'profiles.borrowLoadFailed' => '无法加载可用连接。请重试。',
-			'profiles.borrowFromProfile' => ({required Object displayName}) => '来自 ${displayName}',
-			'profiles.borrowConnectionBorrowed' => '连接已添加。',
-			'profiles.borrowFailed' => '无法添加连接。',
-			'profiles.incorrectPin' => 'PIN 不正确。',
-			'profiles.incorrectPinTryAgain' => 'PIN 不正确。请重试。',
-			'profiles.sourceProfileMissingParentAccount' => '源用户资料缺少关联的主账户。',
-			'profiles.failedToLoadHomeUsers' => '无法加载您的 Plex Home 用户。请检查网络连接后重试。',
-			'profiles.failedToVerifyPin' => '无法验证 PIN。',
-			'profiles.newProfile' => '新建用户资料',
-			'profiles.profileNameHint' => '例如：访客、儿童、客厅',
-			'profiles.pinProtectionOptional' => 'PIN 保护（可选）',
-			'profiles.pinExplain' => '切换用户资料时需要输入 4 位 PIN。',
-			'profiles.continueButton' => '继续',
-			'profiles.pinsDontMatch' => 'PIN 不匹配',
-			'profiles.tokenIdentityMismatch' => 'Plex 用户资料令牌解析到了非预期服务器',
-			'connections.sectionTitle' => '连接',
-			_ => null,
-		} ?? switch (path) {
-			'connections.addConnection' => '添加连接',
-			'connections.addConnectionSubtitleNoProfile' => '使用 Plex 登录，或连接 Jellyfin 或 Emby 服务器',
-			'connections.addConnectionSubtitleScoped' => ({required Object displayName}) => '添加到 ${displayName}：Plex、Jellyfin、Emby，或其他用户资料的连接',
-			'connections.sessionExpiredOne' => ({required Object name}) => '${name} 的会话已过期',
-			'connections.sessionExpiredMany' => ({required Object count}) => '${count} 个服务器的会话已过期',
-			'connections.accessDeniedOne' => ({required Object name}) => '${name} 拒绝此账户访问',
-			'connections.accessDeniedMany' => ({required Object count}) => '${count} 台服务器拒绝此账户访问',
-			'connections.signInAgain' => '重新登录',
-			'connections.editMediaBrowserTitle' => ({required Object product}) => '编辑 ${product} 连接',
-			'connections.editMediaBrowserIntro' => ({required Object serverName}) => '为 ${serverName} 添加或移除 URL。Plezy 会使用延迟最低且可访问的 URL。',
-			'accountPreferences.sectionTitle' => '账户偏好',
-			'accountPreferences.hubSubtitleSingle' => ({required Object account}) => '音频、字幕和媒体库选项已保存在 ${account} 上',
-			'accountPreferences.hubSubtitleMultiple' => ({required Object count}) => '音频、字幕和媒体库选项已保存在 ${count} 个账户上',
-			'accountPreferences.pickAccount' => '每个账户都保存自己的偏好设置。选择要编辑的账户。',
-			'accountPreferences.storedOnAccount' => '这些选项保存在账户本身，因此所有登录该账户的应用都会使用它们——包括你其他设备上的 Plezy。',
-			'accountPreferences.noAccounts' => '没有可配置的账户',
-			'accountPreferences.noAccountsHint' => '登录 Plex，或连接 Jellyfin 或 Emby 服务器，该账户上保存的偏好设置就会显示在这里。',
-			'accountPreferences.unavailable' => '无法访问此账户',
-			'accountPreferences.loadFailed' => '无法加载这些偏好设置',
-			'accountPreferences.noPreference' => '无偏好',
-			'accountPreferences.notSet' => '未设置',
-			'accountPreferences.groups.audioAndSubtitles' => '音频与字幕',
-			'accountPreferences.groups.libraryDisplay' => '媒体库',
-			'accountPreferences.groups.personalMedia' => '个人媒体',
-			'accountPreferences.preferredAudioLanguage' => '首选音频语言',
-			'accountPreferences.autoSelectAudio' => '按语言选择音频',
-			'accountPreferences.autoSelectAudioDescription' => '关闭后保留文件标记为默认的音轨。',
-			'accountPreferences.preferredSubtitleLanguage' => '首选字幕语言',
-			'accountPreferences.subtitleMode' => '开启字幕',
-			'accountPreferences.subtitleModes.none' => '手动选择',
-			'accountPreferences.subtitleModes.noneDescription' => '从不自动打开字幕。',
-			'accountPreferences.subtitleModes.defaultMode' => '遵循轨道标记',
-			'accountPreferences.subtitleModes.defaultModeDescription' => '使用存储在各字幕轨道上的默认和强制标记。',
-			'accountPreferences.subtitleModes.always' => '始终启用',
-			'accountPreferences.subtitleModes.alwaysDescription' => '只要有首选语言的字幕轨道就将其打开。',
-			'accountPreferences.subtitleModes.onlyForced' => '仅强制字幕',
-			'accountPreferences.subtitleModes.onlyForcedDescription' => '只加载标记为强制的轨道。',
-			'accountPreferences.subtitleModes.smart' => '外语音频时显示',
-			'accountPreferences.subtitleModes.smartDescription' => '仅在音频为其他语言时打开字幕。',
-			'accountPreferences.subtitleAccessibility' => 'SDH 字幕',
-			'accountPreferences.subtitleAccessibilityOptions.preferNonSdh' => '优先非 SDH 字幕',
-			'accountPreferences.subtitleAccessibilityOptions.preferSdh' => '优先 SDH 字幕',
-			'accountPreferences.subtitleAccessibilityOptions.onlySdh' => '仅 SDH 字幕',
-			'accountPreferences.subtitleAccessibilityOptions.onlyNonSdh' => '仅非 SDH 字幕',
-			'accountPreferences.forcedSubtitles' => '强制字幕',
-			'accountPreferences.forcedSubtitleOptions.preferNonForced' => '优先非强制字幕',
-			'accountPreferences.forcedSubtitleOptions.preferForced' => '优先强制字幕',
-			'accountPreferences.forcedSubtitleOptions.onlyForced' => '仅强制字幕',
-			'accountPreferences.forcedSubtitleOptions.onlyNonForced' => '仅非强制字幕',
-			'accountPreferences.displayMissingEpisodes' => '显示缺失剧集',
-			'accountPreferences.displayMissingEpisodesDescription' => '列出服务器知道但没有对应文件的剧集。',
-			'accountPreferences.hidePlayedInLatest' => '在“最新”中隐藏已观看项目',
-			'accountPreferences.hidePlayedInLatestDescription' => '将你已经看过的项目从服务器的“最新”列表中移除。',
-			'accountPreferences.displayCollectionsView' => '显示合集视图',
-			'accountPreferences.displayCollectionsViewDescription' => '在媒体库之外提供服务器的合集视图。',
-			'accountPreferences.rewatchingInNextUp' => '在“接下来”中保留重看的剧集',
-			'accountPreferences.rewatchingInNextUpDescription' => '看完一部剧集后再次开始观看时，“接下来”会跟随重看进度，而不是将剧集移除。',
-			'accountPreferences.watchedIndicator' => '已观看标记',
-			'accountPreferences.watchedIndicatorOptions.none' => '从不',
-			'accountPreferences.watchedIndicatorOptions.moviesAndShows' => '电影和电视剧',
-			'accountPreferences.watchedIndicatorOptions.movies' => '仅电影',
-			'accountPreferences.watchedIndicatorOptions.shows' => '仅电视剧',
-			'accountPreferences.mediaReviewsVisibility' => '评分与评论',
-			'accountPreferences.mediaReviewsOptions.usersAndCritics' => '用户和影评人',
-			'accountPreferences.mediaReviewsOptions.usersOnly' => '仅用户',
-			'accountPreferences.mediaReviewsOptions.criticsOnly' => '仅影评人',
-			'accountPreferences.mediaReviewsOptions.nobody' => '隐藏',
-			'discover.title' => '发现',
-			'discover.noContentAvailable' => '没有可用内容',
-			'discover.addMediaToLibraries' => '请向你的媒体库添加一些媒体',
-			'discover.continueWatching' => '继续观看',
-			'discover.continueWatchingIn' => ({required Object library}) => '${library} 中继续观看',
-			'discover.nextUp' => '接下来',
-			'discover.nextUpIn' => ({required Object library}) => '${library} 中接下来',
-			'discover.recentlyAdded' => '最近添加',
-			'discover.recentlyAddedIn' => ({required Object library}) => '${library} 中最近添加',
-			'discover.latestAlbumsIn' => ({required Object library}) => '${library} 中的最新专辑',
-			'discover.recentlyPlayedIn' => ({required Object library}) => '${library} 中最近播放',
-			'discover.mostPlayedIn' => ({required Object library}) => '${library} 中最常播放',
-			'discover.playEpisode' => ({required Object season, required Object episode}) => 'S${season}E${episode}',
-			'discover.overview' => '概述',
-			'discover.cast' => '演员表',
-			'discover.extras' => '预告片与花絮',
-			'discover.studio' => '制作公司',
-			'discover.rating' => '年龄分级',
-			'discover.director' => '导演',
-			'discover.directors' => '导演',
-			'discover.movie' => '电影',
-			'discover.tvShow' => '电视剧',
-			'discover.minutesLeft' => ({required Object minutes}) => '剩余 ${minutes} 分钟',
-			'discover.moreLikeThis' => '更多类似内容',
-			'discover.titleCount' => ({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('zh'))(n, other: '${n} 个标题', ), 
-			'discover.person.born' => '出生',
-			'discover.person.died' => '逝世',
-			'discover.person.birthplace' => '出生地',
-			'discover.person.dateWithAge' => ({required Object date, required Object age}) => '${date}（${age} 岁）',
-			'discover.person.dateWithAgeAtDeath' => ({required Object date, required Object age}) => '${date}（享年 ${age} 岁）',
-			'errors.searchFailed' => ({required Object error}) => '搜索失败：${error}',
-			'errors.searchUnavailable' => '搜索无法连接任何媒体服务器。',
-			'errors.connectionTimeout' => ({required Object context}) => '加载 ${context} 时连接超时',
-			'errors.connectionFailed' => '无法连接到媒体服务器',
-			'errors.unableToLoad' => ({required Object context}) => '无法加载${context}。请重试。',
-			'errors.noClientAvailable' => '没有可用客户端',
-			'errors.pleaseEnterToken' => '请输入一个令牌',
-			'errors.invalidToken' => '令牌无效',
-			'errors.failedToVerifyToken' => ({required Object error}) => '无法验证令牌：${error}',
-			'errors.failedToSwitchProfile' => ({required Object displayName}) => '无法切换到 ${displayName}',
-			'errors.failedToDeleteProfile' => ({required Object displayName}) => '无法删除 ${displayName}',
-			'errors.failedToRate' => '无法更新评分',
-			'errors.reasonTimedOut' => '连接超时',
-			'errors.reasonUnreachable' => '无法连接到服务器',
-			'errors.reasonRefused' => '服务器拒绝了此请求',
-			'errors.reasonNotFound' => '该项目已不在服务器上',
-			'errors.reasonServerError' => '服务器报告了一个错误',
-			'errors.reasonCancelled' => '请求已取消',
-			'errors.reasonUnexpected' => '发生了意外错误',
-			'libraries.title' => '媒体库',
-			'libraries.fallbackTitle' => '媒体库',
-			'libraries.scanLibraryFiles' => '扫描媒体库文件',
-			'libraries.scanLibrary' => '扫描媒体库',
-			'libraries.analyze' => '分析',
-			'libraries.analyzeLibrary' => '分析媒体库',
-			'libraries.refreshMetadata' => '刷新元数据',
-			'libraries.emptyTrash' => '清空回收站',
-			'libraries.emptyingTrash' => ({required Object title}) => '正在清空“${title}”的回收站…',
-			'libraries.trashEmptied' => ({required Object title}) => '已清空“${title}”的回收站',
-			'libraries.failedToEmptyTrash' => ({required Object error}) => '无法清空回收站：${error}',
-			'libraries.analyzing' => ({required Object title}) => '正在分析“${title}”…',
-			'libraries.analysisStarted' => ({required Object title}) => '已开始分析“${title}”',
-			'libraries.failedToAnalyze' => ({required Object error}) => '无法分析媒体库：${error}',
-			'libraries.noLibrariesFound' => '未找到媒体库',
-			'libraries.allLibrariesHidden' => '所有媒体库已隐藏',
-			'libraries.hiddenLibrariesCount' => ({required Object count}) => '已隐藏的媒体库 (${count})',
-			'libraries.thisLibraryIsEmpty' => '此媒体库为空',
-			'libraries.noItemsMatchFilters' => '没有项目符合当前筛选条件',
-			'libraries.resetFilters' => '重置筛选条件',
-			'libraries.all' => '全部',
-			'libraries.clearAll' => '全部清除',
-			'libraries.scanLibraryConfirm' => ({required Object title}) => '确定要扫描“${title}”吗？',
-			'libraries.analyzeLibraryConfirm' => ({required Object title}) => '确定要分析“${title}”吗？',
-			'libraries.refreshMetadataConfirm' => ({required Object title}) => '确定要刷新“${title}”的元数据吗？',
-			'libraries.emptyTrashConfirm' => ({required Object title}) => '确定要清空“${title}”的回收站吗？',
-			'libraries.manageLibraries' => '管理媒体库',
-			'libraries.sort' => '排序',
-			'libraries.sortBy' => '排序依据',
-			'libraries.filters' => '筛选',
-			'libraries.confirmActionMessage' => '确定要执行此操作吗？',
-			'libraries.showLibrary' => '显示媒体库',
-			'libraries.hideLibrary' => '隐藏媒体库',
-			'libraries.libraryOptions' => '媒体库选项',
-			'libraries.content' => '媒体库内容',
-			'libraries.selectLibrary' => '选择媒体库',
-			'libraries.filtersWithCount' => ({required Object count}) => '筛选器（${count}）',
-			'libraries.noRecommendations' => '暂无推荐',
-			'libraries.noCollections' => '此媒体库中没有合集',
-			'libraries.noFoldersFound' => '未找到文件夹',
-			'libraries.folders' => '文件夹',
-			'libraries.tabs.recommended' => '推荐',
-			'libraries.tabs.browse' => '浏览',
-			'libraries.tabs.collections' => '合集',
-			'libraries.tabs.playlists' => '播放列表',
-			'libraries.groupings.title' => '分组',
-			'libraries.groupings.all' => '全部',
-			'libraries.groupings.movies' => '电影',
-			'libraries.groupings.shows' => '剧集',
-			'libraries.groupings.seasons' => '季',
-			'libraries.groupings.episodes' => '集',
-			'libraries.groupings.artists' => '艺术家',
-			'libraries.groupings.albums' => '专辑',
-			'libraries.groupings.tracks' => '曲目',
-			'libraries.groupings.folders' => '文件夹',
-			'libraries.filterCategories.genre' => '类型',
-			'libraries.filterCategories.year' => '年份',
-			'libraries.filterCategories.contentRating' => '内容分级',
-			'libraries.filterCategories.tag' => '标签',
-			'libraries.filterCategories.unwatched' => '未观看',
-			'libraries.filterCategories.unplayed' => '未播放',
-			'libraries.filterCategories.favorites' => '收藏夹',
-			'libraries.filterCategories.filePath' => '文件路径',
-			'libraries.sortLabels.title' => '标题',
-			'libraries.sortLabels.dateAdded' => '添加日期',
-			'libraries.sortLabels.releaseDate' => '发行日期',
-			'libraries.sortLabels.rating' => '评分',
-			'libraries.sortLabels.communityRating' => '社区评分',
-			'libraries.sortLabels.criticRating' => '影评人评分',
-			'libraries.sortLabels.userRating' => '用户评分',
-			'libraries.sortLabels.datePlayed' => '播放日期',
-			'libraries.sortLabels.playCount' => '播放次数',
-			'libraries.sortLabels.productionYear' => '制作年份',
-			'libraries.sortLabels.runtime' => '时长',
-			'libraries.sortLabels.officialRating' => '官方分级',
-			'libraries.sortLabels.premiereDate' => '首映日期',
-			'libraries.sortLabels.startDate' => '开始日期',
-			'libraries.sortLabels.airTime' => '播出时间',
-			'libraries.sortLabels.studio' => '制片公司',
-			'libraries.sortLabels.random' => '随机',
-			'libraries.sortLabels.dateShared' => '共享日期',
-			'libraries.sortLabels.latestEpisodeAirDate' => '最新一集播出日期',
-			'libraries.sortLabels.lastEpisodeDateAdded' => '最新一集添加日期',
-			'libraries.sortLabels.dateDownloaded' => '下载日期',
-			'libraries.sortLabels.size' => '大小',
-			'libraries.sortLabels.library' => '媒体库',
-			'libraries.advancedFilters.include' => '包含',
-			'libraries.advancedFilters.exclude' => '排除',
-			'libraries.advancedFilters.any' => '不限',
-			'libraries.advancedFilters.yes' => '是',
-			'libraries.advancedFilters.no' => '否',
-			'libraries.advancedFilters.not' => ({required Object value}) => '排除 ${value}',
-			'libraries.advancedFilters.valueCount' => ({required Object count}) => '已选 ${count} 项',
-			'libraries.advancedFilters.valueCountExcluded' => ({required Object count}) => '已排除 ${count} 项',
-			'libraries.advancedFilters.searchValues' => '搜索值',
-			'libraries.advancedFilters.noValues' => '没有可选值',
-			'libraries.advancedFilters.matchContains' => '包含',
-			'libraries.advancedFilters.matchNotContains' => '不包含',
-			'libraries.advancedFilters.matchIs' => '是',
-			'libraries.advancedFilters.matchIsNot' => '不是',
-			'libraries.advancedFilters.matchBeginsWith' => '开头为',
-			'libraries.advancedFilters.matchEndsWith' => '结尾为',
-			'libraries.advancedFilters.textHint' => '输入以匹配',
-			'libraries.advancedFilters.from' => '从',
-			'libraries.advancedFilters.to' => '至',
-			'libraries.advancedFilters.range' => ({required Object from, required Object to}) => '${from} 至 ${to}',
-			'libraries.advancedFilters.atLeast' => ({required Object value}) => '${value} 及以上',
-			'libraries.advancedFilters.atMost' => ({required Object value}) => '${value} 及以下',
-			'libraries.advancedFilters.dateLastDays' => ({required Object count}) => '最近 ${count} 天',
-			'libraries.advancedFilters.dateLastYear' => '过去一年',
-			'libraries.advancedFilters.dateOlderThanDays' => ({required Object count}) => '早于 ${count} 天前',
-			'libraries.advancedFilters.dateOlderThanYear' => '早于一年前',
-			'about.title' => '关于',
-			'about.openSourceLicenses' => '开源许可证',
-			'about.versionLabel' => ({required Object version}) => '版本 ${version}',
-			'about.appDescription' => '一款精美的 Flutter Plex、Jellyfin 和 Emby 客户端',
-			'about.viewLicensesDescription' => '查看第三方库的许可证',
-			'serverSelection.noServersFoundForAccount' => ({required Object username, required Object email}) => '未找到 ${username}（${email}）的服务器',
-			'serverSelection.failedToLoadServers' => ({required Object error}) => '无法加载服务器：${error}',
-			'serverSelection.noValidServers' => '此账号下未找到可用的服务器',
-			'hubDetail.title' => '标题',
-			'hubDetail.releaseYear' => '发行年份',
-			'hubDetail.dateAdded' => '添加日期',
-			'hubDetail.rating' => '评分',
-			'hubDetail.noItemsFound' => '未找到项目',
-			'logs.clearLogs' => '清除日志',
-			'logs.copyLogs' => '复制日志',
-			'logs.uploadLogs' => '上传日志',
-			'startup.failedTitle' => 'Plezy 无法启动',
-			'startup.failedBody' => '启动过程中出现问题。以下详情指出了失败的原因。',
-			'startup.failedBodyRepairable' => 'Plezy 的已保存设置文件已损坏，必须先重建才能启动。重试没有用——请选择“修复存储”。',
-			'startup.phaseLabel' => '步骤',
-			'startup.showDetails' => '显示详情',
-			'startup.hideDetails' => '隐藏详情',
-			'startup.copyDetails' => '复制详情',
-			'startup.detailsCopied' => '详情已复制到剪贴板',
-			'startup.uploadDetails' => '上传详情',
-			'startup.repairStorage' => '修复存储',
-			'startup.repairTitle' => '修复已存储的数据？',
-			'startup.repairBodyCommon' => 'Plezy 的设置文件已损坏且无法读取。修复会将所有设置重置为默认值。',
-			'startup.repairBodyOneCredential' => '有一项已保存的登录信息已损坏且无法读取。修复只会移除这一项，其他设置保持不变。',
-			'startup.repairBodySignInsKept' => '你的服务器和个人资料应保持登录状态。',
-			'startup.repairBodySignInsLost' => '保护已保存登录信息的密钥无法从此文件中恢复，因此你需要重新登录每个服务器和个人资料。媒体服务器上的内容不受影响。',
-			'startup.repairBodySessionsUncertain' => '追踪服务（MAL、AniList、Simkl、Trakt）和 Seerr 是分开存储的，可能保留也可能无法保留。Plezy 会明确告诉你保留了哪些。',
-			'startup.repairConfirm' => '修复',
-			'startup.repairSucceeded' => '存储已修复',
-			'startup.repairNeedsRestart' => '存储已修复 — 需要重启',
-			'startup.restartRequiredBody' => '你的数据已修复，但 Plezy 需要重新启动后才能使用。请关闭 Plezy 并重新打开。',
-			'startup.quitPlezy' => '退出 Plezy',
-			'startup.repairFailed' => '修复失败',
-			'startup.repairKeptSignIns' => '你的服务器和个人资料仍然保持登录状态。',
-			'startup.repairLostSignIns' => '保护已保存登录信息的密钥无法恢复。你需要重新登录每个服务器和个人资料。',
-			'startup.repairLostSessions' => '至少有一个追踪服务或 Seerr 连接已丢失，需要重新连接。',
-			'startup.backupTitle' => '已保留损坏文件的副本',
-			'startup.backupWarning' => '其中包含你的登录凭据。请勿上传或分享。',
-			'startup.deleteBackup' => '删除副本',
-			'startup.backupDeleted' => '副本已删除。',
-			'startup.previousFailureTitle' => 'Plezy 上次启动失败',
-			'licenses.relatedPackages' => '相关软件包',
-			'licenses.license' => '许可证',
-			'licenses.licenseNumber' => ({required Object number}) => '许可证 ${number}',
-			'licenses.licensesCount' => ({required Object count}) => '${count} 个许可证',
-			'navigation.libraries' => '媒体库',
-			'navigation.downloads' => '下载',
-			'navigation.liveTv' => '直播电视',
-			'navigation.explore' => '探索',
-			'explore.title' => '探索',
-			'explore.selectSource' => '选择来源',
-			'explore.rows.watchlist' => '想看列表',
-			'explore.rows.recommendedMovies' => '推荐电影',
-			'explore.rows.recommendedShows' => '推荐剧集',
-			'explore.rows.trendingMovies' => '近期热门电影',
-			'explore.rows.trendingShows' => '近期热门剧集',
-			'explore.rows.popularMovies' => '人气电影',
-			'explore.rows.popularShows' => '人气剧集',
-			'explore.rows.trendingAnime' => '热门动画',
-			'explore.rows.suggestedAnime' => '推荐动画',
-			'explore.rows.airingAnime' => '热门连载动画',
-			'explore.rows.popularAnime' => '最受欢迎动画',
-			'explore.rows.trending' => '近期热门',
-			'explore.rows.upcomingMovies' => '即将上映的电影',
-			'explore.rows.upcomingShows' => '即将播出的剧集',
-			'explore.status.airing' => '连载中',
-			'explore.status.ended' => '已完结',
-			'explore.status.canceled' => '已取消',
-			'explore.status.upcoming' => '即将上线',
-			'explore.episodeCount' => ({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('zh'))(n, other: '${n} 集', ), 
-			'explore.cast' => '演员表',
-			'explore.characters' => '角色',
-			'explore.addToWatchlist' => '添加到想看列表',
-			'explore.removeFromWatchlist' => '从想看列表移除',
-			'explore.addedToWatchlist' => '已加入待看列表',
-			'explore.removedFromWatchlist' => '已从待看列表中移除',
-			'explore.watchlistUpdateFailed' => '无法更新想看列表',
-			'explore.watchlistNoMatch' => '无法将此项目与待看列表匹配',
-			'explore.notInLibrary' => '不在你的媒体库中',
-			'explore.inTheseLibraries' => '在这些媒体库中',
-			'explore.checkingLibrary' => '正在检查你的媒体库…',
-			'explore.libraryCheckFailed' => ({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('zh'))(n, other: '无法检查 ${n} 台服务器', ), 
-			'explore.emptyTitle' => '这里还什么都没有',
-			'explore.emptyMessage' => ({required Object source}) => '当 ${source} 有内容时，相关内容将显示在这里。',
-			'explore.searchHint' => ({required Object source}) => '搜索 ${source}',
-			'explore.searchEmpty' => ({required Object query}) => '没有“${query}”的结果',
-			'explore.searchPrompt' => ({required Object source}) => '在 ${source} 上搜索电影和剧集。',
-			'explore.searchFailed' => '搜索失败。请检查网络连接后重试。',
-			'explore.badge.rankPopular' => ({required Object n}) => '热门榜第 #${n} 名',
-			'explore.badge.rankAiring' => ({required Object n}) => '在播榜第 #${n} 名',
-			'explore.badge.rankRated' => ({required Object n}) => '评分榜第 #${n} 名',
-			'explore.badge.rankTrending' => ({required Object n}) => '趋势榜第 #${n} 名',
-			'explore.badge.rankSeasonal' => ({required Object season, required Object n}) => '${season}榜第 #${n} 名',
-			'explore.badge.watchingNow' => ({required Object n}) => '${n} 人正在观看',
-			'explore.badge.available' => '可观看',
-			'explore.badge.partiallyAvailable' => '部分可观看',
-			'explore.badge.availableIn4k' => '提供 4K',
-			'explore.badge.requested' => '已请求',
-			'explore.badge.pendingApproval' => '待批准',
-			'explore.badge.processing' => '处理中',
-			'explore.badge.declined' => '已拒绝',
-			'explore.badge.requestFailed' => '请求失败',
-			'explore.badge.requested4k' => '已请求 4K',
-			'explore.badge.seasonsAvailable' => ({required Object available, required Object total}) => '已有 ${available}/${total} 季',
-			'explore.badge.nextEpisodeIn' => ({required Object episode, required Object duration}) => '第 ${episode} 集将在 ${duration} 后播出',
-			'explore.badge.nextAiringIn' => ({required Object duration}) => '下一集将在 ${duration} 后播出',
-			'explore.badge.episodesShort' => ({required Object n}) => '${n} 集',
-			'explore.badge.minutesPerEpisode' => ({required Object n}) => '${n} 分钟/集',
-			'explore.badge.adult' => '18+',
-			'explore.stats.listed' => ({required Object n}) => '${n} 人已标记',
-			'explore.stats.viewersDay' => ({required Object n}) => '今日 ${n} 人观看',
-			'explore.stats.viewersWeek' => ({required Object n}) => '本周 ${n} 人观看',
-			'explore.stats.viewersMonth' => ({required Object n}) => '本月 ${n} 人观看',
-			'explore.stats.viewersYear' => ({required Object n}) => '今年 ${n} 人观看',
-			'explore.stats.viewersAllTime' => ({required Object n}) => '累计 ${n} 人观看',
-			'explore.stats.planning' => ({required Object n}) => '${n} 人想看',
-			'explore.stats.favorited' => ({required Object n}) => '${n} 人收藏',
-			'explore.stats.dropRate' => ({required Object percent}) => '${percent} 弃番',
-			'explore.stats.comments' => ({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('zh'))(n, other: '${n} 条评论', ), 
-			'explore.stats.votes' => ({required Object n}) => '${n} 票',
-			'explore.stats.watching' => ({required Object n}) => '${n} 人正在观看',
-			'explore.stats.completed' => ({required Object n}) => '${n} 人已看完',
-			'explore.stats.onHold' => ({required Object n}) => '${n} 人搁置',
-			'explore.stats.dropped' => ({required Object n}) => '${n} 人弃番',
-			'explore.season.winter' => '冬季',
-			'explore.season.spring' => '春季',
-			'explore.season.summer' => '夏季',
-			'explore.season.fall' => '秋季',
-			'explore.season.withYear' => ({required Object year, required Object season}) => '${year}年${season}',
-			'explore.format.tv' => 'TV',
-			'explore.format.tvShort' => 'TV 短片',
-			'explore.format.movie' => '电影',
-			'explore.format.special' => '特别篇',
-			'explore.format.ova' => 'OVA',
-			'explore.format.ona' => 'ONA',
-			'explore.format.music' => '音乐',
-			'explore.format.other' => '其他',
-			'explore.sourceMaterial.original' => '原创',
-			'explore.sourceMaterial.manga' => '漫画',
-			'explore.sourceMaterial.lightNovel' => '轻小说',
-			'explore.sourceMaterial.novel' => '小说',
-			'explore.sourceMaterial.visualNovel' => '视觉小说',
-			'explore.sourceMaterial.game' => '游戏',
-			'explore.sourceMaterial.webComic' => '网络漫画',
-			'explore.sourceMaterial.musicRelease' => '音乐',
-			'explore.sourceMaterial.otherMedia' => '其他',
-			'explore.creditRole.actor' => '演员',
-			'explore.creditRole.director' => '导演',
-			'explore.creditRole.writer' => '编剧',
-			'explore.creditRole.producer' => '制片人',
-			'explore.creditRole.creator' => '创作者',
-			'explore.creditRole.composer' => '作曲',
-			'explore.relation.prequel' => '前传',
-			'explore.relation.sequel' => '续集',
-			'explore.relation.sideStory' => '番外篇',
-			'explore.relation.spinOff' => '衍生作品',
-			'explore.relation.alternativeVersion' => '另一版本',
-			'explore.relation.summary' => '总集篇',
-			'explore.relation.parentStory' => '原作',
-			'explore.relation.adaptation' => '改编',
-			'explore.relation.other' => '相关',
-			'explore.broadcast' => ({required Object day, required Object time}) => '每周${day} ${time}播出',
-			'explore.broadcastWithZone' => ({required Object day, required Object time, required Object timezone}) => '每周${day} ${time} ${timezone}播出',
-			'explore.detail.originalTitle' => '原名',
-			'explore.detail.alsoKnownAs' => '又名',
-			'explore.detail.studios' => '制作公司',
-			'explore.detail.country' => '国家/地区',
-			'explore.detail.language' => '语言',
-			'explore.detail.released' => '上映日期',
-			'explore.detail.physicalRelease' => '光盘发售',
-			'explore.detail.ended' => '完结日期',
-			'explore.detail.addedOn' => ({required Object date}) => '添加于 ${date}',
-			'explore.detail.yourRating' => '你的评分',
-			'explore.detail.budget' => '预算',
-			'explore.detail.revenue' => '票房',
-			'explore.detail.contentAdvisory' => '年龄分级',
-			'explore.detail.tags' => '标签',
-			'explore.detail.revealSpoilerTags' => '显示剧透标签',
-			'explore.detail.links' => '链接',
-			'explore.detail.watchOn' => '观看平台',
-			'explore.detail.watchTrailer' => '观看预告片',
-			'explore.detail.openOn' => ({required Object site}) => '在 ${site} 打开',
-			'explore.detail.trailerUnavailable' => '无法在此设备上打开预告片',
-			'explore.detail.linkUnavailable' => '无法在此设备上打开链接',
-			'explore.detail.crew' => '演职人员',
-			'explore.detail.ratings' => '评分',
-			'explore.detail.schedule' => '播出时间',
-			'explore.detail.recommendedByUsers' => ({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('zh'))(n, other: '由 ${n} 位用户推荐', ), 
-			'explore.detail.recommendedBy' => ({required Object who}) => '由 ${who} 推荐',
-			'explore.detail.favoritedBy' => ({required Object who}) => '由 ${who} 收藏',
-			'explore.detail.unairedEpisodes' => ({required Object n}) => '还有 ${n} 集未播出',
-			'explore.detail.recommendedByPercent' => ({required Object percent}) => '${percent} 的观众推荐',
-			'explore.detail.relatedTitles' => '相关作品',
-			'explore.detail.background' => '背景',
-			'explore.totalResults' => ({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('zh'))(n, other: '${n} 条结果', ), 
-			'liveTv.title' => '直播电视',
-			'liveTv.guide' => '节目指南',
-			'liveTv.noChannels' => '没有可用的频道',
-			'liveTv.noDvr' => '没有服务器配置 DVR',
-			'liveTv.serverUnavailable' => '直播电视服务器不可用。',
-			'liveTv.serverNotConnected' => '直播电视服务器未连接。',
-			'liveTv.noPrograms' => '没有可用的节目数据',
-			'liveTv.liveStreamFailed' => '直播流失败',
-			'liveTv.unknownProgram' => '未知节目',
-			'liveTv.unknownHub' => '未知',
-			'liveTv.unknownError' => '未知错误',
-			'liveTv.channelNumber' => ({required Object number}) => '频道 ${number}',
-			'liveTv.unknownChannel' => '未知频道',
-			'liveTv.live' => '直播',
-			'liveTv.reloadGuide' => '重新加载节目指南',
-			'liveTv.searchGuide' => '搜索节目指南',
-			'liveTv.searchHint' => '搜索频道和节目',
-			'liveTv.searchNoResults' => ({required Object query}) => '没有与“${query}”匹配的结果',
-			'liveTv.channelsSection' => '频道',
-			'liveTv.programsSection' => '节目',
-			'liveTv.now' => '现在',
-			'liveTv.today' => '今天',
-			'liveTv.tomorrow' => '明天',
-			'liveTv.midnight' => '午夜',
-			'liveTv.overnight' => '凌晨',
-			'liveTv.morning' => '上午',
-			'liveTv.daytime' => '白天',
-			'liveTv.evening' => '晚上',
-			'liveTv.lateNight' => '深夜',
-			'liveTv.whatsOn' => '正在播出',
-			'liveTv.watchChannel' => '观看频道',
-			'liveTv.favorites' => '收藏',
-			'liveTv.reorderFavorites' => '重新排序收藏',
-			'liveTv.noFavoriteChannels' => '没有收藏的频道',
-			'liveTv.noFavoriteChannelsHint' => '显示所有频道，然后长按某个频道将其加入收藏。',
-			'liveTv.showAllChannels' => '显示所有频道',
-			'liveTv.favoritesLoadFailed' => '无法加载收藏。请检查网络连接后重试。',
-			'liveTv.favoritesUpdateFailed' => '无法更新收藏。请检查网络连接后重试。',
-			'liveTv.joinSession' => '加入正在进行的会话',
-			'liveTv.watchFromStart' => ({required Object minutes}) => '从头观看（${minutes}分钟前开始）',
-			'liveTv.watchLive' => '观看直播',
-			'liveTv.goToLive' => '跳至直播',
-			'liveTv.record' => '录制',
-			'liveTv.recordEpisode' => '录制单集',
-			'liveTv.recordSeries' => '录制系列节目',
-			'liveTv.recordOptions' => '录制选项',
-			'liveTv.saveTo' => '保存到',
-			'liveTv.recordings' => '录制内容',
-			'liveTv.scheduledRecordings' => '计划录制',
-			'liveTv.recordingRules' => '录制规则',
-			'liveTv.noScheduledRecordings' => '没有安排的录制',
-			'liveTv.manageRecording' => '管理录制',
-			'liveTv.cancelRecording' => '取消录制',
-			'liveTv.cancelRecordingTitle' => '取消此次录制？',
-			'liveTv.cancelRecordingMessage' => ({required Object title}) => '将不再录制 ${title}。',
-			'liveTv.deleteRule' => '删除规则',
-			'liveTv.deleteRuleTitle' => '删除录制规则？',
-			'liveTv.deleteRuleMessage' => ({required Object title}) => '今后将不再录制 ${title} 的剧集。',
-			'liveTv.recordingScheduled' => '录制已安排',
-			'liveTv.alreadyScheduled' => '此节目已安排录制',
-			'liveTv.dvrAdminRequired' => 'DVR 设置需要管理员账户',
-			'liveTv.recordingFailed' => '无法安排录制',
-			'liveTv.recordingTargetMissing' => '无法确定录制库',
-			'liveTv.recordNotAvailable' => '此节目无法录制',
-			'liveTv.recordingCancelled' => '录制已取消',
-			'liveTv.recordingRuleDeleted' => '录制规则已删除',
-			'liveTv.processRecordingRules' => '重新评估规则',
-			'liveTv.recordingInProgress' => '正在录制',
-			'liveTv.recordingsCount' => ({required Object count}) => '已安排 ${count} 项录制',
-			'liveTv.editRule' => '编辑规则',
-			'liveTv.editRuleAction' => '编辑',
-			'liveTv.recordingRuleUpdated' => '录制规则已更新',
-			'liveTv.guideReloadRequested' => '已请求更新节目指南',
-			'liveTv.guideReloadFailed' => '无法刷新节目指南',
-			'liveTv.rulesProcessRequested' => '已请求重新评估规则',
-			'liveTv.rulesProcessFailed' => '无法重新评估录制规则',
-			'liveTv.recordShow' => '录制节目',
-			'liveTv.recordSettings.startEarly' => '提前开始（秒）',
-			'liveTv.recordSettings.endLate' => '延后结束（秒）',
-			'liveTv.recordSettings.newOnly' => '仅新剧集',
-			'liveTv.recordSettings.anyChannel' => '在任意频道录制',
-			'liveTv.recordSettings.anyTime' => '在任意时间录制',
-			'liveTv.recordSettings.skipInLibrary' => '跳过媒体库中已有的剧集',
-			'liveTv.recordSettings.keepUpTo' => '保留的剧集数',
-			_ => null,
-		} ?? switch (path) {
-			'liveTv.recordSettings.keepUpToHint' => '0 表示保留全部剧集',
-			'liveTv.startingInMinutes' => ({required Object minutes}) => '${minutes} 分钟后开始',
-			'liveTv.dayAtTime' => ({required Object day, required Object time}) => '${day} ${time}',
-			'liveTv.invalidPlaybackData' => ({required Object product}) => '${product} 返回了无效的直播电视播放数据',
-			'liveTv.failedToStartChannel' => '无法播放直播频道',
-			'liveTv.failedToBuildStreamUrl' => '无法生成视频流 URL',
-			'liveTv.playbackStartFailed' => ({required Object reason}) => '无法启动该频道：${reason}',
-			'liveTv.channelSwitchFailed' => ({required Object reason}) => '无法切换频道：${reason}',
-			'collections.title' => '合集',
-			'collections.collection' => '合集',
-			'collections.empty' => '合集为空',
-			'collections.deleteCollection' => '删除合集',
-			'collections.deleteConfirm' => ({required Object title}) => '要删除“${title}”吗？此操作无法撤销。',
-			'collections.deleted' => '已删除合集',
-			'collections.deleteFailed' => '删除合集失败',
-			'collections.deleteFailedWithError' => ({required Object error}) => '删除合集失败：${error}',
-			'collections.selectCollection' => '选择合集',
-			'collections.collectionName' => '合集名称',
-			'collections.enterCollectionName' => '输入合集名称',
-			'collections.addedToCollection' => '已添加到合集',
-			'collections.errorAddingToCollection' => '添加到合集失败',
-			'collections.created' => '已创建合集',
-			'collections.removeFromCollection' => '从合集移除',
-			'collections.removeFromCollectionConfirm' => ({required Object title}) => '将“${title}”从此合集移除？',
-			'collections.removedFromCollection' => '已从合集移除',
-			'collections.removeFromCollectionFailed' => '从合集移除失败',
-			'collections.removeFromCollectionError' => ({required Object error}) => '从合集移除时出错：${error}',
-			'collections.searchCollections' => '搜索合集…',
-			'playlists.title' => '播放列表',
-			'playlists.playlist' => '播放列表',
-			'playlists.noPlaylists' => '未找到播放列表',
-			'playlists.create' => '创建播放列表',
-			'playlists.playlistName' => '播放列表名称',
-			'playlists.enterPlaylistName' => '输入播放列表名称',
-			'playlists.delete' => '删除播放列表',
-			'playlists.removeItem' => '从播放列表中移除',
-			'playlists.smartPlaylist' => '智能播放列表',
-			'playlists.itemCount' => ({required Object count}) => '${count} 个项目',
-			'playlists.oneItem' => '1 个项目',
-			'playlists.emptyPlaylist' => '此播放列表为空',
-			'playlists.deleteConfirm' => '删除播放列表？',
-			'playlists.deleteMessage' => ({required Object name}) => '确定要删除“${name}”吗？',
-			'playlists.created' => '播放列表已创建',
-			'playlists.deleted' => '播放列表已删除',
-			'playlists.itemAdded' => '已添加到播放列表',
-			'playlists.itemRemoved' => '已从播放列表中移除',
-			'playlists.selectPlaylist' => '选择播放列表',
-			'playlists.searchPlaylists' => '搜索播放列表…',
-			'playlists.errorCreating' => '创建播放列表失败',
-			'playlists.errorDeleting' => '删除播放列表失败',
-			'playlists.errorLoading' => '加载播放列表失败',
-			'playlists.errorAdding' => '添加到播放列表失败',
-			'playlists.errorReordering' => '重新排序播放列表项目失败',
-			'playlists.errorRemoving' => '从播放列表中移除失败',
-			'music.goToAlbum' => '前往专辑',
-			'music.goToArtist' => '前往艺术家',
-			'music.instantMix' => '即时混合播放',
-			'music.playNext' => '下一首播放',
-			'music.addToQueue' => '添加到队列',
-			'music.discNumber' => ({required Object n}) => '碟片 ${n}',
-			'music.trackCount' => ({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('zh'))(n, other: '${n} 首', ), 
-			'music.nowPlaying' => '正在播放',
-			'music.playingFrom' => ({required Object title}) => '播放来源：${title}',
-			'music.queue' => '播放队列',
-			'music.clearQueue' => '清空队列',
-			'music.lyrics' => '歌词',
-			'music.noLyrics' => '暂无歌词',
-			'music.sleepTimer' => '睡眠定时器',
-			'music.sleepTimerEndOfTrack' => '当前曲目结束时',
-			'music.sleepTimerMinutes' => ({required Object n}) => '${n} 分钟',
-			'music.stopPlayback' => '停止播放',
-			'music.previousTrack' => '上一首',
-			'music.nextTrack' => '下一首',
-			'music.repeat' => '循环',
-			'music.repeatAll' => '列表循环',
-			'music.repeatOne' => '单曲循环',
-			'music.instantMixNoServer' => '没有可用于即时混合的服务器',
-			'music.instantMixFailed' => '加载即时混合失败',
-			'music.instantMixEmpty' => '即时混合没有生成任何曲目',
-			'music.noAudioUrl' => ({required Object track}) => '没有可供 ${track} 使用的音频 URL',
-			'music.discography.singlesAndEps' => '单曲和 EP',
-			'music.discography.live' => '现场',
-			'music.discography.compilations' => '合集',
-			'watchTogether.title' => '一起看',
-			'watchTogether.description' => '与朋友和家人同步观看内容',
-			'watchTogether.createRoom' => '创建房间',
-			'watchTogether.creatingRoom' => '正在创建房间…',
-			'watchTogether.joinRoom' => '加入房间',
-			'watchTogether.joiningRoom' => '正在加入房间…',
-			'watchTogether.connecting' => '正在连接…',
-			'watchTogether.relayPublic' => '房间使用公共 Open Watch Party 中继服务器。',
-			'watchTogether.relayCustom' => ({required Object url}) => '房间使用你位于 ${url} 的中继服务器。',
-			'watchTogether.recentRooms' => '最近的房间',
-			'watchTogether.roomActions' => '房间操作',
-			'watchTogether.renameRoom' => '重命名房间',
-			'watchTogether.removeRoom' => '移除',
-			'watchTogether.enterRoomCode' => '输入主持人提供的 6 位代码。',
-			'watchTogether.roomCode' => '房间代码',
-			'watchTogether.paste' => '粘贴',
-			'watchTogether.noCodeInClipboard' => '剪贴板中没有房间代码',
-			'watchTogether.copyCode' => '复制代码',
-			'watchTogether.codeCopied' => '房间代码已复制',
-			'watchTogether.shareInvite' => '分享邀请',
-			'watchTogether.inviteCopied' => '邀请已复制。请将其粘贴到消息中。',
-			'watchTogether.inviteMessage' => ({required Object code}) => '加入我在 Plezy 中的“一起看”房间：打开“一起看”，选择“加入房间”，然后输入 ${code}。',
-			'watchTogether.openSessionControls' => '打开“一起看”会话控制',
-			'watchTogether.reconnecting' => '正在重新连接…',
-			'watchTogether.reconnectingDescription' => '连接已中断。你将自动重新加入房间。',
-			'watchTogether.connected' => '已连接',
-			'watchTogether.disconnected' => '已断开连接',
-			'watchTogether.youAreHost' => '你是主持人',
-			'watchTogether.hostedBy' => ({required Object name}) => '由 ${name} 主持',
-			'watchTogether.hostControlsPlayback' => '主持人控制播放',
-			'watchTogether.anyoneCanControl' => '任何人都可以控制播放',
-			'watchTogether.roomLocked' => '房间已锁定',
-			'watchTogether.nowPlaying' => '正在播放',
-			'watchTogether.nothingPlaying' => '未在播放',
-			'watchTogether.nothingPlayingHost' => '从任意媒体库播放内容，即可与房间成员分享。',
-			'watchTogether.nothingPlayingGuest' => '主持人播放内容后，将在此处打开。',
-			'watchTogether.notShareable' => '此视频没有匹配的影视目录条目，因此只有能访问同一服务器的人才能播放。',
-			'watchTogether.searching' => '正在你的媒体库中查找此视频…',
-			'watchTogether.yourCopy' => '你的副本',
-			'watchTogether.sharingYourCopy' => '你正在分享你的副本',
-			'watchTogether.playingOtherLength' => ({required Object difference}) => '正在播放你的副本（${difference}）',
-			'watchTogether.mismatchTitle' => '你的副本时长不同',
-			'watchTogether.mismatchDescription' => ({required Object difference}) => '你最接近的副本比房间的视频${difference}。它可能是其他剪辑版或版本。',
-			'watchTogether.playAnyway' => '仍要播放',
-			'watchTogether.chooseAnotherCopy' => '选择其他副本',
-			'watchTogether.dontPlay' => '不播放',
-			'watchTogether.unavailableTitle' => '你没有此视频',
-			'watchTogether.unavailableDescription' => 'Plezy 在你的媒体库中找不到它。请自行选择副本或重新搜索。',
-			'watchTogether.chooseCopy' => '选择副本',
-			'watchTogether.searchAgain' => '重新搜索',
-			'watchTogether.noCandidates' => '在你的媒体库中未找到副本。',
-			'watchTogether.choiceFailed' => '无法为房间播放此副本',
-			'watchTogether.lengthLonger' => ({required Object duration}) => '长 ${duration}',
-			'watchTogether.lengthShorter' => ({required Object duration}) => '短 ${duration}',
-			'watchTogether.lengthSame' => '时长相同',
-			'watchTogether.lengthUnknown' => '时长未知',
-			'watchTogether.joinCurrentPlayback' => '加入当前播放',
-			'watchTogether.joinCurrentPlaybackDescription' => '加入主持人当前正在观看的内容',
-			'watchTogether.stopMedia' => '为所有人停止视频',
-			'watchTogether.syncOffset' => '同步偏移',
-			'watchTogether.syncOffsetDescription' => '如果你的视频比房间快或慢，可在此调整。',
-			'watchTogether.offsetHint' => ({required Object difference}) => '你的副本比房间的视频${difference}。',
-			'watchTogether.applyDifference' => ({required Object offset}) => '使用 ${offset}',
-			'watchTogether.offsetMinusSecond' => '-1 秒',
-			'watchTogether.offsetMinusTenth' => '-100 毫秒',
-			'watchTogether.offsetPlusTenth' => '+100 毫秒',
-			'watchTogether.offsetPlusSecond' => '+1 秒',
-			'watchTogether.participants' => '参与者',
-			'watchTogether.participantCount' => ({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('zh'))(n, other: '${n} 位参与者', ), 
-			'watchTogether.hostBadge' => '主持人',
-			'watchTogether.nameYou' => ({required Object name}) => '${name}（你）',
-			'watchTogether.playerIdle' => '空闲',
-			'watchTogether.playerLoading' => '加载中',
-			'watchTogether.playerReady' => '就绪',
-			'watchTogether.playerBuffering' => '缓冲中',
-			'watchTogether.matchSearching' => '搜索中',
-			'watchTogether.matchMatched' => '有此视频',
-			'watchTogether.matchMismatched' => '时长不同',
-			'watchTogether.matchUnavailable' => '没有此视频',
-			'watchTogether.participantOffset' => ({required Object offset}) => '偏移 ${offset}',
-			'watchTogether.makeHost' => '设为主持人',
-			'watchTogether.makeHostQuestion' => '移交主持人？',
-			'watchTogether.makeHostConfirm' => ({required Object name}) => '${name} 将控制播放并主导所有人的会话。',
-			'watchTogether.transfer' => '移交',
-			'watchTogether.removeParticipant' => '移出房间',
-			'watchTogether.removeParticipantQuestion' => ({required Object name}) => '移除 ${name}？',
-			'watchTogether.removeParticipantConfirm' => ({required Object name}) => '${name} 将离开房间。除非你锁定房间，否则对方仍可使用代码重新加入。',
-			'watchTogether.remove' => '移除',
-			'watchTogether.roomSettings' => '房间设置',
-			'watchTogether.letEveryoneControl' => '允许所有人控制播放',
-			'watchTogether.lockRoom' => '锁定房间',
-			'watchTogether.lockRoomDescription' => '新成员无法加入',
-			'watchTogether.leaveRoom' => '离开房间',
-			'watchTogether.leaveRoomQuestion' => '离开房间？',
-			'watchTogether.leaveRoomConfirm' => '你可以使用房间代码重新加入。',
-			'watchTogether.leave' => '离开',
-			'watchTogether.endRoom' => '结束房间',
-			'watchTogether.endRoomQuestion' => '结束房间？',
-			'watchTogether.endRoomConfirm' => '这将为所有人结束此房间。',
-			'watchTogether.end' => '结束',
-			'watchTogether.playBlockedTitle' => '播放未开始',
-			'watchTogether.playBlockedDescription' => '按下播放，开始与房间成员一起观看。',
-			'watchTogether.notices.pressedPlay' => ({required Object name}) => '${name} 按下了播放',
-			'watchTogether.notices.playbackStarted' => '已开始播放',
-			'watchTogether.notices.paused' => ({required Object name}) => '${name} 暂停了播放',
-			'watchTogether.notices.playbackPaused' => '已暂停播放',
-			'watchTogether.notices.jumpedTo' => ({required Object name, required Object position}) => '${name} 跳转到了 ${position}',
-			'watchTogether.notices.roomJumpedTo' => ({required Object position}) => '已跳转到 ${position}',
-			'watchTogether.notices.changedSpeed' => ({required Object name, required Object speed}) => '${name} 将速度设为 ${speed}',
-			'watchTogether.notices.speedChanged' => ({required Object speed}) => '速度已设为 ${speed}',
-			'watchTogether.notices.startedMedia' => ({required Object name, required Object title}) => '${name} 开始播放 ${title}',
-			'watchTogether.notices.mediaStarted' => ({required Object title}) => '正在播放 ${title}',
-			'watchTogether.notices.stoppedMedia' => ({required Object name}) => '${name} 停止了视频',
-			'watchTogether.notices.mediaStopped' => '视频已停止',
-			'watchTogether.notices.waitingFor' => ({required Object name}) => '正在等待 ${name}…',
-			'watchTogether.notices.waitingForSomeone' => '正在等待其他人跟上…',
-			'watchTogether.notices.finished' => '已播放完毕',
-			'watchTogether.notices.hostChangedTo' => ({required Object name}) => '${name} 现在是主持人',
-			'watchTogether.notices.youAreNowHost' => '你现在是主持人',
-			'watchTogether.notices.joined' => ({required Object name}) => '${name} 已加入',
-			'watchTogether.notices.left' => ({required Object name}) => '${name} 已离开',
-			'watchTogether.notices.controlRefused' => '只有主持人可以控制播放',
-			'watchTogether.notices.searchFailed' => '无法在部分服务器上搜索房间的视频',
-			'watchTogether.notices.playBlocked' => '按下播放即可开始',
-			'watchTogether.notices.shareFailed' => '无法与房间分享此视频',
-			'watchTogether.notices.downloadNotShared' => '下载内容所属的服务器离线时，无法与房间分享',
-			'watchTogether.notices.openFailed' => '无法打开房间的视频',
-			'watchTogether.ended.ended' => '主持人已结束房间',
-			'watchTogether.ended.kicked' => '你已被移出房间',
-			'watchTogether.ended.expired' => '房间已过期',
-			'watchTogether.ended.replaced' => '你已在另一台设备上加入此房间',
-			'watchTogether.ended.lost' => '与房间的连接已断开',
-			'watchTogether.errors.invalidCode' => '这不是房间代码。代码由 6 位字母和数字组成，不含 0、1、I、L 或 O。',
-			'watchTogether.errors.roomNotFound' => '没有使用此代码的房间。该房间可能已结束。',
-			'watchTogether.errors.roomFull' => '该房间已满。',
-			'watchTogether.errors.roomLocked' => '主持人已锁定该房间。',
-			'watchTogether.errors.relayFull' => '“一起看”当前繁忙。请稍后再试。',
-			'watchTogether.errors.unreachable' => '无法连接到“一起看”中继服务器。请检查网络连接。',
-			'watchTogether.errors.rateLimited' => '尝试次数过多。请稍等片刻后重试。',
-			'watchTogether.errors.clientBlocked' => '此版本的 Plezy 无法使用该中继服务器。请更新应用。',
-			'watchTogether.errors.forbidden' => '只有主持人可以执行此操作。',
-			'watchTogether.errors.notInRoom' => '你不在房间中。',
-			'watchTogether.errors.alreadyInRoom' => '你已在房间中。',
-			'watchTogether.errors.resumeFailed' => '无法重新加入房间。',
-			'watchTogether.errors.unsupported' => '该中继服务器不支持此操作。',
-			'watchTogether.errors.generic' => '出现问题。请重试。',
-			'watchTogether.untitledEpisode' => ({required Object number}) => '第${number}集',
-			'downloads.title' => '下载',
-			'downloads.manage' => '管理',
-			'downloads.tvShows' => '电视剧',
-			'downloads.movies' => '电影',
-			'downloads.music' => '音乐',
-			'downloads.tracksQueued' => ({required Object count}) => '${count} 首曲目已加入下载队列',
-			'downloads.noDownloads' => '暂无下载',
-			'downloads.noDownloadsDescription' => '下载的内容将在此处显示以供离线观看',
-			'downloads.downloadNow' => '下载',
-			'downloads.deleteDownload' => '删除下载',
-			'downloads.retryDownload' => '重试下载',
-			'downloads.downloadQueued' => '下载已排队',
-			'downloads.downloadResumed' => '下载已继续',
-			'downloads.serverErrorBitrate' => '服务器错误：文件可能超过远程比特率限制',
-			'downloads.storageFull' => '为保护剩余存储空间，下载已停止。请释放空间或选择其他下载位置，然后重试。',
-			'downloads.storageUnavailable' => '无法检查可用存储空间，因此下载已停止。请检查下载位置后重试。',
-			'downloads.episodesQueued' => ({required Object count}) => '${count} 集已加入下载队列',
-			'downloads.downloadDeleted' => '下载已删除',
-			'downloads.deleteConfirm' => ({required Object title}) => '要从此设备删除“${title}”吗？',
-			'downloads.deleteCollectionDownloads' => '删除下载',
-			'downloads.deleteCollectionDownloadsConfirm' => ({required Object title}) => '要从此设备删除“${title}”中的所有下载吗？',
-			'downloads.collectionDownloadsDeleted' => '下载已删除',
-			'downloads.cancelledDownloadTitle' => '已取消的下载',
-			'downloads.cancelledDownloadMessage' => '此下载已取消。你想怎么做？',
-			'downloads.allEpisodesAlreadyDownloaded' => '所有剧集均已下载',
-			'downloads.resumeDownload' => '继续下载',
-			'downloads.cancelledDownload' => '已取消的下载',
-			'downloads.syncingFile' => ({required Object file, required Object status}) => '${file}（正在同步 ${status}）',
-			'downloads.downloadedFileClickToComplete' => ({required Object file}) => '已下载 ${file} — 点击以完成',
-			'downloads.partialDownloadClickToComplete' => '已部分下载 — 点击以完成',
-			'downloads.deleting' => '正在删除…',
-			'downloads.deletingWithProgress' => ({required Object title, required Object current, required Object total}) => '正在删除 ${title}…（${current}/${total}）',
-			'downloads.queuedTooltip' => '已排队',
-			'downloads.queuedFilesTooltip' => ({required Object files}) => '已排队：${files}',
-			'downloads.downloadingTooltip' => '正在下载…',
-			'downloads.downloadingFilesTooltip' => ({required Object files}) => '正在下载 ${files}',
-			'downloads.noDownloadsTree' => '暂无下载',
-			'downloads.pauseAll' => '全部暂停',
-			'downloads.resumeAll' => '全部继续',
-			'downloads.retryAll' => '全部重试',
-			'downloads.retryFailed' => '重试失败的下载',
-			'downloads.deleteAll' => '全部删除',
-			'downloads.selectVersion' => '选择版本',
-			'downloads.allEpisodes' => '所有剧集',
-			'downloads.unwatchedOnly' => '仅未观看',
-			'downloads.nextNUnwatched' => ({required Object count}) => '接下来 ${count} 集未观看',
-			'downloads.customAmount' => '自定义数量…',
-			'downloads.includeSpecials' => '包含特别篇',
-			'downloads.howManyEpisodes' => '下载几集？',
-			'downloads.invalidEpisodeCount' => '请输入有效的集数。',
-			'downloads.keepSynced' => '保持同步',
-			'downloads.downloadOnce' => '下载一次',
-			'downloads.keepNUnwatched' => ({required Object count}) => '保留 ${count} 集未观看内容',
-			'downloads.editSyncRule' => '编辑同步规则',
-			'downloads.removeSyncRule' => '删除同步规则',
-			'downloads.removeSyncRuleConfirm' => ({required Object title}) => '停止同步“${title}”？已下载的剧集将被保留。',
-			'downloads.removeListSyncRuleConfirm' => ({required Object title}) => '停止同步“${title}”？',
-			'downloads.deleteSyncRuleDownloads' => '同时删除相关下载',
-			'downloads.deleteSyncRuleDownloadsDescription' => '被其他同步规则或个人资料使用的下载将保留。',
-			'downloads.syncRuleCreated' => ({required Object count}) => '同步规则已创建 — 保留 ${count} 集未观看内容',
-			'downloads.syncRuleUpdated' => '同步规则已更新',
-			'downloads.syncRuleRemoved' => '同步规则已删除',
-			'downloads.syncRuleAndDownloadsRemoved' => '同步规则及相关下载已删除',
-			'downloads.syncRuleCleanupBusy' => '同步规则正在更新中，请稍后再试。',
-			'downloads.syncRuleCleanupUnavailable' => '无法安全识别相关下载。请重新连接服务器后再试，或在不删除下载的情况下移除规则。',
-			'downloads.syncedNewEpisodes' => ({required Object title, required Object count}) => '已为 ${title} 同步 ${count} 个新剧集',
-			'downloads.activeSyncRules' => '同步规则',
-			'downloads.noSyncRules' => '没有同步规则',
-			'downloads.manageSyncRule' => '管理同步',
-			'downloads.editEpisodeCount' => '剧集数量',
-			'downloads.editSyncFilter' => '同步筛选',
-			'downloads.syncAllItems' => '同步所有项目',
-			'downloads.syncUnwatchedItems' => '同步未观看项目',
-			'downloads.syncRuleServerContext' => ({required Object server, required Object status}) => '服务器：${server} • ${status}',
-			'downloads.syncRuleAvailable' => '可用',
-			'downloads.syncRuleOffline' => '离线',
-			'downloads.syncRuleSignInRequired' => '需要登录',
-			'downloads.syncRuleAccessDenied' => '访问被拒绝',
-			'downloads.syncRuleNotAvailableForProfile' => '当前用户资料不可用',
-			'downloads.syncRuleUnknownServer' => '未知服务器',
-			'downloads.syncRuleListCreated' => '同步规则已创建',
-			'downloads.backgroundWarning.bannerBlocked' => '离开应用后，下载将停止',
-			'downloads.backgroundWarning.bannerDegraded' => '后台下载可能受限',
-			'downloads.backgroundWarning.bannerAction' => '详情',
-			'downloads.backgroundWarning.sheetTitle' => '后台下载已被阻止',
-			'downloads.backgroundWarning.sheetTitleDegraded' => '后台下载可能受限',
-			'downloads.backgroundWarning.sheetIntro' => 'Android 正在阻止 Plezy 在后台稳定下载。',
-			'downloads.backgroundWarning.sheetIntroDegraded' => '你的设备限制了 Plezy 在后台下载的时机。',
-			'downloads.backgroundWarning.reasonBackgroundRestricted' => 'Plezy 的后台使用受到限制。请将其电池用量或后台使用设置为“不受限制”。',
-			'downloads.backgroundWarning.reasonStandbyRestricted' => 'Android 已将 Plezy 置于受限待机状态。请将其电池用量设为“不受限制”。',
-			'downloads.backgroundWarning.reasonDownloadChannelBlocked' => '下载通知已关闭，因此可能无法查看进度或进行控制。',
-			'downloads.backgroundWarning.reasonNotificationsDisabled' => '通知已关闭。在 Android 13 或更高版本中，长时间后台下载需要开启通知。',
-			'downloads.backgroundWarning.reasonDataSaver' => '流量节省程序已开启，会阻止使用移动数据进行后台下载。使用 Wi-Fi 时下载应仍可进行。',
-			'downloads.backgroundWarning.reasonOemUnknown' => 'Plezy 在后台时，下载曾多次停止。请检查 Plezy 的电池用量或后台使用设置。',
-			'downloads.backgroundWarning.openSettings' => '打开设置',
-			'downloads.backgroundWarning.stillNotWorking' => '设备专属帮助',
-			'downloads.backgroundWarning.stillNotWorkingDescription' => '查看适用于你设备的操作步骤；如果问题仍然存在，请通过设置 › 查看日志发送日志。',
-			'downloads.backgroundWarning.dialogTitle' => '下载可能无法完成',
-			'downloads.backgroundWarning.dialogDownloadAnyway' => '仍要下载',
-			'downloads.backgroundWarning.dialogFixFirst' => '先解决此问题',
-			'downloads.backgroundWarning.statusTile' => '后台下载',
-			'downloads.backgroundWarning.statusOk' => '允许在后台运行',
-			'downloads.backgroundWarning.statusBlocked' => '已被系统设置阻止',
-			'downloads.backgroundWarning.statusDegraded' => '受系统设置限制',
-			'downloads.backgroundWarning.statusUnknown' => '尚未检查',
-			'downloads.backgroundWarning.settingsUnavailable' => '无法在此设备上打开系统设置',
-			'downloads.backgroundWarning.linkUnavailable' => '无法在此设备上打开 dontkillmyapp.com',
-			'downloads.options' => '下载选项',
-			'downloads.groupings.library' => '媒体库',
-			'downloads.groupings.collections' => '合集',
-			'downloads.unknownLibrary' => '未知媒体库',
-			'downloads.unknownShow' => '未知节目',
-			'downloads.unknownSeason' => '未知季',
-			'downloads.unknownAlbum' => '未知专辑',
-			'downloads.completedOfTotal' => ({required Object completed, required Object total}) => '已完成 ${completed}/${total}',
-			'downloads.errorFileNotFound' => '未找到文件（404）',
-			'downloads.errorDownloadNotAllowed' => '服务器不允许下载（403）',
-			'downloads.errorDownloadFailed' => '下载失败',
-			'downloads.errorDownloadFailedWithReason' => ({required Object reason}) => '下载失败：${reason}',
-			'downloads.errorHttpStatus' => ({required Object status}) => '下载失败（HTTP ${status}）',
-			'downloads.errorPostProcessing' => ({required Object reason}) => '后处理失败：${reason}',
-			'downloads.reasonFileNotSaved' => '无法将文件保存到此设备',
-			'downloads.reasonCannotResume' => '无法继续未完成的下载',
-			'downloads.reasonDeviceStorageFull' => '此设备的存储空间已满',
-			'downloads.notificationDownloading' => '正在下载…',
-			'downloads.notificationComplete' => '下载完成',
-			'downloads.notificationPaused' => '下载已暂停',
-			'shaders.title' => '着色器',
-			'shaders.noShaderDescription' => '无视频增强',
-			'shaders.nvscalerDescription' => 'NVIDIA 图像缩放，使视频更清晰',
-			'shaders.artcnnVariantNeutral' => '中性',
-			'shaders.artcnnVariantDenoise' => '降噪',
-			'shaders.artcnnVariantDenoiseSharpen' => '降噪 + 锐化',
-			'shaders.qualityFast' => '快速',
-			'shaders.qualityHQ' => '高质量',
-			'shaders.mode' => '模式',
-			'shaders.importShader' => '导入着色器',
-			'shaders.customShaderDescription' => '自定义 GLSL 着色器',
-			'shaders.shaderImported' => '着色器已导入',
-			'shaders.shaderImportFailed' => '导入着色器失败',
-			'shaders.deleteShader' => '删除着色器',
-			'shaders.deleteShaderConfirm' => ({required Object name}) => '删除“${name}”？',
-			'companionRemote.title' => '遥控器',
-			'companionRemote.connectedTo' => ({required Object name}) => '已连接到 ${name}',
-			'companionRemote.unknownDevice' => '未知设备',
-			'companionRemote.session.startingServer' => '正在启动远程服务器…',
-			'companionRemote.session.hostAddress' => '主机地址',
-			'companionRemote.session.connected' => '已连接',
-			'companionRemote.session.serverRunning' => '远程服务器已启动',
-			'companionRemote.session.serverStopped' => '远程服务器已停止',
-			'companionRemote.session.serverRunningDescription' => '网络上的移动设备可以连接到此应用',
-			'companionRemote.session.serverStoppedDescription' => '启动服务器以允许移动设备连接',
-			'companionRemote.session.usePhoneToControl' => '使用移动设备控制此应用',
-			'companionRemote.session.startServer' => '启动服务器',
-			'companionRemote.session.stopServer' => '停止服务器',
-			'companionRemote.session.minimize' => '最小化',
-			'companionRemote.session.manualAddressHint' => '手动连接地址：',
-			'companionRemote.pairing.discoveryDescription' => '使用同一 Plex 账号的 Plezy 设备会显示在这里',
-			'companionRemote.pairing.hostAddressHint' => '192.168.1.100:48632',
-			'companionRemote.pairing.connecting' => '正在连接…',
-			'companionRemote.pairing.searchingForDevices' => '正在搜索设备…',
-			'companionRemote.pairing.noDevicesFound' => '未在网络中找到设备',
-			'companionRemote.pairing.noDevicesHint' => '请在桌面端打开 Plezy，并确保设备连接到同一 Wi-Fi 网络',
-			'companionRemote.pairing.availableDevices' => '可用设备',
-			'companionRemote.pairing.manualConnection' => '手动连接',
-			'companionRemote.pairing.cryptoInitFailed' => '无法启动安全连接。请先登录 Plex。',
-			'companionRemote.pairing.validationHostRequired' => '请输入主机地址',
-			'companionRemote.pairing.validationHostFormat' => '格式必须为 IP:端口（例如 192.168.1.100:48632）',
-			'companionRemote.pairing.connectionTimedOut' => '连接超时。请在两台设备上使用同一网络。',
-			'companionRemote.pairing.sessionNotFound' => '未找到设备。请确认 Plezy 正在主机上运行。',
-			'companionRemote.pairing.authFailed' => '认证失败。两台设备需要使用同一 Plex 账号。',
-			'companionRemote.pairing.failedToConnect' => ({required Object error}) => '连接失败：${error}',
-			'companionRemote.remote.disconnectConfirm' => '确定要断开遥控会话吗？',
-			'companionRemote.remote.reconnecting' => '正在重新连接…',
-			'companionRemote.remote.attemptOf' => ({required Object current}) => '第 ${current} 次尝试，共 5 次',
-			'companionRemote.remote.retryNow' => '立即重试',
-			'companionRemote.remote.tabRemote' => '遥控器',
-			'companionRemote.remote.tabPlay' => '播放',
-			'companionRemote.remote.tabMore' => '更多',
-			'companionRemote.remote.menu' => '菜单',
-			'companionRemote.remote.tabNavigation' => '导航',
-			'companionRemote.remote.tabDiscover' => '发现',
-			'companionRemote.remote.tabLibraries' => '媒体库',
-			'companionRemote.remote.tabSearch' => '搜索',
-			'companionRemote.remote.tabDownloads' => '下载',
-			'companionRemote.remote.tabSettings' => '设置',
-			'companionRemote.remote.previous' => '上一个',
-			'companionRemote.remote.playPause' => '播放/暂停',
-			'companionRemote.remote.next' => '下一个',
-			'companionRemote.remote.seekBack' => '快退',
-			'companionRemote.remote.stop' => '停止',
-			'companionRemote.remote.seekForward' => '快进',
-			'companionRemote.remote.volume' => '音量',
-			'companionRemote.remote.volumeDown' => '降低音量',
-			'companionRemote.remote.volumeUp' => '提高音量',
-			'companionRemote.remote.fullscreen' => '全屏',
-			'companionRemote.remote.subtitles' => '字幕',
-			'companionRemote.remote.audio' => '音频',
-			'companionRemote.remote.searchHint' => '在桌面端搜索…',
-			'companionRemote.errors.noNetworkInterface' => '未找到网络接口',
-			'companionRemote.errors.authenticationFailed' => '身份验证失败',
-			'companionRemote.errors.serverStartFailed' => ({required Object error}) => '无法启动远程服务器：${error}',
-			'companionRemote.errors.commandFailed' => ({required Object error}) => '无法发送远程命令：${error}',
-			'companionRemote.errors.joinTimedOut' => '加入会话超时',
-			'companionRemote.errors.failedToConnectAnyAddress' => '无法连接到任何地址',
-			'companionRemote.errors.connectionLostAfterAttempts' => ({required Object attempts}) => '${attempts} 次尝试后连接丢失',
-			'companionRemote.errors.connectionLost' => '连接丢失',
-			'companionRemote.closedBeforeAuth' => '连接在身份验证前已关闭',
-			'videoSettings.playbackSpeed' => '播放速度',
-			'videoSettings.normalSpeed' => '正常',
-			'videoSettings.sleepTimerActive' => ({required Object duration}) => '运行中（${duration}）',
-			'videoSettings.zoom' => '缩放',
-			'videoSettings.sleepTimer' => '睡眠定时器',
-			'videoSettings.audioSync' => '音频同步',
-			'videoSettings.subtitleSync' => '字幕同步',
-			'videoSettings.hdr' => 'HDR',
-			'videoSettings.hdrUnsupported' => '此处不支持 HDR——当前桌面合成器或视频输出无法传输 HDR。',
-			'videoSettings.hdrToneMapping' => 'HDR 色调映射',
-			'videoSettings.hdrToneMappingCompositor' => '合成器',
-			'videoSettings.hdrToneMappingCompositorDescription' => '直接传递源的 HDR 元数据，并由桌面合成器进行映射。',
-			'videoSettings.hdrToneMappingPlayer' => '播放器',
-			'videoSettings.hdrToneMappingPlayerDescription' => '在播放器中映射到显示器的峰值亮度，然后将结果告知合成器。',
-			'videoSettings.hdrToneMappingFailed' => '无法更改 HDR 色调映射——仍在使用之前的模式。',
-			'videoSettings.audioOutput' => '音频输出',
-			'videoSettings.performanceOverlay' => '性能监控',
-			'videoSettings.audioOutputDolbyAtmos' => 'Dolby Atmos',
-			'videoSettings.audioOutputDolbyAudio' => 'Dolby Audio',
-			'videoSettings.audioOutputSurround' => '环绕声',
-			'videoSettings.audioOutputSpatial' => '空间音频',
-			'videoSettings.audioOutputStereo' => '立体声',
-			'videoSettings.audioNormalization' => '响度标准化',
-			'videoSettings.audioNormalizationDisablesPassthrough' => '将音频解码为 PCM；开启时直通关闭',
-			'performanceOverlay.color' => '颜色',
-			'performanceOverlay.performance' => '性能',
-			'performanceOverlay.buffer' => '缓冲',
-			'performanceOverlay.app' => '应用',
-			'performanceOverlay.decoder' => '解码器',
-			'performanceOverlay.rawDecoder' => '原始解码器',
-			'performanceOverlay.tunneling' => '隧道',
-			'performanceOverlay.passthrough' => '直通',
-			'performanceOverlay.aspect' => '宽高比',
-			'performanceOverlay.rotation' => '旋转',
-			'performanceOverlay.dvSource' => 'DV 来源',
-			'performanceOverlay.dvPath' => 'DV 路径',
-			'performanceOverlay.dvRouteDecoder' => 'Dolby Vision 解码器',
-			'performanceOverlay.dvRouteDecoderP81' => 'Dolby Vision 解码器（P7→8.1）',
-			'performanceOverlay.dvRouteBaseLayer' => '基础层',
-			'performanceOverlay.dvRouteBaseLayerHdr10' => 'HDR10 基础层',
-			'performanceOverlay.dvRouteBaseLayerHlg' => 'HLG 基础层',
-			'performanceOverlay.dvRouteBaseLayerSdr' => 'SDR 基础层',
-			'performanceOverlay.dvRouteReshaped' => 'RPU 重塑（gpu-next）',
-			'performanceOverlay.p7Conversion' => 'P7 转换',
-			'performanceOverlay.sampleRate' => '采样率',
-			'performanceOverlay.pixelFormat' => '像素格式',
-			'performanceOverlay.hwFormat' => '硬件格式',
-			'performanceOverlay.matrix' => '矩阵',
-			'performanceOverlay.primaries' => '基色',
-			'performanceOverlay.transfer' => '传递特性',
-			'performanceOverlay.renderFps' => '渲染 FPS',
-			'performanceOverlay.displayFps' => '显示 FPS',
-			'performanceOverlay.avSync' => 'A/V 同步',
-			'performanceOverlay.dropped' => '丢帧',
-			'performanceOverlay.dvRpus' => 'DV RPU',
-			'performanceOverlay.dvRpuAverage' => 'DV RPU 平均',
-			'performanceOverlay.dvSampleAverage' => 'DV 采样平均',
-			'performanceOverlay.maxLuma' => '最大亮度',
-			'performanceOverlay.minLuma' => '最小亮度',
-			'performanceOverlay.maxCll' => 'MaxCLL',
-			'performanceOverlay.maxFall' => 'MaxFALL',
-			'performanceOverlay.cacheUsed' => '已用缓存',
-			'performanceOverlay.cacheLimit' => '缓存限制',
-			'performanceOverlay.speed' => '速度',
-			'performanceOverlay.player' => '播放器',
-			'performanceOverlay.memory' => '内存',
-			'performanceOverlay.uiFps' => 'UI FPS',
-			'performanceOverlay.fps' => 'FPS',
-			'performanceOverlay.decoderAndroidHw' => 'Android 硬件',
-			'performanceOverlay.decoderNvidiaHw' => 'NVIDIA 硬件',
-			'performanceOverlay.decoderQualcommHw' => 'Qualcomm 硬件',
-			'performanceOverlay.decoderMediatekHw' => 'MediaTek 硬件',
-			'performanceOverlay.decoderExynosHw' => 'Exynos 硬件',
-			'performanceOverlay.decoderSoftware' => '软件',
-			_ => null,
-		} ?? switch (path) {
-			'performanceOverlay.decoderHardware' => '硬件',
-			'performanceOverlay.tunnelingActive' => '已启用',
-			'performanceOverlay.dvRpuFailed' => ({required Object converted, required Object failures}) => '${converted}（${failures} 个失败）',
-			'externalPlayer.title' => '外部播放器',
-			'externalPlayer.useExternalPlayer' => '使用外部播放器',
-			'externalPlayer.useExternalPlayerDescription' => '在其他应用中打开视频',
-			'externalPlayer.selectPlayer' => '选择播放器',
-			'externalPlayer.customPlayers' => '自定义播放器',
-			'externalPlayer.systemDefault' => '系统默认',
-			'externalPlayer.addCustomPlayer' => '添加自定义播放器',
-			'externalPlayer.playerName' => '播放器名称',
-			'externalPlayer.playerNameHint' => '我的播放器',
-			'externalPlayer.playerCommand' => '命令',
-			'externalPlayer.playerPackage' => '包名',
-			'externalPlayer.playerUrlScheme' => 'URL 方案',
-			'externalPlayer.off' => '关闭',
-			'externalPlayer.launchFailed' => '无法打开外部播放器',
-			'externalPlayer.appNotInstalled' => ({required Object name}) => '${name} 未安装',
-			'externalPlayer.playInExternalPlayer' => '在外部播放器中播放',
-			'metadataEdit.editMetadata' => '编辑…',
-			'metadataEdit.screenTitle' => '编辑元数据',
-			'metadataEdit.basicInfo' => '基本信息',
-			'metadataEdit.artwork' => '封面图片',
-			'metadataEdit.advancedSettings' => '高级设置',
-			'metadataEdit.title' => '标题',
-			'metadataEdit.sortTitle' => '排序标题',
-			'metadataEdit.originalTitle' => '原始标题',
-			'metadataEdit.releaseDate' => '上映日期',
-			'metadataEdit.contentRating' => '内容分级',
-			'metadataEdit.studio' => '制片厂',
-			'metadataEdit.tagline' => '标语',
-			'metadataEdit.summary' => '简介',
-			'metadataEdit.poster' => '海报',
-			'metadataEdit.background' => '背景',
-			'metadataEdit.logo' => '标志',
-			'metadataEdit.squareArt' => '方形图片',
-			'metadataEdit.selectPoster' => '选择海报',
-			'metadataEdit.selectBackground' => '选择背景',
-			'metadataEdit.selectLogo' => '选择标志',
-			'metadataEdit.selectSquareArt' => '选择方形图片',
-			'metadataEdit.fromUrl' => '通过 URL',
-			'metadataEdit.uploadFile' => '上传文件',
-			'metadataEdit.enterImageUrl' => '输入图片 URL',
-			'metadataEdit.imageUrl' => '图片 URL',
-			'metadataEdit.metadataUpdated' => '元数据已更新',
-			'metadataEdit.metadataUpdateFailed' => '元数据更新失败',
-			'metadataEdit.artworkUpdated' => '封面图片已更新',
-			'metadataEdit.artworkUpdateFailed' => '封面图片更新失败',
-			'metadataEdit.noArtworkAvailable' => '没有可用的封面图片',
-			'metadataEdit.artworkOption' => ({required Object index}) => '封面图片选项 ${index}',
-			'metadataEdit.selectedArtworkOption' => ({required Object index}) => '封面图片选项 ${index}，已选择',
-			'metadataEdit.notSet' => '未设置',
-			'metadataEdit.libraryDefault' => '媒体库默认',
-			'metadataEdit.accountDefault' => '账户默认',
-			'metadataEdit.seriesDefault' => '剧集默认',
-			'metadataEdit.episodeSorting' => '剧集排序',
-			'metadataEdit.oldestFirst' => '最旧优先',
-			'metadataEdit.newestFirst' => '最新优先',
-			'metadataEdit.keep' => '保留',
-			'metadataEdit.allEpisodes' => '所有剧集',
-			'metadataEdit.latestEpisodes' => ({required Object count}) => '最新 ${count} 集',
-			'metadataEdit.latestEpisode' => '最新一集',
-			'metadataEdit.episodesAddedPastDays' => ({required Object count}) => '过去 ${count} 天内添加的剧集',
-			'metadataEdit.deleteAfterPlaying' => '播放后删除剧集',
-			'metadataEdit.never' => '从不',
-			'metadataEdit.afterADay' => '一天后',
-			'metadataEdit.afterAWeek' => '一周后',
-			'metadataEdit.afterAMonth' => '一个月后',
-			'metadataEdit.onNextRefresh' => '下次刷新时',
-			'metadataEdit.seasons' => '季',
-			'metadataEdit.show' => '显示',
-			'metadataEdit.hide' => '隐藏',
-			'metadataEdit.episodeOrdering' => '剧集排列顺序',
-			'metadataEdit.tmdbAiring' => 'The Movie Database（播出顺序）',
-			'metadataEdit.tvdbAiring' => 'TheTVDB（播出顺序）',
-			'metadataEdit.tvdbAbsolute' => 'TheTVDB（绝对顺序）',
-			'metadataEdit.metadataLanguage' => '元数据语言',
-			'metadataEdit.useOriginalTitle' => '使用原始标题',
-			'metadataEdit.preferredAudioLanguage' => '首选音频语言',
-			'metadataEdit.preferredSubtitleLanguage' => '首选字幕语言',
-			'metadataEdit.subtitleMode' => '自动选择字幕模式',
-			'metadataEdit.manuallySelected' => '手动选择',
-			'metadataEdit.shownWithForeignAudio' => '外语音频时显示',
-			'metadataEdit.alwaysEnabled' => '始终启用',
-			'metadataEdit.tags' => '标签',
-			'metadataEdit.addTag' => '添加标签',
-			'metadataEdit.genre' => '类型',
-			'metadataEdit.director' => '导演',
-			'metadataEdit.writer' => '编剧',
-			'metadataEdit.producer' => '制片人',
-			'metadataEdit.country' => '国家',
-			'metadataEdit.collection' => '合集',
-			'metadataEdit.label' => '标记',
-			'metadataEdit.quickTag' => '快速标签…',
-			'matchScreen.match' => '匹配…',
-			'matchScreen.fixMatch' => '修正匹配…',
-			'matchScreen.unmatch' => '取消匹配',
-			'matchScreen.unmatchConfirm' => '清除此匹配？在重新匹配前，Plex 会将其视为未匹配。',
-			'matchScreen.unmatchSuccess' => '已取消匹配',
-			'matchScreen.unmatchFailed' => '无法取消匹配',
-			'matchScreen.matchApplied' => '匹配已应用',
-			'matchScreen.matchFailed' => '应用匹配失败',
-			'matchScreen.titleHint' => '标题',
-			'matchScreen.yearHint' => '年份',
-			'matchScreen.search' => '搜索',
-			'matchScreen.noMatchesFound' => '未找到匹配项',
-			'serverTasks.title' => '服务器任务',
-			'serverTasks.failedToLoad' => '加载任务失败',
-			'serverTasks.noTasks' => '没有正在运行的任务',
-			'trakt.title' => 'Trakt',
-			'trakt.connected' => '已连接',
-			'trakt.connectedAs' => ({required Object username}) => '已以 @${username} 身份连接',
-			'trakt.disconnectConfirm' => '断开 Trakt 账户？',
-			'trakt.disconnectConfirmBody' => 'Plezy 将停止向 Trakt 发送事件。你可随时重新连接。',
-			'trakt.scrobble' => '实时同步播放状态',
-			'trakt.scrobbleDescription' => '播放期间将播放、暂停和停止事件发送到 Trakt。',
-			'trakt.watchedSync' => '同步已观看状态',
-			'trakt.watchedSyncDescription' => '在 Plezy 中将内容标记为已观看时，也会在 Trakt 上标记为已观看。',
-			'seerr.title' => 'Seerr',
-			'seerr.connectTitle' => '连接 Seerr',
-			'seerr.serverUrl' => '服务器 URL',
-			'seerr.serverUrlHelper' => '你的 Seerr 实例的地址',
-			'seerr.checkServer' => '继续',
-			'seerr.signInWithJellyfin' => '使用 Jellyfin 登录',
-			'seerr.signInWithEmby' => '使用 Emby 登录',
-			'seerr.signInWithLocal' => '使用本地账户',
-			'seerr.email' => '邮箱',
-			'seerr.noSignInMethods' => '此 Seerr 实例未提供 Plezy 支持的登录方式。',
-			'seerr.instance' => '实例',
-			'seerr.disconnectConfirm' => '断开 Seerr 连接？',
-			'seerr.disconnectConfirmBody' => 'Plezy 将忘记此 Seerr 实例。可随时重新连接。',
-			'seerr.request' => '请求',
-			'seerr.request4k' => '请求 4K',
-			'seerr.seasons' => '季',
-			'seerr.allSeasons' => '全部季',
-			'seerr.advancedOptions' => '高级',
-			'seerr.destinationServer' => '目标服务器',
-			'seerr.qualityProfile' => '画质配置',
-			'seerr.rootFolder' => '根目录',
-			'seerr.languageProfile' => '语言配置',
-			'seerr.tags' => '标签',
-			'seerr.noTags' => '无标签',
-			'seerr.defaultOption' => ({required Object name}) => '${name}（默认）',
-			'seerr.animeNote' => '此剧集为动画。',
-			'seerr.requestSubmitted' => '请求已提交',
-			'seerr.requestFailed' => ({required Object error}) => '请求失败：${error}',
-			'seerr.requestsLoadFailed' => '无法加载请求选项',
-			'seerr.nothingToRequest' => '所有内容都已可用或已请求。',
-			'seerr.statusAvailable' => '可用',
-			'seerr.statusPartiallyAvailable' => '部分可用',
-			'seerr.statusRequested' => '已请求',
-			'seerr.statusProcessing' => '处理中',
-			'seerr.statusBlocklisted' => '已加入屏蔽列表',
-			'seerr.couldNotReach' => ({required Object url, required Object error}) => '无法连接到 ${url}：${error}',
-			'seerr.noInstanceAtUrl' => ({required Object url, required Object status}) => '${url} 上没有 Seerr 实例（HTTP ${status}）',
-			'seerr.behindAuthProxy' => '响应来自需要身份验证的反向代理（SSO 或 HTTP 认证），而非 Seerr。Plezy 无法通过它登录：请让 Seerr 的 /api/v1 路径为此应用绕过代理，或使用可直接访问 Seerr 的地址。',
-			'seerr.invalidUrl' => '输入服务器地址，例如 https://seerr.example.com',
-			'seerr.quickConnectUnsupported' => '此 Seerr 实例不支持 Quick Connect。需要 Seerr 3.4 或更高版本。',
-			'seerr.notInitialized' => '此 Seerr 实例尚未完成首次运行设置',
-			'seerr.noPlexTokenForReauth' => '没有可用于重新登录的 Plex 令牌',
-			'seerr.noStoredCredentials' => '没有已保存的凭据可用于重新登录',
-			'seerr.signInRejected' => '登录被拒绝',
-			'seerr.noSessionCookie' => 'Seerr 未签发会话 Cookie',
-			'seerr.freshCookieRejected' => 'Seerr 拒绝了新的会话 Cookie',
-			'seerr.noUserInformation' => 'Seerr 未返回用户信息',
-			'seerr.sessionRejectedAfterReauth' => '重新登录后会话被拒绝',
-			'seerr.permissionDenied' => 'Seerr 拒绝了此操作：你的账户不再拥有所需权限',
-			'seerr.permissionRevoked' => '你不再拥有请求此内容的权限',
-			'services.title' => '服务',
-			'services.hubSubtitle' => '同步观看进度并请求新内容。',
-			'services.integrations' => '集成',
-			'services.notConnected' => '未连接',
-			'services.connectedAs' => ({required Object username}) => '已以 @${username} 身份连接',
-			'services.scrobble' => '自动记录进度',
-			'services.scrobbleDescription' => '观看完一集或一部电影后更新你的列表。',
-			'services.disconnectConfirm' => ({required Object service}) => '断开 ${service} 连接？',
-			'services.disconnectConfirmBody' => ({required Object service}) => 'Plezy 将停止更新 ${service}。可随时重新连接。',
-			'services.connectFailed' => ({required Object service}) => '无法连接到 ${service}。请重试。',
-			'services.names.mal' => 'MyAnimeList',
-			'services.names.anilist' => 'AniList',
-			'services.names.simkl' => 'Simkl',
-			'services.names.seerr' => 'Seerr',
-			'services.names.mdblist' => 'MDBList',
-			'services.simklReconnect.title' => '重新连接 Simkl',
-			'services.simklReconnect.subtitle' => 'Simkl 即将停用此连接所使用的登录方式。重新连接将打开 simkl.com 以授权 Plezy — Plezy 永远不会看到你的密码。你的观看记录仍保留在 Simkl 上。',
-			'services.deviceCode.title' => ({required Object service}) => '在 ${service} 上激活 Plezy',
-			'services.deviceCode.instructions' => '扫描二维码，或访问下方地址并输入此代码：',
-			'services.deviceCode.openToActivate' => ({required Object service}) => '打开 ${service} 以激活',
-			'services.deviceCode.copyCode' => '复制激活代码',
-			'services.deviceCode.waitingForAuthorization' => '等待授权…',
-			'services.deviceCode.codeCopied' => '代码已复制',
-			'services.oauthProxy.title' => ({required Object service}) => '登录 ${service}',
-			'services.oauthProxy.body' => '扫描此二维码，或在任意设备上打开 URL。',
-			'services.oauthProxy.openToSignIn' => ({required Object service}) => '打开 ${service} 以登录',
-			'services.pendingAuth.copyUrl' => '复制登录 URL',
-			'services.pendingAuth.urlCopied' => 'URL 已复制',
-			'services.libraryFilter.title' => '媒体库筛选',
-			'services.libraryFilter.subtitleAllSyncing' => '同步所有媒体库',
-			'services.libraryFilter.subtitleNoneSyncing' => '不同步任何内容',
-			'services.libraryFilter.subtitleBlocked' => ({required Object count}) => '已屏蔽 ${count} 个',
-			'services.libraryFilter.subtitleAllowed' => ({required Object count}) => '已允许 ${count} 个',
-			'services.libraryFilter.mode' => '筛选模式',
-			'services.libraryFilter.modeBlacklist' => '黑名单',
-			'services.libraryFilter.modeWhitelist' => '白名单',
-			'services.libraryFilter.modeHintBlacklist' => '同步下方未勾选的所有媒体库。',
-			'services.libraryFilter.modeHintWhitelist' => '仅同步下方勾选的媒体库。',
-			'services.libraryFilter.libraries' => '媒体库',
-			'services.libraryFilter.noLibraries' => '没有可用的媒体库',
-			'addServer.addMediaBrowserTitle' => ({required Object product}) => '添加 ${product} 服务器',
-			'addServer.serverUrls' => '服务器 URL',
-			'addServer.serverUrlsHelper' => '可输入多个 URL，并用逗号分隔。',
-			'addServer.findServer' => '查找服务器',
-			'addServer.searchingLocalMediaBrowserServers' => ({required Object product}) => '正在查找本地 ${product} 服务器…',
-			'addServer.localMediaBrowserServers' => ({required Object product}) => '本地 ${product} 服务器',
-			'addServer.username' => '用户名',
-			'addServer.password' => '密码',
-			'addServer.signIn' => '登录',
-			'addServer.change' => '更改',
-			'addServer.required' => '必填',
-			'addServer.couldNotReachServer' => ({required Object error}) => '无法连接到服务器：${error}',
-			'addServer.signInFailed' => ({required Object error}) => '登录失败：${error}',
-			'addServer.quickConnectFailed' => ({required Object error}) => 'Quick Connect 失败：${error}',
-			'addServer.addPlexTitle' => '使用 Plex 登录',
-			'addServer.pinExpired' => 'PIN 在登录前已过期。请重试。',
-			'addServer.failedToRegisterAccount' => ({required Object error}) => '注册账户失败：${error}',
-			'addServer.enterMediaBrowserUrlError' => ({required Object product}) => '请输入你的 ${product} 服务器 URL',
-			'addServer.addConnectionTitle' => '添加连接',
-			'addServer.addConnectionTitleScoped' => ({required Object name}) => '添加到 ${name}',
-			'addServer.signInWithPlexCard' => '使用 Plex 登录',
-			'addServer.signInWithPlexCardSubtitle' => '授权此设备。共享服务器会被添加。',
-			'addServer.signInWithPlexCardSubtitleScoped' => '授权一个 Plex 账户。Plex Home 用户将成为 Plezy 用户资料。',
-			'addServer.connectToMediaBrowserCard' => ({required Object product}) => '连接到 ${product}',
-			'addServer.connectToMediaBrowserCardSubtitle' => '输入你的服务器 URL、用户名和密码。',
-			'addServer.connectToMediaBrowserCardSubtitleScoped' => ({required Object product, required Object name}) => '登录你的 ${product} 服务器。将绑定到 ${name}。',
-			'addServer.borrowFromAnotherProfile' => '使用其他用户资料的连接',
-			'addServer.borrowFromAnotherProfileSubtitle' => '复用另一个用户资料的连接。受 PIN 保护的用户资料需要输入 PIN。',
-			'addServer.invalidCredentials' => '用户名或密码无效',
-			'addServer.authResponseNotJson' => '身份验证响应不是有效的 JSON',
-			'addServer.authResponseIncomplete' => '服务器返回的登录响应不完整',
-			'addServer.quickConnectRejected' => '服务器拒绝了 Quick Connect',
-			'addServer.quickConnectNotJson' => 'Quick Connect 响应不是有效的 JSON',
-			'addServer.quickConnectMissingFields' => 'Quick Connect 响应中缺少代码或密钥',
-			'addServer.quickConnectPollRejected' => '服务器拒绝了 Quick Connect 轮询',
-			'addServer.serverTimedOut' => '服务器未及时响应',
-			'addServer.responseNotJson' => '服务器响应不是有效的 JSON',
-			'addServer.responseMissingIdentity' => ({required Object product}) => '响应中缺少 ID 或服务器名称——这是 ${product} 服务器吗？',
-			'addServer.probeFailed' => ({required Object error}) => '无法连接到服务器：${error}',
-			'addServer.enterAtLeastOneUrl' => ({required Object product}) => '请输入至少一个 ${product} 服务器 URL',
-			'addServer.noReachableServer' => ({required Object product}) => '未找到可连接的 ${product} 服务器',
-			'addServer.urlsPointToDifferentServers' => ({required Object product}) => '这些 URL 指向不同的 ${product} 服务器',
-			'addServer.urlDoesNotMatchServer' => ({required Object product}) => '此 URL 与 ${product} 服务器不匹配',
-			'addServer.redirectUnsupported' => '服务器重定向到了不受支持的 URL',
-			'addServer.redirectDifferentHost' => ({required Object product}) => '服务器重定向到了其他主机。请直接输入最终的 ${product} URL。',
-			'addServer.redirectInsecure' => '服务器从 HTTPS 重定向到了不安全的 URL',
-			'addServer.redirectUnsupportedEnterFinal' => ({required Object product}) => '服务器重定向到了不受支持的 URL。请直接输入最终的 ${product} URL。',
-			_ => null,
-		};
+		switch (path) {
+			case 'app.title': return 'Plezy';
+			case 'appIcon.title': return '应用图标';
+			case 'appIcon.defaultIcon': return '默认';
+			case 'appIcon.current': return '当前图标';
+			case 'appIcon.locked': return '包含在主题与图标包中';
+			case 'appIcon.lockedHint': return '备用图标包含在主题与图标包中。';
+			case 'appIcon.changeFailed': return '无法更改应用图标';
+			case 'appIcon.launcherHint': return '离开 Plezy 后，新图标将显示在主屏幕上。';
+			case 'appIcon.tvLauncherHint': return '离开 Plezy 后将显示新横幅。在电视重启之前，Android TV 可能仍会显示旧横幅。';
+			case 'appIcon.names.midnight': return '午夜';
+			case 'appIcon.names.ember': return '余烬';
+			case 'appIcon.names.paper': return '纸张';
+			case 'appIcon.names.oled': return 'OLED';
+			case 'appIcon.names.line': return '线条';
+			case 'appIcon.names.ocean': return '海洋';
+			case 'appIcon.names.ultraviolet': return '紫外';
+			case 'appIcon.names.matcha': return '抹茶';
+			case 'appIcon.names.sunset': return '日落';
+			case 'appIcon.names.gold': return '金色';
+			case 'appIcon.names.titanium': return '钛金';
+			case 'appIcon.names.glass': return '玻璃';
+			case 'appIcon.names.crt': return 'CRT';
+			case 'appIcon.names.vhs': return 'VHS';
+			case 'appIcon.names.synthwave': return '合成波';
+			case 'appIcon.names.pixel': return '像素';
+			case 'appIcon.names.neon': return '霓虹';
+			case 'appIcon.names.sticker': return '贴纸';
+			case 'appIcon.names.ticket': return '票根';
+			case 'appIcon.names.pop': return '波普';
+			case 'appIcon.names.strata': return '地层';
+			case 'appIcon.names.facet': return '切面';
+			case 'appIcon.names.tilde': return '波浪号';
+			case 'auth.signInWithPlex': return '使用 Plex 登录';
+			case 'auth.showQRCode': return '显示二维码';
+			case 'auth.authenticate': return '验证';
+			case 'auth.authenticationTimeout': return '验证超时。请重试。';
+			case 'auth.scanQRToSignIn': return '扫描二维码登录';
+			case 'auth.waitingForAuth': return '正在等待身份验证…\n请在浏览器中登录。';
+			case 'auth.useBrowser': return '使用浏览器';
+			case 'auth.or': return '或';
+			case 'auth.connectToMediaBrowser': return ({required Object product}) => '连接到 ${product}';
+			case 'auth.quickConnect': return 'Quick Connect';
+			case 'auth.useQuickConnect': return '使用 Quick Connect';
+			case 'auth.quickConnectInstructions': return '在 Jellyfin 中打开 Quick Connect 并输入此代码。';
+			case 'auth.quickConnectWaiting': return '等待批准…';
+			case 'auth.quickConnectCancel': return '取消';
+			case 'auth.quickConnectExpired': return 'Quick Connect 已过期。请重试。';
+			case 'auth.localDataRecoveryRequired': return 'Plezy 无法安全恢复本地登录状态和待处理的播放数据。请重新登录。';
+			case 'auth.pinCheckRejected': return 'Plex PIN 检查被拒绝';
+			case 'common.cancel': return '取消';
+			case 'common.save': return '保存';
+			case 'common.close': return '关闭';
+			case 'common.clear': return '清除';
+			case 'common.reset': return '重置';
+			case 'common.later': return '稍后';
+			case 'common.submit': return '提交';
+			case 'common.confirm': return '确认';
+			case 'common.retry': return '重试';
+			case 'common.logout': return '退出登录';
+			case 'common.unknown': return '未知';
+			case 'common.refresh': return '刷新';
+			case 'common.yes': return '是';
+			case 'common.no': return '否';
+			case 'common.delete': return '删除';
+			case 'common.edit': return '编辑';
+			case 'common.shuffle': return '随机播放';
+			case 'common.addTo': return '添加到…';
+			case 'common.createNew': return '新建';
+			case 'common.connect': return '连接';
+			case 'common.disconnect': return '断开连接';
+			case 'common.play': return '播放';
+			case 'common.pause': return '暂停';
+			case 'common.resume': return '继续';
+			case 'common.error': return '错误';
+			case 'common.search': return '搜索';
+			case 'common.home': return '首页';
+			case 'common.back': return '返回';
+			case 'common.settings': return '设置';
+			case 'common.mute': return '静音';
+			case 'common.ok': return '确定';
+			case 'common.off': return '关闭';
+			case 'common.options': return '选项';
+			case 'common.seasonNumber': return ({required Object number}) => '第${number}季';
+			case 'common.episodeNumberTitle': return ({required Object number, required Object title}) => '第${number}集 — ${title}';
+			case 'common.chapterNumber': return ({required Object number}) => '第${number}章';
+			case 'common.reconnect': return '重新连接';
+			case 'common.viewAll': return '查看全部';
+			case 'common.checkingNetwork': return '正在检查网络…';
+			case 'common.loadingServers': return '正在加载服务器…';
+			case 'common.connectingToServers': return '正在连接服务器…';
+			case 'common.startingOfflineMode': return '正在启动离线模式…';
+			case 'common.loading': return '加载中…';
+			case 'common.fullscreen': return '全屏';
+			case 'common.exitFullscreen': return '退出全屏';
+			case 'common.pressBackAgainToExit': return '再按一次返回键退出';
+			case 'common.ratingSource.critic': return '影评人';
+			case 'common.ratingSource.audience': return '观众';
+			case 'common.ratingSource.imdb': return 'IMDb';
+			case 'common.ratingSource.tmdb': return 'TMDB';
+			case 'common.ratingSource.rottenTomatoes': return 'Rotten Tomatoes';
+			case 'common.ratingSource.simkl': return 'Simkl';
+			case 'common.ratingSource.mal': return 'MyAnimeList';
+			case 'common.ratingSource.anilist': return 'AniList';
+			case 'common.ratingSource.trakt': return 'Trakt';
+			case 'common.ratingSource.rottenTomatoesCritic': return 'Rotten Tomatoes 影评人';
+			case 'common.ratingSource.rottenTomatoesAudience': return 'Rotten Tomatoes 观众';
+			case 'common.ratingSource.metacritic': return 'Metacritic';
+			case 'common.ratingSource.letterboxd': return 'Letterboxd';
+			case 'common.notAvailable': return 'N/A';
+			case 'common.url': return 'URL';
+			case 'common.letterKeys': return 'ABC';
+			case 'common.mediaKind.movie': return '电影';
+			case 'common.mediaKind.show': return '剧集';
+			case 'common.mediaKind.season': return '季';
+			case 'common.mediaKind.episode': return '单集';
+			case 'common.mediaKind.artist': return '艺术家';
+			case 'common.mediaKind.album': return '专辑';
+			case 'common.mediaKind.track': return '曲目';
+			case 'common.mediaKind.collection': return '合集';
+			case 'common.mediaKind.playlist': return '播放列表';
+			case 'common.mediaKind.clip': return '短片';
+			case 'common.mediaKind.photo': return '照片';
+			case 'common.mediaKind.folder': return '文件夹';
+			case 'screens.licenses': return '许可证';
+			case 'screens.switchProfile': return '切换用户';
+			case 'screens.subtitleStyling': return '字幕样式';
+			case 'screens.mpvConfig': return 'mpv.conf';
+			case 'screens.logs': return '日志';
+			case 'update.available': return '有可用更新';
+			case 'update.versionAvailable': return ({required Object version}) => '版本 ${version} 已发布';
+			case 'update.currentVersion': return ({required Object version}) => '当前版本：${version}';
+			case 'update.skipVersion': return '跳过此版本';
+			case 'update.viewRelease': return '查看发布详情';
+			case 'update.latestVersion': return '当前已是最新版本';
+			case 'update.checkFailed': return '无法检查更新';
+			case 'supporter.title': return '主题与图标包';
+			case 'supporter.intro': return '可选的一次性购买，提供以下外观类附加内容：';
+			case 'supporter.presetThemes': return '预设主题';
+			case 'supporter.presetThemesDescription': return '余烬、冰川、森林、梅子和纸张';
+			case 'supporter.customTheme': return '自定义主题';
+			case 'supporter.customThemeDescription': return '自行挑选每种颜色';
+			case 'supporter.appIcons': return '应用图标';
+			case 'supporter.appIconsDescription': return '选择备用 Plezy 图标';
+			case 'supporter.buy': return ({required Object price}) => '以 ${price} 购买';
+			case 'supporter.loadingPrice': return '正在加载价格…';
+			case 'supporter.restore': return '恢复购买';
+			case 'supporter.pending': return '你的购买正在等待付款或批准。商店完成处理后，附加内容将立即解锁。';
+			case 'supporter.thankYouTitle': return '感谢你的购买';
+			case 'supporter.thankYouBody': return '主题与图标包已解锁。';
+			case 'supporter.tileSubtitle': return '一次性购买即可解锁主题和应用图标';
+			case 'supporter.tileSubtitleThemesOnly': return '一次性购买即可解锁主题';
+			case 'supporter.tileUnlocked': return '已解锁 — 感谢你的购买';
+			case 'supporter.errors.storeUnavailable': return '无法进行购买。请确认你已登录商店，且此设备允许购买。';
+			case 'supporter.errors.productNotFound': return '你的商店目前无法购买主题与图标包。';
+			case 'supporter.errors.productQueryFailed': return '无法加载价格。请检查网络连接后重试。';
+			case 'supporter.errors.purchaseFailed': return '购买未完成。请重试。';
+			case 'supporter.errors.restoreFailed': return '无法连接到商店以恢复你的购买。请重试。';
+			case 'supporter.errors.nothingToRestore': return '未在此商店账户中找到主题与图标包购买记录。';
+			case 'settings.title': return '设置';
+			case 'settings.supportDeveloper': return '支持 Plezy';
+			case 'settings.supportDeveloperDescription': return '通过 Liberapay 捐赠支持开发';
+			case 'settings.language': return '语言';
+			case 'settings.theme': return '主题';
+			case 'settings.appearance': return '外观';
+			case 'settings.videoPlayback': return '视频播放';
+			case 'settings.videoPlaybackDescription': return '配置播放行为';
+			case 'settings.advanced': return '高级';
+			case 'settings.episodePosterMode': return '剧集海报样式';
+			case 'settings.seriesPoster': return '剧集海报';
+			case 'settings.seasonPoster': return '季海报';
+			case 'settings.episodeThumbnail': return '缩略图';
+			case 'settings.showHeroSectionDescription': return '在主屏幕上显示精选内容轮播区';
+			case 'settings.secondsLabel': return '秒';
+			case 'settings.minutesLabel': return '分钟';
+			case 'settings.secondsShort': return '秒';
+			case 'settings.minutesShort': return '分钟';
+			case 'settings.durationHint': return ({required Object min, required Object max}) => '输入时长（${min}–${max}）';
+			case 'settings.systemTheme': return '系统';
+			case 'settings.lightTheme': return '浅色';
+			case 'settings.darkTheme': return '深色';
+			case 'settings.oledTheme': return 'OLED';
+			case 'settings.emberTheme': return '余烬';
+			case 'settings.glacierTheme': return '冰川';
+			case 'settings.forestTheme': return '森林';
+			case 'settings.plumTheme': return '梅子';
+			case 'settings.paperTheme': return '纸张';
+			case 'settings.libraryDensity': return '媒体库密度';
+			case 'settings.displayScale': return '界面缩放';
+			case 'settings.compact': return '紧凑';
+			case 'settings.comfortable': return '舒适';
+			case 'settings.gridSpacing': return '网格间距';
+			case 'settings.gridSpacingTight': return '紧密';
+			case 'settings.gridSpacingNormal': return '标准';
+			case 'settings.gridSpacingSpacious': return '宽松';
+			case 'settings.tvCornerSpotlightBackdrop': return '右上角聚焦背景图';
+			case 'settings.tvCornerSpotlightBackdropDescription': return '在右上角显示精选内容图片，而不是铺满整个屏幕';
+			case 'settings.viewMode': return '视图模式';
+			case 'settings.gridView': return '网格视图';
+			case 'settings.listView': return '列表视图';
+			case 'settings.showHeroSection': return '显示精选内容区';
+			case 'settings.continueWatchingAction': return '继续观看操作';
+			case 'settings.continueWatchingPlay': return '播放';
+			case 'settings.continueWatchingDetails': return '打开详情';
+			case 'settings.episodeAction': return '剧集操作';
+			case 'settings.episodePlay': return '播放';
+			case 'settings.episodeDetails': return '打开详情';
+			case 'settings.useGlobalHubs': return '使用主页布局';
+			case 'settings.useGlobalHubsDescription': return '显示统一主页内容；否则使用各媒体库的推荐内容。';
+			case 'settings.showServerNameOnHubs': return '在推荐栏显示服务器名称';
+			case 'settings.showServerNameOnHubsDescription': return '始终在推荐栏标题中显示服务器名称。';
+			case 'settings.groupLibrariesByServer': return '按服务器分组媒体库';
+			case 'settings.groupLibrariesByServerDescription': return '在侧边栏中按媒体服务器分组媒体库。';
+			case 'settings.alwaysKeepSidebarOpen': return '始终保持侧边栏展开';
+			case 'settings.alwaysKeepSidebarOpenDescription': return '侧边栏保持展开状态，内容区域自动调整';
+			case 'settings.showUnwatchedCount': return '显示未观看数量';
+			case 'settings.showUnwatchedCountDescription': return '在剧集和季上显示未观看集数';
+			case 'settings.showWatchedIndicators': return '显示已观看标记';
+			case 'settings.showWatchedIndicatorsDescription': return '在已观看的电影、剧集和单集上显示对勾标记';
+			case 'settings.showEpisodeNumberOnCards': return '在卡片上显示集数';
+			case 'settings.showEpisodeNumberOnCardsDescription': return '在剧集卡片上显示季和集编号';
+			case 'settings.showSeasonPostersOnTabs': return '在选项卡上显示季海报';
+			case 'settings.showSeasonPostersOnTabsDescription': return '在每季标签上方显示该季海报';
+			case 'settings.tvFullCardLayout': return '完整电视卡片';
+			case 'settings.tvFullCardLayoutDescription': return '使用仅显示图片的电视卡片，并在图片上叠加演员姓名';
+			case 'settings.focusGlow': return '焦点光晕';
+			case 'settings.focusGlowDescription': return '在获得焦点的卡片周围显示柔和的光晕';
+			case 'settings.visualEffects': return '视觉效果';
+			case 'settings.visualEffectsAuto': return '自动';
+			case 'settings.visualEffectsAutoDescription': return '在性能较低的设备上自动减少效果';
+			case 'settings.visualEffectsFull': return '完整效果';
+			case 'settings.visualEffectsReduced': return '简化';
+			case 'settings.visualEffectsReducedDescription': return '减少动画并使用较低分辨率的封面图片';
+			case 'settings.hideSpoilers': return '隐藏未看剧集的剧透内容';
+			case 'settings.hideSpoilersDescription': return '模糊未观看剧集的缩略图和描述';
+			case 'settings.playerBackend': return '播放器引擎';
+			case 'settings.exoPlayer': return 'ExoPlayer';
+			case 'settings.mpv': return 'mpv';
+			case 'settings.hardwareDecoding': return '硬件解码';
+			case 'settings.hardwareDecodingDescription': return '如果可用，使用硬件加速';
+			case 'settings.playbackBuffer': return '播放缓冲';
+			case 'settings.playbackBufferAuto': return '自动（推荐）';
+			case 'settings.playbackBufferLarge': return '大';
+			case 'settings.playbackBufferExtraLarge': return '特大';
+			case 'settings.playbackBufferDescription': return '针对不稳定的连接缓冲更多内容。也受缓冲大小限制。';
+			case 'settings.defaultQualityTitle': return '默认画质';
+			case 'settings.cellularQualityTitle': return '移动网络默认画质';
+			case 'settings.cellularQualitySameAsDefault': return '与默认画质相同';
+			case 'settings.directPlayCoveredQuality': return '以原始画质播放较小视频';
+			case 'settings.directPlayCoveredQualityDescription': return '已在画质限制内的视频直接播放，而非转码';
+			case 'settings.videoCodecs': return '视频编解码器';
+			case 'settings.videoCodecsDescription': return '未勾选的编解码器将由服务器转码';
+			case 'settings.videoCodecsAlwaysAccepted': return '始终接受';
+			case 'settings.musicQualityTitle': return '音乐音质';
+			case 'settings.subtitleStyling': return '字幕样式';
+			case 'settings.subtitleStylingDescription': return '调整字幕外观';
+			case 'settings.smallSkipDuration': return '短跳过时长';
+			case 'settings.largeSkipDuration': return '长跳过时长';
+			case 'settings.rewindOnResume': return '恢复时回退';
+			case 'settings.secondsUnit': return ({required Object seconds}) => '${seconds} 秒';
+			case 'settings.defaultSleepTimer': return '默认睡眠定时器';
+			case 'settings.minutesUnit': return ({required Object minutes}) => '${minutes} 分钟';
+			case 'settings.rememberTrackSelections': return '记住每部剧集或电影的音轨选择';
+			case 'settings.rememberTrackSelectionsDescription': return '分别记住每部内容的音频和字幕选择';
+			case 'settings.rememberTrackSelectionsBackendRule': return 'Plex 会按文件将每个选择保存在服务器上；Jellyfin 还会开启账户的“记住选择”；Emby 不支持';
+			case 'settings.followServerTrackSelections': return '使用服务器为每集选择的轨道';
+			case 'settings.followServerTrackSelectionsDescription': return '切换剧集时，应用服务器上为该集选择的音频和字幕，而不是沿用当前选择';
+			case 'settings.resumeMusicOnLaunch': return '记住音乐会话';
+			case 'settings.resumeMusicOnLaunchDescription': return '应用启动时，将上次播放的歌曲在停止位置以暂停状态打开';
+			case 'settings.showChapterMarkersOnTimeline': return '在进度条上显示章节标记';
+			case 'settings.showChapterMarkersOnTimelineDescription': return '按章节边界分段显示进度条';
+			case 'settings.specialsOrdering': return '特别篇按剧集顺序';
+			case 'settings.specialsOrderingDescription': return '特别篇在剧集观看顺序中的播放位置';
+			case 'settings.specialsOrderingServer': return '遵循服务器顺序';
+			case 'settings.specialsOrderingAirDate': return '按播出日期穿插';
+			case 'settings.specialsOrderingLast': return '常规季之后';
+			case 'settings.clickVideoTogglesPlayback': return '点击视频可切换播放/暂停';
+			case 'settings.clickVideoTogglesPlaybackDescription': return '点击视频即可播放或暂停，而不是显示控制项。';
+			case 'settings.videoPlayerControls': return '视频播放器控制';
+			case 'settings.keyboardShortcuts': return '键盘快捷键';
+			case 'settings.keyboardShortcutsDescription': return '自定义键盘快捷键';
+			case 'settings.videoPlayerNavigation': return '视频播放器导航';
+			case 'settings.videoPlayerNavigationDescription': return '使用方向键导航视频播放器控件';
+			case 'settings.watchTogetherRelay': return '一起看中继服务器';
+			case 'settings.watchTogetherRelayDescription': return '除非自行设置，否则使用公共 Open Watch Party 中继服务器';
+			case 'settings.watchTogetherRelayHint': return 'https://my-relay.example.com';
+			case 'settings.watchTogetherRelayInvalid': return '请输入有效的 HTTP 或 HTTPS 中继服务器基础 URL。';
+			case 'settings.crashReporting': return '崩溃报告';
+			case 'settings.crashReportingDescription': return '发送崩溃报告以帮助改进应用';
+			case 'settings.debugLogging': return '调试日志';
+			case 'settings.debugLoggingDescription': return '启用详细日志记录以便故障排除';
+			case 'settings.viewLogs': return '查看日志';
+			case 'settings.viewLogsDescription': return '查看应用日志';
+			case 'settings.clearImageCache': return '清除图片缓存';
+			case 'settings.clearImageCacheDescription': return '清除缓存的封面与缩略图。图片在重新下载前加载速度可能会变慢。';
+			case 'settings.clearImageCacheSuccess': return '图片缓存已成功清除';
+			case 'settings.resetSettings': return '重置设置';
+			case 'settings.resetSettingsDescription': return '恢复默认设置。此操作无法撤销。';
+			case 'settings.resetSettingsSuccess': return '设置重置成功';
+			case 'settings.backup': return '备份';
+			case 'settings.exportSettings': return '导出设置';
+			case 'settings.exportSettingsDescription': return '将偏好设置保存到文件';
+			case 'settings.exportSettingsSuccess': return '设置已导出';
+			case 'settings.importSettings': return '导入设置';
+			case 'settings.importSettingsDescription': return '从文件恢复偏好设置';
+			case 'settings.importSettingsConfirm': return '这将替换您当前的设置。继续吗？';
+			case 'settings.importSettingsSuccess': return '设置已导入';
+			case 'settings.importSettingsInvalidFile': return '此文件不是有效的 Plezy 设置导出';
+			case 'settings.importSettingsNoUser': return '导入设置前请先登录';
+			case 'settings.shortcutsReset': return '快捷键已重置为默认值';
+			case 'settings.resetShortcutsConfirm': return '这将用默认快捷键替换你的自定义快捷键。继续吗？';
+			case 'settings.about': return '关于';
+			case 'settings.aboutDescription': return '应用程序信息和许可证';
+			case 'settings.updates': return '更新';
+			case 'settings.updateAvailable': return '有可用更新';
+			case 'settings.checkForUpdates': return '检查更新';
+			case 'settings.autoCheckUpdatesOnStartup': return '启动时自动检查更新';
+			case 'settings.autoCheckUpdatesOnStartupDescription': return '启动时有可用更新则通知';
+			case 'settings.validationErrorEnterNumber': return '请输入有效数字';
+			case 'settings.validationErrorDuration': return ({required Object min, required Object max, required Object unit}) => '时长必须介于 ${min} 和 ${max} ${unit} 之间';
+			case 'settings.shortcutAlreadyAssigned': return ({required Object action}) => '快捷键已被分配给 ${action}';
+			case 'settings.shortcutUpdated': return ({required Object action}) => '快捷键已为 ${action} 更新';
+			case 'settings.saveFailed': return '无法保存更改。请重试。';
+			case 'settings.autoPlayAndSkip': return '自动播放与跳过';
+			case 'settings.autoPlayNextEpisode': return '自动播放下一集';
+			case 'settings.autoPlayNextEpisodeDescription': return '当前剧集结束时自动播放下一集';
+			case 'settings.shuffleStartsFromBeginning': return '随机播放从头开始';
+			case 'settings.shuffleStartsFromBeginningDescription': return '随机播放时每集从头开始播放，而非续播';
+			case 'settings.playNextCountdown': return '播放下一集倒计时';
+			case 'settings.playNextCountdownImmediate': return '立即播放';
+			case 'settings.skipIntroMode': return '跳过片头';
+			case 'settings.skipIntroModeOffDescription': return '正常播放片头，不显示跳过按钮';
+			case 'settings.skipIntroModeButtonDescription': return '片头开始时显示跳过按钮';
+			case 'settings.skipIntroModeAutoDescription': return '在下方设定的延迟后自动跳过片头';
+			case 'settings.skipCreditsMode': return '跳过片尾';
+			case 'settings.skipCreditsModeOffDescription': return '正常播放片尾，不显示跳过按钮';
+			case 'settings.skipCreditsModeButtonDescription': return '片尾开始时显示跳过按钮';
+			case 'settings.skipCreditsModeAutoDescription': return '自动跳过片尾并播放下一集';
+			case 'settings.skipMarkerModeOff': return '关闭';
+			case 'settings.skipMarkerModeButton': return '显示按钮';
+			case 'settings.skipMarkerModeAuto': return '自动';
+			case 'settings.forceSkipMarkerFallback': return '强制使用备用标记';
+			case 'settings.forceSkipMarkerFallbackDescription': return '即使 Plex 有标记，也使用章节标题模式';
+			case 'settings.autoSkipDelay': return '自动跳过延迟';
+			case 'settings.autoSkipDelayDescription': return ({required Object seconds}) => '自动跳过前等待 ${seconds} 秒';
+			case 'settings.introPattern': return '片头标记模式';
+			case 'settings.introPatternDescription': return '用于匹配章节标题中片头标记的正则表达式';
+			case 'settings.creditsPattern': return '片尾标记模式';
+			case 'settings.creditsPatternDescription': return '用于匹配章节标题中片尾标记的正则表达式';
+			case 'settings.invalidRegex': return '无效的正则表达式';
+			case 'settings.regex': return '正则表达式';
+			case 'settings.downloads': return '下载';
+			case 'settings.downloadLocationDescription': return '选择下载内容的存储位置';
+			case 'settings.downloadLocationDefault': return '默认（应用存储）';
+			case 'settings.downloadLocationCustom': return '自定义位置';
+			case 'settings.selectFolder': return '选择文件夹';
+			case 'settings.resetToDefault': return '重置为默认';
+			case 'settings.currentPath': return ({required Object path}) => '当前路径：${path}';
+			case 'settings.downloadLocationChanged': return '下载位置已更改';
+			case 'settings.downloadLocationReset': return '下载位置已重置为默认';
+			case 'settings.downloadLocationInvalid': return '所选文件夹不可写入';
+			case 'settings.downloadLocationPickerUnavailable': return '此设备不支持选择文件夹';
+			case 'settings.downloadOnWifiOnly': return '仅通过 Wi-Fi 下载';
+			case 'settings.downloadOnWifiOnlyDescription': return '使用移动数据时不允许下载';
+			case 'settings.autoRemoveWatchedDownloads': return '自动移除已观看的下载';
+			case 'settings.autoRemoveWatchedDownloadsDescription': return '自动删除已观看的下载';
+			case 'settings.cellularDownloadBlocked': return '已阻止通过移动网络下载。请连接 Wi-Fi 或更改设置。';
+			case 'settings.maxVolume': return '最大音量';
+			case 'settings.maxVolumeDescription': return '允许音量超过 100%，以便播放音量较低的内容';
+			case 'settings.maxVolumePercent': return ({required Object percent}) => '${percent}%';
+			case 'settings.discordRichPresence': return 'Discord 动态状态';
+			case 'settings.discordRichPresenceDescription': return '在 Discord 上显示您正在观看的内容';
+			case 'settings.services': return '服务';
+			case 'settings.servicesDescription': return '连接 Trakt、MyAnimeList、Seerr 等';
+			case 'settings.manageLibrariesDescription': return '重新排序和隐藏媒体库';
+			case 'settings.companionRemoteServer': return '远程控制服务器';
+			case 'settings.companionRemoteServerDescription': return '允许同一网络中的移动设备控制此应用';
+			case 'settings.companionRemoteServerStartFailed': return '无法启动远程控制服务器';
+			case 'settings.companionRemoteServerStopFailed': return '无法停止远程控制服务器';
+			case 'settings.autoPip': return '自动画中画';
+			case 'settings.autoPipDescription': return '播放期间离开应用时自动进入画中画模式';
+			case 'settings.matchContentFrameRate': return '匹配内容帧率';
+			case 'settings.matchContentFrameRateDescription': return '使显示器刷新率与视频帧率匹配';
+			case 'settings.matchContentResolution': return '匹配内容分辨率';
+			case 'settings.matchContentResolutionDescription': return '将显示切换为视频的原生分辨率，由电视负责放大。播放期间菜单和字幕也会一并放大';
+			case 'settings.matchRefreshRate': return '匹配刷新率';
+			case 'settings.matchRefreshRateDescription': return '全屏时匹配显示刷新率';
+			case 'settings.matchDynamicRange': return '匹配动态范围';
+			case 'settings.matchDynamicRangeDescription': return 'HDR 内容切换到 HDR，随后切回 SDR';
+			case 'settings.displaySwitchDelay': return '显示切换延迟';
+			case 'settings.tunneledPlayback': return '隧道播放';
+			case 'settings.tunneledPlaybackDescription': return '使用视频隧道模式。若播放 HDR 内容时出现黑屏或画面卡顿，请将其关闭。';
+			case 'settings.audioPassthrough': return '音频直通';
+			case 'settings.audioPassthroughDescription': return '将 Dolby/DTS 音频不经重新编码直接发送到功放或电视，保留环绕声。如果没有声音，请关闭。';
+			case 'settings.audioPassthroughDescriptionApple': return '对 Dolby Digital Plus（含 Atmos）使用 Apple 原生 Dolby 解码器。DTS 和 TrueHD 仍以多声道 PCM 播放。如果没有声音，请关闭。';
+			case 'settings.audioPassthroughDescriptionAppleSpatial': return '对 Dolby Digital Plus（含 Atmos）使用 Apple 原生 Dolby 解码器。在 iOS、iPadOS 和 tvOS 26 或更高版本上，TrueHD Atmos 和 DTS:X 以空间音频播放。其他 DTS 和 TrueHD 音轨以多声道 PCM 播放。如果没有声音，请关闭。';
+			case 'settings.audioPassthroughOverriddenByNormalization': return '响度标准化开启时停用';
+			case 'settings.audioChannelLimit': return '音频声道';
+			case 'settings.audioChannelLimitDescription': return '为无法播放所有声道的扬声器、耳机或 HDMI 设备下混解码后的音频';
+			case 'settings.audioChannelLimitOriginal': return '原始';
+			case 'settings.audioChannelLimitOriginalDescription': return '播放音轨中的所有声道';
+			case 'settings.audioChannelLimitSurround51': return '最多 5.1';
+			case 'settings.audioChannelLimitSurround51Description': return '为仅支持 5.1 PCM 的电视和功放将 7.1 下混为 5.1。不影响直通。';
+			case 'settings.audioChannelLimitStereo': return '立体声';
+			case 'settings.audioChannelLimitStereoDescription': return '下混为双声道，适用于立体声扬声器或耳机。将关闭直通。';
+			case 'settings.downmixCenterBoost': return '中置声道增强';
+			case 'settings.downmixCenterBoostValue': return ({required Object db}) => '${db} dB';
+			case 'settings.downmixCenterBoostLabel': return '增强（dB）';
+			case 'settings.downmixCenterBoostShort': return 'dB';
+			case 'settings.audioDownmixNormalize': return '下混时音量标准化';
+			case 'settings.audioDownmixNormalizeDescription': return '降低混音电平以防止削波。关闭可保持原始音量（大音量场景可能失真）。';
+			case 'settings.dvConversionMode': return 'Dolby Vision 转换';
+			case 'settings.dvConversionModeDescription': return '选择如何处理 Dolby Vision Profile 7 文件。';
+			case 'settings.dvConversionAuto': return '自动';
+			case 'settings.dvConversionNative': return '原生 / 禁用';
+			case 'settings.dvConversionDv81': return 'P7 → P8.1';
+			case 'settings.dvConversionHevcStrip': return 'P7 → HEVC';
+			case 'settings.dvConversionAutoDescription': return '使用设备能力检测和常规回退机制';
+			case 'settings.dvConversionNativeDescription': return '强制原生 DV7 并禁止重试 DV 转换';
+			case 'settings.dvConversionDv81Description': return '强制内联 RPU 转换为 Dolby Vision Profile 8.1';
+			case 'settings.dvConversionHevcStripDescription': return '移除 Dolby Vision RPU/EL 层并呈现普通 HEVC';
+			case 'settings.disableDolbyVision': return '禁用 Dolby Vision';
+			case 'settings.disableDolbyVisionDescription': return '文件包含 HDR10 或 HLG 层时，改为播放该层而非 Dolby Vision';
+			case 'settings.hdrSdrConversion': return 'HDR 转 SDR';
+			case 'settings.hdrSdrConversionDescription': return '选择在显示器无法显示 HDR 时由谁转换 HDR 视频。';
+			case 'settings.hdrSdrConversionAuto': return '自动';
+			case 'settings.hdrSdrConversionAutoDescription': return 'Android 9 及更高版本使用设备，更早版本使用播放器';
+			case 'settings.hdrSdrConversionDevice': return '设备';
+			case 'settings.hdrSdrConversionDeviceDescription': return '由设备的视频硬件转换。速度最快，但色彩取决于设备';
+			case 'settings.hdrSdrConversionPlayer': return '播放器';
+			case 'settings.hdrSdrConversionPlayerDescription': return '由播放器转换。色彩一致，但在低端电视盒上 4K 可能卡顿';
+			case 'settings.deinterlace': return '去隔行';
+			case 'settings.deinterlaceDescription': return '消除隔行扫描视频中的梳状伪影（仅 mpv 播放器）';
+			case 'settings.deinterlaceOff': return '关闭';
+			case 'settings.deinterlaceOffDescription': return '按解码原样显示隔行扫描视频';
+			case 'settings.deinterlaceVideo': return '视频';
+			case 'settings.deinterlaceVideoDescription': return '将每一场转换为完整的一帧。适用于为电视拍摄的视频，如体育、新闻和音乐会';
+			case 'settings.deinterlaceFilm': return '电影';
+			case 'settings.deinterlaceFilmDescription': return '还原经胶转磁（telecine）处理为 29.97 fps 的电影和动画的原始帧，常见于 NTSC DVD。为电视拍摄的视频会出现卡顿。直播电视使用“视频”模式';
+			case 'settings.requireProfileSelectionOnOpen': return '打开应用时选择用户资料';
+			case 'settings.requireProfileSelectionOnOpenDescription': return '每次打开应用时都显示用户资料选择界面';
+			case 'settings.forceTvMode': return '强制 TV 模式';
+			case 'settings.forceTvModeDescription': return '强制 TV 布局。适用于无法自动检测的设备。需要重启。';
+			case 'settings.startInFullscreen': return '以全屏模式启动';
+			case 'settings.startInFullscreenDescription': return '启动时以全屏模式打开 Plezy';
+			case 'settings.exitFullscreenOnPlayerClose': return '关闭播放器时退出全屏';
+			case 'settings.exitFullscreenOnPlayerCloseDescription': return '关闭视频播放器时自动退出全屏模式';
+			case 'settings.autoHidePerformanceOverlay': return '自动隐藏性能叠加层';
+			case 'settings.autoHidePerformanceOverlayDescription': return '性能叠加层随播放控件一起淡入淡出';
+			case 'settings.showNavBarLabels': return '显示导航栏标签';
+			case 'settings.showNavBarLabelsDescription': return '在导航栏图标下方显示文字标签';
+			case 'settings.startupSection': return '启动页面';
+			case 'settings.showExploreTab': return '显示“探索”标签页';
+			case 'settings.showExploreTabDescription': return '显示“探索”标签页，其中包含来自 Plex Discover 和已连接追踪服务的内容';
+			case 'settings.liveTvDefaultFavorites': return '默认显示收藏频道';
+			case 'settings.liveTvDefaultFavoritesDescription': return '打开直播电视时仅显示收藏频道';
+			case 'settings.general': return '通用';
+			case 'settings.generalDescription': return '语言、启动和窗口行为';
+			case 'settings.languageAndRegion': return '语言与地区';
+			case 'settings.startup': return '启动';
+			case 'settings.display': return '显示';
+			case 'settings.libraryAndCards': return '媒体库与卡片';
+			case 'settings.homeScreen': return '主屏幕';
+			case 'settings.navigation': return '导航';
+			case 'settings.window': return '窗口';
+			case 'settings.liveTv': return '直播电视';
+			case 'settings.player': return '播放器';
+			case 'settings.videoAndDisplay': return '视频与显示';
+			case 'settings.audio': return '音频';
+			case 'settings.quality': return '画质';
+			case 'settings.subtitles': return '字幕';
+			case 'settings.seekAndTiming': return '跳转与计时';
+			case 'settings.behavior': return '行为';
+			case 'settings.gestures': return '手势';
+			case 'settings.gestureBrightnessSwipe': return '亮度滑动';
+			case 'settings.gestureBrightnessSwipeDescription': return '在屏幕左边缘上下滑动以调节亮度';
+			case 'settings.gestureVolumeSwipe': return '音量滑动';
+			case 'settings.gestureVolumeSwipeDescription': return '在屏幕右边缘上下滑动以调节音量';
+			case 'settings.gesturePinchToZoom': return '双指缩放';
+			case 'settings.gesturePinchToZoomDescription': return '在视频上双指捏合以放大或缩小';
+			case 'settings.rememberBrightnessLevel': return '记住亮度';
+			case 'settings.rememberBrightnessLevelDescription': return '以上次滑动设置的亮度开始播放';
+			case 'settings.controls': return '控制';
+			case 'settings.rememberPlayerChanges': return '记住播放器更改';
+			case 'settings.rememberPlayerChangesDescription': return '播放期间所做的更改保存并重新应用的位置';
+			case 'settings.scopePlaybackSpeed': return '播放速度';
+			case 'settings.scopeShaderPreset': return '着色器预设';
+			case 'settings.scopeAspectRatio': return '宽高比';
+			case 'settings.scopeZoom': return '缩放';
+			case 'settings.scopeSyncOffsets': return '音频和字幕同步';
+			case 'settings.playerScopeOff': return '不保存';
+			case 'settings.playerScopeGlobal': return '所有位置';
+			case 'settings.playerScopeLibrary': return '按媒体库';
+			case 'settings.playerScopeTitle': return '按剧集或电影';
+			case 'settings.exportDialogTitle': return '导出 Plezy 设置';
+			case 'themeEditor.builtIn': return '内置';
+			case 'themeEditor.presets': return '预设';
+			case 'themeEditor.custom': return '自定义';
+			case 'themeEditor.customEmpty': return '尚未创建';
+			case 'themeEditor.editCustom': return '编辑自定义主题';
+			case 'themeEditor.editCustomDescription': return '自行选择每种颜色';
+			case 'themeEditor.locked': return '通过主题与图标包解锁';
+			case 'themeEditor.savedLocked': return '已保存 — 通过主题与图标包解锁';
+			case 'themeEditor.title': return '自定义主题';
+			case 'themeEditor.startFrom': return '从现有主题开始';
+			case 'themeEditor.startFromDescription': return '从其他主题复制所有颜色';
+			case 'themeEditor.colors': return '颜色';
+			case 'themeEditor.preview': return '预览';
+			case 'themeEditor.slots.bg': return '背景';
+			case 'themeEditor.slots.surface': return '表面';
+			case 'themeEditor.slots.outline': return '描边';
+			case 'themeEditor.slots.text': return '文字';
+			case 'themeEditor.slots.textMuted': return '次要文字';
+			case 'themeEditor.slots.accent': return '强调色';
+			case 'themeEditor.opacity': return '不透明度';
+			case 'themeEditor.hexHint': return '#RRGGBB 或 #AARRGGBB';
+			case 'themeEditor.fromOtherThemes': return '来自其他主题';
+			case 'themeEditor.swatchLabel': return ({required Object theme, required Object color}) => '${theme} · ${color}';
+			case 'themeEditor.contrast.textOnBg': return '背景上的文字';
+			case 'themeEditor.contrast.textOnSurface': return '表面上的文字';
+			case 'themeEditor.contrast.textMutedOnBg': return '背景上的次要文字';
+			case 'themeEditor.contrast.textMutedOnSurface': return '表面上的次要文字';
+			case 'themeEditor.contrast.accentOnBg': return '背景上的强调色';
+			case 'themeEditor.contrast.accentOnSurface': return '表面上的强调色';
+			case 'themeEditor.contrast.labelOnAccent': return '强调色上的按钮文字';
+			case 'themeEditor.lowContrast': return ({required Object pair, required Object ratio, required Object minimum}) => '${pair}：${ratio}:1，低于建议的 ${minimum}:1';
+			case 'themeEditor.discardTitle': return '放弃更改？';
+			case 'themeEditor.discardMessage': return '未保存的颜色更改将会丢失。';
+			case 'themeEditor.discard': return '放弃';
+			case 'themeEditor.previewCardTitle': return ({required Object number}) => '第${number}集';
+			case 'themeEditor.previewCardSubtitle': return ({required Object minutes}) => '剩余 ${minutes} 分钟';
+			case 'themeEditor.previewSwitch': return '自动播放';
+			case 'themeEditor.previewMutedText': return '次要文字看起来是这样的';
+			case 'search.hint': return '搜索电影、剧集、音乐…';
+			case 'search.tryDifferentTerm': return '尝试不同的搜索词';
+			case 'search.searchYourMedia': return '搜索媒体';
+			case 'search.enterTitleActorOrKeyword': return '输入标题、演员或关键词';
+			case 'search.people': return '人物';
+			case 'hotkeys.setShortcutFor': return ({required Object actionName}) => '为 ${actionName} 设置快捷键';
+			case 'hotkeys.clearShortcut': return '清除快捷键';
+			case 'hotkeys.noShortcutSet': return '未设置快捷键';
+			case 'hotkeys.currentShortcut': return '当前快捷键：';
+			case 'hotkeys.pressToRecord': return '点击后录入快捷键';
+			case 'hotkeys.recordingShortcut': return '请按下快捷键';
+			case 'hotkeys.actions.playPause': return '播放/暂停';
+			case 'hotkeys.actions.volumeUp': return '增大音量';
+			case 'hotkeys.actions.volumeDown': return '减小音量';
+			case 'hotkeys.actions.seekForward': return ({required Object seconds}) => '快进 (${seconds}秒)';
+			case 'hotkeys.actions.seekBackward': return ({required Object seconds}) => '快退 (${seconds}秒)';
+			case 'hotkeys.actions.fullscreenToggle': return '切换全屏';
+			case 'hotkeys.actions.muteToggle': return '切换静音';
+			case 'hotkeys.actions.subtitleToggle': return '切换字幕';
+			case 'hotkeys.actions.audioTrackNext': return '下一音轨';
+			case 'hotkeys.actions.subtitleTrackNext': return '下一字幕轨';
+			case 'hotkeys.actions.chapterNext': return '下一章节';
+			case 'hotkeys.actions.chapterPrevious': return '上一章节';
+			case 'hotkeys.actions.episodeNext': return '下一集';
+			case 'hotkeys.actions.episodePrevious': return '上一集';
+			case 'hotkeys.actions.speedIncrease': return '加速';
+			case 'hotkeys.actions.speedDecrease': return '减速';
+			case 'hotkeys.actions.speedReset': return '重置速度';
+			case 'hotkeys.actions.zoomIn': return '放大';
+			case 'hotkeys.actions.zoomOut': return '缩小';
+			case 'hotkeys.actions.zoomReset': return '重置缩放';
+			case 'hotkeys.actions.subSeekNext': return '跳转到下一条字幕';
+			case 'hotkeys.actions.subSeekPrev': return '跳转到上一条字幕';
+			case 'hotkeys.actions.shaderToggle': return '切换着色器';
+			case 'hotkeys.actions.skipMarker': return '跳过片头/片尾';
+			case 'hotkeys.actions.screenshot': return '截图';
+			case 'fileInfo.title': return '文件信息';
+			case 'fileInfo.overview': return '简介';
+			case 'fileInfo.video': return '视频';
+			case 'fileInfo.audio': return '音频';
+			case 'fileInfo.subtitles': return '字幕';
+			case 'fileInfo.images': return '内嵌图片';
+			case 'fileInfo.dataStreams': return '数据流';
+			case 'fileInfo.lyrics': return '歌词';
+			case 'fileInfo.file': return '文件';
+			case 'fileInfo.attachments': return '附件';
+			case 'fileInfo.delivery': return '传输方式';
+			case 'fileInfo.versionCounter': return ({required Object index, required Object count}) => '第 ${index} 个版本，共 ${count} 个';
+			case 'fileInfo.fileCounter': return ({required Object index, required Object count}) => '第 ${index} 个文件，共 ${count} 个';
+			case 'fileInfo.noStreams': return '服务器报告此文件没有媒体流。';
+			case 'fileInfo.copyPath': return '复制路径';
+			case 'fileInfo.pathCopied': return '文件路径已复制';
+			case 'fileInfo.codec': return '编解码器';
+			case 'fileInfo.codecTag': return '编码器标签';
+			case 'fileInfo.resolution': return '分辨率';
+			case 'fileInfo.codedResolution': return '编码分辨率';
+			case 'fileInfo.bitrate': return '比特率';
+			case 'fileInfo.frameRate': return '帧率';
+			case 'fileInfo.rotation': return '旋转';
+			case 'fileInfo.comment': return '注释';
+			case 'fileInfo.audioDescription': return '音频描述';
+			case 'fileInfo.headerCompression': return '头部压缩';
+			case 'fileInfo.sidecarFile': return '外挂文件';
+			case 'fileInfo.transportTimestamp': return '传输时间戳';
+			case 'fileInfo.displayOffset': return '显示偏移';
+			case 'fileInfo.previewFailureCode': return '预览失败代码';
+			case 'fileInfo.previewRetries': return '预览重试次数';
+			case 'fileInfo.aspectRatio': return '宽高比';
+			case 'fileInfo.pixelAspectRatio': return '像素宽高比';
+			case 'fileInfo.profile': return '编码配置';
+			case 'fileInfo.level': return '级别';
+			case 'fileInfo.bitDepth': return '位深度';
+			case 'fileInfo.pixelFormat': return '像素格式';
+			case 'fileInfo.colorSpace': return '色彩空间';
+			case 'fileInfo.colorRange': return '色彩范围';
+			case 'fileInfo.colorPrimaries': return '色彩基色';
+			case 'fileInfo.colorTransfer': return '色彩转换';
+			case 'fileInfo.chromaSubsampling': return '色度子采样';
+			case 'fileInfo.chromaLocation': return '色度位置';
+			case 'fileInfo.scanType': return '扫描类型';
+			case 'fileInfo.interlaced': return '隔行扫描';
+			case 'fileInfo.anamorphic': return '变形宽银幕';
+			case 'fileInfo.referenceFrames': return '参考帧';
+			case 'fileInfo.dynamicRange': return '动态范围';
+			case 'fileInfo.dolbyVision': return 'Dolby Vision';
+			case 'fileInfo.dolbyVisionLevel': return 'Dolby Vision 级别';
+			case 'fileInfo.dolbyVisionVersion': return 'Dolby Vision 版本';
+			case 'fileInfo.dolbyVisionLayers': return 'Dolby Vision 图层';
+			case 'fileInfo.baseLayerCompatibility': return '基础层兼容性';
+			case 'fileInfo.avcBitstream': return 'AVC 比特流';
+			case 'fileInfo.nalLengthSize': return 'NAL 长度';
+			case 'fileInfo.scalingMatrix': return '自定义缩放矩阵';
+			case 'fileInfo.streamIdentifier': return '流标识符';
+			case 'fileInfo.streamIndex': return '流索引';
+			case 'fileInfo.streamId': return '流 ID';
+			case 'fileInfo.language': return '语言';
+			case 'fileInfo.languageCode': return '语言代码';
+			case 'fileInfo.streamTitle': return '轨道标题';
+			case 'fileInfo.channels': return '声道';
+			case 'fileInfo.sampleRate': return '采样率';
+			case 'fileInfo.spatialAudio': return '空间音频';
+			case 'fileInfo.textBased': return '基于文本';
+			case 'fileInfo.subtitleFormat': return '外挂文件格式';
+			case 'fileInfo.provider': return '提供方';
+			case 'fileInfo.matchScore': return '匹配分数';
+			case 'fileInfo.externalDelivery': return '可单独提供';
+			case 'fileInfo.sidecarPath': return '外挂文件路径';
+			case 'fileInfo.sourceStream': return '复制来源';
+			case 'fileInfo.temporary': return '临时';
+			case 'fileInfo.timeBase': return '时间基准';
+			case 'fileInfo.overallBitrate': return '总比特率';
+			case 'fileInfo.path': return '路径';
+			case 'fileInfo.fileName': return '文件名';
+			case 'fileInfo.size': return '大小';
+			case 'fileInfo.totalSize': return '总大小';
+			case 'fileInfo.container': return '容器';
+			case 'fileInfo.duration': return '时长';
+			case 'fileInfo.previewThumbnails': return '预览缩略图';
+			case 'fileInfo.previewIndex': return '预览索引';
+			case 'fileInfo.packetLength': return '数据包长度';
+			case 'fileInfo.filePresent': return '文件存在';
+			case 'fileInfo.fileReadable': return '服务器可读';
+			case 'fileInfo.streamPath': return '流路径';
+			case 'fileInfo.optimizedForStreaming': return '已针对流式传输优化';
+			case 'fileInfo.has64bitOffsets': return '64 位偏移量';
+			case 'fileInfo.protocol': return '协议';
+			case 'fileInfo.mediaType': return '媒体类型';
+			case 'fileInfo.sourceKind': return '来源类型';
+			case 'fileInfo.optimizedVersion': return '优化版本';
+			case 'fileInfo.optimizationTarget': return '优化目标';
+			case 'fileInfo.deletedAt': return '已删除';
+			case 'fileInfo.remoteSource': return '远程来源';
+			case 'fileInfo.infiniteStream': return '无限流';
+			case 'fileInfo.directPlay': return '直接播放';
+			case 'fileInfo.directStream': return '直接串流';
+			case 'fileInfo.transcoding': return '转码';
+			case 'fileInfo.etag': return 'ETag';
+			case 'fileInfo.versionId': return '版本 ID';
+			case 'fileInfo.fileId': return '文件 ID';
+			case 'fileInfo.defaultAudioTrack': return '默认音轨';
+			case 'fileInfo.defaultSubtitleTrack': return '默认字幕轨道';
+			case 'fileInfo.subtitlesOff': return '关闭';
+			case 'fileInfo.flagDefault': return '默认';
+			case 'fileInfo.flagForced': return '强制';
+			case 'fileInfo.flagSelected': return '已选';
+			case 'fileInfo.flagExternal': return '外部';
+			case 'fileInfo.flagHearingImpaired': return '听障辅助';
+			case 'fileInfo.flagDub': return '配音';
+			case 'fileInfo.flagOriginal': return '原声';
+			case 'fileInfo.channelsMono': return '单声道';
+			case 'fileInfo.dolbyVisionProfile': return ({required Object profile}) => '编码配置 ${profile}';
+			case 'mediaMenu.markAsWatched': return '标记为已观看';
+			case 'mediaMenu.markAsUnwatched': return '标记为未观看';
+			case 'mediaMenu.removeFromContinueWatching': return '从继续观看中移除';
+			case 'mediaMenu.viewDetails': return '查看详情';
+			case 'mediaMenu.goToSeries': return '前往剧集';
+			case 'mediaMenu.shufflePlay': return '随机播放';
+			case 'mediaMenu.shuffleNotAvailableOffline': return '离线时无法随机播放';
+			case 'mediaMenu.fileInfo': return '文件信息';
+			case 'mediaMenu.deleteEpisodeFromServer': return '从服务器删除单集';
+			case 'mediaMenu.deleteSeasonFromServer': return '从服务器删除季度';
+			case 'mediaMenu.deleteShowFromServer': return '从服务器删除剧集';
+			case 'mediaMenu.deleteMovieFromServer': return '从服务器删除电影';
+			case 'mediaMenu.deleteEpisodeTitle': return '删除这个单集？';
+			case 'mediaMenu.deleteSeasonTitle': return '删除这一季度？';
+			case 'mediaMenu.deleteShowTitle': return '删除这部剧集？';
+			case 'mediaMenu.deleteMovieTitle': return '删除这部电影？';
+			case 'mediaMenu.deleteEpisodeConfirm': return '删除单集';
+			case 'mediaMenu.deleteSeasonConfirm': return '删除季度';
+			case 'mediaMenu.deleteShowConfirm': return '删除剧集';
+			case 'mediaMenu.deleteMovieConfirm': return '删除电影';
+			case 'mediaMenu.deleteAnyway': return '仍然删除';
+			case 'mediaMenu.confirmDeleteTarget': return ({required Object title}) => '从你的服务器永久删除 ${title}？';
+			case 'mediaMenu.deleteMultipleWarning': return '这包括所有剧集及其文件。';
+			case 'mediaMenu.deleteEpisodeCountWarning': return ({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('zh'))(n,
+				other: '这将删除其中全部 ${n} 集以及它们的文件。',
+			);
+			case 'mediaMenu.deleteMultiPartWarning': return ({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('zh'))(n,
+				other: '此项目存储在 ${n} 个文件中，所有这些文件都会被删除。',
+			);
+			case 'mediaMenu.deleteSharedFileHeading': return ({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('zh'))(n,
+				other: '另外 ${n} 集存储在同一个文件中，也会一并删除：',
+			);
+			case 'mediaMenu.deleteScopeUnverifiedProbeFailed': return 'Plezy 无法确认此操作会删除哪些文件，因此删除范围可能超出上面提到的项目。请取消后重试，或仍然删除。';
+			case 'mediaMenu.deleteScopeUnverifiedNoFileInfo': return '你的服务器没有提供此项目的文件详情，因此 Plezy 无法确认此操作会删除哪些文件。删除范围可能超出上面提到的项目。';
+			case 'mediaMenu.mediaDeletedSuccessfully': return '媒体项已成功删除';
+			case 'mediaMenu.mediaFailedToDelete': return '删除媒体项失败';
+			case 'mediaMenu.rate': return '评分';
+			case 'mediaMenu.playFromBeginning': return '从头播放';
+			case 'mediaMenu.playVersion': return '播放版本…';
+			case 'rateSheet.title': return '评分';
+			case 'rateSheet.server': return '服务器';
+			case 'rateSheet.favorite': return '收藏';
+			case 'rateSheet.favorited': return '已收藏';
+			case 'rateSheet.saved': return '已保存';
+			case 'rateSheet.notAvailable': return '未找到匹配项';
+			case 'rateSheet.noConnectedServices': return '在设置中连接服务，即可在此评分。';
+			case 'accessibility.mediaCardMovie': return ({required Object title}) => '${title}, 电影';
+			case 'accessibility.mediaCardShow': return ({required Object title}) => '${title}, 电视剧';
+			case 'accessibility.mediaCardEpisode': return ({required Object title, required Object episodeInfo}) => '${title}, ${episodeInfo}';
+			case 'accessibility.mediaCardSeason': return ({required Object title, required Object seasonInfo}) => '${title}, ${seasonInfo}';
+			case 'accessibility.mediaCardWatched': return '已观看';
+			case 'accessibility.mediaCardPartiallyWatched': return ({required Object percent}) => '已观看 ${percent}%';
+			case 'accessibility.mediaCardUnwatched': return '未观看';
+			case 'accessibility.tapToPlay': return '点击播放';
+			case 'accessibility.decrease': return '减小';
+			case 'accessibility.increase': return '增大';
+			case 'accessibility.decreaseValue': return ({required Object label}) => '减小${label}';
+			case 'accessibility.increaseValue': return ({required Object label}) => '增大${label}';
+			case 'accessibility.hue': return '色相';
+			case 'accessibility.saturation': return '饱和度';
+			case 'accessibility.brightness': return '亮度';
+			case 'accessibility.hexColor': return '十六进制颜色';
+			case 'accessibility.expandText': return '展开文本';
+			case 'accessibility.collapseText': return '折叠文本';
+			case 'accessibility.alphabetNavigation': return '字母导航';
+			case 'accessibility.alphabetScrollHint': return '上下滑动以按字母移动';
+			case 'accessibility.rowColumnPosition': return ({required Object row, required Object rowCount, required Object column, required Object columnCount}) => '第 ${row} 行，共 ${rowCount} 行；第 ${column} 列，共 ${columnCount} 列';
+			case 'accessibility.rowPosition': return ({required Object row, required Object rowCount}) => '第 ${row} 行，共 ${rowCount} 行';
+			case 'accessibility.autoScrollPlay': return '开始自动滚动';
+			case 'accessibility.autoScrollPause': return '暂停自动滚动';
+			case 'accessibility.hueShort': return 'H';
+			case 'accessibility.saturationShort': return 'S';
+			case 'accessibility.valueShort': return 'V';
+			case 'tooltips.shufflePlay': return '随机播放';
+			case 'tooltips.playTrailer': return '播放预告片';
+			case 'tooltips.markAsWatched': return '标记为已观看';
+			case 'tooltips.markAsUnwatched': return '标记为未观看';
+			case 'audioTracks.track': return ({required Object n}) => '音轨 ${n}';
+			case 'videoControls.audioLabel': return '音频';
+			case 'videoControls.subtitlesLabel': return '字幕';
+			case 'videoControls.addTime': return ({required Object amount, required Object unit}) => '+${amount}${unit}';
+			case 'videoControls.letterbox': return '黑边模式';
+			case 'videoControls.fillScreen': return '填充屏幕';
+			case 'videoControls.stretch': return '拉伸';
+			case 'videoControls.lockRotation': return '锁定旋转';
+			case 'videoControls.unlockRotation': return '解锁旋转';
+			case 'videoControls.timerActive': return '定时器已激活';
+			case 'videoControls.playbackWillPauseIn': return ({required Object duration}) => '播放将在 ${duration} 后暂停';
+			case 'videoControls.sleepTimerEndOfVideo': return '当前视频结束时';
+			case 'videoControls.sleepTimerStopAtHeader': return '停止于';
+			case 'videoControls.sleepTimerDurationHeader': return '定时器';
+			case 'videoControls.playbackWillPauseAtEnd': return '播放将在此视频结束时暂停';
+			case 'videoControls.stillWatching': return '还在看吗？';
+			case 'videoControls.pausingIn': return ({required Object seconds}) => '${seconds} 秒后暂停';
+			case 'videoControls.continueWatching': return '继续';
+			case 'videoControls.autoPlayNext': return '自动播放下一集';
+			case 'videoControls.playNext': return '播放下一集';
+			case 'videoControls.playButton': return '播放';
+			case 'videoControls.pauseButton': return '暂停';
+			case 'videoControls.playbackPaused': return '已暂停';
+			case 'videoControls.playbackResumed': return '正在播放';
+			case 'videoControls.loadingVideo': return '正在加载视频';
+			case 'videoControls.showPlaybackControls': return '显示播放控制项';
+			case 'videoControls.hidePlaybackControls': return '隐藏播放控制项';
+			case 'videoControls.seekBackwardButton': return ({required Object seconds}) => '快退 ${seconds} 秒';
+			case 'videoControls.seekForwardButton': return ({required Object seconds}) => '快进 ${seconds} 秒';
+			case 'videoControls.previousButton': return '上一集';
+			case 'videoControls.nextButton': return '下一集';
+			case 'videoControls.previousChapterButton': return '上一章节';
+			case 'videoControls.nextChapterButton': return '下一章节';
+			case 'videoControls.muteButton': return '静音';
+			case 'videoControls.unmuteButton': return '取消静音';
+			case 'videoControls.settingsButton': return '播放设置';
+			case 'videoControls.tracksButton': return '音频和字幕';
+			case 'videoControls.chaptersButton': return '章节';
+			case 'videoControls.versionQualityButton': return '版本与画质';
+			case 'videoControls.versionColumnHeader': return '版本';
+			case 'videoControls.qualityColumnHeader': return '画质';
+			case 'videoControls.qualityOriginal': return '原始';
+			case 'videoControls.qualityPresetLabel': return ({required Object resolution, required Object bitrate}) => '${resolution}p ${bitrate} Mbps';
+			case 'videoControls.transcodeUnavailableFallback': return '转码不可用 — 以原始画质播放';
+			case 'videoControls.subtitleUnavailableFallback': return '无法加载所选字幕 — 将继续无字幕播放';
+			case 'videoControls.pipButton': return '画中画';
+			case 'videoControls.aspectRatioButton': return '宽高比';
+			case 'videoControls.ambientLighting': return '氛围灯光';
+			case 'videoControls.fullscreenButton': return '进入全屏';
+			case 'videoControls.exitFullscreenButton': return '退出全屏';
+			case 'videoControls.alwaysOnTopButton': return '窗口置顶';
+			case 'videoControls.rotationLockButton': return '旋转锁定';
+			case 'videoControls.lockScreen': return '锁定屏幕';
+			case 'videoControls.screenLockButton': return '屏幕锁定';
+			case 'videoControls.timelineSlider': return '视频时间轴';
+			case 'videoControls.volumeSlider': return '音量滑块';
+			case 'videoControls.endsAt': return ({required Object time}) => '结束时间：${time}';
+			case 'videoControls.pipActive': return '正在以画中画模式播放';
+			case 'videoControls.pipFailed': return '画中画启动失败';
+			case 'videoControls.screenshotSaved': return '截图已保存';
+			case 'videoControls.screenshotFailed': return '无法截图';
+			case 'videoControls.zoomPercent': return ({required Object percent}) => '缩放 ${percent}%';
+			case 'videoControls.volumePercent': return ({required Object percent}) => '音量 ${percent}%';
+			case 'videoControls.pipErrors.androidVersion': return '需要 Android 8.0 或更高版本';
+			case 'videoControls.pipErrors.iosVersion': return '需要 iOS 15.0 或更高版本';
+			case 'videoControls.pipErrors.permissionDisabled': return '画中画已禁用。请在系统设置中启用。';
+			case 'videoControls.pipErrors.notSupported': return '此设备不支持画中画模式';
+			case 'videoControls.pipErrors.voSwitchFailed': return '无法切换画中画的视频输出';
+			case 'videoControls.pipErrors.failed': return '画中画启动失败';
+			case 'videoControls.pipErrors.prepareFailed': return '无法准备画中画';
+			case 'videoControls.pipErrors.unknown': return ({required Object error}) => '发生错误：${error}';
+			case 'videoControls.chapters': return '章节';
+			case 'videoControls.noChaptersAvailable': return '没有可用的章节';
+			case 'videoControls.queue': return '播放队列';
+			case 'videoControls.noQueueItems': return '队列中没有项目';
+			case 'videoControls.noAudioDevicesAvailable': return '没有可用的音频设备';
+			case 'videoControls.searchSubtitles': return '搜索字幕';
+			case 'videoControls.language': return '语言';
+			case 'videoControls.noSubtitlesFound': return '未找到字幕';
+			case 'videoControls.subtitleDownloaded': return '字幕已下载';
+			case 'videoControls.subtitleDownloadedNotApplied': return '字幕已下载，但无法选择';
+			case 'videoControls.subtitleDownloadFailed': return '字幕下载失败';
+			case 'videoControls.subtitleDownloadTimedOut': return '字幕未及时出现，下载可能已失败';
+			case 'videoControls.searchLanguages': return '搜索语言…';
+			case 'videoControls.skipIntro': return '跳过片头';
+			case 'videoControls.skipCredits': return '跳过片尾';
+			case 'videoControls.nextEpisode': return '下一集';
+			case 'videoControls.subtitleTrack': return ({required Object n}) => '轨道 ${n}';
+			case 'videoControls.subtitleFile': return ({required Object name}) => '字幕 ${name}';
+			case 'videoControls.forcedTrack': return ({required Object label}) => '${label}（强制）';
+			case 'videoControls.osdSubtitlesOff': return '字幕：关闭';
+			case 'videoControls.osdSubtitles': return ({required Object track}) => '字幕：${track}';
+			case 'videoControls.osdAudio': return ({required Object track}) => '音频：${track}';
+			case 'messages.markedAsWatched': return '已标记为已观看';
+			case 'messages.markedAsUnwatched': return '已标记为未观看';
+			case 'messages.markedAsWatchedOffline': return '已标记为已观看（将在联网时同步）';
+			case 'messages.markedAsUnwatchedOffline': return '已标记为未观看（将在联网时同步）';
+			case 'messages.autoRemovedWatchedDownload': return ({required Object title}) => '已自动移除：${title}';
+			case 'messages.autoRemovedWatchedDownloads': return ({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('zh'))(n,
+				other: '已自动移除 ${n} 个看过的下载',
+			);
+			case 'messages.removedFromContinueWatching': return '已从继续观看中移除';
+			case 'messages.errorLoading': return ({required Object error}) => '出错：${error}';
+			case 'messages.searchPartialResults': return '部分媒体服务器无法搜索。正在显示可用的结果。';
+			case 'messages.streamInterrupted': return '视频流已中断。按播放键或拖动进度条重试。';
+			case 'messages.liveStreamInterrupted': return '直播流已中断。按播放键重试。';
+			case 'messages.fileInfoNotAvailable': return '文件信息不可用';
+			case 'messages.playbackAuthenticationRequired': return '请重新登录媒体服务器以播放此项目。';
+			case 'messages.playbackServerUnavailable': return '媒体服务器不可用。请稍后重试。';
+			case 'messages.playbackDataInvalid': return '服务器返回了无效的播放信息。';
+			case 'messages.playbackCancelled': return '播放已取消。';
+			case 'messages.playbackFailed': return '无法开始播放。';
+			case 'messages.playbackFailedDetail': return ({required Object error}) => '无法开始播放：${error}';
+			case 'messages.audioOutputFailed': return '音频输出停止响应。请检查电视或功放的音频连接；如果其他应用也没有声音，请重启设备。';
+			case 'messages.mediaUnavailable': return '此内容不再可用。';
+			case 'messages.errorLoadingFileInfo': return ({required Object error}) => '加载文件信息时出错：${error}';
+			case 'messages.errorLoadingSeries': return '加载剧集时出错';
+			case 'messages.musicNotSupported': return '尚不支持播放音乐';
+			case 'messages.noDescriptionAvailable': return '暂无描述';
+			case 'messages.noProfilesAvailable': return '没有可用的用户资料';
+			case 'messages.contactAdminForProfiles': return '请联系服务器管理员添加用户资料';
+			case 'messages.unableToDetermineLibrarySection': return '无法确定此项目所属的媒体库';
+			case 'messages.logsCleared': return '日志已清除';
+			case 'messages.logsCopied': return '日志已复制到剪贴板';
+			case 'messages.noLogsAvailable': return '没有可用日志';
+			case 'messages.libraryScanning': return ({required Object title}) => '正在扫描“${title}”…';
+			case 'messages.libraryScanStarted': return ({required Object title}) => '已开始扫描“${title}”媒体库';
+			case 'messages.libraryScanFailed': return ({required Object error}) => '无法扫描媒体库：${error}';
+			case 'messages.metadataRefreshing': return ({required Object title}) => '正在刷新“${title}”的元数据…';
+			case 'messages.metadataRefreshStarted': return ({required Object title}) => '已开始刷新“${title}”的元数据';
+			case 'messages.metadataRefreshFailed': return ({required Object error}) => '无法刷新元数据：${error}';
+			case 'messages.logoutConfirm': return '确定要退出登录吗？';
+			case 'messages.noSeasonsFound': return '未找到季';
+			case 'messages.seasonsLoadFailed': return '无法加载季';
+			case 'messages.noEpisodesFound': return '在第一季中未找到剧集';
+			case 'messages.noEpisodesFoundGeneral': return '未找到剧集';
+			case 'messages.episodesLoadFailed': return '无法加载剧集';
+			case 'messages.noResultsFound': return '未找到结果';
+			case 'messages.sleepTimerSet': return ({required Object label}) => '睡眠定时器已设置为 ${label}';
+			case 'messages.noItemsAvailable': return '没有可用的项目';
+			case 'messages.failedToCreatePlayQueueNoItems': return '创建播放队列失败：没有可用项目';
+			case 'messages.failedPlayback': return ({required Object action, required Object error}) => '无法执行“${action}”：${error}';
+			case 'messages.switchingToCompatiblePlayer': return '正在切换到兼容的播放器…';
+			case 'messages.serverLimitTitle': return '播放失败';
+			case 'messages.serverLimitBody': return '服务器错误（HTTP 500）。此次会话可能因带宽或转码限制而被拒绝。请联系服务器所有者调整限制。';
+			case 'messages.mediaUnreadableTitle': return '文件不可用';
+			case 'messages.mediaUnreadableBody': return '服务器找到了此项目，但无法读取其文件（HTTP 404）。文件可能已被移动、删除，或其存储已离线。请联系服务器管理员检查文件并重新扫描媒体库。';
+			case 'messages.serverBusyTitle': return '视频流不可用';
+			case 'messages.serverBusyBody': return '服务器持续拒绝传输此文件（HTTP 503）。服务器可能正在重启或正忙，也可能是文件所在的存储设备已离线。请稍后重试；如果问题持续出现，请联系服务器所有者检查服务器和文件存储设备。';
+			case 'messages.playbackNotAllowedTitle': return '不允许播放';
+			case 'messages.playbackNotAllowedBody': return '服务器拒绝传输此项目（HTTP 403）。此账户可能没有播放权限，或服务器可能仅允许在其局域网内播放。';
+			case 'messages.logsUploaded': return '日志已上传';
+			case 'messages.logsUploadFailed': return '上传日志失败';
+			case 'messages.logId': return '日志 ID';
+			case 'messages.burnedSubtitlesUseMenu': return '字幕已烧录到此视频流中。请从字幕菜单中更改。';
+			case 'messages.noVideoUrl': return '没有可用的视频 URL';
+			case 'messages.playbackNoMediaSources': return '服务器未返回可播放的媒体源';
+			case 'messages.playbackDataNotPrepared': return '播放数据尚未准备就绪时便开始了播放';
+			case 'messages.streamSelectionUnavailable': return '此媒体源不支持选择视频流';
+			case 'messages.streamSelectionFailed': return '无法应用所选视频流';
+			case 'messages.trackSelectionNotRemembered': return '此轨道选择仅对当前播放生效。';
+			case 'messages.serverUnavailableForProfile': return '没有可供当前用户资料使用的服务器';
+			case 'subtitlingStyling.text': return '文本';
+			case 'subtitlingStyling.border': return '边框';
+			case 'subtitlingStyling.background': return '背景';
+			case 'subtitlingStyling.fontSize': return '字号';
+			case 'subtitlingStyling.textColor': return '文本颜色';
+			case 'subtitlingStyling.borderSize': return '边框大小';
+			case 'subtitlingStyling.borderColor': return '边框颜色';
+			case 'subtitlingStyling.backgroundOpacity': return '背景不透明度';
+			case 'subtitlingStyling.backgroundColor': return '背景颜色';
+			case 'subtitlingStyling.position': return '位置';
+			case 'subtitlingStyling.assOverride': return 'ASS 样式覆盖';
+			case 'subtitlingStyling.overrideScale': return '缩放';
+			case 'subtitlingStyling.overrideForce': return '强制';
+			case 'subtitlingStyling.overrideStrip': return '移除样式';
+			case 'subtitlingStyling.positionTop': return '顶部';
+			case 'subtitlingStyling.positionBottom': return '底部';
+			case 'subtitlingStyling.useMargins': return '使用边距';
+			case 'subtitlingStyling.useMarginsDescription': return '允许文字字幕显示在视频画面之外的区域。样式字幕可能保留其原始位置。';
+			case 'subtitlingStyling.anchorToScreen': return '锚定到屏幕';
+			case 'subtitlingStyling.anchorToScreenDescription': return '在宽屏视频下方的黑边中显示文本字幕';
+			case 'subtitlingStyling.bold': return '粗体';
+			case 'subtitlingStyling.italic': return '斜体';
+			case 'subtitlingStyling.renderResolution': return '渲染分辨率';
+			case 'subtitlingStyling.renderResolutionScreen': return '屏幕分辨率';
+			case 'subtitlingStyling.renderResolutionVideo': return '视频分辨率';
+			case 'mpvConfig.title': return 'mpv 配置';
+			case 'mpvConfig.description': return '高级视频播放器设置';
+			case 'mpvConfig.presets': return '预设';
+			case 'mpvConfig.noPresets': return '没有保存的预设';
+			case 'mpvConfig.saveAsPreset': return '保存为预设…';
+			case 'mpvConfig.presetName': return '预设名称';
+			case 'mpvConfig.presetNameHint': return '输入此预设的名称';
+			case 'mpvConfig.loadPreset': return '加载';
+			case 'mpvConfig.deletePreset': return '删除';
+			case 'mpvConfig.presetSaved': return '预设已保存';
+			case 'mpvConfig.presetLoaded': return '预设已加载';
+			case 'mpvConfig.presetDeleted': return '预设已删除';
+			case 'mpvConfig.confirmDeletePreset': return '确定要删除此预设吗？';
+			case 'mpvConfig.configPlaceholder': return 'gpu-api=vulkan\nhwdec=auto\n# comment';
+			case 'mpvConfig.lineHint': return 'option=value';
+			case 'mpvConfig.addLine': return '添加行';
+			case 'mpvConfig.removeLine': return '移除行';
+			case 'mpvConfig.embeddedVoHint': return 'Linux 上会忽略 vo、gpu-context 和 gpu-api：嵌入式视频始终通过视频平面上的 vo=libmpv 渲染，而 gpu-next（ArtCNN 等计算着色器需要它）无法以嵌入式方式运行。';
+			case 'dialog.confirmAction': return '确认操作';
+			case 'profiles.addPlezyProfile': return '添加 Plezy 用户资料';
+			case 'profiles.switchingProfile': return '正在切换用户资料…';
+			case 'profiles.deleteThisProfileTitle': return '删除此用户资料？';
+			case 'profiles.deleteThisProfileMessage': return ({required Object displayName}) => '移除 ${displayName}。连接不会受影响。';
+			case 'profiles.active': return '当前使用';
+			case 'profiles.manage': return '管理';
+			case 'profiles.delete': return '删除';
+			case 'profiles.signOut': return '退出登录';
+			case 'profiles.signOutPlexTitle': return '退出 Plex 登录？';
+			case 'profiles.signOutPlexMessage': return ({required Object displayName}) => '要移除 ${displayName} 和所有 Plex Home 用户吗？可随时重新登录。';
+			case 'profiles.signOutPlexDeleteDownloads': return '同时删除下载内容';
+			case 'profiles.signOutPlexDeleteDownloadsDescription': return '否则下载内容将保留在此设备上，并在你重新登录此账户时恢复。';
+			case 'profiles.signedOutPlex': return '已退出 Plex 登录。';
+			case 'profiles.signOutFailed': return '退出登录失败。';
+			case 'profiles.sectionTitle': return '用户资料';
+			case 'profiles.summarySingle': return '添加用户资料，以便同时使用受管理用户和本地用户身份';
+			case 'profiles.summaryMultipleWithActive': return ({required Object count, required Object activeName}) => '${count} 个用户资料 · 当前：${activeName}';
+			case 'profiles.summaryMultiple': return ({required Object count}) => '${count} 个用户资料';
+			case 'profiles.removeConnectionTitle': return '移除连接？';
+			case 'profiles.removeConnectionMessage': return ({required Object displayName, required Object connectionLabel}) => '移除 ${displayName} 对 ${connectionLabel} 的访问权限。其他用户资料仍可使用此连接。';
+			case 'profiles.deleteProfileTitle': return '删除用户资料？';
+			case 'profiles.deleteProfileMessage': return ({required Object displayName}) => '移除 ${displayName} 及其连接。服务器仍可供其他用户资料使用。';
+			case 'profiles.profileNameLabel': return '用户资料名称';
+			case 'profiles.pinProtectionLabel': return 'PIN 保护';
+			case 'profiles.pinManagedByPlex': return 'PIN 由 Plex 管理。在 plex.tv 上编辑。';
+			case 'profiles.noPinSetEditOnPlex': return '未设置 PIN。如需设置，请在 plex.tv 上编辑 Plex Home 用户。';
+			case 'profiles.setPin': return '设置 PIN';
+			case 'profiles.setPinTitle': return '设置 PIN';
+			case 'profiles.confirmPinTitle': return '确认 PIN';
+			case 'profiles.pinSet': return '已设置 PIN';
+			case 'profiles.changePin': return '更改';
+			case 'profiles.removePin': return '移除';
+			case 'profiles.connectionsLabel': return '连接';
+			case 'profiles.add': return '添加';
+			case 'profiles.deleteProfileButton': return '删除用户资料';
+			case 'profiles.noConnectionsHint': return '没有连接 — 请添加连接以使用此用户资料。';
+			case 'profiles.noConnections': return '没有连接';
+			case 'profiles.plexHomeAccount': return 'Plex Home 账户';
+			case 'profiles.plexAccountChip': return ({required Object account}) => 'Plex 账户：${account}';
+			case 'profiles.plexAccountUserChip': return ({required Object account, required Object user}) => '${account} 账户下的 ${user}';
+			case 'profiles.connectionDefault': return '默认';
+			case 'profiles.connectionAs': return ({required Object displayName}) => '以 ${displayName} 身份';
+			case 'profiles.makeDefault': return '设为默认';
+			case 'profiles.removeConnection': return '移除';
+			case 'profiles.profileRenamed': return '用户资料已重命名。';
+			case 'profiles.borrowAddTo': return ({required Object displayName}) => '添加到 ${displayName}';
+			case 'profiles.borrowExplain': return '使用另一个用户资料的连接。受 PIN 保护的用户资料需要输入 PIN。';
+			case 'profiles.borrowEmpty': return '暂无可用连接。';
+			case 'profiles.borrowEmptySubtitle': return '请先将 Plex、Jellyfin 或 Emby 连接到另一个用户资料。';
+			case 'profiles.borrowLoadFailed': return '无法加载可用连接。请重试。';
+			case 'profiles.borrowFromProfile': return ({required Object displayName}) => '来自 ${displayName}';
+			case 'profiles.borrowConnectionBorrowed': return '连接已添加。';
+			case 'profiles.borrowFailed': return '无法添加连接。';
+			case 'profiles.incorrectPin': return 'PIN 不正确。';
+			case 'profiles.incorrectPinTryAgain': return 'PIN 不正确。请重试。';
+			case 'profiles.sourceProfileMissingParentAccount': return '源用户资料缺少关联的主账户。';
+			case 'profiles.failedToLoadHomeUsers': return '无法加载您的 Plex Home 用户。请检查网络连接后重试。';
+			case 'profiles.failedToVerifyPin': return '无法验证 PIN。';
+			case 'profiles.newProfile': return '新建用户资料';
+			case 'profiles.profileNameHint': return '例如：访客、儿童、客厅';
+			case 'profiles.pinProtectionOptional': return 'PIN 保护（可选）';
+			case 'profiles.pinExplain': return '切换用户资料时需要输入 4 位 PIN。';
+			case 'profiles.continueButton': return '继续';
+			case 'profiles.pinsDontMatch': return 'PIN 不匹配';
+			case 'profiles.tokenIdentityMismatch': return 'Plex 用户资料令牌解析到了非预期服务器';
+			case 'connections.sectionTitle': return '连接';
+			case 'connections.addConnection': return '添加连接';
+			case 'connections.addConnectionSubtitleNoProfile': return '使用 Plex 登录，或连接 Jellyfin 或 Emby 服务器';
+			case 'connections.addConnectionSubtitleScoped': return ({required Object displayName}) => '添加到 ${displayName}：Plex、Jellyfin、Emby，或其他用户资料的连接';
+			case 'connections.sessionExpiredOne': return ({required Object name}) => '${name} 的会话已过期';
+			case 'connections.sessionExpiredMany': return ({required Object count}) => '${count} 个服务器的会话已过期';
+			case 'connections.accessDeniedOne': return ({required Object name}) => '${name} 拒绝此账户访问';
+			case 'connections.accessDeniedMany': return ({required Object count}) => '${count} 台服务器拒绝此账户访问';
+			case 'connections.signInAgain': return '重新登录';
+			case 'connections.editMediaBrowserTitle': return ({required Object product}) => '编辑 ${product} 连接';
+			case 'connections.editMediaBrowserIntro': return ({required Object serverName}) => '为 ${serverName} 添加或移除 URL。Plezy 会使用延迟最低且可访问的 URL。';
+			case 'accountPreferences.sectionTitle': return '账户偏好';
+			case 'accountPreferences.hubSubtitleSingle': return ({required Object account}) => '音频、字幕和媒体库选项已保存在 ${account} 上';
+			case 'accountPreferences.hubSubtitleMultiple': return ({required Object count}) => '音频、字幕和媒体库选项已保存在 ${count} 个账户上';
+			case 'accountPreferences.pickAccount': return '每个账户都保存自己的偏好设置。选择要编辑的账户。';
+			case 'accountPreferences.storedOnAccount': return '这些选项保存在账户本身，因此所有登录该账户的应用都会使用它们——包括你其他设备上的 Plezy。';
+			case 'accountPreferences.noAccounts': return '没有可配置的账户';
+			case 'accountPreferences.noAccountsHint': return '登录 Plex，或连接 Jellyfin 或 Emby 服务器，该账户上保存的偏好设置就会显示在这里。';
+			case 'accountPreferences.unavailable': return '无法访问此账户';
+			case 'accountPreferences.loadFailed': return '无法加载这些偏好设置';
+			case 'accountPreferences.noPreference': return '无偏好';
+			case 'accountPreferences.notSet': return '未设置';
+			case 'accountPreferences.groups.audioAndSubtitles': return '音频与字幕';
+			case 'accountPreferences.groups.libraryDisplay': return '媒体库';
+			case 'accountPreferences.groups.personalMedia': return '个人媒体';
+			case 'accountPreferences.preferredAudioLanguage': return '首选音频语言';
+			case 'accountPreferences.autoSelectAudio': return '按语言选择音频';
+			case 'accountPreferences.autoSelectAudioDescription': return '关闭后保留文件标记为默认的音轨。';
+			case 'accountPreferences.preferredSubtitleLanguage': return '首选字幕语言';
+			case 'accountPreferences.subtitleMode': return '开启字幕';
+			case 'accountPreferences.subtitleModes.none': return '手动选择';
+			case 'accountPreferences.subtitleModes.noneDescription': return '从不自动打开字幕。';
+			case 'accountPreferences.subtitleModes.defaultMode': return '遵循轨道标记';
+			case 'accountPreferences.subtitleModes.defaultModeDescription': return '使用存储在各字幕轨道上的默认和强制标记。';
+			case 'accountPreferences.subtitleModes.always': return '始终启用';
+			case 'accountPreferences.subtitleModes.alwaysDescription': return '只要有首选语言的字幕轨道就将其打开。';
+			case 'accountPreferences.subtitleModes.onlyForced': return '仅强制字幕';
+			case 'accountPreferences.subtitleModes.onlyForcedDescription': return '只加载标记为强制的轨道。';
+			case 'accountPreferences.subtitleModes.smart': return '外语音频时显示';
+			case 'accountPreferences.subtitleModes.smartDescription': return '仅在音频为其他语言时打开字幕。';
+			case 'accountPreferences.subtitleAccessibility': return 'SDH 字幕';
+			case 'accountPreferences.subtitleAccessibilityOptions.preferNonSdh': return '优先非 SDH 字幕';
+			case 'accountPreferences.subtitleAccessibilityOptions.preferSdh': return '优先 SDH 字幕';
+			case 'accountPreferences.subtitleAccessibilityOptions.onlySdh': return '仅 SDH 字幕';
+			case 'accountPreferences.subtitleAccessibilityOptions.onlyNonSdh': return '仅非 SDH 字幕';
+			case 'accountPreferences.forcedSubtitles': return '强制字幕';
+			case 'accountPreferences.forcedSubtitleOptions.preferNonForced': return '优先非强制字幕';
+			case 'accountPreferences.forcedSubtitleOptions.preferForced': return '优先强制字幕';
+			case 'accountPreferences.forcedSubtitleOptions.onlyForced': return '仅强制字幕';
+			case 'accountPreferences.forcedSubtitleOptions.onlyNonForced': return '仅非强制字幕';
+			case 'accountPreferences.displayMissingEpisodes': return '显示缺失剧集';
+			case 'accountPreferences.displayMissingEpisodesDescription': return '列出服务器知道但没有对应文件的剧集。';
+			case 'accountPreferences.hidePlayedInLatest': return '在“最新”中隐藏已观看项目';
+			case 'accountPreferences.hidePlayedInLatestDescription': return '将你已经看过的项目从服务器的“最新”列表中移除。';
+			case 'accountPreferences.displayCollectionsView': return '显示合集视图';
+			case 'accountPreferences.displayCollectionsViewDescription': return '在媒体库之外提供服务器的合集视图。';
+			case 'accountPreferences.rewatchingInNextUp': return '在“接下来”中保留重看的剧集';
+			case 'accountPreferences.rewatchingInNextUpDescription': return '看完一部剧集后再次开始观看时，“接下来”会跟随重看进度，而不是将剧集移除。';
+			case 'accountPreferences.watchedIndicator': return '已观看标记';
+			case 'accountPreferences.watchedIndicatorOptions.none': return '从不';
+			case 'accountPreferences.watchedIndicatorOptions.moviesAndShows': return '电影和电视剧';
+			case 'accountPreferences.watchedIndicatorOptions.movies': return '仅电影';
+			case 'accountPreferences.watchedIndicatorOptions.shows': return '仅电视剧';
+			case 'accountPreferences.mediaReviewsVisibility': return '评分与评论';
+			case 'accountPreferences.mediaReviewsOptions.usersAndCritics': return '用户和影评人';
+			case 'accountPreferences.mediaReviewsOptions.usersOnly': return '仅用户';
+			case 'accountPreferences.mediaReviewsOptions.criticsOnly': return '仅影评人';
+			case 'accountPreferences.mediaReviewsOptions.nobody': return '隐藏';
+			case 'discover.title': return '发现';
+			case 'discover.noContentAvailable': return '没有可用内容';
+			case 'discover.addMediaToLibraries': return '请向你的媒体库添加一些媒体';
+			case 'discover.continueWatching': return '继续观看';
+			case 'discover.continueWatchingIn': return ({required Object library}) => '${library} 中继续观看';
+			case 'discover.nextUp': return '接下来';
+			case 'discover.nextUpIn': return ({required Object library}) => '${library} 中接下来';
+			case 'discover.recentlyAdded': return '最近添加';
+			case 'discover.recentlyAddedIn': return ({required Object library}) => '${library} 中最近添加';
+			case 'discover.latestAlbumsIn': return ({required Object library}) => '${library} 中的最新专辑';
+			case 'discover.recentlyPlayedIn': return ({required Object library}) => '${library} 中最近播放';
+			case 'discover.mostPlayedIn': return ({required Object library}) => '${library} 中最常播放';
+			case 'discover.playEpisode': return ({required Object season, required Object episode}) => 'S${season}E${episode}';
+			case 'discover.overview': return '概述';
+			case 'discover.cast': return '演员表';
+			case 'discover.extras': return '预告片与花絮';
+			case 'discover.studio': return '制作公司';
+			case 'discover.rating': return '年龄分级';
+			case 'discover.director': return '导演';
+			case 'discover.directors': return '导演';
+			case 'discover.movie': return '电影';
+			case 'discover.tvShow': return '电视剧';
+			case 'discover.minutesLeft': return ({required Object minutes}) => '剩余 ${minutes} 分钟';
+			case 'discover.moreLikeThis': return '更多类似内容';
+			case 'discover.titleCount': return ({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('zh'))(n,
+				other: '${n} 个标题',
+			);
+			case 'discover.person.born': return '出生';
+			case 'discover.person.died': return '逝世';
+			case 'discover.person.birthplace': return '出生地';
+			case 'discover.person.dateWithAge': return ({required Object date, required Object age}) => '${date}（${age} 岁）';
+			case 'discover.person.dateWithAgeAtDeath': return ({required Object date, required Object age}) => '${date}（享年 ${age} 岁）';
+			case 'errors.searchFailed': return ({required Object error}) => '搜索失败：${error}';
+			case 'errors.searchUnavailable': return '搜索无法连接任何媒体服务器。';
+			case 'errors.connectionTimeout': return ({required Object context}) => '加载 ${context} 时连接超时';
+			case 'errors.connectionFailed': return '无法连接到媒体服务器';
+			case 'errors.unableToLoad': return ({required Object context}) => '无法加载${context}。请重试。';
+			case 'errors.noClientAvailable': return '没有可用客户端';
+			case 'errors.pleaseEnterToken': return '请输入一个令牌';
+			case 'errors.invalidToken': return '令牌无效';
+			case 'errors.failedToVerifyToken': return ({required Object error}) => '无法验证令牌：${error}';
+			case 'errors.failedToSwitchProfile': return ({required Object displayName}) => '无法切换到 ${displayName}';
+			case 'errors.failedToDeleteProfile': return ({required Object displayName}) => '无法删除 ${displayName}';
+			case 'errors.failedToRate': return '无法更新评分';
+			case 'errors.reasonTimedOut': return '连接超时';
+			case 'errors.reasonUnreachable': return '无法连接到服务器';
+			case 'errors.reasonRefused': return '服务器拒绝了此请求';
+			case 'errors.reasonNotFound': return '该项目已不在服务器上';
+			case 'errors.reasonServerError': return '服务器报告了一个错误';
+			case 'errors.reasonCancelled': return '请求已取消';
+			case 'errors.reasonUnexpected': return '发生了意外错误';
+			case 'libraries.title': return '媒体库';
+			case 'libraries.fallbackTitle': return '媒体库';
+			case 'libraries.scanLibraryFiles': return '扫描媒体库文件';
+			case 'libraries.scanLibrary': return '扫描媒体库';
+			case 'libraries.analyze': return '分析';
+			case 'libraries.analyzeLibrary': return '分析媒体库';
+			case 'libraries.refreshMetadata': return '刷新元数据';
+			case 'libraries.emptyTrash': return '清空回收站';
+			case 'libraries.emptyingTrash': return ({required Object title}) => '正在清空“${title}”的回收站…';
+			case 'libraries.trashEmptied': return ({required Object title}) => '已清空“${title}”的回收站';
+			case 'libraries.failedToEmptyTrash': return ({required Object error}) => '无法清空回收站：${error}';
+			case 'libraries.analyzing': return ({required Object title}) => '正在分析“${title}”…';
+			case 'libraries.analysisStarted': return ({required Object title}) => '已开始分析“${title}”';
+			case 'libraries.failedToAnalyze': return ({required Object error}) => '无法分析媒体库：${error}';
+			case 'libraries.noLibrariesFound': return '未找到媒体库';
+			case 'libraries.allLibrariesHidden': return '所有媒体库已隐藏';
+			case 'libraries.hiddenLibrariesCount': return ({required Object count}) => '已隐藏的媒体库 (${count})';
+			case 'libraries.thisLibraryIsEmpty': return '此媒体库为空';
+			case 'libraries.noItemsMatchFilters': return '没有项目符合当前筛选条件';
+			case 'libraries.resetFilters': return '重置筛选条件';
+			case 'libraries.all': return '全部';
+			case 'libraries.clearAll': return '全部清除';
+			case 'libraries.scanLibraryConfirm': return ({required Object title}) => '确定要扫描“${title}”吗？';
+			case 'libraries.analyzeLibraryConfirm': return ({required Object title}) => '确定要分析“${title}”吗？';
+			case 'libraries.refreshMetadataConfirm': return ({required Object title}) => '确定要刷新“${title}”的元数据吗？';
+			case 'libraries.emptyTrashConfirm': return ({required Object title}) => '确定要清空“${title}”的回收站吗？';
+			case 'libraries.manageLibraries': return '管理媒体库';
+			case 'libraries.sort': return '排序';
+			case 'libraries.sortBy': return '排序依据';
+			case 'libraries.filters': return '筛选';
+			case 'libraries.confirmActionMessage': return '确定要执行此操作吗？';
+			case 'libraries.showLibrary': return '显示媒体库';
+			case 'libraries.hideLibrary': return '隐藏媒体库';
+			case 'libraries.libraryOptions': return '媒体库选项';
+			case 'libraries.content': return '媒体库内容';
+			case 'libraries.selectLibrary': return '选择媒体库';
+			case 'libraries.filtersWithCount': return ({required Object count}) => '筛选器（${count}）';
+			case 'libraries.noRecommendations': return '暂无推荐';
+			case 'libraries.noCollections': return '此媒体库中没有合集';
+			case 'libraries.noFoldersFound': return '未找到文件夹';
+			case 'libraries.folders': return '文件夹';
+			case 'libraries.tabs.recommended': return '推荐';
+			case 'libraries.tabs.browse': return '浏览';
+			case 'libraries.tabs.collections': return '合集';
+			case 'libraries.tabs.playlists': return '播放列表';
+			case 'libraries.groupings.title': return '分组';
+			case 'libraries.groupings.all': return '全部';
+			case 'libraries.groupings.movies': return '电影';
+			case 'libraries.groupings.shows': return '剧集';
+			case 'libraries.groupings.seasons': return '季';
+			case 'libraries.groupings.episodes': return '集';
+			case 'libraries.groupings.artists': return '艺术家';
+			case 'libraries.groupings.albums': return '专辑';
+			case 'libraries.groupings.tracks': return '曲目';
+			case 'libraries.groupings.folders': return '文件夹';
+			case 'libraries.filterCategories.genre': return '类型';
+			case 'libraries.filterCategories.year': return '年份';
+			case 'libraries.filterCategories.contentRating': return '内容分级';
+			case 'libraries.filterCategories.tag': return '标签';
+			case 'libraries.filterCategories.unwatched': return '未观看';
+			case 'libraries.filterCategories.unplayed': return '未播放';
+			case 'libraries.filterCategories.favorites': return '收藏夹';
+			case 'libraries.filterCategories.filePath': return '文件路径';
+			case 'libraries.sortLabels.title': return '标题';
+			case 'libraries.sortLabels.dateAdded': return '添加日期';
+			case 'libraries.sortLabels.releaseDate': return '发行日期';
+			case 'libraries.sortLabels.rating': return '评分';
+			case 'libraries.sortLabels.communityRating': return '社区评分';
+			case 'libraries.sortLabels.criticRating': return '影评人评分';
+			case 'libraries.sortLabels.userRating': return '用户评分';
+			case 'libraries.sortLabels.datePlayed': return '播放日期';
+			case 'libraries.sortLabels.playCount': return '播放次数';
+			case 'libraries.sortLabels.productionYear': return '制作年份';
+			case 'libraries.sortLabels.runtime': return '时长';
+			case 'libraries.sortLabels.officialRating': return '官方分级';
+			case 'libraries.sortLabels.premiereDate': return '首映日期';
+			case 'libraries.sortLabels.startDate': return '开始日期';
+			case 'libraries.sortLabels.airTime': return '播出时间';
+			case 'libraries.sortLabels.studio': return '制片公司';
+			case 'libraries.sortLabels.random': return '随机';
+			case 'libraries.sortLabels.dateShared': return '共享日期';
+			case 'libraries.sortLabels.latestEpisodeAirDate': return '最新一集播出日期';
+			case 'libraries.sortLabels.lastEpisodeDateAdded': return '最新一集添加日期';
+			case 'libraries.sortLabels.dateDownloaded': return '下载日期';
+			case 'libraries.sortLabels.size': return '大小';
+			case 'libraries.sortLabels.library': return '媒体库';
+			case 'libraries.advancedFilters.include': return '包含';
+			case 'libraries.advancedFilters.exclude': return '排除';
+			case 'libraries.advancedFilters.any': return '不限';
+			case 'libraries.advancedFilters.yes': return '是';
+			case 'libraries.advancedFilters.no': return '否';
+			case 'libraries.advancedFilters.not': return ({required Object value}) => '排除 ${value}';
+			case 'libraries.advancedFilters.valueCount': return ({required Object count}) => '已选 ${count} 项';
+			case 'libraries.advancedFilters.valueCountExcluded': return ({required Object count}) => '已排除 ${count} 项';
+			case 'libraries.advancedFilters.searchValues': return '搜索值';
+			case 'libraries.advancedFilters.noValues': return '没有可选值';
+			case 'libraries.advancedFilters.matchContains': return '包含';
+			case 'libraries.advancedFilters.matchNotContains': return '不包含';
+			case 'libraries.advancedFilters.matchIs': return '是';
+			case 'libraries.advancedFilters.matchIsNot': return '不是';
+			case 'libraries.advancedFilters.matchBeginsWith': return '开头为';
+			case 'libraries.advancedFilters.matchEndsWith': return '结尾为';
+			case 'libraries.advancedFilters.textHint': return '输入以匹配';
+			case 'libraries.advancedFilters.from': return '从';
+			case 'libraries.advancedFilters.to': return '至';
+			case 'libraries.advancedFilters.range': return ({required Object from, required Object to}) => '${from} 至 ${to}';
+			case 'libraries.advancedFilters.atLeast': return ({required Object value}) => '${value} 及以上';
+			case 'libraries.advancedFilters.atMost': return ({required Object value}) => '${value} 及以下';
+			case 'libraries.advancedFilters.dateLastDays': return ({required Object count}) => '最近 ${count} 天';
+			case 'libraries.advancedFilters.dateLastYear': return '过去一年';
+			case 'libraries.advancedFilters.dateOlderThanDays': return ({required Object count}) => '早于 ${count} 天前';
+			case 'libraries.advancedFilters.dateOlderThanYear': return '早于一年前';
+			case 'about.title': return '关于';
+			case 'about.openSourceLicenses': return '开源许可证';
+			case 'about.versionLabel': return ({required Object version}) => '版本 ${version}';
+			case 'about.appDescription': return '一款精美的 Flutter Plex、Jellyfin 和 Emby 客户端';
+			case 'about.viewLicensesDescription': return '查看第三方库的许可证';
+			case 'serverSelection.noServersFoundForAccount': return ({required Object username, required Object email}) => '未找到 ${username}（${email}）的服务器';
+			case 'serverSelection.failedToLoadServers': return ({required Object error}) => '无法加载服务器：${error}';
+			case 'serverSelection.noValidServers': return '此账号下未找到可用的服务器';
+			case 'hubDetail.title': return '标题';
+			case 'hubDetail.releaseYear': return '发行年份';
+			case 'hubDetail.dateAdded': return '添加日期';
+			case 'hubDetail.rating': return '评分';
+			case 'hubDetail.noItemsFound': return '未找到项目';
+			case 'logs.clearLogs': return '清除日志';
+			case 'logs.copyLogs': return '复制日志';
+			case 'logs.uploadLogs': return '上传日志';
+			case 'startup.failedTitle': return 'Plezy 无法启动';
+			case 'startup.failedBody': return '启动过程中出现问题。以下详情指出了失败的原因。';
+			case 'startup.failedBodyRepairable': return 'Plezy 的已保存设置文件已损坏，必须先重建才能启动。重试没有用——请选择“修复存储”。';
+			case 'startup.phaseLabel': return '步骤';
+			case 'startup.showDetails': return '显示详情';
+			case 'startup.hideDetails': return '隐藏详情';
+			case 'startup.copyDetails': return '复制详情';
+			case 'startup.detailsCopied': return '详情已复制到剪贴板';
+			case 'startup.uploadDetails': return '上传详情';
+			case 'startup.repairStorage': return '修复存储';
+			case 'startup.repairTitle': return '修复已存储的数据？';
+			case 'startup.repairBodyCommon': return 'Plezy 的设置文件已损坏且无法读取。修复会将所有设置重置为默认值。';
+			case 'startup.repairBodyOneCredential': return '有一项已保存的登录信息已损坏且无法读取。修复只会移除这一项，其他设置保持不变。';
+			case 'startup.repairBodySignInsKept': return '你的服务器和个人资料应保持登录状态。';
+			case 'startup.repairBodySignInsLost': return '保护已保存登录信息的密钥无法从此文件中恢复，因此你需要重新登录每个服务器和个人资料。媒体服务器上的内容不受影响。';
+			case 'startup.repairBodySessionsUncertain': return '追踪服务（MAL、AniList、Simkl、Trakt）和 Seerr 是分开存储的，可能保留也可能无法保留。Plezy 会明确告诉你保留了哪些。';
+			case 'startup.repairConfirm': return '修复';
+			case 'startup.repairSucceeded': return '存储已修复';
+			case 'startup.repairNeedsRestart': return '存储已修复 — 需要重启';
+			case 'startup.restartRequiredBody': return '你的数据已修复，但 Plezy 需要重新启动后才能使用。请关闭 Plezy 并重新打开。';
+			case 'startup.quitPlezy': return '退出 Plezy';
+			case 'startup.repairFailed': return '修复失败';
+			case 'startup.repairKeptSignIns': return '你的服务器和个人资料仍然保持登录状态。';
+			case 'startup.repairLostSignIns': return '保护已保存登录信息的密钥无法恢复。你需要重新登录每个服务器和个人资料。';
+			case 'startup.repairLostSessions': return '至少有一个追踪服务或 Seerr 连接已丢失，需要重新连接。';
+			case 'startup.backupTitle': return '已保留损坏文件的副本';
+			case 'startup.backupWarning': return '其中包含你的登录凭据。请勿上传或分享。';
+			case 'startup.deleteBackup': return '删除副本';
+			case 'startup.backupDeleted': return '副本已删除。';
+			case 'startup.previousFailureTitle': return 'Plezy 上次启动失败';
+			case 'licenses.relatedPackages': return '相关软件包';
+			case 'licenses.license': return '许可证';
+			case 'licenses.licenseNumber': return ({required Object number}) => '许可证 ${number}';
+			case 'licenses.licensesCount': return ({required Object count}) => '${count} 个许可证';
+			case 'navigation.libraries': return '媒体库';
+			case 'navigation.downloads': return '下载';
+			case 'navigation.liveTv': return '直播电视';
+			case 'navigation.explore': return '探索';
+			case 'explore.title': return '探索';
+			case 'explore.selectSource': return '选择来源';
+			case 'explore.rows.watchlist': return '想看列表';
+			case 'explore.rows.recommendedMovies': return '推荐电影';
+			case 'explore.rows.recommendedShows': return '推荐剧集';
+			case 'explore.rows.trendingMovies': return '近期热门电影';
+			case 'explore.rows.trendingShows': return '近期热门剧集';
+			case 'explore.rows.popularMovies': return '人气电影';
+			case 'explore.rows.popularShows': return '人气剧集';
+			case 'explore.rows.trendingAnime': return '热门动画';
+			case 'explore.rows.suggestedAnime': return '推荐动画';
+			case 'explore.rows.airingAnime': return '热门连载动画';
+			case 'explore.rows.popularAnime': return '最受欢迎动画';
+			case 'explore.rows.trending': return '近期热门';
+			case 'explore.rows.upcomingMovies': return '即将上映的电影';
+			case 'explore.rows.upcomingShows': return '即将播出的剧集';
+			case 'explore.status.airing': return '连载中';
+			case 'explore.status.ended': return '已完结';
+			case 'explore.status.canceled': return '已取消';
+			case 'explore.status.upcoming': return '即将上线';
+			case 'explore.episodeCount': return ({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('zh'))(n,
+				other: '${n} 集',
+			);
+			case 'explore.cast': return '演员表';
+			case 'explore.characters': return '角色';
+			case 'explore.addToWatchlist': return '添加到想看列表';
+			case 'explore.removeFromWatchlist': return '从想看列表移除';
+			case 'explore.addedToWatchlist': return '已加入待看列表';
+			case 'explore.removedFromWatchlist': return '已从待看列表中移除';
+			case 'explore.watchlistUpdateFailed': return '无法更新想看列表';
+			case 'explore.watchlistNoMatch': return '无法将此项目与待看列表匹配';
+			case 'explore.notInLibrary': return '不在你的媒体库中';
+			case 'explore.inTheseLibraries': return '在这些媒体库中';
+			case 'explore.checkingLibrary': return '正在检查你的媒体库…';
+			case 'explore.libraryCheckFailed': return ({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('zh'))(n,
+				other: '无法检查 ${n} 台服务器',
+			);
+			case 'explore.emptyTitle': return '这里还什么都没有';
+			case 'explore.emptyMessage': return ({required Object source}) => '当 ${source} 有内容时，相关内容将显示在这里。';
+			case 'explore.searchHint': return ({required Object source}) => '搜索 ${source}';
+			case 'explore.searchEmpty': return ({required Object query}) => '没有“${query}”的结果';
+			case 'explore.searchPrompt': return ({required Object source}) => '在 ${source} 上搜索电影和剧集。';
+			case 'explore.searchFailed': return '搜索失败。请检查网络连接后重试。';
+			case 'explore.badge.rankPopular': return ({required Object n}) => '热门榜第 #${n} 名';
+			case 'explore.badge.rankAiring': return ({required Object n}) => '在播榜第 #${n} 名';
+			case 'explore.badge.rankRated': return ({required Object n}) => '评分榜第 #${n} 名';
+			case 'explore.badge.rankTrending': return ({required Object n}) => '趋势榜第 #${n} 名';
+			case 'explore.badge.rankSeasonal': return ({required Object season, required Object n}) => '${season}榜第 #${n} 名';
+			case 'explore.badge.watchingNow': return ({required Object n}) => '${n} 人正在观看';
+			case 'explore.badge.available': return '可观看';
+			case 'explore.badge.partiallyAvailable': return '部分可观看';
+			case 'explore.badge.availableIn4k': return '提供 4K';
+			case 'explore.badge.requested': return '已请求';
+			case 'explore.badge.pendingApproval': return '待批准';
+			case 'explore.badge.processing': return '处理中';
+			case 'explore.badge.declined': return '已拒绝';
+			case 'explore.badge.requestFailed': return '请求失败';
+			case 'explore.badge.requested4k': return '已请求 4K';
+			case 'explore.badge.seasonsAvailable': return ({required Object available, required Object total}) => '已有 ${available}/${total} 季';
+			case 'explore.badge.nextEpisodeIn': return ({required Object episode, required Object duration}) => '第 ${episode} 集将在 ${duration} 后播出';
+			case 'explore.badge.nextAiringIn': return ({required Object duration}) => '下一集将在 ${duration} 后播出';
+			case 'explore.badge.episodesShort': return ({required Object n}) => '${n} 集';
+			case 'explore.badge.minutesPerEpisode': return ({required Object n}) => '${n} 分钟/集';
+			case 'explore.badge.adult': return '18+';
+			case 'explore.stats.listed': return ({required Object n}) => '${n} 人已标记';
+			case 'explore.stats.viewersDay': return ({required Object n}) => '今日 ${n} 人观看';
+			case 'explore.stats.viewersWeek': return ({required Object n}) => '本周 ${n} 人观看';
+			case 'explore.stats.viewersMonth': return ({required Object n}) => '本月 ${n} 人观看';
+			case 'explore.stats.viewersYear': return ({required Object n}) => '今年 ${n} 人观看';
+			case 'explore.stats.viewersAllTime': return ({required Object n}) => '累计 ${n} 人观看';
+			case 'explore.stats.planning': return ({required Object n}) => '${n} 人想看';
+			case 'explore.stats.favorited': return ({required Object n}) => '${n} 人收藏';
+			case 'explore.stats.dropRate': return ({required Object percent}) => '${percent} 弃番';
+			case 'explore.stats.comments': return ({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('zh'))(n,
+				other: '${n} 条评论',
+			);
+			case 'explore.stats.votes': return ({required Object n}) => '${n} 票';
+			case 'explore.stats.watching': return ({required Object n}) => '${n} 人正在观看';
+			case 'explore.stats.completed': return ({required Object n}) => '${n} 人已看完';
+			case 'explore.stats.onHold': return ({required Object n}) => '${n} 人搁置';
+			case 'explore.stats.dropped': return ({required Object n}) => '${n} 人弃番';
+			case 'explore.season.winter': return '冬季';
+			case 'explore.season.spring': return '春季';
+			case 'explore.season.summer': return '夏季';
+			case 'explore.season.fall': return '秋季';
+			case 'explore.season.withYear': return ({required Object year, required Object season}) => '${year}年${season}';
+			case 'explore.format.tv': return 'TV';
+			case 'explore.format.tvShort': return 'TV 短片';
+			case 'explore.format.movie': return '电影';
+			case 'explore.format.special': return '特别篇';
+			case 'explore.format.ova': return 'OVA';
+			case 'explore.format.ona': return 'ONA';
+			case 'explore.format.music': return '音乐';
+			case 'explore.format.other': return '其他';
+			case 'explore.sourceMaterial.original': return '原创';
+			case 'explore.sourceMaterial.manga': return '漫画';
+			case 'explore.sourceMaterial.lightNovel': return '轻小说';
+			case 'explore.sourceMaterial.novel': return '小说';
+			case 'explore.sourceMaterial.visualNovel': return '视觉小说';
+			case 'explore.sourceMaterial.game': return '游戏';
+			case 'explore.sourceMaterial.webComic': return '网络漫画';
+			case 'explore.sourceMaterial.musicRelease': return '音乐';
+			case 'explore.sourceMaterial.otherMedia': return '其他';
+			case 'explore.creditRole.actor': return '演员';
+			case 'explore.creditRole.director': return '导演';
+			case 'explore.creditRole.writer': return '编剧';
+			case 'explore.creditRole.producer': return '制片人';
+			case 'explore.creditRole.creator': return '创作者';
+			case 'explore.creditRole.composer': return '作曲';
+			case 'explore.relation.prequel': return '前传';
+			case 'explore.relation.sequel': return '续集';
+			case 'explore.relation.sideStory': return '番外篇';
+			case 'explore.relation.spinOff': return '衍生作品';
+			case 'explore.relation.alternativeVersion': return '另一版本';
+			case 'explore.relation.summary': return '总集篇';
+			case 'explore.relation.parentStory': return '原作';
+			case 'explore.relation.adaptation': return '改编';
+			case 'explore.relation.other': return '相关';
+			case 'explore.broadcast': return ({required Object day, required Object time}) => '每周${day} ${time}播出';
+			case 'explore.broadcastWithZone': return ({required Object day, required Object time, required Object timezone}) => '每周${day} ${time} ${timezone}播出';
+			case 'explore.detail.originalTitle': return '原名';
+			case 'explore.detail.alsoKnownAs': return '又名';
+			case 'explore.detail.studios': return '制作公司';
+			case 'explore.detail.country': return '国家/地区';
+			case 'explore.detail.language': return '语言';
+			case 'explore.detail.released': return '上映日期';
+			case 'explore.detail.physicalRelease': return '光盘发售';
+			case 'explore.detail.ended': return '完结日期';
+			case 'explore.detail.addedOn': return ({required Object date}) => '添加于 ${date}';
+			case 'explore.detail.yourRating': return '你的评分';
+			case 'explore.detail.budget': return '预算';
+			case 'explore.detail.revenue': return '票房';
+			case 'explore.detail.contentAdvisory': return '年龄分级';
+			case 'explore.detail.tags': return '标签';
+			case 'explore.detail.revealSpoilerTags': return '显示剧透标签';
+			case 'explore.detail.links': return '链接';
+			case 'explore.detail.watchOn': return '观看平台';
+			case 'explore.detail.watchTrailer': return '观看预告片';
+			case 'explore.detail.openOn': return ({required Object site}) => '在 ${site} 打开';
+			case 'explore.detail.trailerUnavailable': return '无法在此设备上打开预告片';
+			case 'explore.detail.linkUnavailable': return '无法在此设备上打开链接';
+			case 'explore.detail.crew': return '演职人员';
+			case 'explore.detail.ratings': return '评分';
+			case 'explore.detail.schedule': return '播出时间';
+			case 'explore.detail.recommendedByUsers': return ({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('zh'))(n,
+				other: '由 ${n} 位用户推荐',
+			);
+			case 'explore.detail.recommendedBy': return ({required Object who}) => '由 ${who} 推荐';
+			case 'explore.detail.favoritedBy': return ({required Object who}) => '由 ${who} 收藏';
+			case 'explore.detail.unairedEpisodes': return ({required Object n}) => '还有 ${n} 集未播出';
+			case 'explore.detail.recommendedByPercent': return ({required Object percent}) => '${percent} 的观众推荐';
+			case 'explore.detail.relatedTitles': return '相关作品';
+			case 'explore.detail.background': return '背景';
+			case 'explore.totalResults': return ({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('zh'))(n,
+				other: '${n} 条结果',
+			);
+			case 'liveTv.title': return '直播电视';
+			case 'liveTv.guide': return '节目指南';
+			case 'liveTv.noChannels': return '没有可用的频道';
+			case 'liveTv.noDvr': return '没有服务器配置 DVR';
+			case 'liveTv.serverUnavailable': return '直播电视服务器不可用。';
+			case 'liveTv.serverNotConnected': return '直播电视服务器未连接。';
+			case 'liveTv.noPrograms': return '没有可用的节目数据';
+			case 'liveTv.liveStreamFailed': return '直播流失败';
+			case 'liveTv.unknownProgram': return '未知节目';
+			case 'liveTv.unknownHub': return '未知';
+			case 'liveTv.unknownError': return '未知错误';
+			case 'liveTv.channelNumber': return ({required Object number}) => '频道 ${number}';
+			case 'liveTv.unknownChannel': return '未知频道';
+			case 'liveTv.live': return '直播';
+			case 'liveTv.reloadGuide': return '重新加载节目指南';
+			case 'liveTv.searchGuide': return '搜索节目指南';
+			case 'liveTv.searchHint': return '搜索频道和节目';
+			case 'liveTv.searchNoResults': return ({required Object query}) => '没有与“${query}”匹配的结果';
+			case 'liveTv.channelsSection': return '频道';
+			case 'liveTv.programsSection': return '节目';
+			case 'liveTv.now': return '现在';
+			case 'liveTv.today': return '今天';
+			case 'liveTv.tomorrow': return '明天';
+			case 'liveTv.midnight': return '午夜';
+			case 'liveTv.overnight': return '凌晨';
+			case 'liveTv.morning': return '上午';
+			case 'liveTv.daytime': return '白天';
+			case 'liveTv.evening': return '晚上';
+			case 'liveTv.lateNight': return '深夜';
+			case 'liveTv.whatsOn': return '正在播出';
+			case 'liveTv.watchChannel': return '观看频道';
+			case 'liveTv.favorites': return '收藏';
+			case 'liveTv.reorderFavorites': return '重新排序收藏';
+			case 'liveTv.noFavoriteChannels': return '没有收藏的频道';
+			case 'liveTv.noFavoriteChannelsHint': return '显示所有频道，然后长按某个频道将其加入收藏。';
+			case 'liveTv.showAllChannels': return '显示所有频道';
+			case 'liveTv.favoritesLoadFailed': return '无法加载收藏。请检查网络连接后重试。';
+			case 'liveTv.favoritesUpdateFailed': return '无法更新收藏。请检查网络连接后重试。';
+			case 'liveTv.joinSession': return '加入正在进行的会话';
+			case 'liveTv.watchFromStart': return ({required Object minutes}) => '从头观看（${minutes}分钟前开始）';
+			case 'liveTv.watchLive': return '观看直播';
+			case 'liveTv.goToLive': return '跳至直播';
+			case 'liveTv.record': return '录制';
+			case 'liveTv.recordEpisode': return '录制单集';
+			case 'liveTv.recordSeries': return '录制系列节目';
+			case 'liveTv.recordOptions': return '录制选项';
+			case 'liveTv.saveTo': return '保存到';
+			case 'liveTv.recordings': return '录制内容';
+			case 'liveTv.scheduledRecordings': return '计划录制';
+			case 'liveTv.recordingRules': return '录制规则';
+			case 'liveTv.noScheduledRecordings': return '没有安排的录制';
+			case 'liveTv.manageRecording': return '管理录制';
+			case 'liveTv.cancelRecording': return '取消录制';
+			case 'liveTv.cancelRecordingTitle': return '取消此次录制？';
+			case 'liveTv.cancelRecordingMessage': return ({required Object title}) => '将不再录制 ${title}。';
+			case 'liveTv.deleteRule': return '删除规则';
+			case 'liveTv.deleteRuleTitle': return '删除录制规则？';
+			case 'liveTv.deleteRuleMessage': return ({required Object title}) => '今后将不再录制 ${title} 的剧集。';
+			case 'liveTv.recordingScheduled': return '录制已安排';
+			case 'liveTv.alreadyScheduled': return '此节目已安排录制';
+			case 'liveTv.dvrAdminRequired': return 'DVR 设置需要管理员账户';
+			case 'liveTv.recordingFailed': return '无法安排录制';
+			case 'liveTv.recordingTargetMissing': return '无法确定录制库';
+			case 'liveTv.recordNotAvailable': return '此节目无法录制';
+			case 'liveTv.recordingCancelled': return '录制已取消';
+			case 'liveTv.recordingRuleDeleted': return '录制规则已删除';
+			case 'liveTv.processRecordingRules': return '重新评估规则';
+			case 'liveTv.recordingInProgress': return '正在录制';
+			case 'liveTv.recordingsCount': return ({required Object count}) => '已安排 ${count} 项录制';
+			case 'liveTv.editRule': return '编辑规则';
+			case 'liveTv.editRuleAction': return '编辑';
+			case 'liveTv.recordingRuleUpdated': return '录制规则已更新';
+			case 'liveTv.guideReloadRequested': return '已请求更新节目指南';
+			case 'liveTv.guideReloadFailed': return '无法刷新节目指南';
+			case 'liveTv.rulesProcessRequested': return '已请求重新评估规则';
+			case 'liveTv.rulesProcessFailed': return '无法重新评估录制规则';
+			case 'liveTv.recordShow': return '录制节目';
+			case 'liveTv.recordSettings.startEarly': return '提前开始（秒）';
+			case 'liveTv.recordSettings.endLate': return '延后结束（秒）';
+			case 'liveTv.recordSettings.newOnly': return '仅新剧集';
+			case 'liveTv.recordSettings.anyChannel': return '在任意频道录制';
+			case 'liveTv.recordSettings.anyTime': return '在任意时间录制';
+			case 'liveTv.recordSettings.skipInLibrary': return '跳过媒体库中已有的剧集';
+			case 'liveTv.recordSettings.keepUpTo': return '保留的剧集数';
+			case 'liveTv.recordSettings.keepUpToHint': return '0 表示保留全部剧集';
+			case 'liveTv.startingInMinutes': return ({required Object minutes}) => '${minutes} 分钟后开始';
+			case 'liveTv.dayAtTime': return ({required Object day, required Object time}) => '${day} ${time}';
+			case 'liveTv.invalidPlaybackData': return ({required Object product}) => '${product} 返回了无效的直播电视播放数据';
+			case 'liveTv.failedToStartChannel': return '无法播放直播频道';
+			case 'liveTv.failedToBuildStreamUrl': return '无法生成视频流 URL';
+			case 'liveTv.playbackStartFailed': return ({required Object reason}) => '无法启动该频道：${reason}';
+			case 'liveTv.channelSwitchFailed': return ({required Object reason}) => '无法切换频道：${reason}';
+			case 'collections.title': return '合集';
+			case 'collections.collection': return '合集';
+			case 'collections.empty': return '合集为空';
+			case 'collections.deleteCollection': return '删除合集';
+			case 'collections.deleteConfirm': return ({required Object title}) => '要删除“${title}”吗？此操作无法撤销。';
+			case 'collections.deleted': return '已删除合集';
+			case 'collections.deleteFailed': return '删除合集失败';
+			case 'collections.deleteFailedWithError': return ({required Object error}) => '删除合集失败：${error}';
+			case 'collections.selectCollection': return '选择合集';
+			case 'collections.collectionName': return '合集名称';
+			case 'collections.enterCollectionName': return '输入合集名称';
+			case 'collections.addedToCollection': return '已添加到合集';
+			case 'collections.errorAddingToCollection': return '添加到合集失败';
+			case 'collections.created': return '已创建合集';
+			case 'collections.removeFromCollection': return '从合集移除';
+			case 'collections.removeFromCollectionConfirm': return ({required Object title}) => '将“${title}”从此合集移除？';
+			case 'collections.removedFromCollection': return '已从合集移除';
+			case 'collections.removeFromCollectionFailed': return '从合集移除失败';
+			case 'collections.removeFromCollectionError': return ({required Object error}) => '从合集移除时出错：${error}';
+			case 'collections.searchCollections': return '搜索合集…';
+			case 'playlists.title': return '播放列表';
+			case 'playlists.playlist': return '播放列表';
+			case 'playlists.noPlaylists': return '未找到播放列表';
+			case 'playlists.create': return '创建播放列表';
+			case 'playlists.playlistName': return '播放列表名称';
+			case 'playlists.enterPlaylistName': return '输入播放列表名称';
+			case 'playlists.delete': return '删除播放列表';
+			case 'playlists.removeItem': return '从播放列表中移除';
+			case 'playlists.smartPlaylist': return '智能播放列表';
+			case 'playlists.itemCount': return ({required Object count}) => '${count} 个项目';
+			case 'playlists.oneItem': return '1 个项目';
+			case 'playlists.emptyPlaylist': return '此播放列表为空';
+			case 'playlists.deleteConfirm': return '删除播放列表？';
+			case 'playlists.deleteMessage': return ({required Object name}) => '确定要删除“${name}”吗？';
+			case 'playlists.created': return '播放列表已创建';
+			case 'playlists.deleted': return '播放列表已删除';
+			case 'playlists.itemAdded': return '已添加到播放列表';
+			case 'playlists.itemRemoved': return '已从播放列表中移除';
+			case 'playlists.selectPlaylist': return '选择播放列表';
+			case 'playlists.searchPlaylists': return '搜索播放列表…';
+			case 'playlists.errorCreating': return '创建播放列表失败';
+			case 'playlists.errorDeleting': return '删除播放列表失败';
+			case 'playlists.errorLoading': return '加载播放列表失败';
+			case 'playlists.errorAdding': return '添加到播放列表失败';
+			case 'playlists.errorReordering': return '重新排序播放列表项目失败';
+			case 'playlists.errorRemoving': return '从播放列表中移除失败';
+			case 'music.goToAlbum': return '前往专辑';
+			case 'music.goToArtist': return '前往艺术家';
+			case 'music.instantMix': return '即时混合播放';
+			case 'music.playNext': return '下一首播放';
+			case 'music.addToQueue': return '添加到队列';
+			case 'music.discNumber': return ({required Object n}) => '碟片 ${n}';
+			case 'music.trackCount': return ({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('zh'))(n,
+				other: '${n} 首',
+			);
+			case 'music.nowPlaying': return '正在播放';
+			case 'music.playingFrom': return ({required Object title}) => '播放来源：${title}';
+			case 'music.queue': return '播放队列';
+			case 'music.clearQueue': return '清空队列';
+			case 'music.lyrics': return '歌词';
+			case 'music.noLyrics': return '暂无歌词';
+			case 'music.sleepTimer': return '睡眠定时器';
+			case 'music.sleepTimerEndOfTrack': return '当前曲目结束时';
+			case 'music.sleepTimerMinutes': return ({required Object n}) => '${n} 分钟';
+			case 'music.stopPlayback': return '停止播放';
+			case 'music.previousTrack': return '上一首';
+			case 'music.nextTrack': return '下一首';
+			case 'music.repeat': return '循环';
+			case 'music.repeatAll': return '列表循环';
+			case 'music.repeatOne': return '单曲循环';
+			case 'music.instantMixNoServer': return '没有可用于即时混合的服务器';
+			case 'music.instantMixFailed': return '加载即时混合失败';
+			case 'music.instantMixEmpty': return '即时混合没有生成任何曲目';
+			case 'music.noAudioUrl': return ({required Object track}) => '没有可供 ${track} 使用的音频 URL';
+			case 'music.discography.singlesAndEps': return '单曲和 EP';
+			case 'music.discography.live': return '现场';
+			case 'music.discography.compilations': return '合集';
+			case 'watchTogether.title': return '一起看';
+			case 'watchTogether.description': return '与朋友和家人同步观看内容';
+			case 'watchTogether.createRoom': return '创建房间';
+			case 'watchTogether.creatingRoom': return '正在创建房间…';
+			case 'watchTogether.joinRoom': return '加入房间';
+			case 'watchTogether.joiningRoom': return '正在加入房间…';
+			case 'watchTogether.connecting': return '正在连接…';
+			case 'watchTogether.relayPublic': return '房间使用公共 Open Watch Party 中继服务器。';
+			case 'watchTogether.relayCustom': return ({required Object url}) => '房间使用你位于 ${url} 的中继服务器。';
+			case 'watchTogether.recentRooms': return '最近的房间';
+			case 'watchTogether.roomActions': return '房间操作';
+			case 'watchTogether.renameRoom': return '重命名房间';
+			case 'watchTogether.removeRoom': return '移除';
+			case 'watchTogether.enterRoomCode': return '输入主持人提供的 6 位代码。';
+			case 'watchTogether.roomCode': return '房间代码';
+			case 'watchTogether.paste': return '粘贴';
+			case 'watchTogether.noCodeInClipboard': return '剪贴板中没有房间代码';
+			case 'watchTogether.copyCode': return '复制代码';
+			case 'watchTogether.codeCopied': return '房间代码已复制';
+			case 'watchTogether.shareInvite': return '分享邀请';
+			case 'watchTogether.inviteCopied': return '邀请已复制。请将其粘贴到消息中。';
+			case 'watchTogether.inviteMessage': return ({required Object code}) => '加入我在 Plezy 中的“一起看”房间：打开“一起看”，选择“加入房间”，然后输入 ${code}。';
+			case 'watchTogether.openSessionControls': return '打开“一起看”会话控制';
+			case 'watchTogether.reconnecting': return '正在重新连接…';
+			case 'watchTogether.reconnectingDescription': return '连接已中断。你将自动重新加入房间。';
+			case 'watchTogether.connected': return '已连接';
+			case 'watchTogether.disconnected': return '已断开连接';
+			case 'watchTogether.youAreHost': return '你是主持人';
+			case 'watchTogether.hostedBy': return ({required Object name}) => '由 ${name} 主持';
+			case 'watchTogether.hostControlsPlayback': return '主持人控制播放';
+			case 'watchTogether.anyoneCanControl': return '任何人都可以控制播放';
+			case 'watchTogether.roomLocked': return '房间已锁定';
+			case 'watchTogether.nowPlaying': return '正在播放';
+			case 'watchTogether.nothingPlaying': return '未在播放';
+			case 'watchTogether.nothingPlayingHost': return '从任意媒体库播放内容，即可与房间成员分享。';
+			case 'watchTogether.nothingPlayingGuest': return '主持人播放内容后，将在此处打开。';
+			case 'watchTogether.notShareable': return '此视频没有匹配的影视目录条目，因此只有能访问同一服务器的人才能播放。';
+			case 'watchTogether.searching': return '正在你的媒体库中查找此视频…';
+			case 'watchTogether.yourCopy': return '你的副本';
+			case 'watchTogether.sharingYourCopy': return '你正在分享你的副本';
+			case 'watchTogether.playingOtherLength': return ({required Object difference}) => '正在播放你的副本（${difference}）';
+			case 'watchTogether.mismatchTitle': return '你的副本时长不同';
+			case 'watchTogether.mismatchDescription': return ({required Object difference}) => '你最接近的副本比房间的视频${difference}。它可能是其他剪辑版或版本。';
+			case 'watchTogether.playAnyway': return '仍要播放';
+			case 'watchTogether.chooseAnotherCopy': return '选择其他副本';
+			case 'watchTogether.dontPlay': return '不播放';
+			case 'watchTogether.unavailableTitle': return '你没有此视频';
+			case 'watchTogether.unavailableDescription': return 'Plezy 在你的媒体库中找不到它。请自行选择副本或重新搜索。';
+			case 'watchTogether.chooseCopy': return '选择副本';
+			case 'watchTogether.searchAgain': return '重新搜索';
+			case 'watchTogether.noCandidates': return '在你的媒体库中未找到副本。';
+			case 'watchTogether.choiceFailed': return '无法为房间播放此副本';
+			case 'watchTogether.lengthLonger': return ({required Object duration}) => '长 ${duration}';
+			case 'watchTogether.lengthShorter': return ({required Object duration}) => '短 ${duration}';
+			case 'watchTogether.lengthSame': return '时长相同';
+			case 'watchTogether.lengthUnknown': return '时长未知';
+			case 'watchTogether.joinCurrentPlayback': return '加入当前播放';
+			case 'watchTogether.joinCurrentPlaybackDescription': return '加入主持人当前正在观看的内容';
+			case 'watchTogether.stopMedia': return '为所有人停止视频';
+			case 'watchTogether.syncOffset': return '同步偏移';
+			case 'watchTogether.syncOffsetDescription': return '如果你的视频比房间快或慢，可在此调整。';
+			case 'watchTogether.offsetHint': return ({required Object difference}) => '你的副本比房间的视频${difference}。';
+			case 'watchTogether.applyDifference': return ({required Object offset}) => '使用 ${offset}';
+			case 'watchTogether.offsetMinusSecond': return '-1 秒';
+			case 'watchTogether.offsetMinusTenth': return '-100 毫秒';
+			case 'watchTogether.offsetPlusTenth': return '+100 毫秒';
+			case 'watchTogether.offsetPlusSecond': return '+1 秒';
+			case 'watchTogether.participants': return '参与者';
+			case 'watchTogether.participantCount': return ({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('zh'))(n,
+				other: '${n} 位参与者',
+			);
+			case 'watchTogether.hostBadge': return '主持人';
+			case 'watchTogether.nameYou': return ({required Object name}) => '${name}（你）';
+			case 'watchTogether.playerIdle': return '空闲';
+			case 'watchTogether.playerLoading': return '加载中';
+			case 'watchTogether.playerReady': return '就绪';
+			case 'watchTogether.playerBuffering': return '缓冲中';
+			case 'watchTogether.matchSearching': return '搜索中';
+			case 'watchTogether.matchMatched': return '有此视频';
+			case 'watchTogether.matchMismatched': return '时长不同';
+			case 'watchTogether.matchUnavailable': return '没有此视频';
+			case 'watchTogether.participantOffset': return ({required Object offset}) => '偏移 ${offset}';
+			case 'watchTogether.makeHost': return '设为主持人';
+			case 'watchTogether.makeHostQuestion': return '移交主持人？';
+			case 'watchTogether.makeHostConfirm': return ({required Object name}) => '${name} 将控制播放并主导所有人的会话。';
+			case 'watchTogether.transfer': return '移交';
+			case 'watchTogether.removeParticipant': return '移出房间';
+			case 'watchTogether.removeParticipantQuestion': return ({required Object name}) => '移除 ${name}？';
+			case 'watchTogether.removeParticipantConfirm': return ({required Object name}) => '${name} 将离开房间。除非你锁定房间，否则对方仍可使用代码重新加入。';
+			case 'watchTogether.remove': return '移除';
+			case 'watchTogether.roomSettings': return '房间设置';
+			case 'watchTogether.letEveryoneControl': return '允许所有人控制播放';
+			case 'watchTogether.lockRoom': return '锁定房间';
+			case 'watchTogether.lockRoomDescription': return '新成员无法加入';
+			case 'watchTogether.leaveRoom': return '离开房间';
+			case 'watchTogether.leaveRoomQuestion': return '离开房间？';
+			case 'watchTogether.leaveRoomConfirm': return '你可以使用房间代码重新加入。';
+			case 'watchTogether.leave': return '离开';
+			case 'watchTogether.endRoom': return '结束房间';
+			case 'watchTogether.endRoomQuestion': return '结束房间？';
+			case 'watchTogether.endRoomConfirm': return '这将为所有人结束此房间。';
+			case 'watchTogether.end': return '结束';
+			case 'watchTogether.playBlockedTitle': return '播放未开始';
+			case 'watchTogether.playBlockedDescription': return '按下播放，开始与房间成员一起观看。';
+			case 'watchTogether.notices.pressedPlay': return ({required Object name}) => '${name} 按下了播放';
+			case 'watchTogether.notices.playbackStarted': return '已开始播放';
+			case 'watchTogether.notices.paused': return ({required Object name}) => '${name} 暂停了播放';
+			case 'watchTogether.notices.playbackPaused': return '已暂停播放';
+			case 'watchTogether.notices.jumpedTo': return ({required Object name, required Object position}) => '${name} 跳转到了 ${position}';
+			case 'watchTogether.notices.roomJumpedTo': return ({required Object position}) => '已跳转到 ${position}';
+			case 'watchTogether.notices.changedSpeed': return ({required Object name, required Object speed}) => '${name} 将速度设为 ${speed}';
+			case 'watchTogether.notices.speedChanged': return ({required Object speed}) => '速度已设为 ${speed}';
+			case 'watchTogether.notices.startedMedia': return ({required Object name, required Object title}) => '${name} 开始播放 ${title}';
+			case 'watchTogether.notices.mediaStarted': return ({required Object title}) => '正在播放 ${title}';
+			case 'watchTogether.notices.stoppedMedia': return ({required Object name}) => '${name} 停止了视频';
+			case 'watchTogether.notices.mediaStopped': return '视频已停止';
+			case 'watchTogether.notices.waitingFor': return ({required Object name}) => '正在等待 ${name}…';
+			case 'watchTogether.notices.waitingForSomeone': return '正在等待其他人跟上…';
+			case 'watchTogether.notices.finished': return '已播放完毕';
+			case 'watchTogether.notices.hostChangedTo': return ({required Object name}) => '${name} 现在是主持人';
+			case 'watchTogether.notices.youAreNowHost': return '你现在是主持人';
+			case 'watchTogether.notices.joined': return ({required Object name}) => '${name} 已加入';
+			case 'watchTogether.notices.left': return ({required Object name}) => '${name} 已离开';
+			case 'watchTogether.notices.controlRefused': return '只有主持人可以控制播放';
+			case 'watchTogether.notices.searchFailed': return '无法在部分服务器上搜索房间的视频';
+			case 'watchTogether.notices.playBlocked': return '按下播放即可开始';
+			case 'watchTogether.notices.shareFailed': return '无法与房间分享此视频';
+			case 'watchTogether.notices.downloadNotShared': return '下载内容所属的服务器离线时，无法与房间分享';
+			case 'watchTogether.notices.openFailed': return '无法打开房间的视频';
+			case 'watchTogether.ended.ended': return '主持人已结束房间';
+			case 'watchTogether.ended.kicked': return '你已被移出房间';
+			case 'watchTogether.ended.expired': return '房间已过期';
+			case 'watchTogether.ended.replaced': return '你已在另一台设备上加入此房间';
+			case 'watchTogether.ended.lost': return '与房间的连接已断开';
+			case 'watchTogether.errors.invalidCode': return '这不是房间代码。代码由 6 位字母和数字组成，不含 0、1、I、L 或 O。';
+			case 'watchTogether.errors.roomNotFound': return '没有使用此代码的房间。该房间可能已结束。';
+			case 'watchTogether.errors.roomFull': return '该房间已满。';
+			case 'watchTogether.errors.roomLocked': return '主持人已锁定该房间。';
+			case 'watchTogether.errors.relayFull': return '“一起看”当前繁忙。请稍后再试。';
+			case 'watchTogether.errors.unreachable': return '无法连接到“一起看”中继服务器。请检查网络连接。';
+			case 'watchTogether.errors.rateLimited': return '尝试次数过多。请稍等片刻后重试。';
+			case 'watchTogether.errors.clientBlocked': return '此版本的 Plezy 无法使用该中继服务器。请更新应用。';
+			case 'watchTogether.errors.forbidden': return '只有主持人可以执行此操作。';
+			case 'watchTogether.errors.notInRoom': return '你不在房间中。';
+			case 'watchTogether.errors.alreadyInRoom': return '你已在房间中。';
+			case 'watchTogether.errors.resumeFailed': return '无法重新加入房间。';
+			case 'watchTogether.errors.unsupported': return '该中继服务器不支持此操作。';
+			case 'watchTogether.errors.generic': return '出现问题。请重试。';
+			case 'watchTogether.untitledEpisode': return ({required Object number}) => '第${number}集';
+			case 'downloads.title': return '下载';
+			case 'downloads.manage': return '管理';
+			case 'downloads.tvShows': return '电视剧';
+			case 'downloads.movies': return '电影';
+			case 'downloads.music': return '音乐';
+			case 'downloads.tracksQueued': return ({required Object count}) => '${count} 首曲目已加入下载队列';
+			case 'downloads.noDownloads': return '暂无下载';
+			case 'downloads.noDownloadsDescription': return '下载的内容将在此处显示以供离线观看';
+			case 'downloads.downloadNow': return '下载';
+			case 'downloads.deleteDownload': return '删除下载';
+			case 'downloads.retryDownload': return '重试下载';
+			case 'downloads.downloadQueued': return '下载已排队';
+			case 'downloads.downloadResumed': return '下载已继续';
+			case 'downloads.serverErrorBitrate': return '服务器错误：文件可能超过远程比特率限制';
+			case 'downloads.storageFull': return '为保护剩余存储空间，下载已停止。请释放空间或选择其他下载位置，然后重试。';
+			case 'downloads.storageUnavailable': return '无法检查可用存储空间，因此下载已停止。请检查下载位置后重试。';
+			case 'downloads.episodesQueued': return ({required Object count}) => '${count} 集已加入下载队列';
+			case 'downloads.downloadDeleted': return '下载已删除';
+			case 'downloads.deleteConfirm': return ({required Object title}) => '要从此设备删除“${title}”吗？';
+			case 'downloads.deleteCollectionDownloads': return '删除下载';
+			case 'downloads.deleteCollectionDownloadsConfirm': return ({required Object title}) => '要从此设备删除“${title}”中的所有下载吗？';
+			case 'downloads.collectionDownloadsDeleted': return '下载已删除';
+			case 'downloads.cancelledDownloadTitle': return '已取消的下载';
+			case 'downloads.cancelledDownloadMessage': return '此下载已取消。你想怎么做？';
+			case 'downloads.allEpisodesAlreadyDownloaded': return '所有剧集均已下载';
+			case 'downloads.resumeDownload': return '继续下载';
+			case 'downloads.cancelledDownload': return '已取消的下载';
+			case 'downloads.syncingFile': return ({required Object file, required Object status}) => '${file}（正在同步 ${status}）';
+			case 'downloads.downloadedFileClickToComplete': return ({required Object file}) => '已下载 ${file} — 点击以完成';
+			case 'downloads.partialDownloadClickToComplete': return '已部分下载 — 点击以完成';
+			case 'downloads.deleting': return '正在删除…';
+			case 'downloads.deletingWithProgress': return ({required Object title, required Object current, required Object total}) => '正在删除 ${title}…（${current}/${total}）';
+			case 'downloads.queuedTooltip': return '已排队';
+			case 'downloads.queuedFilesTooltip': return ({required Object files}) => '已排队：${files}';
+			case 'downloads.downloadingTooltip': return '正在下载…';
+			case 'downloads.downloadingFilesTooltip': return ({required Object files}) => '正在下载 ${files}';
+			case 'downloads.noDownloadsTree': return '暂无下载';
+			case 'downloads.pauseAll': return '全部暂停';
+			case 'downloads.resumeAll': return '全部继续';
+			case 'downloads.retryAll': return '全部重试';
+			case 'downloads.retryFailed': return '重试失败的下载';
+			case 'downloads.deleteAll': return '全部删除';
+			case 'downloads.selectVersion': return '选择版本';
+			case 'downloads.allEpisodes': return '所有剧集';
+			case 'downloads.unwatchedOnly': return '仅未观看';
+			case 'downloads.nextNUnwatched': return ({required Object count}) => '接下来 ${count} 集未观看';
+			case 'downloads.customAmount': return '自定义数量…';
+			case 'downloads.includeSpecials': return '包含特别篇';
+			case 'downloads.howManyEpisodes': return '下载几集？';
+			case 'downloads.invalidEpisodeCount': return '请输入有效的集数。';
+			case 'downloads.keepSynced': return '保持同步';
+			case 'downloads.downloadOnce': return '下载一次';
+			case 'downloads.keepNUnwatched': return ({required Object count}) => '保留 ${count} 集未观看内容';
+			case 'downloads.editSyncRule': return '编辑同步规则';
+			case 'downloads.removeSyncRule': return '删除同步规则';
+			case 'downloads.removeSyncRuleConfirm': return ({required Object title}) => '停止同步“${title}”？已下载的剧集将被保留。';
+			case 'downloads.removeListSyncRuleConfirm': return ({required Object title}) => '停止同步“${title}”？';
+			case 'downloads.deleteSyncRuleDownloads': return '同时删除相关下载';
+			case 'downloads.deleteSyncRuleDownloadsDescription': return '被其他同步规则或个人资料使用的下载将保留。';
+			case 'downloads.syncRuleCreated': return ({required Object count}) => '同步规则已创建 — 保留 ${count} 集未观看内容';
+			case 'downloads.syncRuleUpdated': return '同步规则已更新';
+			case 'downloads.syncRuleRemoved': return '同步规则已删除';
+			case 'downloads.syncRuleAndDownloadsRemoved': return '同步规则及相关下载已删除';
+			case 'downloads.syncRuleCleanupBusy': return '同步规则正在更新中，请稍后再试。';
+			case 'downloads.syncRuleCleanupUnavailable': return '无法安全识别相关下载。请重新连接服务器后再试，或在不删除下载的情况下移除规则。';
+			case 'downloads.syncedNewEpisodes': return ({required Object title, required Object count}) => '已为 ${title} 同步 ${count} 个新剧集';
+			case 'downloads.activeSyncRules': return '同步规则';
+			case 'downloads.noSyncRules': return '没有同步规则';
+			case 'downloads.manageSyncRule': return '管理同步';
+			case 'downloads.editEpisodeCount': return '剧集数量';
+			case 'downloads.editSyncFilter': return '同步筛选';
+			case 'downloads.syncAllItems': return '同步所有项目';
+			case 'downloads.syncUnwatchedItems': return '同步未观看项目';
+			case 'downloads.syncRuleServerContext': return ({required Object server, required Object status}) => '服务器：${server} • ${status}';
+			case 'downloads.syncRuleAvailable': return '可用';
+			case 'downloads.syncRuleOffline': return '离线';
+			case 'downloads.syncRuleSignInRequired': return '需要登录';
+			case 'downloads.syncRuleAccessDenied': return '访问被拒绝';
+			case 'downloads.syncRuleNotAvailableForProfile': return '当前用户资料不可用';
+			case 'downloads.syncRuleUnknownServer': return '未知服务器';
+			case 'downloads.syncRuleListCreated': return '同步规则已创建';
+			case 'downloads.backgroundWarning.bannerBlocked': return '离开应用后，下载将停止';
+			case 'downloads.backgroundWarning.bannerDegraded': return '后台下载可能受限';
+			case 'downloads.backgroundWarning.bannerAction': return '详情';
+			case 'downloads.backgroundWarning.sheetTitle': return '后台下载已被阻止';
+			case 'downloads.backgroundWarning.sheetTitleDegraded': return '后台下载可能受限';
+			case 'downloads.backgroundWarning.sheetIntro': return 'Android 正在阻止 Plezy 在后台稳定下载。';
+			case 'downloads.backgroundWarning.sheetIntroDegraded': return '你的设备限制了 Plezy 在后台下载的时机。';
+			case 'downloads.backgroundWarning.reasonBackgroundRestricted': return 'Plezy 的后台使用受到限制。请将其电池用量或后台使用设置为“不受限制”。';
+			case 'downloads.backgroundWarning.reasonStandbyRestricted': return 'Android 已将 Plezy 置于受限待机状态。请将其电池用量设为“不受限制”。';
+			case 'downloads.backgroundWarning.reasonDownloadChannelBlocked': return '下载通知已关闭，因此可能无法查看进度或进行控制。';
+			case 'downloads.backgroundWarning.reasonNotificationsDisabled': return '通知已关闭。在 Android 13 或更高版本中，长时间后台下载需要开启通知。';
+			case 'downloads.backgroundWarning.reasonDataSaver': return '流量节省程序已开启，会阻止使用移动数据进行后台下载。使用 Wi-Fi 时下载应仍可进行。';
+			case 'downloads.backgroundWarning.reasonOemUnknown': return 'Plezy 在后台时，下载曾多次停止。请检查 Plezy 的电池用量或后台使用设置。';
+			case 'downloads.backgroundWarning.openSettings': return '打开设置';
+			case 'downloads.backgroundWarning.stillNotWorking': return '设备专属帮助';
+			case 'downloads.backgroundWarning.stillNotWorkingDescription': return '查看适用于你设备的操作步骤；如果问题仍然存在，请通过设置 › 查看日志发送日志。';
+			case 'downloads.backgroundWarning.dialogTitle': return '下载可能无法完成';
+			case 'downloads.backgroundWarning.dialogDownloadAnyway': return '仍要下载';
+			case 'downloads.backgroundWarning.dialogFixFirst': return '先解决此问题';
+			case 'downloads.backgroundWarning.statusTile': return '后台下载';
+			case 'downloads.backgroundWarning.statusOk': return '允许在后台运行';
+			case 'downloads.backgroundWarning.statusBlocked': return '已被系统设置阻止';
+			case 'downloads.backgroundWarning.statusDegraded': return '受系统设置限制';
+			case 'downloads.backgroundWarning.statusUnknown': return '尚未检查';
+			case 'downloads.backgroundWarning.settingsUnavailable': return '无法在此设备上打开系统设置';
+			case 'downloads.backgroundWarning.linkUnavailable': return '无法在此设备上打开 dontkillmyapp.com';
+			case 'downloads.options': return '下载选项';
+			case 'downloads.groupings.library': return '媒体库';
+			case 'downloads.groupings.collections': return '合集';
+			case 'downloads.unknownLibrary': return '未知媒体库';
+			case 'downloads.unknownShow': return '未知节目';
+			case 'downloads.unknownSeason': return '未知季';
+			case 'downloads.unknownAlbum': return '未知专辑';
+			case 'downloads.completedOfTotal': return ({required Object completed, required Object total}) => '已完成 ${completed}/${total}';
+			case 'downloads.errorFileNotFound': return '未找到文件（404）';
+			case 'downloads.errorDownloadNotAllowed': return '服务器不允许下载（403）';
+			case 'downloads.errorDownloadFailed': return '下载失败';
+			case 'downloads.errorDownloadFailedWithReason': return ({required Object reason}) => '下载失败：${reason}';
+			case 'downloads.errorHttpStatus': return ({required Object status}) => '下载失败（HTTP ${status}）';
+			case 'downloads.errorPostProcessing': return ({required Object reason}) => '后处理失败：${reason}';
+			case 'downloads.reasonFileNotSaved': return '无法将文件保存到此设备';
+			case 'downloads.reasonCannotResume': return '无法继续未完成的下载';
+			case 'downloads.reasonDeviceStorageFull': return '此设备的存储空间已满';
+			case 'downloads.notificationDownloading': return '正在下载…';
+			case 'downloads.notificationComplete': return '下载完成';
+			case 'downloads.notificationPaused': return '下载已暂停';
+			case 'shaders.title': return '着色器';
+			case 'shaders.noShaderDescription': return '无视频增强';
+			case 'shaders.nvscalerDescription': return 'NVIDIA 图像缩放，使视频更清晰';
+			case 'shaders.artcnnVariantNeutral': return '中性';
+			case 'shaders.artcnnVariantDenoise': return '降噪';
+			case 'shaders.artcnnVariantDenoiseSharpen': return '降噪 + 锐化';
+			case 'shaders.qualityFast': return '快速';
+			case 'shaders.qualityHQ': return '高质量';
+			case 'shaders.mode': return '模式';
+			case 'shaders.importShader': return '导入着色器';
+			case 'shaders.customShaderDescription': return '自定义 GLSL 着色器';
+			case 'shaders.shaderImported': return '着色器已导入';
+			case 'shaders.shaderImportFailed': return '导入着色器失败';
+			case 'shaders.deleteShader': return '删除着色器';
+			case 'shaders.deleteShaderConfirm': return ({required Object name}) => '删除“${name}”？';
+			case 'companionRemote.title': return '遥控器';
+			case 'companionRemote.connectedTo': return ({required Object name}) => '已连接到 ${name}';
+			case 'companionRemote.unknownDevice': return '未知设备';
+			case 'companionRemote.session.startingServer': return '正在启动远程服务器…';
+			case 'companionRemote.session.hostAddress': return '主机地址';
+			case 'companionRemote.session.connected': return '已连接';
+			case 'companionRemote.session.serverRunning': return '远程服务器已启动';
+			case 'companionRemote.session.serverStopped': return '远程服务器已停止';
+			case 'companionRemote.session.serverRunningDescription': return '网络上的移动设备可以连接到此应用';
+			case 'companionRemote.session.serverStoppedDescription': return '启动服务器以允许移动设备连接';
+			case 'companionRemote.session.usePhoneToControl': return '使用移动设备控制此应用';
+			case 'companionRemote.session.startServer': return '启动服务器';
+			case 'companionRemote.session.stopServer': return '停止服务器';
+			case 'companionRemote.session.minimize': return '最小化';
+			case 'companionRemote.session.manualAddressHint': return '手动连接地址：';
+			case 'companionRemote.pairing.discoveryDescription': return '使用同一 Plex 账号的 Plezy 设备会显示在这里';
+			case 'companionRemote.pairing.hostAddressHint': return '192.168.1.100:48632';
+			case 'companionRemote.pairing.connecting': return '正在连接…';
+			case 'companionRemote.pairing.searchingForDevices': return '正在搜索设备…';
+			case 'companionRemote.pairing.noDevicesFound': return '未在网络中找到设备';
+			case 'companionRemote.pairing.noDevicesHint': return '请在桌面端打开 Plezy，并确保设备连接到同一 Wi-Fi 网络';
+			case 'companionRemote.pairing.availableDevices': return '可用设备';
+			case 'companionRemote.pairing.manualConnection': return '手动连接';
+			case 'companionRemote.pairing.cryptoInitFailed': return '无法启动安全连接。请先登录 Plex。';
+			case 'companionRemote.pairing.validationHostRequired': return '请输入主机地址';
+			case 'companionRemote.pairing.validationHostFormat': return '格式必须为 IP:端口（例如 192.168.1.100:48632）';
+			case 'companionRemote.pairing.connectionTimedOut': return '连接超时。请在两台设备上使用同一网络。';
+			case 'companionRemote.pairing.sessionNotFound': return '未找到设备。请确认 Plezy 正在主机上运行。';
+			case 'companionRemote.pairing.authFailed': return '认证失败。两台设备需要使用同一 Plex 账号。';
+			case 'companionRemote.pairing.failedToConnect': return ({required Object error}) => '连接失败：${error}';
+			case 'companionRemote.remote.disconnectConfirm': return '确定要断开遥控会话吗？';
+			case 'companionRemote.remote.reconnecting': return '正在重新连接…';
+			case 'companionRemote.remote.attemptOf': return ({required Object current}) => '第 ${current} 次尝试，共 5 次';
+			case 'companionRemote.remote.retryNow': return '立即重试';
+			case 'companionRemote.remote.tabRemote': return '遥控器';
+			case 'companionRemote.remote.tabPlay': return '播放';
+			case 'companionRemote.remote.tabMore': return '更多';
+			case 'companionRemote.remote.menu': return '菜单';
+			case 'companionRemote.remote.tabNavigation': return '导航';
+			case 'companionRemote.remote.tabDiscover': return '发现';
+			case 'companionRemote.remote.tabLibraries': return '媒体库';
+			case 'companionRemote.remote.tabSearch': return '搜索';
+			case 'companionRemote.remote.tabDownloads': return '下载';
+			case 'companionRemote.remote.tabSettings': return '设置';
+			case 'companionRemote.remote.previous': return '上一个';
+			case 'companionRemote.remote.playPause': return '播放/暂停';
+			case 'companionRemote.remote.next': return '下一个';
+			case 'companionRemote.remote.seekBack': return '快退';
+			case 'companionRemote.remote.stop': return '停止';
+			case 'companionRemote.remote.seekForward': return '快进';
+			case 'companionRemote.remote.volume': return '音量';
+			case 'companionRemote.remote.volumeDown': return '降低音量';
+			case 'companionRemote.remote.volumeUp': return '提高音量';
+			case 'companionRemote.remote.fullscreen': return '全屏';
+			case 'companionRemote.remote.subtitles': return '字幕';
+			case 'companionRemote.remote.audio': return '音频';
+			case 'companionRemote.remote.searchHint': return '在桌面端搜索…';
+			case 'companionRemote.errors.noNetworkInterface': return '未找到网络接口';
+			case 'companionRemote.errors.authenticationFailed': return '身份验证失败';
+			case 'companionRemote.errors.serverStartFailed': return ({required Object error}) => '无法启动远程服务器：${error}';
+			case 'companionRemote.errors.commandFailed': return ({required Object error}) => '无法发送远程命令：${error}';
+			case 'companionRemote.errors.joinTimedOut': return '加入会话超时';
+			case 'companionRemote.errors.failedToConnectAnyAddress': return '无法连接到任何地址';
+			case 'companionRemote.errors.connectionLostAfterAttempts': return ({required Object attempts}) => '${attempts} 次尝试后连接丢失';
+			case 'companionRemote.errors.connectionLost': return '连接丢失';
+			case 'companionRemote.closedBeforeAuth': return '连接在身份验证前已关闭';
+			case 'videoSettings.playbackSpeed': return '播放速度';
+			case 'videoSettings.normalSpeed': return '正常';
+			case 'videoSettings.sleepTimerActive': return ({required Object duration}) => '运行中（${duration}）';
+			case 'videoSettings.zoom': return '缩放';
+			case 'videoSettings.sleepTimer': return '睡眠定时器';
+			case 'videoSettings.audioSync': return '音频同步';
+			case 'videoSettings.subtitleSync': return '字幕同步';
+			case 'videoSettings.hdr': return 'HDR';
+			case 'videoSettings.hdrUnsupported': return '此处不支持 HDR——当前桌面合成器或视频输出无法传输 HDR。';
+			case 'videoSettings.hdrToneMapping': return 'HDR 色调映射';
+			case 'videoSettings.hdrToneMappingCompositor': return '合成器';
+			case 'videoSettings.hdrToneMappingCompositorDescription': return '直接传递源的 HDR 元数据，并由桌面合成器进行映射。';
+			case 'videoSettings.hdrToneMappingPlayer': return '播放器';
+			case 'videoSettings.hdrToneMappingPlayerDescription': return '在播放器中映射到显示器的峰值亮度，然后将结果告知合成器。';
+			case 'videoSettings.hdrToneMappingFailed': return '无法更改 HDR 色调映射——仍在使用之前的模式。';
+			case 'videoSettings.audioOutput': return '音频输出';
+			case 'videoSettings.performanceOverlay': return '性能监控';
+			case 'videoSettings.audioOutputDolbyAtmos': return 'Dolby Atmos';
+			case 'videoSettings.audioOutputDolbyAudio': return 'Dolby Audio';
+			case 'videoSettings.audioOutputSurround': return '环绕声';
+			case 'videoSettings.audioOutputSpatial': return '空间音频';
+			case 'videoSettings.audioOutputStereo': return '立体声';
+			case 'videoSettings.audioNormalization': return '响度标准化';
+			case 'videoSettings.audioNormalizationDisablesPassthrough': return '将音频解码为 PCM；开启时直通关闭';
+			case 'performanceOverlay.color': return '颜色';
+			case 'performanceOverlay.performance': return '性能';
+			case 'performanceOverlay.buffer': return '缓冲';
+			case 'performanceOverlay.app': return '应用';
+			case 'performanceOverlay.decoder': return '解码器';
+			case 'performanceOverlay.rawDecoder': return '原始解码器';
+			case 'performanceOverlay.tunneling': return '隧道';
+			case 'performanceOverlay.passthrough': return '直通';
+			case 'performanceOverlay.aspect': return '宽高比';
+			case 'performanceOverlay.rotation': return '旋转';
+			case 'performanceOverlay.dvSource': return 'DV 来源';
+			case 'performanceOverlay.dvPath': return 'DV 路径';
+			case 'performanceOverlay.dvRouteDecoder': return 'Dolby Vision 解码器';
+			case 'performanceOverlay.dvRouteDecoderP81': return 'Dolby Vision 解码器（P7→8.1）';
+			case 'performanceOverlay.dvRouteBaseLayer': return '基础层';
+			case 'performanceOverlay.dvRouteBaseLayerHdr10': return 'HDR10 基础层';
+			case 'performanceOverlay.dvRouteBaseLayerHlg': return 'HLG 基础层';
+			case 'performanceOverlay.dvRouteBaseLayerSdr': return 'SDR 基础层';
+			case 'performanceOverlay.dvRouteReshaped': return 'RPU 重塑（gpu-next）';
+			case 'performanceOverlay.p7Conversion': return 'P7 转换';
+			case 'performanceOverlay.sampleRate': return '采样率';
+			case 'performanceOverlay.pixelFormat': return '像素格式';
+			case 'performanceOverlay.hwFormat': return '硬件格式';
+			case 'performanceOverlay.matrix': return '矩阵';
+			case 'performanceOverlay.primaries': return '基色';
+			case 'performanceOverlay.transfer': return '传递特性';
+			case 'performanceOverlay.renderFps': return '渲染 FPS';
+			case 'performanceOverlay.displayFps': return '显示 FPS';
+			case 'performanceOverlay.avSync': return 'A/V 同步';
+			case 'performanceOverlay.dropped': return '丢帧';
+			case 'performanceOverlay.dvRpus': return 'DV RPU';
+			case 'performanceOverlay.dvRpuAverage': return 'DV RPU 平均';
+			case 'performanceOverlay.dvSampleAverage': return 'DV 采样平均';
+			case 'performanceOverlay.maxLuma': return '最大亮度';
+			case 'performanceOverlay.minLuma': return '最小亮度';
+			case 'performanceOverlay.maxCll': return 'MaxCLL';
+			case 'performanceOverlay.maxFall': return 'MaxFALL';
+			case 'performanceOverlay.cacheUsed': return '已用缓存';
+			case 'performanceOverlay.cacheLimit': return '缓存限制';
+			case 'performanceOverlay.speed': return '速度';
+			case 'performanceOverlay.player': return '播放器';
+			case 'performanceOverlay.memory': return '内存';
+			case 'performanceOverlay.uiFps': return 'UI FPS';
+			case 'performanceOverlay.fps': return 'FPS';
+			case 'performanceOverlay.decoderAndroidHw': return 'Android 硬件';
+			case 'performanceOverlay.decoderNvidiaHw': return 'NVIDIA 硬件';
+			case 'performanceOverlay.decoderQualcommHw': return 'Qualcomm 硬件';
+			case 'performanceOverlay.decoderMediatekHw': return 'MediaTek 硬件';
+			case 'performanceOverlay.decoderExynosHw': return 'Exynos 硬件';
+			case 'performanceOverlay.decoderSoftware': return '软件';
+			case 'performanceOverlay.decoderHardware': return '硬件';
+			case 'performanceOverlay.tunnelingActive': return '已启用';
+			case 'performanceOverlay.dvRpuFailed': return ({required Object converted, required Object failures}) => '${converted}（${failures} 个失败）';
+			case 'externalPlayer.title': return '外部播放器';
+			case 'externalPlayer.useExternalPlayer': return '使用外部播放器';
+			case 'externalPlayer.useExternalPlayerDescription': return '在其他应用中打开视频';
+			case 'externalPlayer.selectPlayer': return '选择播放器';
+			case 'externalPlayer.customPlayers': return '自定义播放器';
+			case 'externalPlayer.systemDefault': return '系统默认';
+			case 'externalPlayer.addCustomPlayer': return '添加自定义播放器';
+			case 'externalPlayer.playerName': return '播放器名称';
+			case 'externalPlayer.playerNameHint': return '我的播放器';
+			case 'externalPlayer.playerCommand': return '命令';
+			case 'externalPlayer.playerPackage': return '包名';
+			case 'externalPlayer.playerUrlScheme': return 'URL 方案';
+			case 'externalPlayer.off': return '关闭';
+			case 'externalPlayer.launchFailed': return '无法打开外部播放器';
+			case 'externalPlayer.appNotInstalled': return ({required Object name}) => '${name} 未安装';
+			case 'externalPlayer.playInExternalPlayer': return '在外部播放器中播放';
+			case 'metadataEdit.editMetadata': return '编辑…';
+			case 'metadataEdit.screenTitle': return '编辑元数据';
+			case 'metadataEdit.basicInfo': return '基本信息';
+			case 'metadataEdit.artwork': return '封面图片';
+			case 'metadataEdit.advancedSettings': return '高级设置';
+			case 'metadataEdit.title': return '标题';
+			case 'metadataEdit.sortTitle': return '排序标题';
+			case 'metadataEdit.originalTitle': return '原始标题';
+			case 'metadataEdit.releaseDate': return '上映日期';
+			case 'metadataEdit.contentRating': return '内容分级';
+			case 'metadataEdit.studio': return '制片厂';
+			case 'metadataEdit.tagline': return '标语';
+			case 'metadataEdit.summary': return '简介';
+			case 'metadataEdit.poster': return '海报';
+			case 'metadataEdit.background': return '背景';
+			case 'metadataEdit.logo': return '标志';
+			case 'metadataEdit.squareArt': return '方形图片';
+			case 'metadataEdit.selectPoster': return '选择海报';
+			case 'metadataEdit.selectBackground': return '选择背景';
+			case 'metadataEdit.selectLogo': return '选择标志';
+			case 'metadataEdit.selectSquareArt': return '选择方形图片';
+			case 'metadataEdit.fromUrl': return '通过 URL';
+			case 'metadataEdit.uploadFile': return '上传文件';
+			case 'metadataEdit.enterImageUrl': return '输入图片 URL';
+			case 'metadataEdit.imageUrl': return '图片 URL';
+			case 'metadataEdit.metadataUpdated': return '元数据已更新';
+			case 'metadataEdit.metadataUpdateFailed': return '元数据更新失败';
+			case 'metadataEdit.artworkUpdated': return '封面图片已更新';
+			case 'metadataEdit.artworkUpdateFailed': return '封面图片更新失败';
+			case 'metadataEdit.noArtworkAvailable': return '没有可用的封面图片';
+			case 'metadataEdit.artworkOption': return ({required Object index}) => '封面图片选项 ${index}';
+			case 'metadataEdit.selectedArtworkOption': return ({required Object index}) => '封面图片选项 ${index}，已选择';
+			case 'metadataEdit.notSet': return '未设置';
+			case 'metadataEdit.libraryDefault': return '媒体库默认';
+			case 'metadataEdit.accountDefault': return '账户默认';
+			case 'metadataEdit.seriesDefault': return '剧集默认';
+			case 'metadataEdit.episodeSorting': return '剧集排序';
+			case 'metadataEdit.oldestFirst': return '最旧优先';
+			case 'metadataEdit.newestFirst': return '最新优先';
+			case 'metadataEdit.keep': return '保留';
+			case 'metadataEdit.allEpisodes': return '所有剧集';
+			case 'metadataEdit.latestEpisodes': return ({required Object count}) => '最新 ${count} 集';
+			case 'metadataEdit.latestEpisode': return '最新一集';
+			case 'metadataEdit.episodesAddedPastDays': return ({required Object count}) => '过去 ${count} 天内添加的剧集';
+			case 'metadataEdit.deleteAfterPlaying': return '播放后删除剧集';
+			case 'metadataEdit.never': return '从不';
+			case 'metadataEdit.afterADay': return '一天后';
+			case 'metadataEdit.afterAWeek': return '一周后';
+			case 'metadataEdit.afterAMonth': return '一个月后';
+			case 'metadataEdit.onNextRefresh': return '下次刷新时';
+			case 'metadataEdit.seasons': return '季';
+			case 'metadataEdit.show': return '显示';
+			case 'metadataEdit.hide': return '隐藏';
+			case 'metadataEdit.episodeOrdering': return '剧集排列顺序';
+			case 'metadataEdit.tmdbAiring': return 'The Movie Database（播出顺序）';
+			case 'metadataEdit.tvdbAiring': return 'TheTVDB（播出顺序）';
+			case 'metadataEdit.tvdbAbsolute': return 'TheTVDB（绝对顺序）';
+			case 'metadataEdit.metadataLanguage': return '元数据语言';
+			case 'metadataEdit.useOriginalTitle': return '使用原始标题';
+			case 'metadataEdit.preferredAudioLanguage': return '首选音频语言';
+			case 'metadataEdit.preferredSubtitleLanguage': return '首选字幕语言';
+			case 'metadataEdit.subtitleMode': return '自动选择字幕模式';
+			case 'metadataEdit.manuallySelected': return '手动选择';
+			case 'metadataEdit.shownWithForeignAudio': return '外语音频时显示';
+			case 'metadataEdit.alwaysEnabled': return '始终启用';
+			case 'metadataEdit.tags': return '标签';
+			case 'metadataEdit.addTag': return '添加标签';
+			case 'metadataEdit.genre': return '类型';
+			case 'metadataEdit.director': return '导演';
+			case 'metadataEdit.writer': return '编剧';
+			case 'metadataEdit.producer': return '制片人';
+			case 'metadataEdit.country': return '国家';
+			case 'metadataEdit.collection': return '合集';
+			case 'metadataEdit.label': return '标记';
+			case 'metadataEdit.quickTag': return '快速标签…';
+			case 'matchScreen.match': return '匹配…';
+			case 'matchScreen.fixMatch': return '修正匹配…';
+			case 'matchScreen.unmatch': return '取消匹配';
+			case 'matchScreen.unmatchConfirm': return '清除此匹配？在重新匹配前，Plex 会将其视为未匹配。';
+			case 'matchScreen.unmatchSuccess': return '已取消匹配';
+			case 'matchScreen.unmatchFailed': return '无法取消匹配';
+			case 'matchScreen.matchApplied': return '匹配已应用';
+			case 'matchScreen.matchFailed': return '应用匹配失败';
+			case 'matchScreen.titleHint': return '标题';
+			case 'matchScreen.yearHint': return '年份';
+			case 'matchScreen.search': return '搜索';
+			case 'matchScreen.noMatchesFound': return '未找到匹配项';
+			case 'serverTasks.title': return '服务器任务';
+			case 'serverTasks.failedToLoad': return '加载任务失败';
+			case 'serverTasks.noTasks': return '没有正在运行的任务';
+			case 'trakt.title': return 'Trakt';
+			case 'trakt.connected': return '已连接';
+			case 'trakt.connectedAs': return ({required Object username}) => '已以 @${username} 身份连接';
+			case 'trakt.disconnectConfirm': return '断开 Trakt 账户？';
+			case 'trakt.disconnectConfirmBody': return 'Plezy 将停止向 Trakt 发送事件。你可随时重新连接。';
+			case 'trakt.scrobble': return '实时同步播放状态';
+			case 'trakt.scrobbleDescription': return '播放期间将播放、暂停和停止事件发送到 Trakt。';
+			case 'trakt.watchedSync': return '同步已观看状态';
+			case 'trakt.watchedSyncDescription': return '在 Plezy 中将内容标记为已观看时，也会在 Trakt 上标记为已观看。';
+			case 'seerr.title': return 'Seerr';
+			case 'seerr.connectTitle': return '连接 Seerr';
+			case 'seerr.serverUrl': return '服务器 URL';
+			case 'seerr.serverUrlHelper': return '你的 Seerr 实例的地址';
+			case 'seerr.checkServer': return '继续';
+			case 'seerr.signInWithJellyfin': return '使用 Jellyfin 登录';
+			case 'seerr.signInWithEmby': return '使用 Emby 登录';
+			case 'seerr.signInWithLocal': return '使用本地账户';
+			case 'seerr.email': return '邮箱';
+			case 'seerr.noSignInMethods': return '此 Seerr 实例未提供 Plezy 支持的登录方式。';
+			case 'seerr.instance': return '实例';
+			case 'seerr.disconnectConfirm': return '断开 Seerr 连接？';
+			case 'seerr.disconnectConfirmBody': return 'Plezy 将忘记此 Seerr 实例。可随时重新连接。';
+			case 'seerr.request': return '请求';
+			case 'seerr.request4k': return '请求 4K';
+			case 'seerr.seasons': return '季';
+			case 'seerr.allSeasons': return '全部季';
+			case 'seerr.advancedOptions': return '高级';
+			case 'seerr.destinationServer': return '目标服务器';
+			case 'seerr.qualityProfile': return '画质配置';
+			case 'seerr.rootFolder': return '根目录';
+			case 'seerr.languageProfile': return '语言配置';
+			case 'seerr.tags': return '标签';
+			case 'seerr.noTags': return '无标签';
+			case 'seerr.defaultOption': return ({required Object name}) => '${name}（默认）';
+			case 'seerr.animeNote': return '此剧集为动画。';
+			case 'seerr.requestSubmitted': return '请求已提交';
+			case 'seerr.requestFailed': return ({required Object error}) => '请求失败：${error}';
+			case 'seerr.requestsLoadFailed': return '无法加载请求选项';
+			case 'seerr.nothingToRequest': return '所有内容都已可用或已请求。';
+			case 'seerr.statusAvailable': return '可用';
+			case 'seerr.statusPartiallyAvailable': return '部分可用';
+			case 'seerr.statusRequested': return '已请求';
+			case 'seerr.statusProcessing': return '处理中';
+			case 'seerr.statusBlocklisted': return '已加入屏蔽列表';
+			case 'seerr.couldNotReach': return ({required Object url, required Object error}) => '无法连接到 ${url}：${error}';
+			case 'seerr.noInstanceAtUrl': return ({required Object url, required Object status}) => '${url} 上没有 Seerr 实例（HTTP ${status}）';
+			case 'seerr.behindAuthProxy': return '响应来自需要身份验证的反向代理（SSO 或 HTTP 认证），而非 Seerr。Plezy 无法通过它登录：请让 Seerr 的 /api/v1 路径为此应用绕过代理，或使用可直接访问 Seerr 的地址。';
+			case 'seerr.invalidUrl': return '输入服务器地址，例如 https://seerr.example.com';
+			case 'seerr.quickConnectUnsupported': return '此 Seerr 实例不支持 Quick Connect。需要 Seerr 3.4 或更高版本。';
+			case 'seerr.notInitialized': return '此 Seerr 实例尚未完成首次运行设置';
+			case 'seerr.noPlexTokenForReauth': return '没有可用于重新登录的 Plex 令牌';
+			case 'seerr.noStoredCredentials': return '没有已保存的凭据可用于重新登录';
+			case 'seerr.signInRejected': return '登录被拒绝';
+			case 'seerr.noSessionCookie': return 'Seerr 未签发会话 Cookie';
+			case 'seerr.freshCookieRejected': return 'Seerr 拒绝了新的会话 Cookie';
+			case 'seerr.noUserInformation': return 'Seerr 未返回用户信息';
+			case 'seerr.sessionRejectedAfterReauth': return '重新登录后会话被拒绝';
+			case 'seerr.permissionDenied': return 'Seerr 拒绝了此操作：你的账户不再拥有所需权限';
+			case 'seerr.permissionRevoked': return '你不再拥有请求此内容的权限';
+			case 'services.title': return '服务';
+			case 'services.hubSubtitle': return '同步观看进度并请求新内容。';
+			case 'services.integrations': return '集成';
+			case 'services.notConnected': return '未连接';
+			case 'services.connectedAs': return ({required Object username}) => '已以 @${username} 身份连接';
+			case 'services.scrobble': return '自动记录进度';
+			case 'services.scrobbleDescription': return '观看完一集或一部电影后更新你的列表。';
+			case 'services.disconnectConfirm': return ({required Object service}) => '断开 ${service} 连接？';
+			case 'services.disconnectConfirmBody': return ({required Object service}) => 'Plezy 将停止更新 ${service}。可随时重新连接。';
+			case 'services.connectFailed': return ({required Object service}) => '无法连接到 ${service}。请重试。';
+			case 'services.names.mal': return 'MyAnimeList';
+			case 'services.names.anilist': return 'AniList';
+			case 'services.names.simkl': return 'Simkl';
+			case 'services.names.seerr': return 'Seerr';
+			case 'services.names.mdblist': return 'MDBList';
+			case 'services.simklReconnect.title': return '重新连接 Simkl';
+			case 'services.simklReconnect.subtitle': return 'Simkl 即将停用此连接所使用的登录方式。重新连接将打开 simkl.com 以授权 Plezy — Plezy 永远不会看到你的密码。你的观看记录仍保留在 Simkl 上。';
+			case 'services.deviceCode.title': return ({required Object service}) => '在 ${service} 上激活 Plezy';
+			case 'services.deviceCode.instructions': return '扫描二维码，或访问下方地址并输入此代码：';
+			case 'services.deviceCode.openToActivate': return ({required Object service}) => '打开 ${service} 以激活';
+			case 'services.deviceCode.copyCode': return '复制激活代码';
+			case 'services.deviceCode.waitingForAuthorization': return '等待授权…';
+			case 'services.deviceCode.codeCopied': return '代码已复制';
+			case 'services.oauthProxy.title': return ({required Object service}) => '登录 ${service}';
+			case 'services.oauthProxy.body': return '扫描此二维码，或在任意设备上打开 URL。';
+			case 'services.oauthProxy.openToSignIn': return ({required Object service}) => '打开 ${service} 以登录';
+			case 'services.pendingAuth.copyUrl': return '复制登录 URL';
+			case 'services.pendingAuth.urlCopied': return 'URL 已复制';
+			case 'services.libraryFilter.title': return '媒体库筛选';
+			case 'services.libraryFilter.subtitleAllSyncing': return '同步所有媒体库';
+			case 'services.libraryFilter.subtitleNoneSyncing': return '不同步任何内容';
+			case 'services.libraryFilter.subtitleBlocked': return ({required Object count}) => '已屏蔽 ${count} 个';
+			case 'services.libraryFilter.subtitleAllowed': return ({required Object count}) => '已允许 ${count} 个';
+			case 'services.libraryFilter.mode': return '筛选模式';
+			case 'services.libraryFilter.modeBlacklist': return '黑名单';
+			case 'services.libraryFilter.modeWhitelist': return '白名单';
+			case 'services.libraryFilter.modeHintBlacklist': return '同步下方未勾选的所有媒体库。';
+			case 'services.libraryFilter.modeHintWhitelist': return '仅同步下方勾选的媒体库。';
+			case 'services.libraryFilter.libraries': return '媒体库';
+			case 'services.libraryFilter.noLibraries': return '没有可用的媒体库';
+			case 'addServer.addMediaBrowserTitle': return ({required Object product}) => '添加 ${product} 服务器';
+			case 'addServer.serverUrls': return '服务器 URL';
+			case 'addServer.serverUrlsHelper': return '可输入多个 URL，并用逗号分隔。';
+			case 'addServer.findServer': return '查找服务器';
+			case 'addServer.searchingLocalMediaBrowserServers': return ({required Object product}) => '正在查找本地 ${product} 服务器…';
+			case 'addServer.localMediaBrowserServers': return ({required Object product}) => '本地 ${product} 服务器';
+			case 'addServer.username': return '用户名';
+			case 'addServer.password': return '密码';
+			case 'addServer.signIn': return '登录';
+			case 'addServer.change': return '更改';
+			case 'addServer.required': return '必填';
+			case 'addServer.couldNotReachServer': return ({required Object error}) => '无法连接到服务器：${error}';
+			case 'addServer.signInFailed': return ({required Object error}) => '登录失败：${error}';
+			case 'addServer.quickConnectFailed': return ({required Object error}) => 'Quick Connect 失败：${error}';
+			case 'addServer.addPlexTitle': return '使用 Plex 登录';
+			case 'addServer.pinExpired': return 'PIN 在登录前已过期。请重试。';
+			case 'addServer.failedToRegisterAccount': return ({required Object error}) => '注册账户失败：${error}';
+			case 'addServer.enterMediaBrowserUrlError': return ({required Object product}) => '请输入你的 ${product} 服务器 URL';
+			case 'addServer.addConnectionTitle': return '添加连接';
+			case 'addServer.addConnectionTitleScoped': return ({required Object name}) => '添加到 ${name}';
+			case 'addServer.signInWithPlexCard': return '使用 Plex 登录';
+			case 'addServer.signInWithPlexCardSubtitle': return '授权此设备。共享服务器会被添加。';
+			case 'addServer.signInWithPlexCardSubtitleScoped': return '授权一个 Plex 账户。Plex Home 用户将成为 Plezy 用户资料。';
+			case 'addServer.connectToMediaBrowserCard': return ({required Object product}) => '连接到 ${product}';
+			case 'addServer.connectToMediaBrowserCardSubtitle': return '输入你的服务器 URL、用户名和密码。';
+			case 'addServer.connectToMediaBrowserCardSubtitleScoped': return ({required Object product, required Object name}) => '登录你的 ${product} 服务器。将绑定到 ${name}。';
+			case 'addServer.borrowFromAnotherProfile': return '使用其他用户资料的连接';
+			case 'addServer.borrowFromAnotherProfileSubtitle': return '复用另一个用户资料的连接。受 PIN 保护的用户资料需要输入 PIN。';
+			case 'addServer.invalidCredentials': return '用户名或密码无效';
+			case 'addServer.authResponseNotJson': return '身份验证响应不是有效的 JSON';
+			case 'addServer.authResponseIncomplete': return '服务器返回的登录响应不完整';
+			case 'addServer.quickConnectRejected': return '服务器拒绝了 Quick Connect';
+			case 'addServer.quickConnectNotJson': return 'Quick Connect 响应不是有效的 JSON';
+			case 'addServer.quickConnectMissingFields': return 'Quick Connect 响应中缺少代码或密钥';
+			case 'addServer.quickConnectPollRejected': return '服务器拒绝了 Quick Connect 轮询';
+			case 'addServer.serverTimedOut': return '服务器未及时响应';
+			case 'addServer.responseNotJson': return '服务器响应不是有效的 JSON';
+			case 'addServer.responseMissingIdentity': return ({required Object product}) => '响应中缺少 ID 或服务器名称——这是 ${product} 服务器吗？';
+			case 'addServer.probeFailed': return ({required Object error}) => '无法连接到服务器：${error}';
+			case 'addServer.enterAtLeastOneUrl': return ({required Object product}) => '请输入至少一个 ${product} 服务器 URL';
+			case 'addServer.noReachableServer': return ({required Object product}) => '未找到可连接的 ${product} 服务器';
+			case 'addServer.urlsPointToDifferentServers': return ({required Object product}) => '这些 URL 指向不同的 ${product} 服务器';
+			case 'addServer.urlDoesNotMatchServer': return ({required Object product}) => '此 URL 与 ${product} 服务器不匹配';
+			case 'addServer.redirectUnsupported': return '服务器重定向到了不受支持的 URL';
+			case 'addServer.redirectDifferentHost': return ({required Object product}) => '服务器重定向到了其他主机。请直接输入最终的 ${product} URL。';
+			case 'addServer.redirectInsecure': return '服务器从 HTTPS 重定向到了不安全的 URL';
+			case 'addServer.redirectUnsupportedEnterFinal': return ({required Object product}) => '服务器重定向到了不受支持的 URL。请直接输入最终的 ${product} URL。';
+			default: return null;
+		}
 	}
 }
+

@@ -3,7 +3,6 @@
 ///
 // coverage:ignore-file
 // ignore_for_file: type=lint, unused_import
-// dart format off
 
 import 'package:flutter/widgets.dart';
 import 'package:intl/intl.dart';
@@ -11,7 +10,7 @@ import 'package:slang/generated.dart';
 import 'strings.g.dart';
 
 // Path: <root>
-class TranslationsHu extends Translations with BaseTranslations<AppLocale, Translations> {
+class TranslationsHu extends Translations {
 	/// You can call this constructor and build your own translation instance of this locale.
 	/// Constructing via the enum [AppLocale.build] is preferred.
 	TranslationsHu({Map<String, Node>? overrides, PluralResolver? cardinalResolver, PluralResolver? ordinalResolver, TranslationMetadata<AppLocale, Translations>? meta})
@@ -39,65 +38,67 @@ class TranslationsHu extends Translations with BaseTranslations<AppLocale, Trans
 	TranslationsHu $copyWith({TranslationMetadata<AppLocale, Translations>? meta}) => TranslationsHu(meta: meta ?? this.$meta);
 
 	// Translations
-	@override late final _Translations$app$hu app = _Translations$app$hu._(_root);
-	@override late final _Translations$appIcon$hu appIcon = _Translations$appIcon$hu._(_root);
-	@override late final _Translations$auth$hu auth = _Translations$auth$hu._(_root);
-	@override late final _Translations$common$hu common = _Translations$common$hu._(_root);
-	@override late final _Translations$screens$hu screens = _Translations$screens$hu._(_root);
-	@override late final _Translations$update$hu update = _Translations$update$hu._(_root);
-	@override late final _Translations$supporter$hu supporter = _Translations$supporter$hu._(_root);
-	@override late final _Translations$settings$hu settings = _Translations$settings$hu._(_root);
-	@override late final _Translations$themeEditor$hu themeEditor = _Translations$themeEditor$hu._(_root);
-	@override late final _Translations$search$hu search = _Translations$search$hu._(_root);
-	@override late final _Translations$hotkeys$hu hotkeys = _Translations$hotkeys$hu._(_root);
-	@override late final _Translations$fileInfo$hu fileInfo = _Translations$fileInfo$hu._(_root);
-	@override late final _Translations$mediaMenu$hu mediaMenu = _Translations$mediaMenu$hu._(_root);
-	@override late final _Translations$rateSheet$hu rateSheet = _Translations$rateSheet$hu._(_root);
-	@override late final _Translations$accessibility$hu accessibility = _Translations$accessibility$hu._(_root);
-	@override late final _Translations$tooltips$hu tooltips = _Translations$tooltips$hu._(_root);
-	@override late final _Translations$audioTracks$hu audioTracks = _Translations$audioTracks$hu._(_root);
-	@override late final _Translations$videoControls$hu videoControls = _Translations$videoControls$hu._(_root);
-	@override late final _Translations$messages$hu messages = _Translations$messages$hu._(_root);
-	@override late final _Translations$subtitlingStyling$hu subtitlingStyling = _Translations$subtitlingStyling$hu._(_root);
-	@override late final _Translations$mpvConfig$hu mpvConfig = _Translations$mpvConfig$hu._(_root);
-	@override late final _Translations$dialog$hu dialog = _Translations$dialog$hu._(_root);
-	@override late final _Translations$profiles$hu profiles = _Translations$profiles$hu._(_root);
-	@override late final _Translations$connections$hu connections = _Translations$connections$hu._(_root);
-	@override late final _Translations$accountPreferences$hu accountPreferences = _Translations$accountPreferences$hu._(_root);
-	@override late final _Translations$discover$hu discover = _Translations$discover$hu._(_root);
-	@override late final _Translations$errors$hu errors = _Translations$errors$hu._(_root);
-	@override late final _Translations$libraries$hu libraries = _Translations$libraries$hu._(_root);
-	@override late final _Translations$about$hu about = _Translations$about$hu._(_root);
-	@override late final _Translations$serverSelection$hu serverSelection = _Translations$serverSelection$hu._(_root);
-	@override late final _Translations$hubDetail$hu hubDetail = _Translations$hubDetail$hu._(_root);
-	@override late final _Translations$logs$hu logs = _Translations$logs$hu._(_root);
-	@override late final _Translations$startup$hu startup = _Translations$startup$hu._(_root);
-	@override late final _Translations$licenses$hu licenses = _Translations$licenses$hu._(_root);
-	@override late final _Translations$navigation$hu navigation = _Translations$navigation$hu._(_root);
-	@override late final _Translations$explore$hu explore = _Translations$explore$hu._(_root);
-	@override late final _Translations$liveTv$hu liveTv = _Translations$liveTv$hu._(_root);
-	@override late final _Translations$collections$hu collections = _Translations$collections$hu._(_root);
-	@override late final _Translations$playlists$hu playlists = _Translations$playlists$hu._(_root);
-	@override late final _Translations$music$hu music = _Translations$music$hu._(_root);
-	@override late final _Translations$watchTogether$hu watchTogether = _Translations$watchTogether$hu._(_root);
-	@override late final _Translations$downloads$hu downloads = _Translations$downloads$hu._(_root);
-	@override late final _Translations$shaders$hu shaders = _Translations$shaders$hu._(_root);
-	@override late final _Translations$companionRemote$hu companionRemote = _Translations$companionRemote$hu._(_root);
-	@override late final _Translations$videoSettings$hu videoSettings = _Translations$videoSettings$hu._(_root);
-	@override late final _Translations$performanceOverlay$hu performanceOverlay = _Translations$performanceOverlay$hu._(_root);
-	@override late final _Translations$externalPlayer$hu externalPlayer = _Translations$externalPlayer$hu._(_root);
-	@override late final _Translations$metadataEdit$hu metadataEdit = _Translations$metadataEdit$hu._(_root);
-	@override late final _Translations$matchScreen$hu matchScreen = _Translations$matchScreen$hu._(_root);
-	@override late final _Translations$serverTasks$hu serverTasks = _Translations$serverTasks$hu._(_root);
-	@override late final _Translations$trakt$hu trakt = _Translations$trakt$hu._(_root);
-	@override late final _Translations$seerr$hu seerr = _Translations$seerr$hu._(_root);
-	@override late final _Translations$services$hu services = _Translations$services$hu._(_root);
-	@override late final _Translations$addServer$hu addServer = _Translations$addServer$hu._(_root);
+	@override late final _TranslationsAppHu app = _TranslationsAppHu._(_root);
+	@override late final _TranslationsAppIconHu appIcon = _TranslationsAppIconHu._(_root);
+	@override late final _TranslationsAuthHu auth = _TranslationsAuthHu._(_root);
+	@override late final _TranslationsCommonHu common = _TranslationsCommonHu._(_root);
+	@override late final _TranslationsScreensHu screens = _TranslationsScreensHu._(_root);
+	@override late final _TranslationsUpdateHu update = _TranslationsUpdateHu._(_root);
+	@override late final _TranslationsSupporterHu supporter = _TranslationsSupporterHu._(_root);
+	@override late final _TranslationsSettingsHu settings = _TranslationsSettingsHu._(_root);
+	@override late final _TranslationsThemeEditorHu themeEditor = _TranslationsThemeEditorHu._(_root);
+	@override late final _TranslationsSearchHu search = _TranslationsSearchHu._(_root);
+	@override late final _TranslationsHotkeysHu hotkeys = _TranslationsHotkeysHu._(_root);
+	@override late final _TranslationsFileInfoHu fileInfo = _TranslationsFileInfoHu._(_root);
+	@override late final _TranslationsMediaMenuHu mediaMenu = _TranslationsMediaMenuHu._(_root);
+	@override late final _TranslationsRateSheetHu rateSheet = _TranslationsRateSheetHu._(_root);
+	@override late final _TranslationsAccessibilityHu accessibility = _TranslationsAccessibilityHu._(_root);
+	@override late final _TranslationsTooltipsHu tooltips = _TranslationsTooltipsHu._(_root);
+	@override late final _TranslationsAudioTracksHu audioTracks = _TranslationsAudioTracksHu._(_root);
+	@override late final _TranslationsVideoControlsHu videoControls = _TranslationsVideoControlsHu._(_root);
+	@override late final _TranslationsUserStatusHu userStatus = _TranslationsUserStatusHu._(_root);
+	@override late final _TranslationsMessagesHu messages = _TranslationsMessagesHu._(_root);
+	@override late final _TranslationsSubtitlingStylingHu subtitlingStyling = _TranslationsSubtitlingStylingHu._(_root);
+	@override late final _TranslationsMpvConfigHu mpvConfig = _TranslationsMpvConfigHu._(_root);
+	@override late final _TranslationsDialogHu dialog = _TranslationsDialogHu._(_root);
+	@override late final _TranslationsProfilesHu profiles = _TranslationsProfilesHu._(_root);
+	@override late final _TranslationsConnectionsHu connections = _TranslationsConnectionsHu._(_root);
+	@override late final _TranslationsAccountPreferencesHu accountPreferences = _TranslationsAccountPreferencesHu._(_root);
+	@override late final _TranslationsDiscoverHu discover = _TranslationsDiscoverHu._(_root);
+	@override late final _TranslationsErrorsHu errors = _TranslationsErrorsHu._(_root);
+	@override late final _TranslationsLibrariesHu libraries = _TranslationsLibrariesHu._(_root);
+	@override late final _TranslationsAboutHu about = _TranslationsAboutHu._(_root);
+	@override late final _TranslationsServerSelectionHu serverSelection = _TranslationsServerSelectionHu._(_root);
+	@override late final _TranslationsHubDetailHu hubDetail = _TranslationsHubDetailHu._(_root);
+	@override late final _TranslationsLogsHu logs = _TranslationsLogsHu._(_root);
+	@override late final _TranslationsStartupHu startup = _TranslationsStartupHu._(_root);
+	@override late final _TranslationsLicensesHu licenses = _TranslationsLicensesHu._(_root);
+	@override late final _TranslationsNavigationHu navigation = _TranslationsNavigationHu._(_root);
+	@override late final _TranslationsExploreHu explore = _TranslationsExploreHu._(_root);
+	@override late final _TranslationsLiveTvHu liveTv = _TranslationsLiveTvHu._(_root);
+	@override late final _TranslationsCollectionsHu collections = _TranslationsCollectionsHu._(_root);
+	@override late final _TranslationsPlaylistsHu playlists = _TranslationsPlaylistsHu._(_root);
+	@override late final _TranslationsMusicHu music = _TranslationsMusicHu._(_root);
+	@override late final _TranslationsWatchTogetherHu watchTogether = _TranslationsWatchTogetherHu._(_root);
+	@override late final _TranslationsDownloadsHu downloads = _TranslationsDownloadsHu._(_root);
+	@override late final _TranslationsShadersHu shaders = _TranslationsShadersHu._(_root);
+	@override late final _TranslationsCompanionRemoteHu companionRemote = _TranslationsCompanionRemoteHu._(_root);
+	@override late final _TranslationsVideoSettingsHu videoSettings = _TranslationsVideoSettingsHu._(_root);
+	@override late final _TranslationsPerformanceOverlayHu performanceOverlay = _TranslationsPerformanceOverlayHu._(_root);
+	@override late final _TranslationsExternalPlayerHu externalPlayer = _TranslationsExternalPlayerHu._(_root);
+	@override late final _TranslationsMetadataEditHu metadataEdit = _TranslationsMetadataEditHu._(_root);
+	@override late final _TranslationsMatchScreenHu matchScreen = _TranslationsMatchScreenHu._(_root);
+	@override late final _TranslationsServerTasksHu serverTasks = _TranslationsServerTasksHu._(_root);
+	@override late final _TranslationsTraktHu trakt = _TranslationsTraktHu._(_root);
+	@override late final _TranslationsSeerrHu seerr = _TranslationsSeerrHu._(_root);
+	@override late final _TranslationsServicesHu services = _TranslationsServicesHu._(_root);
+	@override late final _TranslationsAddServerHu addServer = _TranslationsAddServerHu._(_root);
+	@override late final _TranslationsDeepLinksHu deepLinks = _TranslationsDeepLinksHu._(_root);
 }
 
 // Path: app
-class _Translations$app$hu extends Translations$app$en {
-	_Translations$app$hu._(TranslationsHu root) : this._root = root, super.internal(root);
+class _TranslationsAppHu extends TranslationsAppEn {
+	_TranslationsAppHu._(TranslationsHu root) : this._root = root, super.internal(root);
 
 	final TranslationsHu _root; // ignore: unused_field
 
@@ -106,8 +107,8 @@ class _Translations$app$hu extends Translations$app$en {
 }
 
 // Path: appIcon
-class _Translations$appIcon$hu extends Translations$appIcon$en {
-	_Translations$appIcon$hu._(TranslationsHu root) : this._root = root, super.internal(root);
+class _TranslationsAppIconHu extends TranslationsAppIconEn {
+	_TranslationsAppIconHu._(TranslationsHu root) : this._root = root, super.internal(root);
 
 	final TranslationsHu _root; // ignore: unused_field
 
@@ -120,12 +121,12 @@ class _Translations$appIcon$hu extends Translations$appIcon$en {
 	@override String get changeFailed => 'Nem sikerült módosítani az alkalmazásikont';
 	@override String get launcherHint => 'Az új ikon azután jelenik meg a kezdőképernyőn, hogy kiléptél a Plezyből.';
 	@override String get tvLauncherHint => 'Az új banner azután jelenik meg, hogy kiléptél a Plezyből. Az Android TV a TV újraindításáig még a régit is mutathatja.';
-	@override late final _Translations$appIcon$names$hu names = _Translations$appIcon$names$hu._(_root);
+	@override late final _TranslationsAppIconNamesHu names = _TranslationsAppIconNamesHu._(_root);
 }
 
 // Path: auth
-class _Translations$auth$hu extends Translations$auth$en {
-	_Translations$auth$hu._(TranslationsHu root) : this._root = root, super.internal(root);
+class _TranslationsAuthHu extends TranslationsAuthEn {
+	_TranslationsAuthHu._(TranslationsHu root) : this._root = root, super.internal(root);
 
 	final TranslationsHu _root; // ignore: unused_field
 
@@ -150,8 +151,8 @@ class _Translations$auth$hu extends Translations$auth$en {
 }
 
 // Path: common
-class _Translations$common$hu extends Translations$common$en {
-	_Translations$common$hu._(TranslationsHu root) : this._root = root, super.internal(root);
+class _TranslationsCommonHu extends TranslationsCommonEn {
+	_TranslationsCommonHu._(TranslationsHu root) : this._root = root, super.internal(root);
 
 	final TranslationsHu _root; // ignore: unused_field
 
@@ -202,16 +203,16 @@ class _Translations$common$hu extends Translations$common$en {
 	@override String get fullscreen => 'Teljes képernyő';
 	@override String get exitFullscreen => 'Kilépés a teljes képernyőből';
 	@override String get pressBackAgainToExit => 'A kilépéshez nyomd meg újra a Vissza gombot';
-	@override late final _Translations$common$ratingSource$hu ratingSource = _Translations$common$ratingSource$hu._(_root);
+	@override late final _TranslationsCommonRatingSourceHu ratingSource = _TranslationsCommonRatingSourceHu._(_root);
 	@override String get notAvailable => 'N/A';
 	@override String get url => 'URL';
 	@override String get letterKeys => 'ABC';
-	@override late final _Translations$common$mediaKind$hu mediaKind = _Translations$common$mediaKind$hu._(_root);
+	@override late final _TranslationsCommonMediaKindHu mediaKind = _TranslationsCommonMediaKindHu._(_root);
 }
 
 // Path: screens
-class _Translations$screens$hu extends Translations$screens$en {
-	_Translations$screens$hu._(TranslationsHu root) : this._root = root, super.internal(root);
+class _TranslationsScreensHu extends TranslationsScreensEn {
+	_TranslationsScreensHu._(TranslationsHu root) : this._root = root, super.internal(root);
 
 	final TranslationsHu _root; // ignore: unused_field
 
@@ -224,8 +225,8 @@ class _Translations$screens$hu extends Translations$screens$en {
 }
 
 // Path: update
-class _Translations$update$hu extends Translations$update$en {
-	_Translations$update$hu._(TranslationsHu root) : this._root = root, super.internal(root);
+class _TranslationsUpdateHu extends TranslationsUpdateEn {
+	_TranslationsUpdateHu._(TranslationsHu root) : this._root = root, super.internal(root);
 
 	final TranslationsHu _root; // ignore: unused_field
 
@@ -240,8 +241,8 @@ class _Translations$update$hu extends Translations$update$en {
 }
 
 // Path: supporter
-class _Translations$supporter$hu extends Translations$supporter$en {
-	_Translations$supporter$hu._(TranslationsHu root) : this._root = root, super.internal(root);
+class _TranslationsSupporterHu extends TranslationsSupporterEn {
+	_TranslationsSupporterHu._(TranslationsHu root) : this._root = root, super.internal(root);
 
 	final TranslationsHu _root; // ignore: unused_field
 
@@ -263,12 +264,12 @@ class _Translations$supporter$hu extends Translations$supporter$en {
 	@override String get tileSubtitle => 'Témák és alkalmazásikonok feloldása egyszeri vásárlással';
 	@override String get tileSubtitleThemesOnly => 'Témák feloldása egyszeri vásárlással';
 	@override String get tileUnlocked => 'Feloldva — köszönjük a vásárlást';
-	@override late final _Translations$supporter$errors$hu errors = _Translations$supporter$errors$hu._(_root);
+	@override late final _TranslationsSupporterErrorsHu errors = _TranslationsSupporterErrorsHu._(_root);
 }
 
 // Path: settings
-class _Translations$settings$hu extends Translations$settings$en {
-	_Translations$settings$hu._(TranslationsHu root) : this._root = root, super.internal(root);
+class _TranslationsSettingsHu extends TranslationsSettingsEn {
+	_TranslationsSettingsHu._(TranslationsHu root) : this._root = root, super.internal(root);
 
 	final TranslationsHu _root; // ignore: unused_field
 
@@ -612,8 +613,8 @@ class _Translations$settings$hu extends Translations$settings$en {
 }
 
 // Path: themeEditor
-class _Translations$themeEditor$hu extends Translations$themeEditor$en {
-	_Translations$themeEditor$hu._(TranslationsHu root) : this._root = root, super.internal(root);
+class _TranslationsThemeEditorHu extends TranslationsThemeEditorEn {
+	_TranslationsThemeEditorHu._(TranslationsHu root) : this._root = root, super.internal(root);
 
 	final TranslationsHu _root; // ignore: unused_field
 
@@ -631,12 +632,12 @@ class _Translations$themeEditor$hu extends Translations$themeEditor$en {
 	@override String get startFromDescription => 'Az összes szín átmásolása egy másik témából';
 	@override String get colors => 'Színek';
 	@override String get preview => 'Előnézet';
-	@override late final _Translations$themeEditor$slots$hu slots = _Translations$themeEditor$slots$hu._(_root);
+	@override late final _TranslationsThemeEditorSlotsHu slots = _TranslationsThemeEditorSlotsHu._(_root);
 	@override String get opacity => 'Átlátszatlanság';
 	@override String get hexHint => '#RRGGBB vagy #AARRGGBB';
 	@override String get fromOtherThemes => 'Más témákból';
 	@override String swatchLabel({required Object theme, required Object color}) => '${theme} – ${color}';
-	@override late final _Translations$themeEditor$contrast$hu contrast = _Translations$themeEditor$contrast$hu._(_root);
+	@override late final _TranslationsThemeEditorContrastHu contrast = _TranslationsThemeEditorContrastHu._(_root);
 	@override String lowContrast({required Object pair, required Object ratio, required Object minimum}) => '${pair}: ${ratio}:1, az ajánlott ${minimum}:1 alatt';
 	@override String get discardTitle => 'Elveted a módosításokat?';
 	@override String get discardMessage => 'A nem mentett színmódosítások elvesznek.';
@@ -648,8 +649,8 @@ class _Translations$themeEditor$hu extends Translations$themeEditor$en {
 }
 
 // Path: search
-class _Translations$search$hu extends Translations$search$en {
-	_Translations$search$hu._(TranslationsHu root) : this._root = root, super.internal(root);
+class _TranslationsSearchHu extends TranslationsSearchEn {
+	_TranslationsSearchHu._(TranslationsHu root) : this._root = root, super.internal(root);
 
 	final TranslationsHu _root; // ignore: unused_field
 
@@ -662,8 +663,8 @@ class _Translations$search$hu extends Translations$search$en {
 }
 
 // Path: hotkeys
-class _Translations$hotkeys$hu extends Translations$hotkeys$en {
-	_Translations$hotkeys$hu._(TranslationsHu root) : this._root = root, super.internal(root);
+class _TranslationsHotkeysHu extends TranslationsHotkeysEn {
+	_TranslationsHotkeysHu._(TranslationsHu root) : this._root = root, super.internal(root);
 
 	final TranslationsHu _root; // ignore: unused_field
 
@@ -674,12 +675,12 @@ class _Translations$hotkeys$hu extends Translations$hotkeys$en {
 	@override String get currentShortcut => 'Jelenlegi billentyűparancs:';
 	@override String get pressToRecord => 'Válaszd ki a billentyűparancs rögzítéséhez';
 	@override String get recordingShortcut => 'Nyomd meg most a billentyűparancsot';
-	@override late final _Translations$hotkeys$actions$hu actions = _Translations$hotkeys$actions$hu._(_root);
+	@override late final _TranslationsHotkeysActionsHu actions = _TranslationsHotkeysActionsHu._(_root);
 }
 
 // Path: fileInfo
-class _Translations$fileInfo$hu extends Translations$fileInfo$en {
-	_Translations$fileInfo$hu._(TranslationsHu root) : this._root = root, super.internal(root);
+class _TranslationsFileInfoHu extends TranslationsFileInfoEn {
+	_TranslationsFileInfoHu._(TranslationsHu root) : this._root = root, super.internal(root);
 
 	final TranslationsHu _root; // ignore: unused_field
 
@@ -802,8 +803,8 @@ class _Translations$fileInfo$hu extends Translations$fileInfo$en {
 }
 
 // Path: mediaMenu
-class _Translations$mediaMenu$hu extends Translations$mediaMenu$en {
-	_Translations$mediaMenu$hu._(TranslationsHu root) : this._root = root, super.internal(root);
+class _TranslationsMediaMenuHu extends TranslationsMediaMenuEn {
+	_TranslationsMediaMenuHu._(TranslationsHu root) : this._root = root, super.internal(root);
 
 	final TranslationsHu _root; // ignore: unused_field
 
@@ -853,8 +854,8 @@ class _Translations$mediaMenu$hu extends Translations$mediaMenu$en {
 }
 
 // Path: rateSheet
-class _Translations$rateSheet$hu extends Translations$rateSheet$en {
-	_Translations$rateSheet$hu._(TranslationsHu root) : this._root = root, super.internal(root);
+class _TranslationsRateSheetHu extends TranslationsRateSheetEn {
+	_TranslationsRateSheetHu._(TranslationsHu root) : this._root = root, super.internal(root);
 
 	final TranslationsHu _root; // ignore: unused_field
 
@@ -869,8 +870,8 @@ class _Translations$rateSheet$hu extends Translations$rateSheet$en {
 }
 
 // Path: accessibility
-class _Translations$accessibility$hu extends Translations$accessibility$en {
-	_Translations$accessibility$hu._(TranslationsHu root) : this._root = root, super.internal(root);
+class _TranslationsAccessibilityHu extends TranslationsAccessibilityEn {
+	_TranslationsAccessibilityHu._(TranslationsHu root) : this._root = root, super.internal(root);
 
 	final TranslationsHu _root; // ignore: unused_field
 
@@ -905,8 +906,8 @@ class _Translations$accessibility$hu extends Translations$accessibility$en {
 }
 
 // Path: tooltips
-class _Translations$tooltips$hu extends Translations$tooltips$en {
-	_Translations$tooltips$hu._(TranslationsHu root) : this._root = root, super.internal(root);
+class _TranslationsTooltipsHu extends TranslationsTooltipsEn {
+	_TranslationsTooltipsHu._(TranslationsHu root) : this._root = root, super.internal(root);
 
 	final TranslationsHu _root; // ignore: unused_field
 
@@ -918,8 +919,8 @@ class _Translations$tooltips$hu extends Translations$tooltips$en {
 }
 
 // Path: audioTracks
-class _Translations$audioTracks$hu extends Translations$audioTracks$en {
-	_Translations$audioTracks$hu._(TranslationsHu root) : this._root = root, super.internal(root);
+class _TranslationsAudioTracksHu extends TranslationsAudioTracksEn {
+	_TranslationsAudioTracksHu._(TranslationsHu root) : this._root = root, super.internal(root);
 
 	final TranslationsHu _root; // ignore: unused_field
 
@@ -928,8 +929,8 @@ class _Translations$audioTracks$hu extends Translations$audioTracks$en {
 }
 
 // Path: videoControls
-class _Translations$videoControls$hu extends Translations$videoControls$en {
-	_Translations$videoControls$hu._(TranslationsHu root) : this._root = root, super.internal(root);
+class _TranslationsVideoControlsHu extends TranslationsVideoControlsEn {
+	_TranslationsVideoControlsHu._(TranslationsHu root) : this._root = root, super.internal(root);
 
 	final TranslationsHu _root; // ignore: unused_field
 
@@ -996,7 +997,7 @@ class _Translations$videoControls$hu extends Translations$videoControls$en {
 	@override String get screenshotFailed => 'Nem sikerült képernyőképet készíteni';
 	@override String zoomPercent({required Object percent}) => 'Nagyítás ${percent}%';
 	@override String volumePercent({required Object percent}) => 'Hangerő ${percent}%';
-	@override late final _Translations$videoControls$pipErrors$hu pipErrors = _Translations$videoControls$pipErrors$hu._(_root);
+	@override late final _TranslationsVideoControlsPipErrorsHu pipErrors = _TranslationsVideoControlsPipErrorsHu._(_root);
 	@override String get chapters => 'Fejezetek';
 	@override String get noChaptersAvailable => 'Nincsenek elérhető fejezetek';
 	@override String get queue => 'Lejátszási sor';
@@ -1021,9 +1022,18 @@ class _Translations$videoControls$hu extends Translations$videoControls$en {
 	@override String osdAudio({required Object track}) => 'Hang: ${track}';
 }
 
+// Path: userStatus
+class _TranslationsUserStatusHu extends TranslationsUserStatusEn {
+	_TranslationsUserStatusHu._(TranslationsHu root) : this._root = root, super.internal(root);
+
+	final TranslationsHu _root; // ignore: unused_field
+
+	// Translations
+}
+
 // Path: messages
-class _Translations$messages$hu extends Translations$messages$en {
-	_Translations$messages$hu._(TranslationsHu root) : this._root = root, super.internal(root);
+class _TranslationsMessagesHu extends TranslationsMessagesEn {
+	_TranslationsMessagesHu._(TranslationsHu root) : this._root = root, super.internal(root);
 
 	final TranslationsHu _root; // ignore: unused_field
 
@@ -1101,8 +1111,8 @@ class _Translations$messages$hu extends Translations$messages$en {
 }
 
 // Path: subtitlingStyling
-class _Translations$subtitlingStyling$hu extends Translations$subtitlingStyling$en {
-	_Translations$subtitlingStyling$hu._(TranslationsHu root) : this._root = root, super.internal(root);
+class _TranslationsSubtitlingStylingHu extends TranslationsSubtitlingStylingEn {
+	_TranslationsSubtitlingStylingHu._(TranslationsHu root) : this._root = root, super.internal(root);
 
 	final TranslationsHu _root; // ignore: unused_field
 
@@ -1135,8 +1145,8 @@ class _Translations$subtitlingStyling$hu extends Translations$subtitlingStyling$
 }
 
 // Path: mpvConfig
-class _Translations$mpvConfig$hu extends Translations$mpvConfig$en {
-	_Translations$mpvConfig$hu._(TranslationsHu root) : this._root = root, super.internal(root);
+class _TranslationsMpvConfigHu extends TranslationsMpvConfigEn {
+	_TranslationsMpvConfigHu._(TranslationsHu root) : this._root = root, super.internal(root);
 
 	final TranslationsHu _root; // ignore: unused_field
 
@@ -1162,8 +1172,8 @@ class _Translations$mpvConfig$hu extends Translations$mpvConfig$en {
 }
 
 // Path: dialog
-class _Translations$dialog$hu extends Translations$dialog$en {
-	_Translations$dialog$hu._(TranslationsHu root) : this._root = root, super.internal(root);
+class _TranslationsDialogHu extends TranslationsDialogEn {
+	_TranslationsDialogHu._(TranslationsHu root) : this._root = root, super.internal(root);
 
 	final TranslationsHu _root; // ignore: unused_field
 
@@ -1172,8 +1182,8 @@ class _Translations$dialog$hu extends Translations$dialog$en {
 }
 
 // Path: profiles
-class _Translations$profiles$hu extends Translations$profiles$en {
-	_Translations$profiles$hu._(TranslationsHu root) : this._root = root, super.internal(root);
+class _TranslationsProfilesHu extends TranslationsProfilesEn {
+	_TranslationsProfilesHu._(TranslationsHu root) : this._root = root, super.internal(root);
 
 	final TranslationsHu _root; // ignore: unused_field
 
@@ -1246,8 +1256,8 @@ class _Translations$profiles$hu extends Translations$profiles$en {
 }
 
 // Path: connections
-class _Translations$connections$hu extends Translations$connections$en {
-	_Translations$connections$hu._(TranslationsHu root) : this._root = root, super.internal(root);
+class _TranslationsConnectionsHu extends TranslationsConnectionsEn {
+	_TranslationsConnectionsHu._(TranslationsHu root) : this._root = root, super.internal(root);
 
 	final TranslationsHu _root; // ignore: unused_field
 
@@ -1266,8 +1276,8 @@ class _Translations$connections$hu extends Translations$connections$en {
 }
 
 // Path: accountPreferences
-class _Translations$accountPreferences$hu extends Translations$accountPreferences$en {
-	_Translations$accountPreferences$hu._(TranslationsHu root) : this._root = root, super.internal(root);
+class _TranslationsAccountPreferencesHu extends TranslationsAccountPreferencesEn {
+	_TranslationsAccountPreferencesHu._(TranslationsHu root) : this._root = root, super.internal(root);
 
 	final TranslationsHu _root; // ignore: unused_field
 
@@ -1283,17 +1293,17 @@ class _Translations$accountPreferences$hu extends Translations$accountPreference
 	@override String get loadFailed => 'Nem sikerült betölteni ezeket a beállításokat';
 	@override String get noPreference => 'Nincs preferencia';
 	@override String get notSet => 'Nincs beállítva';
-	@override late final _Translations$accountPreferences$groups$hu groups = _Translations$accountPreferences$groups$hu._(_root);
+	@override late final _TranslationsAccountPreferencesGroupsHu groups = _TranslationsAccountPreferencesGroupsHu._(_root);
 	@override String get preferredAudioLanguage => 'Elsődleges hangnyelv';
 	@override String get autoSelectAudio => 'Hangsáv kiválasztása nyelv alapján';
 	@override String get autoSelectAudioDescription => 'Ki kapcsolásnál a fájl által alapértelmezettként megjelölt hangsáv marad.';
 	@override String get preferredSubtitleLanguage => 'Elsődleges feliratnyelv';
 	@override String get subtitleMode => 'Feliratok bekapcsolása';
-	@override late final _Translations$accountPreferences$subtitleModes$hu subtitleModes = _Translations$accountPreferences$subtitleModes$hu._(_root);
+	@override late final _TranslationsAccountPreferencesSubtitleModesHu subtitleModes = _TranslationsAccountPreferencesSubtitleModesHu._(_root);
 	@override String get subtitleAccessibility => 'SDH-feliratok';
-	@override late final _Translations$accountPreferences$subtitleAccessibilityOptions$hu subtitleAccessibilityOptions = _Translations$accountPreferences$subtitleAccessibilityOptions$hu._(_root);
+	@override late final _TranslationsAccountPreferencesSubtitleAccessibilityOptionsHu subtitleAccessibilityOptions = _TranslationsAccountPreferencesSubtitleAccessibilityOptionsHu._(_root);
 	@override String get forcedSubtitles => 'Kényszerített feliratok';
-	@override late final _Translations$accountPreferences$forcedSubtitleOptions$hu forcedSubtitleOptions = _Translations$accountPreferences$forcedSubtitleOptions$hu._(_root);
+	@override late final _TranslationsAccountPreferencesForcedSubtitleOptionsHu forcedSubtitleOptions = _TranslationsAccountPreferencesForcedSubtitleOptionsHu._(_root);
 	@override String get displayMissingEpisodes => 'Hiányzó epizódok megjelenítése';
 	@override String get displayMissingEpisodesDescription => 'Azoknak az epizódoknak a listázása, amelyeket a szerver ismer, de nincs hozzájuk fájl.';
 	@override String get hidePlayedInLatest => 'Megnézett elemek elrejtése a Legújabbak között';
@@ -1303,14 +1313,14 @@ class _Translations$accountPreferences$hu extends Translations$accountPreference
 	@override String get rewatchingInNextUp => 'Újranézett sorozatok megtartása a Következikben';
 	@override String get rewatchingInNextUpDescription => 'Ha befejezel egy sorozatot, és újra elkezded, a Következik az újranézést követi, ahelyett hogy eldobná a sorozatot.';
 	@override String get watchedIndicator => 'Megtekintett jelzések';
-	@override late final _Translations$accountPreferences$watchedIndicatorOptions$hu watchedIndicatorOptions = _Translations$accountPreferences$watchedIndicatorOptions$hu._(_root);
+	@override late final _TranslationsAccountPreferencesWatchedIndicatorOptionsHu watchedIndicatorOptions = _TranslationsAccountPreferencesWatchedIndicatorOptionsHu._(_root);
 	@override String get mediaReviewsVisibility => 'Értékelések és kritikák';
-	@override late final _Translations$accountPreferences$mediaReviewsOptions$hu mediaReviewsOptions = _Translations$accountPreferences$mediaReviewsOptions$hu._(_root);
+	@override late final _TranslationsAccountPreferencesMediaReviewsOptionsHu mediaReviewsOptions = _TranslationsAccountPreferencesMediaReviewsOptionsHu._(_root);
 }
 
 // Path: discover
-class _Translations$discover$hu extends Translations$discover$en {
-	_Translations$discover$hu._(TranslationsHu root) : this._root = root, super.internal(root);
+class _TranslationsDiscoverHu extends TranslationsDiscoverEn {
+	_TranslationsDiscoverHu._(TranslationsHu root) : this._root = root, super.internal(root);
 
 	final TranslationsHu _root; // ignore: unused_field
 
@@ -1343,12 +1353,12 @@ class _Translations$discover$hu extends Translations$discover$en {
 		one: '${n} cím',
 		other: '${n} cím',
 	);
-	@override late final _Translations$discover$person$hu person = _Translations$discover$person$hu._(_root);
+	@override late final _TranslationsDiscoverPersonHu person = _TranslationsDiscoverPersonHu._(_root);
 }
 
 // Path: errors
-class _Translations$errors$hu extends Translations$errors$en {
-	_Translations$errors$hu._(TranslationsHu root) : this._root = root, super.internal(root);
+class _TranslationsErrorsHu extends TranslationsErrorsEn {
+	_TranslationsErrorsHu._(TranslationsHu root) : this._root = root, super.internal(root);
 
 	final TranslationsHu _root; // ignore: unused_field
 
@@ -1375,8 +1385,8 @@ class _Translations$errors$hu extends Translations$errors$en {
 }
 
 // Path: libraries
-class _Translations$libraries$hu extends Translations$libraries$en {
-	_Translations$libraries$hu._(TranslationsHu root) : this._root = root, super.internal(root);
+class _TranslationsLibrariesHu extends TranslationsLibrariesEn {
+	_TranslationsLibrariesHu._(TranslationsHu root) : this._root = root, super.internal(root);
 
 	final TranslationsHu _root; // ignore: unused_field
 
@@ -1422,16 +1432,16 @@ class _Translations$libraries$hu extends Translations$libraries$en {
 	@override String get noCollections => 'Nincsenek gyűjtemények ebben a könyvtárban';
 	@override String get noFoldersFound => 'Nem találhatók mappák';
 	@override String get folders => 'mappák';
-	@override late final _Translations$libraries$tabs$hu tabs = _Translations$libraries$tabs$hu._(_root);
-	@override late final _Translations$libraries$groupings$hu groupings = _Translations$libraries$groupings$hu._(_root);
-	@override late final _Translations$libraries$filterCategories$hu filterCategories = _Translations$libraries$filterCategories$hu._(_root);
-	@override late final _Translations$libraries$sortLabels$hu sortLabels = _Translations$libraries$sortLabels$hu._(_root);
-	@override late final _Translations$libraries$advancedFilters$hu advancedFilters = _Translations$libraries$advancedFilters$hu._(_root);
+	@override late final _TranslationsLibrariesTabsHu tabs = _TranslationsLibrariesTabsHu._(_root);
+	@override late final _TranslationsLibrariesGroupingsHu groupings = _TranslationsLibrariesGroupingsHu._(_root);
+	@override late final _TranslationsLibrariesFilterCategoriesHu filterCategories = _TranslationsLibrariesFilterCategoriesHu._(_root);
+	@override late final _TranslationsLibrariesSortLabelsHu sortLabels = _TranslationsLibrariesSortLabelsHu._(_root);
+	@override late final _TranslationsLibrariesAdvancedFiltersHu advancedFilters = _TranslationsLibrariesAdvancedFiltersHu._(_root);
 }
 
 // Path: about
-class _Translations$about$hu extends Translations$about$en {
-	_Translations$about$hu._(TranslationsHu root) : this._root = root, super.internal(root);
+class _TranslationsAboutHu extends TranslationsAboutEn {
+	_TranslationsAboutHu._(TranslationsHu root) : this._root = root, super.internal(root);
 
 	final TranslationsHu _root; // ignore: unused_field
 
@@ -1444,8 +1454,8 @@ class _Translations$about$hu extends Translations$about$en {
 }
 
 // Path: serverSelection
-class _Translations$serverSelection$hu extends Translations$serverSelection$en {
-	_Translations$serverSelection$hu._(TranslationsHu root) : this._root = root, super.internal(root);
+class _TranslationsServerSelectionHu extends TranslationsServerSelectionEn {
+	_TranslationsServerSelectionHu._(TranslationsHu root) : this._root = root, super.internal(root);
 
 	final TranslationsHu _root; // ignore: unused_field
 
@@ -1456,8 +1466,8 @@ class _Translations$serverSelection$hu extends Translations$serverSelection$en {
 }
 
 // Path: hubDetail
-class _Translations$hubDetail$hu extends Translations$hubDetail$en {
-	_Translations$hubDetail$hu._(TranslationsHu root) : this._root = root, super.internal(root);
+class _TranslationsHubDetailHu extends TranslationsHubDetailEn {
+	_TranslationsHubDetailHu._(TranslationsHu root) : this._root = root, super.internal(root);
 
 	final TranslationsHu _root; // ignore: unused_field
 
@@ -1470,8 +1480,8 @@ class _Translations$hubDetail$hu extends Translations$hubDetail$en {
 }
 
 // Path: logs
-class _Translations$logs$hu extends Translations$logs$en {
-	_Translations$logs$hu._(TranslationsHu root) : this._root = root, super.internal(root);
+class _TranslationsLogsHu extends TranslationsLogsEn {
+	_TranslationsLogsHu._(TranslationsHu root) : this._root = root, super.internal(root);
 
 	final TranslationsHu _root; // ignore: unused_field
 
@@ -1482,8 +1492,8 @@ class _Translations$logs$hu extends Translations$logs$en {
 }
 
 // Path: startup
-class _Translations$startup$hu extends Translations$startup$en {
-	_Translations$startup$hu._(TranslationsHu root) : this._root = root, super.internal(root);
+class _TranslationsStartupHu extends TranslationsStartupEn {
+	_TranslationsStartupHu._(TranslationsHu root) : this._root = root, super.internal(root);
 
 	final TranslationsHu _root; // ignore: unused_field
 
@@ -1521,8 +1531,8 @@ class _Translations$startup$hu extends Translations$startup$en {
 }
 
 // Path: licenses
-class _Translations$licenses$hu extends Translations$licenses$en {
-	_Translations$licenses$hu._(TranslationsHu root) : this._root = root, super.internal(root);
+class _TranslationsLicensesHu extends TranslationsLicensesEn {
+	_TranslationsLicensesHu._(TranslationsHu root) : this._root = root, super.internal(root);
 
 	final TranslationsHu _root; // ignore: unused_field
 
@@ -1534,8 +1544,8 @@ class _Translations$licenses$hu extends Translations$licenses$en {
 }
 
 // Path: navigation
-class _Translations$navigation$hu extends Translations$navigation$en {
-	_Translations$navigation$hu._(TranslationsHu root) : this._root = root, super.internal(root);
+class _TranslationsNavigationHu extends TranslationsNavigationEn {
+	_TranslationsNavigationHu._(TranslationsHu root) : this._root = root, super.internal(root);
 
 	final TranslationsHu _root; // ignore: unused_field
 
@@ -1547,16 +1557,16 @@ class _Translations$navigation$hu extends Translations$navigation$en {
 }
 
 // Path: explore
-class _Translations$explore$hu extends Translations$explore$en {
-	_Translations$explore$hu._(TranslationsHu root) : this._root = root, super.internal(root);
+class _TranslationsExploreHu extends TranslationsExploreEn {
+	_TranslationsExploreHu._(TranslationsHu root) : this._root = root, super.internal(root);
 
 	final TranslationsHu _root; // ignore: unused_field
 
 	// Translations
 	@override String get title => 'Böngészés';
 	@override String get selectSource => 'Forrás kiválasztása';
-	@override late final _Translations$explore$rows$hu rows = _Translations$explore$rows$hu._(_root);
-	@override late final _Translations$explore$status$hu status = _Translations$explore$status$hu._(_root);
+	@override late final _TranslationsExploreRowsHu rows = _TranslationsExploreRowsHu._(_root);
+	@override late final _TranslationsExploreStatusHu status = _TranslationsExploreStatusHu._(_root);
 	@override String episodeCount({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('hu'))(n,
 		one: '${n} epizód',
 		other: '${n} epizód',
@@ -1582,16 +1592,16 @@ class _Translations$explore$hu extends Translations$explore$en {
 	@override String searchEmpty({required Object query}) => 'Nincs találat a következőre: "${query}"';
 	@override String searchPrompt({required Object source}) => 'Filmek és sorozatok keresése a következőn: ${source}.';
 	@override String get searchFailed => 'A keresés nem sikerült. Ellenőrizd a kapcsolatot és próbáld újra.';
-	@override late final _Translations$explore$badge$hu badge = _Translations$explore$badge$hu._(_root);
-	@override late final _Translations$explore$stats$hu stats = _Translations$explore$stats$hu._(_root);
-	@override late final _Translations$explore$season$hu season = _Translations$explore$season$hu._(_root);
-	@override late final _Translations$explore$format$hu format = _Translations$explore$format$hu._(_root);
-	@override late final _Translations$explore$sourceMaterial$hu sourceMaterial = _Translations$explore$sourceMaterial$hu._(_root);
-	@override late final _Translations$explore$creditRole$hu creditRole = _Translations$explore$creditRole$hu._(_root);
-	@override late final _Translations$explore$relation$hu relation = _Translations$explore$relation$hu._(_root);
+	@override late final _TranslationsExploreBadgeHu badge = _TranslationsExploreBadgeHu._(_root);
+	@override late final _TranslationsExploreStatsHu stats = _TranslationsExploreStatsHu._(_root);
+	@override late final _TranslationsExploreSeasonHu season = _TranslationsExploreSeasonHu._(_root);
+	@override late final _TranslationsExploreFormatHu format = _TranslationsExploreFormatHu._(_root);
+	@override late final _TranslationsExploreSourceMaterialHu sourceMaterial = _TranslationsExploreSourceMaterialHu._(_root);
+	@override late final _TranslationsExploreCreditRoleHu creditRole = _TranslationsExploreCreditRoleHu._(_root);
+	@override late final _TranslationsExploreRelationHu relation = _TranslationsExploreRelationHu._(_root);
 	@override String broadcast({required Object day, required Object time}) => 'Adásban: ${day}, ${time} órakor';
 	@override String broadcastWithZone({required Object day, required Object time, required Object timezone}) => 'Adásban: ${day}, ${time} ${timezone}';
-	@override late final _Translations$explore$detail$hu detail = _Translations$explore$detail$hu._(_root);
+	@override late final _TranslationsExploreDetailHu detail = _TranslationsExploreDetailHu._(_root);
 	@override String totalResults({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('hu'))(n,
 		one: '${n} találat',
 		other: '${n} találat',
@@ -1599,8 +1609,8 @@ class _Translations$explore$hu extends Translations$explore$en {
 }
 
 // Path: liveTv
-class _Translations$liveTv$hu extends Translations$liveTv$en {
-	_Translations$liveTv$hu._(TranslationsHu root) : this._root = root, super.internal(root);
+class _TranslationsLiveTvHu extends TranslationsLiveTvEn {
+	_TranslationsLiveTvHu._(TranslationsHu root) : this._root = root, super.internal(root);
 
 	final TranslationsHu _root; // ignore: unused_field
 
@@ -1682,7 +1692,7 @@ class _Translations$liveTv$hu extends Translations$liveTv$en {
 	@override String get rulesProcessRequested => 'Szabályok újraértékelése kérve';
 	@override String get rulesProcessFailed => 'Nem sikerült újra kiértékelni a felvételi szabályokat';
 	@override String get recordShow => 'Műsor rögzítése';
-	@override late final _Translations$liveTv$recordSettings$hu recordSettings = _Translations$liveTv$recordSettings$hu._(_root);
+	@override late final _TranslationsLiveTvRecordSettingsHu recordSettings = _TranslationsLiveTvRecordSettingsHu._(_root);
 	@override String startingInMinutes({required Object minutes}) => '${minutes} perc múlva kezdődik';
 	@override String dayAtTime({required Object day, required Object time}) => '${day}, ${time}';
 	@override String invalidPlaybackData({required Object product}) => 'A(z) ${product} érvénytelen Élő TV-lejátszási adatokat adott vissza';
@@ -1693,8 +1703,8 @@ class _Translations$liveTv$hu extends Translations$liveTv$en {
 }
 
 // Path: collections
-class _Translations$collections$hu extends Translations$collections$en {
-	_Translations$collections$hu._(TranslationsHu root) : this._root = root, super.internal(root);
+class _TranslationsCollectionsHu extends TranslationsCollectionsEn {
+	_TranslationsCollectionsHu._(TranslationsHu root) : this._root = root, super.internal(root);
 
 	final TranslationsHu _root; // ignore: unused_field
 
@@ -1722,8 +1732,8 @@ class _Translations$collections$hu extends Translations$collections$en {
 }
 
 // Path: playlists
-class _Translations$playlists$hu extends Translations$playlists$en {
-	_Translations$playlists$hu._(TranslationsHu root) : this._root = root, super.internal(root);
+class _TranslationsPlaylistsHu extends TranslationsPlaylistsEn {
+	_TranslationsPlaylistsHu._(TranslationsHu root) : this._root = root, super.internal(root);
 
 	final TranslationsHu _root; // ignore: unused_field
 
@@ -1757,8 +1767,8 @@ class _Translations$playlists$hu extends Translations$playlists$en {
 }
 
 // Path: music
-class _Translations$music$hu extends Translations$music$en {
-	_Translations$music$hu._(TranslationsHu root) : this._root = root, super.internal(root);
+class _TranslationsMusicHu extends TranslationsMusicEn {
+	_TranslationsMusicHu._(TranslationsHu root) : this._root = root, super.internal(root);
 
 	final TranslationsHu _root; // ignore: unused_field
 
@@ -1792,12 +1802,12 @@ class _Translations$music$hu extends Translations$music$en {
 	@override String get instantMixFailed => 'Nem sikerült betölteni az azonnali mixet';
 	@override String get instantMixEmpty => 'Az azonnali mix nem adott vissza zeneszámokat';
 	@override String noAudioUrl({required Object track}) => 'Nem érhető el hang-URL ehhez: ${track}';
-	@override late final _Translations$music$discography$hu discography = _Translations$music$discography$hu._(_root);
+	@override late final _TranslationsMusicDiscographyHu discography = _TranslationsMusicDiscographyHu._(_root);
 }
 
 // Path: watchTogether
-class _Translations$watchTogether$hu extends Translations$watchTogether$en {
-	_Translations$watchTogether$hu._(TranslationsHu root) : this._root = root, super.internal(root);
+class _TranslationsWatchTogetherHu extends TranslationsWatchTogetherEn {
+	_TranslationsWatchTogetherHu._(TranslationsHu root) : this._root = root, super.internal(root);
 
 	final TranslationsHu _root; // ignore: unused_field
 
@@ -1907,15 +1917,15 @@ class _Translations$watchTogether$hu extends Translations$watchTogether$en {
 	@override String get end => 'Befejezés';
 	@override String get playBlockedTitle => 'A lejátszás nem indult el';
 	@override String get playBlockedDescription => 'Nyomd meg a lejátszás gombot, hogy együtt nézhesd a szobával.';
-	@override late final _Translations$watchTogether$notices$hu notices = _Translations$watchTogether$notices$hu._(_root);
-	@override late final _Translations$watchTogether$ended$hu ended = _Translations$watchTogether$ended$hu._(_root);
-	@override late final _Translations$watchTogether$errors$hu errors = _Translations$watchTogether$errors$hu._(_root);
+	@override late final _TranslationsWatchTogetherNoticesHu notices = _TranslationsWatchTogetherNoticesHu._(_root);
+	@override late final _TranslationsWatchTogetherEndedHu ended = _TranslationsWatchTogetherEndedHu._(_root);
+	@override late final _TranslationsWatchTogetherErrorsHu errors = _TranslationsWatchTogetherErrorsHu._(_root);
 	@override String untitledEpisode({required Object number}) => '${number}. epizód';
 }
 
 // Path: downloads
-class _Translations$downloads$hu extends Translations$downloads$en {
-	_Translations$downloads$hu._(TranslationsHu root) : this._root = root, super.internal(root);
+class _TranslationsDownloadsHu extends TranslationsDownloadsEn {
+	_TranslationsDownloadsHu._(TranslationsHu root) : this._root = root, super.internal(root);
 
 	final TranslationsHu _root; // ignore: unused_field
 
@@ -2001,9 +2011,9 @@ class _Translations$downloads$hu extends Translations$downloads$en {
 	@override String get syncRuleNotAvailableForProfile => 'Nem érhető el a jelenlegi profilhoz';
 	@override String get syncRuleUnknownServer => 'Ismeretlen szerver';
 	@override String get syncRuleListCreated => 'Szinkronizálási szabály létrehozva';
-	@override late final _Translations$downloads$backgroundWarning$hu backgroundWarning = _Translations$downloads$backgroundWarning$hu._(_root);
+	@override late final _TranslationsDownloadsBackgroundWarningHu backgroundWarning = _TranslationsDownloadsBackgroundWarningHu._(_root);
 	@override String get options => 'Letöltések lehetőségei';
-	@override late final _Translations$downloads$groupings$hu groupings = _Translations$downloads$groupings$hu._(_root);
+	@override late final _TranslationsDownloadsGroupingsHu groupings = _TranslationsDownloadsGroupingsHu._(_root);
 	@override String get unknownLibrary => 'Ismeretlen könyvtár';
 	@override String get unknownShow => 'Ismeretlen sorozat';
 	@override String get unknownSeason => 'Ismeretlen évad';
@@ -2024,8 +2034,8 @@ class _Translations$downloads$hu extends Translations$downloads$en {
 }
 
 // Path: shaders
-class _Translations$shaders$hu extends Translations$shaders$en {
-	_Translations$shaders$hu._(TranslationsHu root) : this._root = root, super.internal(root);
+class _TranslationsShadersHu extends TranslationsShadersEn {
+	_TranslationsShadersHu._(TranslationsHu root) : this._root = root, super.internal(root);
 
 	final TranslationsHu _root; // ignore: unused_field
 
@@ -2048,8 +2058,8 @@ class _Translations$shaders$hu extends Translations$shaders$en {
 }
 
 // Path: companionRemote
-class _Translations$companionRemote$hu extends Translations$companionRemote$en {
-	_Translations$companionRemote$hu._(TranslationsHu root) : this._root = root, super.internal(root);
+class _TranslationsCompanionRemoteHu extends TranslationsCompanionRemoteEn {
+	_TranslationsCompanionRemoteHu._(TranslationsHu root) : this._root = root, super.internal(root);
 
 	final TranslationsHu _root; // ignore: unused_field
 
@@ -2057,16 +2067,16 @@ class _Translations$companionRemote$hu extends Translations$companionRemote$en {
 	@override String get title => 'Kísérőtávirányító';
 	@override String connectedTo({required Object name}) => 'Csatlakoztatva a következőhöz: ${name}';
 	@override String get unknownDevice => 'Ismeretlen eszköz';
-	@override late final _Translations$companionRemote$session$hu session = _Translations$companionRemote$session$hu._(_root);
-	@override late final _Translations$companionRemote$pairing$hu pairing = _Translations$companionRemote$pairing$hu._(_root);
-	@override late final _Translations$companionRemote$remote$hu remote = _Translations$companionRemote$remote$hu._(_root);
-	@override late final _Translations$companionRemote$errors$hu errors = _Translations$companionRemote$errors$hu._(_root);
+	@override late final _TranslationsCompanionRemoteSessionHu session = _TranslationsCompanionRemoteSessionHu._(_root);
+	@override late final _TranslationsCompanionRemotePairingHu pairing = _TranslationsCompanionRemotePairingHu._(_root);
+	@override late final _TranslationsCompanionRemoteRemoteHu remote = _TranslationsCompanionRemoteRemoteHu._(_root);
+	@override late final _TranslationsCompanionRemoteErrorsHu errors = _TranslationsCompanionRemoteErrorsHu._(_root);
 	@override String get closedBeforeAuth => 'A kapcsolat a hitelesítés előtt megszakadt';
 }
 
 // Path: videoSettings
-class _Translations$videoSettings$hu extends Translations$videoSettings$en {
-	_Translations$videoSettings$hu._(TranslationsHu root) : this._root = root, super.internal(root);
+class _TranslationsVideoSettingsHu extends TranslationsVideoSettingsEn {
+	_TranslationsVideoSettingsHu._(TranslationsHu root) : this._root = root, super.internal(root);
 
 	final TranslationsHu _root; // ignore: unused_field
 
@@ -2098,8 +2108,8 @@ class _Translations$videoSettings$hu extends Translations$videoSettings$en {
 }
 
 // Path: performanceOverlay
-class _Translations$performanceOverlay$hu extends Translations$performanceOverlay$en {
-	_Translations$performanceOverlay$hu._(TranslationsHu root) : this._root = root, super.internal(root);
+class _TranslationsPerformanceOverlayHu extends TranslationsPerformanceOverlayEn {
+	_TranslationsPerformanceOverlayHu._(TranslationsHu root) : this._root = root, super.internal(root);
 
 	final TranslationsHu _root; // ignore: unused_field
 
@@ -2160,8 +2170,8 @@ class _Translations$performanceOverlay$hu extends Translations$performanceOverla
 }
 
 // Path: externalPlayer
-class _Translations$externalPlayer$hu extends Translations$externalPlayer$en {
-	_Translations$externalPlayer$hu._(TranslationsHu root) : this._root = root, super.internal(root);
+class _TranslationsExternalPlayerHu extends TranslationsExternalPlayerEn {
+	_TranslationsExternalPlayerHu._(TranslationsHu root) : this._root = root, super.internal(root);
 
 	final TranslationsHu _root; // ignore: unused_field
 
@@ -2185,8 +2195,8 @@ class _Translations$externalPlayer$hu extends Translations$externalPlayer$en {
 }
 
 // Path: metadataEdit
-class _Translations$metadataEdit$hu extends Translations$metadataEdit$en {
-	_Translations$metadataEdit$hu._(TranslationsHu root) : this._root = root, super.internal(root);
+class _TranslationsMetadataEditHu extends TranslationsMetadataEditEn {
+	_TranslationsMetadataEditHu._(TranslationsHu root) : this._root = root, super.internal(root);
 
 	final TranslationsHu _root; // ignore: unused_field
 
@@ -2269,8 +2279,8 @@ class _Translations$metadataEdit$hu extends Translations$metadataEdit$en {
 }
 
 // Path: matchScreen
-class _Translations$matchScreen$hu extends Translations$matchScreen$en {
-	_Translations$matchScreen$hu._(TranslationsHu root) : this._root = root, super.internal(root);
+class _TranslationsMatchScreenHu extends TranslationsMatchScreenEn {
+	_TranslationsMatchScreenHu._(TranslationsHu root) : this._root = root, super.internal(root);
 
 	final TranslationsHu _root; // ignore: unused_field
 
@@ -2290,8 +2300,8 @@ class _Translations$matchScreen$hu extends Translations$matchScreen$en {
 }
 
 // Path: serverTasks
-class _Translations$serverTasks$hu extends Translations$serverTasks$en {
-	_Translations$serverTasks$hu._(TranslationsHu root) : this._root = root, super.internal(root);
+class _TranslationsServerTasksHu extends TranslationsServerTasksEn {
+	_TranslationsServerTasksHu._(TranslationsHu root) : this._root = root, super.internal(root);
 
 	final TranslationsHu _root; // ignore: unused_field
 
@@ -2302,8 +2312,8 @@ class _Translations$serverTasks$hu extends Translations$serverTasks$en {
 }
 
 // Path: trakt
-class _Translations$trakt$hu extends Translations$trakt$en {
-	_Translations$trakt$hu._(TranslationsHu root) : this._root = root, super.internal(root);
+class _TranslationsTraktHu extends TranslationsTraktEn {
+	_TranslationsTraktHu._(TranslationsHu root) : this._root = root, super.internal(root);
 
 	final TranslationsHu _root; // ignore: unused_field
 
@@ -2320,8 +2330,8 @@ class _Translations$trakt$hu extends Translations$trakt$en {
 }
 
 // Path: seerr
-class _Translations$seerr$hu extends Translations$seerr$en {
-	_Translations$seerr$hu._(TranslationsHu root) : this._root = root, super.internal(root);
+class _TranslationsSeerrHu extends TranslationsSeerrEn {
+	_TranslationsSeerrHu._(TranslationsHu root) : this._root = root, super.internal(root);
 
 	final TranslationsHu _root; // ignore: unused_field
 
@@ -2379,8 +2389,8 @@ class _Translations$seerr$hu extends Translations$seerr$en {
 }
 
 // Path: services
-class _Translations$services$hu extends Translations$services$en {
-	_Translations$services$hu._(TranslationsHu root) : this._root = root, super.internal(root);
+class _TranslationsServicesHu extends TranslationsServicesEn {
+	_TranslationsServicesHu._(TranslationsHu root) : this._root = root, super.internal(root);
 
 	final TranslationsHu _root; // ignore: unused_field
 
@@ -2395,17 +2405,17 @@ class _Translations$services$hu extends Translations$services$en {
 	@override String disconnectConfirm({required Object service}) => 'Leválasztod a(z) ${service} szolgáltatást?';
 	@override String disconnectConfirmBody({required Object service}) => 'A Plezy nem frissíti többé a(z) ${service} adatait. Bármikor újracsatlakozhatsz.';
 	@override String connectFailed({required Object service}) => 'Nem sikerült csatlakozni a következőhöz: ${service}. Próbáld újra.';
-	@override late final _Translations$services$names$hu names = _Translations$services$names$hu._(_root);
-	@override late final _Translations$services$simklReconnect$hu simklReconnect = _Translations$services$simklReconnect$hu._(_root);
-	@override late final _Translations$services$deviceCode$hu deviceCode = _Translations$services$deviceCode$hu._(_root);
-	@override late final _Translations$services$oauthProxy$hu oauthProxy = _Translations$services$oauthProxy$hu._(_root);
-	@override late final _Translations$services$pendingAuth$hu pendingAuth = _Translations$services$pendingAuth$hu._(_root);
-	@override late final _Translations$services$libraryFilter$hu libraryFilter = _Translations$services$libraryFilter$hu._(_root);
+	@override late final _TranslationsServicesNamesHu names = _TranslationsServicesNamesHu._(_root);
+	@override late final _TranslationsServicesSimklReconnectHu simklReconnect = _TranslationsServicesSimklReconnectHu._(_root);
+	@override late final _TranslationsServicesDeviceCodeHu deviceCode = _TranslationsServicesDeviceCodeHu._(_root);
+	@override late final _TranslationsServicesOauthProxyHu oauthProxy = _TranslationsServicesOauthProxyHu._(_root);
+	@override late final _TranslationsServicesPendingAuthHu pendingAuth = _TranslationsServicesPendingAuthHu._(_root);
+	@override late final _TranslationsServicesLibraryFilterHu libraryFilter = _TranslationsServicesLibraryFilterHu._(_root);
 }
 
 // Path: addServer
-class _Translations$addServer$hu extends Translations$addServer$en {
-	_Translations$addServer$hu._(TranslationsHu root) : this._root = root, super.internal(root);
+class _TranslationsAddServerHu extends TranslationsAddServerEn {
+	_TranslationsAddServerHu._(TranslationsHu root) : this._root = root, super.internal(root);
 
 	final TranslationsHu _root; // ignore: unused_field
 
@@ -2459,9 +2469,18 @@ class _Translations$addServer$hu extends Translations$addServer$en {
 	@override String redirectUnsupportedEnterFinal({required Object product}) => 'A szerver nem támogatott URL-re irányított át. Add meg közvetlenül a végleges ${product} URL-t.';
 }
 
+// Path: deepLinks
+class _TranslationsDeepLinksHu extends TranslationsDeepLinksEn {
+	_TranslationsDeepLinksHu._(TranslationsHu root) : this._root = root, super.internal(root);
+
+	final TranslationsHu _root; // ignore: unused_field
+
+	// Translations
+}
+
 // Path: appIcon.names
-class _Translations$appIcon$names$hu extends Translations$appIcon$names$en {
-	_Translations$appIcon$names$hu._(TranslationsHu root) : this._root = root, super.internal(root);
+class _TranslationsAppIconNamesHu extends TranslationsAppIconNamesEn {
+	_TranslationsAppIconNamesHu._(TranslationsHu root) : this._root = root, super.internal(root);
 
 	final TranslationsHu _root; // ignore: unused_field
 
@@ -2492,8 +2511,8 @@ class _Translations$appIcon$names$hu extends Translations$appIcon$names$en {
 }
 
 // Path: common.ratingSource
-class _Translations$common$ratingSource$hu extends Translations$common$ratingSource$en {
-	_Translations$common$ratingSource$hu._(TranslationsHu root) : this._root = root, super.internal(root);
+class _TranslationsCommonRatingSourceHu extends TranslationsCommonRatingSourceEn {
+	_TranslationsCommonRatingSourceHu._(TranslationsHu root) : this._root = root, super.internal(root);
 
 	final TranslationsHu _root; // ignore: unused_field
 
@@ -2514,8 +2533,8 @@ class _Translations$common$ratingSource$hu extends Translations$common$ratingSou
 }
 
 // Path: common.mediaKind
-class _Translations$common$mediaKind$hu extends Translations$common$mediaKind$en {
-	_Translations$common$mediaKind$hu._(TranslationsHu root) : this._root = root, super.internal(root);
+class _TranslationsCommonMediaKindHu extends TranslationsCommonMediaKindEn {
+	_TranslationsCommonMediaKindHu._(TranslationsHu root) : this._root = root, super.internal(root);
 
 	final TranslationsHu _root; // ignore: unused_field
 
@@ -2535,8 +2554,8 @@ class _Translations$common$mediaKind$hu extends Translations$common$mediaKind$en
 }
 
 // Path: supporter.errors
-class _Translations$supporter$errors$hu extends Translations$supporter$errors$en {
-	_Translations$supporter$errors$hu._(TranslationsHu root) : this._root = root, super.internal(root);
+class _TranslationsSupporterErrorsHu extends TranslationsSupporterErrorsEn {
+	_TranslationsSupporterErrorsHu._(TranslationsHu root) : this._root = root, super.internal(root);
 
 	final TranslationsHu _root; // ignore: unused_field
 
@@ -2550,8 +2569,8 @@ class _Translations$supporter$errors$hu extends Translations$supporter$errors$en
 }
 
 // Path: themeEditor.slots
-class _Translations$themeEditor$slots$hu extends Translations$themeEditor$slots$en {
-	_Translations$themeEditor$slots$hu._(TranslationsHu root) : this._root = root, super.internal(root);
+class _TranslationsThemeEditorSlotsHu extends TranslationsThemeEditorSlotsEn {
+	_TranslationsThemeEditorSlotsHu._(TranslationsHu root) : this._root = root, super.internal(root);
 
 	final TranslationsHu _root; // ignore: unused_field
 
@@ -2565,8 +2584,8 @@ class _Translations$themeEditor$slots$hu extends Translations$themeEditor$slots$
 }
 
 // Path: themeEditor.contrast
-class _Translations$themeEditor$contrast$hu extends Translations$themeEditor$contrast$en {
-	_Translations$themeEditor$contrast$hu._(TranslationsHu root) : this._root = root, super.internal(root);
+class _TranslationsThemeEditorContrastHu extends TranslationsThemeEditorContrastEn {
+	_TranslationsThemeEditorContrastHu._(TranslationsHu root) : this._root = root, super.internal(root);
 
 	final TranslationsHu _root; // ignore: unused_field
 
@@ -2581,8 +2600,8 @@ class _Translations$themeEditor$contrast$hu extends Translations$themeEditor$con
 }
 
 // Path: hotkeys.actions
-class _Translations$hotkeys$actions$hu extends Translations$hotkeys$actions$en {
-	_Translations$hotkeys$actions$hu._(TranslationsHu root) : this._root = root, super.internal(root);
+class _TranslationsHotkeysActionsHu extends TranslationsHotkeysActionsEn {
+	_TranslationsHotkeysActionsHu._(TranslationsHu root) : this._root = root, super.internal(root);
 
 	final TranslationsHu _root; // ignore: unused_field
 
@@ -2615,8 +2634,8 @@ class _Translations$hotkeys$actions$hu extends Translations$hotkeys$actions$en {
 }
 
 // Path: videoControls.pipErrors
-class _Translations$videoControls$pipErrors$hu extends Translations$videoControls$pipErrors$en {
-	_Translations$videoControls$pipErrors$hu._(TranslationsHu root) : this._root = root, super.internal(root);
+class _TranslationsVideoControlsPipErrorsHu extends TranslationsVideoControlsPipErrorsEn {
+	_TranslationsVideoControlsPipErrorsHu._(TranslationsHu root) : this._root = root, super.internal(root);
 
 	final TranslationsHu _root; // ignore: unused_field
 
@@ -2632,8 +2651,8 @@ class _Translations$videoControls$pipErrors$hu extends Translations$videoControl
 }
 
 // Path: accountPreferences.groups
-class _Translations$accountPreferences$groups$hu extends Translations$accountPreferences$groups$en {
-	_Translations$accountPreferences$groups$hu._(TranslationsHu root) : this._root = root, super.internal(root);
+class _TranslationsAccountPreferencesGroupsHu extends TranslationsAccountPreferencesGroupsEn {
+	_TranslationsAccountPreferencesGroupsHu._(TranslationsHu root) : this._root = root, super.internal(root);
 
 	final TranslationsHu _root; // ignore: unused_field
 
@@ -2644,8 +2663,8 @@ class _Translations$accountPreferences$groups$hu extends Translations$accountPre
 }
 
 // Path: accountPreferences.subtitleModes
-class _Translations$accountPreferences$subtitleModes$hu extends Translations$accountPreferences$subtitleModes$en {
-	_Translations$accountPreferences$subtitleModes$hu._(TranslationsHu root) : this._root = root, super.internal(root);
+class _TranslationsAccountPreferencesSubtitleModesHu extends TranslationsAccountPreferencesSubtitleModesEn {
+	_TranslationsAccountPreferencesSubtitleModesHu._(TranslationsHu root) : this._root = root, super.internal(root);
 
 	final TranslationsHu _root; // ignore: unused_field
 
@@ -2663,8 +2682,8 @@ class _Translations$accountPreferences$subtitleModes$hu extends Translations$acc
 }
 
 // Path: accountPreferences.subtitleAccessibilityOptions
-class _Translations$accountPreferences$subtitleAccessibilityOptions$hu extends Translations$accountPreferences$subtitleAccessibilityOptions$en {
-	_Translations$accountPreferences$subtitleAccessibilityOptions$hu._(TranslationsHu root) : this._root = root, super.internal(root);
+class _TranslationsAccountPreferencesSubtitleAccessibilityOptionsHu extends TranslationsAccountPreferencesSubtitleAccessibilityOptionsEn {
+	_TranslationsAccountPreferencesSubtitleAccessibilityOptionsHu._(TranslationsHu root) : this._root = root, super.internal(root);
 
 	final TranslationsHu _root; // ignore: unused_field
 
@@ -2676,8 +2695,8 @@ class _Translations$accountPreferences$subtitleAccessibilityOptions$hu extends T
 }
 
 // Path: accountPreferences.forcedSubtitleOptions
-class _Translations$accountPreferences$forcedSubtitleOptions$hu extends Translations$accountPreferences$forcedSubtitleOptions$en {
-	_Translations$accountPreferences$forcedSubtitleOptions$hu._(TranslationsHu root) : this._root = root, super.internal(root);
+class _TranslationsAccountPreferencesForcedSubtitleOptionsHu extends TranslationsAccountPreferencesForcedSubtitleOptionsEn {
+	_TranslationsAccountPreferencesForcedSubtitleOptionsHu._(TranslationsHu root) : this._root = root, super.internal(root);
 
 	final TranslationsHu _root; // ignore: unused_field
 
@@ -2689,8 +2708,8 @@ class _Translations$accountPreferences$forcedSubtitleOptions$hu extends Translat
 }
 
 // Path: accountPreferences.watchedIndicatorOptions
-class _Translations$accountPreferences$watchedIndicatorOptions$hu extends Translations$accountPreferences$watchedIndicatorOptions$en {
-	_Translations$accountPreferences$watchedIndicatorOptions$hu._(TranslationsHu root) : this._root = root, super.internal(root);
+class _TranslationsAccountPreferencesWatchedIndicatorOptionsHu extends TranslationsAccountPreferencesWatchedIndicatorOptionsEn {
+	_TranslationsAccountPreferencesWatchedIndicatorOptionsHu._(TranslationsHu root) : this._root = root, super.internal(root);
 
 	final TranslationsHu _root; // ignore: unused_field
 
@@ -2702,8 +2721,8 @@ class _Translations$accountPreferences$watchedIndicatorOptions$hu extends Transl
 }
 
 // Path: accountPreferences.mediaReviewsOptions
-class _Translations$accountPreferences$mediaReviewsOptions$hu extends Translations$accountPreferences$mediaReviewsOptions$en {
-	_Translations$accountPreferences$mediaReviewsOptions$hu._(TranslationsHu root) : this._root = root, super.internal(root);
+class _TranslationsAccountPreferencesMediaReviewsOptionsHu extends TranslationsAccountPreferencesMediaReviewsOptionsEn {
+	_TranslationsAccountPreferencesMediaReviewsOptionsHu._(TranslationsHu root) : this._root = root, super.internal(root);
 
 	final TranslationsHu _root; // ignore: unused_field
 
@@ -2715,8 +2734,8 @@ class _Translations$accountPreferences$mediaReviewsOptions$hu extends Translatio
 }
 
 // Path: discover.person
-class _Translations$discover$person$hu extends Translations$discover$person$en {
-	_Translations$discover$person$hu._(TranslationsHu root) : this._root = root, super.internal(root);
+class _TranslationsDiscoverPersonHu extends TranslationsDiscoverPersonEn {
+	_TranslationsDiscoverPersonHu._(TranslationsHu root) : this._root = root, super.internal(root);
 
 	final TranslationsHu _root; // ignore: unused_field
 
@@ -2729,8 +2748,8 @@ class _Translations$discover$person$hu extends Translations$discover$person$en {
 }
 
 // Path: libraries.tabs
-class _Translations$libraries$tabs$hu extends Translations$libraries$tabs$en {
-	_Translations$libraries$tabs$hu._(TranslationsHu root) : this._root = root, super.internal(root);
+class _TranslationsLibrariesTabsHu extends TranslationsLibrariesTabsEn {
+	_TranslationsLibrariesTabsHu._(TranslationsHu root) : this._root = root, super.internal(root);
 
 	final TranslationsHu _root; // ignore: unused_field
 
@@ -2742,8 +2761,8 @@ class _Translations$libraries$tabs$hu extends Translations$libraries$tabs$en {
 }
 
 // Path: libraries.groupings
-class _Translations$libraries$groupings$hu extends Translations$libraries$groupings$en {
-	_Translations$libraries$groupings$hu._(TranslationsHu root) : this._root = root, super.internal(root);
+class _TranslationsLibrariesGroupingsHu extends TranslationsLibrariesGroupingsEn {
+	_TranslationsLibrariesGroupingsHu._(TranslationsHu root) : this._root = root, super.internal(root);
 
 	final TranslationsHu _root; // ignore: unused_field
 
@@ -2761,8 +2780,8 @@ class _Translations$libraries$groupings$hu extends Translations$libraries$groupi
 }
 
 // Path: libraries.filterCategories
-class _Translations$libraries$filterCategories$hu extends Translations$libraries$filterCategories$en {
-	_Translations$libraries$filterCategories$hu._(TranslationsHu root) : this._root = root, super.internal(root);
+class _TranslationsLibrariesFilterCategoriesHu extends TranslationsLibrariesFilterCategoriesEn {
+	_TranslationsLibrariesFilterCategoriesHu._(TranslationsHu root) : this._root = root, super.internal(root);
 
 	final TranslationsHu _root; // ignore: unused_field
 
@@ -2778,8 +2797,8 @@ class _Translations$libraries$filterCategories$hu extends Translations$libraries
 }
 
 // Path: libraries.sortLabels
-class _Translations$libraries$sortLabels$hu extends Translations$libraries$sortLabels$en {
-	_Translations$libraries$sortLabels$hu._(TranslationsHu root) : this._root = root, super.internal(root);
+class _TranslationsLibrariesSortLabelsHu extends TranslationsLibrariesSortLabelsEn {
+	_TranslationsLibrariesSortLabelsHu._(TranslationsHu root) : this._root = root, super.internal(root);
 
 	final TranslationsHu _root; // ignore: unused_field
 
@@ -2810,8 +2829,8 @@ class _Translations$libraries$sortLabels$hu extends Translations$libraries$sortL
 }
 
 // Path: libraries.advancedFilters
-class _Translations$libraries$advancedFilters$hu extends Translations$libraries$advancedFilters$en {
-	_Translations$libraries$advancedFilters$hu._(TranslationsHu root) : this._root = root, super.internal(root);
+class _TranslationsLibrariesAdvancedFiltersHu extends TranslationsLibrariesAdvancedFiltersEn {
+	_TranslationsLibrariesAdvancedFiltersHu._(TranslationsHu root) : this._root = root, super.internal(root);
 
 	final TranslationsHu _root; // ignore: unused_field
 
@@ -2845,8 +2864,8 @@ class _Translations$libraries$advancedFilters$hu extends Translations$libraries$
 }
 
 // Path: explore.rows
-class _Translations$explore$rows$hu extends Translations$explore$rows$en {
-	_Translations$explore$rows$hu._(TranslationsHu root) : this._root = root, super.internal(root);
+class _TranslationsExploreRowsHu extends TranslationsExploreRowsEn {
+	_TranslationsExploreRowsHu._(TranslationsHu root) : this._root = root, super.internal(root);
 
 	final TranslationsHu _root; // ignore: unused_field
 
@@ -2868,8 +2887,8 @@ class _Translations$explore$rows$hu extends Translations$explore$rows$en {
 }
 
 // Path: explore.status
-class _Translations$explore$status$hu extends Translations$explore$status$en {
-	_Translations$explore$status$hu._(TranslationsHu root) : this._root = root, super.internal(root);
+class _TranslationsExploreStatusHu extends TranslationsExploreStatusEn {
+	_TranslationsExploreStatusHu._(TranslationsHu root) : this._root = root, super.internal(root);
 
 	final TranslationsHu _root; // ignore: unused_field
 
@@ -2881,8 +2900,8 @@ class _Translations$explore$status$hu extends Translations$explore$status$en {
 }
 
 // Path: explore.badge
-class _Translations$explore$badge$hu extends Translations$explore$badge$en {
-	_Translations$explore$badge$hu._(TranslationsHu root) : this._root = root, super.internal(root);
+class _TranslationsExploreBadgeHu extends TranslationsExploreBadgeEn {
+	_TranslationsExploreBadgeHu._(TranslationsHu root) : this._root = root, super.internal(root);
 
 	final TranslationsHu _root; // ignore: unused_field
 
@@ -2911,8 +2930,8 @@ class _Translations$explore$badge$hu extends Translations$explore$badge$en {
 }
 
 // Path: explore.stats
-class _Translations$explore$stats$hu extends Translations$explore$stats$en {
-	_Translations$explore$stats$hu._(TranslationsHu root) : this._root = root, super.internal(root);
+class _TranslationsExploreStatsHu extends TranslationsExploreStatsEn {
+	_TranslationsExploreStatsHu._(TranslationsHu root) : this._root = root, super.internal(root);
 
 	final TranslationsHu _root; // ignore: unused_field
 
@@ -2938,8 +2957,8 @@ class _Translations$explore$stats$hu extends Translations$explore$stats$en {
 }
 
 // Path: explore.season
-class _Translations$explore$season$hu extends Translations$explore$season$en {
-	_Translations$explore$season$hu._(TranslationsHu root) : this._root = root, super.internal(root);
+class _TranslationsExploreSeasonHu extends TranslationsExploreSeasonEn {
+	_TranslationsExploreSeasonHu._(TranslationsHu root) : this._root = root, super.internal(root);
 
 	final TranslationsHu _root; // ignore: unused_field
 
@@ -2952,8 +2971,8 @@ class _Translations$explore$season$hu extends Translations$explore$season$en {
 }
 
 // Path: explore.format
-class _Translations$explore$format$hu extends Translations$explore$format$en {
-	_Translations$explore$format$hu._(TranslationsHu root) : this._root = root, super.internal(root);
+class _TranslationsExploreFormatHu extends TranslationsExploreFormatEn {
+	_TranslationsExploreFormatHu._(TranslationsHu root) : this._root = root, super.internal(root);
 
 	final TranslationsHu _root; // ignore: unused_field
 
@@ -2969,8 +2988,8 @@ class _Translations$explore$format$hu extends Translations$explore$format$en {
 }
 
 // Path: explore.sourceMaterial
-class _Translations$explore$sourceMaterial$hu extends Translations$explore$sourceMaterial$en {
-	_Translations$explore$sourceMaterial$hu._(TranslationsHu root) : this._root = root, super.internal(root);
+class _TranslationsExploreSourceMaterialHu extends TranslationsExploreSourceMaterialEn {
+	_TranslationsExploreSourceMaterialHu._(TranslationsHu root) : this._root = root, super.internal(root);
 
 	final TranslationsHu _root; // ignore: unused_field
 
@@ -2987,8 +3006,8 @@ class _Translations$explore$sourceMaterial$hu extends Translations$explore$sourc
 }
 
 // Path: explore.creditRole
-class _Translations$explore$creditRole$hu extends Translations$explore$creditRole$en {
-	_Translations$explore$creditRole$hu._(TranslationsHu root) : this._root = root, super.internal(root);
+class _TranslationsExploreCreditRoleHu extends TranslationsExploreCreditRoleEn {
+	_TranslationsExploreCreditRoleHu._(TranslationsHu root) : this._root = root, super.internal(root);
 
 	final TranslationsHu _root; // ignore: unused_field
 
@@ -3002,8 +3021,8 @@ class _Translations$explore$creditRole$hu extends Translations$explore$creditRol
 }
 
 // Path: explore.relation
-class _Translations$explore$relation$hu extends Translations$explore$relation$en {
-	_Translations$explore$relation$hu._(TranslationsHu root) : this._root = root, super.internal(root);
+class _TranslationsExploreRelationHu extends TranslationsExploreRelationEn {
+	_TranslationsExploreRelationHu._(TranslationsHu root) : this._root = root, super.internal(root);
 
 	final TranslationsHu _root; // ignore: unused_field
 
@@ -3020,8 +3039,8 @@ class _Translations$explore$relation$hu extends Translations$explore$relation$en
 }
 
 // Path: explore.detail
-class _Translations$explore$detail$hu extends Translations$explore$detail$en {
-	_Translations$explore$detail$hu._(TranslationsHu root) : this._root = root, super.internal(root);
+class _TranslationsExploreDetailHu extends TranslationsExploreDetailEn {
+	_TranslationsExploreDetailHu._(TranslationsHu root) : this._root = root, super.internal(root);
 
 	final TranslationsHu _root; // ignore: unused_field
 
@@ -3063,8 +3082,8 @@ class _Translations$explore$detail$hu extends Translations$explore$detail$en {
 }
 
 // Path: liveTv.recordSettings
-class _Translations$liveTv$recordSettings$hu extends Translations$liveTv$recordSettings$en {
-	_Translations$liveTv$recordSettings$hu._(TranslationsHu root) : this._root = root, super.internal(root);
+class _TranslationsLiveTvRecordSettingsHu extends TranslationsLiveTvRecordSettingsEn {
+	_TranslationsLiveTvRecordSettingsHu._(TranslationsHu root) : this._root = root, super.internal(root);
 
 	final TranslationsHu _root; // ignore: unused_field
 
@@ -3080,8 +3099,8 @@ class _Translations$liveTv$recordSettings$hu extends Translations$liveTv$recordS
 }
 
 // Path: music.discography
-class _Translations$music$discography$hu extends Translations$music$discography$en {
-	_Translations$music$discography$hu._(TranslationsHu root) : this._root = root, super.internal(root);
+class _TranslationsMusicDiscographyHu extends TranslationsMusicDiscographyEn {
+	_TranslationsMusicDiscographyHu._(TranslationsHu root) : this._root = root, super.internal(root);
 
 	final TranslationsHu _root; // ignore: unused_field
 
@@ -3092,8 +3111,8 @@ class _Translations$music$discography$hu extends Translations$music$discography$
 }
 
 // Path: watchTogether.notices
-class _Translations$watchTogether$notices$hu extends Translations$watchTogether$notices$en {
-	_Translations$watchTogether$notices$hu._(TranslationsHu root) : this._root = root, super.internal(root);
+class _TranslationsWatchTogetherNoticesHu extends TranslationsWatchTogetherNoticesEn {
+	_TranslationsWatchTogetherNoticesHu._(TranslationsHu root) : this._root = root, super.internal(root);
 
 	final TranslationsHu _root; // ignore: unused_field
 
@@ -3126,8 +3145,8 @@ class _Translations$watchTogether$notices$hu extends Translations$watchTogether$
 }
 
 // Path: watchTogether.ended
-class _Translations$watchTogether$ended$hu extends Translations$watchTogether$ended$en {
-	_Translations$watchTogether$ended$hu._(TranslationsHu root) : this._root = root, super.internal(root);
+class _TranslationsWatchTogetherEndedHu extends TranslationsWatchTogetherEndedEn {
+	_TranslationsWatchTogetherEndedHu._(TranslationsHu root) : this._root = root, super.internal(root);
 
 	final TranslationsHu _root; // ignore: unused_field
 
@@ -3140,8 +3159,8 @@ class _Translations$watchTogether$ended$hu extends Translations$watchTogether$en
 }
 
 // Path: watchTogether.errors
-class _Translations$watchTogether$errors$hu extends Translations$watchTogether$errors$en {
-	_Translations$watchTogether$errors$hu._(TranslationsHu root) : this._root = root, super.internal(root);
+class _TranslationsWatchTogetherErrorsHu extends TranslationsWatchTogetherErrorsEn {
+	_TranslationsWatchTogetherErrorsHu._(TranslationsHu root) : this._root = root, super.internal(root);
 
 	final TranslationsHu _root; // ignore: unused_field
 
@@ -3163,8 +3182,8 @@ class _Translations$watchTogether$errors$hu extends Translations$watchTogether$e
 }
 
 // Path: downloads.backgroundWarning
-class _Translations$downloads$backgroundWarning$hu extends Translations$downloads$backgroundWarning$en {
-	_Translations$downloads$backgroundWarning$hu._(TranslationsHu root) : this._root = root, super.internal(root);
+class _TranslationsDownloadsBackgroundWarningHu extends TranslationsDownloadsBackgroundWarningEn {
+	_TranslationsDownloadsBackgroundWarningHu._(TranslationsHu root) : this._root = root, super.internal(root);
 
 	final TranslationsHu _root; // ignore: unused_field
 
@@ -3198,8 +3217,8 @@ class _Translations$downloads$backgroundWarning$hu extends Translations$download
 }
 
 // Path: downloads.groupings
-class _Translations$downloads$groupings$hu extends Translations$downloads$groupings$en {
-	_Translations$downloads$groupings$hu._(TranslationsHu root) : this._root = root, super.internal(root);
+class _TranslationsDownloadsGroupingsHu extends TranslationsDownloadsGroupingsEn {
+	_TranslationsDownloadsGroupingsHu._(TranslationsHu root) : this._root = root, super.internal(root);
 
 	final TranslationsHu _root; // ignore: unused_field
 
@@ -3209,8 +3228,8 @@ class _Translations$downloads$groupings$hu extends Translations$downloads$groupi
 }
 
 // Path: companionRemote.session
-class _Translations$companionRemote$session$hu extends Translations$companionRemote$session$en {
-	_Translations$companionRemote$session$hu._(TranslationsHu root) : this._root = root, super.internal(root);
+class _TranslationsCompanionRemoteSessionHu extends TranslationsCompanionRemoteSessionEn {
+	_TranslationsCompanionRemoteSessionHu._(TranslationsHu root) : this._root = root, super.internal(root);
 
 	final TranslationsHu _root; // ignore: unused_field
 
@@ -3230,8 +3249,8 @@ class _Translations$companionRemote$session$hu extends Translations$companionRem
 }
 
 // Path: companionRemote.pairing
-class _Translations$companionRemote$pairing$hu extends Translations$companionRemote$pairing$en {
-	_Translations$companionRemote$pairing$hu._(TranslationsHu root) : this._root = root, super.internal(root);
+class _TranslationsCompanionRemotePairingHu extends TranslationsCompanionRemotePairingEn {
+	_TranslationsCompanionRemotePairingHu._(TranslationsHu root) : this._root = root, super.internal(root);
 
 	final TranslationsHu _root; // ignore: unused_field
 
@@ -3254,8 +3273,8 @@ class _Translations$companionRemote$pairing$hu extends Translations$companionRem
 }
 
 // Path: companionRemote.remote
-class _Translations$companionRemote$remote$hu extends Translations$companionRemote$remote$en {
-	_Translations$companionRemote$remote$hu._(TranslationsHu root) : this._root = root, super.internal(root);
+class _TranslationsCompanionRemoteRemoteHu extends TranslationsCompanionRemoteRemoteEn {
+	_TranslationsCompanionRemoteRemoteHu._(TranslationsHu root) : this._root = root, super.internal(root);
 
 	final TranslationsHu _root; // ignore: unused_field
 
@@ -3290,8 +3309,8 @@ class _Translations$companionRemote$remote$hu extends Translations$companionRemo
 }
 
 // Path: companionRemote.errors
-class _Translations$companionRemote$errors$hu extends Translations$companionRemote$errors$en {
-	_Translations$companionRemote$errors$hu._(TranslationsHu root) : this._root = root, super.internal(root);
+class _TranslationsCompanionRemoteErrorsHu extends TranslationsCompanionRemoteErrorsEn {
+	_TranslationsCompanionRemoteErrorsHu._(TranslationsHu root) : this._root = root, super.internal(root);
 
 	final TranslationsHu _root; // ignore: unused_field
 
@@ -3307,8 +3326,8 @@ class _Translations$companionRemote$errors$hu extends Translations$companionRemo
 }
 
 // Path: services.names
-class _Translations$services$names$hu extends Translations$services$names$en {
-	_Translations$services$names$hu._(TranslationsHu root) : this._root = root, super.internal(root);
+class _TranslationsServicesNamesHu extends TranslationsServicesNamesEn {
+	_TranslationsServicesNamesHu._(TranslationsHu root) : this._root = root, super.internal(root);
 
 	final TranslationsHu _root; // ignore: unused_field
 
@@ -3321,8 +3340,8 @@ class _Translations$services$names$hu extends Translations$services$names$en {
 }
 
 // Path: services.simklReconnect
-class _Translations$services$simklReconnect$hu extends Translations$services$simklReconnect$en {
-	_Translations$services$simklReconnect$hu._(TranslationsHu root) : this._root = root, super.internal(root);
+class _TranslationsServicesSimklReconnectHu extends TranslationsServicesSimklReconnectEn {
+	_TranslationsServicesSimklReconnectHu._(TranslationsHu root) : this._root = root, super.internal(root);
 
 	final TranslationsHu _root; // ignore: unused_field
 
@@ -3332,8 +3351,8 @@ class _Translations$services$simklReconnect$hu extends Translations$services$sim
 }
 
 // Path: services.deviceCode
-class _Translations$services$deviceCode$hu extends Translations$services$deviceCode$en {
-	_Translations$services$deviceCode$hu._(TranslationsHu root) : this._root = root, super.internal(root);
+class _TranslationsServicesDeviceCodeHu extends TranslationsServicesDeviceCodeEn {
+	_TranslationsServicesDeviceCodeHu._(TranslationsHu root) : this._root = root, super.internal(root);
 
 	final TranslationsHu _root; // ignore: unused_field
 
@@ -3347,8 +3366,8 @@ class _Translations$services$deviceCode$hu extends Translations$services$deviceC
 }
 
 // Path: services.oauthProxy
-class _Translations$services$oauthProxy$hu extends Translations$services$oauthProxy$en {
-	_Translations$services$oauthProxy$hu._(TranslationsHu root) : this._root = root, super.internal(root);
+class _TranslationsServicesOauthProxyHu extends TranslationsServicesOauthProxyEn {
+	_TranslationsServicesOauthProxyHu._(TranslationsHu root) : this._root = root, super.internal(root);
 
 	final TranslationsHu _root; // ignore: unused_field
 
@@ -3359,8 +3378,8 @@ class _Translations$services$oauthProxy$hu extends Translations$services$oauthPr
 }
 
 // Path: services.pendingAuth
-class _Translations$services$pendingAuth$hu extends Translations$services$pendingAuth$en {
-	_Translations$services$pendingAuth$hu._(TranslationsHu root) : this._root = root, super.internal(root);
+class _TranslationsServicesPendingAuthHu extends TranslationsServicesPendingAuthEn {
+	_TranslationsServicesPendingAuthHu._(TranslationsHu root) : this._root = root, super.internal(root);
 
 	final TranslationsHu _root; // ignore: unused_field
 
@@ -3370,8 +3389,8 @@ class _Translations$services$pendingAuth$hu extends Translations$services$pendin
 }
 
 // Path: services.libraryFilter
-class _Translations$services$libraryFilter$hu extends Translations$services$libraryFilter$en {
-	_Translations$services$libraryFilter$hu._(TranslationsHu root) : this._root = root, super.internal(root);
+class _TranslationsServicesLibraryFilterHu extends TranslationsServicesLibraryFilterEn {
+	_TranslationsServicesLibraryFilterHu._(TranslationsHu root) : this._root = root, super.internal(root);
 
 	final TranslationsHu _root; // ignore: unused_field
 
@@ -3390,2326 +3409,2352 @@ class _Translations$services$libraryFilter$hu extends Translations$services$libr
 	@override String get noLibraries => 'Nincsenek elérhető könyvtárak';
 }
 
-/// The flat map containing all translations for locale <hu>.
+/// Flat map(s) containing all translations.
 /// Only for edge cases! For simple maps, use the map function of this library.
-///
-/// The Dart AOT compiler has issues with very large switch statements,
-/// so the map is split into smaller functions (512 entries each).
 extension on TranslationsHu {
 	dynamic _flatMapFunction(String path) {
-		return switch (path) {
-			'app.title' => 'Plezy',
-			'appIcon.title' => 'Alkalmazásikon',
-			'appIcon.defaultIcon' => 'Alapértelmezett',
-			'appIcon.current' => 'Jelenlegi ikon',
-			'appIcon.locked' => 'A Téma- és ikoncsomag része',
-			'appIcon.lockedHint' => 'Az alternatív ikonok a Téma- és ikoncsomag részei.',
-			'appIcon.changeFailed' => 'Nem sikerült módosítani az alkalmazásikont',
-			'appIcon.launcherHint' => 'Az új ikon azután jelenik meg a kezdőképernyőn, hogy kiléptél a Plezyből.',
-			'appIcon.tvLauncherHint' => 'Az új banner azután jelenik meg, hogy kiléptél a Plezyből. Az Android TV a TV újraindításáig még a régit is mutathatja.',
-			'appIcon.names.midnight' => 'Éjfél',
-			'appIcon.names.ember' => 'Parázs',
-			'appIcon.names.paper' => 'Papír',
-			'appIcon.names.oled' => 'OLED',
-			'appIcon.names.line' => 'Vonal',
-			'appIcon.names.ocean' => 'Óceán',
-			'appIcon.names.ultraviolet' => 'Ultraibolya',
-			'appIcon.names.matcha' => 'Matcha',
-			'appIcon.names.sunset' => 'Naplemente',
-			'appIcon.names.gold' => 'Arany',
-			'appIcon.names.titanium' => 'Titán',
-			'appIcon.names.glass' => 'Üveg',
-			'appIcon.names.crt' => 'CRT',
-			'appIcon.names.vhs' => 'VHS',
-			'appIcon.names.synthwave' => 'Synthwave',
-			'appIcon.names.pixel' => 'Pixel',
-			'appIcon.names.neon' => 'Neon',
-			'appIcon.names.sticker' => 'Matrica',
-			'appIcon.names.ticket' => 'Jegy',
-			'appIcon.names.pop' => 'Pop',
-			'appIcon.names.strata' => 'Rétegek',
-			'appIcon.names.facet' => 'Fazetta',
-			'appIcon.names.tilde' => 'Tilde',
-			'auth.signInWithPlex' => 'Bejelentkezés Plexszel',
-			'auth.showQRCode' => 'QR-kód megjelenítése',
-			'auth.authenticate' => 'Hitelesítés',
-			'auth.authenticationTimeout' => 'A hitelesítés időtúllépés miatt megszakadt. Próbáld újra.',
-			'auth.scanQRToSignIn' => 'Olvasd be ezt a QR-kódot a bejelentkezéshez',
-			'auth.waitingForAuth' => 'Várakozás a hitelesítésre...\nJelentkezz be a böngésződben.',
-			'auth.useBrowser' => 'Böngésző használata',
-			'auth.or' => 'vagy',
-			'auth.connectToMediaBrowser' => ({required Object product}) => 'Csatlakozás a(z) ${product} szolgáltatáshoz',
-			'auth.quickConnect' => 'Quick Connect',
-			'auth.useQuickConnect' => 'Quick Connect használata',
-			'auth.quickConnectInstructions' => 'Nyisd meg a Quick Connect-et a Jellyfinben, és add meg ezt a kódot.',
-			'auth.quickConnectWaiting' => 'Várakozás a jóváhagyásra…',
-			'auth.quickConnectCancel' => 'Mégse',
-			'auth.quickConnectExpired' => 'A Quick Connect kód lejárt. Próbáld újra.',
-			'auth.localDataRecoveryRequired' => 'A Plezy nem tudta biztonságosan helyreállítani a helyi bejelentkezés és a függőben lévő lejátszás adatait. Jelentkezz be újra.',
-			'auth.pinCheckRejected' => 'A Plex PIN ellenőrzését elutasították',
-			'common.cancel' => 'Mégse',
-			'common.save' => 'Mentés',
-			'common.close' => 'Bezárás',
-			'common.clear' => 'Törlés',
-			'common.reset' => 'Visszaállítás',
-			'common.later' => 'Később',
-			'common.submit' => 'Beküldés',
-			'common.confirm' => 'Megerősítés',
-			'common.retry' => 'Újra',
-			'common.logout' => 'Kijelentkezés',
-			'common.unknown' => 'Ismeretlen',
-			'common.refresh' => 'Frissítés',
-			'common.yes' => 'Igen',
-			'common.no' => 'Nem',
-			'common.delete' => 'Törlés',
-			'common.edit' => 'Szerkesztés',
-			'common.shuffle' => 'Véletlenszerű lejátszás',
-			'common.addTo' => 'Hozzáadás...',
-			'common.createNew' => 'Új létrehozása',
-			'common.connect' => 'Csatlakozás',
-			'common.disconnect' => 'Kapcsolat bontása',
-			'common.play' => 'Lejátszás',
-			'common.pause' => 'Szünet',
-			'common.resume' => 'Folytatás',
-			'common.error' => 'Hiba',
-			'common.search' => 'Keresés',
-			'common.home' => 'Kezdőlap',
-			'common.back' => 'Vissza',
-			'common.settings' => 'Beállítások',
-			'common.mute' => 'Némítás',
-			'common.ok' => 'OK',
-			'common.off' => 'Ki',
-			'common.options' => 'Lehetőségek',
-			'common.seasonNumber' => ({required Object number}) => '${number}. évad',
-			'common.episodeNumberTitle' => ({required Object number, required Object title}) => '${number}. epizód - ${title}',
-			'common.chapterNumber' => ({required Object number}) => '${number}. fejezet',
-			'common.reconnect' => 'Újracsatlakozás',
-			'common.viewAll' => 'Összes megtekintése',
-			'common.checkingNetwork' => 'Hálózat ellenőrzése...',
-			'common.loadingServers' => 'Szerverek betöltése...',
-			'common.connectingToServers' => 'Csatlakozás a szerverekhez...',
-			'common.startingOfflineMode' => 'Kapcsolat nélküli mód indítása...',
-			'common.loading' => 'Betöltés...',
-			'common.fullscreen' => 'Teljes képernyő',
-			'common.exitFullscreen' => 'Kilépés a teljes képernyőből',
-			'common.pressBackAgainToExit' => 'A kilépéshez nyomd meg újra a Vissza gombot',
-			'common.ratingSource.critic' => 'Kritikusok',
-			'common.ratingSource.audience' => 'Közönség',
-			'common.ratingSource.imdb' => 'IMDb',
-			'common.ratingSource.tmdb' => 'TMDB',
-			'common.ratingSource.rottenTomatoes' => 'Rotten Tomatoes',
-			'common.ratingSource.simkl' => 'Simkl',
-			'common.ratingSource.mal' => 'MyAnimeList',
-			'common.ratingSource.anilist' => 'AniList',
-			'common.ratingSource.trakt' => 'Trakt',
-			'common.ratingSource.rottenTomatoesCritic' => 'Rotten Tomatoes kritikusok',
-			'common.ratingSource.rottenTomatoesAudience' => 'Rotten Tomatoes közönség',
-			'common.ratingSource.metacritic' => 'Metacritic',
-			'common.ratingSource.letterboxd' => 'Letterboxd',
-			'common.notAvailable' => 'N/A',
-			'common.url' => 'URL',
-			'common.letterKeys' => 'ABC',
-			'common.mediaKind.movie' => 'Film',
-			'common.mediaKind.show' => 'Sorozat',
-			'common.mediaKind.season' => 'Évad',
-			'common.mediaKind.episode' => 'Epizód',
-			'common.mediaKind.artist' => 'Előadó',
-			'common.mediaKind.album' => 'Album',
-			'common.mediaKind.track' => 'Szám',
-			'common.mediaKind.collection' => 'Gyűjtemény',
-			'common.mediaKind.playlist' => 'Lejátszási lista',
-			'common.mediaKind.clip' => 'Klip',
-			'common.mediaKind.photo' => 'Fénykép',
-			'common.mediaKind.folder' => 'Mappa',
-			'screens.licenses' => 'Licencek',
-			'screens.switchProfile' => 'Profilváltás',
-			'screens.subtitleStyling' => 'Feliratok stílusa',
-			'screens.mpvConfig' => 'mpv.conf',
-			'screens.logs' => 'Naplók',
-			'update.available' => 'Frissítés érhető el',
-			'update.versionAvailable' => ({required Object version}) => 'A(z) ${version} verzió elérhető',
-			'update.currentVersion' => ({required Object version}) => 'Jelenlegi: ${version}',
-			'update.skipVersion' => 'Verzió kihagyása',
-			'update.viewRelease' => 'Kiadási megjegyzések',
-			'update.latestVersion' => 'A legújabb verziót használod',
-			'update.checkFailed' => 'Nem sikerült az újabb frissítések ellenőrzése',
-			'supporter.title' => 'Téma- és ikoncsomag',
-			'supporter.intro' => 'Opcionális, egyszeri vásárlás kozmetikai extrákkal:',
-			'supporter.presetThemes' => 'Előre beállított témák',
-			'supporter.presetThemesDescription' => 'Parázs, Gleccser, Erdő, Szilva és Papír',
-			'supporter.customTheme' => 'Egyéni téma',
-			'supporter.customThemeDescription' => 'Minden színt te választasz ki',
-			'supporter.appIcons' => 'Alkalmazásikonok',
-			'supporter.appIconsDescription' => 'Válassz egy alternatív Plezy-ikont',
-			'supporter.buy' => ({required Object price}) => 'Megvásárlás: ${price}',
-			'supporter.loadingPrice' => 'Ár betöltése...',
-			'supporter.restore' => 'Vásárlások visszaállítása',
-			'supporter.pending' => 'A vásárlásod fizetésre vagy jóváhagyásra vár. Az extrák azonnal feloldódnak, amint az áruház lezárja a folyamatot.',
-			'supporter.thankYouTitle' => 'Köszönjük a vásárlást',
-			'supporter.thankYouBody' => 'A Téma- és ikoncsomag fel van oldva.',
-			'supporter.tileSubtitle' => 'Témák és alkalmazásikonok feloldása egyszeri vásárlással',
-			'supporter.tileSubtitleThemesOnly' => 'Témák feloldása egyszeri vásárlással',
-			'supporter.tileUnlocked' => 'Feloldva — köszönjük a vásárlást',
-			'supporter.errors.storeUnavailable' => 'A vásárlás nem érhető el. Ellenőrizd, hogy be vagy-e jelentkezve az áruházba, és engedélyezett-e a vásárlás ezen az eszközön.',
-			'supporter.errors.productNotFound' => 'A Téma- és ikoncsomag jelenleg nem érhető el az áruházadban.',
-			'supporter.errors.productQueryFailed' => 'Nem sikerült betölteni az árat. Ellenőrizd a kapcsolatot, majd próbáld újra.',
-			'supporter.errors.purchaseFailed' => 'A vásárlás nem sikerült. Próbáld újra.',
-			'supporter.errors.restoreFailed' => 'Nem sikerült elérni az áruházat a vásárlás visszaállításához. Próbáld újra.',
-			'supporter.errors.nothingToRestore' => 'Ehhez az áruházfiókhoz nem található Téma- és ikoncsomag-vásárlás.',
-			'settings.title' => 'Beállítások',
-			'settings.supportDeveloper' => 'Plezy támogatása',
-			'settings.supportDeveloperDescription' => 'A fejlesztés támogatása Liberapay-en keresztül',
-			'settings.language' => 'Nyelv',
-			'settings.theme' => 'Téma',
-			'settings.appearance' => 'Megjelenés',
-			'settings.videoPlayback' => 'Videólejátszás',
-			'settings.videoPlaybackDescription' => 'Lejátszási viselkedés beállítása',
-			'settings.advanced' => 'Haladó',
-			'settings.episodePosterMode' => 'Epizódborító stílusa',
-			'settings.seriesPoster' => 'Sorozatborító',
-			'settings.seasonPoster' => 'Évadborító',
-			'settings.episodeThumbnail' => 'Bélyegkép',
-			'settings.showHeroSectionDescription' => 'Kiemelt tartalmak sávjának megjelenítése a kezdőlapon',
-			'settings.secondsLabel' => 'Másodperc',
-			'settings.minutesLabel' => 'Perc',
-			'settings.secondsShort' => 'mp',
-			'settings.minutesShort' => 'p',
-			'settings.durationHint' => ({required Object min, required Object max}) => 'Add meg az időtartamot (${min}-${max})',
-			'settings.systemTheme' => 'Rendszer',
-			'settings.lightTheme' => 'Világos',
-			'settings.darkTheme' => 'Sötét',
-			'settings.oledTheme' => 'OLED',
-			'settings.emberTheme' => 'Parázs',
-			'settings.glacierTheme' => 'Gleccser',
-			'settings.forestTheme' => 'Erdő',
-			'settings.plumTheme' => 'Szilva',
-			'settings.paperTheme' => 'Papír',
-			'settings.libraryDensity' => 'Könyvtársűrűség',
-			'settings.displayScale' => 'Kijelző méretezése',
-			'settings.compact' => 'Kompakt',
-			'settings.comfortable' => 'Kényelmes',
-			'settings.gridSpacing' => 'Rácstávolság',
-			'settings.gridSpacingTight' => 'Sűrű',
-			'settings.gridSpacingNormal' => 'Normál',
-			'settings.gridSpacingSpacious' => 'Tágas',
-			'settings.tvCornerSpotlightBackdrop' => 'Sarokban megjelenő kiemelt háttérkép',
-			'settings.tvCornerSpotlightBackdropDescription' => 'A kiemelt háttérkép megjelenítése a jobb felső sarokban a teljes képernyő helyett',
-			'settings.viewMode' => 'Nézetmód',
-			'settings.gridView' => 'Rács',
-			'settings.listView' => 'Lista',
-			'settings.showHeroSection' => 'Kiemelt sáv megjelenítése',
-			'settings.continueWatchingAction' => 'A „Folytatás” művelete',
-			'settings.continueWatchingPlay' => 'Lejátszás',
-			'settings.continueWatchingDetails' => 'Részletek megnyitása',
-			'settings.episodeAction' => 'Az epizódkártya művelete',
-			'settings.episodePlay' => 'Lejátszás',
-			'settings.episodeDetails' => 'Részletek megnyitása',
-			'settings.useGlobalHubs' => 'Kezdőlap elrendezés használata',
-			'settings.useGlobalHubsDescription' => 'Egyesített kezdőlapi blokkok megjelenítése. Egyébként a könyvtári ajánlások jelennek meg.',
-			'settings.showServerNameOnHubs' => 'Szervernév megjelenítése a blokkoknál',
-			'settings.showServerNameOnHubsDescription' => 'Mindig jelenjen meg a szerver neve a blokkok címében.',
-			'settings.groupLibrariesByServer' => 'Könyvtárak csoportosítása szerver szerint',
-			'settings.groupLibrariesByServerDescription' => 'Az oldalsáv könyvtárainak csoportosítása a médiaszerverek alatt.',
-			'settings.alwaysKeepSidebarOpen' => 'Oldalsáv mindig nyitva',
-			'settings.alwaysKeepSidebarOpenDescription' => 'Az oldalsáv kibontva marad, a tartalom területe igazodik hozzá',
-			'settings.showUnwatchedCount' => 'Nem látott elemek számának megjelenítése',
-			'settings.showUnwatchedCountDescription' => 'Megjeleníti a még nem látott epizódok számát a sorozatoknál és évadoknál',
-			'settings.showWatchedIndicators' => 'Megtekintésjelölők megjelenítése',
-			'settings.showWatchedIndicatorsDescription' => 'Pipa megjelenítése a megtekintett filmeken, sorozatokon és epizódokon',
-			'settings.showEpisodeNumberOnCards' => 'Epizódszám megjelenítése a kártyákon',
-			'settings.showEpisodeNumberOnCardsDescription' => 'Megjeleníti az évad- és epizódszámot az epizódkártyákon',
-			'settings.showSeasonPostersOnTabs' => 'Évadborítók megjelenítése a füleken',
-			'settings.showSeasonPostersOnTabsDescription' => 'Megjeleníti az egyes évadok borítóját a fülük felett',
-			'settings.tvFullCardLayout' => 'Teljes TV-kártyák',
-			'settings.tvFullCardLayoutDescription' => 'Csak képet tartalmazó TV-kártyák használata, rájuk helyezett színésznevekkel',
-			'settings.focusGlow' => 'Kijelölési ragyogás',
-			'settings.focusGlowDescription' => 'Finom ragyogás rajzolása a kijelölt kártya köré',
-			'settings.visualEffects' => 'Vizuális effektek',
-			'settings.visualEffectsAuto' => 'Automatikus',
-			'settings.visualEffectsAutoDescription' => 'Effektek automatikus csökkentése alacsony teljesítményű eszközökön',
-			'settings.visualEffectsFull' => 'Teljes',
-			'settings.visualEffectsReduced' => 'Csökkentett',
-			'settings.visualEffectsReducedDescription' => 'Kevesebb animáció és alacsonyabb felbontású képek',
-			'settings.hideSpoilers' => 'Spoilerek elrejtése a nem látott epizódoknál',
-			'settings.hideSpoilersDescription' => 'Bélyegképek és leírások elhomályosítása a még meg nem nézett epizódoknál',
-			'settings.playerBackend' => 'Lejátszómotor',
-			'settings.exoPlayer' => 'ExoPlayer',
-			'settings.mpv' => 'mpv',
-			'settings.hardwareDecoding' => 'Hardveres dekódolás',
-			'settings.hardwareDecodingDescription' => 'Hardveres gyorsítás használata, ha elérhető',
-			'settings.playbackBuffer' => 'Lejátszási puffer',
-			'settings.playbackBufferAuto' => 'Automatikus (ajánlott)',
-			'settings.playbackBufferLarge' => 'Nagy',
-			'settings.playbackBufferExtraLarge' => 'Extra nagy',
-			'settings.playbackBufferDescription' => 'Több puffert használ instabil kapcsolatok ellen. A pufferméret is korlátozza.',
-			'settings.defaultQualityTitle' => 'Alapértelmezett minőség',
-			'settings.cellularQualityTitle' => 'Alapértelmezett minőség mobilhálózaton',
-			'settings.cellularQualitySameAsDefault' => 'Ugyanaz, mint az alapértelmezett minőség',
-			'settings.directPlayCoveredQuality' => 'Kisebb videók lejátszása eredeti minőségben',
-			'settings.directPlayCoveredQualityDescription' => 'A minőségi korláton belüli videók közvetlen lejátszása átkódolás helyett',
-			'settings.videoCodecs' => 'Videokodekek',
-			'settings.videoCodecsDescription' => 'A nem bejelölt kodekeket a szerver átkódolja',
-			'settings.videoCodecsAlwaysAccepted' => 'Mindig elfogadva',
-			'settings.musicQualityTitle' => 'Zene minősége',
-			'settings.subtitleStyling' => 'Feliratok stílusa',
-			'settings.subtitleStylingDescription' => 'Feliratok megjelenésének testreszabása',
-			'settings.smallSkipDuration' => 'Kis ugrás időtartama',
-			'settings.largeSkipDuration' => 'Nagy ugrás időtartama',
-			'settings.rewindOnResume' => 'Visszatekerés folytatáskor',
-			'settings.secondsUnit' => ({required Object seconds}) => '${seconds} másodperc',
-			'settings.defaultSleepTimer' => 'Alapértelmezett elalvási időzítő',
-			'settings.minutesUnit' => ({required Object minutes}) => '${minutes} perc',
-			'settings.rememberTrackSelections' => 'Sávválasztások megjegyzése sorozatonként/filmenként',
-			'settings.rememberTrackSelectionsDescription' => 'Hang- és feliratválasztások megjegyzése címenként',
-			'settings.rememberTrackSelectionsBackendRule' => 'A Plex minden választást fájlonként a szerveren ment; a Jellyfin a fiók „Választások megjegyzése” funkcióját is bekapcsolja; az Emby nem támogatott',
-			'settings.followServerTrackSelections' => 'A szerver epizódonkénti sávválasztásának használata',
-			'settings.followServerTrackSelectionsDescription' => 'Epizódváltáskor a szerveren kiválasztott hang és felirat lép életbe az aktuális választás átvitele helyett',
-			'settings.resumeMusicOnLaunch' => 'Zenei munkamenet megjegyzése',
-			'settings.resumeMusicOnLaunchDescription' => 'Az alkalmazás indításakor az utolsó szám szüneteltetve nyílik meg ott, ahol abbamaradt',
-			'settings.showChapterMarkersOnTimeline' => 'Fejezetjelölők megjelenítése az idősávon',
-			'settings.showChapterMarkersOnTimelineDescription' => 'Az idősáv felosztása a fejezetek határainál',
-			'settings.specialsOrdering' => 'Különkiadások epizódsorrendben',
-			'settings.specialsOrderingDescription' => 'A különkiadások helye a sorozat lejátszási sorrendjében',
-			'settings.specialsOrderingServer' => 'Szerver szerinti sorrend',
-			'settings.specialsOrderingAirDate' => 'Adás dátuma szerint közbeszúrva',
-			'settings.specialsOrderingLast' => 'A normál évadok után',
-			'settings.clickVideoTogglesPlayback' => 'Kattintás a videóra a lejátszás/szünet váltásához',
-			'settings.clickVideoTogglesPlaybackDescription' => 'A videóra kattintva vált a lejátszás/szünet, a vezérlők megjelenítése helyett.',
-			'settings.videoPlayerControls' => 'Videólejátszó vezérlői',
-			'settings.keyboardShortcuts' => 'Billentyűparancsok',
-			'settings.keyboardShortcutsDescription' => 'Billentyűparancsok testreszabása',
-			'settings.videoPlayerNavigation' => 'Videólejátszó-navigáció',
-			'settings.videoPlayerNavigationDescription' => 'A nyílbillentyűk használata a videólejátszó vezérlői közötti navigáláshoz',
-			'settings.watchTogetherRelay' => 'Watch Together-relé',
-			'settings.watchTogetherRelayDescription' => 'Nyilvános Open Watch Party-relék, hacsak nem adsz meg sajátot',
-			'settings.watchTogetherRelayHint' => 'https://my-relay.example.com',
-			'settings.watchTogetherRelayInvalid' => 'Adj meg egy érvényes HTTP- vagy HTTPS-alapú relészerver-URL-t.',
-			'settings.crashReporting' => 'Összeomlási jelentések',
-			'settings.crashReportingDescription' => 'Összeomlási jelentések küldése az alkalmazás fejlesztésének elősegítéséhez',
-			'settings.debugLogging' => 'Hibakeresési naplózás',
-			'settings.debugLoggingDescription' => 'Részletes naplózás engedélyezése a hibaelhárításhoz',
-			'settings.viewLogs' => 'Naplók megtekintése',
-			'settings.viewLogsDescription' => 'Alkalmazásnaplók megtekintése',
-			'settings.clearImageCache' => 'Képgyorsítótár törlése',
-			'settings.clearImageCacheDescription' => 'Törli a gyorsítótárazott borítókat és miniatűröket. A képek lassabban tölthetők be, amíg újra le nem töltődnek.',
-			'settings.clearImageCacheSuccess' => 'A képgyorsítótár sikeresen törölve',
-			'settings.resetSettings' => 'Beállítások visszaállítása',
-			'settings.resetSettingsDescription' => 'Az alapértelmezett beállítások visszaállítása. Ez a művelet nem vonható vissza.',
-			'settings.resetSettingsSuccess' => 'A beállítások sikeresen visszaállítva',
-			'settings.backup' => 'Biztonsági mentés',
-			'settings.exportSettings' => 'Beállítások exportálása',
-			'settings.exportSettingsDescription' => 'Beállítások mentése fájlba',
-			'settings.exportSettingsSuccess' => 'Beállítások exportálva',
-			'settings.importSettings' => 'Beállítások importálása',
-			'settings.importSettingsDescription' => 'Beállítások visszaállítása fájlból',
-			'settings.importSettingsConfirm' => 'Ez felülírja a jelenlegi beállításaidat. Folytatod?',
-			'settings.importSettingsSuccess' => 'Beállítások importálva',
-			'settings.importSettingsInvalidFile' => 'Ez a fájl nem érvényes Plezy-beállításexport',
-			'settings.importSettingsNoUser' => 'Jelentkezz be a beállítások importálása előtt',
-			'settings.shortcutsReset' => 'A billentyűparancsok visszaálltak az alapértelmezettekre',
-			'settings.resetShortcutsConfirm' => 'Ezzel az egyéni billentyűparancsaid helyére az alapértelmezettek kerülnek. Folytatod?',
-			'settings.about' => 'Névjegy',
-			'settings.aboutDescription' => 'Alkalmazásadatok és licencek',
-			'settings.updates' => 'Frissítések',
-			'settings.updateAvailable' => 'Frissítés érhető el',
-			'settings.checkForUpdates' => 'Frissítések keresése',
-			'settings.autoCheckUpdatesOnStartup' => 'Frissítések automatikus keresése indításkor',
-			'settings.autoCheckUpdatesOnStartupDescription' => 'Értesítés küldése indításkor, ha új frissítés érhető el',
-			'settings.validationErrorEnterNumber' => 'Adj meg egy érvényes számot',
-			'settings.validationErrorDuration' => ({required Object min, required Object max, required Object unit}) => 'Az időtartamnak ${min} és ${max} ${unit} között kell lennie',
-			'settings.shortcutAlreadyAssigned' => ({required Object action}) => 'A billentyűparancs már hozzá van rendelve a következőhöz: ${action}',
-			'settings.shortcutUpdated' => ({required Object action}) => 'Billentyűparancs frissítve a következőhöz: ${action}',
-			'settings.saveFailed' => 'Nem sikerült menteni a módosításokat. Próbáld újra.',
-			'settings.autoPlayAndSkip' => 'Automatikus lejátszás és átugrás',
-			'settings.autoPlayNextEpisode' => 'Következő epizód automatikus lejátszása',
-			'settings.autoPlayNextEpisodeDescription' => 'A következő epizód automatikus elindítása, amikor az aktuális véget ér',
-			'settings.shuffleStartsFromBeginning' => 'Véletlenszerű lejátszás az elejétől',
-			'settings.shuffleStartsFromBeginningDescription' => 'Minden epizód az elejétől indul véletlenszerű lejátszáskor a folytatás helyett',
-			'settings.playNextCountdown' => 'Visszaszámlálás a következő epizódig',
-			'settings.playNextCountdownImmediate' => 'Azonnali lejátszás',
-			'settings.skipIntroMode' => 'Intró átugrása',
-			'settings.skipIntroModeOffDescription' => 'Az intrók normálisan lejátszódnak, átugró gomb nélkül',
-			'settings.skipIntroModeButtonDescription' => 'Átugró gomb megjelenítése az intró kezdetekor',
-			'settings.skipIntroModeAutoDescription' => 'Az intrók automatikus átugrása az alábbi késleltetés után',
-			'settings.skipCreditsMode' => 'Stáblista átugrása',
-			'settings.skipCreditsModeOffDescription' => 'A stáblista normálisan lejátszódik, átugró gomb nélkül',
-			'settings.skipCreditsModeButtonDescription' => 'Átugró gomb megjelenítése a stáblista kezdetekor',
-			'settings.skipCreditsModeAutoDescription' => 'A stáblista automatikus átugrása és a következő epizód lejátszása',
-			'settings.skipMarkerModeOff' => 'Ki',
-			'settings.skipMarkerModeButton' => 'Gomb megjelenítése',
-			'settings.skipMarkerModeAuto' => 'Automatikus',
-			'settings.forceSkipMarkerFallback' => 'Tartalék jelölők kényszerítése',
-			'settings.forceSkipMarkerFallbackDescription' => 'Fejezetcím-minták használata akkor is, ha a Plex rendelkezik jelölőkkel',
-			'settings.autoSkipDelay' => 'Automatikus átugrás késleltetése',
-			'settings.autoSkipDelayDescription' => ({required Object seconds}) => 'Várakozás ${seconds} másodpercig az automatikus átugrás előtt',
-			'settings.introPattern' => 'Intrójelölő mintája',
-			'settings.introPatternDescription' => 'Reguláris kifejezés az intrójelölők illesztéséhez a fejezetcímekben',
-			'settings.creditsPattern' => 'Stáblistajelölő mintája',
-			'settings.creditsPatternDescription' => 'Reguláris kifejezés a stáblistajelölők illesztéséhez a fejezetcímekben',
-			'settings.invalidRegex' => 'Érvénytelen reguláris kifejezés',
-			'settings.regex' => 'Reguláris kifejezés',
-			'settings.downloads' => 'Letöltések',
-			'settings.downloadLocationDescription' => 'Válaszd ki a letöltött tartalom tárolási helyét',
-			'settings.downloadLocationDefault' => 'Alapértelmezett (alkalmazástárhely)',
-			'settings.downloadLocationCustom' => 'Egyéni hely',
-			'settings.selectFolder' => 'Mappa kiválasztása',
-			'settings.resetToDefault' => 'Visszaállítás alapértelmezettre',
-			'settings.currentPath' => ({required Object path}) => 'Jelenlegi: ${path}',
-			'settings.downloadLocationChanged' => 'A letöltési hely megváltozott',
-			'settings.downloadLocationReset' => 'A letöltési hely visszaállt az alapértelmezettre',
-			'settings.downloadLocationInvalid' => 'A kiválasztott mappa nem írható',
-			'settings.downloadLocationPickerUnavailable' => 'A mappaválasztás ezen az eszközön nem érhető el',
-			'settings.downloadOnWifiOnly' => 'Letöltés csak Wi-Fi-n',
-			'settings.downloadOnWifiOnlyDescription' => 'Letöltések megakadályozása mobiladat-használat esetén',
-			'settings.autoRemoveWatchedDownloads' => 'Megnézett letöltések automatikus eltávolítása',
-			'settings.autoRemoveWatchedDownloadsDescription' => 'A megnézett letöltések automatikus törlése',
-			'settings.cellularDownloadBlocked' => 'A letöltések mobilhálózaton le vannak tiltva. Használj Wi-Fi-t, vagy módosítsd a beállítást.',
-			'settings.maxVolume' => 'Maximális hangerő',
-			'settings.maxVolumeDescription' => 'A hangerő 100% fölé emelésének engedélyezése halk tartalmak esetén',
-			'settings.maxVolumePercent' => ({required Object percent}) => '${percent}%',
-			'settings.discordRichPresence' => 'Discord Rich Presence',
-			'settings.discordRichPresenceDescription' => 'Megjeleníti a Discordon, hogy éppen mit nézel',
-			'settings.services' => 'Szolgáltatások',
-			'settings.servicesDescription' => 'Trakt, MyAnimeList, Seerr és egyéb szolgáltatások csatlakoztatása',
-			'settings.manageLibrariesDescription' => 'Könyvtárak sorrendjének módosítása és elrejtése',
-			'settings.companionRemoteServer' => 'Kísérőtávirányító szervere',
-			'settings.companionRemoteServerDescription' => 'Lehetővé teszi, hogy a hálózaton lévő mobileszközökről vezéreld az alkalmazást',
-			'settings.companionRemoteServerStartFailed' => 'Nem sikerült elindítani a kísérőtávirányító szerverét',
-			'settings.companionRemoteServerStopFailed' => 'Nem sikerült leállítani a kísérőtávirányító szerverét',
-			'settings.autoPip' => 'Automatikus kép a képben (PiP)',
-			'settings.autoPipDescription' => 'Lejátszás közben az alkalmazás elhagyásakor automatikusan kép a képben módra vált',
-			'settings.matchContentFrameRate' => 'Képkockasebesség illesztése a tartalomhoz',
-			'settings.matchContentFrameRateDescription' => 'A kijelző frissítési frekvenciájának igazítása a videóhoz',
-			'settings.matchContentResolution' => 'Igazítás a tartalom felbontásához',
-			'settings.matchContentResolutionDescription' => 'A kijelzőt a videó natív felbontására váltja, hogy a felskálázást a tévé végezze. Lejátszás közben a menük és a feliratok is felskálázódnak',
-			'settings.matchRefreshRate' => 'Frissítési frekvencia illesztése',
-			'settings.matchRefreshRateDescription' => 'A kijelző frissítési frekvenciájának igazítása teljes képernyőn',
-			'settings.matchDynamicRange' => 'Dinamikatartomány illesztése',
-			'settings.matchDynamicRangeDescription' => 'HDR bekapcsolása HDR-tartalmak esetén, majd visszaváltás SDR-re',
-			'settings.displaySwitchDelay' => 'Kijelzőváltási késleltetés',
-			'settings.tunneledPlayback' => 'Alagutas lejátszás',
-			'settings.tunneledPlaybackDescription' => 'Videóalagút használata. Tiltsd le, ha HDR-lejátszáskor fekete a kép vagy akadozik a mozgás.',
-			'settings.audioPassthrough' => 'Hangtovábbítás (passthrough)',
-			'settings.audioPassthroughDescription' => 'Dolby/DTS-hang továbbítása az erősítőre vagy a TV-re újrakódolás nélkül, a térhangzás megőrzésével. Kapcsold ki, ha nincs hang.',
-			'settings.audioPassthroughDescriptionApple' => 'Az Apple natív Dolby-dekóderének használata Dolby Digital Plushoz, az Atmost is beleértve. A DTS és a TrueHD továbbra is többcsatornás PCM-ként szól. Kapcsold ki, ha nincs hang.',
-			'settings.audioPassthroughDescriptionAppleSpatial' => 'Az Apple natív Dolby-dekóderének használata Dolby Digital Plushoz, az Atmost is beleértve. iOS, iPadOS és tvOS 26 vagy újabb rendszeren a TrueHD Atmos és a DTS:X térbeli hangzásként szól. A többi DTS- és TrueHD-sáv többcsatornás PCM-ként szól. Kapcsold ki, ha nincs hang.',
-			'settings.audioPassthroughOverriddenByNormalization' => 'Ki, amíg a hangerőnormalizálás be van kapcsolva',
-			'settings.audioChannelLimit' => 'Hangcsatornák',
-			'settings.audioChannelLimitDescription' => 'A dekódolt hang lekeverése olyan hangszórókhoz, fejhallgatókhoz vagy HDMI-rendszerekhez, amelyek nem tudják lejátszani az összes csatornát',
-			'settings.audioChannelLimitOriginal' => 'Eredeti',
-			'settings.audioChannelLimitOriginalDescription' => 'A sáv összes csatornájának lejátszása',
-			'settings.audioChannelLimitSurround51' => 'Legfeljebb 5.1',
-			'settings.audioChannelLimitSurround51Description' => '7.1 lekeverése 5.1-re olyan TV-khez és erősítőkhöz, amelyek csak 5.1-es PCM-et fogadnak. A hangtovábbítást nem érinti.',
-			'settings.audioChannelLimitStereo' => 'Sztereó',
-			'settings.audioChannelLimitStereoDescription' => 'Lekeverés két csatornára sztereó hangszórókhoz vagy fejhallgatóhoz. Kikapcsolja a hangtovábbítást.',
-			'settings.downmixCenterBoost' => 'Középső csatorna kiemelése',
-			'settings.downmixCenterBoostValue' => ({required Object db}) => '${db} dB',
-			'settings.downmixCenterBoostLabel' => 'Kiemelés (dB)',
-			'settings.downmixCenterBoostShort' => 'dB',
-			'settings.audioDownmixNormalize' => 'Hangerő normalizálása lekeveréskor',
-			'settings.audioDownmixNormalizeDescription' => 'A keverés szintjének csökkentése a torzítás elkerülésére. Kapcsold ki az eredeti hangerő megőrzéséhez (a hangos jelenetek torzíthatnak).',
-			'settings.dvConversionMode' => 'Dolby Vision-átalakítás',
-			'settings.dvConversionModeDescription' => 'Válaszd ki, hogyan legyenek kezelve a Dolby Vision Profile 7 fájlok.',
-			'settings.dvConversionAuto' => 'Automatikus',
-			'settings.dvConversionNative' => 'Natív / letiltva',
-			'settings.dvConversionDv81' => 'P7 → P8.1',
-			'settings.dvConversionHevcStrip' => 'P7 → HEVC',
-			'settings.dvConversionAutoDescription' => 'Az eszköz képességeinek felismerése és szükség esetén a szokásos tartalék megoldás használata',
-			'settings.dvConversionNativeDescription' => 'A natív DV7 kényszerítése és a DV-átalakítási újrapróbálkozás letiltása',
-			'settings.dvConversionDv81Description' => 'A közvetlen RPU-átalakítás kényszerítése Dolby Vision Profile 8.1-re',
-			'settings.dvConversionHevcStripDescription' => 'A Dolby Vision RPU/EL-rétegek eltávolítása és egyszerű HEVC-ként való megjelenítés',
-			'settings.disableDolbyVision' => 'Dolby Vision letiltása',
-			'settings.disableDolbyVisionDescription' => 'A Dolby Vision helyett a fájl HDR10 vagy HLG rétegének lejátszása, ha van ilyen',
-			'settings.hdrSdrConversion' => 'HDR–SDR átalakítás',
-			'settings.hdrSdrConversionDescription' => 'Válaszd ki, mi alakítsa át a HDR-videót, ha a kijelző nem tud HDR-t megjeleníteni.',
-			'settings.hdrSdrConversionAuto' => 'Automatikus',
-			'settings.hdrSdrConversionAutoDescription' => 'Eszköz Android 9-től, lejátszó a régebbi verziókon',
-			'settings.hdrSdrConversionDevice' => 'Eszköz',
-			'settings.hdrSdrConversionDeviceDescription' => 'Az eszköz videohardvere alakítja át. A leggyorsabb, de a színek az eszköztől függnek',
-			'settings.hdrSdrConversionPlayer' => 'Lejátszó',
-			'settings.hdrSdrConversionPlayerDescription' => 'A lejátszó alakítja át. Egységes színek, de a 4K akadozhat a gyengébb TV-boxokon',
-			'settings.deinterlace' => 'Deinterlacing',
-			'settings.deinterlaceDescription' => 'Fésűfog-műtermékek eltávolítása a váltott soros videóból (csak mpv lejátszóval)',
-			'settings.deinterlaceOff' => 'Ki',
-			'settings.deinterlaceOffDescription' => 'A váltott soros videó megjelenítése úgy, ahogy dekódolva lett',
-			'settings.deinterlaceVideo' => 'Videó',
-			'settings.deinterlaceVideoDescription' => 'Minden félképből teljes képkocka lesz. TV-re rögzített felvételekhez, például sporthoz, hírekhez és koncertekhez',
-			'settings.deinterlaceFilm' => 'Film',
-			'settings.deinterlaceFilmDescription' => 'A 29,97 fps-re telecine-eljárással átalakított filmek és animációk eredeti képkockáinak helyreállítása, ami gyakori az NTSC DVD-ken. A TV-re rögzített felvételek akadoznak. Az Élő TV a Videó módot használja',
-			'settings.requireProfileSelectionOnOpen' => 'Profil kérése az alkalmazás megnyitásakor',
-			'settings.requireProfileSelectionOnOpenDescription' => 'Profilválasztó megjelenítése minden alkalommal, amikor az alkalmazást megnyitod',
-			'settings.forceTvMode' => 'TV-mód kényszerítése',
-			'settings.forceTvModeDescription' => 'TV-elrendezés kényszerítése az automatikus felismeréssel nem rendelkező eszközökön. Újraindítást igényel.',
-			'settings.startInFullscreen' => 'Indítás teljes képernyőn',
-			'settings.startInFullscreenDescription' => 'A Plezy megnyitása teljes képernyős módban indításkor',
-			'settings.exitFullscreenOnPlayerClose' => 'Kilépés a teljes képernyőből a lejátszó bezárásakor',
-			'settings.exitFullscreenOnPlayerCloseDescription' => 'Automatikus kilépés a teljes képernyőből a videólejátszó bezárásakor',
-			'settings.autoHidePerformanceOverlay' => 'Teljesítményadatok automatikus elrejtése',
-			'settings.autoHidePerformanceOverlayDescription' => 'A teljesítményadatok elhalványítása a lejátszásvezérlőkkel együtt',
-			'settings.showNavBarLabels' => 'Navigációs sáv címkéinek megjelenítése',
-			'settings.showNavBarLabelsDescription' => 'Szöveges címkék megjelenítése a navigációs sáv ikonjai alatt',
-			'settings.startupSection' => 'Indítási oldal',
-			'settings.showExploreTab' => 'Felfedezés lap megjelenítése',
-			'settings.showExploreTabDescription' => 'A Plex Discover és a csatlakoztatott követők tartalmait megjelenítő Felfedezés lap megjelenítése',
-			'settings.liveTvDefaultFavorites' => 'Kedvenc csatornák alapértelmezés szerint',
-			'settings.liveTvDefaultFavoritesDescription' => 'Csak a kedvenc csatornák megjelenítése az Élő TV megnyitásakor',
-			'settings.general' => 'Általános',
-			'settings.generalDescription' => 'Nyelv, indítás és ablakviselkedés',
-			'settings.languageAndRegion' => 'Nyelv és régió',
-			'settings.startup' => 'Indítás',
-			'settings.display' => 'Kijelző',
-			'settings.libraryAndCards' => 'Könyvtár és kártyák',
-			'settings.homeScreen' => 'Kezdőképernyő',
-			'settings.navigation' => 'Navigáció',
-			'settings.window' => 'Ablak',
-			'settings.liveTv' => 'Élő TV',
-			'settings.player' => 'Lejátszó',
-			'settings.videoAndDisplay' => 'Videó és kijelző',
-			'settings.audio' => 'Hang',
-			'settings.quality' => 'Minőség',
-			'settings.subtitles' => 'Feliratok',
-			'settings.seekAndTiming' => 'Tekerés és időzítés',
-			'settings.behavior' => 'Viselkedés',
-			'settings.gestures' => 'Mozdulatok',
-			'settings.gestureBrightnessSwipe' => 'Fényerő-húzás',
-			'settings.gestureBrightnessSwipeDescription' => 'Húzd felfelé vagy lefelé a bal szélén a fényerő beállításához',
-			'settings.gestureVolumeSwipe' => 'Hangerő-húzás',
-			'settings.gestureVolumeSwipeDescription' => 'Húzd felfelé vagy lefelé a jobb szélén a hangerő beállításához',
-			'settings.gesturePinchToZoom' => 'Csípés a nagyításhoz',
-			'settings.gesturePinchToZoomDescription' => 'Csípj a videóra a nagyításhoz vagy kicsinyítéshez',
-			'settings.rememberBrightnessLevel' => 'Fényerőszint megjegyzése',
-			'settings.rememberBrightnessLevelDescription' => 'A lejátszás az utolsó húzással beállított fényerővel indul',
-			'settings.controls' => 'Vezérlők',
-			'settings.rememberPlayerChanges' => 'Lejátszó módosításainak megjegyzése',
-			'settings.rememberPlayerChangesDescription' => 'A lejátszás közben végzett módosítások mentési és újbóli alkalmazási helye',
-			'settings.scopePlaybackSpeed' => 'Lejátszási sebesség',
-			'settings.scopeShaderPreset' => 'Shader-előbeállítás',
-			'settings.scopeAspectRatio' => 'Képarány',
-			'settings.scopeZoom' => 'Nagyítás',
-			'settings.scopeSyncOffsets' => 'Hang- és feliratszinkronizálás',
-			'settings.playerScopeOff' => 'Ne mentse',
-			'settings.playerScopeGlobal' => 'Mindenhol',
-			'settings.playerScopeLibrary' => 'Könyvtáronként',
-			'settings.playerScopeTitle' => 'Sorozatonként vagy filmenként',
-			'settings.exportDialogTitle' => 'Plezy-beállítások exportálása',
-			'themeEditor.builtIn' => 'Beépített',
-			'themeEditor.presets' => 'Előre beállított',
-			'themeEditor.custom' => 'Egyéni',
-			'themeEditor.customEmpty' => 'Még nincs létrehozva',
-			'themeEditor.editCustom' => 'Egyéni téma szerkesztése',
-			'themeEditor.editCustomDescription' => 'Válaszd ki magad az összes színt',
-			'themeEditor.locked' => 'A Téma- és ikoncsomaggal oldható fel',
-			'themeEditor.savedLocked' => 'Mentve — a Téma- és ikoncsomaggal oldható fel',
-			'themeEditor.title' => 'Egyéni téma',
-			'themeEditor.startFrom' => 'Kiindulási téma',
-			'themeEditor.startFromDescription' => 'Az összes szín átmásolása egy másik témából',
-			'themeEditor.colors' => 'Színek',
-			'themeEditor.preview' => 'Előnézet',
-			'themeEditor.slots.bg' => 'Háttér',
-			'themeEditor.slots.surface' => 'Felület',
-			'themeEditor.slots.outline' => 'Körvonal',
-			'themeEditor.slots.text' => 'Szöveg',
-			'themeEditor.slots.textMuted' => 'Másodlagos szöveg',
-			_ => null,
-		} ?? switch (path) {
-			'themeEditor.slots.accent' => 'Kiemelőszín',
-			'themeEditor.opacity' => 'Átlátszatlanság',
-			'themeEditor.hexHint' => '#RRGGBB vagy #AARRGGBB',
-			'themeEditor.fromOtherThemes' => 'Más témákból',
-			'themeEditor.swatchLabel' => ({required Object theme, required Object color}) => '${theme} – ${color}',
-			'themeEditor.contrast.textOnBg' => 'Szöveg a háttéren',
-			'themeEditor.contrast.textOnSurface' => 'Szöveg a felületen',
-			'themeEditor.contrast.textMutedOnBg' => 'Másodlagos szöveg a háttéren',
-			'themeEditor.contrast.textMutedOnSurface' => 'Másodlagos szöveg a felületen',
-			'themeEditor.contrast.accentOnBg' => 'Kiemelőszín a háttéren',
-			'themeEditor.contrast.accentOnSurface' => 'Kiemelőszín a felületen',
-			'themeEditor.contrast.labelOnAccent' => 'Gombfelirat a kiemelőszínen',
-			'themeEditor.lowContrast' => ({required Object pair, required Object ratio, required Object minimum}) => '${pair}: ${ratio}:1, az ajánlott ${minimum}:1 alatt',
-			'themeEditor.discardTitle' => 'Elveted a módosításokat?',
-			'themeEditor.discardMessage' => 'A nem mentett színmódosítások elvesznek.',
-			'themeEditor.discard' => 'Elvetés',
-			'themeEditor.previewCardTitle' => ({required Object number}) => '${number}. epizód',
-			'themeEditor.previewCardSubtitle' => ({required Object minutes}) => '${minutes} perc van hátra',
-			'themeEditor.previewSwitch' => 'Automatikus lejátszás',
-			'themeEditor.previewMutedText' => 'Így néz ki a másodlagos szöveg',
-			'search.hint' => 'Keresés filmek, sorozatok és zenék között...',
-			'search.tryDifferentTerm' => 'Próbálj másik keresési kifejezést',
-			'search.searchYourMedia' => 'Keresés a saját médiatartalmak között',
-			'search.enterTitleActorOrKeyword' => 'Adj meg egy címet, színészt vagy kulcsszót',
-			'search.people' => 'Személyek',
-			'hotkeys.setShortcutFor' => ({required Object actionName}) => 'Billentyűparancs beállítása ehhez: ${actionName}',
-			'hotkeys.clearShortcut' => 'Billentyűparancs törlése',
-			'hotkeys.noShortcutSet' => 'Nincs billentyűparancs beállítva',
-			'hotkeys.currentShortcut' => 'Jelenlegi billentyűparancs:',
-			'hotkeys.pressToRecord' => 'Válaszd ki a billentyűparancs rögzítéséhez',
-			'hotkeys.recordingShortcut' => 'Nyomd meg most a billentyűparancsot',
-			'hotkeys.actions.playPause' => 'Lejátszás/Szünet',
-			'hotkeys.actions.volumeUp' => 'Hangerő fel',
-			'hotkeys.actions.volumeDown' => 'Hangerő le',
-			'hotkeys.actions.seekForward' => ({required Object seconds}) => 'Tekerés előre (${seconds} mp)',
-			'hotkeys.actions.seekBackward' => ({required Object seconds}) => 'Tekerés hátra (${seconds} mp)',
-			'hotkeys.actions.fullscreenToggle' => 'Teljes képernyős mód váltása',
-			'hotkeys.actions.muteToggle' => 'Némítás be- és kikapcsolása',
-			'hotkeys.actions.subtitleToggle' => 'Feliratok be- és kikapcsolása',
-			'hotkeys.actions.audioTrackNext' => 'Következő hangsáv',
-			'hotkeys.actions.subtitleTrackNext' => 'Következő feliratsáv',
-			'hotkeys.actions.chapterNext' => 'Következő fejezet',
-			'hotkeys.actions.chapterPrevious' => 'Előző fejezet',
-			'hotkeys.actions.episodeNext' => 'Következő epizód',
-			'hotkeys.actions.episodePrevious' => 'Előző epizód',
-			'hotkeys.actions.speedIncrease' => 'Sebesség növelése',
-			'hotkeys.actions.speedDecrease' => 'Sebesség csökkentése',
-			'hotkeys.actions.speedReset' => 'Sebesség alaphelyzetbe állítása',
-			'hotkeys.actions.zoomIn' => 'Nagyítás',
-			'hotkeys.actions.zoomOut' => 'Kicsinyítés',
-			'hotkeys.actions.zoomReset' => 'Nagyítás alaphelyzetbe állítása',
-			'hotkeys.actions.subSeekNext' => 'Ugrás a következő feliratra',
-			'hotkeys.actions.subSeekPrev' => 'Ugrás az előző feliratra',
-			'hotkeys.actions.shaderToggle' => 'Shaderek be- és kikapcsolása',
-			'hotkeys.actions.skipMarker' => 'Intró/stáblista átugrása',
-			'hotkeys.actions.screenshot' => 'Képernyőkép készítése',
-			'fileInfo.title' => 'Fájlinformáció',
-			'fileInfo.overview' => 'Áttekintés',
-			'fileInfo.video' => 'Videó',
-			'fileInfo.audio' => 'Hang',
-			'fileInfo.subtitles' => 'Feliratok',
-			'fileInfo.images' => 'Beágyazott képek',
-			'fileInfo.dataStreams' => 'Adatfolyamok',
-			'fileInfo.lyrics' => 'Dalszövegek',
-			'fileInfo.file' => 'Fájl',
-			'fileInfo.attachments' => 'Mellékletek',
-			'fileInfo.delivery' => 'Kézbesítés',
-			'fileInfo.versionCounter' => ({required Object index, required Object count}) => '${index}. verzió a(z) ${count} közül',
-			'fileInfo.fileCounter' => ({required Object index, required Object count}) => '${index}. fájl a(z) ${count} közül',
-			'fileInfo.noStreams' => 'A szerver nem jelentett adatfolyamot ehhez a fájlhoz.',
-			'fileInfo.copyPath' => 'Útvonal másolása',
-			'fileInfo.pathCopied' => 'Fájlútvonal kimásolva',
-			'fileInfo.codec' => 'Kodek',
-			'fileInfo.codecTag' => 'Kodekcímke',
-			'fileInfo.resolution' => 'Felbontás',
-			'fileInfo.codedResolution' => 'Kódolt felbontás',
-			'fileInfo.bitrate' => 'Bitráta',
-			'fileInfo.frameRate' => 'Képkockasebesség',
-			'fileInfo.rotation' => 'Forgatás',
-			'fileInfo.comment' => 'Megjegyzés',
-			'fileInfo.audioDescription' => 'Hangleírás',
-			'fileInfo.headerCompression' => 'Fejléc-tömörítés',
-			'fileInfo.sidecarFile' => 'Kísérő fájl',
-			'fileInfo.transportTimestamp' => 'Szállítási időbélyeg',
-			'fileInfo.displayOffset' => 'Megjelenítési eltolás',
-			'fileInfo.previewFailureCode' => 'Előnézeti hibakód',
-			'fileInfo.previewRetries' => 'Előnézeti újrapróbálkozások',
-			'fileInfo.aspectRatio' => 'Méretarány',
-			'fileInfo.pixelAspectRatio' => 'Pixel képarány',
-			'fileInfo.profile' => 'Profil',
-			'fileInfo.level' => 'Szint',
-			'fileInfo.bitDepth' => 'Bitmélység',
-			'fileInfo.pixelFormat' => 'Pixelformátum',
-			'fileInfo.colorSpace' => 'Színtér',
-			'fileInfo.colorRange' => 'Színtartomány',
-			'fileInfo.colorPrimaries' => 'Elsődleges színek',
-			'fileInfo.colorTransfer' => 'Színátvitel',
-			'fileInfo.chromaSubsampling' => 'Krominancia-alulmintavételezés',
-			'fileInfo.chromaLocation' => 'Kroma elhelyezkedés',
-			'fileInfo.scanType' => 'Pásztázási típus',
-			'fileInfo.interlaced' => 'Váltott soros',
-			'fileInfo.anamorphic' => 'Anamorf',
-			'fileInfo.referenceFrames' => 'Referencia képkockák',
-			'fileInfo.dynamicRange' => 'Dinamikatartomány',
-			'fileInfo.dolbyVision' => 'Dolby Vision',
-			'fileInfo.dolbyVisionLevel' => 'Dolby Vision szint',
-			'fileInfo.dolbyVisionVersion' => 'Dolby Vision verzió',
-			'fileInfo.dolbyVisionLayers' => 'Dolby Vision rétegek',
-			'fileInfo.baseLayerCompatibility' => 'Alapréteg-kompatibilitás',
-			'fileInfo.avcBitstream' => 'AVC bitfolyam',
-			'fileInfo.nalLengthSize' => 'NAL hosszméret',
-			'fileInfo.scalingMatrix' => 'Egyéni méretezési mátrix',
-			'fileInfo.streamIdentifier' => 'Adatfolyam-azonosító',
-			'fileInfo.streamIndex' => 'Adatfolyam-index',
-			'fileInfo.streamId' => 'Adatfolyam azonosítója',
-			'fileInfo.language' => 'Nyelv',
-			'fileInfo.languageCode' => 'Nyelvkód',
-			'fileInfo.streamTitle' => 'Sáv címe',
-			'fileInfo.channels' => 'Csatornák',
-			'fileInfo.sampleRate' => 'Mintavételi frekvencia',
-			'fileInfo.spatialAudio' => 'Térbeli hang',
-			'fileInfo.textBased' => 'Szövegalapú',
-			'fileInfo.subtitleFormat' => 'Kísérő formátum',
-			'fileInfo.provider' => 'Szolgáltató',
-			'fileInfo.matchScore' => 'Egyezési pontszám',
-			'fileInfo.externalDelivery' => 'Külön is kiszolgálható',
-			'fileInfo.sidecarPath' => 'Kísérő fájl útvonala',
-			'fileInfo.sourceStream' => 'Másolva innen',
-			'fileInfo.temporary' => 'Ideiglenes',
-			'fileInfo.timeBase' => 'Időalap',
-			'fileInfo.overallBitrate' => 'Összesített bitráta',
-			'fileInfo.path' => 'Elérési út',
-			'fileInfo.fileName' => 'Fájlnév',
-			'fileInfo.size' => 'Méret',
-			'fileInfo.totalSize' => 'Teljes méret',
-			'fileInfo.container' => 'Konténer',
-			'fileInfo.duration' => 'Időtartam',
-			'fileInfo.previewThumbnails' => 'Előnézeti miniatűrök',
-			'fileInfo.previewIndex' => 'Előnézeti index',
-			'fileInfo.packetLength' => 'Csomaghossz',
-			'fileInfo.filePresent' => 'Fájl jelen van',
-			'fileInfo.fileReadable' => 'A szerver számára olvasható',
-			'fileInfo.streamPath' => 'Adatfolyam útvonala',
-			'fileInfo.optimizedForStreaming' => 'Adatfolyam-továbbításra optimalizálva',
-			'fileInfo.has64bitOffsets' => '64 bites eltolások',
-			'fileInfo.protocol' => 'Protokoll',
-			'fileInfo.mediaType' => 'Médiatípus',
-			'fileInfo.sourceKind' => 'Forrás típusa',
-			'fileInfo.optimizedVersion' => 'Optimalizált verzió',
-			'fileInfo.optimizationTarget' => 'Optimalizálási cél',
-			'fileInfo.deletedAt' => 'Törölve',
-			'fileInfo.remoteSource' => 'Távoli forrás',
-			'fileInfo.infiniteStream' => 'Végtelen adatfolyam',
-			'fileInfo.directPlay' => 'Közvetlen lejátszás',
-			'fileInfo.directStream' => 'Közvetlen adatfolyam',
-			'fileInfo.transcoding' => 'Átkódolás',
-			'fileInfo.etag' => 'ETag',
-			'fileInfo.versionId' => 'Verzióazonosító',
-			'fileInfo.fileId' => 'Fájlazonosító',
-			'fileInfo.defaultAudioTrack' => 'Alapértelmezett hangsáv',
-			'fileInfo.defaultSubtitleTrack' => 'Alapértelmezett feliratsáv',
-			'fileInfo.subtitlesOff' => 'Ki',
-			'fileInfo.flagDefault' => 'Alapértelmezett',
-			'fileInfo.flagForced' => 'Kényszerített',
-			'fileInfo.flagSelected' => 'Kiválasztva',
-			'fileInfo.flagExternal' => 'Külső',
-			'fileInfo.flagHearingImpaired' => 'Nagyothallóknak',
-			'fileInfo.flagDub' => 'Szinkron',
-			'fileInfo.flagOriginal' => 'Eredeti',
-			'fileInfo.channelsMono' => 'Monó',
-			'fileInfo.dolbyVisionProfile' => ({required Object profile}) => '${profile} profil',
-			'mediaMenu.markAsWatched' => 'Megjelölés megtekintettként',
-			'mediaMenu.markAsUnwatched' => 'Megjelölés nem megtekintettként',
-			'mediaMenu.removeFromContinueWatching' => 'Eltávolítás a folytatásból',
-			'mediaMenu.viewDetails' => 'Részletek megtekintése',
-			'mediaMenu.goToSeries' => 'Ugrás a sorozathoz',
-			'mediaMenu.shufflePlay' => 'Véletlenszerű lejátszás',
-			'mediaMenu.shuffleNotAvailableOffline' => 'A véletlenszerű lejátszás nem érhető el offline',
-			'mediaMenu.fileInfo' => 'Fájlinformáció',
-			'mediaMenu.deleteEpisodeFromServer' => 'Epizód törlése a szerverről',
-			'mediaMenu.deleteSeasonFromServer' => 'Évad törlése a szerverről',
-			'mediaMenu.deleteShowFromServer' => 'Sorozat törlése a szerverről',
-			'mediaMenu.deleteMovieFromServer' => 'Film törlése a szerverről',
-			'mediaMenu.deleteEpisodeTitle' => 'Töröljük ezt az epizódot?',
-			'mediaMenu.deleteSeasonTitle' => 'Töröljük ezt az évadot?',
-			'mediaMenu.deleteShowTitle' => 'Töröljük ezt a sorozatot?',
-			'mediaMenu.deleteMovieTitle' => 'Töröljük ezt a filmet?',
-			'mediaMenu.deleteEpisodeConfirm' => 'Epizód törlése',
-			'mediaMenu.deleteSeasonConfirm' => 'Évad törlése',
-			'mediaMenu.deleteShowConfirm' => 'Sorozat törlése',
-			'mediaMenu.deleteMovieConfirm' => 'Film törlése',
-			'mediaMenu.deleteAnyway' => 'Törlés mindenképp',
-			'mediaMenu.confirmDeleteTarget' => ({required Object title}) => 'Véglegesen töröljük a(z) ${title} elemet a szerverről?',
-			'mediaMenu.deleteMultipleWarning' => 'Ez magában foglalja az összes epizódot és azok fájljait.',
-			'mediaMenu.deleteEpisodeCountWarning' => ({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('hu'))(n, one: 'Ez törli az összes (${n}) epizódot benne és a hozzá tartozó fájlt.', other: 'Ez törli az összes (${n}) epizódot benne és a fájljaikat.', ), 
-			'mediaMenu.deleteMultiPartWarning' => ({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('hu'))(n, one: 'Ez az elem ${n} fájlban van tárolva, amely törlésre kerül.', other: 'Ez az elem ${n} fájlban van tárolva, és mindegyik törlésre kerül.', ), 
-			'mediaMenu.deleteSharedFileHeading' => ({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('hu'))(n, one: 'További ${n} epizód is ugyanabban a fájlban van, és szintén törlésre kerül:', other: 'További ${n} epizód is ugyanabban a fájlban van, és szintén törlésre kerül:', ), 
-			'mediaMenu.deleteScopeUnverifiedProbeFailed' => 'A Plezy nem tudta ellenőrizni, mely fájlokat távolítja el ez, ezért a fent nevezett elemnél többet is törölhet. Szakítsa meg és próbálja újra, vagy töröljön mindenképp.',
-			'mediaMenu.deleteScopeUnverifiedNoFileInfo' => 'A szerver nem szolgáltatott fájladatokat ehhez az elemhez, ezért a Plezy nem tudja ellenőrizni, mely fájlokat távolít el. A fent nevezett elemnél többet is törölhet.',
-			'mediaMenu.mediaDeletedSuccessfully' => 'Médiaelem sikeresen törölve',
-			'mediaMenu.mediaFailedToDelete' => 'Nem sikerült a médiaelem törlése',
-			'mediaMenu.rate' => 'Értékelés',
-			'mediaMenu.playFromBeginning' => 'Lejátszás az elejétől',
-			'mediaMenu.playVersion' => 'Verzió lejátszása...',
-			'rateSheet.title' => 'Értékelés',
-			'rateSheet.server' => 'Szerver',
-			'rateSheet.favorite' => 'Kedvenc',
-			'rateSheet.favorited' => 'Kedvencekhez hozzáadva',
-			'rateSheet.saved' => 'Mentve',
-			'rateSheet.notAvailable' => 'Nincs találat',
-			'rateSheet.noConnectedServices' => 'Az értékeléshez csatlakoztass egy szolgáltatást a Beállításokban.',
-			'accessibility.mediaCardMovie' => ({required Object title}) => '${title}, film',
-			'accessibility.mediaCardShow' => ({required Object title}) => '${title}, TV-sorozat',
-			'accessibility.mediaCardEpisode' => ({required Object title, required Object episodeInfo}) => '${title}, ${episodeInfo}',
-			'accessibility.mediaCardSeason' => ({required Object title, required Object seasonInfo}) => '${title}, ${seasonInfo}',
-			'accessibility.mediaCardWatched' => 'megtekintve',
-			'accessibility.mediaCardPartiallyWatched' => ({required Object percent}) => '${percent} százalék megtekintve',
-			'accessibility.mediaCardUnwatched' => 'még nem láttad',
-			'accessibility.tapToPlay' => 'Koppints a lejátszáshoz',
-			'accessibility.decrease' => 'Csökkentés',
-			'accessibility.increase' => 'Növelés',
-			'accessibility.decreaseValue' => ({required Object label}) => '${label} csökkentése',
-			'accessibility.increaseValue' => ({required Object label}) => '${label} növelése',
-			'accessibility.hue' => 'Árnyalat',
-			'accessibility.saturation' => 'Telítettség',
-			'accessibility.brightness' => 'Fényerő',
-			'accessibility.hexColor' => 'Hex színkód',
-			'accessibility.expandText' => 'Szöveg kibontása',
-			'accessibility.collapseText' => 'Szöveg összecsukása',
-			'accessibility.alphabetNavigation' => 'Ábécé szerinti navigáció',
-			'accessibility.alphabetScrollHint' => 'A betűnkénti léptetéshez pöccints felfelé vagy lefelé',
-			'accessibility.rowColumnPosition' => ({required Object row, required Object rowCount, required Object column, required Object columnCount}) => '${row}. sor a(z) ${rowCount} sorból, ${column}. oszlop a(z) ${columnCount} oszlopból',
-			'accessibility.rowPosition' => ({required Object row, required Object rowCount}) => '${row}. sor a(z) ${rowCount} sorból',
-			'accessibility.autoScrollPlay' => 'Automatikus görgetés indítása',
-			'accessibility.autoScrollPause' => 'Automatikus görgetés szüneteltetése',
-			'accessibility.hueShort' => 'H',
-			'accessibility.saturationShort' => 'S',
-			'accessibility.valueShort' => 'V',
-			'tooltips.shufflePlay' => 'Véletlenszerű lejátszás',
-			'tooltips.playTrailer' => 'Előzetes lejátszása',
-			'tooltips.markAsWatched' => 'Megjelölés megtekintettként',
-			'tooltips.markAsUnwatched' => 'Megjelölés nem megtekintettként',
-			'audioTracks.track' => ({required Object n}) => '${n}. hangsáv',
-			'videoControls.audioLabel' => 'Hang',
-			'videoControls.subtitlesLabel' => 'Feliratok',
-			'videoControls.addTime' => ({required Object amount, required Object unit}) => '+${amount}${unit}',
-			'videoControls.letterbox' => 'Fekete sávok',
-			'videoControls.fillScreen' => 'Képernyő kitöltése',
-			'videoControls.stretch' => 'Nyújtás',
-			'videoControls.lockRotation' => 'Forgatás zárolása',
-			'videoControls.unlockRotation' => 'Forgatás feloldása',
-			'videoControls.timerActive' => 'Időzítő aktív',
-			'videoControls.playbackWillPauseIn' => ({required Object duration}) => 'A lejátszás ${duration} múlva szünetel',
-			'videoControls.sleepTimerEndOfVideo' => 'Jelenlegi videó vége',
-			'videoControls.sleepTimerStopAtHeader' => 'Leállítás ekkor',
-			'videoControls.sleepTimerDurationHeader' => 'Időzítő',
-			'videoControls.playbackWillPauseAtEnd' => 'A lejátszás szünetel a videó végén',
-			'videoControls.stillWatching' => 'Még nézed?',
-			'videoControls.pausingIn' => ({required Object seconds}) => 'Szüneteltetés ${seconds} mp múlva',
-			'videoControls.continueWatching' => 'Folytatás',
-			'videoControls.autoPlayNext' => 'Következő automatikus lejátszása',
-			'videoControls.playNext' => 'Következő lejátszása',
-			'videoControls.playButton' => 'Lejátszás',
-			'videoControls.pauseButton' => 'Szünet',
-			'videoControls.playbackPaused' => 'Szüneteltetve',
-			'videoControls.playbackResumed' => 'Lejátszás',
-			'videoControls.loadingVideo' => 'Videó betöltése',
-			'videoControls.showPlaybackControls' => 'Lejátszásvezérlők megjelenítése',
-			'videoControls.hidePlaybackControls' => 'Lejátszásvezérlők elrejtése',
-			'videoControls.seekBackwardButton' => ({required Object seconds}) => 'Tekerés hátra ${seconds} másodperccel',
-			'videoControls.seekForwardButton' => ({required Object seconds}) => 'Tekerés előre ${seconds} másodperccel',
-			'videoControls.previousButton' => 'Előző epizód',
-			'videoControls.nextButton' => 'Következő epizód',
-			'videoControls.previousChapterButton' => 'Előző fejezet',
-			'videoControls.nextChapterButton' => 'Következő fejezet',
-			'videoControls.muteButton' => 'Némítás',
-			'videoControls.unmuteButton' => 'Hang visszakapcsolása',
-			'videoControls.settingsButton' => 'Lejátszási beállítások',
-			'videoControls.tracksButton' => 'Hang és feliratok',
-			'videoControls.chaptersButton' => 'Fejezetek',
-			'videoControls.versionQualityButton' => 'Verzió és minőség',
-			'videoControls.versionColumnHeader' => 'Verzió',
-			'videoControls.qualityColumnHeader' => 'Minőség',
-			'videoControls.qualityOriginal' => 'Eredeti',
-			'videoControls.qualityPresetLabel' => ({required Object resolution, required Object bitrate}) => '${resolution}p ${bitrate} Mbps',
-			'videoControls.transcodeUnavailableFallback' => 'A transzkódolás nem érhető el — eredeti minőség lejátszása',
-			'videoControls.subtitleUnavailableFallback' => 'A kiválasztott feliratot nem sikerült betölteni — folytatás felirat nélkül',
-			'videoControls.pipButton' => 'Kép a képben mód',
-			'videoControls.aspectRatioButton' => 'Méretarány',
-			'videoControls.ambientLighting' => 'Környezeti megvilágítás',
-			'videoControls.fullscreenButton' => 'Teljes képernyős mód bekapcsolása',
-			'videoControls.exitFullscreenButton' => 'Teljes képernyős mód kikapcsolása',
-			'videoControls.alwaysOnTopButton' => 'Mindig legfelül',
-			'videoControls.rotationLockButton' => 'Elforgatás zárolása',
-			'videoControls.lockScreen' => 'Képernyő zárolása',
-			'videoControls.screenLockButton' => 'Képernyőzár',
-			'videoControls.timelineSlider' => 'Videó idősáv',
-			'videoControls.volumeSlider' => 'Hangerő',
-			'videoControls.endsAt' => ({required Object time}) => 'Vége: ${time}',
-			'videoControls.pipActive' => 'Lejátszás kép a képben módban',
-			'videoControls.pipFailed' => 'Nem sikerült elindítani a kép a képben módot',
-			'videoControls.screenshotSaved' => 'Képernyőkép elmentve',
-			'videoControls.screenshotFailed' => 'Nem sikerült képernyőképet készíteni',
-			'videoControls.zoomPercent' => ({required Object percent}) => 'Nagyítás ${percent}%',
-			'videoControls.volumePercent' => ({required Object percent}) => 'Hangerő ${percent}%',
-			'videoControls.pipErrors.androidVersion' => 'Android 8.0 vagy újabb szükséges',
-			'videoControls.pipErrors.iosVersion' => 'iOS 15.0 vagy újabb szükséges',
-			'videoControls.pipErrors.permissionDisabled' => 'A kép a képben mód le van tiltva. Engedélyezd a rendszerbeállításokban.',
-			'videoControls.pipErrors.notSupported' => 'Az eszköz nem támogatja a kép a képben módot',
-			'videoControls.pipErrors.voSwitchFailed' => 'Nem sikerült átváltani a videókimenetet a kép a képben módhoz',
-			'videoControls.pipErrors.failed' => 'Nem sikerült elindítani a kép a képben módot',
-			'videoControls.pipErrors.prepareFailed' => 'Nem sikerült előkészíteni a kép a képben módot',
-			'videoControls.pipErrors.unknown' => ({required Object error}) => 'Hiba történt: ${error}',
-			'videoControls.chapters' => 'Fejezetek',
-			'videoControls.noChaptersAvailable' => 'Nincsenek elérhető fejezetek',
-			'videoControls.queue' => 'Lejátszási sor',
-			'videoControls.noQueueItems' => 'Nincsenek elemek a sorban',
-			'videoControls.noAudioDevicesAvailable' => 'Nincsenek elérhető audioeszközök',
-			'videoControls.searchSubtitles' => 'Feliratok keresése',
-			'videoControls.language' => 'Nyelv',
-			'videoControls.noSubtitlesFound' => 'Nem találhatók feliratok',
-			'videoControls.subtitleDownloaded' => 'Felirat letöltve',
-			'videoControls.subtitleDownloadedNotApplied' => 'Felirat letöltve, de nem sikerült kiválasztani',
-			'videoControls.subtitleDownloadFailed' => 'Nem sikerült a felirat letöltése',
-			'videoControls.subtitleDownloadTimedOut' => 'A felirat nem jelent meg időben. Lehet, hogy a letöltés nem sikerült',
-			'videoControls.searchLanguages' => 'Nyelvek keresése...',
-			'videoControls.skipIntro' => 'Főcím átugrása',
-			'videoControls.skipCredits' => 'Stáblista átugrása',
-			'videoControls.nextEpisode' => 'Következő epizód',
-			'videoControls.subtitleTrack' => ({required Object n}) => '${n}. sáv',
-			'videoControls.subtitleFile' => ({required Object name}) => '${name} felirat',
-			'videoControls.forcedTrack' => ({required Object label}) => '${label} (kényszerített)',
-			'videoControls.osdSubtitlesOff' => 'Feliratok: ki',
-			'videoControls.osdSubtitles' => ({required Object track}) => 'Feliratok: ${track}',
-			'videoControls.osdAudio' => ({required Object track}) => 'Hang: ${track}',
-			'messages.markedAsWatched' => 'Megjelölve megtekintettként',
-			'messages.markedAsUnwatched' => 'Megjelölve nem megtekintettként',
-			'messages.markedAsWatchedOffline' => 'Megjelölve megtekintettként (szinkronizálás online állapotban)',
-			'messages.markedAsUnwatchedOffline' => 'Megjelölve nem megtekintettként (szinkronizálás online állapotban)',
-			'messages.autoRemovedWatchedDownload' => ({required Object title}) => 'Automatikusan eltávolítva: ${title}',
-			'messages.autoRemovedWatchedDownloads' => ({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('hu'))(n, one: '${n} megtekintett letöltés automatikusan eltávolítva', other: '${n} megtekintett letöltés automatikusan eltávolítva', ), 
-			'messages.removedFromContinueWatching' => 'Eltávolítva a folytatásból',
-			'messages.errorLoading' => ({required Object error}) => 'Hiba: ${error}',
-			'messages.searchPartialResults' => 'Néhány médiaszervert nem sikerült keresni. Az elérhető találatok megjelenítése.',
-			'messages.streamInterrupted' => 'Az adatfolyam megszakadt. Az újrapróbálkozáshoz indítsd el a lejátszást, vagy tekerj másik pozícióra.',
-			'messages.liveStreamInterrupted' => 'Az élő adás megszakadt. Nyomd meg a lejátszást az újrapróbálkozáshoz.',
-			'messages.fileInfoNotAvailable' => 'A fájlinformáció nem érhető el',
-			'messages.playbackAuthenticationRequired' => 'Az elem lejátszásához jelentkezz be újra a médiaszerverre.',
-			'messages.playbackServerUnavailable' => 'A médiaszerver nem érhető el. Próbáld újra később.',
-			'messages.playbackDataInvalid' => 'A szerver érvénytelen lejátszási adatokat küldött.',
-			'messages.playbackCancelled' => 'A lejátszás megszakítva.',
-			'messages.playbackFailed' => 'Nem sikerült elindítani a lejátszást.',
-			'messages.playbackFailedDetail' => ({required Object error}) => 'Nem sikerült elindítani a lejátszást: ${error}',
-			'messages.audioOutputFailed' => 'A hangkimenet nem válaszol. Ellenőrizd a TV vagy az erősítő hangcsatlakozását; ha más alkalmazásokban sincs hang, indítsd újra az eszközt.',
-			'messages.mediaUnavailable' => 'Ez a tartalom már nem érhető el.',
-			'messages.errorLoadingFileInfo' => ({required Object error}) => 'Hiba a fájlinformációk betöltésekor: ${error}',
-			'messages.errorLoadingSeries' => 'Hiba a sorozat betöltésekor',
-			'messages.musicNotSupported' => 'A zenelejátszás még nem támogatott',
-			'messages.noDescriptionAvailable' => 'Nincs elérhető leírás',
-			'messages.noProfilesAvailable' => 'Nincsenek elérhető profilok',
-			'messages.contactAdminForProfiles' => 'Lépj kapcsolatba a szerver adminisztrátorával profilok hozzáadásához',
-			'messages.unableToDetermineLibrarySection' => 'Nem sikerült meghatározni az elem könyvtári részlegét',
-			'messages.logsCleared' => 'Naplók törölve',
-			'messages.logsCopied' => 'Naplók a vágólapra másolva',
-			'messages.noLogsAvailable' => 'Nincsenek elérhető naplók',
-			'messages.libraryScanning' => ({required Object title}) => '"${title}" beolvasása...',
-			'messages.libraryScanStarted' => ({required Object title}) => 'Könyvtár beolvasása elindítva a következőhöz: "${title}"',
-			'messages.libraryScanFailed' => ({required Object error}) => 'Nem sikerült a könyvtár beolvasása: ${error}',
-			'messages.metadataRefreshing' => ({required Object title}) => 'Metaadatok frissítése a következőhöz: "${title}"...',
-			'messages.metadataRefreshStarted' => ({required Object title}) => 'Metaadatok frissítése elindítva a következőhöz: "${title}"',
-			'messages.metadataRefreshFailed' => ({required Object error}) => 'Nem sikerült a metaadatok frissítése: ${error}',
-			'messages.logoutConfirm' => 'Biztosan ki szeretnél jelentkezni?',
-			'messages.noSeasonsFound' => 'Nem találhatók évadok',
-			'messages.seasonsLoadFailed' => 'Nem sikerült az évadok betöltése',
-			'messages.noEpisodesFound' => 'Nem találhatók epizódok az első évadban',
-			'messages.noEpisodesFoundGeneral' => 'Nem találhatók epizódok',
-			'messages.episodesLoadFailed' => 'Nem sikerült az epizódok betöltése',
-			'messages.noResultsFound' => 'Nincs találat',
-			'messages.sleepTimerSet' => ({required Object label}) => 'Elalvási időzítő beállítva: ${label}',
-			'messages.noItemsAvailable' => 'Nincsenek elérhető elemek',
-			'messages.failedToCreatePlayQueueNoItems' => 'Nem sikerült létrehozni a lejátszási sort — nincsenek elemek',
-			'messages.failedPlayback' => ({required Object action, required Object error}) => 'Nem sikerült a művelet (${action}): ${error}',
-			'messages.switchingToCompatiblePlayer' => 'Váltás kompatibilis lejátszóra...',
-			'messages.serverLimitTitle' => 'A lejátszás nem sikerült',
-			'messages.serverLimitBody' => 'Szerverhiba (HTTP 500). A munkamenetet valószínűleg egy sávszélességi vagy átkódolási korlát utasította el. Kérd meg a tulajdonost a korlát módosítására.',
-			'messages.mediaUnreadableTitle' => 'A fájl nem érhető el',
-			'messages.mediaUnreadableBody' => 'A szerver megtalálta ezt az elemet, de nem tudta beolvasni a fájlját (HTTP 404). A fájl valószínűleg áthelyezésre vagy törlésre került, vagy a tárhelye offline. Kérje meg a szerver tulajdonosát, hogy ellenőrizze a fájlt, és vizsgálja újra a könyvtárat.',
-			'messages.serverBusyTitle' => 'A stream nem érhető el',
-			'messages.serverBusyBody' => 'A szerver ismételten megtagadta ennek a fájlnak a streamelését (HTTP 503). Lehet, hogy újraindul, túlterhelt, vagy a fájl tárhelye nem érhető el. Próbáld újra egy kis idő múlva – ha a probléma továbbra is fennáll, kérd meg a szerver tulajdonosát, hogy ellenőrizze a szervert és a fájl tárhelyét.',
-			'messages.playbackNotAllowedTitle' => 'A lejátszás nem engedélyezett',
-			'messages.playbackNotAllowedBody' => 'A szerver megtagadta ennek az elemnek a streamelését (HTTP 403). Lehet, hogy a fiókodnak nincs engedélye a lejátszására, vagy a szerver csak a helyi hálózatán engedélyezi a lejátszást.',
-			'messages.logsUploaded' => 'Naplók feltöltve',
-			'messages.logsUploadFailed' => 'Nem sikerült a naplók feltöltése',
-			'messages.logId' => 'Naplóazonosító',
-			'messages.burnedSubtitlesUseMenu' => 'A feliratok bele vannak égetve ebbe a streambe. A feliratmenüben módosíthatod őket.',
-			'messages.noVideoUrl' => 'Nem érhető el videó-URL',
-			'messages.playbackNoMediaSources' => 'A szerver nem adott vissza lejátszható médiaforrást',
-			'messages.playbackDataNotPrepared' => 'A lejátszás az adatok elkészülte előtt indult el',
-			'messages.streamSelectionUnavailable' => 'Ehhez a forráshoz nem érhető el a streamek kiválasztása',
-			'messages.streamSelectionFailed' => 'Nem sikerült alkalmazni a kiválasztott streameket',
-			'messages.trackSelectionNotRemembered' => 'Ez a sávválasztás csak az aktuális lejátszásra érvényes.',
-			'messages.serverUnavailableForProfile' => 'Az aktív profilhoz nem érhető el szerver',
-			'subtitlingStyling.text' => 'Szöveg',
-			'subtitlingStyling.border' => 'Keret',
-			'subtitlingStyling.background' => 'Háttér',
-			'subtitlingStyling.fontSize' => 'Betűméret',
-			'subtitlingStyling.textColor' => 'Szövegszín',
-			'subtitlingStyling.borderSize' => 'Keretméret',
-			'subtitlingStyling.borderColor' => 'Keretszín',
-			'subtitlingStyling.backgroundOpacity' => 'Háttér átlátszatlansága',
-			'subtitlingStyling.backgroundColor' => 'Háttérszín',
-			'subtitlingStyling.position' => 'Pozíció',
-			'subtitlingStyling.assOverride' => 'ASS felülbírálása',
-			'subtitlingStyling.overrideScale' => 'Skálázás',
-			'subtitlingStyling.overrideForce' => 'Kényszerítés',
-			'subtitlingStyling.overrideStrip' => 'Stílus eltávolítása',
-			'subtitlingStyling.positionTop' => 'Fent',
-			'subtitlingStyling.positionBottom' => 'Lent',
-			'subtitlingStyling.useMargins' => 'Margók használata',
-			'subtitlingStyling.useMarginsDescription' => 'A szöveges feliratok a videón kívüli területen is megjelenhetnek. A stilizált feliratok megtarthatják eredeti pozíciójukat.',
-			'subtitlingStyling.anchorToScreen' => 'Képernyőhöz rögzítés',
-			'subtitlingStyling.anchorToScreenDescription' => 'A szöveges feliratok megjelenítése a szélesvásznú videó alatti fekete sávban',
-			'subtitlingStyling.bold' => 'Félkövér',
-			'subtitlingStyling.italic' => 'Dőlt',
-			'subtitlingStyling.renderResolution' => 'Renderelési felbontás',
-			'subtitlingStyling.renderResolutionScreen' => 'Képernyőfelbontás',
-			'subtitlingStyling.renderResolutionVideo' => 'Videófelbontás',
-			'mpvConfig.title' => 'mpv.conf',
-			'mpvConfig.description' => 'Haladó videólejátszó beállítások',
-			'mpvConfig.presets' => 'Előbeállítások',
-			'mpvConfig.noPresets' => 'Nincsenek mentett előbeállítások',
-			'mpvConfig.saveAsPreset' => 'Mentés előbeállításként...',
-			'mpvConfig.presetName' => 'Előbeállítás neve',
-			'mpvConfig.presetNameHint' => 'Add meg az előbeállítás nevét',
-			'mpvConfig.loadPreset' => 'Betöltés',
-			'mpvConfig.deletePreset' => 'Törlés',
-			'mpvConfig.presetSaved' => 'Előbeállítás mentve',
-			'mpvConfig.presetLoaded' => 'Előbeállítás betöltve',
-			'mpvConfig.presetDeleted' => 'Előbeállítás törölve',
-			'mpvConfig.confirmDeletePreset' => 'Biztosan törölni szeretnéd ezt az előbeállítást?',
-			'mpvConfig.configPlaceholder' => 'gpu-api=vulkan\nhwdec=auto\n# megjegyzés',
-			'mpvConfig.lineHint' => 'option=value',
-			'mpvConfig.addLine' => 'Sor hozzáadása',
-			'mpvConfig.removeLine' => 'Sor eltávolítása',
-			'mpvConfig.embeddedVoHint' => 'A vo, gpu-context és gpu-api beállítások Linuxon figyelmen kívül maradnak: a beágyazott videó mindig a vo=libmpv-n keresztül jelenik meg a videósíkon, a gpu-next (amelyre az ArtCNN-hez hasonló compute shadereknek szükségük van) pedig nem futhat beágyazva.',
-			'dialog.confirmAction' => 'Művelet megerősítése',
-			'profiles.addPlezyProfile' => 'Plezy profil hozzáadása',
-			'profiles.switchingProfile' => 'Profilváltás…',
-			'profiles.deleteThisProfileTitle' => 'Törlöd ezt a profilt?',
-			'profiles.deleteThisProfileMessage' => ({required Object displayName}) => '${displayName} eltávolítása. A kapcsolatokat nem érinti.',
-			'profiles.active' => 'Aktív',
-			'profiles.manage' => 'Kezelés',
-			'profiles.delete' => 'Törlés',
-			'profiles.signOut' => 'Kijelentkezés',
-			'profiles.signOutPlexTitle' => 'Kijelentkezel a Plexből?',
-			'profiles.signOutPlexMessage' => ({required Object displayName}) => 'Eltávolítod a(z) ${displayName} profilt és az összes Plex Home-felhasználót? Bármikor visszajelentkezhetsz.',
-			'profiles.signOutPlexDeleteDownloads' => 'A letöltések törlése is',
-			'profiles.signOutPlexDeleteDownloadsDescription' => 'Ellenkező esetben az eszközön maradnak, és újra megjelennek, amikor visszajelentkezel ebbe a fiókba.',
-			'profiles.signedOutPlex' => 'Kijelentkezve a Plexből.',
-			'profiles.signOutFailed' => 'A kijelentkezés nem sikerült.',
-			'profiles.sectionTitle' => 'Profilok',
-			'profiles.summarySingle' => 'Adj hozzá profilokat a kezelt felhasználók és a helyi profilok együttes használatához',
-			'profiles.summaryMultipleWithActive' => ({required Object count, required Object activeName}) => '${count} profil · aktív: ${activeName}',
-			'profiles.summaryMultiple' => ({required Object count}) => '${count} profil',
-			'profiles.removeConnectionTitle' => 'Eltávolítod a kapcsolatot?',
-			'profiles.removeConnectionMessage' => ({required Object displayName, required Object connectionLabel}) => 'Eltávolítod ${displayName} hozzáférését a(z) ${connectionLabel} kapcsolathoz. Más profilok megtartják.',
-			'profiles.deleteProfileTitle' => 'Törlöd a profilt?',
-			'profiles.deleteProfileMessage' => ({required Object displayName}) => 'Eltávolítod a(z) ${displayName} profilt és annak kapcsolatait. A szerverek elérhetőek maradnak.',
-			'profiles.profileNameLabel' => 'Profil neve',
-			'profiles.pinProtectionLabel' => 'PIN-kódos védelem',
-			'profiles.pinManagedByPlex' => 'A PIN-kódot a Plex kezeli. Szerkesztés a plex.tv oldalon.',
-			'profiles.noPinSetEditOnPlex' => 'Nincs PIN beállítva. PIN kéréséhez szerkeszd az otthoni felhasználót a plex.tv-n.',
-			'profiles.setPin' => 'PIN beállítása',
-			'profiles.setPinTitle' => 'PIN beállítása',
-			'profiles.confirmPinTitle' => 'PIN megerősítése',
-			'profiles.pinSet' => 'PIN beállítva',
-			'profiles.changePin' => 'Módosítás',
-			'profiles.removePin' => 'Eltávolítás',
-			'profiles.connectionsLabel' => 'Kapcsolatok',
-			'profiles.add' => 'Hozzáadás',
-			'profiles.deleteProfileButton' => 'Profil törlése',
-			'profiles.noConnectionsHint' => 'Nincsenek kapcsolatok — adj hozzá egyet a profil használatához.',
-			'profiles.noConnections' => 'Nincsenek kapcsolatok',
-			'profiles.plexHomeAccount' => 'Plex Home-fiók',
-			'profiles.plexAccountChip' => ({required Object account}) => 'Plex-fiók: ${account}',
-			'profiles.plexAccountUserChip' => ({required Object account, required Object user}) => '${account} fiókján keresztül: ${user}',
-			'profiles.connectionDefault' => 'Alapértelmezett',
-			'profiles.connectionAs' => ({required Object displayName}) => 'mint ${displayName}',
-			'profiles.makeDefault' => 'Beállítás alapértelmezettként',
-			'profiles.removeConnection' => 'Eltávolítás',
-			'profiles.profileRenamed' => 'Profil átnevezve.',
-			'profiles.borrowAddTo' => ({required Object displayName}) => 'Hozzáadás a következőhöz: ${displayName}',
-			'profiles.borrowExplain' => 'Használd egy másik profil kapcsolatát. A PIN-kóddal védett profilokhoz PIN-kód szükséges.',
-			'profiles.borrowEmpty' => 'Még nincs használható kapcsolat.',
-			'profiles.borrowEmptySubtitle' => 'Először csatlakoztasd a Plexet, a Jellyfint vagy az Embyt egy másik profilhoz.',
-			'profiles.borrowLoadFailed' => 'Nem sikerült betölteni az elérhető kapcsolatokat. Próbáld újra.',
-			'profiles.borrowFromProfile' => ({required Object displayName}) => 'Innen: ${displayName}',
-			'profiles.borrowConnectionBorrowed' => 'Kapcsolat átvéve.',
-			'profiles.borrowFailed' => 'Nem sikerült átvenni a kapcsolatot.',
-			'profiles.incorrectPin' => 'Helytelen PIN-kód.',
-			'profiles.incorrectPinTryAgain' => 'Helytelen PIN-kód. Próbáld újra.',
-			'profiles.sourceProfileMissingParentAccount' => 'A forrásprofilból hiányzik a szülőfiók.',
-			'profiles.failedToLoadHomeUsers' => 'Nem sikerült betölteni a Plex Home-felhasználókat. Ellenőrizd a kapcsolatot, majd próbáld újra.',
-			'profiles.failedToVerifyPin' => 'Nem sikerült a PIN-kód ellenőrzése.',
-			'profiles.newProfile' => 'Új profil',
-			'profiles.profileNameHint' => 'pl. Vendégek, Gyerekek, Nappali',
-			'profiles.pinProtectionOptional' => 'PIN-védelem (opcionális)',
-			'profiles.pinExplain' => '4 jegyű PIN-kód szükséges a profilváltáshoz.',
-			'profiles.continueButton' => 'Folytatás',
-			'profiles.pinsDontMatch' => 'A PIN-kódok nem egyeznek',
-			'profiles.tokenIdentityMismatch' => 'A Plex-profil tokenje nem a várt szerverhez tartozik',
-			'connections.sectionTitle' => 'Kapcsolatok',
-			_ => null,
-		} ?? switch (path) {
-			'connections.addConnection' => 'Kapcsolat hozzáadása',
-			'connections.addConnectionSubtitleNoProfile' => 'Jelentkezz be Plexszel, vagy csatlakoztass egy Jellyfin- vagy Emby-szervert',
-			'connections.addConnectionSubtitleScoped' => ({required Object displayName}) => 'Hozzáadás a következőhöz (${displayName}): Plex, Jellyfin, Emby vagy más profilkapcsolat',
-			'connections.sessionExpiredOne' => ({required Object name}) => 'A(z) ${name} munkamenete lejárt',
-			'connections.sessionExpiredMany' => ({required Object count}) => '${count} szerver munkamenete lejárt',
-			'connections.accessDeniedOne' => ({required Object name}) => 'A(z) ${name} megtagadta a hozzáférést ettől a fióktól',
-			'connections.accessDeniedMany' => ({required Object count}) => '${count} szerver megtagadta a hozzáférést ettől a fióktól',
-			'connections.signInAgain' => 'Bejelentkezés újra',
-			'connections.editMediaBrowserTitle' => ({required Object product}) => 'A(z) ${product} kapcsolat szerkesztése',
-			'connections.editMediaBrowserIntro' => ({required Object serverName}) => 'Adjon hozzá vagy távolítson el URL-eket a(z) ${serverName} esetén. A Plezy a legkisebb késleltetésű, elérhető URL-t fogja használni.',
-			'accountPreferences.sectionTitle' => 'Fiókbeállítások',
-			'accountPreferences.hubSubtitleSingle' => ({required Object account}) => 'Hang-, felirat- és könyvtárbeállítások mentve a(z) ${account} fiókra',
-			'accountPreferences.hubSubtitleMultiple' => ({required Object count}) => 'Hang-, felirat- és könyvtárbeállítások mentve ${count} fiókra',
-			'accountPreferences.pickAccount' => 'Minden fiók a saját beállításait tárolja. Válaszd ki a szerkesztendőt.',
-			'accountPreferences.storedOnAccount' => 'Ezek a beállítások magán a fiókon tárolódnak, így minden bejelentkezett alkalmazás használja őket — beleértve a Plezyt a többi eszközödön.',
-			'accountPreferences.noAccounts' => 'Nincs beállítható fiók',
-			'accountPreferences.noAccountsHint' => 'Jelentkezz be a Plexbe, vagy csatlakoztass egy Jellyfin- vagy Emby-szervert, és az azon a fiókon tárolt beállítások itt jelennek meg.',
-			'accountPreferences.unavailable' => 'Ez a fiók nem érhető el',
-			'accountPreferences.loadFailed' => 'Nem sikerült betölteni ezeket a beállításokat',
-			'accountPreferences.noPreference' => 'Nincs preferencia',
-			'accountPreferences.notSet' => 'Nincs beállítva',
-			'accountPreferences.groups.audioAndSubtitles' => 'Hang és feliratok',
-			'accountPreferences.groups.libraryDisplay' => 'Könyvtár',
-			'accountPreferences.groups.personalMedia' => 'Személyes média',
-			'accountPreferences.preferredAudioLanguage' => 'Elsődleges hangnyelv',
-			'accountPreferences.autoSelectAudio' => 'Hangsáv kiválasztása nyelv alapján',
-			'accountPreferences.autoSelectAudioDescription' => 'Ki kapcsolásnál a fájl által alapértelmezettként megjelölt hangsáv marad.',
-			'accountPreferences.preferredSubtitleLanguage' => 'Elsődleges feliratnyelv',
-			'accountPreferences.subtitleMode' => 'Feliratok bekapcsolása',
-			'accountPreferences.subtitleModes.none' => 'Kézzel kiválasztva',
-			'accountPreferences.subtitleModes.noneDescription' => 'Soha ne kapcsolja be magától a feliratokat.',
-			'accountPreferences.subtitleModes.defaultMode' => 'A sáv jelzőinek követése',
-			'accountPreferences.subtitleModes.defaultModeDescription' => 'Az egyes feliratsávokon tárolt alapértelmezett és kényszerített jelzők használata.',
-			'accountPreferences.subtitleModes.always' => 'Mindig engedélyezve',
-			'accountPreferences.subtitleModes.alwaysDescription' => 'Feliratsáv bekapcsolása az elsődleges nyelven, ha van ilyen.',
-			'accountPreferences.subtitleModes.onlyForced' => 'Csak kényszerített feliratok',
-			'accountPreferences.subtitleModes.onlyForcedDescription' => 'Csak a kényszerítettként megjelölt sávok betöltése.',
-			'accountPreferences.subtitleModes.smart' => 'Idegen nyelvű hang esetén megjelenítve',
-			'accountPreferences.subtitleModes.smartDescription' => 'Feliratok bekapcsolása csak akkor, ha a hang más nyelven szól.',
-			'accountPreferences.subtitleAccessibility' => 'SDH-feliratok',
-			'accountPreferences.subtitleAccessibilityOptions.preferNonSdh' => 'Nem SDH-feliratok előnyben részesítése',
-			'accountPreferences.subtitleAccessibilityOptions.preferSdh' => 'SDH-feliratok előnyben részesítése',
-			'accountPreferences.subtitleAccessibilityOptions.onlySdh' => 'Csak SDH-feliratok',
-			'accountPreferences.subtitleAccessibilityOptions.onlyNonSdh' => 'Csak nem SDH-feliratok',
-			'accountPreferences.forcedSubtitles' => 'Kényszerített feliratok',
-			'accountPreferences.forcedSubtitleOptions.preferNonForced' => 'Nem kényszerített feliratok előnyben részesítése',
-			'accountPreferences.forcedSubtitleOptions.preferForced' => 'Kényszerített feliratok előnyben részesítése',
-			'accountPreferences.forcedSubtitleOptions.onlyForced' => 'Csak kényszerített feliratok',
-			'accountPreferences.forcedSubtitleOptions.onlyNonForced' => 'Csak nem kényszerített feliratok',
-			'accountPreferences.displayMissingEpisodes' => 'Hiányzó epizódok megjelenítése',
-			'accountPreferences.displayMissingEpisodesDescription' => 'Azoknak az epizódoknak a listázása, amelyeket a szerver ismer, de nincs hozzájuk fájl.',
-			'accountPreferences.hidePlayedInLatest' => 'Megnézett elemek elrejtése a Legújabbak között',
-			'accountPreferences.hidePlayedInLatestDescription' => 'A már megnézett elemek kimaradnak a szerver Legújabbak soraiból.',
-			'accountPreferences.displayCollectionsView' => 'Gyűjtemények nézet megjelenítése',
-			'accountPreferences.displayCollectionsViewDescription' => 'A szerver Gyűjtemények nézetének megjelenítése a könyvtárak mellett.',
-			'accountPreferences.rewatchingInNextUp' => 'Újranézett sorozatok megtartása a Következikben',
-			'accountPreferences.rewatchingInNextUpDescription' => 'Ha befejezel egy sorozatot, és újra elkezded, a Következik az újranézést követi, ahelyett hogy eldobná a sorozatot.',
-			'accountPreferences.watchedIndicator' => 'Megtekintett jelzések',
-			'accountPreferences.watchedIndicatorOptions.none' => 'Soha',
-			'accountPreferences.watchedIndicatorOptions.moviesAndShows' => 'Filmek és TV-sorozatok',
-			'accountPreferences.watchedIndicatorOptions.movies' => 'Csak filmek',
-			'accountPreferences.watchedIndicatorOptions.shows' => 'Csak TV-sorozatok',
-			'accountPreferences.mediaReviewsVisibility' => 'Értékelések és kritikák',
-			'accountPreferences.mediaReviewsOptions.usersAndCritics' => 'Felhasználók és kritikusok',
-			'accountPreferences.mediaReviewsOptions.usersOnly' => 'Csak felhasználók',
-			'accountPreferences.mediaReviewsOptions.criticsOnly' => 'Csak kritikusok',
-			'accountPreferences.mediaReviewsOptions.nobody' => 'Rejtett',
-			'discover.title' => 'Felfedezés',
-			'discover.noContentAvailable' => 'Nincs elérhető tartalom',
-			'discover.addMediaToLibraries' => 'Adj hozzá médiát a könyvtáraidhoz',
-			'discover.continueWatching' => 'Folytatás',
-			'discover.continueWatchingIn' => ({required Object library}) => 'Folytatás itt: ${library}',
-			'discover.nextUp' => 'Következik',
-			'discover.nextUpIn' => ({required Object library}) => 'Következik itt: ${library}',
-			'discover.recentlyAdded' => 'Legutóbb hozzáadva',
-			'discover.recentlyAddedIn' => ({required Object library}) => 'Legutóbb hozzáadva itt: ${library}',
-			'discover.latestAlbumsIn' => ({required Object library}) => 'Legújabb albumok itt: ${library}',
-			'discover.recentlyPlayedIn' => ({required Object library}) => 'Legutóbb lejátszva itt: ${library}',
-			'discover.mostPlayedIn' => ({required Object library}) => 'Legtöbbször lejátszva itt: ${library}',
-			'discover.playEpisode' => ({required Object season, required Object episode}) => '${season}. évad, ${episode}. epizód',
-			'discover.overview' => 'Áttekintés',
-			'discover.cast' => 'Szereplők',
-			'discover.extras' => 'Előzetesek és extrák',
-			'discover.studio' => 'Stúdió',
-			'discover.rating' => 'Értékelés',
-			'discover.director' => 'Rendező',
-			'discover.directors' => 'Rendezők',
-			'discover.movie' => 'Film',
-			'discover.tvShow' => 'TV-sorozat',
-			'discover.minutesLeft' => ({required Object minutes}) => '${minutes} perc van hátra',
-			'discover.moreLikeThis' => 'Hasonló tartalmak',
-			'discover.titleCount' => ({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('hu'))(n, one: '${n} cím', other: '${n} cím', ), 
-			'discover.person.born' => 'Született',
-			'discover.person.died' => 'Elhunyt',
-			'discover.person.birthplace' => 'Születési hely',
-			'discover.person.dateWithAge' => ({required Object date, required Object age}) => '${date} (${age} éves)',
-			'discover.person.dateWithAgeAtDeath' => ({required Object date, required Object age}) => '${date} (${age} évesen)',
-			'errors.searchFailed' => ({required Object error}) => 'Keresés sikertelen: ${error}',
-			'errors.searchUnavailable' => 'A keresés egyetlen médiaszervert sem tudott elérni.',
-			'errors.connectionTimeout' => ({required Object context}) => 'Hálózati időtúllépés a következő betöltésekor: ${context}',
-			'errors.connectionFailed' => 'Nem sikerült csatlakozni a médiaszerverhez',
-			'errors.unableToLoad' => ({required Object context}) => 'Nem sikerült betölteni a következőt: ${context}. Próbáld újra.',
-			'errors.noClientAvailable' => 'Nincs elérhető kliens',
-			'errors.pleaseEnterToken' => 'Adj meg egy tokent',
-			'errors.invalidToken' => 'Érvénytelen token',
-			'errors.failedToVerifyToken' => ({required Object error}) => 'Nem sikerült a token ellenőrzése: ${error}',
-			'errors.failedToSwitchProfile' => ({required Object displayName}) => 'Nem sikerült átváltani a következő profilra: ${displayName}',
-			'errors.failedToDeleteProfile' => ({required Object displayName}) => 'Nem sikerült törölni a következőt: ${displayName}',
-			'errors.failedToRate' => 'Nem sikerült frissíteni az értékelést',
-			'errors.reasonTimedOut' => 'időtúllépés történt a kapcsolatban',
-			'errors.reasonUnreachable' => 'a médiaszerver nem érhető el',
-			'errors.reasonRefused' => 'a médiaszerver elutasította a kérést',
-			'errors.reasonNotFound' => 'az elem már nem található a médiaszerveren',
-			'errors.reasonServerError' => 'a médiaszerver hibát jelzett',
-			'errors.reasonCancelled' => 'a kérés meg lett szakítva',
-			'errors.reasonUnexpected' => 'váratlan hiba történt',
-			'libraries.title' => 'Könyvtárak',
-			'libraries.fallbackTitle' => 'Könyvtár',
-			'libraries.scanLibraryFiles' => 'Könyvtárfájlok beolvasása',
-			'libraries.scanLibrary' => 'Könyvtár beolvasása',
-			'libraries.analyze' => 'Elemzés',
-			'libraries.analyzeLibrary' => 'Könyvtár elemzése',
-			'libraries.refreshMetadata' => 'Metaadatok frissítése',
-			'libraries.emptyTrash' => 'Lomtár ürítése',
-			'libraries.emptyingTrash' => ({required Object title}) => 'Lomtár ürítése a következőhöz: "${title}"...',
-			'libraries.trashEmptied' => ({required Object title}) => 'Lomtár kiürítve a következőhöz: "${title}"',
-			'libraries.failedToEmptyTrash' => ({required Object error}) => 'Nem sikerült a lomtár ürítése: ${error}',
-			'libraries.analyzing' => ({required Object title}) => '"${title}" elemzése...',
-			'libraries.analysisStarted' => ({required Object title}) => 'Elemzés elindítva a következőhöz: "${title}"',
-			'libraries.failedToAnalyze' => ({required Object error}) => 'Nem sikerült a könyvtár elemzése: ${error}',
-			'libraries.noLibrariesFound' => 'Nem találhatók könyvtárak',
-			'libraries.allLibrariesHidden' => 'Minden könyvtár el van rejtve',
-			'libraries.hiddenLibrariesCount' => ({required Object count}) => 'Rejtett könyvtárak (${count})',
-			'libraries.thisLibraryIsEmpty' => 'Ez a könyvtár üres',
-			'libraries.noItemsMatchFilters' => 'Nincs az aktív szűrőknek megfelelő elem',
-			'libraries.resetFilters' => 'Szűrők visszaállítása',
-			'libraries.all' => 'Összes',
-			'libraries.clearAll' => 'Összes törlése',
-			'libraries.scanLibraryConfirm' => ({required Object title}) => 'Biztosan be szeretnéd olvasni a következőt: "${title}"?',
-			'libraries.analyzeLibraryConfirm' => ({required Object title}) => 'Biztosan elemezni szeretnéd a következőt: "${title}"?',
-			'libraries.refreshMetadataConfirm' => ({required Object title}) => 'Biztosan frissíteni szeretnéd a metaadatokat a következőhöz: "${title}"?',
-			'libraries.emptyTrashConfirm' => ({required Object title}) => 'Biztosan ki szeretnéd üríteni a lomtárat a következőnél: "${title}"?',
-			'libraries.manageLibraries' => 'Könyvtárak kezelése',
-			'libraries.sort' => 'Rendezés',
-			'libraries.sortBy' => 'Rendezés ez alapján',
-			'libraries.filters' => 'Szűrők',
-			'libraries.confirmActionMessage' => 'Biztosan végre szeretnéd hajtani ezt a műveletet?',
-			'libraries.showLibrary' => 'Könyvtár megjelenítése',
-			'libraries.hideLibrary' => 'Könyvtár elrejtése',
-			'libraries.libraryOptions' => 'Könyvtár beállításai',
-			'libraries.content' => 'könyvtár tartalma',
-			'libraries.selectLibrary' => 'Könyvtár kiválasztása',
-			'libraries.filtersWithCount' => ({required Object count}) => 'Szűrők (${count})',
-			'libraries.noRecommendations' => 'Nincsenek elérhető ajánlások',
-			'libraries.noCollections' => 'Nincsenek gyűjtemények ebben a könyvtárban',
-			'libraries.noFoldersFound' => 'Nem találhatók mappák',
-			'libraries.folders' => 'mappák',
-			'libraries.tabs.recommended' => 'Ajánlott',
-			'libraries.tabs.browse' => 'Böngészés',
-			'libraries.tabs.collections' => 'Gyűjtemények',
-			'libraries.tabs.playlists' => 'Lejátszási listák',
-			'libraries.groupings.title' => 'Csoportosítás',
-			'libraries.groupings.all' => 'Összes',
-			'libraries.groupings.movies' => 'Filmek',
-			'libraries.groupings.shows' => 'TV-sorozatok',
-			'libraries.groupings.seasons' => 'Évadok',
-			'libraries.groupings.episodes' => 'Epizódok',
-			'libraries.groupings.artists' => 'Előadók',
-			'libraries.groupings.albums' => 'Albumok',
-			'libraries.groupings.tracks' => 'Zeneszámok',
-			'libraries.groupings.folders' => 'Mappák',
-			'libraries.filterCategories.genre' => 'Műfaj',
-			'libraries.filterCategories.year' => 'Év',
-			'libraries.filterCategories.contentRating' => 'Korhatár-besorolás',
-			'libraries.filterCategories.tag' => 'Címke',
-			'libraries.filterCategories.unwatched' => 'Nem látott',
-			'libraries.filterCategories.unplayed' => 'Nem lejátszott',
-			'libraries.filterCategories.favorites' => 'Kedvencek',
-			'libraries.filterCategories.filePath' => 'Fájl elérési útja',
-			'libraries.sortLabels.title' => 'Cím',
-			'libraries.sortLabels.dateAdded' => 'Hozzáadás dátuma',
-			'libraries.sortLabels.releaseDate' => 'Bemutató dátuma',
-			'libraries.sortLabels.rating' => 'Értékelés',
-			'libraries.sortLabels.communityRating' => 'Közösségi értékelés',
-			'libraries.sortLabels.criticRating' => 'Kritikusi értékelés',
-			'libraries.sortLabels.userRating' => 'Saját értékelés',
-			'libraries.sortLabels.datePlayed' => 'Lejátszás dátuma',
-			'libraries.sortLabels.playCount' => 'Lejátszások száma',
-			'libraries.sortLabels.productionYear' => 'Gyártási év',
-			'libraries.sortLabels.runtime' => 'Játékidő',
-			'libraries.sortLabels.officialRating' => 'Hivatalos besorolás',
-			'libraries.sortLabels.premiereDate' => 'Premier dátuma',
-			'libraries.sortLabels.startDate' => 'Kezdés dátuma',
-			'libraries.sortLabels.airTime' => 'Adásidő',
-			'libraries.sortLabels.studio' => 'Stúdió',
-			'libraries.sortLabels.random' => 'Véletlenszerű',
-			'libraries.sortLabels.dateShared' => 'Megosztás dátuma',
-			'libraries.sortLabels.latestEpisodeAirDate' => 'A legutóbbi epizód sugárzási dátuma',
-			'libraries.sortLabels.lastEpisodeDateAdded' => 'Utolsó epizód hozzáadásának dátuma',
-			'libraries.sortLabels.dateDownloaded' => 'Letöltés dátuma',
-			'libraries.sortLabels.size' => 'Méret',
-			'libraries.sortLabels.library' => 'Könyvtár',
-			'libraries.advancedFilters.include' => 'Belefoglalás',
-			'libraries.advancedFilters.exclude' => 'Kizárás',
-			'libraries.advancedFilters.any' => 'Mindegy',
-			'libraries.advancedFilters.yes' => 'Igen',
-			'libraries.advancedFilters.no' => 'Nem',
-			'libraries.advancedFilters.not' => ({required Object value}) => 'Kivéve: ${value}',
-			'libraries.advancedFilters.valueCount' => ({required Object count}) => '${count} kiválasztva',
-			'libraries.advancedFilters.valueCountExcluded' => ({required Object count}) => '${count} kizárva',
-			'libraries.advancedFilters.searchValues' => 'Értékek keresése',
-			'libraries.advancedFilters.noValues' => 'Nincsenek értékek',
-			'libraries.advancedFilters.matchContains' => 'Tartalmazza',
-			'libraries.advancedFilters.matchNotContains' => 'Nem tartalmazza',
-			'libraries.advancedFilters.matchIs' => 'Egyezik',
-			'libraries.advancedFilters.matchIsNot' => 'Nem egyezik',
-			'libraries.advancedFilters.matchBeginsWith' => 'Ezzel kezdődik',
-			'libraries.advancedFilters.matchEndsWith' => 'Erre végződik',
-			'libraries.advancedFilters.textHint' => 'Írd be a keresett szöveget',
-			'libraries.advancedFilters.from' => 'Ettől',
-			'libraries.advancedFilters.to' => 'Eddig',
-			'libraries.advancedFilters.range' => ({required Object from, required Object to}) => '${from} – ${to}',
-			'libraries.advancedFilters.atLeast' => ({required Object value}) => 'Legalább ${value}',
-			'libraries.advancedFilters.atMost' => ({required Object value}) => 'Legfeljebb ${value}',
-			'libraries.advancedFilters.dateLastDays' => ({required Object count}) => 'Az elmúlt ${count} nap',
-			'libraries.advancedFilters.dateLastYear' => 'Az elmúlt év',
-			'libraries.advancedFilters.dateOlderThanDays' => ({required Object count}) => '${count} napnál régebbi',
-			'libraries.advancedFilters.dateOlderThanYear' => 'Egy évnél régebbi',
-			'about.title' => 'Névjegy',
-			'about.openSourceLicenses' => 'Nyílt forráskódú licencek',
-			'about.versionLabel' => ({required Object version}) => 'Verzió: ${version}',
-			'about.appDescription' => 'Gyönyörű Flutter-kliens a Plexhez, a Jellyfinhez és az Embyhez',
-			'about.viewLicensesDescription' => 'Külső fejlesztésű programkönyvtárak licenceinek megtekintése',
-			'serverSelection.noServersFoundForAccount' => ({required Object username, required Object email}) => 'Nem találhatók szerverek ehhez a fiókhoz: ${username} (${email})',
-			'serverSelection.failedToLoadServers' => ({required Object error}) => 'Nem sikerült a szerverek betöltése: ${error}',
-			'serverSelection.noValidServers' => 'Nem található használható szerver ehhez a fiókhoz',
-			'hubDetail.title' => 'Cím',
-			'hubDetail.releaseYear' => 'Kiadási év',
-			'hubDetail.dateAdded' => 'Hozzáadás dátuma',
-			'hubDetail.rating' => 'Értékelés',
-			'hubDetail.noItemsFound' => 'Nem találhatók elemek',
-			'logs.clearLogs' => 'Naplók törlése',
-			'logs.copyLogs' => 'Naplók másolása',
-			'logs.uploadLogs' => 'Naplók feltöltése',
-			'startup.failedTitle' => 'A Plezy nem tudott elindulni',
-			'startup.failedBody' => 'Valami hiba történt az indítás során. Az alábbi részletek mutatják, mi hibázott.',
-			'startup.failedBodyRepairable' => 'A Plezy mentett beállításfájlja sérült, és újra kell építeni, mielőtt a Plezy elindulhatna. Az újrapróbálkozás nem segít – válassza a Tárhely javítása lehetőséget.',
-			'startup.phaseLabel' => 'Lépés',
-			'startup.showDetails' => 'Részletek megjelenítése',
-			'startup.hideDetails' => 'Részletek elrejtése',
-			'startup.copyDetails' => 'Részletek másolása',
-			'startup.detailsCopied' => 'A részletek a vágólapra kerültek',
-			'startup.uploadDetails' => 'Részletek feltöltése',
-			'startup.repairStorage' => 'Tárhely javítása',
-			'startup.repairTitle' => 'Javítsuk a tárolt adatokat?',
-			'startup.repairBodyCommon' => 'A Plezy beállításfájlja sérült, és nem olvasható. A javítás minden beállítást visszaállít az alapértelmezettre.',
-			'startup.repairBodyOneCredential' => 'Egy mentett bejelentkezés sérült, és nem olvasható. A javítás csak azt távolítja el; a többi beállítása érintetlen marad.',
-			'startup.repairBodySignInsKept' => 'A szervereinek és profiljainak bejelentkezve kell maradniuk.',
-			'startup.repairBodySignInsLost' => 'A mentett bejelentkezéseket védő kulcs nem nyerhető vissza ebből a fájlból, ezért minden szerverre és profilba újra be kell jelentkeznie. A médiaszerveren semmi nem érintett.',
-			'startup.repairBodySessionsUncertain' => 'A nyomkövetők (MAL, AniList, Simkl, Trakt) és a Seerr külön vannak tárolva, és megmaradhatnak vagy nem. A Plezy pontosan megmondja, mit őrzött meg.',
-			'startup.repairConfirm' => 'Javítás',
-			'startup.repairSucceeded' => 'A tárhely javítva',
-			'startup.repairNeedsRestart' => 'A tárhely javítva – újraindítás szükséges',
-			'startup.restartRequiredBody' => 'Az adatait kijavítottuk, de a Plezy-nek frissen kell elindulnia, mielőtt használhatná. Zárja be a Plezy-t, és nyissa meg újra.',
-			'startup.quitPlezy' => 'Kilépés a Plezy-ből',
-			'startup.repairFailed' => 'A javítás nem sikerült',
-			'startup.repairKeptSignIns' => 'A szerverei és profiljai továbbra is be vannak jelentkezve.',
-			'startup.repairLostSignIns' => 'A mentett bejelentkezéseket védő kulcs nem volt visszanyerhető. Minden szerverre és profilba újra be kell jelentkeznie.',
-			'startup.repairLostSessions' => 'Legalább egy nyomkövető- vagy Seerr-kapcsolat elveszett, és újra kell csatlakoztatni.',
-			'startup.backupTitle' => 'A sérült fájlról másolat készült',
-			'startup.backupWarning' => 'Bejelentkezési adatait tartalmazza. Ne töltse fel és ne ossza meg.',
-			'startup.deleteBackup' => 'Másolat törlése',
-			'startup.backupDeleted' => 'A másolat törölve.',
-			'startup.previousFailureTitle' => 'A Plezy legutóbb nem tudott elindulni',
-			'licenses.relatedPackages' => 'Kapcsolódó csomagok',
-			'licenses.license' => 'Licenc',
-			'licenses.licenseNumber' => ({required Object number}) => '${number}. licenc',
-			'licenses.licensesCount' => ({required Object count}) => '${count} licenc',
-			'navigation.libraries' => 'Könyvtárak',
-			'navigation.downloads' => 'Letöltések',
-			'navigation.liveTv' => 'Élő TV',
-			'navigation.explore' => 'Böngészés',
-			'explore.title' => 'Böngészés',
-			'explore.selectSource' => 'Forrás kiválasztása',
-			'explore.rows.watchlist' => 'Néznivalók listája',
-			'explore.rows.recommendedMovies' => 'Ajánlott filmek',
-			'explore.rows.recommendedShows' => 'Ajánlott sorozatok',
-			'explore.rows.trendingMovies' => 'Felkapott filmek',
-			'explore.rows.trendingShows' => 'Felkapott sorozatok',
-			'explore.rows.popularMovies' => 'Népszerű filmek',
-			'explore.rows.popularShows' => 'Népszerű sorozatok',
-			'explore.rows.trendingAnime' => 'Felkapott animék',
-			'explore.rows.suggestedAnime' => 'Ajánlott animék',
-			'explore.rows.airingAnime' => 'Jelenleg futó top animék',
-			'explore.rows.popularAnime' => 'Legnépszerűbb animék',
-			'explore.rows.trending' => 'Felkapott',
-			'explore.rows.upcomingMovies' => 'Közelgő filmek',
-			'explore.rows.upcomingShows' => 'Közelgő sorozatok',
-			'explore.status.airing' => 'Adásban',
-			'explore.status.ended' => 'Befejeződött',
-			'explore.status.canceled' => 'Törölve',
-			'explore.status.upcoming' => 'Közelgő',
-			'explore.episodeCount' => ({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('hu'))(n, one: '${n} epizód', other: '${n} epizód', ), 
-			'explore.cast' => 'Szereplők',
-			'explore.characters' => 'Karakterek',
-			'explore.addToWatchlist' => 'Hozzáadás a Néznivalókhoz',
-			'explore.removeFromWatchlist' => 'Eltávolítás a Néznivalókból',
-			'explore.addedToWatchlist' => 'Hozzáadva a figyelőlistához',
-			'explore.removedFromWatchlist' => 'Eltávolítva a figyelőlistáról',
-			'explore.watchlistUpdateFailed' => 'Nem sikerült a Néznivalók frissítése',
-			'explore.watchlistNoMatch' => 'Nem sikerült ezt az elemet figyelőlistához társítani',
-			'explore.notInLibrary' => 'Nincs a könyvtáradban',
-			'explore.inTheseLibraries' => 'Ezekben a könyvtárakban',
-			'explore.checkingLibrary' => 'Könyvtár ellenőrzése...',
-			'explore.libraryCheckFailed' => ({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('hu'))(n, one: 'Nem sikerült ${n} szervert ellenőrizni', other: 'Nem sikerült ${n} szervert ellenőrizni', ), 
-			'explore.emptyTitle' => 'Még nincs itt semmi',
-			'explore.emptyMessage' => ({required Object source}) => 'A(z) ${source} forrásból származó sorok itt fognak megjelenni, amint van tartalmuk.',
-			'explore.searchHint' => ({required Object source}) => 'Keresés itt: ${source}',
-			'explore.searchEmpty' => ({required Object query}) => 'Nincs találat a következőre: "${query}"',
-			'explore.searchPrompt' => ({required Object source}) => 'Filmek és sorozatok keresése a következőn: ${source}.',
-			'explore.searchFailed' => 'A keresés nem sikerült. Ellenőrizd a kapcsolatot és próbáld újra.',
-			'explore.badge.rankPopular' => ({required Object n}) => '#${n} népszerű',
-			'explore.badge.rankAiring' => ({required Object n}) => '#${n} adásban',
-			'explore.badge.rankRated' => ({required Object n}) => '#${n} értékelt',
-			'explore.badge.rankTrending' => ({required Object n}) => '#${n} felkapott',
-			'explore.badge.rankSeasonal' => ({required Object n, required Object season}) => '#${n} a(z) ${season} évadban',
-			'explore.badge.watchingNow' => ({required Object n}) => '${n} nézi',
-			'explore.badge.available' => 'Elérhető',
-			'explore.badge.partiallyAvailable' => 'Részben elérhető',
-			'explore.badge.availableIn4k' => '4K elérhető',
-			'explore.badge.requested' => 'Kérve',
-			'explore.badge.pendingApproval' => 'Jóváhagyásra vár',
-			'explore.badge.processing' => 'Feldolgozás alatt',
-			'explore.badge.declined' => 'Elutasítva',
-			'explore.badge.requestFailed' => 'A kérés nem sikerült',
-			'explore.badge.requested4k' => '4K kérve',
-			'explore.badge.seasonsAvailable' => ({required Object available, required Object total}) => '${available}/${total} évad',
-			'explore.badge.nextEpisodeIn' => ({required Object episode, required Object duration}) => '${episode}. ep. ${duration} múlva',
-			'explore.badge.nextAiringIn' => ({required Object duration}) => 'Következő ${duration} múlva',
-			'explore.badge.episodesShort' => ({required Object n}) => '${n} ep.',
-			'explore.badge.minutesPerEpisode' => ({required Object n}) => '${n} perc/ep.',
-			'explore.badge.adult' => '18+',
-			'explore.stats.listed' => ({required Object n}) => '${n} listázva',
-			'explore.stats.viewersDay' => ({required Object n}) => '${n} nézte ma',
-			'explore.stats.viewersWeek' => ({required Object n}) => '${n} nézte ezen a héten',
-			'explore.stats.viewersMonth' => ({required Object n}) => '${n} nézte ebben a hónapban',
-			'explore.stats.viewersYear' => ({required Object n}) => '${n} nézte ebben az évben',
-			'explore.stats.viewersAllTime' => ({required Object n}) => '${n} néző',
-			'explore.stats.planning' => ({required Object n}) => '${n} tervezi megnézni',
-			'explore.stats.favorited' => ({required Object n}) => '${n} kedvenc',
-			'explore.stats.dropRate' => ({required Object percent}) => '${percent} felhagyott vele',
-			'explore.stats.comments' => ({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('hu'))(n, one: '${n} hozzászólás', other: '${n} hozzászólás', ), 
-			'explore.stats.votes' => ({required Object n}) => '${n} szavazat',
-			'explore.stats.watching' => ({required Object n}) => '${n} nézi',
-			'explore.stats.completed' => ({required Object n}) => '${n} befejezte',
-			'explore.stats.onHold' => ({required Object n}) => '${n} szünetelteti',
-			'explore.stats.dropped' => ({required Object n}) => '${n} felhagyott vele',
-			'explore.season.winter' => 'Tél',
-			'explore.season.spring' => 'Tavasz',
-			'explore.season.summer' => 'Nyár',
-			'explore.season.fall' => 'Ősz',
-			'explore.season.withYear' => ({required Object season, required Object year}) => '${season} ${year}',
-			'explore.format.tv' => 'TV',
-			'explore.format.tvShort' => 'TV rövid',
-			'explore.format.movie' => 'Film',
-			'explore.format.special' => 'Különkiadás',
-			'explore.format.ova' => 'OVA',
-			'explore.format.ona' => 'ONA',
-			'explore.format.music' => 'Zene',
-			'explore.format.other' => 'Egyéb',
-			'explore.sourceMaterial.original' => 'Eredeti',
-			'explore.sourceMaterial.manga' => 'Manga',
-			'explore.sourceMaterial.lightNovel' => 'Light novel',
-			'explore.sourceMaterial.novel' => 'Regény',
-			'explore.sourceMaterial.visualNovel' => 'Visual novel',
-			'explore.sourceMaterial.game' => 'Játék',
-			'explore.sourceMaterial.webComic' => 'Webképregény',
-			'explore.sourceMaterial.musicRelease' => 'Zene',
-			'explore.sourceMaterial.otherMedia' => 'Egyéb',
-			'explore.creditRole.actor' => 'Színész',
-			'explore.creditRole.director' => 'Rendező',
-			'explore.creditRole.writer' => 'Író',
-			'explore.creditRole.producer' => 'Producer',
-			'explore.creditRole.creator' => 'Alkotó',
-			'explore.creditRole.composer' => 'Zeneszerző',
-			'explore.relation.prequel' => 'Előzmény',
-			'explore.relation.sequel' => 'Folytatás',
-			'explore.relation.sideStory' => 'Melléktörténet',
-			'explore.relation.spinOff' => 'Spin-off',
-			'explore.relation.alternativeVersion' => 'Alternatív verzió',
-			'explore.relation.summary' => 'Összefoglaló',
-			'explore.relation.parentStory' => 'Fő történet',
-			'explore.relation.adaptation' => 'Adaptáció',
-			'explore.relation.other' => 'Kapcsolódó',
-			'explore.broadcast' => ({required Object day, required Object time}) => 'Adásban: ${day}, ${time} órakor',
-			'explore.broadcastWithZone' => ({required Object day, required Object time, required Object timezone}) => 'Adásban: ${day}, ${time} ${timezone}',
-			'explore.detail.originalTitle' => 'Eredeti cím',
-			'explore.detail.alsoKnownAs' => 'Más néven',
-			'explore.detail.studios' => 'Stúdiók',
-			'explore.detail.country' => 'Ország',
-			'explore.detail.language' => 'Nyelv',
-			'explore.detail.released' => 'Megjelent',
-			'explore.detail.physicalRelease' => 'Lemezes',
-			'explore.detail.ended' => 'Befejeződött',
-			'explore.detail.addedOn' => ({required Object date}) => 'Hozzáadva: ${date}',
-			'explore.detail.yourRating' => 'Az Ön értékelése',
-			'explore.detail.budget' => 'Költségvetés',
-			'explore.detail.revenue' => 'Bevétel',
-			'explore.detail.contentAdvisory' => 'Korhatár',
-			'explore.detail.tags' => 'Címkék',
-			'explore.detail.revealSpoilerTags' => 'Spoiler címkék megjelenítése',
-			'explore.detail.links' => 'Hivatkozások',
-			'explore.detail.watchOn' => 'Megnézhető itt',
-			'explore.detail.watchTrailer' => 'Előzetes megtekintése',
-			'explore.detail.openOn' => ({required Object site}) => 'Megnyitás itt: ${site}',
-			'explore.detail.trailerUnavailable' => 'Ezen az eszközön nem sikerült megnyitni az előzetest',
-			'explore.detail.linkUnavailable' => 'Ezen az eszközön nem sikerült megnyitni a hivatkozást',
-			'explore.detail.crew' => 'Stáb',
-			'explore.detail.ratings' => 'Értékelések',
-			'explore.detail.schedule' => 'Műsorrend',
-			'explore.detail.recommendedByUsers' => ({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('hu'))(n, one: '${n} felhasználó ajánlja', other: '${n} felhasználó ajánlja', ), 
-			'explore.detail.recommendedBy' => ({required Object who}) => 'Ajánlotta: ${who}',
-			'explore.detail.favoritedBy' => ({required Object who}) => 'Kedvencek közt: ${who}',
-			'explore.detail.unairedEpisodes' => ({required Object n}) => '${n} még nem került adásba',
-			'explore.detail.recommendedByPercent' => ({required Object percent}) => 'A nézők ${percent}-a ajánlja',
-			'explore.detail.relatedTitles' => 'Kapcsolódó címek',
-			'explore.detail.background' => 'Háttér',
-			'explore.totalResults' => ({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('hu'))(n, one: '${n} találat', other: '${n} találat', ), 
-			'liveTv.title' => 'Élő TV',
-			'liveTv.guide' => 'Műsorújság',
-			'liveTv.noChannels' => 'Nincsenek elérhető csatornák',
-			'liveTv.noDvr' => 'Egyik szerveren sincs beállítva DVR',
-			'liveTv.serverUnavailable' => 'Az Élő TV szerver nem érhető el.',
-			'liveTv.serverNotConnected' => 'Az Élő TV szerver nincs csatlakoztatva.',
-			'liveTv.noPrograms' => 'Nincsenek elérhető műsoradatok',
-			'liveTv.liveStreamFailed' => 'Nem sikerült elindítani az élő adást',
-			'liveTv.unknownProgram' => 'Ismeretlen műsor',
-			'liveTv.unknownHub' => 'Ismeretlen',
-			'liveTv.unknownError' => 'Ismeretlen hiba',
-			'liveTv.channelNumber' => ({required Object number}) => '${number}. csatorna',
-			'liveTv.unknownChannel' => 'Ismeretlen csatorna',
-			'liveTv.live' => 'ÉLŐ',
-			'liveTv.reloadGuide' => 'Műsorújság újratöltése',
-			'liveTv.searchGuide' => 'Keresés a műsorújságban',
-			'liveTv.searchHint' => 'Csatornák és műsorok keresése',
-			'liveTv.searchNoResults' => ({required Object query}) => 'Nincs találat a következőre: "${query}"',
-			'liveTv.channelsSection' => 'Csatornák',
-			'liveTv.programsSection' => 'Műsorok',
-			'liveTv.now' => 'Most',
-			'liveTv.today' => 'Ma',
-			'liveTv.tomorrow' => 'Holnap',
-			'liveTv.midnight' => 'Éjfél',
-			'liveTv.overnight' => 'Késő éjszaka',
-			'liveTv.morning' => 'Reggel',
-			'liveTv.daytime' => 'Napközben',
-			'liveTv.evening' => 'Este',
-			'liveTv.lateNight' => 'Éjszaka',
-			'liveTv.whatsOn' => 'Mi megy most?',
-			'liveTv.watchChannel' => 'Csatorna nézése',
-			'liveTv.favorites' => 'Kedvencek',
-			'liveTv.reorderFavorites' => 'Kedvencek rendezése',
-			'liveTv.noFavoriteChannels' => 'Nincsenek kedvenc csatornák',
-			'liveTv.noFavoriteChannelsHint' => 'Jelenítsd meg az összes csatornát, majd hosszan nyomj meg egy csatornát, hogy hozzáadd a kedvenceidhez.',
-			'liveTv.showAllChannels' => 'Összes csatorna megjelenítése',
-			'liveTv.favoritesLoadFailed' => 'Nem sikerült a kedvencek betöltése. Ellenőrizd a kapcsolatot és próbáld újra.',
-			'liveTv.favoritesUpdateFailed' => 'Nem sikerült frissíteni a kedvenceket. Ellenőrizd a kapcsolatot, majd próbáld újra.',
-			'liveTv.joinSession' => 'Csatlakozás a folyamatban lévő adáshoz',
-			'liveTv.watchFromStart' => ({required Object minutes}) => 'Nézés az elejétől (${minutes} perce megy)',
-			'liveTv.watchLive' => 'Élő adás nézése',
-			'liveTv.goToLive' => 'Ugrás az élő adásra',
-			'liveTv.record' => 'Felvétel',
-			'liveTv.recordEpisode' => 'Epizód rögzítése',
-			'liveTv.recordSeries' => 'Sorozat rögzítése',
-			'liveTv.recordOptions' => 'Felvételi beállítások',
-			'liveTv.saveTo' => 'Mentés ide',
-			'liveTv.recordings' => 'Felvételek',
-			'liveTv.scheduledRecordings' => 'Ütemezve',
-			'liveTv.recordingRules' => 'Felvételi szabályok',
-			'liveTv.noScheduledRecordings' => 'Nincs semmi felvételre ütemezve',
-			'liveTv.manageRecording' => 'Felvétel kezelése',
-			'liveTv.cancelRecording' => 'Felvétel megszakítása',
-			'liveTv.cancelRecordingTitle' => 'Megszakítod ezt a felvételt?',
-			'liveTv.cancelRecordingMessage' => ({required Object title}) => 'A(z) ${title} nem kerül rögzítésre.',
-			'liveTv.deleteRule' => 'Szabály törlése',
-			'liveTv.deleteRuleTitle' => 'Törlöd a felvételi szabályt?',
-			'liveTv.deleteRuleMessage' => ({required Object title}) => 'A(z) ${title} jövőbeli epizódjai nem kerülnek rögzítésre.',
-			'liveTv.recordingScheduled' => 'Felvétel ütemezve',
-			'liveTv.alreadyScheduled' => 'Ez a műsor már ütemezve van',
-			'liveTv.dvrAdminRequired' => 'A DVR beállításokhoz adminisztrátori fiók szükséges',
-			'liveTv.recordingFailed' => 'Nem sikerült a felvétel ütemezése',
-			'liveTv.recordingTargetMissing' => 'Nem sikerült meghatározni a felvételi könyvtárat',
-			'liveTv.recordNotAvailable' => 'A felvétel nem érhető el ehhez a műsorhoz',
-			'liveTv.recordingCancelled' => 'Felvétel megszakítva',
-			'liveTv.recordingRuleDeleted' => 'Felvételi szabály törölve',
-			'liveTv.processRecordingRules' => 'Szabályok újraértékelése',
-			'liveTv.recordingInProgress' => 'Rögzítés folyamatban',
-			'liveTv.recordingsCount' => ({required Object count}) => '${count} ütemezve',
-			'liveTv.editRule' => 'Szabály szerkesztése',
-			'liveTv.editRuleAction' => 'Szerkesztés',
-			'liveTv.recordingRuleUpdated' => 'Felvételi szabály frissítve',
-			'liveTv.guideReloadRequested' => 'Műsorújság frissítése kérve',
-			'liveTv.guideReloadFailed' => 'Nem sikerült frissíteni a műsorújságot',
-			'liveTv.rulesProcessRequested' => 'Szabályok újraértékelése kérve',
-			'liveTv.rulesProcessFailed' => 'Nem sikerült újra kiértékelni a felvételi szabályokat',
-			'liveTv.recordShow' => 'Műsor rögzítése',
-			'liveTv.recordSettings.startEarly' => 'Korábbi kezdés (másodperc)',
-			'liveTv.recordSettings.endLate' => 'Későbbi befejezés (másodperc)',
-			'liveTv.recordSettings.newOnly' => 'Csak új epizódok',
-			'liveTv.recordSettings.anyChannel' => 'Felvétel bármelyik csatornáról',
-			'liveTv.recordSettings.anyTime' => 'Felvétel bármikor',
-			'liveTv.recordSettings.skipInLibrary' => 'A könyvtárban már meglévő epizódok kihagyása',
-			'liveTv.recordSettings.keepUpTo' => 'Megtartandó epizódok',
-			_ => null,
-		} ?? switch (path) {
-			'liveTv.recordSettings.keepUpToHint' => 'A 0 minden epizódot megtart',
-			'liveTv.startingInMinutes' => ({required Object minutes}) => '${minutes} perc múlva kezdődik',
-			'liveTv.dayAtTime' => ({required Object day, required Object time}) => '${day}, ${time}',
-			'liveTv.invalidPlaybackData' => ({required Object product}) => 'A(z) ${product} érvénytelen Élő TV-lejátszási adatokat adott vissza',
-			'liveTv.failedToStartChannel' => 'Nem sikerült elindítani az élő csatornát',
-			'liveTv.failedToBuildStreamUrl' => 'Nem sikerült összeállítani a stream URL-címét',
-			'liveTv.playbackStartFailed' => ({required Object reason}) => 'Nem sikerült elindítani a csatornát: ${reason}',
-			'liveTv.channelSwitchFailed' => ({required Object reason}) => 'Nem sikerült csatornát váltani: ${reason}',
-			'collections.title' => 'Gyűjtemények',
-			'collections.collection' => 'Gyűjtemény',
-			'collections.empty' => 'A gyűjtemény üres',
-			'collections.deleteCollection' => 'Gyűjtemény törlése',
-			'collections.deleteConfirm' => ({required Object title}) => 'Törlöd a következőt: "${title}"? Ez nem vonható vissza.',
-			'collections.deleted' => 'Gyűjtemény törölve',
-			'collections.deleteFailed' => 'Nem sikerült a gyűjtemény törlése',
-			'collections.deleteFailedWithError' => ({required Object error}) => 'Nem sikerült a gyűjtemény törlése: ${error}',
-			'collections.selectCollection' => 'Gyűjtemény kiválasztása',
-			'collections.collectionName' => 'Gyűjtemény neve',
-			'collections.enterCollectionName' => 'Add meg a gyűjtemény nevét',
-			'collections.addedToCollection' => 'Hozzáadva a gyűjteményhez',
-			'collections.errorAddingToCollection' => 'Nem sikerült a gyűjteményhez adni',
-			'collections.created' => 'Gyűjtemény létrehozva',
-			'collections.removeFromCollection' => 'Eltávolítás a gyűjteményből',
-			'collections.removeFromCollectionConfirm' => ({required Object title}) => 'Eltávolítod a következőt: "${title}" ebből a gyűjteményből?',
-			'collections.removedFromCollection' => 'Eltávolítva a gyűjteményből',
-			'collections.removeFromCollectionFailed' => 'Nem sikerült az eltávolítás a gyűjteményből',
-			'collections.removeFromCollectionError' => ({required Object error}) => 'Hiba a gyűjteményből való eltávolításkor: ${error}',
-			'collections.searchCollections' => 'Gyűjtemények keresése...',
-			'playlists.title' => 'Lejátszási listák',
-			'playlists.playlist' => 'Lejátszási lista',
-			'playlists.noPlaylists' => 'Nem találhatók lejátszási listák',
-			'playlists.create' => 'Lejátszási lista létrehozása',
-			'playlists.playlistName' => 'Lejátszási lista neve',
-			'playlists.enterPlaylistName' => 'Add meg a lejátszási lista nevét',
-			'playlists.delete' => 'Lejátszási lista törlése',
-			'playlists.removeItem' => 'Eltávolítás a lejátszási listáról',
-			'playlists.smartPlaylist' => 'Okos lejátszási lista',
-			'playlists.itemCount' => ({required Object count}) => '${count} elem',
-			'playlists.oneItem' => '1 elem',
-			'playlists.emptyPlaylist' => 'Ez a lejátszási lista üres',
-			'playlists.deleteConfirm' => 'Törlöd a lejátszási listát?',
-			'playlists.deleteMessage' => ({required Object name}) => 'Biztosan törölni szeretnéd a következőt: "${name}"?',
-			'playlists.created' => 'Lejátszási lista létrehozva',
-			'playlists.deleted' => 'Lejátszási lista törölve',
-			'playlists.itemAdded' => 'Hozzáadva a lejátszási listához',
-			'playlists.itemRemoved' => 'Eltávolítva a lejátszási listáról',
-			'playlists.selectPlaylist' => 'Lejátszási lista kiválasztása',
-			'playlists.searchPlaylists' => 'Lejátszási listák keresése...',
-			'playlists.errorCreating' => 'Nem sikerült a lejátszási lista létrehozása',
-			'playlists.errorDeleting' => 'Nem sikerült a lejátszási lista törlése',
-			'playlists.errorLoading' => 'Nem sikerült a lejátszási listák betöltése',
-			'playlists.errorAdding' => 'Nem sikerült a lejátszási listához adni',
-			'playlists.errorReordering' => 'Nem sikerült átrendezni a lejátszási lista elemét',
-			'playlists.errorRemoving' => 'Nem sikerült az eltávolítás a lejátszási listáról',
-			'music.goToAlbum' => 'Ugrás az albumhoz',
-			'music.goToArtist' => 'Ugrás az előadóhoz',
-			'music.instantMix' => 'Azonnali keverés',
-			'music.playNext' => 'Következő lejátszása',
-			'music.addToQueue' => 'Hozzáadás a lejátszási sorhoz',
-			'music.discNumber' => ({required Object n}) => '${n}. lemez',
-			'music.trackCount' => ({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('hu'))(n, one: '${n} zeneszám', other: '${n} zeneszám', ), 
-			'music.nowPlaying' => 'Most szól',
-			'music.playingFrom' => ({required Object title}) => 'Lejátszás innen: ${title}',
-			'music.queue' => 'Lejátszási sor',
-			'music.clearQueue' => 'Sor törlése',
-			'music.lyrics' => 'Dalszöveg',
-			'music.noLyrics' => 'Nincs elérhető dalszöveg',
-			'music.sleepTimer' => 'Elalvási időzítő',
-			'music.sleepTimerEndOfTrack' => 'Zeneszám vége',
-			'music.sleepTimerMinutes' => ({required Object n}) => '${n} perc',
-			'music.stopPlayback' => 'Lejátszás leállítása',
-			'music.previousTrack' => 'Előző szám',
-			'music.nextTrack' => 'Következő szám',
-			'music.repeat' => 'Ismétlés',
-			'music.repeatAll' => 'Összes ismétlése',
-			'music.repeatOne' => 'Egy szám ismétlése',
-			'music.instantMixNoServer' => 'Nem érhető el szerver az azonnali mixhez',
-			'music.instantMixFailed' => 'Nem sikerült betölteni az azonnali mixet',
-			'music.instantMixEmpty' => 'Az azonnali mix nem adott vissza zeneszámokat',
-			'music.noAudioUrl' => ({required Object track}) => 'Nem érhető el hang-URL ehhez: ${track}',
-			'music.discography.singlesAndEps' => 'Kislemezek és EP-k',
-			'music.discography.live' => 'Élő',
-			'music.discography.compilations' => 'Válogatások',
-			'watchTogether.title' => 'Watch Together (Közös nézés)',
-			'watchTogether.description' => 'Nézz tartalmat szinkronban barátaiddal és családoddal',
-			'watchTogether.createRoom' => 'Szoba létrehozása',
-			'watchTogether.creatingRoom' => 'Szoba létrehozása...',
-			'watchTogether.joinRoom' => 'Csatlakozás szobához',
-			'watchTogether.joiningRoom' => 'Csatlakozás a szobához...',
-			'watchTogether.connecting' => 'Csatlakozás...',
-			'watchTogether.relayPublic' => 'A szobák a nyilvános Open Watch Party-reléket használják.',
-			'watchTogether.relayCustom' => ({required Object url}) => 'A szobák a saját relédet használják: ${url}.',
-			'watchTogether.recentRooms' => 'Legutóbbi szobák',
-			'watchTogether.roomActions' => 'Szobaműveletek',
-			'watchTogether.renameRoom' => 'Szoba átnevezése',
-			'watchTogether.removeRoom' => 'Eltávolítás',
-			'watchTogether.enterRoomCode' => 'Add meg a házigazdától kapott 6 karakteres kódot.',
-			'watchTogether.roomCode' => 'Szobakód',
-			'watchTogether.paste' => 'Beillesztés',
-			'watchTogether.noCodeInClipboard' => 'A vágólapon nincs szobakód',
-			'watchTogether.copyCode' => 'Kód másolása',
-			'watchTogether.codeCopied' => 'Szobakód másolva',
-			'watchTogether.shareInvite' => 'Meghívó megosztása',
-			'watchTogether.inviteCopied' => 'Meghívó másolva. Illeszd be egy üzenetbe.',
-			'watchTogether.inviteMessage' => ({required Object code}) => 'Csatlakozz a Watch Together-szobámhoz a Plezyben: nyisd meg a Watch Together (Közös nézés) menüt, válaszd a Csatlakozás szobához lehetőséget, és írd be ezt a kódot: ${code}.',
-			'watchTogether.openSessionControls' => 'Watch Together munkamenet-vezérlők megnyitása',
-			'watchTogether.reconnecting' => 'Újracsatlakozás...',
-			'watchTogether.reconnectingDescription' => 'Megszakadt a kapcsolat. Automatikusan visszacsatlakozol a szobához.',
-			'watchTogether.connected' => 'Csatlakozva',
-			'watchTogether.disconnected' => 'Kapcsolat bontva',
-			'watchTogether.youAreHost' => 'Te vagy a házigazda',
-			'watchTogether.hostedBy' => ({required Object name}) => 'Házigazda: ${name}',
-			'watchTogether.hostControlsPlayback' => 'A házigazda vezérli a lejátszást',
-			'watchTogether.anyoneCanControl' => 'Bárki vezérelheti a lejátszást',
-			'watchTogether.roomLocked' => 'Szoba zárolva',
-			'watchTogether.nowPlaying' => 'Most megy',
-			'watchTogether.nothingPlaying' => 'Nincs lejátszás',
-			'watchTogether.nothingPlayingHost' => 'Játssz le valamit bármelyik könyvtárból, hogy megoszd a szobával.',
-			'watchTogether.nothingPlayingGuest' => 'Amikor a házigazda lejátszik valamit, itt fog megnyílni.',
-			'watchTogether.notShareable' => 'Ehhez a videóhoz nincs katalógusbeli egyezés, ezért csak azok tudják lejátszani, akik hozzáférnek ugyanahhoz a szerverhez.',
-			'watchTogether.searching' => 'A videó keresése a könyvtáraidban...',
-			'watchTogether.yourCopy' => 'A saját példányod',
-			'watchTogether.sharingYourCopy' => 'A saját példányodat osztod meg',
-			'watchTogether.playingOtherLength' => ({required Object difference}) => 'Saját példányod lejátszása (${difference})',
-			'watchTogether.mismatchTitle' => 'A példányod hossza eltér',
-			'watchTogether.mismatchDescription' => ({required Object difference}) => 'A legközelebbi példányod ${difference}, mint a szoba videója. Lehet, hogy más vágás vagy változat.',
-			'watchTogether.playAnyway' => 'Lejátszás mégis',
-			'watchTogether.chooseAnotherCopy' => 'Másik példány választása',
-			'watchTogether.dontPlay' => 'Ne játszd le',
-			'watchTogether.unavailableTitle' => 'Ez a videó nincs meg neked',
-			'watchTogether.unavailableDescription' => 'A Plezy nem találta meg a könyvtáraidban. Válassz ki magad egy példányt, vagy keress újra.',
-			'watchTogether.chooseCopy' => 'Példány választása',
-			'watchTogether.searchAgain' => 'Keresés újra',
-			'watchTogether.noCandidates' => 'Nem található példány a könyvtáraidban.',
-			'watchTogether.choiceFailed' => 'Nem sikerült lejátszani ezt a példányt a szobának',
-			'watchTogether.lengthLonger' => ({required Object duration}) => '${duration} különbséggel hosszabb',
-			'watchTogether.lengthShorter' => ({required Object duration}) => '${duration} különbséggel rövidebb',
-			'watchTogether.lengthSame' => 'Azonos hosszúságú',
-			'watchTogether.lengthUnknown' => 'Ismeretlen hosszúságú',
-			'watchTogether.joinCurrentPlayback' => 'Csatlakozás a jelenlegi lejátszáshoz',
-			'watchTogether.joinCurrentPlaybackDescription' => 'Visszatérés ahhoz, amit a házigazda éppen néz',
-			'watchTogether.stopMedia' => 'Videó leállítása mindenkinél',
-			'watchTogether.syncOffset' => 'Szinkroneltolás',
-			'watchTogether.syncOffsetDescription' => 'Told el a videódat, ha a szobához képest előrébb jár vagy lemarad.',
-			'watchTogether.offsetHint' => ({required Object difference}) => 'A példányod ${difference}, mint a szoba videója.',
-			'watchTogether.applyDifference' => ({required Object offset}) => '${offset} alkalmazása',
-			'watchTogether.offsetMinusSecond' => '-1 mp',
-			'watchTogether.offsetMinusTenth' => '-100 ms',
-			'watchTogether.offsetPlusTenth' => '+100 ms',
-			'watchTogether.offsetPlusSecond' => '+1 mp',
-			'watchTogether.participants' => 'Résztvevők',
-			'watchTogether.participantCount' => ({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('hu'))(n, one: '${n} résztvevő', other: '${n} résztvevő', ), 
-			'watchTogether.hostBadge' => 'HÁZIGAZDA',
-			'watchTogether.nameYou' => ({required Object name}) => '${name} (te)',
-			'watchTogether.playerIdle' => 'Tétlen',
-			'watchTogether.playerLoading' => 'Betöltés',
-			'watchTogether.playerReady' => 'Kész',
-			'watchTogether.playerBuffering' => 'Pufferelés',
-			'watchTogether.matchSearching' => 'Keresés',
-			'watchTogether.matchMatched' => 'Megvan a videó',
-			'watchTogether.matchMismatched' => 'Eltérő hosszúságú',
-			'watchTogether.matchUnavailable' => 'Nincs meg a videó',
-			'watchTogether.participantOffset' => ({required Object offset}) => 'Eltolás: ${offset}',
-			'watchTogether.makeHost' => 'Házigazdává tétel',
-			'watchTogether.makeHostQuestion' => 'Átadod a házigazdaságot?',
-			'watchTogether.makeHostConfirm' => ({required Object name}) => '${name} vezérli majd a lejátszást és a munkamenetet mindenki számára.',
-			'watchTogether.transfer' => 'Átadás',
-			'watchTogether.removeParticipant' => 'Eltávolítás a szobából',
-			'watchTogether.removeParticipantQuestion' => ({required Object name}) => '${name} eltávolítása?',
-			'watchTogether.removeParticipantConfirm' => ({required Object name}) => '${name} kikerül a szobából. A kóddal újra csatlakozhat, hacsak nem zárolod a szobát.',
-			'watchTogether.remove' => 'Eltávolítás',
-			'watchTogether.roomSettings' => 'Szobabeállítások',
-			'watchTogether.letEveryoneControl' => 'Mindenki vezérelheti a lejátszást',
-			'watchTogether.lockRoom' => 'Szoba zárolása',
-			'watchTogether.lockRoomDescription' => 'Új résztvevők nem csatlakozhatnak',
-			'watchTogether.leaveRoom' => 'Kilépés a szobából',
-			'watchTogether.leaveRoomQuestion' => 'Kilépsz a szobából?',
-			'watchTogether.leaveRoomConfirm' => 'A szobakóddal újra csatlakozhatsz.',
-			'watchTogether.leave' => 'Kilépés',
-			'watchTogether.endRoom' => 'Szoba bezárása',
-			'watchTogether.endRoomQuestion' => 'Bezárod a szobát?',
-			'watchTogether.endRoomConfirm' => 'Ezzel mindenki számára bezárod a szobát.',
-			'watchTogether.end' => 'Befejezés',
-			'watchTogether.playBlockedTitle' => 'A lejátszás nem indult el',
-			'watchTogether.playBlockedDescription' => 'Nyomd meg a lejátszás gombot, hogy együtt nézhesd a szobával.',
-			'watchTogether.notices.pressedPlay' => ({required Object name}) => '${name} elindította a lejátszást',
-			'watchTogether.notices.playbackStarted' => 'A lejátszás elindult',
-			'watchTogether.notices.paused' => ({required Object name}) => '${name} szüneteltette a lejátszást',
-			'watchTogether.notices.playbackPaused' => 'A lejátszás szünetel',
-			'watchTogether.notices.jumpedTo' => ({required Object name, required Object position}) => '${name} ide ugrott: ${position}',
-			'watchTogether.notices.roomJumpedTo' => ({required Object position}) => 'Ugrás ide: ${position}',
-			'watchTogether.notices.changedSpeed' => ({required Object name, required Object speed}) => '${name} a sebességet ${speed} értékre állította',
-			'watchTogether.notices.speedChanged' => ({required Object speed}) => 'Sebesség beállítva: ${speed}',
-			'watchTogether.notices.startedMedia' => ({required Object name, required Object title}) => '${name} elindította: ${title}',
-			'watchTogether.notices.mediaStarted' => ({required Object title}) => 'Most megy: ${title}',
-			'watchTogether.notices.stoppedMedia' => ({required Object name}) => '${name} leállította a videót',
-			'watchTogether.notices.mediaStopped' => 'A videó leállt',
-			'watchTogether.notices.waitingFor' => ({required Object name}) => 'Várakozás: ${name}...',
-			'watchTogether.notices.waitingForSomeone' => 'Várakozás a lemaradókra...',
-			'watchTogether.notices.finished' => 'Befejeződött',
-			'watchTogether.notices.hostChangedTo' => ({required Object name}) => '${name} lett a házigazda',
-			'watchTogether.notices.youAreNowHost' => 'Mostantól te vagy a házigazda',
-			'watchTogether.notices.joined' => ({required Object name}) => '${name} csatlakozott',
-			'watchTogether.notices.left' => ({required Object name}) => '${name} kilépett',
-			'watchTogether.notices.controlRefused' => 'Csak a házigazda vezérelheti a lejátszást',
-			'watchTogether.notices.searchFailed' => 'Néhány szerveren nem sikerült megkeresni a szoba videóját',
-			'watchTogether.notices.playBlocked' => 'Az indításhoz nyomd meg a lejátszás gombot',
-			'watchTogether.notices.shareFailed' => 'Nem sikerült megosztani ezt a videót a szobával',
-			'watchTogether.notices.downloadNotShared' => 'A letöltések nem oszthatók meg a szobával, amíg a szerverük nem érhető el',
-			'watchTogether.notices.openFailed' => 'Nem sikerült megnyitni a szoba videóját',
-			'watchTogether.ended.ended' => 'A házigazda bezárta a szobát',
-			'watchTogether.ended.kicked' => 'Eltávolítottak a szobából',
-			'watchTogether.ended.expired' => 'A szoba lejárt',
-			'watchTogether.ended.replaced' => 'Egy másik eszközön csatlakoztál ehhez a szobához',
-			'watchTogether.ended.lost' => 'Megszakadt a kapcsolat a szobával',
-			'watchTogether.errors.invalidCode' => 'Ez nem szobakód. A kód 6 betűből és számjegyből áll, 0, 1, I, L és O nélkül.',
-			'watchTogether.errors.roomNotFound' => 'Nincs ilyen kódú szoba. Lehet, hogy már bezárták.',
-			'watchTogether.errors.roomFull' => 'Ez a szoba megtelt.',
-			'watchTogether.errors.roomLocked' => 'A házigazda zárolta ezt a szobát.',
-			'watchTogether.errors.relayFull' => 'A Watch Together jelenleg túlterhelt. Próbáld újra később.',
-			'watchTogether.errors.unreachable' => 'Nem sikerült elérni a Watch Together-relét. Ellenőrizd a kapcsolatot.',
-			'watchTogether.errors.rateLimited' => 'Túl sok próbálkozás. Várj egy kicsit, majd próbáld újra.',
-			'watchTogether.errors.clientBlocked' => 'A Plezy ezen verziója nem tudja használni a relét. Frissítsd az alkalmazást.',
-			'watchTogether.errors.forbidden' => 'Ezt csak a házigazda teheti meg.',
-			'watchTogether.errors.notInRoom' => 'Nem vagy szobában.',
-			'watchTogether.errors.alreadyInRoom' => 'Már egy szobában vagy.',
-			'watchTogether.errors.resumeFailed' => 'Nem sikerült visszacsatlakozni a szobához.',
-			'watchTogether.errors.unsupported' => 'A relé ezt nem támogatja.',
-			'watchTogether.errors.generic' => 'Hiba történt. Próbáld újra.',
-			'watchTogether.untitledEpisode' => ({required Object number}) => '${number}. epizód',
-			'downloads.title' => 'Letöltések',
-			'downloads.manage' => 'Kezelés',
-			'downloads.tvShows' => 'TV-sorozatok',
-			'downloads.movies' => 'Filmek',
-			'downloads.music' => 'Zene',
-			'downloads.tracksQueued' => ({required Object count}) => '${count} zeneszám letöltésre sorba állítva',
-			'downloads.noDownloads' => 'Még nincsenek letöltések',
-			'downloads.noDownloadsDescription' => 'A letöltött tartalmak itt jelennek meg az offline megtekintéshez',
-			'downloads.downloadNow' => 'Letöltés',
-			'downloads.deleteDownload' => 'Letöltés törlése',
-			'downloads.retryDownload' => 'Letöltés újrapróbálása',
-			'downloads.downloadQueued' => 'Letöltés sorba állítva',
-			'downloads.downloadResumed' => 'Letöltés folytatva',
-			'downloads.serverErrorBitrate' => 'Szerverhiba: a fájl meghaladhatja a távoli bitrátakorlátot',
-			'downloads.storageFull' => 'A letöltések leálltak a szabad tárhely védelme érdekében. Szabadíts fel helyet, vagy válassz másik letöltési helyet, majd próbáld újra.',
-			'downloads.storageUnavailable' => 'A letöltések leálltak, mert a rendelkezésre álló tárhely nem ellenőrizhető. Ellenőrizd a letöltési helyet, majd próbáld újra.',
-			'downloads.episodesQueued' => ({required Object count}) => '${count} epizód letöltésre sorba állítva',
-			'downloads.downloadDeleted' => 'Letöltés törölve',
-			'downloads.deleteConfirm' => ({required Object title}) => 'Törlöd a következőt: "${title}" erről az eszközről?',
-			'downloads.deleteCollectionDownloads' => 'Letöltések törlése',
-			'downloads.deleteCollectionDownloadsConfirm' => ({required Object title}) => 'Törlöd a(z) "${title}" összes letöltését erről az eszközről?',
-			'downloads.collectionDownloadsDeleted' => 'Letöltések törölve',
-			'downloads.cancelledDownloadTitle' => 'Megszakított letöltés',
-			'downloads.cancelledDownloadMessage' => 'Ez a letöltés meg lett szakítva. Mit szeretnél tenni?',
-			'downloads.allEpisodesAlreadyDownloaded' => 'Minden epizód le van töltve',
-			'downloads.resumeDownload' => 'Letöltés folytatása',
-			'downloads.cancelledDownload' => 'Megszakított letöltés',
-			'downloads.syncingFile' => ({required Object file, required Object status}) => '${file} (${status} szinkronizálása)',
-			'downloads.downloadedFileClickToComplete' => ({required Object file}) => 'Letöltve: ${file} - Kattints a befejezéshez',
-			'downloads.partialDownloadClickToComplete' => 'Részben letöltve - Kattints a befejezéshez',
-			'downloads.deleting' => 'Törlés...',
-			'downloads.deletingWithProgress' => ({required Object title, required Object current, required Object total}) => '${title} törlése... (${current}/${total})',
-			'downloads.queuedTooltip' => 'Sorban áll',
-			'downloads.queuedFilesTooltip' => ({required Object files}) => 'Sorba állítva: ${files}',
-			'downloads.downloadingTooltip' => 'Letöltés...',
-			'downloads.downloadingFilesTooltip' => ({required Object files}) => 'Letöltés alatt: ${files}',
-			'downloads.noDownloadsTree' => 'Nincsenek letöltések',
-			'downloads.pauseAll' => 'Összes szüneteltetése',
-			'downloads.resumeAll' => 'Összes folytatása',
-			'downloads.retryAll' => 'Összes újrapróbálása',
-			'downloads.retryFailed' => 'Sikertelen letöltések újrapróbálása',
-			'downloads.deleteAll' => 'Összes törlése',
-			'downloads.selectVersion' => 'Verzió kiválasztása',
-			'downloads.allEpisodes' => 'Minden epizód',
-			'downloads.unwatchedOnly' => 'Csak a nem látottak',
-			'downloads.nextNUnwatched' => ({required Object count}) => 'A következő ${count} nem látott epizód',
-			'downloads.customAmount' => 'Egyéni mennyiség...',
-			'downloads.includeSpecials' => 'Különkiadások is',
-			'downloads.howManyEpisodes' => 'Hány epizód?',
-			'downloads.invalidEpisodeCount' => 'Adj meg egy érvényes epizódszámot.',
-			'downloads.keepSynced' => 'Szinkronban tartás',
-			'downloads.downloadOnce' => 'Egyszeri letöltés',
-			'downloads.keepNUnwatched' => ({required Object count}) => '${count} nem látott epizód megtartása',
-			'downloads.editSyncRule' => 'Szinkronizálási szabály szerkesztése',
-			'downloads.removeSyncRule' => 'Szinkronizálási szabály eltávolítása',
-			'downloads.removeSyncRuleConfirm' => ({required Object title}) => 'Leállítod a(z) "${title}" szinkronizálását? A letöltött epizódok megmaradnak.',
-			'downloads.removeListSyncRuleConfirm' => ({required Object title}) => 'Leállítjuk a(z) "${title}" szinkronizálását?',
-			'downloads.deleteSyncRuleDownloads' => 'A kapcsolódó letöltések törlése is',
-			'downloads.deleteSyncRuleDownloadsDescription' => 'A másik szinkronszabály vagy profil által használt letöltések megmaradnak.',
-			'downloads.syncRuleCreated' => ({required Object count}) => 'Szinkronizálási szabály létrehozva — ${count} nem látott epizód megtartása',
-			'downloads.syncRuleUpdated' => 'Szinkronizálási szabály frissítve',
-			'downloads.syncRuleRemoved' => 'Szinkronizálási szabály eltávolítva',
-			'downloads.syncRuleAndDownloadsRemoved' => 'A szinkronszabály és a kapcsolódó letöltések eltávolítva',
-			'downloads.syncRuleCleanupBusy' => 'A szinkronszabályok éppen frissülnek. Próbálja újra egy pillanat múlva.',
-			'downloads.syncRuleCleanupUnavailable' => 'A kapcsolódó letöltések nem azonosíthatók biztonságosan. Csatlakoztassa újra a szervert, és próbálja újra, vagy távolítsa el a szabályt a letöltések törlése nélkül.',
-			'downloads.syncedNewEpisodes' => ({required Object count, required Object title}) => '${count} új epizód szinkronizálva a következőhöz: ${title}',
-			'downloads.activeSyncRules' => 'Szinkronizálási szabályok',
-			'downloads.noSyncRules' => 'Nincsenek szinkronizálási szabályok',
-			'downloads.manageSyncRule' => 'Szinkronizálás kezelése',
-			'downloads.editEpisodeCount' => 'Epizódszám',
-			'downloads.editSyncFilter' => 'Szinkronizálási szűrő',
-			'downloads.syncAllItems' => 'Minden elem szinkronizálása',
-			'downloads.syncUnwatchedItems' => 'Nem látott elemek szinkronizálása',
-			'downloads.syncRuleServerContext' => ({required Object server, required Object status}) => 'Szerver: ${server} • ${status}',
-			'downloads.syncRuleAvailable' => 'Elérhető',
-			'downloads.syncRuleOffline' => 'Offline',
-			'downloads.syncRuleSignInRequired' => 'Bejelentkezés szükséges',
-			'downloads.syncRuleAccessDenied' => 'Hozzáférés megtagadva',
-			'downloads.syncRuleNotAvailableForProfile' => 'Nem érhető el a jelenlegi profilhoz',
-			'downloads.syncRuleUnknownServer' => 'Ismeretlen szerver',
-			'downloads.syncRuleListCreated' => 'Szinkronizálási szabály létrehozva',
-			'downloads.backgroundWarning.bannerBlocked' => 'A letöltések leállnak, ha kilépsz az alkalmazásból',
-			'downloads.backgroundWarning.bannerDegraded' => 'A háttérbeli letöltések korlátozottak lehetnek',
-			'downloads.backgroundWarning.bannerAction' => 'Részletek',
-			'downloads.backgroundWarning.sheetTitle' => 'A háttérbeli letöltések le vannak tiltva',
-			'downloads.backgroundWarning.sheetTitleDegraded' => 'A háttérbeli letöltések korlátozottak lehetnek',
-			'downloads.backgroundWarning.sheetIntro' => 'Az Android megakadályozza, hogy a Plezy megbízhatóan töltsön le a háttérben.',
-			'downloads.backgroundWarning.sheetIntroDegraded' => 'Az eszközöd korlátozza, hogy a Plezy mikor tölthet le a háttérben.',
-			'downloads.backgroundWarning.reasonBackgroundRestricted' => 'A Plezy háttérbeli használata korlátozva van. Állítsd az akkumulátor- vagy háttérhasználatát „Korlátlan” értékre.',
-			'downloads.backgroundWarning.reasonStandbyRestricted' => 'Az Android korlátozott készenléti állapotba helyezte a Plezyt. Állítsd az akkumulátorhasználatát „Korlátlan” értékre.',
-			'downloads.backgroundWarning.reasonDownloadChannelBlocked' => 'A letöltési értesítések ki vannak kapcsolva, ezért előfordulhat, hogy a folyamatjelzés és a vezérlők nem érhetők el.',
-			'downloads.backgroundWarning.reasonNotificationsDisabled' => 'Az értesítések ki vannak kapcsolva. Android 13 vagy újabb rendszeren szükségesek a hosszú háttérbeli letöltésekhez.',
-			'downloads.backgroundWarning.reasonDataSaver' => 'Az Adatforgalom-csökkentő be van kapcsolva, ezért mobiladat-kapcsolaton nem működnek a háttérbeli letöltések. Wi-Fi-n továbbra is működniük kell.',
-			'downloads.backgroundWarning.reasonOemUnknown' => 'A letöltések többször leálltak, miközben a Plezy a háttérben futott. Ellenőrizd a Plezy akkumulátor- vagy háttérhasználati beállításait.',
-			'downloads.backgroundWarning.openSettings' => 'Beállítások megnyitása',
-			'downloads.backgroundWarning.stillNotWorking' => 'Eszközspecifikus segítség',
-			'downloads.backgroundWarning.stillNotWorkingDescription' => 'Nézd meg az eszközödhöz tartozó lépéseket, vagy ha a probléma továbbra is fennáll, küldj naplót a Beállítások › Naplók megtekintése menüből.',
-			'downloads.backgroundWarning.dialogTitle' => 'A letöltések nem biztos, hogy befejeződnek',
-			'downloads.backgroundWarning.dialogDownloadAnyway' => 'Letöltés mégis',
-			'downloads.backgroundWarning.dialogFixFirst' => 'Előbb javítom',
-			'downloads.backgroundWarning.statusTile' => 'Háttérbeli letöltések',
-			'downloads.backgroundWarning.statusOk' => 'Futhat a háttérben',
-			'downloads.backgroundWarning.statusBlocked' => 'A rendszerbeállítások blokkolják',
-			'downloads.backgroundWarning.statusDegraded' => 'A rendszerbeállítások korlátozzák',
-			'downloads.backgroundWarning.statusUnknown' => 'Még nincs ellenőrizve',
-			'downloads.backgroundWarning.settingsUnavailable' => 'Ezen az eszközön nem sikerült megnyitni a rendszerbeállításokat',
-			'downloads.backgroundWarning.linkUnavailable' => 'Ezen az eszközön nem sikerült megnyitni a dontkillmyapp.com webhelyet',
-			'downloads.options' => 'Letöltések lehetőségei',
-			'downloads.groupings.library' => 'Könyvtár',
-			'downloads.groupings.collections' => 'Gyűjtemények',
-			'downloads.unknownLibrary' => 'Ismeretlen könyvtár',
-			'downloads.unknownShow' => 'Ismeretlen sorozat',
-			'downloads.unknownSeason' => 'Ismeretlen évad',
-			'downloads.unknownAlbum' => 'Ismeretlen album',
-			'downloads.completedOfTotal' => ({required Object completed, required Object total}) => '${completed}/${total} kész',
-			'downloads.errorFileNotFound' => 'A fájl nem található (404)',
-			'downloads.errorDownloadNotAllowed' => 'A szerver nem engedélyezi a letöltést (403)',
-			'downloads.errorDownloadFailed' => 'A letöltés nem sikerült',
-			'downloads.errorDownloadFailedWithReason' => ({required Object reason}) => 'A letöltés nem sikerült: ${reason}',
-			'downloads.errorHttpStatus' => ({required Object status}) => 'A letöltés nem sikerült (HTTP ${status})',
-			'downloads.errorPostProcessing' => ({required Object reason}) => 'Az utófeldolgozás nem sikerült: ${reason}',
-			'downloads.reasonFileNotSaved' => 'a fájlt nem sikerült menteni erre az eszközre',
-			'downloads.reasonCannotResume' => 'a részleges letöltést nem sikerült folytatni',
-			'downloads.reasonDeviceStorageFull' => 'az eszközön elfogyott a tárhely',
-			'downloads.notificationDownloading' => 'Letöltés...',
-			'downloads.notificationComplete' => 'Letöltés kész',
-			'downloads.notificationPaused' => 'Letöltés szüneteltetve',
-			'shaders.title' => 'Shaderek',
-			'shaders.noShaderDescription' => 'Nincs videójavítás',
-			'shaders.nvscalerDescription' => 'NVIDIA képskálázás az élesebb videóért',
-			'shaders.artcnnVariantNeutral' => 'Semleges',
-			'shaders.artcnnVariantDenoise' => 'Zajcsökkentés',
-			'shaders.artcnnVariantDenoiseSharpen' => 'Zajcsökkentés + Élesítés',
-			'shaders.qualityFast' => 'Gyors',
-			'shaders.qualityHQ' => 'Kiváló minőség',
-			'shaders.mode' => 'Mód',
-			'shaders.importShader' => 'Shader importálása',
-			'shaders.customShaderDescription' => 'Egyéni GLSL shader',
-			'shaders.shaderImported' => 'Shader importálva',
-			'shaders.shaderImportFailed' => 'Nem sikerült a shader importálása',
-			'shaders.deleteShader' => 'Shader törlése',
-			'shaders.deleteShaderConfirm' => ({required Object name}) => 'Törlöd a következőt: "${name}"?',
-			'companionRemote.title' => 'Kísérőtávirányító',
-			'companionRemote.connectedTo' => ({required Object name}) => 'Csatlakoztatva a következőhöz: ${name}',
-			'companionRemote.unknownDevice' => 'Ismeretlen eszköz',
-			'companionRemote.session.startingServer' => 'Távirányító-szerver indítása...',
-			'companionRemote.session.hostAddress' => 'Gazdagép címe',
-			'companionRemote.session.connected' => 'Csatlakoztatva',
-			'companionRemote.session.serverRunning' => 'A távirányító-szerver aktív',
-			'companionRemote.session.serverStopped' => 'A távirányító-szerver leállítva',
-			'companionRemote.session.serverRunningDescription' => 'A hálózaton lévő mobileszközök csatlakozhatnak ehhez az alkalmazáshoz',
-			'companionRemote.session.serverStoppedDescription' => 'Indítsd el a szervert, hogy a mobileszközök csatlakozhassanak',
-			'companionRemote.session.usePhoneToControl' => 'Használd a mobileszközödet az alkalmazás vezérléséhez',
-			'companionRemote.session.startServer' => 'Szerver indítása',
-			'companionRemote.session.stopServer' => 'Szerver leállítása',
-			'companionRemote.session.minimize' => 'Kis méret',
-			'companionRemote.session.manualAddressHint' => 'Kézi kapcsolódási cím:',
-			'companionRemote.pairing.discoveryDescription' => 'Az azonos Plex-fiókot használó Plezy-eszközök itt jelennek meg',
-			'companionRemote.pairing.hostAddressHint' => '192.168.1.100:48632',
-			'companionRemote.pairing.connecting' => 'Csatlakozás...',
-			'companionRemote.pairing.searchingForDevices' => 'Eszközök keresése...',
-			'companionRemote.pairing.noDevicesFound' => 'Nem találhatók eszközök a hálózaton',
-			'companionRemote.pairing.noDevicesHint' => 'Nyisd meg a Plezyt asztali gépen, és használd ugyanazt a Wi-Fi-hálózatot',
-			'companionRemote.pairing.availableDevices' => 'Elérhető eszközök',
-			'companionRemote.pairing.manualConnection' => 'Kézi csatlakozás',
-			'companionRemote.pairing.cryptoInitFailed' => 'Nem sikerült elindítani a biztonságos kapcsolatot. Először jelentkezz be a Plexbe.',
-			'companionRemote.pairing.validationHostRequired' => 'Add meg a gazdagép címét',
-			'companionRemote.pairing.validationHostFormat' => 'A formátumnak IP:port kell lennie (pl. 192.168.1.100:48632)',
-			'companionRemote.pairing.connectionTimedOut' => 'A csatlakozás túllépte az időkorlátot. Használd ugyanazt a hálózatot mindkét eszközön.',
-			'companionRemote.pairing.sessionNotFound' => 'Az eszköz nem található. Győződj meg arról, hogy a Plezy fut a gazdagépen.',
-			'companionRemote.pairing.authFailed' => 'A hitelesítés nem sikerült. Mindkét eszközön ugyanazt a Plex-fiókot kell használni.',
-			'companionRemote.pairing.failedToConnect' => ({required Object error}) => 'Nem sikerült a csatlakozás: ${error}',
-			'companionRemote.remote.disconnectConfirm' => 'Bontod a kapcsolatot a távoli munkamenettel?',
-			'companionRemote.remote.reconnecting' => 'Újracsatlakozás...',
-			'companionRemote.remote.attemptOf' => ({required Object current}) => '${current} / 5 próbálkozás',
-			'companionRemote.remote.retryNow' => 'Újrapróbálkozás most',
-			'companionRemote.remote.tabRemote' => 'Távirányító',
-			'companionRemote.remote.tabPlay' => 'Lejátszás',
-			'companionRemote.remote.tabMore' => 'Egyebek',
-			'companionRemote.remote.menu' => 'Menü',
-			'companionRemote.remote.tabNavigation' => 'Navigációs lap',
-			'companionRemote.remote.tabDiscover' => 'Felfedezés',
-			'companionRemote.remote.tabLibraries' => 'Könyvtárak',
-			'companionRemote.remote.tabSearch' => 'Keresés',
-			'companionRemote.remote.tabDownloads' => 'Letöltések',
-			'companionRemote.remote.tabSettings' => 'Beállítások',
-			'companionRemote.remote.previous' => 'Előző',
-			'companionRemote.remote.playPause' => 'Lejátszás/Szünet',
-			'companionRemote.remote.next' => 'Következő',
-			'companionRemote.remote.seekBack' => 'Visszatekerés',
-			'companionRemote.remote.stop' => 'Leállítás',
-			'companionRemote.remote.seekForward' => 'Előretekerés',
-			'companionRemote.remote.volume' => 'Hangerő',
-			'companionRemote.remote.volumeDown' => 'Hangerő le',
-			'companionRemote.remote.volumeUp' => 'Hangerő fel',
-			'companionRemote.remote.fullscreen' => 'Teljes képernyő',
-			'companionRemote.remote.subtitles' => 'Feliratok',
-			'companionRemote.remote.audio' => 'Hang',
-			'companionRemote.remote.searchHint' => 'Keresés az asztali gépen...',
-			'companionRemote.errors.noNetworkInterface' => 'Nem található hálózati csatoló',
-			'companionRemote.errors.authenticationFailed' => 'A hitelesítés nem sikerült',
-			'companionRemote.errors.serverStartFailed' => ({required Object error}) => 'Nem sikerült elindítani a távirányító-szervert: ${error}',
-			'companionRemote.errors.commandFailed' => ({required Object error}) => 'Nem sikerült elküldeni a távoli parancsot: ${error}',
-			'companionRemote.errors.joinTimedOut' => 'Időtúllépés a munkamenethez való csatlakozáskor',
-			'companionRemote.errors.failedToConnectAnyAddress' => 'Egyetlen címhez sem sikerült csatlakozni',
-			'companionRemote.errors.connectionLostAfterAttempts' => ({required Object attempts}) => 'A kapcsolat megszakadt ${attempts} próbálkozás után',
-			'companionRemote.errors.connectionLost' => 'A kapcsolat megszakadt',
-			'companionRemote.closedBeforeAuth' => 'A kapcsolat a hitelesítés előtt megszakadt',
-			'videoSettings.playbackSpeed' => 'Lejátszási sebesség',
-			'videoSettings.normalSpeed' => 'Normál',
-			'videoSettings.sleepTimerActive' => ({required Object duration}) => 'Aktív (${duration})',
-			'videoSettings.zoom' => 'Nagyítás',
-			'videoSettings.sleepTimer' => 'Elalvási időzítő',
-			'videoSettings.audioSync' => 'Hang szinkronizálása',
-			'videoSettings.subtitleSync' => 'Felirat szinkronizálása',
-			'videoSettings.hdr' => 'HDR',
-			'videoSettings.hdrUnsupported' => 'A HDR itt nem érhető el – ez az asztali kompozitor vagy videókimenet nem képes továbbítani.',
-			'videoSettings.hdrToneMapping' => 'HDR-tónusleképezés',
-			'videoSettings.hdrToneMappingCompositor' => 'Kompozitor',
-			'videoSettings.hdrToneMappingCompositorDescription' => 'Továbbítja a forrás HDR-metaadatait, és az asztali kompozitorra bízza a tónusleképezést.',
-			'videoSettings.hdrToneMappingPlayer' => 'Lejátszó',
-			'videoSettings.hdrToneMappingPlayerDescription' => 'A lejátszóban a kijelző maximális fényerejéhez igazítja a képet, majd közli az eredményt a kompozitorral.',
-			'videoSettings.hdrToneMappingFailed' => 'Nem sikerült módosítani a HDR-tónusleképezést – továbbra is az előző mód aktív.',
-			'videoSettings.audioOutput' => 'Hangkimenet',
-			'videoSettings.performanceOverlay' => 'Teljesítményadatok',
-			'videoSettings.audioOutputDolbyAtmos' => 'Dolby Atmos',
-			'videoSettings.audioOutputDolbyAudio' => 'Dolby Audio',
-			'videoSettings.audioOutputSurround' => 'Térhatású',
-			'videoSettings.audioOutputSpatial' => 'Térbeli hang',
-			'videoSettings.audioOutputStereo' => 'Sztereó',
-			'videoSettings.audioNormalization' => 'Hangerő normalizálása',
-			'videoSettings.audioNormalizationDisablesPassthrough' => 'PCM-mé dekódolja a hangot; a passthrough ki van kapcsolva, amíg ez be van kapcsolva',
-			'performanceOverlay.color' => 'Szín',
-			'performanceOverlay.performance' => 'Teljesítmény',
-			'performanceOverlay.buffer' => 'Puffer',
-			'performanceOverlay.app' => 'Alkalmazás',
-			'performanceOverlay.decoder' => 'Dekóder',
-			'performanceOverlay.rawDecoder' => 'Nyers dekóder',
-			'performanceOverlay.tunneling' => 'Alagutazás',
-			'performanceOverlay.passthrough' => 'Passthrough',
-			'performanceOverlay.aspect' => 'Méretarány',
-			'performanceOverlay.rotation' => 'Forgatás',
-			'performanceOverlay.dvSource' => 'DV-forrás',
-			'performanceOverlay.dvPath' => 'DV-útvonal',
-			'performanceOverlay.dvRouteDecoder' => 'Dolby Vision-dekóder',
-			'performanceOverlay.dvRouteDecoderP81' => 'Dolby Vision-dekóder (P7→8.1)',
-			'performanceOverlay.dvRouteBaseLayer' => 'Alapréteg',
-			'performanceOverlay.dvRouteBaseLayerHdr10' => 'HDR10-alapréteg',
-			'performanceOverlay.dvRouteBaseLayerHlg' => 'HLG-alapréteg',
-			'performanceOverlay.dvRouteBaseLayerSdr' => 'SDR-alapréteg',
-			'performanceOverlay.dvRouteReshaped' => 'RPU-átformálás (gpu-next)',
-			'performanceOverlay.p7Conversion' => 'P7-átalakítás',
-			'performanceOverlay.sampleRate' => 'Mintavételezési frekvencia',
-			'performanceOverlay.pixelFormat' => 'Képpontformátum',
-			'performanceOverlay.hwFormat' => 'Hardverformátum',
-			'performanceOverlay.matrix' => 'Mátrix',
-			'performanceOverlay.primaries' => 'Elsődleges színek',
-			'performanceOverlay.transfer' => 'Átvitel',
-			'performanceOverlay.renderFps' => 'Renderelési FPS',
-			'performanceOverlay.displayFps' => 'Kijelző-FPS',
-			'performanceOverlay.avSync' => 'A/V-szinkron',
-			'performanceOverlay.dropped' => 'Eldobva',
-			'performanceOverlay.dvRpus' => 'DV RPU-k',
-			'performanceOverlay.dvRpuAverage' => 'DV RPU-átlag',
-			'performanceOverlay.dvSampleAverage' => 'DV-mintaátlag',
-			'performanceOverlay.maxLuma' => 'Maximális luma',
-			'performanceOverlay.minLuma' => 'Minimális luma',
-			'performanceOverlay.maxCll' => 'MaxCLL',
-			'performanceOverlay.maxFall' => 'MaxFALL',
-			'performanceOverlay.cacheUsed' => 'Használt gyorsítótár',
-			'performanceOverlay.cacheLimit' => 'Gyorsítótár korlátja',
-			'performanceOverlay.speed' => 'Sebesség',
-			'performanceOverlay.player' => 'Lejátszó',
-			'performanceOverlay.memory' => 'Memória',
-			'performanceOverlay.uiFps' => 'Felület-FPS',
-			'performanceOverlay.fps' => 'FPS',
-			'performanceOverlay.decoderAndroidHw' => 'Android HW',
-			'performanceOverlay.decoderNvidiaHw' => 'NVIDIA HW',
-			'performanceOverlay.decoderQualcommHw' => 'Qualcomm HW',
-			'performanceOverlay.decoderMediatekHw' => 'MediaTek HW',
-			'performanceOverlay.decoderExynosHw' => 'Exynos HW',
-			'performanceOverlay.decoderSoftware' => 'Szoftveres',
-			_ => null,
-		} ?? switch (path) {
-			'performanceOverlay.decoderHardware' => 'Hardveres',
-			'performanceOverlay.tunnelingActive' => 'Aktív',
-			'performanceOverlay.dvRpuFailed' => ({required Object converted, required Object failures}) => '${converted} (${failures} sikertelen)',
-			'externalPlayer.title' => 'Külső lejátszó',
-			'externalPlayer.useExternalPlayer' => 'Külső lejátszó használata',
-			'externalPlayer.useExternalPlayerDescription' => 'Videók megnyitása egy másik alkalmazásban',
-			'externalPlayer.selectPlayer' => 'Lejátszó kiválasztása',
-			'externalPlayer.customPlayers' => 'Egyéni lejátszók',
-			'externalPlayer.systemDefault' => 'Rendszer alapértelmezése',
-			'externalPlayer.addCustomPlayer' => 'Egyéni lejátszó hozzáadása',
-			'externalPlayer.playerName' => 'Lejátszó neve',
-			'externalPlayer.playerNameHint' => 'Saját lejátszó',
-			'externalPlayer.playerCommand' => 'Parancs',
-			'externalPlayer.playerPackage' => 'Csomagnév',
-			'externalPlayer.playerUrlScheme' => 'URL-séma',
-			'externalPlayer.off' => 'Ki',
-			'externalPlayer.launchFailed' => 'Nem sikerült megnyitni a külső lejátszót',
-			'externalPlayer.appNotInstalled' => ({required Object name}) => 'A(z) ${name} nincs telepítve',
-			'externalPlayer.playInExternalPlayer' => 'Lejátszás külső lejátszóban',
-			'metadataEdit.editMetadata' => 'Szerkesztés...',
-			'metadataEdit.screenTitle' => 'Metaadatok szerkesztése',
-			'metadataEdit.basicInfo' => 'Alapinformációk',
-			'metadataEdit.artwork' => 'Borítók és képek',
-			'metadataEdit.advancedSettings' => 'Haladó beállítások',
-			'metadataEdit.title' => 'Cím',
-			'metadataEdit.sortTitle' => 'Rendezési cím',
-			'metadataEdit.originalTitle' => 'Eredeti cím',
-			'metadataEdit.releaseDate' => 'Bemutató dátuma',
-			'metadataEdit.contentRating' => 'Korhatár-besorolás',
-			'metadataEdit.studio' => 'Stúdió',
-			'metadataEdit.tagline' => 'Jelmondat',
-			'metadataEdit.summary' => 'Összefoglaló',
-			'metadataEdit.poster' => 'Poszter',
-			'metadataEdit.background' => 'Háttér',
-			'metadataEdit.logo' => 'Logó',
-			'metadataEdit.squareArt' => 'Négyzetes kép',
-			'metadataEdit.selectPoster' => 'Poszter kiválasztása',
-			'metadataEdit.selectBackground' => 'Háttér kiválasztása',
-			'metadataEdit.selectLogo' => 'Logó kiválasztása',
-			'metadataEdit.selectSquareArt' => 'Négyzetes kép kiválasztása',
-			'metadataEdit.fromUrl' => 'URL-ről',
-			'metadataEdit.uploadFile' => 'Fájl feltöltése',
-			'metadataEdit.enterImageUrl' => 'Add meg a kép URL-címét',
-			'metadataEdit.imageUrl' => 'Kép URL-címe',
-			'metadataEdit.metadataUpdated' => 'Metaadatok frissítve',
-			'metadataEdit.metadataUpdateFailed' => 'Nem sikerült a metaadatok frissítése',
-			'metadataEdit.artworkUpdated' => 'Képek frissítve',
-			'metadataEdit.artworkUpdateFailed' => 'Nem sikerült a képek frissítése',
-			'metadataEdit.noArtworkAvailable' => 'Nincsenek elérhető képek',
-			'metadataEdit.artworkOption' => ({required Object index}) => '${index}. képváltozat',
-			'metadataEdit.selectedArtworkOption' => ({required Object index}) => '${index}. képváltozat, kiválasztva',
-			'metadataEdit.notSet' => 'Nincs beállítva',
-			'metadataEdit.libraryDefault' => 'Könyvtári alapértelmezés',
-			'metadataEdit.accountDefault' => 'Fiók alapértelmezése',
-			'metadataEdit.seriesDefault' => 'Sorozat alapértelmezése',
-			'metadataEdit.episodeSorting' => 'Epizódok rendezése',
-			'metadataEdit.oldestFirst' => 'Legrégebbi elöl',
-			'metadataEdit.newestFirst' => 'Legújabb elöl',
-			'metadataEdit.keep' => 'Megtartás',
-			'metadataEdit.allEpisodes' => 'Minden epizód',
-			'metadataEdit.latestEpisodes' => ({required Object count}) => 'Legutóbbi ${count} epizód',
-			'metadataEdit.latestEpisode' => 'Legutóbbi epizód',
-			'metadataEdit.episodesAddedPastDays' => ({required Object count}) => 'Az elmúlt ${count} napban hozzáadott epizódok',
-			'metadataEdit.deleteAfterPlaying' => 'Epizódok törlése lejátszás után',
-			'metadataEdit.never' => 'Soha',
-			'metadataEdit.afterADay' => 'Egy nap után',
-			'metadataEdit.afterAWeek' => 'Egy hét után',
-			'metadataEdit.afterAMonth' => 'Egy hónap után',
-			'metadataEdit.onNextRefresh' => 'A következő frissítéskor',
-			'metadataEdit.seasons' => 'Évadok',
-			'metadataEdit.show' => 'Megjelenítés',
-			'metadataEdit.hide' => 'Elrejtés',
-			'metadataEdit.episodeOrdering' => 'Epizódok sorrendje',
-			'metadataEdit.tmdbAiring' => 'The Movie Database (sugárzási sorrend)',
-			'metadataEdit.tvdbAiring' => 'TheTVDB (sugárzási sorrend)',
-			'metadataEdit.tvdbAbsolute' => 'TheTVDB (abszolút sorrend)',
-			'metadataEdit.metadataLanguage' => 'Metaadatok nyelve',
-			'metadataEdit.useOriginalTitle' => 'Eredeti cím használata',
-			'metadataEdit.preferredAudioLanguage' => 'Elsődleges hangnyelv',
-			'metadataEdit.preferredSubtitleLanguage' => 'Elsődleges feliratnyelv',
-			'metadataEdit.subtitleMode' => 'Automatikus feliratválasztási mód',
-			'metadataEdit.manuallySelected' => 'Kézzel kiválasztva',
-			'metadataEdit.shownWithForeignAudio' => 'Idegen nyelvű hang esetén megjelenítve',
-			'metadataEdit.alwaysEnabled' => 'Mindig engedélyezve',
-			'metadataEdit.tags' => 'Címkék',
-			'metadataEdit.addTag' => 'Címke hozzáadása',
-			'metadataEdit.genre' => 'Műfaj',
-			'metadataEdit.director' => 'Rendező',
-			'metadataEdit.writer' => 'Író',
-			'metadataEdit.producer' => 'Producer',
-			'metadataEdit.country' => 'Ország',
-			'metadataEdit.collection' => 'Gyűjtemény',
-			'metadataEdit.label' => 'Kiadó',
-			'metadataEdit.quickTag' => 'Gyors címke...',
-			'matchScreen.match' => 'Párosítás...',
-			'matchScreen.fixMatch' => 'Párosítás javítása...',
-			'matchScreen.unmatch' => 'Párosítás megszüntetése',
-			'matchScreen.unmatchConfirm' => 'Törlöd ezt a párosítást? A Plex párosítatlanként kezeli az újrapárosításig.',
-			'matchScreen.unmatchSuccess' => 'Párosítás megszüntetve',
-			'matchScreen.unmatchFailed' => 'Nem sikerült a párosítás megszüntetése',
-			'matchScreen.matchApplied' => 'Párosítás alkalmazva',
-			'matchScreen.matchFailed' => 'Nem sikerült a párosítás alkalmazása',
-			'matchScreen.titleHint' => 'Cím',
-			'matchScreen.yearHint' => 'Év',
-			'matchScreen.search' => 'Keresés',
-			'matchScreen.noMatchesFound' => 'Nincsenek egyezések',
-			'serverTasks.title' => 'Szerverfeladatok',
-			'serverTasks.failedToLoad' => 'Nem sikerült a feladatok betöltése',
-			'serverTasks.noTasks' => 'Nincsenek futó feladatok',
-			'trakt.title' => 'Trakt',
-			'trakt.connected' => 'Csatlakoztatva',
-			'trakt.connectedAs' => ({required Object username}) => '@${username} néven csatlakoztatva',
-			'trakt.disconnectConfirm' => 'Leválasztod a Trakt-fiókot?',
-			'trakt.disconnectConfirmBody' => 'A Plezy nem küld több eseményt a Traktnak. Bármikor újracsatlakozhatsz.',
-			'trakt.scrobble' => 'Valós idejű scrobbling',
-			'trakt.scrobbleDescription' => 'Lejátszási, szüneteltetési és leállítási események küldése a Traktnak lejátszás közben.',
-			'trakt.watchedSync' => 'Megtekintési állapot szinkronizálása',
-			'trakt.watchedSyncDescription' => 'Ha egy elemet megtekintettként jelölsz meg a Plezyben, a Trakt is megtekintettként jelöli.',
-			'seerr.title' => 'Seerr',
-			'seerr.connectTitle' => 'Seerr csatlakoztatása',
-			'seerr.serverUrl' => 'Szerver URL-címe',
-			'seerr.serverUrlHelper' => 'A Seerr példányod címe',
-			'seerr.checkServer' => 'Folytatás',
-			'seerr.signInWithJellyfin' => 'Bejelentkezés Jellyfinnel',
-			'seerr.signInWithEmby' => 'Bejelentkezés Emby-vel',
-			'seerr.signInWithLocal' => 'Helyi fiók használata',
-			'seerr.email' => 'E-mail',
-			'seerr.noSignInMethods' => 'Ez a Seerr példány nem kínál olyan bejelentkezési módot, amit a Plezy támogat.',
-			'seerr.instance' => 'Példány',
-			'seerr.disconnectConfirm' => 'Leválasztod a Seerr-kapcsolatot?',
-			'seerr.disconnectConfirmBody' => 'A Plezy elfelejti ezt a Seerr példányt. Bármikor újracsatlakozhatsz.',
-			'seerr.request' => 'Igénylés',
-			'seerr.request4k' => 'Igénylés 4K-ban',
-			'seerr.seasons' => 'Évadok',
-			'seerr.allSeasons' => 'Minden évad',
-			'seerr.advancedOptions' => 'Haladó',
-			'seerr.destinationServer' => 'Célszerver',
-			'seerr.qualityProfile' => 'Minőségi profil',
-			'seerr.rootFolder' => 'Gyökérmappa',
-			'seerr.languageProfile' => 'Nyelvi profil',
-			'seerr.tags' => 'Címkék',
-			'seerr.noTags' => 'Nincsenek címkék',
-			'seerr.defaultOption' => ({required Object name}) => '${name} (alapértelmezett)',
-			'seerr.animeNote' => 'Ez a sorozat anime.',
-			'seerr.requestSubmitted' => 'Igénylés elküldve',
-			'seerr.requestFailed' => ({required Object error}) => 'Az igénylés nem sikerült: ${error}',
-			'seerr.requestsLoadFailed' => 'Nem sikerült betölteni az igénylési opciókat',
-			'seerr.nothingToRequest' => 'Minden elem már elérhető vagy igényelve van.',
-			'seerr.statusAvailable' => 'Elérhető',
-			'seerr.statusPartiallyAvailable' => 'Részben elérhető',
-			'seerr.statusRequested' => 'Igényelve',
-			'seerr.statusProcessing' => 'Feldolgozás alatt',
-			'seerr.statusBlocklisted' => 'Tiltólistán',
-			'seerr.couldNotReach' => ({required Object url, required Object error}) => 'Nem sikerült elérni ezt: ${url}: ${error}',
-			'seerr.noInstanceAtUrl' => ({required Object url, required Object status}) => 'Nem található Seerr-példány ezen a címen: ${url} (HTTP ${status})',
-			'seerr.behindAuthProxy' => 'A Seerr helyett egy hitelesítő fordított proxy (SSO vagy HTTP-hitelesítés) válaszolt. A Plezy nem tud rajta bejelentkezni: engedd, hogy a Seerr /api/v1 útvonala megkerülje a proxyt ennél az alkalmazásnál, vagy használj olyan címet, amely közvetlenül eléri a Seerr-t.',
-			'seerr.invalidUrl' => 'Adj meg egy szervercímet, például: https://seerr.example.com',
-			'seerr.quickConnectUnsupported' => 'Ez a Seerr-példány nem támogatja a Quick Connectet. Seerr 3.4 vagy újabb verzió szükséges.',
-			'seerr.notInitialized' => 'Ennek a Seerr-példánynak a kezdeti beállítása még nem fejeződött be',
-			'seerr.noPlexTokenForReauth' => 'Nem áll rendelkezésre Plex-token az újbóli bejelentkezéshez',
-			'seerr.noStoredCredentials' => 'Nem állnak rendelkezésre mentett hitelesítő adatok az újbóli bejelentkezéshez',
-			'seerr.signInRejected' => 'A bejelentkezést elutasították',
-			'seerr.noSessionCookie' => 'A Seerr nem adott ki munkamenet-sütit',
-			'seerr.freshCookieRejected' => 'A Seerr elutasította az új munkamenet-sütit',
-			'seerr.noUserInformation' => 'A Seerr nem adott vissza felhasználói adatokat',
-			'seerr.sessionRejectedAfterReauth' => 'A munkamenetet az újbóli bejelentkezés után elutasították',
-			'seerr.permissionDenied' => 'A Seerr elutasította ezt a műveletet: a fiókod már nem rendelkezik a szükséges jogosultsággal',
-			'seerr.permissionRevoked' => 'Már nincs jogosultságod ennek az igényléséhez',
-			'services.title' => 'Szolgáltatások',
-			'services.hubSubtitle' => 'Megtekintési haladás szinkronizálása és új tartalmak igénylése.',
-			'services.integrations' => 'Integrációk',
-			'services.notConnected' => 'Nincs csatlakoztatva',
-			'services.connectedAs' => ({required Object username}) => '@${username} néven csatlakoztatva',
-			'services.scrobble' => 'Haladás automatikus követése',
-			'services.scrobbleDescription' => 'Lista frissítése, amikor befejezel egy epizódot vagy filmet.',
-			'services.disconnectConfirm' => ({required Object service}) => 'Leválasztod a(z) ${service} szolgáltatást?',
-			'services.disconnectConfirmBody' => ({required Object service}) => 'A Plezy nem frissíti többé a(z) ${service} adatait. Bármikor újracsatlakozhatsz.',
-			'services.connectFailed' => ({required Object service}) => 'Nem sikerült csatlakozni a következőhöz: ${service}. Próbáld újra.',
-			'services.names.mal' => 'MyAnimeList',
-			'services.names.anilist' => 'AniList',
-			'services.names.simkl' => 'Simkl',
-			'services.names.seerr' => 'Seerr',
-			'services.names.mdblist' => 'MDBList',
-			'services.simklReconnect.title' => 'Simkl újracsatlakoztatása',
-			'services.simklReconnect.subtitle' => 'A Simkl kivezeti a kapcsolat által használt bejelentkezési módot. Az újracsatlakozás megnyitja a simkl.com oldalt, ahol jóváhagyhatod a Plezyt — a Plezy sosem látja a jelszavadat. A megtekintési előzményeid a Simklen maradnak.',
-			'services.deviceCode.title' => ({required Object service}) => 'Plezy aktiválása a következőn: ${service}',
-			'services.deviceCode.instructions' => 'Olvasd be a QR-kódot, vagy nyisd meg az alábbi címet, és írd be ezt a kódot:',
-			'services.deviceCode.openToActivate' => ({required Object service}) => 'Nyisd meg a(z) ${service} oldalt az aktiváláshoz',
-			'services.deviceCode.copyCode' => 'Aktiválási kód másolása',
-			'services.deviceCode.waitingForAuthorization' => 'Várakozás az engedélyezésre…',
-			'services.deviceCode.codeCopied' => 'Kód másolva',
-			'services.oauthProxy.title' => ({required Object service}) => 'Bejelentkezés ide: ${service}',
-			'services.oauthProxy.body' => 'Olvasd be ezt a QR-kódot vagy nyisd meg az URL-t bármelyik eszközön.',
-			'services.oauthProxy.openToSignIn' => ({required Object service}) => 'Nyisd meg a(z) ${service} oldalt a bejelentkezéshez',
-			'services.pendingAuth.copyUrl' => 'Bejelentkezési URL másolása',
-			'services.pendingAuth.urlCopied' => 'URL másolva',
-			'services.libraryFilter.title' => 'Könyvtárszűrő',
-			'services.libraryFilter.subtitleAllSyncing' => 'Minden könyvtár szinkronizálása',
-			'services.libraryFilter.subtitleNoneSyncing' => 'Nincs szinkronizálás',
-			'services.libraryFilter.subtitleBlocked' => ({required Object count}) => '${count} kizárva',
-			'services.libraryFilter.subtitleAllowed' => ({required Object count}) => '${count} engedélyezve',
-			'services.libraryFilter.mode' => 'Szűrési mód',
-			'services.libraryFilter.modeBlacklist' => 'Tiltólista',
-			'services.libraryFilter.modeWhitelist' => 'Engedélyezőlista',
-			'services.libraryFilter.modeHintBlacklist' => 'Minden könyvtár szinkronizálása az alább bejelöltek kivételével.',
-			'services.libraryFilter.modeHintWhitelist' => 'Csak az alább bejelölt könyvtárak szinkronizálása.',
-			'services.libraryFilter.libraries' => 'Könyvtárak',
-			'services.libraryFilter.noLibraries' => 'Nincsenek elérhető könyvtárak',
-			'addServer.addMediaBrowserTitle' => ({required Object product}) => '${product} szerver hozzáadása',
-			'addServer.serverUrls' => 'Szerver URL-címei',
-			'addServer.serverUrlsHelper' => 'Több URL is megadható, vesszővel elválasztva.',
-			'addServer.findServer' => 'Szerver keresése',
-			'addServer.searchingLocalMediaBrowserServers' => ({required Object product}) => 'Helyi ${product} szerverek keresése...',
-			'addServer.localMediaBrowserServers' => ({required Object product}) => 'Helyi ${product} szerverek',
-			'addServer.username' => 'Felhasználónév',
-			'addServer.password' => 'Jelszó',
-			'addServer.signIn' => 'Bejelentkezés',
-			'addServer.change' => 'Módosítás',
-			'addServer.required' => 'Kötelező',
-			'addServer.couldNotReachServer' => ({required Object error}) => 'Nem sikerült elérni a szervert: ${error}',
-			'addServer.signInFailed' => ({required Object error}) => 'A bejelentkezés nem sikerült: ${error}',
-			'addServer.quickConnectFailed' => ({required Object error}) => 'A Quick Connect használata nem sikerült: ${error}',
-			'addServer.addPlexTitle' => 'Bejelentkezés Plexszel',
-			'addServer.pinExpired' => 'A PIN-kód a bejelentkezés előtt lejárt. Próbáld újra.',
-			'addServer.failedToRegisterAccount' => ({required Object error}) => 'Nem sikerült a fiók regisztrálása: ${error}',
-			'addServer.enterMediaBrowserUrlError' => ({required Object product}) => 'Adja meg a(z) ${product} szerver URL-jét',
-			'addServer.addConnectionTitle' => 'Kapcsolat hozzáadása',
-			'addServer.addConnectionTitleScoped' => ({required Object name}) => 'Hozzáadás a következőhöz: ${name}',
-			'addServer.signInWithPlexCard' => 'Bejelentkezés Plexszel',
-			'addServer.signInWithPlexCardSubtitle' => 'Eszköz engedélyezése. A megosztott szerverek hozzáadásra kerülnek.',
-			'addServer.signInWithPlexCardSubtitleScoped' => 'Plex-fiók engedélyezése. A Plex Home-felhasználókból profilok lesznek.',
-			'addServer.connectToMediaBrowserCard' => ({required Object product}) => 'Csatlakozás a(z) ${product} szolgáltatáshoz',
-			'addServer.connectToMediaBrowserCardSubtitle' => 'Adja meg a szerver URL-jét, felhasználónevét és jelszavát.',
-			'addServer.connectToMediaBrowserCardSubtitleScoped' => ({required Object product, required Object name}) => 'Jelentkezzen be a(z) ${product} szerverére. A(z) ${name} szolgáltatáshoz kötődik.',
-			'addServer.borrowFromAnotherProfile' => 'Kapcsolat használata másik profilból',
-			'addServer.borrowFromAnotherProfileSubtitle' => 'Egy másik profil kapcsolatának használata. A PIN-kóddal védett profilokhoz PIN-kód szükséges.',
-			'addServer.invalidCredentials' => 'Érvénytelen felhasználónév vagy jelszó',
-			'addServer.authResponseNotJson' => 'A hitelesítési válasz nem érvényes JSON',
-			'addServer.authResponseIncomplete' => 'A szerver bejelentkezési válasza hiányos volt',
-			'addServer.quickConnectRejected' => 'A szerver elutasította a Quick Connect-kérést',
-			'addServer.quickConnectNotJson' => 'A Quick Connect válasza nem érvényes JSON',
-			'addServer.quickConnectMissingFields' => 'A Quick Connect válaszából hiányzik a kód vagy a titkos kulcs',
-			'addServer.quickConnectPollRejected' => 'A szerver elutasította a Quick Connect lekérdezését',
-			'addServer.serverTimedOut' => 'A szerver nem válaszolt időben',
-			'addServer.responseNotJson' => 'A szerver válasza nem érvényes JSON',
-			'addServer.responseMissingIdentity' => ({required Object product}) => 'A válaszból hiányzik az azonosító vagy a szerver neve – ez valóban ${product}-szerver?',
-			'addServer.probeFailed' => ({required Object error}) => 'Nem sikerült elérni a szervert: ${error}',
-			'addServer.enterAtLeastOneUrl' => ({required Object product}) => 'Adj meg legalább egy ${product}-szerverhez tartozó URL-t',
-			'addServer.noReachableServer' => ({required Object product}) => 'Nem található elérhető ${product}-szerver',
-			'addServer.urlsPointToDifferentServers' => ({required Object product}) => 'Ezek az URL-ek különböző ${product}-szerverekre mutatnak',
-			'addServer.urlDoesNotMatchServer' => ({required Object product}) => 'Ez az URL nem egyezik a(z) ${product}-szerverrel',
-			'addServer.redirectUnsupported' => 'A szerver nem támogatott URL-re irányított át',
-			'addServer.redirectDifferentHost' => ({required Object product}) => 'A szerver egy másik gazdagépre irányított át. Add meg közvetlenül a végleges ${product} URL-t.',
-			'addServer.redirectInsecure' => 'A szerver HTTPS-ről nem biztonságos URL-re irányított át',
-			'addServer.redirectUnsupportedEnterFinal' => ({required Object product}) => 'A szerver nem támogatott URL-re irányított át. Add meg közvetlenül a végleges ${product} URL-t.',
-			_ => null,
-		};
+		switch (path) {
+			case 'app.title': return 'Plezy';
+			case 'appIcon.title': return 'Alkalmazásikon';
+			case 'appIcon.defaultIcon': return 'Alapértelmezett';
+			case 'appIcon.current': return 'Jelenlegi ikon';
+			case 'appIcon.locked': return 'A Téma- és ikoncsomag része';
+			case 'appIcon.lockedHint': return 'Az alternatív ikonok a Téma- és ikoncsomag részei.';
+			case 'appIcon.changeFailed': return 'Nem sikerült módosítani az alkalmazásikont';
+			case 'appIcon.launcherHint': return 'Az új ikon azután jelenik meg a kezdőképernyőn, hogy kiléptél a Plezyből.';
+			case 'appIcon.tvLauncherHint': return 'Az új banner azután jelenik meg, hogy kiléptél a Plezyből. Az Android TV a TV újraindításáig még a régit is mutathatja.';
+			case 'appIcon.names.midnight': return 'Éjfél';
+			case 'appIcon.names.ember': return 'Parázs';
+			case 'appIcon.names.paper': return 'Papír';
+			case 'appIcon.names.oled': return 'OLED';
+			case 'appIcon.names.line': return 'Vonal';
+			case 'appIcon.names.ocean': return 'Óceán';
+			case 'appIcon.names.ultraviolet': return 'Ultraibolya';
+			case 'appIcon.names.matcha': return 'Matcha';
+			case 'appIcon.names.sunset': return 'Naplemente';
+			case 'appIcon.names.gold': return 'Arany';
+			case 'appIcon.names.titanium': return 'Titán';
+			case 'appIcon.names.glass': return 'Üveg';
+			case 'appIcon.names.crt': return 'CRT';
+			case 'appIcon.names.vhs': return 'VHS';
+			case 'appIcon.names.synthwave': return 'Synthwave';
+			case 'appIcon.names.pixel': return 'Pixel';
+			case 'appIcon.names.neon': return 'Neon';
+			case 'appIcon.names.sticker': return 'Matrica';
+			case 'appIcon.names.ticket': return 'Jegy';
+			case 'appIcon.names.pop': return 'Pop';
+			case 'appIcon.names.strata': return 'Rétegek';
+			case 'appIcon.names.facet': return 'Fazetta';
+			case 'appIcon.names.tilde': return 'Tilde';
+			case 'auth.signInWithPlex': return 'Bejelentkezés Plexszel';
+			case 'auth.showQRCode': return 'QR-kód megjelenítése';
+			case 'auth.authenticate': return 'Hitelesítés';
+			case 'auth.authenticationTimeout': return 'A hitelesítés időtúllépés miatt megszakadt. Próbáld újra.';
+			case 'auth.scanQRToSignIn': return 'Olvasd be ezt a QR-kódot a bejelentkezéshez';
+			case 'auth.waitingForAuth': return 'Várakozás a hitelesítésre...\nJelentkezz be a böngésződben.';
+			case 'auth.useBrowser': return 'Böngésző használata';
+			case 'auth.or': return 'vagy';
+			case 'auth.connectToMediaBrowser': return ({required Object product}) => 'Csatlakozás a(z) ${product} szolgáltatáshoz';
+			case 'auth.quickConnect': return 'Quick Connect';
+			case 'auth.useQuickConnect': return 'Quick Connect használata';
+			case 'auth.quickConnectInstructions': return 'Nyisd meg a Quick Connect-et a Jellyfinben, és add meg ezt a kódot.';
+			case 'auth.quickConnectWaiting': return 'Várakozás a jóváhagyásra…';
+			case 'auth.quickConnectCancel': return 'Mégse';
+			case 'auth.quickConnectExpired': return 'A Quick Connect kód lejárt. Próbáld újra.';
+			case 'auth.localDataRecoveryRequired': return 'A Plezy nem tudta biztonságosan helyreállítani a helyi bejelentkezés és a függőben lévő lejátszás adatait. Jelentkezz be újra.';
+			case 'auth.pinCheckRejected': return 'A Plex PIN ellenőrzését elutasították';
+			case 'common.cancel': return 'Mégse';
+			case 'common.save': return 'Mentés';
+			case 'common.close': return 'Bezárás';
+			case 'common.clear': return 'Törlés';
+			case 'common.reset': return 'Visszaállítás';
+			case 'common.later': return 'Később';
+			case 'common.submit': return 'Beküldés';
+			case 'common.confirm': return 'Megerősítés';
+			case 'common.retry': return 'Újra';
+			case 'common.logout': return 'Kijelentkezés';
+			case 'common.unknown': return 'Ismeretlen';
+			case 'common.refresh': return 'Frissítés';
+			case 'common.yes': return 'Igen';
+			case 'common.no': return 'Nem';
+			case 'common.delete': return 'Törlés';
+			case 'common.edit': return 'Szerkesztés';
+			case 'common.shuffle': return 'Véletlenszerű lejátszás';
+			case 'common.addTo': return 'Hozzáadás...';
+			case 'common.createNew': return 'Új létrehozása';
+			case 'common.connect': return 'Csatlakozás';
+			case 'common.disconnect': return 'Kapcsolat bontása';
+			case 'common.play': return 'Lejátszás';
+			case 'common.pause': return 'Szünet';
+			case 'common.resume': return 'Folytatás';
+			case 'common.error': return 'Hiba';
+			case 'common.search': return 'Keresés';
+			case 'common.home': return 'Kezdőlap';
+			case 'common.back': return 'Vissza';
+			case 'common.settings': return 'Beállítások';
+			case 'common.mute': return 'Némítás';
+			case 'common.ok': return 'OK';
+			case 'common.off': return 'Ki';
+			case 'common.options': return 'Lehetőségek';
+			case 'common.seasonNumber': return ({required Object number}) => '${number}. évad';
+			case 'common.episodeNumberTitle': return ({required Object number, required Object title}) => '${number}. epizód - ${title}';
+			case 'common.chapterNumber': return ({required Object number}) => '${number}. fejezet';
+			case 'common.reconnect': return 'Újracsatlakozás';
+			case 'common.viewAll': return 'Összes megtekintése';
+			case 'common.checkingNetwork': return 'Hálózat ellenőrzése...';
+			case 'common.loadingServers': return 'Szerverek betöltése...';
+			case 'common.connectingToServers': return 'Csatlakozás a szerverekhez...';
+			case 'common.startingOfflineMode': return 'Kapcsolat nélküli mód indítása...';
+			case 'common.loading': return 'Betöltés...';
+			case 'common.fullscreen': return 'Teljes képernyő';
+			case 'common.exitFullscreen': return 'Kilépés a teljes képernyőből';
+			case 'common.pressBackAgainToExit': return 'A kilépéshez nyomd meg újra a Vissza gombot';
+			case 'common.ratingSource.critic': return 'Kritikusok';
+			case 'common.ratingSource.audience': return 'Közönség';
+			case 'common.ratingSource.imdb': return 'IMDb';
+			case 'common.ratingSource.tmdb': return 'TMDB';
+			case 'common.ratingSource.rottenTomatoes': return 'Rotten Tomatoes';
+			case 'common.ratingSource.simkl': return 'Simkl';
+			case 'common.ratingSource.mal': return 'MyAnimeList';
+			case 'common.ratingSource.anilist': return 'AniList';
+			case 'common.ratingSource.trakt': return 'Trakt';
+			case 'common.ratingSource.rottenTomatoesCritic': return 'Rotten Tomatoes kritikusok';
+			case 'common.ratingSource.rottenTomatoesAudience': return 'Rotten Tomatoes közönség';
+			case 'common.ratingSource.metacritic': return 'Metacritic';
+			case 'common.ratingSource.letterboxd': return 'Letterboxd';
+			case 'common.notAvailable': return 'N/A';
+			case 'common.url': return 'URL';
+			case 'common.letterKeys': return 'ABC';
+			case 'common.mediaKind.movie': return 'Film';
+			case 'common.mediaKind.show': return 'Sorozat';
+			case 'common.mediaKind.season': return 'Évad';
+			case 'common.mediaKind.episode': return 'Epizód';
+			case 'common.mediaKind.artist': return 'Előadó';
+			case 'common.mediaKind.album': return 'Album';
+			case 'common.mediaKind.track': return 'Szám';
+			case 'common.mediaKind.collection': return 'Gyűjtemény';
+			case 'common.mediaKind.playlist': return 'Lejátszási lista';
+			case 'common.mediaKind.clip': return 'Klip';
+			case 'common.mediaKind.photo': return 'Fénykép';
+			case 'common.mediaKind.folder': return 'Mappa';
+			case 'screens.licenses': return 'Licencek';
+			case 'screens.switchProfile': return 'Profilváltás';
+			case 'screens.subtitleStyling': return 'Feliratok stílusa';
+			case 'screens.mpvConfig': return 'mpv.conf';
+			case 'screens.logs': return 'Naplók';
+			case 'update.available': return 'Frissítés érhető el';
+			case 'update.versionAvailable': return ({required Object version}) => 'A(z) ${version} verzió elérhető';
+			case 'update.currentVersion': return ({required Object version}) => 'Jelenlegi: ${version}';
+			case 'update.skipVersion': return 'Verzió kihagyása';
+			case 'update.viewRelease': return 'Kiadási megjegyzések';
+			case 'update.latestVersion': return 'A legújabb verziót használod';
+			case 'update.checkFailed': return 'Nem sikerült az újabb frissítések ellenőrzése';
+			case 'supporter.title': return 'Téma- és ikoncsomag';
+			case 'supporter.intro': return 'Opcionális, egyszeri vásárlás kozmetikai extrákkal:';
+			case 'supporter.presetThemes': return 'Előre beállított témák';
+			case 'supporter.presetThemesDescription': return 'Parázs, Gleccser, Erdő, Szilva és Papír';
+			case 'supporter.customTheme': return 'Egyéni téma';
+			case 'supporter.customThemeDescription': return 'Minden színt te választasz ki';
+			case 'supporter.appIcons': return 'Alkalmazásikonok';
+			case 'supporter.appIconsDescription': return 'Válassz egy alternatív Plezy-ikont';
+			case 'supporter.buy': return ({required Object price}) => 'Megvásárlás: ${price}';
+			case 'supporter.loadingPrice': return 'Ár betöltése...';
+			case 'supporter.restore': return 'Vásárlások visszaállítása';
+			case 'supporter.pending': return 'A vásárlásod fizetésre vagy jóváhagyásra vár. Az extrák azonnal feloldódnak, amint az áruház lezárja a folyamatot.';
+			case 'supporter.thankYouTitle': return 'Köszönjük a vásárlást';
+			case 'supporter.thankYouBody': return 'A Téma- és ikoncsomag fel van oldva.';
+			case 'supporter.tileSubtitle': return 'Témák és alkalmazásikonok feloldása egyszeri vásárlással';
+			case 'supporter.tileSubtitleThemesOnly': return 'Témák feloldása egyszeri vásárlással';
+			case 'supporter.tileUnlocked': return 'Feloldva — köszönjük a vásárlást';
+			case 'supporter.errors.storeUnavailable': return 'A vásárlás nem érhető el. Ellenőrizd, hogy be vagy-e jelentkezve az áruházba, és engedélyezett-e a vásárlás ezen az eszközön.';
+			case 'supporter.errors.productNotFound': return 'A Téma- és ikoncsomag jelenleg nem érhető el az áruházadban.';
+			case 'supporter.errors.productQueryFailed': return 'Nem sikerült betölteni az árat. Ellenőrizd a kapcsolatot, majd próbáld újra.';
+			case 'supporter.errors.purchaseFailed': return 'A vásárlás nem sikerült. Próbáld újra.';
+			case 'supporter.errors.restoreFailed': return 'Nem sikerült elérni az áruházat a vásárlás visszaállításához. Próbáld újra.';
+			case 'supporter.errors.nothingToRestore': return 'Ehhez az áruházfiókhoz nem található Téma- és ikoncsomag-vásárlás.';
+			case 'settings.title': return 'Beállítások';
+			case 'settings.supportDeveloper': return 'Plezy támogatása';
+			case 'settings.supportDeveloperDescription': return 'A fejlesztés támogatása Liberapay-en keresztül';
+			case 'settings.language': return 'Nyelv';
+			case 'settings.theme': return 'Téma';
+			case 'settings.appearance': return 'Megjelenés';
+			case 'settings.videoPlayback': return 'Videólejátszás';
+			case 'settings.videoPlaybackDescription': return 'Lejátszási viselkedés beállítása';
+			case 'settings.advanced': return 'Haladó';
+			case 'settings.episodePosterMode': return 'Epizódborító stílusa';
+			case 'settings.seriesPoster': return 'Sorozatborító';
+			case 'settings.seasonPoster': return 'Évadborító';
+			case 'settings.episodeThumbnail': return 'Bélyegkép';
+			case 'settings.showHeroSectionDescription': return 'Kiemelt tartalmak sávjának megjelenítése a kezdőlapon';
+			case 'settings.secondsLabel': return 'Másodperc';
+			case 'settings.minutesLabel': return 'Perc';
+			case 'settings.secondsShort': return 'mp';
+			case 'settings.minutesShort': return 'p';
+			case 'settings.durationHint': return ({required Object min, required Object max}) => 'Add meg az időtartamot (${min}-${max})';
+			case 'settings.systemTheme': return 'Rendszer';
+			case 'settings.lightTheme': return 'Világos';
+			case 'settings.darkTheme': return 'Sötét';
+			case 'settings.oledTheme': return 'OLED';
+			case 'settings.emberTheme': return 'Parázs';
+			case 'settings.glacierTheme': return 'Gleccser';
+			case 'settings.forestTheme': return 'Erdő';
+			case 'settings.plumTheme': return 'Szilva';
+			case 'settings.paperTheme': return 'Papír';
+			case 'settings.libraryDensity': return 'Könyvtársűrűség';
+			case 'settings.displayScale': return 'Kijelző méretezése';
+			case 'settings.compact': return 'Kompakt';
+			case 'settings.comfortable': return 'Kényelmes';
+			case 'settings.gridSpacing': return 'Rácstávolság';
+			case 'settings.gridSpacingTight': return 'Sűrű';
+			case 'settings.gridSpacingNormal': return 'Normál';
+			case 'settings.gridSpacingSpacious': return 'Tágas';
+			case 'settings.tvCornerSpotlightBackdrop': return 'Sarokban megjelenő kiemelt háttérkép';
+			case 'settings.tvCornerSpotlightBackdropDescription': return 'A kiemelt háttérkép megjelenítése a jobb felső sarokban a teljes képernyő helyett';
+			case 'settings.viewMode': return 'Nézetmód';
+			case 'settings.gridView': return 'Rács';
+			case 'settings.listView': return 'Lista';
+			case 'settings.showHeroSection': return 'Kiemelt sáv megjelenítése';
+			case 'settings.continueWatchingAction': return 'A „Folytatás” művelete';
+			case 'settings.continueWatchingPlay': return 'Lejátszás';
+			case 'settings.continueWatchingDetails': return 'Részletek megnyitása';
+			case 'settings.episodeAction': return 'Az epizódkártya művelete';
+			case 'settings.episodePlay': return 'Lejátszás';
+			case 'settings.episodeDetails': return 'Részletek megnyitása';
+			case 'settings.useGlobalHubs': return 'Kezdőlap elrendezés használata';
+			case 'settings.useGlobalHubsDescription': return 'Egyesített kezdőlapi blokkok megjelenítése. Egyébként a könyvtári ajánlások jelennek meg.';
+			case 'settings.showServerNameOnHubs': return 'Szervernév megjelenítése a blokkoknál';
+			case 'settings.showServerNameOnHubsDescription': return 'Mindig jelenjen meg a szerver neve a blokkok címében.';
+			case 'settings.groupLibrariesByServer': return 'Könyvtárak csoportosítása szerver szerint';
+			case 'settings.groupLibrariesByServerDescription': return 'Az oldalsáv könyvtárainak csoportosítása a médiaszerverek alatt.';
+			case 'settings.alwaysKeepSidebarOpen': return 'Oldalsáv mindig nyitva';
+			case 'settings.alwaysKeepSidebarOpenDescription': return 'Az oldalsáv kibontva marad, a tartalom területe igazodik hozzá';
+			case 'settings.showUnwatchedCount': return 'Nem látott elemek számának megjelenítése';
+			case 'settings.showUnwatchedCountDescription': return 'Megjeleníti a még nem látott epizódok számát a sorozatoknál és évadoknál';
+			case 'settings.showWatchedIndicators': return 'Megtekintésjelölők megjelenítése';
+			case 'settings.showWatchedIndicatorsDescription': return 'Pipa megjelenítése a megtekintett filmeken, sorozatokon és epizódokon';
+			case 'settings.showEpisodeNumberOnCards': return 'Epizódszám megjelenítése a kártyákon';
+			case 'settings.showEpisodeNumberOnCardsDescription': return 'Megjeleníti az évad- és epizódszámot az epizódkártyákon';
+			case 'settings.showSeasonPostersOnTabs': return 'Évadborítók megjelenítése a füleken';
+			case 'settings.showSeasonPostersOnTabsDescription': return 'Megjeleníti az egyes évadok borítóját a fülük felett';
+			case 'settings.tvFullCardLayout': return 'Teljes TV-kártyák';
+			case 'settings.tvFullCardLayoutDescription': return 'Csak képet tartalmazó TV-kártyák használata, rájuk helyezett színésznevekkel';
+			case 'settings.focusGlow': return 'Kijelölési ragyogás';
+			case 'settings.focusGlowDescription': return 'Finom ragyogás rajzolása a kijelölt kártya köré';
+			case 'settings.visualEffects': return 'Vizuális effektek';
+			case 'settings.visualEffectsAuto': return 'Automatikus';
+			case 'settings.visualEffectsAutoDescription': return 'Effektek automatikus csökkentése alacsony teljesítményű eszközökön';
+			case 'settings.visualEffectsFull': return 'Teljes';
+			case 'settings.visualEffectsReduced': return 'Csökkentett';
+			case 'settings.visualEffectsReducedDescription': return 'Kevesebb animáció és alacsonyabb felbontású képek';
+			case 'settings.hideSpoilers': return 'Spoilerek elrejtése a nem látott epizódoknál';
+			case 'settings.hideSpoilersDescription': return 'Bélyegképek és leírások elhomályosítása a még meg nem nézett epizódoknál';
+			case 'settings.playerBackend': return 'Lejátszómotor';
+			case 'settings.exoPlayer': return 'ExoPlayer';
+			case 'settings.mpv': return 'mpv';
+			case 'settings.hardwareDecoding': return 'Hardveres dekódolás';
+			case 'settings.hardwareDecodingDescription': return 'Hardveres gyorsítás használata, ha elérhető';
+			case 'settings.playbackBuffer': return 'Lejátszási puffer';
+			case 'settings.playbackBufferAuto': return 'Automatikus (ajánlott)';
+			case 'settings.playbackBufferLarge': return 'Nagy';
+			case 'settings.playbackBufferExtraLarge': return 'Extra nagy';
+			case 'settings.playbackBufferDescription': return 'Több puffert használ instabil kapcsolatok ellen. A pufferméret is korlátozza.';
+			case 'settings.defaultQualityTitle': return 'Alapértelmezett minőség';
+			case 'settings.cellularQualityTitle': return 'Alapértelmezett minőség mobilhálózaton';
+			case 'settings.cellularQualitySameAsDefault': return 'Ugyanaz, mint az alapértelmezett minőség';
+			case 'settings.directPlayCoveredQuality': return 'Kisebb videók lejátszása eredeti minőségben';
+			case 'settings.directPlayCoveredQualityDescription': return 'A minőségi korláton belüli videók közvetlen lejátszása átkódolás helyett';
+			case 'settings.videoCodecs': return 'Videokodekek';
+			case 'settings.videoCodecsDescription': return 'A nem bejelölt kodekeket a szerver átkódolja';
+			case 'settings.videoCodecsAlwaysAccepted': return 'Mindig elfogadva';
+			case 'settings.musicQualityTitle': return 'Zene minősége';
+			case 'settings.subtitleStyling': return 'Feliratok stílusa';
+			case 'settings.subtitleStylingDescription': return 'Feliratok megjelenésének testreszabása';
+			case 'settings.smallSkipDuration': return 'Kis ugrás időtartama';
+			case 'settings.largeSkipDuration': return 'Nagy ugrás időtartama';
+			case 'settings.rewindOnResume': return 'Visszatekerés folytatáskor';
+			case 'settings.secondsUnit': return ({required Object seconds}) => '${seconds} másodperc';
+			case 'settings.defaultSleepTimer': return 'Alapértelmezett elalvási időzítő';
+			case 'settings.minutesUnit': return ({required Object minutes}) => '${minutes} perc';
+			case 'settings.rememberTrackSelections': return 'Sávválasztások megjegyzése sorozatonként/filmenként';
+			case 'settings.rememberTrackSelectionsDescription': return 'Hang- és feliratválasztások megjegyzése címenként';
+			case 'settings.rememberTrackSelectionsBackendRule': return 'A Plex minden választást fájlonként a szerveren ment; a Jellyfin a fiók „Választások megjegyzése” funkcióját is bekapcsolja; az Emby nem támogatott';
+			case 'settings.followServerTrackSelections': return 'A szerver epizódonkénti sávválasztásának használata';
+			case 'settings.followServerTrackSelectionsDescription': return 'Epizódváltáskor a szerveren kiválasztott hang és felirat lép életbe az aktuális választás átvitele helyett';
+			case 'settings.resumeMusicOnLaunch': return 'Zenei munkamenet megjegyzése';
+			case 'settings.resumeMusicOnLaunchDescription': return 'Az alkalmazás indításakor az utolsó szám szüneteltetve nyílik meg ott, ahol abbamaradt';
+			case 'settings.showChapterMarkersOnTimeline': return 'Fejezetjelölők megjelenítése az idősávon';
+			case 'settings.showChapterMarkersOnTimelineDescription': return 'Az idősáv felosztása a fejezetek határainál';
+			case 'settings.specialsOrdering': return 'Különkiadások epizódsorrendben';
+			case 'settings.specialsOrderingDescription': return 'A különkiadások helye a sorozat lejátszási sorrendjében';
+			case 'settings.specialsOrderingServer': return 'Szerver szerinti sorrend';
+			case 'settings.specialsOrderingAirDate': return 'Adás dátuma szerint közbeszúrva';
+			case 'settings.specialsOrderingLast': return 'A normál évadok után';
+			case 'settings.clickVideoTogglesPlayback': return 'Kattintás a videóra a lejátszás/szünet váltásához';
+			case 'settings.clickVideoTogglesPlaybackDescription': return 'A videóra kattintva vált a lejátszás/szünet, a vezérlők megjelenítése helyett.';
+			case 'settings.videoPlayerControls': return 'Videólejátszó vezérlői';
+			case 'settings.keyboardShortcuts': return 'Billentyűparancsok';
+			case 'settings.keyboardShortcutsDescription': return 'Billentyűparancsok testreszabása';
+			case 'settings.videoPlayerNavigation': return 'Videólejátszó-navigáció';
+			case 'settings.videoPlayerNavigationDescription': return 'A nyílbillentyűk használata a videólejátszó vezérlői közötti navigáláshoz';
+			case 'settings.watchTogetherRelay': return 'Watch Together-relé';
+			case 'settings.watchTogetherRelayDescription': return 'Nyilvános Open Watch Party-relék, hacsak nem adsz meg sajátot';
+			case 'settings.watchTogetherRelayHint': return 'https://my-relay.example.com';
+			case 'settings.watchTogetherRelayInvalid': return 'Adj meg egy érvényes HTTP- vagy HTTPS-alapú relészerver-URL-t.';
+			case 'settings.crashReporting': return 'Összeomlási jelentések';
+			case 'settings.crashReportingDescription': return 'Összeomlási jelentések küldése az alkalmazás fejlesztésének elősegítéséhez';
+			case 'settings.debugLogging': return 'Hibakeresési naplózás';
+			case 'settings.debugLoggingDescription': return 'Részletes naplózás engedélyezése a hibaelhárításhoz';
+			case 'settings.viewLogs': return 'Naplók megtekintése';
+			case 'settings.viewLogsDescription': return 'Alkalmazásnaplók megtekintése';
+			case 'settings.clearImageCache': return 'Képgyorsítótár törlése';
+			case 'settings.clearImageCacheDescription': return 'Törli a gyorsítótárazott borítókat és miniatűröket. A képek lassabban tölthetők be, amíg újra le nem töltődnek.';
+			case 'settings.clearImageCacheSuccess': return 'A képgyorsítótár sikeresen törölve';
+			case 'settings.resetSettings': return 'Beállítások visszaállítása';
+			case 'settings.resetSettingsDescription': return 'Az alapértelmezett beállítások visszaállítása. Ez a művelet nem vonható vissza.';
+			case 'settings.resetSettingsSuccess': return 'A beállítások sikeresen visszaállítva';
+			case 'settings.backup': return 'Biztonsági mentés';
+			case 'settings.exportSettings': return 'Beállítások exportálása';
+			case 'settings.exportSettingsDescription': return 'Beállítások mentése fájlba';
+			case 'settings.exportSettingsSuccess': return 'Beállítások exportálva';
+			case 'settings.importSettings': return 'Beállítások importálása';
+			case 'settings.importSettingsDescription': return 'Beállítások visszaállítása fájlból';
+			case 'settings.importSettingsConfirm': return 'Ez felülírja a jelenlegi beállításaidat. Folytatod?';
+			case 'settings.importSettingsSuccess': return 'Beállítások importálva';
+			case 'settings.importSettingsInvalidFile': return 'Ez a fájl nem érvényes Plezy-beállításexport';
+			case 'settings.importSettingsNoUser': return 'Jelentkezz be a beállítások importálása előtt';
+			case 'settings.shortcutsReset': return 'A billentyűparancsok visszaálltak az alapértelmezettekre';
+			case 'settings.resetShortcutsConfirm': return 'Ezzel az egyéni billentyűparancsaid helyére az alapértelmezettek kerülnek. Folytatod?';
+			case 'settings.about': return 'Névjegy';
+			case 'settings.aboutDescription': return 'Alkalmazásadatok és licencek';
+			case 'settings.updates': return 'Frissítések';
+			case 'settings.updateAvailable': return 'Frissítés érhető el';
+			case 'settings.checkForUpdates': return 'Frissítések keresése';
+			case 'settings.autoCheckUpdatesOnStartup': return 'Frissítések automatikus keresése indításkor';
+			case 'settings.autoCheckUpdatesOnStartupDescription': return 'Értesítés küldése indításkor, ha új frissítés érhető el';
+			case 'settings.validationErrorEnterNumber': return 'Adj meg egy érvényes számot';
+			case 'settings.validationErrorDuration': return ({required Object min, required Object max, required Object unit}) => 'Az időtartamnak ${min} és ${max} ${unit} között kell lennie';
+			case 'settings.shortcutAlreadyAssigned': return ({required Object action}) => 'A billentyűparancs már hozzá van rendelve a következőhöz: ${action}';
+			case 'settings.shortcutUpdated': return ({required Object action}) => 'Billentyűparancs frissítve a következőhöz: ${action}';
+			case 'settings.saveFailed': return 'Nem sikerült menteni a módosításokat. Próbáld újra.';
+			case 'settings.autoPlayAndSkip': return 'Automatikus lejátszás és átugrás';
+			case 'settings.autoPlayNextEpisode': return 'Következő epizód automatikus lejátszása';
+			case 'settings.autoPlayNextEpisodeDescription': return 'A következő epizód automatikus elindítása, amikor az aktuális véget ér';
+			case 'settings.shuffleStartsFromBeginning': return 'Véletlenszerű lejátszás az elejétől';
+			case 'settings.shuffleStartsFromBeginningDescription': return 'Minden epizód az elejétől indul véletlenszerű lejátszáskor a folytatás helyett';
+			case 'settings.playNextCountdown': return 'Visszaszámlálás a következő epizódig';
+			case 'settings.playNextCountdownImmediate': return 'Azonnali lejátszás';
+			case 'settings.skipIntroMode': return 'Intró átugrása';
+			case 'settings.skipIntroModeOffDescription': return 'Az intrók normálisan lejátszódnak, átugró gomb nélkül';
+			case 'settings.skipIntroModeButtonDescription': return 'Átugró gomb megjelenítése az intró kezdetekor';
+			case 'settings.skipIntroModeAutoDescription': return 'Az intrók automatikus átugrása az alábbi késleltetés után';
+			case 'settings.skipCreditsMode': return 'Stáblista átugrása';
+			case 'settings.skipCreditsModeOffDescription': return 'A stáblista normálisan lejátszódik, átugró gomb nélkül';
+			case 'settings.skipCreditsModeButtonDescription': return 'Átugró gomb megjelenítése a stáblista kezdetekor';
+			case 'settings.skipCreditsModeAutoDescription': return 'A stáblista automatikus átugrása és a következő epizód lejátszása';
+			case 'settings.skipMarkerModeOff': return 'Ki';
+			case 'settings.skipMarkerModeButton': return 'Gomb megjelenítése';
+			case 'settings.skipMarkerModeAuto': return 'Automatikus';
+			case 'settings.forceSkipMarkerFallback': return 'Tartalék jelölők kényszerítése';
+			case 'settings.forceSkipMarkerFallbackDescription': return 'Fejezetcím-minták használata akkor is, ha a Plex rendelkezik jelölőkkel';
+			case 'settings.autoSkipDelay': return 'Automatikus átugrás késleltetése';
+			case 'settings.autoSkipDelayDescription': return ({required Object seconds}) => 'Várakozás ${seconds} másodpercig az automatikus átugrás előtt';
+			case 'settings.introPattern': return 'Intrójelölő mintája';
+			case 'settings.introPatternDescription': return 'Reguláris kifejezés az intrójelölők illesztéséhez a fejezetcímekben';
+			case 'settings.creditsPattern': return 'Stáblistajelölő mintája';
+			case 'settings.creditsPatternDescription': return 'Reguláris kifejezés a stáblistajelölők illesztéséhez a fejezetcímekben';
+			case 'settings.invalidRegex': return 'Érvénytelen reguláris kifejezés';
+			case 'settings.regex': return 'Reguláris kifejezés';
+			case 'settings.downloads': return 'Letöltések';
+			case 'settings.downloadLocationDescription': return 'Válaszd ki a letöltött tartalom tárolási helyét';
+			case 'settings.downloadLocationDefault': return 'Alapértelmezett (alkalmazástárhely)';
+			case 'settings.downloadLocationCustom': return 'Egyéni hely';
+			case 'settings.selectFolder': return 'Mappa kiválasztása';
+			case 'settings.resetToDefault': return 'Visszaállítás alapértelmezettre';
+			case 'settings.currentPath': return ({required Object path}) => 'Jelenlegi: ${path}';
+			case 'settings.downloadLocationChanged': return 'A letöltési hely megváltozott';
+			case 'settings.downloadLocationReset': return 'A letöltési hely visszaállt az alapértelmezettre';
+			case 'settings.downloadLocationInvalid': return 'A kiválasztott mappa nem írható';
+			case 'settings.downloadLocationPickerUnavailable': return 'A mappaválasztás ezen az eszközön nem érhető el';
+			case 'settings.downloadOnWifiOnly': return 'Letöltés csak Wi-Fi-n';
+			case 'settings.downloadOnWifiOnlyDescription': return 'Letöltések megakadályozása mobiladat-használat esetén';
+			case 'settings.autoRemoveWatchedDownloads': return 'Megnézett letöltések automatikus eltávolítása';
+			case 'settings.autoRemoveWatchedDownloadsDescription': return 'A megnézett letöltések automatikus törlése';
+			case 'settings.cellularDownloadBlocked': return 'A letöltések mobilhálózaton le vannak tiltva. Használj Wi-Fi-t, vagy módosítsd a beállítást.';
+			case 'settings.maxVolume': return 'Maximális hangerő';
+			case 'settings.maxVolumeDescription': return 'A hangerő 100% fölé emelésének engedélyezése halk tartalmak esetén';
+			case 'settings.maxVolumePercent': return ({required Object percent}) => '${percent}%';
+			case 'settings.discordRichPresence': return 'Discord Rich Presence';
+			case 'settings.discordRichPresenceDescription': return 'Megjeleníti a Discordon, hogy éppen mit nézel';
+			case 'settings.services': return 'Szolgáltatások';
+			case 'settings.servicesDescription': return 'Trakt, MyAnimeList, Seerr és egyéb szolgáltatások csatlakoztatása';
+			case 'settings.manageLibrariesDescription': return 'Könyvtárak sorrendjének módosítása és elrejtése';
+			case 'settings.companionRemoteServer': return 'Kísérőtávirányító szervere';
+			case 'settings.companionRemoteServerDescription': return 'Lehetővé teszi, hogy a hálózaton lévő mobileszközökről vezéreld az alkalmazást';
+			case 'settings.companionRemoteServerStartFailed': return 'Nem sikerült elindítani a kísérőtávirányító szerverét';
+			case 'settings.companionRemoteServerStopFailed': return 'Nem sikerült leállítani a kísérőtávirányító szerverét';
+			case 'settings.autoPip': return 'Automatikus kép a képben (PiP)';
+			case 'settings.autoPipDescription': return 'Lejátszás közben az alkalmazás elhagyásakor automatikusan kép a képben módra vált';
+			case 'settings.matchContentFrameRate': return 'Képkockasebesség illesztése a tartalomhoz';
+			case 'settings.matchContentFrameRateDescription': return 'A kijelző frissítési frekvenciájának igazítása a videóhoz';
+			case 'settings.matchContentResolution': return 'Igazítás a tartalom felbontásához';
+			case 'settings.matchContentResolutionDescription': return 'A kijelzőt a videó natív felbontására váltja, hogy a felskálázást a tévé végezze. Lejátszás közben a menük és a feliratok is felskálázódnak';
+			case 'settings.matchRefreshRate': return 'Frissítési frekvencia illesztése';
+			case 'settings.matchRefreshRateDescription': return 'A kijelző frissítési frekvenciájának igazítása teljes képernyőn';
+			case 'settings.matchDynamicRange': return 'Dinamikatartomány illesztése';
+			case 'settings.matchDynamicRangeDescription': return 'HDR bekapcsolása HDR-tartalmak esetén, majd visszaváltás SDR-re';
+			case 'settings.displaySwitchDelay': return 'Kijelzőváltási késleltetés';
+			case 'settings.tunneledPlayback': return 'Alagutas lejátszás';
+			case 'settings.tunneledPlaybackDescription': return 'Videóalagút használata. Tiltsd le, ha HDR-lejátszáskor fekete a kép vagy akadozik a mozgás.';
+			case 'settings.audioPassthrough': return 'Hangtovábbítás (passthrough)';
+			case 'settings.audioPassthroughDescription': return 'Dolby/DTS-hang továbbítása az erősítőre vagy a TV-re újrakódolás nélkül, a térhangzás megőrzésével. Kapcsold ki, ha nincs hang.';
+			case 'settings.audioPassthroughDescriptionApple': return 'Az Apple natív Dolby-dekóderének használata Dolby Digital Plushoz, az Atmost is beleértve. A DTS és a TrueHD továbbra is többcsatornás PCM-ként szól. Kapcsold ki, ha nincs hang.';
+			case 'settings.audioPassthroughDescriptionAppleSpatial': return 'Az Apple natív Dolby-dekóderének használata Dolby Digital Plushoz, az Atmost is beleértve. iOS, iPadOS és tvOS 26 vagy újabb rendszeren a TrueHD Atmos és a DTS:X térbeli hangzásként szól. A többi DTS- és TrueHD-sáv többcsatornás PCM-ként szól. Kapcsold ki, ha nincs hang.';
+			case 'settings.audioPassthroughOverriddenByNormalization': return 'Ki, amíg a hangerőnormalizálás be van kapcsolva';
+			case 'settings.audioChannelLimit': return 'Hangcsatornák';
+			case 'settings.audioChannelLimitDescription': return 'A dekódolt hang lekeverése olyan hangszórókhoz, fejhallgatókhoz vagy HDMI-rendszerekhez, amelyek nem tudják lejátszani az összes csatornát';
+			case 'settings.audioChannelLimitOriginal': return 'Eredeti';
+			case 'settings.audioChannelLimitOriginalDescription': return 'A sáv összes csatornájának lejátszása';
+			case 'settings.audioChannelLimitSurround51': return 'Legfeljebb 5.1';
+			case 'settings.audioChannelLimitSurround51Description': return '7.1 lekeverése 5.1-re olyan TV-khez és erősítőkhöz, amelyek csak 5.1-es PCM-et fogadnak. A hangtovábbítást nem érinti.';
+			case 'settings.audioChannelLimitStereo': return 'Sztereó';
+			case 'settings.audioChannelLimitStereoDescription': return 'Lekeverés két csatornára sztereó hangszórókhoz vagy fejhallgatóhoz. Kikapcsolja a hangtovábbítást.';
+			case 'settings.downmixCenterBoost': return 'Középső csatorna kiemelése';
+			case 'settings.downmixCenterBoostValue': return ({required Object db}) => '${db} dB';
+			case 'settings.downmixCenterBoostLabel': return 'Kiemelés (dB)';
+			case 'settings.downmixCenterBoostShort': return 'dB';
+			case 'settings.audioDownmixNormalize': return 'Hangerő normalizálása lekeveréskor';
+			case 'settings.audioDownmixNormalizeDescription': return 'A keverés szintjének csökkentése a torzítás elkerülésére. Kapcsold ki az eredeti hangerő megőrzéséhez (a hangos jelenetek torzíthatnak).';
+			case 'settings.dvConversionMode': return 'Dolby Vision-átalakítás';
+			case 'settings.dvConversionModeDescription': return 'Válaszd ki, hogyan legyenek kezelve a Dolby Vision Profile 7 fájlok.';
+			case 'settings.dvConversionAuto': return 'Automatikus';
+			case 'settings.dvConversionNative': return 'Natív / letiltva';
+			case 'settings.dvConversionDv81': return 'P7 → P8.1';
+			case 'settings.dvConversionHevcStrip': return 'P7 → HEVC';
+			case 'settings.dvConversionAutoDescription': return 'Az eszköz képességeinek felismerése és szükség esetén a szokásos tartalék megoldás használata';
+			case 'settings.dvConversionNativeDescription': return 'A natív DV7 kényszerítése és a DV-átalakítási újrapróbálkozás letiltása';
+			case 'settings.dvConversionDv81Description': return 'A közvetlen RPU-átalakítás kényszerítése Dolby Vision Profile 8.1-re';
+			case 'settings.dvConversionHevcStripDescription': return 'A Dolby Vision RPU/EL-rétegek eltávolítása és egyszerű HEVC-ként való megjelenítés';
+			case 'settings.disableDolbyVision': return 'Dolby Vision letiltása';
+			case 'settings.disableDolbyVisionDescription': return 'A Dolby Vision helyett a fájl HDR10 vagy HLG rétegének lejátszása, ha van ilyen';
+			case 'settings.hdrSdrConversion': return 'HDR–SDR átalakítás';
+			case 'settings.hdrSdrConversionDescription': return 'Válaszd ki, mi alakítsa át a HDR-videót, ha a kijelző nem tud HDR-t megjeleníteni.';
+			case 'settings.hdrSdrConversionAuto': return 'Automatikus';
+			case 'settings.hdrSdrConversionAutoDescription': return 'Eszköz Android 9-től, lejátszó a régebbi verziókon';
+			case 'settings.hdrSdrConversionDevice': return 'Eszköz';
+			case 'settings.hdrSdrConversionDeviceDescription': return 'Az eszköz videohardvere alakítja át. A leggyorsabb, de a színek az eszköztől függnek';
+			case 'settings.hdrSdrConversionPlayer': return 'Lejátszó';
+			case 'settings.hdrSdrConversionPlayerDescription': return 'A lejátszó alakítja át. Egységes színek, de a 4K akadozhat a gyengébb TV-boxokon';
+			case 'settings.deinterlace': return 'Deinterlacing';
+			case 'settings.deinterlaceDescription': return 'Fésűfog-műtermékek eltávolítása a váltott soros videóból (csak mpv lejátszóval)';
+			case 'settings.deinterlaceOff': return 'Ki';
+			case 'settings.deinterlaceOffDescription': return 'A váltott soros videó megjelenítése úgy, ahogy dekódolva lett';
+			case 'settings.deinterlaceVideo': return 'Videó';
+			case 'settings.deinterlaceVideoDescription': return 'Minden félképből teljes képkocka lesz. TV-re rögzített felvételekhez, például sporthoz, hírekhez és koncertekhez';
+			case 'settings.deinterlaceFilm': return 'Film';
+			case 'settings.deinterlaceFilmDescription': return 'A 29,97 fps-re telecine-eljárással átalakított filmek és animációk eredeti képkockáinak helyreállítása, ami gyakori az NTSC DVD-ken. A TV-re rögzített felvételek akadoznak. Az Élő TV a Videó módot használja';
+			case 'settings.requireProfileSelectionOnOpen': return 'Profil kérése az alkalmazás megnyitásakor';
+			case 'settings.requireProfileSelectionOnOpenDescription': return 'Profilválasztó megjelenítése minden alkalommal, amikor az alkalmazást megnyitod';
+			case 'settings.forceTvMode': return 'TV-mód kényszerítése';
+			case 'settings.forceTvModeDescription': return 'TV-elrendezés kényszerítése az automatikus felismeréssel nem rendelkező eszközökön. Újraindítást igényel.';
+			case 'settings.startInFullscreen': return 'Indítás teljes képernyőn';
+			case 'settings.startInFullscreenDescription': return 'A Plezy megnyitása teljes képernyős módban indításkor';
+			case 'settings.exitFullscreenOnPlayerClose': return 'Kilépés a teljes képernyőből a lejátszó bezárásakor';
+			case 'settings.exitFullscreenOnPlayerCloseDescription': return 'Automatikus kilépés a teljes képernyőből a videólejátszó bezárásakor';
+			case 'settings.autoHidePerformanceOverlay': return 'Teljesítményadatok automatikus elrejtése';
+			case 'settings.autoHidePerformanceOverlayDescription': return 'A teljesítményadatok elhalványítása a lejátszásvezérlőkkel együtt';
+			case 'settings.showNavBarLabels': return 'Navigációs sáv címkéinek megjelenítése';
+			case 'settings.showNavBarLabelsDescription': return 'Szöveges címkék megjelenítése a navigációs sáv ikonjai alatt';
+			case 'settings.startupSection': return 'Indítási oldal';
+			case 'settings.showExploreTab': return 'Felfedezés lap megjelenítése';
+			case 'settings.showExploreTabDescription': return 'A Plex Discover és a csatlakoztatott követők tartalmait megjelenítő Felfedezés lap megjelenítése';
+			case 'settings.liveTvDefaultFavorites': return 'Kedvenc csatornák alapértelmezés szerint';
+			case 'settings.liveTvDefaultFavoritesDescription': return 'Csak a kedvenc csatornák megjelenítése az Élő TV megnyitásakor';
+			case 'settings.general': return 'Általános';
+			case 'settings.generalDescription': return 'Nyelv, indítás és ablakviselkedés';
+			case 'settings.languageAndRegion': return 'Nyelv és régió';
+			case 'settings.startup': return 'Indítás';
+			case 'settings.display': return 'Kijelző';
+			case 'settings.libraryAndCards': return 'Könyvtár és kártyák';
+			case 'settings.homeScreen': return 'Kezdőképernyő';
+			case 'settings.navigation': return 'Navigáció';
+			case 'settings.window': return 'Ablak';
+			case 'settings.liveTv': return 'Élő TV';
+			case 'settings.player': return 'Lejátszó';
+			case 'settings.videoAndDisplay': return 'Videó és kijelző';
+			case 'settings.audio': return 'Hang';
+			case 'settings.quality': return 'Minőség';
+			case 'settings.subtitles': return 'Feliratok';
+			case 'settings.seekAndTiming': return 'Tekerés és időzítés';
+			case 'settings.behavior': return 'Viselkedés';
+			case 'settings.gestures': return 'Mozdulatok';
+			case 'settings.gestureBrightnessSwipe': return 'Fényerő-húzás';
+			case 'settings.gestureBrightnessSwipeDescription': return 'Húzd felfelé vagy lefelé a bal szélén a fényerő beállításához';
+			case 'settings.gestureVolumeSwipe': return 'Hangerő-húzás';
+			case 'settings.gestureVolumeSwipeDescription': return 'Húzd felfelé vagy lefelé a jobb szélén a hangerő beállításához';
+			case 'settings.gesturePinchToZoom': return 'Csípés a nagyításhoz';
+			case 'settings.gesturePinchToZoomDescription': return 'Csípj a videóra a nagyításhoz vagy kicsinyítéshez';
+			case 'settings.rememberBrightnessLevel': return 'Fényerőszint megjegyzése';
+			case 'settings.rememberBrightnessLevelDescription': return 'A lejátszás az utolsó húzással beállított fényerővel indul';
+			case 'settings.controls': return 'Vezérlők';
+			case 'settings.rememberPlayerChanges': return 'Lejátszó módosításainak megjegyzése';
+			case 'settings.rememberPlayerChangesDescription': return 'A lejátszás közben végzett módosítások mentési és újbóli alkalmazási helye';
+			case 'settings.scopePlaybackSpeed': return 'Lejátszási sebesség';
+			case 'settings.scopeShaderPreset': return 'Shader-előbeállítás';
+			case 'settings.scopeAspectRatio': return 'Képarány';
+			case 'settings.scopeZoom': return 'Nagyítás';
+			case 'settings.scopeSyncOffsets': return 'Hang- és feliratszinkronizálás';
+			case 'settings.playerScopeOff': return 'Ne mentse';
+			case 'settings.playerScopeGlobal': return 'Mindenhol';
+			case 'settings.playerScopeLibrary': return 'Könyvtáronként';
+			case 'settings.playerScopeTitle': return 'Sorozatonként vagy filmenként';
+			case 'settings.exportDialogTitle': return 'Plezy-beállítások exportálása';
+			case 'themeEditor.builtIn': return 'Beépített';
+			case 'themeEditor.presets': return 'Előre beállított';
+			case 'themeEditor.custom': return 'Egyéni';
+			case 'themeEditor.customEmpty': return 'Még nincs létrehozva';
+			case 'themeEditor.editCustom': return 'Egyéni téma szerkesztése';
+			case 'themeEditor.editCustomDescription': return 'Válaszd ki magad az összes színt';
+			case 'themeEditor.locked': return 'A Téma- és ikoncsomaggal oldható fel';
+			case 'themeEditor.savedLocked': return 'Mentve — a Téma- és ikoncsomaggal oldható fel';
+			case 'themeEditor.title': return 'Egyéni téma';
+			case 'themeEditor.startFrom': return 'Kiindulási téma';
+			case 'themeEditor.startFromDescription': return 'Az összes szín átmásolása egy másik témából';
+			case 'themeEditor.colors': return 'Színek';
+			case 'themeEditor.preview': return 'Előnézet';
+			case 'themeEditor.slots.bg': return 'Háttér';
+			case 'themeEditor.slots.surface': return 'Felület';
+			case 'themeEditor.slots.outline': return 'Körvonal';
+			case 'themeEditor.slots.text': return 'Szöveg';
+			case 'themeEditor.slots.textMuted': return 'Másodlagos szöveg';
+			case 'themeEditor.slots.accent': return 'Kiemelőszín';
+			case 'themeEditor.opacity': return 'Átlátszatlanság';
+			case 'themeEditor.hexHint': return '#RRGGBB vagy #AARRGGBB';
+			case 'themeEditor.fromOtherThemes': return 'Más témákból';
+			case 'themeEditor.swatchLabel': return ({required Object theme, required Object color}) => '${theme} – ${color}';
+			case 'themeEditor.contrast.textOnBg': return 'Szöveg a háttéren';
+			case 'themeEditor.contrast.textOnSurface': return 'Szöveg a felületen';
+			case 'themeEditor.contrast.textMutedOnBg': return 'Másodlagos szöveg a háttéren';
+			case 'themeEditor.contrast.textMutedOnSurface': return 'Másodlagos szöveg a felületen';
+			case 'themeEditor.contrast.accentOnBg': return 'Kiemelőszín a háttéren';
+			case 'themeEditor.contrast.accentOnSurface': return 'Kiemelőszín a felületen';
+			case 'themeEditor.contrast.labelOnAccent': return 'Gombfelirat a kiemelőszínen';
+			case 'themeEditor.lowContrast': return ({required Object pair, required Object ratio, required Object minimum}) => '${pair}: ${ratio}:1, az ajánlott ${minimum}:1 alatt';
+			case 'themeEditor.discardTitle': return 'Elveted a módosításokat?';
+			case 'themeEditor.discardMessage': return 'A nem mentett színmódosítások elvesznek.';
+			case 'themeEditor.discard': return 'Elvetés';
+			case 'themeEditor.previewCardTitle': return ({required Object number}) => '${number}. epizód';
+			case 'themeEditor.previewCardSubtitle': return ({required Object minutes}) => '${minutes} perc van hátra';
+			case 'themeEditor.previewSwitch': return 'Automatikus lejátszás';
+			case 'themeEditor.previewMutedText': return 'Így néz ki a másodlagos szöveg';
+			case 'search.hint': return 'Keresés filmek, sorozatok és zenék között...';
+			case 'search.tryDifferentTerm': return 'Próbálj másik keresési kifejezést';
+			case 'search.searchYourMedia': return 'Keresés a saját médiatartalmak között';
+			case 'search.enterTitleActorOrKeyword': return 'Adj meg egy címet, színészt vagy kulcsszót';
+			case 'search.people': return 'Személyek';
+			case 'hotkeys.setShortcutFor': return ({required Object actionName}) => 'Billentyűparancs beállítása ehhez: ${actionName}';
+			case 'hotkeys.clearShortcut': return 'Billentyűparancs törlése';
+			case 'hotkeys.noShortcutSet': return 'Nincs billentyűparancs beállítva';
+			case 'hotkeys.currentShortcut': return 'Jelenlegi billentyűparancs:';
+			case 'hotkeys.pressToRecord': return 'Válaszd ki a billentyűparancs rögzítéséhez';
+			case 'hotkeys.recordingShortcut': return 'Nyomd meg most a billentyűparancsot';
+			case 'hotkeys.actions.playPause': return 'Lejátszás/Szünet';
+			case 'hotkeys.actions.volumeUp': return 'Hangerő fel';
+			case 'hotkeys.actions.volumeDown': return 'Hangerő le';
+			case 'hotkeys.actions.seekForward': return ({required Object seconds}) => 'Tekerés előre (${seconds} mp)';
+			case 'hotkeys.actions.seekBackward': return ({required Object seconds}) => 'Tekerés hátra (${seconds} mp)';
+			case 'hotkeys.actions.fullscreenToggle': return 'Teljes képernyős mód váltása';
+			case 'hotkeys.actions.muteToggle': return 'Némítás be- és kikapcsolása';
+			case 'hotkeys.actions.subtitleToggle': return 'Feliratok be- és kikapcsolása';
+			case 'hotkeys.actions.audioTrackNext': return 'Következő hangsáv';
+			case 'hotkeys.actions.subtitleTrackNext': return 'Következő feliratsáv';
+			case 'hotkeys.actions.chapterNext': return 'Következő fejezet';
+			case 'hotkeys.actions.chapterPrevious': return 'Előző fejezet';
+			case 'hotkeys.actions.episodeNext': return 'Következő epizód';
+			case 'hotkeys.actions.episodePrevious': return 'Előző epizód';
+			case 'hotkeys.actions.speedIncrease': return 'Sebesség növelése';
+			case 'hotkeys.actions.speedDecrease': return 'Sebesség csökkentése';
+			case 'hotkeys.actions.speedReset': return 'Sebesség alaphelyzetbe állítása';
+			case 'hotkeys.actions.zoomIn': return 'Nagyítás';
+			case 'hotkeys.actions.zoomOut': return 'Kicsinyítés';
+			case 'hotkeys.actions.zoomReset': return 'Nagyítás alaphelyzetbe állítása';
+			case 'hotkeys.actions.subSeekNext': return 'Ugrás a következő feliratra';
+			case 'hotkeys.actions.subSeekPrev': return 'Ugrás az előző feliratra';
+			case 'hotkeys.actions.shaderToggle': return 'Shaderek be- és kikapcsolása';
+			case 'hotkeys.actions.skipMarker': return 'Intró/stáblista átugrása';
+			case 'hotkeys.actions.screenshot': return 'Képernyőkép készítése';
+			case 'fileInfo.title': return 'Fájlinformáció';
+			case 'fileInfo.overview': return 'Áttekintés';
+			case 'fileInfo.video': return 'Videó';
+			case 'fileInfo.audio': return 'Hang';
+			case 'fileInfo.subtitles': return 'Feliratok';
+			case 'fileInfo.images': return 'Beágyazott képek';
+			case 'fileInfo.dataStreams': return 'Adatfolyamok';
+			case 'fileInfo.lyrics': return 'Dalszövegek';
+			case 'fileInfo.file': return 'Fájl';
+			case 'fileInfo.attachments': return 'Mellékletek';
+			case 'fileInfo.delivery': return 'Kézbesítés';
+			case 'fileInfo.versionCounter': return ({required Object index, required Object count}) => '${index}. verzió a(z) ${count} közül';
+			case 'fileInfo.fileCounter': return ({required Object index, required Object count}) => '${index}. fájl a(z) ${count} közül';
+			case 'fileInfo.noStreams': return 'A szerver nem jelentett adatfolyamot ehhez a fájlhoz.';
+			case 'fileInfo.copyPath': return 'Útvonal másolása';
+			case 'fileInfo.pathCopied': return 'Fájlútvonal kimásolva';
+			case 'fileInfo.codec': return 'Kodek';
+			case 'fileInfo.codecTag': return 'Kodekcímke';
+			case 'fileInfo.resolution': return 'Felbontás';
+			case 'fileInfo.codedResolution': return 'Kódolt felbontás';
+			case 'fileInfo.bitrate': return 'Bitráta';
+			case 'fileInfo.frameRate': return 'Képkockasebesség';
+			case 'fileInfo.rotation': return 'Forgatás';
+			case 'fileInfo.comment': return 'Megjegyzés';
+			case 'fileInfo.audioDescription': return 'Hangleírás';
+			case 'fileInfo.headerCompression': return 'Fejléc-tömörítés';
+			case 'fileInfo.sidecarFile': return 'Kísérő fájl';
+			case 'fileInfo.transportTimestamp': return 'Szállítási időbélyeg';
+			case 'fileInfo.displayOffset': return 'Megjelenítési eltolás';
+			case 'fileInfo.previewFailureCode': return 'Előnézeti hibakód';
+			case 'fileInfo.previewRetries': return 'Előnézeti újrapróbálkozások';
+			case 'fileInfo.aspectRatio': return 'Méretarány';
+			case 'fileInfo.pixelAspectRatio': return 'Pixel képarány';
+			case 'fileInfo.profile': return 'Profil';
+			case 'fileInfo.level': return 'Szint';
+			case 'fileInfo.bitDepth': return 'Bitmélység';
+			case 'fileInfo.pixelFormat': return 'Pixelformátum';
+			case 'fileInfo.colorSpace': return 'Színtér';
+			case 'fileInfo.colorRange': return 'Színtartomány';
+			case 'fileInfo.colorPrimaries': return 'Elsődleges színek';
+			case 'fileInfo.colorTransfer': return 'Színátvitel';
+			case 'fileInfo.chromaSubsampling': return 'Krominancia-alulmintavételezés';
+			case 'fileInfo.chromaLocation': return 'Kroma elhelyezkedés';
+			case 'fileInfo.scanType': return 'Pásztázási típus';
+			case 'fileInfo.interlaced': return 'Váltott soros';
+			case 'fileInfo.anamorphic': return 'Anamorf';
+			case 'fileInfo.referenceFrames': return 'Referencia képkockák';
+			case 'fileInfo.dynamicRange': return 'Dinamikatartomány';
+			case 'fileInfo.dolbyVision': return 'Dolby Vision';
+			case 'fileInfo.dolbyVisionLevel': return 'Dolby Vision szint';
+			case 'fileInfo.dolbyVisionVersion': return 'Dolby Vision verzió';
+			case 'fileInfo.dolbyVisionLayers': return 'Dolby Vision rétegek';
+			case 'fileInfo.baseLayerCompatibility': return 'Alapréteg-kompatibilitás';
+			case 'fileInfo.avcBitstream': return 'AVC bitfolyam';
+			case 'fileInfo.nalLengthSize': return 'NAL hosszméret';
+			case 'fileInfo.scalingMatrix': return 'Egyéni méretezési mátrix';
+			case 'fileInfo.streamIdentifier': return 'Adatfolyam-azonosító';
+			case 'fileInfo.streamIndex': return 'Adatfolyam-index';
+			case 'fileInfo.streamId': return 'Adatfolyam azonosítója';
+			case 'fileInfo.language': return 'Nyelv';
+			case 'fileInfo.languageCode': return 'Nyelvkód';
+			case 'fileInfo.streamTitle': return 'Sáv címe';
+			case 'fileInfo.channels': return 'Csatornák';
+			case 'fileInfo.sampleRate': return 'Mintavételi frekvencia';
+			case 'fileInfo.spatialAudio': return 'Térbeli hang';
+			case 'fileInfo.textBased': return 'Szövegalapú';
+			case 'fileInfo.subtitleFormat': return 'Kísérő formátum';
+			case 'fileInfo.provider': return 'Szolgáltató';
+			case 'fileInfo.matchScore': return 'Egyezési pontszám';
+			case 'fileInfo.externalDelivery': return 'Külön is kiszolgálható';
+			case 'fileInfo.sidecarPath': return 'Kísérő fájl útvonala';
+			case 'fileInfo.sourceStream': return 'Másolva innen';
+			case 'fileInfo.temporary': return 'Ideiglenes';
+			case 'fileInfo.timeBase': return 'Időalap';
+			case 'fileInfo.overallBitrate': return 'Összesített bitráta';
+			case 'fileInfo.path': return 'Elérési út';
+			case 'fileInfo.fileName': return 'Fájlnév';
+			case 'fileInfo.size': return 'Méret';
+			case 'fileInfo.totalSize': return 'Teljes méret';
+			case 'fileInfo.container': return 'Konténer';
+			case 'fileInfo.duration': return 'Időtartam';
+			case 'fileInfo.previewThumbnails': return 'Előnézeti miniatűrök';
+			case 'fileInfo.previewIndex': return 'Előnézeti index';
+			case 'fileInfo.packetLength': return 'Csomaghossz';
+			case 'fileInfo.filePresent': return 'Fájl jelen van';
+			case 'fileInfo.fileReadable': return 'A szerver számára olvasható';
+			case 'fileInfo.streamPath': return 'Adatfolyam útvonala';
+			case 'fileInfo.optimizedForStreaming': return 'Adatfolyam-továbbításra optimalizálva';
+			case 'fileInfo.has64bitOffsets': return '64 bites eltolások';
+			case 'fileInfo.protocol': return 'Protokoll';
+			case 'fileInfo.mediaType': return 'Médiatípus';
+			case 'fileInfo.sourceKind': return 'Forrás típusa';
+			case 'fileInfo.optimizedVersion': return 'Optimalizált verzió';
+			case 'fileInfo.optimizationTarget': return 'Optimalizálási cél';
+			case 'fileInfo.deletedAt': return 'Törölve';
+			case 'fileInfo.remoteSource': return 'Távoli forrás';
+			case 'fileInfo.infiniteStream': return 'Végtelen adatfolyam';
+			case 'fileInfo.directPlay': return 'Közvetlen lejátszás';
+			case 'fileInfo.directStream': return 'Közvetlen adatfolyam';
+			case 'fileInfo.transcoding': return 'Átkódolás';
+			case 'fileInfo.etag': return 'ETag';
+			case 'fileInfo.versionId': return 'Verzióazonosító';
+			case 'fileInfo.fileId': return 'Fájlazonosító';
+			case 'fileInfo.defaultAudioTrack': return 'Alapértelmezett hangsáv';
+			case 'fileInfo.defaultSubtitleTrack': return 'Alapértelmezett feliratsáv';
+			case 'fileInfo.subtitlesOff': return 'Ki';
+			case 'fileInfo.flagDefault': return 'Alapértelmezett';
+			case 'fileInfo.flagForced': return 'Kényszerített';
+			case 'fileInfo.flagSelected': return 'Kiválasztva';
+			case 'fileInfo.flagExternal': return 'Külső';
+			case 'fileInfo.flagHearingImpaired': return 'Nagyothallóknak';
+			case 'fileInfo.flagDub': return 'Szinkron';
+			case 'fileInfo.flagOriginal': return 'Eredeti';
+			case 'fileInfo.channelsMono': return 'Monó';
+			case 'fileInfo.dolbyVisionProfile': return ({required Object profile}) => '${profile} profil';
+			case 'mediaMenu.markAsWatched': return 'Megjelölés megtekintettként';
+			case 'mediaMenu.markAsUnwatched': return 'Megjelölés nem megtekintettként';
+			case 'mediaMenu.removeFromContinueWatching': return 'Eltávolítás a folytatásból';
+			case 'mediaMenu.viewDetails': return 'Részletek megtekintése';
+			case 'mediaMenu.goToSeries': return 'Ugrás a sorozathoz';
+			case 'mediaMenu.shufflePlay': return 'Véletlenszerű lejátszás';
+			case 'mediaMenu.shuffleNotAvailableOffline': return 'A véletlenszerű lejátszás nem érhető el offline';
+			case 'mediaMenu.fileInfo': return 'Fájlinformáció';
+			case 'mediaMenu.deleteEpisodeFromServer': return 'Epizód törlése a szerverről';
+			case 'mediaMenu.deleteSeasonFromServer': return 'Évad törlése a szerverről';
+			case 'mediaMenu.deleteShowFromServer': return 'Sorozat törlése a szerverről';
+			case 'mediaMenu.deleteMovieFromServer': return 'Film törlése a szerverről';
+			case 'mediaMenu.deleteEpisodeTitle': return 'Töröljük ezt az epizódot?';
+			case 'mediaMenu.deleteSeasonTitle': return 'Töröljük ezt az évadot?';
+			case 'mediaMenu.deleteShowTitle': return 'Töröljük ezt a sorozatot?';
+			case 'mediaMenu.deleteMovieTitle': return 'Töröljük ezt a filmet?';
+			case 'mediaMenu.deleteEpisodeConfirm': return 'Epizód törlése';
+			case 'mediaMenu.deleteSeasonConfirm': return 'Évad törlése';
+			case 'mediaMenu.deleteShowConfirm': return 'Sorozat törlése';
+			case 'mediaMenu.deleteMovieConfirm': return 'Film törlése';
+			case 'mediaMenu.deleteAnyway': return 'Törlés mindenképp';
+			case 'mediaMenu.confirmDeleteTarget': return ({required Object title}) => 'Véglegesen töröljük a(z) ${title} elemet a szerverről?';
+			case 'mediaMenu.deleteMultipleWarning': return 'Ez magában foglalja az összes epizódot és azok fájljait.';
+			case 'mediaMenu.deleteEpisodeCountWarning': return ({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('hu'))(n,
+				one: 'Ez törli az összes (${n}) epizódot benne és a hozzá tartozó fájlt.',
+				other: 'Ez törli az összes (${n}) epizódot benne és a fájljaikat.',
+			);
+			case 'mediaMenu.deleteMultiPartWarning': return ({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('hu'))(n,
+				one: 'Ez az elem ${n} fájlban van tárolva, amely törlésre kerül.',
+				other: 'Ez az elem ${n} fájlban van tárolva, és mindegyik törlésre kerül.',
+			);
+			case 'mediaMenu.deleteSharedFileHeading': return ({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('hu'))(n,
+				one: 'További ${n} epizód is ugyanabban a fájlban van, és szintén törlésre kerül:',
+				other: 'További ${n} epizód is ugyanabban a fájlban van, és szintén törlésre kerül:',
+			);
+			case 'mediaMenu.deleteScopeUnverifiedProbeFailed': return 'A Plezy nem tudta ellenőrizni, mely fájlokat távolítja el ez, ezért a fent nevezett elemnél többet is törölhet. Szakítsa meg és próbálja újra, vagy töröljön mindenképp.';
+			case 'mediaMenu.deleteScopeUnverifiedNoFileInfo': return 'A szerver nem szolgáltatott fájladatokat ehhez az elemhez, ezért a Plezy nem tudja ellenőrizni, mely fájlokat távolít el. A fent nevezett elemnél többet is törölhet.';
+			case 'mediaMenu.mediaDeletedSuccessfully': return 'Médiaelem sikeresen törölve';
+			case 'mediaMenu.mediaFailedToDelete': return 'Nem sikerült a médiaelem törlése';
+			case 'mediaMenu.rate': return 'Értékelés';
+			case 'mediaMenu.playFromBeginning': return 'Lejátszás az elejétől';
+			case 'mediaMenu.playVersion': return 'Verzió lejátszása...';
+			case 'rateSheet.title': return 'Értékelés';
+			case 'rateSheet.server': return 'Szerver';
+			case 'rateSheet.favorite': return 'Kedvenc';
+			case 'rateSheet.favorited': return 'Kedvencekhez hozzáadva';
+			case 'rateSheet.saved': return 'Mentve';
+			case 'rateSheet.notAvailable': return 'Nincs találat';
+			case 'rateSheet.noConnectedServices': return 'Az értékeléshez csatlakoztass egy szolgáltatást a Beállításokban.';
+			case 'accessibility.mediaCardMovie': return ({required Object title}) => '${title}, film';
+			case 'accessibility.mediaCardShow': return ({required Object title}) => '${title}, TV-sorozat';
+			case 'accessibility.mediaCardEpisode': return ({required Object title, required Object episodeInfo}) => '${title}, ${episodeInfo}';
+			case 'accessibility.mediaCardSeason': return ({required Object title, required Object seasonInfo}) => '${title}, ${seasonInfo}';
+			case 'accessibility.mediaCardWatched': return 'megtekintve';
+			case 'accessibility.mediaCardPartiallyWatched': return ({required Object percent}) => '${percent} százalék megtekintve';
+			case 'accessibility.mediaCardUnwatched': return 'még nem láttad';
+			case 'accessibility.tapToPlay': return 'Koppints a lejátszáshoz';
+			case 'accessibility.decrease': return 'Csökkentés';
+			case 'accessibility.increase': return 'Növelés';
+			case 'accessibility.decreaseValue': return ({required Object label}) => '${label} csökkentése';
+			case 'accessibility.increaseValue': return ({required Object label}) => '${label} növelése';
+			case 'accessibility.hue': return 'Árnyalat';
+			case 'accessibility.saturation': return 'Telítettség';
+			case 'accessibility.brightness': return 'Fényerő';
+			case 'accessibility.hexColor': return 'Hex színkód';
+			case 'accessibility.expandText': return 'Szöveg kibontása';
+			case 'accessibility.collapseText': return 'Szöveg összecsukása';
+			case 'accessibility.alphabetNavigation': return 'Ábécé szerinti navigáció';
+			case 'accessibility.alphabetScrollHint': return 'A betűnkénti léptetéshez pöccints felfelé vagy lefelé';
+			case 'accessibility.rowColumnPosition': return ({required Object row, required Object rowCount, required Object column, required Object columnCount}) => '${row}. sor a(z) ${rowCount} sorból, ${column}. oszlop a(z) ${columnCount} oszlopból';
+			case 'accessibility.rowPosition': return ({required Object row, required Object rowCount}) => '${row}. sor a(z) ${rowCount} sorból';
+			case 'accessibility.autoScrollPlay': return 'Automatikus görgetés indítása';
+			case 'accessibility.autoScrollPause': return 'Automatikus görgetés szüneteltetése';
+			case 'accessibility.hueShort': return 'H';
+			case 'accessibility.saturationShort': return 'S';
+			case 'accessibility.valueShort': return 'V';
+			case 'tooltips.shufflePlay': return 'Véletlenszerű lejátszás';
+			case 'tooltips.playTrailer': return 'Előzetes lejátszása';
+			case 'tooltips.markAsWatched': return 'Megjelölés megtekintettként';
+			case 'tooltips.markAsUnwatched': return 'Megjelölés nem megtekintettként';
+			case 'audioTracks.track': return ({required Object n}) => '${n}. hangsáv';
+			case 'videoControls.audioLabel': return 'Hang';
+			case 'videoControls.subtitlesLabel': return 'Feliratok';
+			case 'videoControls.addTime': return ({required Object amount, required Object unit}) => '+${amount}${unit}';
+			case 'videoControls.letterbox': return 'Fekete sávok';
+			case 'videoControls.fillScreen': return 'Képernyő kitöltése';
+			case 'videoControls.stretch': return 'Nyújtás';
+			case 'videoControls.lockRotation': return 'Forgatás zárolása';
+			case 'videoControls.unlockRotation': return 'Forgatás feloldása';
+			case 'videoControls.timerActive': return 'Időzítő aktív';
+			case 'videoControls.playbackWillPauseIn': return ({required Object duration}) => 'A lejátszás ${duration} múlva szünetel';
+			case 'videoControls.sleepTimerEndOfVideo': return 'Jelenlegi videó vége';
+			case 'videoControls.sleepTimerStopAtHeader': return 'Leállítás ekkor';
+			case 'videoControls.sleepTimerDurationHeader': return 'Időzítő';
+			case 'videoControls.playbackWillPauseAtEnd': return 'A lejátszás szünetel a videó végén';
+			case 'videoControls.stillWatching': return 'Még nézed?';
+			case 'videoControls.pausingIn': return ({required Object seconds}) => 'Szüneteltetés ${seconds} mp múlva';
+			case 'videoControls.continueWatching': return 'Folytatás';
+			case 'videoControls.autoPlayNext': return 'Következő automatikus lejátszása';
+			case 'videoControls.playNext': return 'Következő lejátszása';
+			case 'videoControls.playButton': return 'Lejátszás';
+			case 'videoControls.pauseButton': return 'Szünet';
+			case 'videoControls.playbackPaused': return 'Szüneteltetve';
+			case 'videoControls.playbackResumed': return 'Lejátszás';
+			case 'videoControls.loadingVideo': return 'Videó betöltése';
+			case 'videoControls.showPlaybackControls': return 'Lejátszásvezérlők megjelenítése';
+			case 'videoControls.hidePlaybackControls': return 'Lejátszásvezérlők elrejtése';
+			case 'videoControls.seekBackwardButton': return ({required Object seconds}) => 'Tekerés hátra ${seconds} másodperccel';
+			case 'videoControls.seekForwardButton': return ({required Object seconds}) => 'Tekerés előre ${seconds} másodperccel';
+			case 'videoControls.previousButton': return 'Előző epizód';
+			case 'videoControls.nextButton': return 'Következő epizód';
+			case 'videoControls.previousChapterButton': return 'Előző fejezet';
+			case 'videoControls.nextChapterButton': return 'Következő fejezet';
+			case 'videoControls.muteButton': return 'Némítás';
+			case 'videoControls.unmuteButton': return 'Hang visszakapcsolása';
+			case 'videoControls.settingsButton': return 'Lejátszási beállítások';
+			case 'videoControls.tracksButton': return 'Hang és feliratok';
+			case 'videoControls.chaptersButton': return 'Fejezetek';
+			case 'videoControls.versionQualityButton': return 'Verzió és minőség';
+			case 'videoControls.versionColumnHeader': return 'Verzió';
+			case 'videoControls.qualityColumnHeader': return 'Minőség';
+			case 'videoControls.qualityOriginal': return 'Eredeti';
+			case 'videoControls.qualityPresetLabel': return ({required Object resolution, required Object bitrate}) => '${resolution}p ${bitrate} Mbps';
+			case 'videoControls.transcodeUnavailableFallback': return 'A transzkódolás nem érhető el — eredeti minőség lejátszása';
+			case 'videoControls.subtitleUnavailableFallback': return 'A kiválasztott feliratot nem sikerült betölteni — folytatás felirat nélkül';
+			case 'videoControls.pipButton': return 'Kép a képben mód';
+			case 'videoControls.aspectRatioButton': return 'Méretarány';
+			case 'videoControls.ambientLighting': return 'Környezeti megvilágítás';
+			case 'videoControls.fullscreenButton': return 'Teljes képernyős mód bekapcsolása';
+			case 'videoControls.exitFullscreenButton': return 'Teljes képernyős mód kikapcsolása';
+			case 'videoControls.alwaysOnTopButton': return 'Mindig legfelül';
+			case 'videoControls.rotationLockButton': return 'Elforgatás zárolása';
+			case 'videoControls.lockScreen': return 'Képernyő zárolása';
+			case 'videoControls.screenLockButton': return 'Képernyőzár';
+			case 'videoControls.timelineSlider': return 'Videó idősáv';
+			case 'videoControls.volumeSlider': return 'Hangerő';
+			case 'videoControls.endsAt': return ({required Object time}) => 'Vége: ${time}';
+			case 'videoControls.pipActive': return 'Lejátszás kép a képben módban';
+			case 'videoControls.pipFailed': return 'Nem sikerült elindítani a kép a képben módot';
+			case 'videoControls.screenshotSaved': return 'Képernyőkép elmentve';
+			case 'videoControls.screenshotFailed': return 'Nem sikerült képernyőképet készíteni';
+			case 'videoControls.zoomPercent': return ({required Object percent}) => 'Nagyítás ${percent}%';
+			case 'videoControls.volumePercent': return ({required Object percent}) => 'Hangerő ${percent}%';
+			case 'videoControls.pipErrors.androidVersion': return 'Android 8.0 vagy újabb szükséges';
+			case 'videoControls.pipErrors.iosVersion': return 'iOS 15.0 vagy újabb szükséges';
+			case 'videoControls.pipErrors.permissionDisabled': return 'A kép a képben mód le van tiltva. Engedélyezd a rendszerbeállításokban.';
+			case 'videoControls.pipErrors.notSupported': return 'Az eszköz nem támogatja a kép a képben módot';
+			case 'videoControls.pipErrors.voSwitchFailed': return 'Nem sikerült átváltani a videókimenetet a kép a képben módhoz';
+			case 'videoControls.pipErrors.failed': return 'Nem sikerült elindítani a kép a képben módot';
+			case 'videoControls.pipErrors.prepareFailed': return 'Nem sikerült előkészíteni a kép a képben módot';
+			case 'videoControls.pipErrors.unknown': return ({required Object error}) => 'Hiba történt: ${error}';
+			case 'videoControls.chapters': return 'Fejezetek';
+			case 'videoControls.noChaptersAvailable': return 'Nincsenek elérhető fejezetek';
+			case 'videoControls.queue': return 'Lejátszási sor';
+			case 'videoControls.noQueueItems': return 'Nincsenek elemek a sorban';
+			case 'videoControls.noAudioDevicesAvailable': return 'Nincsenek elérhető audioeszközök';
+			case 'videoControls.searchSubtitles': return 'Feliratok keresése';
+			case 'videoControls.language': return 'Nyelv';
+			case 'videoControls.noSubtitlesFound': return 'Nem találhatók feliratok';
+			case 'videoControls.subtitleDownloaded': return 'Felirat letöltve';
+			case 'videoControls.subtitleDownloadedNotApplied': return 'Felirat letöltve, de nem sikerült kiválasztani';
+			case 'videoControls.subtitleDownloadFailed': return 'Nem sikerült a felirat letöltése';
+			case 'videoControls.subtitleDownloadTimedOut': return 'A felirat nem jelent meg időben. Lehet, hogy a letöltés nem sikerült';
+			case 'videoControls.searchLanguages': return 'Nyelvek keresése...';
+			case 'videoControls.skipIntro': return 'Főcím átugrása';
+			case 'videoControls.skipCredits': return 'Stáblista átugrása';
+			case 'videoControls.nextEpisode': return 'Következő epizód';
+			case 'videoControls.subtitleTrack': return ({required Object n}) => '${n}. sáv';
+			case 'videoControls.subtitleFile': return ({required Object name}) => '${name} felirat';
+			case 'videoControls.forcedTrack': return ({required Object label}) => '${label} (kényszerített)';
+			case 'videoControls.osdSubtitlesOff': return 'Feliratok: ki';
+			case 'videoControls.osdSubtitles': return ({required Object track}) => 'Feliratok: ${track}';
+			case 'videoControls.osdAudio': return ({required Object track}) => 'Hang: ${track}';
+			case 'messages.markedAsWatched': return 'Megjelölve megtekintettként';
+			case 'messages.markedAsUnwatched': return 'Megjelölve nem megtekintettként';
+			case 'messages.markedAsWatchedOffline': return 'Megjelölve megtekintettként (szinkronizálás online állapotban)';
+			case 'messages.markedAsUnwatchedOffline': return 'Megjelölve nem megtekintettként (szinkronizálás online állapotban)';
+			case 'messages.autoRemovedWatchedDownload': return ({required Object title}) => 'Automatikusan eltávolítva: ${title}';
+			case 'messages.autoRemovedWatchedDownloads': return ({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('hu'))(n,
+				one: '${n} megtekintett letöltés automatikusan eltávolítva',
+				other: '${n} megtekintett letöltés automatikusan eltávolítva',
+			);
+			case 'messages.removedFromContinueWatching': return 'Eltávolítva a folytatásból';
+			case 'messages.errorLoading': return ({required Object error}) => 'Hiba: ${error}';
+			case 'messages.searchPartialResults': return 'Néhány médiaszervert nem sikerült keresni. Az elérhető találatok megjelenítése.';
+			case 'messages.streamInterrupted': return 'Az adatfolyam megszakadt. Az újrapróbálkozáshoz indítsd el a lejátszást, vagy tekerj másik pozícióra.';
+			case 'messages.liveStreamInterrupted': return 'Az élő adás megszakadt. Nyomd meg a lejátszást az újrapróbálkozáshoz.';
+			case 'messages.fileInfoNotAvailable': return 'A fájlinformáció nem érhető el';
+			case 'messages.playbackAuthenticationRequired': return 'Az elem lejátszásához jelentkezz be újra a médiaszerverre.';
+			case 'messages.playbackServerUnavailable': return 'A médiaszerver nem érhető el. Próbáld újra később.';
+			case 'messages.playbackDataInvalid': return 'A szerver érvénytelen lejátszási adatokat küldött.';
+			case 'messages.playbackCancelled': return 'A lejátszás megszakítva.';
+			case 'messages.playbackFailed': return 'Nem sikerült elindítani a lejátszást.';
+			case 'messages.playbackFailedDetail': return ({required Object error}) => 'Nem sikerült elindítani a lejátszást: ${error}';
+			case 'messages.audioOutputFailed': return 'A hangkimenet nem válaszol. Ellenőrizd a TV vagy az erősítő hangcsatlakozását; ha más alkalmazásokban sincs hang, indítsd újra az eszközt.';
+			case 'messages.mediaUnavailable': return 'Ez a tartalom már nem érhető el.';
+			case 'messages.errorLoadingFileInfo': return ({required Object error}) => 'Hiba a fájlinformációk betöltésekor: ${error}';
+			case 'messages.errorLoadingSeries': return 'Hiba a sorozat betöltésekor';
+			case 'messages.musicNotSupported': return 'A zenelejátszás még nem támogatott';
+			case 'messages.noDescriptionAvailable': return 'Nincs elérhető leírás';
+			case 'messages.noProfilesAvailable': return 'Nincsenek elérhető profilok';
+			case 'messages.contactAdminForProfiles': return 'Lépj kapcsolatba a szerver adminisztrátorával profilok hozzáadásához';
+			case 'messages.unableToDetermineLibrarySection': return 'Nem sikerült meghatározni az elem könyvtári részlegét';
+			case 'messages.logsCleared': return 'Naplók törölve';
+			case 'messages.logsCopied': return 'Naplók a vágólapra másolva';
+			case 'messages.noLogsAvailable': return 'Nincsenek elérhető naplók';
+			case 'messages.libraryScanning': return ({required Object title}) => '"${title}" beolvasása...';
+			case 'messages.libraryScanStarted': return ({required Object title}) => 'Könyvtár beolvasása elindítva a következőhöz: "${title}"';
+			case 'messages.libraryScanFailed': return ({required Object error}) => 'Nem sikerült a könyvtár beolvasása: ${error}';
+			case 'messages.metadataRefreshing': return ({required Object title}) => 'Metaadatok frissítése a következőhöz: "${title}"...';
+			case 'messages.metadataRefreshStarted': return ({required Object title}) => 'Metaadatok frissítése elindítva a következőhöz: "${title}"';
+			case 'messages.metadataRefreshFailed': return ({required Object error}) => 'Nem sikerült a metaadatok frissítése: ${error}';
+			case 'messages.logoutConfirm': return 'Biztosan ki szeretnél jelentkezni?';
+			case 'messages.noSeasonsFound': return 'Nem találhatók évadok';
+			case 'messages.seasonsLoadFailed': return 'Nem sikerült az évadok betöltése';
+			case 'messages.noEpisodesFound': return 'Nem találhatók epizódok az első évadban';
+			case 'messages.noEpisodesFoundGeneral': return 'Nem találhatók epizódok';
+			case 'messages.episodesLoadFailed': return 'Nem sikerült az epizódok betöltése';
+			case 'messages.noResultsFound': return 'Nincs találat';
+			case 'messages.sleepTimerSet': return ({required Object label}) => 'Elalvási időzítő beállítva: ${label}';
+			case 'messages.noItemsAvailable': return 'Nincsenek elérhető elemek';
+			case 'messages.failedToCreatePlayQueueNoItems': return 'Nem sikerült létrehozni a lejátszási sort — nincsenek elemek';
+			case 'messages.failedPlayback': return ({required Object action, required Object error}) => 'Nem sikerült a művelet (${action}): ${error}';
+			case 'messages.switchingToCompatiblePlayer': return 'Váltás kompatibilis lejátszóra...';
+			case 'messages.serverLimitTitle': return 'A lejátszás nem sikerült';
+			case 'messages.serverLimitBody': return 'Szerverhiba (HTTP 500). A munkamenetet valószínűleg egy sávszélességi vagy átkódolási korlát utasította el. Kérd meg a tulajdonost a korlát módosítására.';
+			case 'messages.mediaUnreadableTitle': return 'A fájl nem érhető el';
+			case 'messages.mediaUnreadableBody': return 'A szerver megtalálta ezt az elemet, de nem tudta beolvasni a fájlját (HTTP 404). A fájl valószínűleg áthelyezésre vagy törlésre került, vagy a tárhelye offline. Kérje meg a szerver tulajdonosát, hogy ellenőrizze a fájlt, és vizsgálja újra a könyvtárat.';
+			case 'messages.serverBusyTitle': return 'A stream nem érhető el';
+			case 'messages.serverBusyBody': return 'A szerver ismételten megtagadta ennek a fájlnak a streamelését (HTTP 503). Lehet, hogy újraindul, túlterhelt, vagy a fájl tárhelye nem érhető el. Próbáld újra egy kis idő múlva – ha a probléma továbbra is fennáll, kérd meg a szerver tulajdonosát, hogy ellenőrizze a szervert és a fájl tárhelyét.';
+			case 'messages.playbackNotAllowedTitle': return 'A lejátszás nem engedélyezett';
+			case 'messages.playbackNotAllowedBody': return 'A szerver megtagadta ennek az elemnek a streamelését (HTTP 403). Lehet, hogy a fiókodnak nincs engedélye a lejátszására, vagy a szerver csak a helyi hálózatán engedélyezi a lejátszást.';
+			case 'messages.logsUploaded': return 'Naplók feltöltve';
+			case 'messages.logsUploadFailed': return 'Nem sikerült a naplók feltöltése';
+			case 'messages.logId': return 'Naplóazonosító';
+			case 'messages.burnedSubtitlesUseMenu': return 'A feliratok bele vannak égetve ebbe a streambe. A feliratmenüben módosíthatod őket.';
+			case 'messages.noVideoUrl': return 'Nem érhető el videó-URL';
+			case 'messages.playbackNoMediaSources': return 'A szerver nem adott vissza lejátszható médiaforrást';
+			case 'messages.playbackDataNotPrepared': return 'A lejátszás az adatok elkészülte előtt indult el';
+			case 'messages.streamSelectionUnavailable': return 'Ehhez a forráshoz nem érhető el a streamek kiválasztása';
+			case 'messages.streamSelectionFailed': return 'Nem sikerült alkalmazni a kiválasztott streameket';
+			case 'messages.trackSelectionNotRemembered': return 'Ez a sávválasztás csak az aktuális lejátszásra érvényes.';
+			case 'messages.serverUnavailableForProfile': return 'Az aktív profilhoz nem érhető el szerver';
+			case 'subtitlingStyling.text': return 'Szöveg';
+			case 'subtitlingStyling.border': return 'Keret';
+			case 'subtitlingStyling.background': return 'Háttér';
+			case 'subtitlingStyling.fontSize': return 'Betűméret';
+			case 'subtitlingStyling.textColor': return 'Szövegszín';
+			case 'subtitlingStyling.borderSize': return 'Keretméret';
+			case 'subtitlingStyling.borderColor': return 'Keretszín';
+			case 'subtitlingStyling.backgroundOpacity': return 'Háttér átlátszatlansága';
+			case 'subtitlingStyling.backgroundColor': return 'Háttérszín';
+			case 'subtitlingStyling.position': return 'Pozíció';
+			case 'subtitlingStyling.assOverride': return 'ASS felülbírálása';
+			case 'subtitlingStyling.overrideScale': return 'Skálázás';
+			case 'subtitlingStyling.overrideForce': return 'Kényszerítés';
+			case 'subtitlingStyling.overrideStrip': return 'Stílus eltávolítása';
+			case 'subtitlingStyling.positionTop': return 'Fent';
+			case 'subtitlingStyling.positionBottom': return 'Lent';
+			case 'subtitlingStyling.useMargins': return 'Margók használata';
+			case 'subtitlingStyling.useMarginsDescription': return 'A szöveges feliratok a videón kívüli területen is megjelenhetnek. A stilizált feliratok megtarthatják eredeti pozíciójukat.';
+			case 'subtitlingStyling.anchorToScreen': return 'Képernyőhöz rögzítés';
+			case 'subtitlingStyling.anchorToScreenDescription': return 'A szöveges feliratok megjelenítése a szélesvásznú videó alatti fekete sávban';
+			case 'subtitlingStyling.bold': return 'Félkövér';
+			case 'subtitlingStyling.italic': return 'Dőlt';
+			case 'subtitlingStyling.renderResolution': return 'Renderelési felbontás';
+			case 'subtitlingStyling.renderResolutionScreen': return 'Képernyőfelbontás';
+			case 'subtitlingStyling.renderResolutionVideo': return 'Videófelbontás';
+			case 'mpvConfig.title': return 'mpv.conf';
+			case 'mpvConfig.description': return 'Haladó videólejátszó beállítások';
+			case 'mpvConfig.presets': return 'Előbeállítások';
+			case 'mpvConfig.noPresets': return 'Nincsenek mentett előbeállítások';
+			case 'mpvConfig.saveAsPreset': return 'Mentés előbeállításként...';
+			case 'mpvConfig.presetName': return 'Előbeállítás neve';
+			case 'mpvConfig.presetNameHint': return 'Add meg az előbeállítás nevét';
+			case 'mpvConfig.loadPreset': return 'Betöltés';
+			case 'mpvConfig.deletePreset': return 'Törlés';
+			case 'mpvConfig.presetSaved': return 'Előbeállítás mentve';
+			case 'mpvConfig.presetLoaded': return 'Előbeállítás betöltve';
+			case 'mpvConfig.presetDeleted': return 'Előbeállítás törölve';
+			case 'mpvConfig.confirmDeletePreset': return 'Biztosan törölni szeretnéd ezt az előbeállítást?';
+			case 'mpvConfig.configPlaceholder': return 'gpu-api=vulkan\nhwdec=auto\n# megjegyzés';
+			case 'mpvConfig.lineHint': return 'option=value';
+			case 'mpvConfig.addLine': return 'Sor hozzáadása';
+			case 'mpvConfig.removeLine': return 'Sor eltávolítása';
+			case 'mpvConfig.embeddedVoHint': return 'A vo, gpu-context és gpu-api beállítások Linuxon figyelmen kívül maradnak: a beágyazott videó mindig a vo=libmpv-n keresztül jelenik meg a videósíkon, a gpu-next (amelyre az ArtCNN-hez hasonló compute shadereknek szükségük van) pedig nem futhat beágyazva.';
+			case 'dialog.confirmAction': return 'Művelet megerősítése';
+			case 'profiles.addPlezyProfile': return 'Plezy profil hozzáadása';
+			case 'profiles.switchingProfile': return 'Profilváltás…';
+			case 'profiles.deleteThisProfileTitle': return 'Törlöd ezt a profilt?';
+			case 'profiles.deleteThisProfileMessage': return ({required Object displayName}) => '${displayName} eltávolítása. A kapcsolatokat nem érinti.';
+			case 'profiles.active': return 'Aktív';
+			case 'profiles.manage': return 'Kezelés';
+			case 'profiles.delete': return 'Törlés';
+			case 'profiles.signOut': return 'Kijelentkezés';
+			case 'profiles.signOutPlexTitle': return 'Kijelentkezel a Plexből?';
+			case 'profiles.signOutPlexMessage': return ({required Object displayName}) => 'Eltávolítod a(z) ${displayName} profilt és az összes Plex Home-felhasználót? Bármikor visszajelentkezhetsz.';
+			case 'profiles.signOutPlexDeleteDownloads': return 'A letöltések törlése is';
+			case 'profiles.signOutPlexDeleteDownloadsDescription': return 'Ellenkező esetben az eszközön maradnak, és újra megjelennek, amikor visszajelentkezel ebbe a fiókba.';
+			case 'profiles.signedOutPlex': return 'Kijelentkezve a Plexből.';
+			case 'profiles.signOutFailed': return 'A kijelentkezés nem sikerült.';
+			case 'profiles.sectionTitle': return 'Profilok';
+			case 'profiles.summarySingle': return 'Adj hozzá profilokat a kezelt felhasználók és a helyi profilok együttes használatához';
+			case 'profiles.summaryMultipleWithActive': return ({required Object count, required Object activeName}) => '${count} profil · aktív: ${activeName}';
+			case 'profiles.summaryMultiple': return ({required Object count}) => '${count} profil';
+			case 'profiles.removeConnectionTitle': return 'Eltávolítod a kapcsolatot?';
+			case 'profiles.removeConnectionMessage': return ({required Object displayName, required Object connectionLabel}) => 'Eltávolítod ${displayName} hozzáférését a(z) ${connectionLabel} kapcsolathoz. Más profilok megtartják.';
+			case 'profiles.deleteProfileTitle': return 'Törlöd a profilt?';
+			case 'profiles.deleteProfileMessage': return ({required Object displayName}) => 'Eltávolítod a(z) ${displayName} profilt és annak kapcsolatait. A szerverek elérhetőek maradnak.';
+			case 'profiles.profileNameLabel': return 'Profil neve';
+			case 'profiles.pinProtectionLabel': return 'PIN-kódos védelem';
+			case 'profiles.pinManagedByPlex': return 'A PIN-kódot a Plex kezeli. Szerkesztés a plex.tv oldalon.';
+			case 'profiles.noPinSetEditOnPlex': return 'Nincs PIN beállítva. PIN kéréséhez szerkeszd az otthoni felhasználót a plex.tv-n.';
+			case 'profiles.setPin': return 'PIN beállítása';
+			case 'profiles.setPinTitle': return 'PIN beállítása';
+			case 'profiles.confirmPinTitle': return 'PIN megerősítése';
+			case 'profiles.pinSet': return 'PIN beállítva';
+			case 'profiles.changePin': return 'Módosítás';
+			case 'profiles.removePin': return 'Eltávolítás';
+			case 'profiles.connectionsLabel': return 'Kapcsolatok';
+			case 'profiles.add': return 'Hozzáadás';
+			case 'profiles.deleteProfileButton': return 'Profil törlése';
+			case 'profiles.noConnectionsHint': return 'Nincsenek kapcsolatok — adj hozzá egyet a profil használatához.';
+			case 'profiles.noConnections': return 'Nincsenek kapcsolatok';
+			case 'profiles.plexHomeAccount': return 'Plex Home-fiók';
+			case 'profiles.plexAccountChip': return ({required Object account}) => 'Plex-fiók: ${account}';
+			case 'profiles.plexAccountUserChip': return ({required Object account, required Object user}) => '${account} fiókján keresztül: ${user}';
+			case 'profiles.connectionDefault': return 'Alapértelmezett';
+			case 'profiles.connectionAs': return ({required Object displayName}) => 'mint ${displayName}';
+			case 'profiles.makeDefault': return 'Beállítás alapértelmezettként';
+			case 'profiles.removeConnection': return 'Eltávolítás';
+			case 'profiles.profileRenamed': return 'Profil átnevezve.';
+			case 'profiles.borrowAddTo': return ({required Object displayName}) => 'Hozzáadás a következőhöz: ${displayName}';
+			case 'profiles.borrowExplain': return 'Használd egy másik profil kapcsolatát. A PIN-kóddal védett profilokhoz PIN-kód szükséges.';
+			case 'profiles.borrowEmpty': return 'Még nincs használható kapcsolat.';
+			case 'profiles.borrowEmptySubtitle': return 'Először csatlakoztasd a Plexet, a Jellyfint vagy az Embyt egy másik profilhoz.';
+			case 'profiles.borrowLoadFailed': return 'Nem sikerült betölteni az elérhető kapcsolatokat. Próbáld újra.';
+			case 'profiles.borrowFromProfile': return ({required Object displayName}) => 'Innen: ${displayName}';
+			case 'profiles.borrowConnectionBorrowed': return 'Kapcsolat átvéve.';
+			case 'profiles.borrowFailed': return 'Nem sikerült átvenni a kapcsolatot.';
+			case 'profiles.incorrectPin': return 'Helytelen PIN-kód.';
+			case 'profiles.incorrectPinTryAgain': return 'Helytelen PIN-kód. Próbáld újra.';
+			case 'profiles.sourceProfileMissingParentAccount': return 'A forrásprofilból hiányzik a szülőfiók.';
+			case 'profiles.failedToLoadHomeUsers': return 'Nem sikerült betölteni a Plex Home-felhasználókat. Ellenőrizd a kapcsolatot, majd próbáld újra.';
+			case 'profiles.failedToVerifyPin': return 'Nem sikerült a PIN-kód ellenőrzése.';
+			case 'profiles.newProfile': return 'Új profil';
+			case 'profiles.profileNameHint': return 'pl. Vendégek, Gyerekek, Nappali';
+			case 'profiles.pinProtectionOptional': return 'PIN-védelem (opcionális)';
+			case 'profiles.pinExplain': return '4 jegyű PIN-kód szükséges a profilváltáshoz.';
+			case 'profiles.continueButton': return 'Folytatás';
+			case 'profiles.pinsDontMatch': return 'A PIN-kódok nem egyeznek';
+			case 'profiles.tokenIdentityMismatch': return 'A Plex-profil tokenje nem a várt szerverhez tartozik';
+			case 'connections.sectionTitle': return 'Kapcsolatok';
+			case 'connections.addConnection': return 'Kapcsolat hozzáadása';
+			case 'connections.addConnectionSubtitleNoProfile': return 'Jelentkezz be Plexszel, vagy csatlakoztass egy Jellyfin- vagy Emby-szervert';
+			case 'connections.addConnectionSubtitleScoped': return ({required Object displayName}) => 'Hozzáadás a következőhöz (${displayName}): Plex, Jellyfin, Emby vagy más profilkapcsolat';
+			case 'connections.sessionExpiredOne': return ({required Object name}) => 'A(z) ${name} munkamenete lejárt';
+			case 'connections.sessionExpiredMany': return ({required Object count}) => '${count} szerver munkamenete lejárt';
+			case 'connections.accessDeniedOne': return ({required Object name}) => 'A(z) ${name} megtagadta a hozzáférést ettől a fióktól';
+			case 'connections.accessDeniedMany': return ({required Object count}) => '${count} szerver megtagadta a hozzáférést ettől a fióktól';
+			case 'connections.signInAgain': return 'Bejelentkezés újra';
+			case 'connections.editMediaBrowserTitle': return ({required Object product}) => 'A(z) ${product} kapcsolat szerkesztése';
+			case 'connections.editMediaBrowserIntro': return ({required Object serverName}) => 'Adjon hozzá vagy távolítson el URL-eket a(z) ${serverName} esetén. A Plezy a legkisebb késleltetésű, elérhető URL-t fogja használni.';
+			case 'accountPreferences.sectionTitle': return 'Fiókbeállítások';
+			case 'accountPreferences.hubSubtitleSingle': return ({required Object account}) => 'Hang-, felirat- és könyvtárbeállítások mentve a(z) ${account} fiókra';
+			case 'accountPreferences.hubSubtitleMultiple': return ({required Object count}) => 'Hang-, felirat- és könyvtárbeállítások mentve ${count} fiókra';
+			case 'accountPreferences.pickAccount': return 'Minden fiók a saját beállításait tárolja. Válaszd ki a szerkesztendőt.';
+			case 'accountPreferences.storedOnAccount': return 'Ezek a beállítások magán a fiókon tárolódnak, így minden bejelentkezett alkalmazás használja őket — beleértve a Plezyt a többi eszközödön.';
+			case 'accountPreferences.noAccounts': return 'Nincs beállítható fiók';
+			case 'accountPreferences.noAccountsHint': return 'Jelentkezz be a Plexbe, vagy csatlakoztass egy Jellyfin- vagy Emby-szervert, és az azon a fiókon tárolt beállítások itt jelennek meg.';
+			case 'accountPreferences.unavailable': return 'Ez a fiók nem érhető el';
+			case 'accountPreferences.loadFailed': return 'Nem sikerült betölteni ezeket a beállításokat';
+			case 'accountPreferences.noPreference': return 'Nincs preferencia';
+			case 'accountPreferences.notSet': return 'Nincs beállítva';
+			case 'accountPreferences.groups.audioAndSubtitles': return 'Hang és feliratok';
+			case 'accountPreferences.groups.libraryDisplay': return 'Könyvtár';
+			case 'accountPreferences.groups.personalMedia': return 'Személyes média';
+			case 'accountPreferences.preferredAudioLanguage': return 'Elsődleges hangnyelv';
+			case 'accountPreferences.autoSelectAudio': return 'Hangsáv kiválasztása nyelv alapján';
+			case 'accountPreferences.autoSelectAudioDescription': return 'Ki kapcsolásnál a fájl által alapértelmezettként megjelölt hangsáv marad.';
+			case 'accountPreferences.preferredSubtitleLanguage': return 'Elsődleges feliratnyelv';
+			case 'accountPreferences.subtitleMode': return 'Feliratok bekapcsolása';
+			case 'accountPreferences.subtitleModes.none': return 'Kézzel kiválasztva';
+			case 'accountPreferences.subtitleModes.noneDescription': return 'Soha ne kapcsolja be magától a feliratokat.';
+			case 'accountPreferences.subtitleModes.defaultMode': return 'A sáv jelzőinek követése';
+			case 'accountPreferences.subtitleModes.defaultModeDescription': return 'Az egyes feliratsávokon tárolt alapértelmezett és kényszerített jelzők használata.';
+			case 'accountPreferences.subtitleModes.always': return 'Mindig engedélyezve';
+			case 'accountPreferences.subtitleModes.alwaysDescription': return 'Feliratsáv bekapcsolása az elsődleges nyelven, ha van ilyen.';
+			case 'accountPreferences.subtitleModes.onlyForced': return 'Csak kényszerített feliratok';
+			case 'accountPreferences.subtitleModes.onlyForcedDescription': return 'Csak a kényszerítettként megjelölt sávok betöltése.';
+			case 'accountPreferences.subtitleModes.smart': return 'Idegen nyelvű hang esetén megjelenítve';
+			case 'accountPreferences.subtitleModes.smartDescription': return 'Feliratok bekapcsolása csak akkor, ha a hang más nyelven szól.';
+			case 'accountPreferences.subtitleAccessibility': return 'SDH-feliratok';
+			case 'accountPreferences.subtitleAccessibilityOptions.preferNonSdh': return 'Nem SDH-feliratok előnyben részesítése';
+			case 'accountPreferences.subtitleAccessibilityOptions.preferSdh': return 'SDH-feliratok előnyben részesítése';
+			case 'accountPreferences.subtitleAccessibilityOptions.onlySdh': return 'Csak SDH-feliratok';
+			case 'accountPreferences.subtitleAccessibilityOptions.onlyNonSdh': return 'Csak nem SDH-feliratok';
+			case 'accountPreferences.forcedSubtitles': return 'Kényszerített feliratok';
+			case 'accountPreferences.forcedSubtitleOptions.preferNonForced': return 'Nem kényszerített feliratok előnyben részesítése';
+			case 'accountPreferences.forcedSubtitleOptions.preferForced': return 'Kényszerített feliratok előnyben részesítése';
+			case 'accountPreferences.forcedSubtitleOptions.onlyForced': return 'Csak kényszerített feliratok';
+			case 'accountPreferences.forcedSubtitleOptions.onlyNonForced': return 'Csak nem kényszerített feliratok';
+			case 'accountPreferences.displayMissingEpisodes': return 'Hiányzó epizódok megjelenítése';
+			case 'accountPreferences.displayMissingEpisodesDescription': return 'Azoknak az epizódoknak a listázása, amelyeket a szerver ismer, de nincs hozzájuk fájl.';
+			case 'accountPreferences.hidePlayedInLatest': return 'Megnézett elemek elrejtése a Legújabbak között';
+			case 'accountPreferences.hidePlayedInLatestDescription': return 'A már megnézett elemek kimaradnak a szerver Legújabbak soraiból.';
+			case 'accountPreferences.displayCollectionsView': return 'Gyűjtemények nézet megjelenítése';
+			case 'accountPreferences.displayCollectionsViewDescription': return 'A szerver Gyűjtemények nézetének megjelenítése a könyvtárak mellett.';
+			case 'accountPreferences.rewatchingInNextUp': return 'Újranézett sorozatok megtartása a Következikben';
+			case 'accountPreferences.rewatchingInNextUpDescription': return 'Ha befejezel egy sorozatot, és újra elkezded, a Következik az újranézést követi, ahelyett hogy eldobná a sorozatot.';
+			case 'accountPreferences.watchedIndicator': return 'Megtekintett jelzések';
+			case 'accountPreferences.watchedIndicatorOptions.none': return 'Soha';
+			case 'accountPreferences.watchedIndicatorOptions.moviesAndShows': return 'Filmek és TV-sorozatok';
+			case 'accountPreferences.watchedIndicatorOptions.movies': return 'Csak filmek';
+			case 'accountPreferences.watchedIndicatorOptions.shows': return 'Csak TV-sorozatok';
+			case 'accountPreferences.mediaReviewsVisibility': return 'Értékelések és kritikák';
+			case 'accountPreferences.mediaReviewsOptions.usersAndCritics': return 'Felhasználók és kritikusok';
+			case 'accountPreferences.mediaReviewsOptions.usersOnly': return 'Csak felhasználók';
+			case 'accountPreferences.mediaReviewsOptions.criticsOnly': return 'Csak kritikusok';
+			case 'accountPreferences.mediaReviewsOptions.nobody': return 'Rejtett';
+			case 'discover.title': return 'Felfedezés';
+			case 'discover.noContentAvailable': return 'Nincs elérhető tartalom';
+			case 'discover.addMediaToLibraries': return 'Adj hozzá médiát a könyvtáraidhoz';
+			case 'discover.continueWatching': return 'Folytatás';
+			case 'discover.continueWatchingIn': return ({required Object library}) => 'Folytatás itt: ${library}';
+			case 'discover.nextUp': return 'Következik';
+			case 'discover.nextUpIn': return ({required Object library}) => 'Következik itt: ${library}';
+			case 'discover.recentlyAdded': return 'Legutóbb hozzáadva';
+			case 'discover.recentlyAddedIn': return ({required Object library}) => 'Legutóbb hozzáadva itt: ${library}';
+			case 'discover.latestAlbumsIn': return ({required Object library}) => 'Legújabb albumok itt: ${library}';
+			case 'discover.recentlyPlayedIn': return ({required Object library}) => 'Legutóbb lejátszva itt: ${library}';
+			case 'discover.mostPlayedIn': return ({required Object library}) => 'Legtöbbször lejátszva itt: ${library}';
+			case 'discover.playEpisode': return ({required Object season, required Object episode}) => '${season}. évad, ${episode}. epizód';
+			case 'discover.overview': return 'Áttekintés';
+			case 'discover.cast': return 'Szereplők';
+			case 'discover.extras': return 'Előzetesek és extrák';
+			case 'discover.studio': return 'Stúdió';
+			case 'discover.rating': return 'Értékelés';
+			case 'discover.director': return 'Rendező';
+			case 'discover.directors': return 'Rendezők';
+			case 'discover.movie': return 'Film';
+			case 'discover.tvShow': return 'TV-sorozat';
+			case 'discover.minutesLeft': return ({required Object minutes}) => '${minutes} perc van hátra';
+			case 'discover.moreLikeThis': return 'Hasonló tartalmak';
+			case 'discover.titleCount': return ({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('hu'))(n,
+				one: '${n} cím',
+				other: '${n} cím',
+			);
+			case 'discover.person.born': return 'Született';
+			case 'discover.person.died': return 'Elhunyt';
+			case 'discover.person.birthplace': return 'Születési hely';
+			case 'discover.person.dateWithAge': return ({required Object date, required Object age}) => '${date} (${age} éves)';
+			case 'discover.person.dateWithAgeAtDeath': return ({required Object date, required Object age}) => '${date} (${age} évesen)';
+			case 'errors.searchFailed': return ({required Object error}) => 'Keresés sikertelen: ${error}';
+			case 'errors.searchUnavailable': return 'A keresés egyetlen médiaszervert sem tudott elérni.';
+			case 'errors.connectionTimeout': return ({required Object context}) => 'Hálózati időtúllépés a következő betöltésekor: ${context}';
+			case 'errors.connectionFailed': return 'Nem sikerült csatlakozni a médiaszerverhez';
+			case 'errors.unableToLoad': return ({required Object context}) => 'Nem sikerült betölteni a következőt: ${context}. Próbáld újra.';
+			case 'errors.noClientAvailable': return 'Nincs elérhető kliens';
+			case 'errors.pleaseEnterToken': return 'Adj meg egy tokent';
+			case 'errors.invalidToken': return 'Érvénytelen token';
+			case 'errors.failedToVerifyToken': return ({required Object error}) => 'Nem sikerült a token ellenőrzése: ${error}';
+			case 'errors.failedToSwitchProfile': return ({required Object displayName}) => 'Nem sikerült átváltani a következő profilra: ${displayName}';
+			case 'errors.failedToDeleteProfile': return ({required Object displayName}) => 'Nem sikerült törölni a következőt: ${displayName}';
+			case 'errors.failedToRate': return 'Nem sikerült frissíteni az értékelést';
+			case 'errors.reasonTimedOut': return 'időtúllépés történt a kapcsolatban';
+			case 'errors.reasonUnreachable': return 'a médiaszerver nem érhető el';
+			case 'errors.reasonRefused': return 'a médiaszerver elutasította a kérést';
+			case 'errors.reasonNotFound': return 'az elem már nem található a médiaszerveren';
+			case 'errors.reasonServerError': return 'a médiaszerver hibát jelzett';
+			case 'errors.reasonCancelled': return 'a kérés meg lett szakítva';
+			case 'errors.reasonUnexpected': return 'váratlan hiba történt';
+			case 'libraries.title': return 'Könyvtárak';
+			case 'libraries.fallbackTitle': return 'Könyvtár';
+			case 'libraries.scanLibraryFiles': return 'Könyvtárfájlok beolvasása';
+			case 'libraries.scanLibrary': return 'Könyvtár beolvasása';
+			case 'libraries.analyze': return 'Elemzés';
+			case 'libraries.analyzeLibrary': return 'Könyvtár elemzése';
+			case 'libraries.refreshMetadata': return 'Metaadatok frissítése';
+			case 'libraries.emptyTrash': return 'Lomtár ürítése';
+			case 'libraries.emptyingTrash': return ({required Object title}) => 'Lomtár ürítése a következőhöz: "${title}"...';
+			case 'libraries.trashEmptied': return ({required Object title}) => 'Lomtár kiürítve a következőhöz: "${title}"';
+			case 'libraries.failedToEmptyTrash': return ({required Object error}) => 'Nem sikerült a lomtár ürítése: ${error}';
+			case 'libraries.analyzing': return ({required Object title}) => '"${title}" elemzése...';
+			case 'libraries.analysisStarted': return ({required Object title}) => 'Elemzés elindítva a következőhöz: "${title}"';
+			case 'libraries.failedToAnalyze': return ({required Object error}) => 'Nem sikerült a könyvtár elemzése: ${error}';
+			case 'libraries.noLibrariesFound': return 'Nem találhatók könyvtárak';
+			case 'libraries.allLibrariesHidden': return 'Minden könyvtár el van rejtve';
+			case 'libraries.hiddenLibrariesCount': return ({required Object count}) => 'Rejtett könyvtárak (${count})';
+			case 'libraries.thisLibraryIsEmpty': return 'Ez a könyvtár üres';
+			case 'libraries.noItemsMatchFilters': return 'Nincs az aktív szűrőknek megfelelő elem';
+			case 'libraries.resetFilters': return 'Szűrők visszaállítása';
+			case 'libraries.all': return 'Összes';
+			case 'libraries.clearAll': return 'Összes törlése';
+			case 'libraries.scanLibraryConfirm': return ({required Object title}) => 'Biztosan be szeretnéd olvasni a következőt: "${title}"?';
+			case 'libraries.analyzeLibraryConfirm': return ({required Object title}) => 'Biztosan elemezni szeretnéd a következőt: "${title}"?';
+			case 'libraries.refreshMetadataConfirm': return ({required Object title}) => 'Biztosan frissíteni szeretnéd a metaadatokat a következőhöz: "${title}"?';
+			case 'libraries.emptyTrashConfirm': return ({required Object title}) => 'Biztosan ki szeretnéd üríteni a lomtárat a következőnél: "${title}"?';
+			case 'libraries.manageLibraries': return 'Könyvtárak kezelése';
+			case 'libraries.sort': return 'Rendezés';
+			case 'libraries.sortBy': return 'Rendezés ez alapján';
+			case 'libraries.filters': return 'Szűrők';
+			case 'libraries.confirmActionMessage': return 'Biztosan végre szeretnéd hajtani ezt a műveletet?';
+			case 'libraries.showLibrary': return 'Könyvtár megjelenítése';
+			case 'libraries.hideLibrary': return 'Könyvtár elrejtése';
+			case 'libraries.libraryOptions': return 'Könyvtár beállításai';
+			case 'libraries.content': return 'könyvtár tartalma';
+			case 'libraries.selectLibrary': return 'Könyvtár kiválasztása';
+			case 'libraries.filtersWithCount': return ({required Object count}) => 'Szűrők (${count})';
+			case 'libraries.noRecommendations': return 'Nincsenek elérhető ajánlások';
+			case 'libraries.noCollections': return 'Nincsenek gyűjtemények ebben a könyvtárban';
+			case 'libraries.noFoldersFound': return 'Nem találhatók mappák';
+			case 'libraries.folders': return 'mappák';
+			case 'libraries.tabs.recommended': return 'Ajánlott';
+			case 'libraries.tabs.browse': return 'Böngészés';
+			case 'libraries.tabs.collections': return 'Gyűjtemények';
+			case 'libraries.tabs.playlists': return 'Lejátszási listák';
+			case 'libraries.groupings.title': return 'Csoportosítás';
+			case 'libraries.groupings.all': return 'Összes';
+			case 'libraries.groupings.movies': return 'Filmek';
+			case 'libraries.groupings.shows': return 'TV-sorozatok';
+			case 'libraries.groupings.seasons': return 'Évadok';
+			case 'libraries.groupings.episodes': return 'Epizódok';
+			case 'libraries.groupings.artists': return 'Előadók';
+			case 'libraries.groupings.albums': return 'Albumok';
+			case 'libraries.groupings.tracks': return 'Zeneszámok';
+			case 'libraries.groupings.folders': return 'Mappák';
+			case 'libraries.filterCategories.genre': return 'Műfaj';
+			case 'libraries.filterCategories.year': return 'Év';
+			case 'libraries.filterCategories.contentRating': return 'Korhatár-besorolás';
+			case 'libraries.filterCategories.tag': return 'Címke';
+			case 'libraries.filterCategories.unwatched': return 'Nem látott';
+			case 'libraries.filterCategories.unplayed': return 'Nem lejátszott';
+			case 'libraries.filterCategories.favorites': return 'Kedvencek';
+			case 'libraries.filterCategories.filePath': return 'Fájl elérési útja';
+			case 'libraries.sortLabels.title': return 'Cím';
+			case 'libraries.sortLabels.dateAdded': return 'Hozzáadás dátuma';
+			case 'libraries.sortLabels.releaseDate': return 'Bemutató dátuma';
+			case 'libraries.sortLabels.rating': return 'Értékelés';
+			case 'libraries.sortLabels.communityRating': return 'Közösségi értékelés';
+			case 'libraries.sortLabels.criticRating': return 'Kritikusi értékelés';
+			case 'libraries.sortLabels.userRating': return 'Saját értékelés';
+			case 'libraries.sortLabels.datePlayed': return 'Lejátszás dátuma';
+			case 'libraries.sortLabels.playCount': return 'Lejátszások száma';
+			case 'libraries.sortLabels.productionYear': return 'Gyártási év';
+			case 'libraries.sortLabels.runtime': return 'Játékidő';
+			case 'libraries.sortLabels.officialRating': return 'Hivatalos besorolás';
+			case 'libraries.sortLabels.premiereDate': return 'Premier dátuma';
+			case 'libraries.sortLabels.startDate': return 'Kezdés dátuma';
+			case 'libraries.sortLabels.airTime': return 'Adásidő';
+			case 'libraries.sortLabels.studio': return 'Stúdió';
+			case 'libraries.sortLabels.random': return 'Véletlenszerű';
+			case 'libraries.sortLabels.dateShared': return 'Megosztás dátuma';
+			case 'libraries.sortLabels.latestEpisodeAirDate': return 'A legutóbbi epizód sugárzási dátuma';
+			case 'libraries.sortLabels.lastEpisodeDateAdded': return 'Utolsó epizód hozzáadásának dátuma';
+			case 'libraries.sortLabels.dateDownloaded': return 'Letöltés dátuma';
+			case 'libraries.sortLabels.size': return 'Méret';
+			case 'libraries.sortLabels.library': return 'Könyvtár';
+			case 'libraries.advancedFilters.include': return 'Belefoglalás';
+			case 'libraries.advancedFilters.exclude': return 'Kizárás';
+			case 'libraries.advancedFilters.any': return 'Mindegy';
+			case 'libraries.advancedFilters.yes': return 'Igen';
+			case 'libraries.advancedFilters.no': return 'Nem';
+			case 'libraries.advancedFilters.not': return ({required Object value}) => 'Kivéve: ${value}';
+			case 'libraries.advancedFilters.valueCount': return ({required Object count}) => '${count} kiválasztva';
+			case 'libraries.advancedFilters.valueCountExcluded': return ({required Object count}) => '${count} kizárva';
+			case 'libraries.advancedFilters.searchValues': return 'Értékek keresése';
+			case 'libraries.advancedFilters.noValues': return 'Nincsenek értékek';
+			case 'libraries.advancedFilters.matchContains': return 'Tartalmazza';
+			case 'libraries.advancedFilters.matchNotContains': return 'Nem tartalmazza';
+			case 'libraries.advancedFilters.matchIs': return 'Egyezik';
+			case 'libraries.advancedFilters.matchIsNot': return 'Nem egyezik';
+			case 'libraries.advancedFilters.matchBeginsWith': return 'Ezzel kezdődik';
+			case 'libraries.advancedFilters.matchEndsWith': return 'Erre végződik';
+			case 'libraries.advancedFilters.textHint': return 'Írd be a keresett szöveget';
+			case 'libraries.advancedFilters.from': return 'Ettől';
+			case 'libraries.advancedFilters.to': return 'Eddig';
+			case 'libraries.advancedFilters.range': return ({required Object from, required Object to}) => '${from} – ${to}';
+			case 'libraries.advancedFilters.atLeast': return ({required Object value}) => 'Legalább ${value}';
+			case 'libraries.advancedFilters.atMost': return ({required Object value}) => 'Legfeljebb ${value}';
+			case 'libraries.advancedFilters.dateLastDays': return ({required Object count}) => 'Az elmúlt ${count} nap';
+			case 'libraries.advancedFilters.dateLastYear': return 'Az elmúlt év';
+			case 'libraries.advancedFilters.dateOlderThanDays': return ({required Object count}) => '${count} napnál régebbi';
+			case 'libraries.advancedFilters.dateOlderThanYear': return 'Egy évnél régebbi';
+			case 'about.title': return 'Névjegy';
+			case 'about.openSourceLicenses': return 'Nyílt forráskódú licencek';
+			case 'about.versionLabel': return ({required Object version}) => 'Verzió: ${version}';
+			case 'about.appDescription': return 'Gyönyörű Flutter-kliens a Plexhez, a Jellyfinhez és az Embyhez';
+			case 'about.viewLicensesDescription': return 'Külső fejlesztésű programkönyvtárak licenceinek megtekintése';
+			case 'serverSelection.noServersFoundForAccount': return ({required Object username, required Object email}) => 'Nem találhatók szerverek ehhez a fiókhoz: ${username} (${email})';
+			case 'serverSelection.failedToLoadServers': return ({required Object error}) => 'Nem sikerült a szerverek betöltése: ${error}';
+			case 'serverSelection.noValidServers': return 'Nem található használható szerver ehhez a fiókhoz';
+			case 'hubDetail.title': return 'Cím';
+			case 'hubDetail.releaseYear': return 'Kiadási év';
+			case 'hubDetail.dateAdded': return 'Hozzáadás dátuma';
+			case 'hubDetail.rating': return 'Értékelés';
+			case 'hubDetail.noItemsFound': return 'Nem találhatók elemek';
+			case 'logs.clearLogs': return 'Naplók törlése';
+			case 'logs.copyLogs': return 'Naplók másolása';
+			case 'logs.uploadLogs': return 'Naplók feltöltése';
+			case 'startup.failedTitle': return 'A Plezy nem tudott elindulni';
+			case 'startup.failedBody': return 'Valami hiba történt az indítás során. Az alábbi részletek mutatják, mi hibázott.';
+			case 'startup.failedBodyRepairable': return 'A Plezy mentett beállításfájlja sérült, és újra kell építeni, mielőtt a Plezy elindulhatna. Az újrapróbálkozás nem segít – válassza a Tárhely javítása lehetőséget.';
+			case 'startup.phaseLabel': return 'Lépés';
+			case 'startup.showDetails': return 'Részletek megjelenítése';
+			case 'startup.hideDetails': return 'Részletek elrejtése';
+			case 'startup.copyDetails': return 'Részletek másolása';
+			case 'startup.detailsCopied': return 'A részletek a vágólapra kerültek';
+			case 'startup.uploadDetails': return 'Részletek feltöltése';
+			case 'startup.repairStorage': return 'Tárhely javítása';
+			case 'startup.repairTitle': return 'Javítsuk a tárolt adatokat?';
+			case 'startup.repairBodyCommon': return 'A Plezy beállításfájlja sérült, és nem olvasható. A javítás minden beállítást visszaállít az alapértelmezettre.';
+			case 'startup.repairBodyOneCredential': return 'Egy mentett bejelentkezés sérült, és nem olvasható. A javítás csak azt távolítja el; a többi beállítása érintetlen marad.';
+			case 'startup.repairBodySignInsKept': return 'A szervereinek és profiljainak bejelentkezve kell maradniuk.';
+			case 'startup.repairBodySignInsLost': return 'A mentett bejelentkezéseket védő kulcs nem nyerhető vissza ebből a fájlból, ezért minden szerverre és profilba újra be kell jelentkeznie. A médiaszerveren semmi nem érintett.';
+			case 'startup.repairBodySessionsUncertain': return 'A nyomkövetők (MAL, AniList, Simkl, Trakt) és a Seerr külön vannak tárolva, és megmaradhatnak vagy nem. A Plezy pontosan megmondja, mit őrzött meg.';
+			case 'startup.repairConfirm': return 'Javítás';
+			case 'startup.repairSucceeded': return 'A tárhely javítva';
+			case 'startup.repairNeedsRestart': return 'A tárhely javítva – újraindítás szükséges';
+			case 'startup.restartRequiredBody': return 'Az adatait kijavítottuk, de a Plezy-nek frissen kell elindulnia, mielőtt használhatná. Zárja be a Plezy-t, és nyissa meg újra.';
+			case 'startup.quitPlezy': return 'Kilépés a Plezy-ből';
+			case 'startup.repairFailed': return 'A javítás nem sikerült';
+			case 'startup.repairKeptSignIns': return 'A szerverei és profiljai továbbra is be vannak jelentkezve.';
+			case 'startup.repairLostSignIns': return 'A mentett bejelentkezéseket védő kulcs nem volt visszanyerhető. Minden szerverre és profilba újra be kell jelentkeznie.';
+			case 'startup.repairLostSessions': return 'Legalább egy nyomkövető- vagy Seerr-kapcsolat elveszett, és újra kell csatlakoztatni.';
+			case 'startup.backupTitle': return 'A sérült fájlról másolat készült';
+			case 'startup.backupWarning': return 'Bejelentkezési adatait tartalmazza. Ne töltse fel és ne ossza meg.';
+			case 'startup.deleteBackup': return 'Másolat törlése';
+			case 'startup.backupDeleted': return 'A másolat törölve.';
+			case 'startup.previousFailureTitle': return 'A Plezy legutóbb nem tudott elindulni';
+			case 'licenses.relatedPackages': return 'Kapcsolódó csomagok';
+			case 'licenses.license': return 'Licenc';
+			case 'licenses.licenseNumber': return ({required Object number}) => '${number}. licenc';
+			case 'licenses.licensesCount': return ({required Object count}) => '${count} licenc';
+			case 'navigation.libraries': return 'Könyvtárak';
+			case 'navigation.downloads': return 'Letöltések';
+			case 'navigation.liveTv': return 'Élő TV';
+			case 'navigation.explore': return 'Böngészés';
+			case 'explore.title': return 'Böngészés';
+			case 'explore.selectSource': return 'Forrás kiválasztása';
+			case 'explore.rows.watchlist': return 'Néznivalók listája';
+			case 'explore.rows.recommendedMovies': return 'Ajánlott filmek';
+			case 'explore.rows.recommendedShows': return 'Ajánlott sorozatok';
+			case 'explore.rows.trendingMovies': return 'Felkapott filmek';
+			case 'explore.rows.trendingShows': return 'Felkapott sorozatok';
+			case 'explore.rows.popularMovies': return 'Népszerű filmek';
+			case 'explore.rows.popularShows': return 'Népszerű sorozatok';
+			case 'explore.rows.trendingAnime': return 'Felkapott animék';
+			case 'explore.rows.suggestedAnime': return 'Ajánlott animék';
+			case 'explore.rows.airingAnime': return 'Jelenleg futó top animék';
+			case 'explore.rows.popularAnime': return 'Legnépszerűbb animék';
+			case 'explore.rows.trending': return 'Felkapott';
+			case 'explore.rows.upcomingMovies': return 'Közelgő filmek';
+			case 'explore.rows.upcomingShows': return 'Közelgő sorozatok';
+			case 'explore.status.airing': return 'Adásban';
+			case 'explore.status.ended': return 'Befejeződött';
+			case 'explore.status.canceled': return 'Törölve';
+			case 'explore.status.upcoming': return 'Közelgő';
+			case 'explore.episodeCount': return ({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('hu'))(n,
+				one: '${n} epizód',
+				other: '${n} epizód',
+			);
+			case 'explore.cast': return 'Szereplők';
+			case 'explore.characters': return 'Karakterek';
+			case 'explore.addToWatchlist': return 'Hozzáadás a Néznivalókhoz';
+			case 'explore.removeFromWatchlist': return 'Eltávolítás a Néznivalókból';
+			case 'explore.addedToWatchlist': return 'Hozzáadva a figyelőlistához';
+			case 'explore.removedFromWatchlist': return 'Eltávolítva a figyelőlistáról';
+			case 'explore.watchlistUpdateFailed': return 'Nem sikerült a Néznivalók frissítése';
+			case 'explore.watchlistNoMatch': return 'Nem sikerült ezt az elemet figyelőlistához társítani';
+			case 'explore.notInLibrary': return 'Nincs a könyvtáradban';
+			case 'explore.inTheseLibraries': return 'Ezekben a könyvtárakban';
+			case 'explore.checkingLibrary': return 'Könyvtár ellenőrzése...';
+			case 'explore.libraryCheckFailed': return ({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('hu'))(n,
+				one: 'Nem sikerült ${n} szervert ellenőrizni',
+				other: 'Nem sikerült ${n} szervert ellenőrizni',
+			);
+			case 'explore.emptyTitle': return 'Még nincs itt semmi';
+			case 'explore.emptyMessage': return ({required Object source}) => 'A(z) ${source} forrásból származó sorok itt fognak megjelenni, amint van tartalmuk.';
+			case 'explore.searchHint': return ({required Object source}) => 'Keresés itt: ${source}';
+			case 'explore.searchEmpty': return ({required Object query}) => 'Nincs találat a következőre: "${query}"';
+			case 'explore.searchPrompt': return ({required Object source}) => 'Filmek és sorozatok keresése a következőn: ${source}.';
+			case 'explore.searchFailed': return 'A keresés nem sikerült. Ellenőrizd a kapcsolatot és próbáld újra.';
+			case 'explore.badge.rankPopular': return ({required Object n}) => '#${n} népszerű';
+			case 'explore.badge.rankAiring': return ({required Object n}) => '#${n} adásban';
+			case 'explore.badge.rankRated': return ({required Object n}) => '#${n} értékelt';
+			case 'explore.badge.rankTrending': return ({required Object n}) => '#${n} felkapott';
+			case 'explore.badge.rankSeasonal': return ({required Object n, required Object season}) => '#${n} a(z) ${season} évadban';
+			case 'explore.badge.watchingNow': return ({required Object n}) => '${n} nézi';
+			case 'explore.badge.available': return 'Elérhető';
+			case 'explore.badge.partiallyAvailable': return 'Részben elérhető';
+			case 'explore.badge.availableIn4k': return '4K elérhető';
+			case 'explore.badge.requested': return 'Kérve';
+			case 'explore.badge.pendingApproval': return 'Jóváhagyásra vár';
+			case 'explore.badge.processing': return 'Feldolgozás alatt';
+			case 'explore.badge.declined': return 'Elutasítva';
+			case 'explore.badge.requestFailed': return 'A kérés nem sikerült';
+			case 'explore.badge.requested4k': return '4K kérve';
+			case 'explore.badge.seasonsAvailable': return ({required Object available, required Object total}) => '${available}/${total} évad';
+			case 'explore.badge.nextEpisodeIn': return ({required Object episode, required Object duration}) => '${episode}. ep. ${duration} múlva';
+			case 'explore.badge.nextAiringIn': return ({required Object duration}) => 'Következő ${duration} múlva';
+			case 'explore.badge.episodesShort': return ({required Object n}) => '${n} ep.';
+			case 'explore.badge.minutesPerEpisode': return ({required Object n}) => '${n} perc/ep.';
+			case 'explore.badge.adult': return '18+';
+			case 'explore.stats.listed': return ({required Object n}) => '${n} listázva';
+			case 'explore.stats.viewersDay': return ({required Object n}) => '${n} nézte ma';
+			case 'explore.stats.viewersWeek': return ({required Object n}) => '${n} nézte ezen a héten';
+			case 'explore.stats.viewersMonth': return ({required Object n}) => '${n} nézte ebben a hónapban';
+			case 'explore.stats.viewersYear': return ({required Object n}) => '${n} nézte ebben az évben';
+			case 'explore.stats.viewersAllTime': return ({required Object n}) => '${n} néző';
+			case 'explore.stats.planning': return ({required Object n}) => '${n} tervezi megnézni';
+			case 'explore.stats.favorited': return ({required Object n}) => '${n} kedvenc';
+			case 'explore.stats.dropRate': return ({required Object percent}) => '${percent} felhagyott vele';
+			case 'explore.stats.comments': return ({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('hu'))(n,
+				one: '${n} hozzászólás',
+				other: '${n} hozzászólás',
+			);
+			case 'explore.stats.votes': return ({required Object n}) => '${n} szavazat';
+			case 'explore.stats.watching': return ({required Object n}) => '${n} nézi';
+			case 'explore.stats.completed': return ({required Object n}) => '${n} befejezte';
+			case 'explore.stats.onHold': return ({required Object n}) => '${n} szünetelteti';
+			case 'explore.stats.dropped': return ({required Object n}) => '${n} felhagyott vele';
+			case 'explore.season.winter': return 'Tél';
+			case 'explore.season.spring': return 'Tavasz';
+			case 'explore.season.summer': return 'Nyár';
+			case 'explore.season.fall': return 'Ősz';
+			case 'explore.season.withYear': return ({required Object season, required Object year}) => '${season} ${year}';
+			case 'explore.format.tv': return 'TV';
+			case 'explore.format.tvShort': return 'TV rövid';
+			case 'explore.format.movie': return 'Film';
+			case 'explore.format.special': return 'Különkiadás';
+			case 'explore.format.ova': return 'OVA';
+			case 'explore.format.ona': return 'ONA';
+			case 'explore.format.music': return 'Zene';
+			case 'explore.format.other': return 'Egyéb';
+			case 'explore.sourceMaterial.original': return 'Eredeti';
+			case 'explore.sourceMaterial.manga': return 'Manga';
+			case 'explore.sourceMaterial.lightNovel': return 'Light novel';
+			case 'explore.sourceMaterial.novel': return 'Regény';
+			case 'explore.sourceMaterial.visualNovel': return 'Visual novel';
+			case 'explore.sourceMaterial.game': return 'Játék';
+			case 'explore.sourceMaterial.webComic': return 'Webképregény';
+			case 'explore.sourceMaterial.musicRelease': return 'Zene';
+			case 'explore.sourceMaterial.otherMedia': return 'Egyéb';
+			case 'explore.creditRole.actor': return 'Színész';
+			case 'explore.creditRole.director': return 'Rendező';
+			case 'explore.creditRole.writer': return 'Író';
+			case 'explore.creditRole.producer': return 'Producer';
+			case 'explore.creditRole.creator': return 'Alkotó';
+			case 'explore.creditRole.composer': return 'Zeneszerző';
+			case 'explore.relation.prequel': return 'Előzmény';
+			case 'explore.relation.sequel': return 'Folytatás';
+			case 'explore.relation.sideStory': return 'Melléktörténet';
+			case 'explore.relation.spinOff': return 'Spin-off';
+			case 'explore.relation.alternativeVersion': return 'Alternatív verzió';
+			case 'explore.relation.summary': return 'Összefoglaló';
+			case 'explore.relation.parentStory': return 'Fő történet';
+			case 'explore.relation.adaptation': return 'Adaptáció';
+			case 'explore.relation.other': return 'Kapcsolódó';
+			case 'explore.broadcast': return ({required Object day, required Object time}) => 'Adásban: ${day}, ${time} órakor';
+			case 'explore.broadcastWithZone': return ({required Object day, required Object time, required Object timezone}) => 'Adásban: ${day}, ${time} ${timezone}';
+			case 'explore.detail.originalTitle': return 'Eredeti cím';
+			case 'explore.detail.alsoKnownAs': return 'Más néven';
+			case 'explore.detail.studios': return 'Stúdiók';
+			case 'explore.detail.country': return 'Ország';
+			case 'explore.detail.language': return 'Nyelv';
+			case 'explore.detail.released': return 'Megjelent';
+			case 'explore.detail.physicalRelease': return 'Lemezes';
+			case 'explore.detail.ended': return 'Befejeződött';
+			case 'explore.detail.addedOn': return ({required Object date}) => 'Hozzáadva: ${date}';
+			case 'explore.detail.yourRating': return 'Az Ön értékelése';
+			case 'explore.detail.budget': return 'Költségvetés';
+			case 'explore.detail.revenue': return 'Bevétel';
+			case 'explore.detail.contentAdvisory': return 'Korhatár';
+			case 'explore.detail.tags': return 'Címkék';
+			case 'explore.detail.revealSpoilerTags': return 'Spoiler címkék megjelenítése';
+			case 'explore.detail.links': return 'Hivatkozások';
+			case 'explore.detail.watchOn': return 'Megnézhető itt';
+			case 'explore.detail.watchTrailer': return 'Előzetes megtekintése';
+			case 'explore.detail.openOn': return ({required Object site}) => 'Megnyitás itt: ${site}';
+			case 'explore.detail.trailerUnavailable': return 'Ezen az eszközön nem sikerült megnyitni az előzetest';
+			case 'explore.detail.linkUnavailable': return 'Ezen az eszközön nem sikerült megnyitni a hivatkozást';
+			case 'explore.detail.crew': return 'Stáb';
+			case 'explore.detail.ratings': return 'Értékelések';
+			case 'explore.detail.schedule': return 'Műsorrend';
+			case 'explore.detail.recommendedByUsers': return ({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('hu'))(n,
+				one: '${n} felhasználó ajánlja',
+				other: '${n} felhasználó ajánlja',
+			);
+			case 'explore.detail.recommendedBy': return ({required Object who}) => 'Ajánlotta: ${who}';
+			case 'explore.detail.favoritedBy': return ({required Object who}) => 'Kedvencek közt: ${who}';
+			case 'explore.detail.unairedEpisodes': return ({required Object n}) => '${n} még nem került adásba';
+			case 'explore.detail.recommendedByPercent': return ({required Object percent}) => 'A nézők ${percent}-a ajánlja';
+			case 'explore.detail.relatedTitles': return 'Kapcsolódó címek';
+			case 'explore.detail.background': return 'Háttér';
+			case 'explore.totalResults': return ({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('hu'))(n,
+				one: '${n} találat',
+				other: '${n} találat',
+			);
+			case 'liveTv.title': return 'Élő TV';
+			case 'liveTv.guide': return 'Műsorújság';
+			case 'liveTv.noChannels': return 'Nincsenek elérhető csatornák';
+			case 'liveTv.noDvr': return 'Egyik szerveren sincs beállítva DVR';
+			case 'liveTv.serverUnavailable': return 'Az Élő TV szerver nem érhető el.';
+			case 'liveTv.serverNotConnected': return 'Az Élő TV szerver nincs csatlakoztatva.';
+			case 'liveTv.noPrograms': return 'Nincsenek elérhető műsoradatok';
+			case 'liveTv.liveStreamFailed': return 'Nem sikerült elindítani az élő adást';
+			case 'liveTv.unknownProgram': return 'Ismeretlen műsor';
+			case 'liveTv.unknownHub': return 'Ismeretlen';
+			case 'liveTv.unknownError': return 'Ismeretlen hiba';
+			case 'liveTv.channelNumber': return ({required Object number}) => '${number}. csatorna';
+			case 'liveTv.unknownChannel': return 'Ismeretlen csatorna';
+			case 'liveTv.live': return 'ÉLŐ';
+			case 'liveTv.reloadGuide': return 'Műsorújság újratöltése';
+			case 'liveTv.searchGuide': return 'Keresés a műsorújságban';
+			case 'liveTv.searchHint': return 'Csatornák és műsorok keresése';
+			case 'liveTv.searchNoResults': return ({required Object query}) => 'Nincs találat a következőre: "${query}"';
+			case 'liveTv.channelsSection': return 'Csatornák';
+			case 'liveTv.programsSection': return 'Műsorok';
+			case 'liveTv.now': return 'Most';
+			case 'liveTv.today': return 'Ma';
+			case 'liveTv.tomorrow': return 'Holnap';
+			case 'liveTv.midnight': return 'Éjfél';
+			case 'liveTv.overnight': return 'Késő éjszaka';
+			case 'liveTv.morning': return 'Reggel';
+			case 'liveTv.daytime': return 'Napközben';
+			case 'liveTv.evening': return 'Este';
+			case 'liveTv.lateNight': return 'Éjszaka';
+			case 'liveTv.whatsOn': return 'Mi megy most?';
+			case 'liveTv.watchChannel': return 'Csatorna nézése';
+			case 'liveTv.favorites': return 'Kedvencek';
+			case 'liveTv.reorderFavorites': return 'Kedvencek rendezése';
+			case 'liveTv.noFavoriteChannels': return 'Nincsenek kedvenc csatornák';
+			case 'liveTv.noFavoriteChannelsHint': return 'Jelenítsd meg az összes csatornát, majd hosszan nyomj meg egy csatornát, hogy hozzáadd a kedvenceidhez.';
+			case 'liveTv.showAllChannels': return 'Összes csatorna megjelenítése';
+			case 'liveTv.favoritesLoadFailed': return 'Nem sikerült a kedvencek betöltése. Ellenőrizd a kapcsolatot és próbáld újra.';
+			case 'liveTv.favoritesUpdateFailed': return 'Nem sikerült frissíteni a kedvenceket. Ellenőrizd a kapcsolatot, majd próbáld újra.';
+			case 'liveTv.joinSession': return 'Csatlakozás a folyamatban lévő adáshoz';
+			case 'liveTv.watchFromStart': return ({required Object minutes}) => 'Nézés az elejétől (${minutes} perce megy)';
+			case 'liveTv.watchLive': return 'Élő adás nézése';
+			case 'liveTv.goToLive': return 'Ugrás az élő adásra';
+			case 'liveTv.record': return 'Felvétel';
+			case 'liveTv.recordEpisode': return 'Epizód rögzítése';
+			case 'liveTv.recordSeries': return 'Sorozat rögzítése';
+			case 'liveTv.recordOptions': return 'Felvételi beállítások';
+			case 'liveTv.saveTo': return 'Mentés ide';
+			case 'liveTv.recordings': return 'Felvételek';
+			case 'liveTv.scheduledRecordings': return 'Ütemezve';
+			case 'liveTv.recordingRules': return 'Felvételi szabályok';
+			case 'liveTv.noScheduledRecordings': return 'Nincs semmi felvételre ütemezve';
+			case 'liveTv.manageRecording': return 'Felvétel kezelése';
+			case 'liveTv.cancelRecording': return 'Felvétel megszakítása';
+			case 'liveTv.cancelRecordingTitle': return 'Megszakítod ezt a felvételt?';
+			case 'liveTv.cancelRecordingMessage': return ({required Object title}) => 'A(z) ${title} nem kerül rögzítésre.';
+			case 'liveTv.deleteRule': return 'Szabály törlése';
+			case 'liveTv.deleteRuleTitle': return 'Törlöd a felvételi szabályt?';
+			case 'liveTv.deleteRuleMessage': return ({required Object title}) => 'A(z) ${title} jövőbeli epizódjai nem kerülnek rögzítésre.';
+			case 'liveTv.recordingScheduled': return 'Felvétel ütemezve';
+			case 'liveTv.alreadyScheduled': return 'Ez a műsor már ütemezve van';
+			case 'liveTv.dvrAdminRequired': return 'A DVR beállításokhoz adminisztrátori fiók szükséges';
+			case 'liveTv.recordingFailed': return 'Nem sikerült a felvétel ütemezése';
+			case 'liveTv.recordingTargetMissing': return 'Nem sikerült meghatározni a felvételi könyvtárat';
+			case 'liveTv.recordNotAvailable': return 'A felvétel nem érhető el ehhez a műsorhoz';
+			case 'liveTv.recordingCancelled': return 'Felvétel megszakítva';
+			case 'liveTv.recordingRuleDeleted': return 'Felvételi szabály törölve';
+			case 'liveTv.processRecordingRules': return 'Szabályok újraértékelése';
+			case 'liveTv.recordingInProgress': return 'Rögzítés folyamatban';
+			case 'liveTv.recordingsCount': return ({required Object count}) => '${count} ütemezve';
+			case 'liveTv.editRule': return 'Szabály szerkesztése';
+			case 'liveTv.editRuleAction': return 'Szerkesztés';
+			case 'liveTv.recordingRuleUpdated': return 'Felvételi szabály frissítve';
+			case 'liveTv.guideReloadRequested': return 'Műsorújság frissítése kérve';
+			case 'liveTv.guideReloadFailed': return 'Nem sikerült frissíteni a műsorújságot';
+			case 'liveTv.rulesProcessRequested': return 'Szabályok újraértékelése kérve';
+			case 'liveTv.rulesProcessFailed': return 'Nem sikerült újra kiértékelni a felvételi szabályokat';
+			case 'liveTv.recordShow': return 'Műsor rögzítése';
+			case 'liveTv.recordSettings.startEarly': return 'Korábbi kezdés (másodperc)';
+			case 'liveTv.recordSettings.endLate': return 'Későbbi befejezés (másodperc)';
+			case 'liveTv.recordSettings.newOnly': return 'Csak új epizódok';
+			case 'liveTv.recordSettings.anyChannel': return 'Felvétel bármelyik csatornáról';
+			case 'liveTv.recordSettings.anyTime': return 'Felvétel bármikor';
+			case 'liveTv.recordSettings.skipInLibrary': return 'A könyvtárban már meglévő epizódok kihagyása';
+			case 'liveTv.recordSettings.keepUpTo': return 'Megtartandó epizódok';
+			case 'liveTv.recordSettings.keepUpToHint': return 'A 0 minden epizódot megtart';
+			case 'liveTv.startingInMinutes': return ({required Object minutes}) => '${minutes} perc múlva kezdődik';
+			case 'liveTv.dayAtTime': return ({required Object day, required Object time}) => '${day}, ${time}';
+			case 'liveTv.invalidPlaybackData': return ({required Object product}) => 'A(z) ${product} érvénytelen Élő TV-lejátszási adatokat adott vissza';
+			case 'liveTv.failedToStartChannel': return 'Nem sikerült elindítani az élő csatornát';
+			case 'liveTv.failedToBuildStreamUrl': return 'Nem sikerült összeállítani a stream URL-címét';
+			case 'liveTv.playbackStartFailed': return ({required Object reason}) => 'Nem sikerült elindítani a csatornát: ${reason}';
+			case 'liveTv.channelSwitchFailed': return ({required Object reason}) => 'Nem sikerült csatornát váltani: ${reason}';
+			case 'collections.title': return 'Gyűjtemények';
+			case 'collections.collection': return 'Gyűjtemény';
+			case 'collections.empty': return 'A gyűjtemény üres';
+			case 'collections.deleteCollection': return 'Gyűjtemény törlése';
+			case 'collections.deleteConfirm': return ({required Object title}) => 'Törlöd a következőt: "${title}"? Ez nem vonható vissza.';
+			case 'collections.deleted': return 'Gyűjtemény törölve';
+			case 'collections.deleteFailed': return 'Nem sikerült a gyűjtemény törlése';
+			case 'collections.deleteFailedWithError': return ({required Object error}) => 'Nem sikerült a gyűjtemény törlése: ${error}';
+			case 'collections.selectCollection': return 'Gyűjtemény kiválasztása';
+			case 'collections.collectionName': return 'Gyűjtemény neve';
+			case 'collections.enterCollectionName': return 'Add meg a gyűjtemény nevét';
+			case 'collections.addedToCollection': return 'Hozzáadva a gyűjteményhez';
+			case 'collections.errorAddingToCollection': return 'Nem sikerült a gyűjteményhez adni';
+			case 'collections.created': return 'Gyűjtemény létrehozva';
+			case 'collections.removeFromCollection': return 'Eltávolítás a gyűjteményből';
+			case 'collections.removeFromCollectionConfirm': return ({required Object title}) => 'Eltávolítod a következőt: "${title}" ebből a gyűjteményből?';
+			case 'collections.removedFromCollection': return 'Eltávolítva a gyűjteményből';
+			case 'collections.removeFromCollectionFailed': return 'Nem sikerült az eltávolítás a gyűjteményből';
+			case 'collections.removeFromCollectionError': return ({required Object error}) => 'Hiba a gyűjteményből való eltávolításkor: ${error}';
+			case 'collections.searchCollections': return 'Gyűjtemények keresése...';
+			case 'playlists.title': return 'Lejátszási listák';
+			case 'playlists.playlist': return 'Lejátszási lista';
+			case 'playlists.noPlaylists': return 'Nem találhatók lejátszási listák';
+			case 'playlists.create': return 'Lejátszási lista létrehozása';
+			case 'playlists.playlistName': return 'Lejátszási lista neve';
+			case 'playlists.enterPlaylistName': return 'Add meg a lejátszási lista nevét';
+			case 'playlists.delete': return 'Lejátszási lista törlése';
+			case 'playlists.removeItem': return 'Eltávolítás a lejátszási listáról';
+			case 'playlists.smartPlaylist': return 'Okos lejátszási lista';
+			case 'playlists.itemCount': return ({required Object count}) => '${count} elem';
+			case 'playlists.oneItem': return '1 elem';
+			case 'playlists.emptyPlaylist': return 'Ez a lejátszási lista üres';
+			case 'playlists.deleteConfirm': return 'Törlöd a lejátszási listát?';
+			case 'playlists.deleteMessage': return ({required Object name}) => 'Biztosan törölni szeretnéd a következőt: "${name}"?';
+			case 'playlists.created': return 'Lejátszási lista létrehozva';
+			case 'playlists.deleted': return 'Lejátszási lista törölve';
+			case 'playlists.itemAdded': return 'Hozzáadva a lejátszási listához';
+			case 'playlists.itemRemoved': return 'Eltávolítva a lejátszási listáról';
+			case 'playlists.selectPlaylist': return 'Lejátszási lista kiválasztása';
+			case 'playlists.searchPlaylists': return 'Lejátszási listák keresése...';
+			case 'playlists.errorCreating': return 'Nem sikerült a lejátszási lista létrehozása';
+			case 'playlists.errorDeleting': return 'Nem sikerült a lejátszási lista törlése';
+			case 'playlists.errorLoading': return 'Nem sikerült a lejátszási listák betöltése';
+			case 'playlists.errorAdding': return 'Nem sikerült a lejátszási listához adni';
+			case 'playlists.errorReordering': return 'Nem sikerült átrendezni a lejátszási lista elemét';
+			case 'playlists.errorRemoving': return 'Nem sikerült az eltávolítás a lejátszási listáról';
+			case 'music.goToAlbum': return 'Ugrás az albumhoz';
+			case 'music.goToArtist': return 'Ugrás az előadóhoz';
+			case 'music.instantMix': return 'Azonnali keverés';
+			case 'music.playNext': return 'Következő lejátszása';
+			case 'music.addToQueue': return 'Hozzáadás a lejátszási sorhoz';
+			case 'music.discNumber': return ({required Object n}) => '${n}. lemez';
+			case 'music.trackCount': return ({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('hu'))(n,
+				one: '${n} zeneszám',
+				other: '${n} zeneszám',
+			);
+			case 'music.nowPlaying': return 'Most szól';
+			case 'music.playingFrom': return ({required Object title}) => 'Lejátszás innen: ${title}';
+			case 'music.queue': return 'Lejátszási sor';
+			case 'music.clearQueue': return 'Sor törlése';
+			case 'music.lyrics': return 'Dalszöveg';
+			case 'music.noLyrics': return 'Nincs elérhető dalszöveg';
+			case 'music.sleepTimer': return 'Elalvási időzítő';
+			case 'music.sleepTimerEndOfTrack': return 'Zeneszám vége';
+			case 'music.sleepTimerMinutes': return ({required Object n}) => '${n} perc';
+			case 'music.stopPlayback': return 'Lejátszás leállítása';
+			case 'music.previousTrack': return 'Előző szám';
+			case 'music.nextTrack': return 'Következő szám';
+			case 'music.repeat': return 'Ismétlés';
+			case 'music.repeatAll': return 'Összes ismétlése';
+			case 'music.repeatOne': return 'Egy szám ismétlése';
+			case 'music.instantMixNoServer': return 'Nem érhető el szerver az azonnali mixhez';
+			case 'music.instantMixFailed': return 'Nem sikerült betölteni az azonnali mixet';
+			case 'music.instantMixEmpty': return 'Az azonnali mix nem adott vissza zeneszámokat';
+			case 'music.noAudioUrl': return ({required Object track}) => 'Nem érhető el hang-URL ehhez: ${track}';
+			case 'music.discography.singlesAndEps': return 'Kislemezek és EP-k';
+			case 'music.discography.live': return 'Élő';
+			case 'music.discography.compilations': return 'Válogatások';
+			case 'watchTogether.title': return 'Watch Together (Közös nézés)';
+			case 'watchTogether.description': return 'Nézz tartalmat szinkronban barátaiddal és családoddal';
+			case 'watchTogether.createRoom': return 'Szoba létrehozása';
+			case 'watchTogether.creatingRoom': return 'Szoba létrehozása...';
+			case 'watchTogether.joinRoom': return 'Csatlakozás szobához';
+			case 'watchTogether.joiningRoom': return 'Csatlakozás a szobához...';
+			case 'watchTogether.connecting': return 'Csatlakozás...';
+			case 'watchTogether.relayPublic': return 'A szobák a nyilvános Open Watch Party-reléket használják.';
+			case 'watchTogether.relayCustom': return ({required Object url}) => 'A szobák a saját relédet használják: ${url}.';
+			case 'watchTogether.recentRooms': return 'Legutóbbi szobák';
+			case 'watchTogether.roomActions': return 'Szobaműveletek';
+			case 'watchTogether.renameRoom': return 'Szoba átnevezése';
+			case 'watchTogether.removeRoom': return 'Eltávolítás';
+			case 'watchTogether.enterRoomCode': return 'Add meg a házigazdától kapott 6 karakteres kódot.';
+			case 'watchTogether.roomCode': return 'Szobakód';
+			case 'watchTogether.paste': return 'Beillesztés';
+			case 'watchTogether.noCodeInClipboard': return 'A vágólapon nincs szobakód';
+			case 'watchTogether.copyCode': return 'Kód másolása';
+			case 'watchTogether.codeCopied': return 'Szobakód másolva';
+			case 'watchTogether.shareInvite': return 'Meghívó megosztása';
+			case 'watchTogether.inviteCopied': return 'Meghívó másolva. Illeszd be egy üzenetbe.';
+			case 'watchTogether.inviteMessage': return ({required Object code}) => 'Csatlakozz a Watch Together-szobámhoz a Plezyben: nyisd meg a Watch Together (Közös nézés) menüt, válaszd a Csatlakozás szobához lehetőséget, és írd be ezt a kódot: ${code}.';
+			case 'watchTogether.openSessionControls': return 'Watch Together munkamenet-vezérlők megnyitása';
+			case 'watchTogether.reconnecting': return 'Újracsatlakozás...';
+			case 'watchTogether.reconnectingDescription': return 'Megszakadt a kapcsolat. Automatikusan visszacsatlakozol a szobához.';
+			case 'watchTogether.connected': return 'Csatlakozva';
+			case 'watchTogether.disconnected': return 'Kapcsolat bontva';
+			case 'watchTogether.youAreHost': return 'Te vagy a házigazda';
+			case 'watchTogether.hostedBy': return ({required Object name}) => 'Házigazda: ${name}';
+			case 'watchTogether.hostControlsPlayback': return 'A házigazda vezérli a lejátszást';
+			case 'watchTogether.anyoneCanControl': return 'Bárki vezérelheti a lejátszást';
+			case 'watchTogether.roomLocked': return 'Szoba zárolva';
+			case 'watchTogether.nowPlaying': return 'Most megy';
+			case 'watchTogether.nothingPlaying': return 'Nincs lejátszás';
+			case 'watchTogether.nothingPlayingHost': return 'Játssz le valamit bármelyik könyvtárból, hogy megoszd a szobával.';
+			case 'watchTogether.nothingPlayingGuest': return 'Amikor a házigazda lejátszik valamit, itt fog megnyílni.';
+			case 'watchTogether.notShareable': return 'Ehhez a videóhoz nincs katalógusbeli egyezés, ezért csak azok tudják lejátszani, akik hozzáférnek ugyanahhoz a szerverhez.';
+			case 'watchTogether.searching': return 'A videó keresése a könyvtáraidban...';
+			case 'watchTogether.yourCopy': return 'A saját példányod';
+			case 'watchTogether.sharingYourCopy': return 'A saját példányodat osztod meg';
+			case 'watchTogether.playingOtherLength': return ({required Object difference}) => 'Saját példányod lejátszása (${difference})';
+			case 'watchTogether.mismatchTitle': return 'A példányod hossza eltér';
+			case 'watchTogether.mismatchDescription': return ({required Object difference}) => 'A legközelebbi példányod ${difference}, mint a szoba videója. Lehet, hogy más vágás vagy változat.';
+			case 'watchTogether.playAnyway': return 'Lejátszás mégis';
+			case 'watchTogether.chooseAnotherCopy': return 'Másik példány választása';
+			case 'watchTogether.dontPlay': return 'Ne játszd le';
+			case 'watchTogether.unavailableTitle': return 'Ez a videó nincs meg neked';
+			case 'watchTogether.unavailableDescription': return 'A Plezy nem találta meg a könyvtáraidban. Válassz ki magad egy példányt, vagy keress újra.';
+			case 'watchTogether.chooseCopy': return 'Példány választása';
+			case 'watchTogether.searchAgain': return 'Keresés újra';
+			case 'watchTogether.noCandidates': return 'Nem található példány a könyvtáraidban.';
+			case 'watchTogether.choiceFailed': return 'Nem sikerült lejátszani ezt a példányt a szobának';
+			case 'watchTogether.lengthLonger': return ({required Object duration}) => '${duration} különbséggel hosszabb';
+			case 'watchTogether.lengthShorter': return ({required Object duration}) => '${duration} különbséggel rövidebb';
+			case 'watchTogether.lengthSame': return 'Azonos hosszúságú';
+			case 'watchTogether.lengthUnknown': return 'Ismeretlen hosszúságú';
+			case 'watchTogether.joinCurrentPlayback': return 'Csatlakozás a jelenlegi lejátszáshoz';
+			case 'watchTogether.joinCurrentPlaybackDescription': return 'Visszatérés ahhoz, amit a házigazda éppen néz';
+			case 'watchTogether.stopMedia': return 'Videó leállítása mindenkinél';
+			case 'watchTogether.syncOffset': return 'Szinkroneltolás';
+			case 'watchTogether.syncOffsetDescription': return 'Told el a videódat, ha a szobához képest előrébb jár vagy lemarad.';
+			case 'watchTogether.offsetHint': return ({required Object difference}) => 'A példányod ${difference}, mint a szoba videója.';
+			case 'watchTogether.applyDifference': return ({required Object offset}) => '${offset} alkalmazása';
+			case 'watchTogether.offsetMinusSecond': return '-1 mp';
+			case 'watchTogether.offsetMinusTenth': return '-100 ms';
+			case 'watchTogether.offsetPlusTenth': return '+100 ms';
+			case 'watchTogether.offsetPlusSecond': return '+1 mp';
+			case 'watchTogether.participants': return 'Résztvevők';
+			case 'watchTogether.participantCount': return ({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('hu'))(n,
+				one: '${n} résztvevő',
+				other: '${n} résztvevő',
+			);
+			case 'watchTogether.hostBadge': return 'HÁZIGAZDA';
+			case 'watchTogether.nameYou': return ({required Object name}) => '${name} (te)';
+			case 'watchTogether.playerIdle': return 'Tétlen';
+			case 'watchTogether.playerLoading': return 'Betöltés';
+			case 'watchTogether.playerReady': return 'Kész';
+			case 'watchTogether.playerBuffering': return 'Pufferelés';
+			case 'watchTogether.matchSearching': return 'Keresés';
+			case 'watchTogether.matchMatched': return 'Megvan a videó';
+			case 'watchTogether.matchMismatched': return 'Eltérő hosszúságú';
+			case 'watchTogether.matchUnavailable': return 'Nincs meg a videó';
+			case 'watchTogether.participantOffset': return ({required Object offset}) => 'Eltolás: ${offset}';
+			case 'watchTogether.makeHost': return 'Házigazdává tétel';
+			case 'watchTogether.makeHostQuestion': return 'Átadod a házigazdaságot?';
+			case 'watchTogether.makeHostConfirm': return ({required Object name}) => '${name} vezérli majd a lejátszást és a munkamenetet mindenki számára.';
+			case 'watchTogether.transfer': return 'Átadás';
+			case 'watchTogether.removeParticipant': return 'Eltávolítás a szobából';
+			case 'watchTogether.removeParticipantQuestion': return ({required Object name}) => '${name} eltávolítása?';
+			case 'watchTogether.removeParticipantConfirm': return ({required Object name}) => '${name} kikerül a szobából. A kóddal újra csatlakozhat, hacsak nem zárolod a szobát.';
+			case 'watchTogether.remove': return 'Eltávolítás';
+			case 'watchTogether.roomSettings': return 'Szobabeállítások';
+			case 'watchTogether.letEveryoneControl': return 'Mindenki vezérelheti a lejátszást';
+			case 'watchTogether.lockRoom': return 'Szoba zárolása';
+			case 'watchTogether.lockRoomDescription': return 'Új résztvevők nem csatlakozhatnak';
+			case 'watchTogether.leaveRoom': return 'Kilépés a szobából';
+			case 'watchTogether.leaveRoomQuestion': return 'Kilépsz a szobából?';
+			case 'watchTogether.leaveRoomConfirm': return 'A szobakóddal újra csatlakozhatsz.';
+			case 'watchTogether.leave': return 'Kilépés';
+			case 'watchTogether.endRoom': return 'Szoba bezárása';
+			case 'watchTogether.endRoomQuestion': return 'Bezárod a szobát?';
+			case 'watchTogether.endRoomConfirm': return 'Ezzel mindenki számára bezárod a szobát.';
+			case 'watchTogether.end': return 'Befejezés';
+			case 'watchTogether.playBlockedTitle': return 'A lejátszás nem indult el';
+			case 'watchTogether.playBlockedDescription': return 'Nyomd meg a lejátszás gombot, hogy együtt nézhesd a szobával.';
+			case 'watchTogether.notices.pressedPlay': return ({required Object name}) => '${name} elindította a lejátszást';
+			case 'watchTogether.notices.playbackStarted': return 'A lejátszás elindult';
+			case 'watchTogether.notices.paused': return ({required Object name}) => '${name} szüneteltette a lejátszást';
+			case 'watchTogether.notices.playbackPaused': return 'A lejátszás szünetel';
+			case 'watchTogether.notices.jumpedTo': return ({required Object name, required Object position}) => '${name} ide ugrott: ${position}';
+			case 'watchTogether.notices.roomJumpedTo': return ({required Object position}) => 'Ugrás ide: ${position}';
+			case 'watchTogether.notices.changedSpeed': return ({required Object name, required Object speed}) => '${name} a sebességet ${speed} értékre állította';
+			case 'watchTogether.notices.speedChanged': return ({required Object speed}) => 'Sebesség beállítva: ${speed}';
+			case 'watchTogether.notices.startedMedia': return ({required Object name, required Object title}) => '${name} elindította: ${title}';
+			case 'watchTogether.notices.mediaStarted': return ({required Object title}) => 'Most megy: ${title}';
+			case 'watchTogether.notices.stoppedMedia': return ({required Object name}) => '${name} leállította a videót';
+			case 'watchTogether.notices.mediaStopped': return 'A videó leállt';
+			case 'watchTogether.notices.waitingFor': return ({required Object name}) => 'Várakozás: ${name}...';
+			case 'watchTogether.notices.waitingForSomeone': return 'Várakozás a lemaradókra...';
+			case 'watchTogether.notices.finished': return 'Befejeződött';
+			case 'watchTogether.notices.hostChangedTo': return ({required Object name}) => '${name} lett a házigazda';
+			case 'watchTogether.notices.youAreNowHost': return 'Mostantól te vagy a házigazda';
+			case 'watchTogether.notices.joined': return ({required Object name}) => '${name} csatlakozott';
+			case 'watchTogether.notices.left': return ({required Object name}) => '${name} kilépett';
+			case 'watchTogether.notices.controlRefused': return 'Csak a házigazda vezérelheti a lejátszást';
+			case 'watchTogether.notices.searchFailed': return 'Néhány szerveren nem sikerült megkeresni a szoba videóját';
+			case 'watchTogether.notices.playBlocked': return 'Az indításhoz nyomd meg a lejátszás gombot';
+			case 'watchTogether.notices.shareFailed': return 'Nem sikerült megosztani ezt a videót a szobával';
+			case 'watchTogether.notices.downloadNotShared': return 'A letöltések nem oszthatók meg a szobával, amíg a szerverük nem érhető el';
+			case 'watchTogether.notices.openFailed': return 'Nem sikerült megnyitni a szoba videóját';
+			case 'watchTogether.ended.ended': return 'A házigazda bezárta a szobát';
+			case 'watchTogether.ended.kicked': return 'Eltávolítottak a szobából';
+			case 'watchTogether.ended.expired': return 'A szoba lejárt';
+			case 'watchTogether.ended.replaced': return 'Egy másik eszközön csatlakoztál ehhez a szobához';
+			case 'watchTogether.ended.lost': return 'Megszakadt a kapcsolat a szobával';
+			case 'watchTogether.errors.invalidCode': return 'Ez nem szobakód. A kód 6 betűből és számjegyből áll, 0, 1, I, L és O nélkül.';
+			case 'watchTogether.errors.roomNotFound': return 'Nincs ilyen kódú szoba. Lehet, hogy már bezárták.';
+			case 'watchTogether.errors.roomFull': return 'Ez a szoba megtelt.';
+			case 'watchTogether.errors.roomLocked': return 'A házigazda zárolta ezt a szobát.';
+			case 'watchTogether.errors.relayFull': return 'A Watch Together jelenleg túlterhelt. Próbáld újra később.';
+			case 'watchTogether.errors.unreachable': return 'Nem sikerült elérni a Watch Together-relét. Ellenőrizd a kapcsolatot.';
+			case 'watchTogether.errors.rateLimited': return 'Túl sok próbálkozás. Várj egy kicsit, majd próbáld újra.';
+			case 'watchTogether.errors.clientBlocked': return 'A Plezy ezen verziója nem tudja használni a relét. Frissítsd az alkalmazást.';
+			case 'watchTogether.errors.forbidden': return 'Ezt csak a házigazda teheti meg.';
+			case 'watchTogether.errors.notInRoom': return 'Nem vagy szobában.';
+			case 'watchTogether.errors.alreadyInRoom': return 'Már egy szobában vagy.';
+			case 'watchTogether.errors.resumeFailed': return 'Nem sikerült visszacsatlakozni a szobához.';
+			case 'watchTogether.errors.unsupported': return 'A relé ezt nem támogatja.';
+			case 'watchTogether.errors.generic': return 'Hiba történt. Próbáld újra.';
+			case 'watchTogether.untitledEpisode': return ({required Object number}) => '${number}. epizód';
+			case 'downloads.title': return 'Letöltések';
+			case 'downloads.manage': return 'Kezelés';
+			case 'downloads.tvShows': return 'TV-sorozatok';
+			case 'downloads.movies': return 'Filmek';
+			case 'downloads.music': return 'Zene';
+			case 'downloads.tracksQueued': return ({required Object count}) => '${count} zeneszám letöltésre sorba állítva';
+			case 'downloads.noDownloads': return 'Még nincsenek letöltések';
+			case 'downloads.noDownloadsDescription': return 'A letöltött tartalmak itt jelennek meg az offline megtekintéshez';
+			case 'downloads.downloadNow': return 'Letöltés';
+			case 'downloads.deleteDownload': return 'Letöltés törlése';
+			case 'downloads.retryDownload': return 'Letöltés újrapróbálása';
+			case 'downloads.downloadQueued': return 'Letöltés sorba állítva';
+			case 'downloads.downloadResumed': return 'Letöltés folytatva';
+			case 'downloads.serverErrorBitrate': return 'Szerverhiba: a fájl meghaladhatja a távoli bitrátakorlátot';
+			case 'downloads.storageFull': return 'A letöltések leálltak a szabad tárhely védelme érdekében. Szabadíts fel helyet, vagy válassz másik letöltési helyet, majd próbáld újra.';
+			case 'downloads.storageUnavailable': return 'A letöltések leálltak, mert a rendelkezésre álló tárhely nem ellenőrizhető. Ellenőrizd a letöltési helyet, majd próbáld újra.';
+			case 'downloads.episodesQueued': return ({required Object count}) => '${count} epizód letöltésre sorba állítva';
+			case 'downloads.downloadDeleted': return 'Letöltés törölve';
+			case 'downloads.deleteConfirm': return ({required Object title}) => 'Törlöd a következőt: "${title}" erről az eszközről?';
+			case 'downloads.deleteCollectionDownloads': return 'Letöltések törlése';
+			case 'downloads.deleteCollectionDownloadsConfirm': return ({required Object title}) => 'Törlöd a(z) "${title}" összes letöltését erről az eszközről?';
+			case 'downloads.collectionDownloadsDeleted': return 'Letöltések törölve';
+			case 'downloads.cancelledDownloadTitle': return 'Megszakított letöltés';
+			case 'downloads.cancelledDownloadMessage': return 'Ez a letöltés meg lett szakítva. Mit szeretnél tenni?';
+			case 'downloads.allEpisodesAlreadyDownloaded': return 'Minden epizód le van töltve';
+			case 'downloads.resumeDownload': return 'Letöltés folytatása';
+			case 'downloads.cancelledDownload': return 'Megszakított letöltés';
+			case 'downloads.syncingFile': return ({required Object file, required Object status}) => '${file} (${status} szinkronizálása)';
+			case 'downloads.downloadedFileClickToComplete': return ({required Object file}) => 'Letöltve: ${file} - Kattints a befejezéshez';
+			case 'downloads.partialDownloadClickToComplete': return 'Részben letöltve - Kattints a befejezéshez';
+			case 'downloads.deleting': return 'Törlés...';
+			case 'downloads.deletingWithProgress': return ({required Object title, required Object current, required Object total}) => '${title} törlése... (${current}/${total})';
+			case 'downloads.queuedTooltip': return 'Sorban áll';
+			case 'downloads.queuedFilesTooltip': return ({required Object files}) => 'Sorba állítva: ${files}';
+			case 'downloads.downloadingTooltip': return 'Letöltés...';
+			case 'downloads.downloadingFilesTooltip': return ({required Object files}) => 'Letöltés alatt: ${files}';
+			case 'downloads.noDownloadsTree': return 'Nincsenek letöltések';
+			case 'downloads.pauseAll': return 'Összes szüneteltetése';
+			case 'downloads.resumeAll': return 'Összes folytatása';
+			case 'downloads.retryAll': return 'Összes újrapróbálása';
+			case 'downloads.retryFailed': return 'Sikertelen letöltések újrapróbálása';
+			case 'downloads.deleteAll': return 'Összes törlése';
+			case 'downloads.selectVersion': return 'Verzió kiválasztása';
+			case 'downloads.allEpisodes': return 'Minden epizód';
+			case 'downloads.unwatchedOnly': return 'Csak a nem látottak';
+			case 'downloads.nextNUnwatched': return ({required Object count}) => 'A következő ${count} nem látott epizód';
+			case 'downloads.customAmount': return 'Egyéni mennyiség...';
+			case 'downloads.includeSpecials': return 'Különkiadások is';
+			case 'downloads.howManyEpisodes': return 'Hány epizód?';
+			case 'downloads.invalidEpisodeCount': return 'Adj meg egy érvényes epizódszámot.';
+			case 'downloads.keepSynced': return 'Szinkronban tartás';
+			case 'downloads.downloadOnce': return 'Egyszeri letöltés';
+			case 'downloads.keepNUnwatched': return ({required Object count}) => '${count} nem látott epizód megtartása';
+			case 'downloads.editSyncRule': return 'Szinkronizálási szabály szerkesztése';
+			case 'downloads.removeSyncRule': return 'Szinkronizálási szabály eltávolítása';
+			case 'downloads.removeSyncRuleConfirm': return ({required Object title}) => 'Leállítod a(z) "${title}" szinkronizálását? A letöltött epizódok megmaradnak.';
+			case 'downloads.removeListSyncRuleConfirm': return ({required Object title}) => 'Leállítjuk a(z) "${title}" szinkronizálását?';
+			case 'downloads.deleteSyncRuleDownloads': return 'A kapcsolódó letöltések törlése is';
+			case 'downloads.deleteSyncRuleDownloadsDescription': return 'A másik szinkronszabály vagy profil által használt letöltések megmaradnak.';
+			case 'downloads.syncRuleCreated': return ({required Object count}) => 'Szinkronizálási szabály létrehozva — ${count} nem látott epizód megtartása';
+			case 'downloads.syncRuleUpdated': return 'Szinkronizálási szabály frissítve';
+			case 'downloads.syncRuleRemoved': return 'Szinkronizálási szabály eltávolítva';
+			case 'downloads.syncRuleAndDownloadsRemoved': return 'A szinkronszabály és a kapcsolódó letöltések eltávolítva';
+			case 'downloads.syncRuleCleanupBusy': return 'A szinkronszabályok éppen frissülnek. Próbálja újra egy pillanat múlva.';
+			case 'downloads.syncRuleCleanupUnavailable': return 'A kapcsolódó letöltések nem azonosíthatók biztonságosan. Csatlakoztassa újra a szervert, és próbálja újra, vagy távolítsa el a szabályt a letöltések törlése nélkül.';
+			case 'downloads.syncedNewEpisodes': return ({required Object count, required Object title}) => '${count} új epizód szinkronizálva a következőhöz: ${title}';
+			case 'downloads.activeSyncRules': return 'Szinkronizálási szabályok';
+			case 'downloads.noSyncRules': return 'Nincsenek szinkronizálási szabályok';
+			case 'downloads.manageSyncRule': return 'Szinkronizálás kezelése';
+			case 'downloads.editEpisodeCount': return 'Epizódszám';
+			case 'downloads.editSyncFilter': return 'Szinkronizálási szűrő';
+			case 'downloads.syncAllItems': return 'Minden elem szinkronizálása';
+			case 'downloads.syncUnwatchedItems': return 'Nem látott elemek szinkronizálása';
+			case 'downloads.syncRuleServerContext': return ({required Object server, required Object status}) => 'Szerver: ${server} • ${status}';
+			case 'downloads.syncRuleAvailable': return 'Elérhető';
+			case 'downloads.syncRuleOffline': return 'Offline';
+			case 'downloads.syncRuleSignInRequired': return 'Bejelentkezés szükséges';
+			case 'downloads.syncRuleAccessDenied': return 'Hozzáférés megtagadva';
+			case 'downloads.syncRuleNotAvailableForProfile': return 'Nem érhető el a jelenlegi profilhoz';
+			case 'downloads.syncRuleUnknownServer': return 'Ismeretlen szerver';
+			case 'downloads.syncRuleListCreated': return 'Szinkronizálási szabály létrehozva';
+			case 'downloads.backgroundWarning.bannerBlocked': return 'A letöltések leállnak, ha kilépsz az alkalmazásból';
+			case 'downloads.backgroundWarning.bannerDegraded': return 'A háttérbeli letöltések korlátozottak lehetnek';
+			case 'downloads.backgroundWarning.bannerAction': return 'Részletek';
+			case 'downloads.backgroundWarning.sheetTitle': return 'A háttérbeli letöltések le vannak tiltva';
+			case 'downloads.backgroundWarning.sheetTitleDegraded': return 'A háttérbeli letöltések korlátozottak lehetnek';
+			case 'downloads.backgroundWarning.sheetIntro': return 'Az Android megakadályozza, hogy a Plezy megbízhatóan töltsön le a háttérben.';
+			case 'downloads.backgroundWarning.sheetIntroDegraded': return 'Az eszközöd korlátozza, hogy a Plezy mikor tölthet le a háttérben.';
+			case 'downloads.backgroundWarning.reasonBackgroundRestricted': return 'A Plezy háttérbeli használata korlátozva van. Állítsd az akkumulátor- vagy háttérhasználatát „Korlátlan” értékre.';
+			case 'downloads.backgroundWarning.reasonStandbyRestricted': return 'Az Android korlátozott készenléti állapotba helyezte a Plezyt. Állítsd az akkumulátorhasználatát „Korlátlan” értékre.';
+			case 'downloads.backgroundWarning.reasonDownloadChannelBlocked': return 'A letöltési értesítések ki vannak kapcsolva, ezért előfordulhat, hogy a folyamatjelzés és a vezérlők nem érhetők el.';
+			case 'downloads.backgroundWarning.reasonNotificationsDisabled': return 'Az értesítések ki vannak kapcsolva. Android 13 vagy újabb rendszeren szükségesek a hosszú háttérbeli letöltésekhez.';
+			case 'downloads.backgroundWarning.reasonDataSaver': return 'Az Adatforgalom-csökkentő be van kapcsolva, ezért mobiladat-kapcsolaton nem működnek a háttérbeli letöltések. Wi-Fi-n továbbra is működniük kell.';
+			case 'downloads.backgroundWarning.reasonOemUnknown': return 'A letöltések többször leálltak, miközben a Plezy a háttérben futott. Ellenőrizd a Plezy akkumulátor- vagy háttérhasználati beállításait.';
+			case 'downloads.backgroundWarning.openSettings': return 'Beállítások megnyitása';
+			case 'downloads.backgroundWarning.stillNotWorking': return 'Eszközspecifikus segítség';
+			case 'downloads.backgroundWarning.stillNotWorkingDescription': return 'Nézd meg az eszközödhöz tartozó lépéseket, vagy ha a probléma továbbra is fennáll, küldj naplót a Beállítások › Naplók megtekintése menüből.';
+			case 'downloads.backgroundWarning.dialogTitle': return 'A letöltések nem biztos, hogy befejeződnek';
+			case 'downloads.backgroundWarning.dialogDownloadAnyway': return 'Letöltés mégis';
+			case 'downloads.backgroundWarning.dialogFixFirst': return 'Előbb javítom';
+			case 'downloads.backgroundWarning.statusTile': return 'Háttérbeli letöltések';
+			case 'downloads.backgroundWarning.statusOk': return 'Futhat a háttérben';
+			case 'downloads.backgroundWarning.statusBlocked': return 'A rendszerbeállítások blokkolják';
+			case 'downloads.backgroundWarning.statusDegraded': return 'A rendszerbeállítások korlátozzák';
+			case 'downloads.backgroundWarning.statusUnknown': return 'Még nincs ellenőrizve';
+			case 'downloads.backgroundWarning.settingsUnavailable': return 'Ezen az eszközön nem sikerült megnyitni a rendszerbeállításokat';
+			case 'downloads.backgroundWarning.linkUnavailable': return 'Ezen az eszközön nem sikerült megnyitni a dontkillmyapp.com webhelyet';
+			case 'downloads.options': return 'Letöltések lehetőségei';
+			case 'downloads.groupings.library': return 'Könyvtár';
+			case 'downloads.groupings.collections': return 'Gyűjtemények';
+			case 'downloads.unknownLibrary': return 'Ismeretlen könyvtár';
+			case 'downloads.unknownShow': return 'Ismeretlen sorozat';
+			case 'downloads.unknownSeason': return 'Ismeretlen évad';
+			case 'downloads.unknownAlbum': return 'Ismeretlen album';
+			case 'downloads.completedOfTotal': return ({required Object completed, required Object total}) => '${completed}/${total} kész';
+			case 'downloads.errorFileNotFound': return 'A fájl nem található (404)';
+			case 'downloads.errorDownloadNotAllowed': return 'A szerver nem engedélyezi a letöltést (403)';
+			case 'downloads.errorDownloadFailed': return 'A letöltés nem sikerült';
+			case 'downloads.errorDownloadFailedWithReason': return ({required Object reason}) => 'A letöltés nem sikerült: ${reason}';
+			case 'downloads.errorHttpStatus': return ({required Object status}) => 'A letöltés nem sikerült (HTTP ${status})';
+			case 'downloads.errorPostProcessing': return ({required Object reason}) => 'Az utófeldolgozás nem sikerült: ${reason}';
+			case 'downloads.reasonFileNotSaved': return 'a fájlt nem sikerült menteni erre az eszközre';
+			case 'downloads.reasonCannotResume': return 'a részleges letöltést nem sikerült folytatni';
+			case 'downloads.reasonDeviceStorageFull': return 'az eszközön elfogyott a tárhely';
+			case 'downloads.notificationDownloading': return 'Letöltés...';
+			case 'downloads.notificationComplete': return 'Letöltés kész';
+			case 'downloads.notificationPaused': return 'Letöltés szüneteltetve';
+			case 'shaders.title': return 'Shaderek';
+			case 'shaders.noShaderDescription': return 'Nincs videójavítás';
+			case 'shaders.nvscalerDescription': return 'NVIDIA képskálázás az élesebb videóért';
+			case 'shaders.artcnnVariantNeutral': return 'Semleges';
+			case 'shaders.artcnnVariantDenoise': return 'Zajcsökkentés';
+			case 'shaders.artcnnVariantDenoiseSharpen': return 'Zajcsökkentés + Élesítés';
+			case 'shaders.qualityFast': return 'Gyors';
+			case 'shaders.qualityHQ': return 'Kiváló minőség';
+			case 'shaders.mode': return 'Mód';
+			case 'shaders.importShader': return 'Shader importálása';
+			case 'shaders.customShaderDescription': return 'Egyéni GLSL shader';
+			case 'shaders.shaderImported': return 'Shader importálva';
+			case 'shaders.shaderImportFailed': return 'Nem sikerült a shader importálása';
+			case 'shaders.deleteShader': return 'Shader törlése';
+			case 'shaders.deleteShaderConfirm': return ({required Object name}) => 'Törlöd a következőt: "${name}"?';
+			case 'companionRemote.title': return 'Kísérőtávirányító';
+			case 'companionRemote.connectedTo': return ({required Object name}) => 'Csatlakoztatva a következőhöz: ${name}';
+			case 'companionRemote.unknownDevice': return 'Ismeretlen eszköz';
+			case 'companionRemote.session.startingServer': return 'Távirányító-szerver indítása...';
+			case 'companionRemote.session.hostAddress': return 'Gazdagép címe';
+			case 'companionRemote.session.connected': return 'Csatlakoztatva';
+			case 'companionRemote.session.serverRunning': return 'A távirányító-szerver aktív';
+			case 'companionRemote.session.serverStopped': return 'A távirányító-szerver leállítva';
+			case 'companionRemote.session.serverRunningDescription': return 'A hálózaton lévő mobileszközök csatlakozhatnak ehhez az alkalmazáshoz';
+			case 'companionRemote.session.serverStoppedDescription': return 'Indítsd el a szervert, hogy a mobileszközök csatlakozhassanak';
+			case 'companionRemote.session.usePhoneToControl': return 'Használd a mobileszközödet az alkalmazás vezérléséhez';
+			case 'companionRemote.session.startServer': return 'Szerver indítása';
+			case 'companionRemote.session.stopServer': return 'Szerver leállítása';
+			case 'companionRemote.session.minimize': return 'Kis méret';
+			case 'companionRemote.session.manualAddressHint': return 'Kézi kapcsolódási cím:';
+			case 'companionRemote.pairing.discoveryDescription': return 'Az azonos Plex-fiókot használó Plezy-eszközök itt jelennek meg';
+			case 'companionRemote.pairing.hostAddressHint': return '192.168.1.100:48632';
+			case 'companionRemote.pairing.connecting': return 'Csatlakozás...';
+			case 'companionRemote.pairing.searchingForDevices': return 'Eszközök keresése...';
+			case 'companionRemote.pairing.noDevicesFound': return 'Nem találhatók eszközök a hálózaton';
+			case 'companionRemote.pairing.noDevicesHint': return 'Nyisd meg a Plezyt asztali gépen, és használd ugyanazt a Wi-Fi-hálózatot';
+			case 'companionRemote.pairing.availableDevices': return 'Elérhető eszközök';
+			case 'companionRemote.pairing.manualConnection': return 'Kézi csatlakozás';
+			case 'companionRemote.pairing.cryptoInitFailed': return 'Nem sikerült elindítani a biztonságos kapcsolatot. Először jelentkezz be a Plexbe.';
+			case 'companionRemote.pairing.validationHostRequired': return 'Add meg a gazdagép címét';
+			case 'companionRemote.pairing.validationHostFormat': return 'A formátumnak IP:port kell lennie (pl. 192.168.1.100:48632)';
+			case 'companionRemote.pairing.connectionTimedOut': return 'A csatlakozás túllépte az időkorlátot. Használd ugyanazt a hálózatot mindkét eszközön.';
+			case 'companionRemote.pairing.sessionNotFound': return 'Az eszköz nem található. Győződj meg arról, hogy a Plezy fut a gazdagépen.';
+			case 'companionRemote.pairing.authFailed': return 'A hitelesítés nem sikerült. Mindkét eszközön ugyanazt a Plex-fiókot kell használni.';
+			case 'companionRemote.pairing.failedToConnect': return ({required Object error}) => 'Nem sikerült a csatlakozás: ${error}';
+			case 'companionRemote.remote.disconnectConfirm': return 'Bontod a kapcsolatot a távoli munkamenettel?';
+			case 'companionRemote.remote.reconnecting': return 'Újracsatlakozás...';
+			case 'companionRemote.remote.attemptOf': return ({required Object current}) => '${current} / 5 próbálkozás';
+			case 'companionRemote.remote.retryNow': return 'Újrapróbálkozás most';
+			case 'companionRemote.remote.tabRemote': return 'Távirányító';
+			case 'companionRemote.remote.tabPlay': return 'Lejátszás';
+			case 'companionRemote.remote.tabMore': return 'Egyebek';
+			case 'companionRemote.remote.menu': return 'Menü';
+			case 'companionRemote.remote.tabNavigation': return 'Navigációs lap';
+			case 'companionRemote.remote.tabDiscover': return 'Felfedezés';
+			case 'companionRemote.remote.tabLibraries': return 'Könyvtárak';
+			case 'companionRemote.remote.tabSearch': return 'Keresés';
+			case 'companionRemote.remote.tabDownloads': return 'Letöltések';
+			case 'companionRemote.remote.tabSettings': return 'Beállítások';
+			case 'companionRemote.remote.previous': return 'Előző';
+			case 'companionRemote.remote.playPause': return 'Lejátszás/Szünet';
+			case 'companionRemote.remote.next': return 'Következő';
+			case 'companionRemote.remote.seekBack': return 'Visszatekerés';
+			case 'companionRemote.remote.stop': return 'Leállítás';
+			case 'companionRemote.remote.seekForward': return 'Előretekerés';
+			case 'companionRemote.remote.volume': return 'Hangerő';
+			case 'companionRemote.remote.volumeDown': return 'Hangerő le';
+			case 'companionRemote.remote.volumeUp': return 'Hangerő fel';
+			case 'companionRemote.remote.fullscreen': return 'Teljes képernyő';
+			case 'companionRemote.remote.subtitles': return 'Feliratok';
+			case 'companionRemote.remote.audio': return 'Hang';
+			case 'companionRemote.remote.searchHint': return 'Keresés az asztali gépen...';
+			case 'companionRemote.errors.noNetworkInterface': return 'Nem található hálózati csatoló';
+			case 'companionRemote.errors.authenticationFailed': return 'A hitelesítés nem sikerült';
+			case 'companionRemote.errors.serverStartFailed': return ({required Object error}) => 'Nem sikerült elindítani a távirányító-szervert: ${error}';
+			case 'companionRemote.errors.commandFailed': return ({required Object error}) => 'Nem sikerült elküldeni a távoli parancsot: ${error}';
+			case 'companionRemote.errors.joinTimedOut': return 'Időtúllépés a munkamenethez való csatlakozáskor';
+			case 'companionRemote.errors.failedToConnectAnyAddress': return 'Egyetlen címhez sem sikerült csatlakozni';
+			case 'companionRemote.errors.connectionLostAfterAttempts': return ({required Object attempts}) => 'A kapcsolat megszakadt ${attempts} próbálkozás után';
+			case 'companionRemote.errors.connectionLost': return 'A kapcsolat megszakadt';
+			case 'companionRemote.closedBeforeAuth': return 'A kapcsolat a hitelesítés előtt megszakadt';
+			case 'videoSettings.playbackSpeed': return 'Lejátszási sebesség';
+			case 'videoSettings.normalSpeed': return 'Normál';
+			case 'videoSettings.sleepTimerActive': return ({required Object duration}) => 'Aktív (${duration})';
+			case 'videoSettings.zoom': return 'Nagyítás';
+			case 'videoSettings.sleepTimer': return 'Elalvási időzítő';
+			case 'videoSettings.audioSync': return 'Hang szinkronizálása';
+			case 'videoSettings.subtitleSync': return 'Felirat szinkronizálása';
+			case 'videoSettings.hdr': return 'HDR';
+			case 'videoSettings.hdrUnsupported': return 'A HDR itt nem érhető el – ez az asztali kompozitor vagy videókimenet nem képes továbbítani.';
+			case 'videoSettings.hdrToneMapping': return 'HDR-tónusleképezés';
+			case 'videoSettings.hdrToneMappingCompositor': return 'Kompozitor';
+			case 'videoSettings.hdrToneMappingCompositorDescription': return 'Továbbítja a forrás HDR-metaadatait, és az asztali kompozitorra bízza a tónusleképezést.';
+			case 'videoSettings.hdrToneMappingPlayer': return 'Lejátszó';
+			case 'videoSettings.hdrToneMappingPlayerDescription': return 'A lejátszóban a kijelző maximális fényerejéhez igazítja a képet, majd közli az eredményt a kompozitorral.';
+			case 'videoSettings.hdrToneMappingFailed': return 'Nem sikerült módosítani a HDR-tónusleképezést – továbbra is az előző mód aktív.';
+			case 'videoSettings.audioOutput': return 'Hangkimenet';
+			case 'videoSettings.performanceOverlay': return 'Teljesítményadatok';
+			case 'videoSettings.audioOutputDolbyAtmos': return 'Dolby Atmos';
+			case 'videoSettings.audioOutputDolbyAudio': return 'Dolby Audio';
+			case 'videoSettings.audioOutputSurround': return 'Térhatású';
+			case 'videoSettings.audioOutputSpatial': return 'Térbeli hang';
+			case 'videoSettings.audioOutputStereo': return 'Sztereó';
+			case 'videoSettings.audioNormalization': return 'Hangerő normalizálása';
+			case 'videoSettings.audioNormalizationDisablesPassthrough': return 'PCM-mé dekódolja a hangot; a passthrough ki van kapcsolva, amíg ez be van kapcsolva';
+			case 'performanceOverlay.color': return 'Szín';
+			case 'performanceOverlay.performance': return 'Teljesítmény';
+			case 'performanceOverlay.buffer': return 'Puffer';
+			case 'performanceOverlay.app': return 'Alkalmazás';
+			case 'performanceOverlay.decoder': return 'Dekóder';
+			case 'performanceOverlay.rawDecoder': return 'Nyers dekóder';
+			case 'performanceOverlay.tunneling': return 'Alagutazás';
+			case 'performanceOverlay.passthrough': return 'Passthrough';
+			case 'performanceOverlay.aspect': return 'Méretarány';
+			case 'performanceOverlay.rotation': return 'Forgatás';
+			case 'performanceOverlay.dvSource': return 'DV-forrás';
+			case 'performanceOverlay.dvPath': return 'DV-útvonal';
+			case 'performanceOverlay.dvRouteDecoder': return 'Dolby Vision-dekóder';
+			case 'performanceOverlay.dvRouteDecoderP81': return 'Dolby Vision-dekóder (P7→8.1)';
+			case 'performanceOverlay.dvRouteBaseLayer': return 'Alapréteg';
+			case 'performanceOverlay.dvRouteBaseLayerHdr10': return 'HDR10-alapréteg';
+			case 'performanceOverlay.dvRouteBaseLayerHlg': return 'HLG-alapréteg';
+			case 'performanceOverlay.dvRouteBaseLayerSdr': return 'SDR-alapréteg';
+			case 'performanceOverlay.dvRouteReshaped': return 'RPU-átformálás (gpu-next)';
+			case 'performanceOverlay.p7Conversion': return 'P7-átalakítás';
+			case 'performanceOverlay.sampleRate': return 'Mintavételezési frekvencia';
+			case 'performanceOverlay.pixelFormat': return 'Képpontformátum';
+			case 'performanceOverlay.hwFormat': return 'Hardverformátum';
+			case 'performanceOverlay.matrix': return 'Mátrix';
+			case 'performanceOverlay.primaries': return 'Elsődleges színek';
+			case 'performanceOverlay.transfer': return 'Átvitel';
+			case 'performanceOverlay.renderFps': return 'Renderelési FPS';
+			case 'performanceOverlay.displayFps': return 'Kijelző-FPS';
+			case 'performanceOverlay.avSync': return 'A/V-szinkron';
+			case 'performanceOverlay.dropped': return 'Eldobva';
+			case 'performanceOverlay.dvRpus': return 'DV RPU-k';
+			case 'performanceOverlay.dvRpuAverage': return 'DV RPU-átlag';
+			case 'performanceOverlay.dvSampleAverage': return 'DV-mintaátlag';
+			case 'performanceOverlay.maxLuma': return 'Maximális luma';
+			case 'performanceOverlay.minLuma': return 'Minimális luma';
+			case 'performanceOverlay.maxCll': return 'MaxCLL';
+			case 'performanceOverlay.maxFall': return 'MaxFALL';
+			case 'performanceOverlay.cacheUsed': return 'Használt gyorsítótár';
+			case 'performanceOverlay.cacheLimit': return 'Gyorsítótár korlátja';
+			case 'performanceOverlay.speed': return 'Sebesség';
+			case 'performanceOverlay.player': return 'Lejátszó';
+			case 'performanceOverlay.memory': return 'Memória';
+			case 'performanceOverlay.uiFps': return 'Felület-FPS';
+			case 'performanceOverlay.fps': return 'FPS';
+			case 'performanceOverlay.decoderAndroidHw': return 'Android HW';
+			case 'performanceOverlay.decoderNvidiaHw': return 'NVIDIA HW';
+			case 'performanceOverlay.decoderQualcommHw': return 'Qualcomm HW';
+			case 'performanceOverlay.decoderMediatekHw': return 'MediaTek HW';
+			case 'performanceOverlay.decoderExynosHw': return 'Exynos HW';
+			case 'performanceOverlay.decoderSoftware': return 'Szoftveres';
+			case 'performanceOverlay.decoderHardware': return 'Hardveres';
+			case 'performanceOverlay.tunnelingActive': return 'Aktív';
+			case 'performanceOverlay.dvRpuFailed': return ({required Object converted, required Object failures}) => '${converted} (${failures} sikertelen)';
+			case 'externalPlayer.title': return 'Külső lejátszó';
+			case 'externalPlayer.useExternalPlayer': return 'Külső lejátszó használata';
+			case 'externalPlayer.useExternalPlayerDescription': return 'Videók megnyitása egy másik alkalmazásban';
+			case 'externalPlayer.selectPlayer': return 'Lejátszó kiválasztása';
+			case 'externalPlayer.customPlayers': return 'Egyéni lejátszók';
+			case 'externalPlayer.systemDefault': return 'Rendszer alapértelmezése';
+			case 'externalPlayer.addCustomPlayer': return 'Egyéni lejátszó hozzáadása';
+			case 'externalPlayer.playerName': return 'Lejátszó neve';
+			case 'externalPlayer.playerNameHint': return 'Saját lejátszó';
+			case 'externalPlayer.playerCommand': return 'Parancs';
+			case 'externalPlayer.playerPackage': return 'Csomagnév';
+			case 'externalPlayer.playerUrlScheme': return 'URL-séma';
+			case 'externalPlayer.off': return 'Ki';
+			case 'externalPlayer.launchFailed': return 'Nem sikerült megnyitni a külső lejátszót';
+			case 'externalPlayer.appNotInstalled': return ({required Object name}) => 'A(z) ${name} nincs telepítve';
+			case 'externalPlayer.playInExternalPlayer': return 'Lejátszás külső lejátszóban';
+			case 'metadataEdit.editMetadata': return 'Szerkesztés...';
+			case 'metadataEdit.screenTitle': return 'Metaadatok szerkesztése';
+			case 'metadataEdit.basicInfo': return 'Alapinformációk';
+			case 'metadataEdit.artwork': return 'Borítók és képek';
+			case 'metadataEdit.advancedSettings': return 'Haladó beállítások';
+			case 'metadataEdit.title': return 'Cím';
+			case 'metadataEdit.sortTitle': return 'Rendezési cím';
+			case 'metadataEdit.originalTitle': return 'Eredeti cím';
+			case 'metadataEdit.releaseDate': return 'Bemutató dátuma';
+			case 'metadataEdit.contentRating': return 'Korhatár-besorolás';
+			case 'metadataEdit.studio': return 'Stúdió';
+			case 'metadataEdit.tagline': return 'Jelmondat';
+			case 'metadataEdit.summary': return 'Összefoglaló';
+			case 'metadataEdit.poster': return 'Poszter';
+			case 'metadataEdit.background': return 'Háttér';
+			case 'metadataEdit.logo': return 'Logó';
+			case 'metadataEdit.squareArt': return 'Négyzetes kép';
+			case 'metadataEdit.selectPoster': return 'Poszter kiválasztása';
+			case 'metadataEdit.selectBackground': return 'Háttér kiválasztása';
+			case 'metadataEdit.selectLogo': return 'Logó kiválasztása';
+			case 'metadataEdit.selectSquareArt': return 'Négyzetes kép kiválasztása';
+			case 'metadataEdit.fromUrl': return 'URL-ről';
+			case 'metadataEdit.uploadFile': return 'Fájl feltöltése';
+			case 'metadataEdit.enterImageUrl': return 'Add meg a kép URL-címét';
+			case 'metadataEdit.imageUrl': return 'Kép URL-címe';
+			case 'metadataEdit.metadataUpdated': return 'Metaadatok frissítve';
+			case 'metadataEdit.metadataUpdateFailed': return 'Nem sikerült a metaadatok frissítése';
+			case 'metadataEdit.artworkUpdated': return 'Képek frissítve';
+			case 'metadataEdit.artworkUpdateFailed': return 'Nem sikerült a képek frissítése';
+			case 'metadataEdit.noArtworkAvailable': return 'Nincsenek elérhető képek';
+			case 'metadataEdit.artworkOption': return ({required Object index}) => '${index}. képváltozat';
+			case 'metadataEdit.selectedArtworkOption': return ({required Object index}) => '${index}. képváltozat, kiválasztva';
+			case 'metadataEdit.notSet': return 'Nincs beállítva';
+			case 'metadataEdit.libraryDefault': return 'Könyvtári alapértelmezés';
+			case 'metadataEdit.accountDefault': return 'Fiók alapértelmezése';
+			case 'metadataEdit.seriesDefault': return 'Sorozat alapértelmezése';
+			case 'metadataEdit.episodeSorting': return 'Epizódok rendezése';
+			case 'metadataEdit.oldestFirst': return 'Legrégebbi elöl';
+			case 'metadataEdit.newestFirst': return 'Legújabb elöl';
+			case 'metadataEdit.keep': return 'Megtartás';
+			case 'metadataEdit.allEpisodes': return 'Minden epizód';
+			case 'metadataEdit.latestEpisodes': return ({required Object count}) => 'Legutóbbi ${count} epizód';
+			case 'metadataEdit.latestEpisode': return 'Legutóbbi epizód';
+			case 'metadataEdit.episodesAddedPastDays': return ({required Object count}) => 'Az elmúlt ${count} napban hozzáadott epizódok';
+			case 'metadataEdit.deleteAfterPlaying': return 'Epizódok törlése lejátszás után';
+			case 'metadataEdit.never': return 'Soha';
+			case 'metadataEdit.afterADay': return 'Egy nap után';
+			case 'metadataEdit.afterAWeek': return 'Egy hét után';
+			case 'metadataEdit.afterAMonth': return 'Egy hónap után';
+			case 'metadataEdit.onNextRefresh': return 'A következő frissítéskor';
+			case 'metadataEdit.seasons': return 'Évadok';
+			case 'metadataEdit.show': return 'Megjelenítés';
+			case 'metadataEdit.hide': return 'Elrejtés';
+			case 'metadataEdit.episodeOrdering': return 'Epizódok sorrendje';
+			case 'metadataEdit.tmdbAiring': return 'The Movie Database (sugárzási sorrend)';
+			case 'metadataEdit.tvdbAiring': return 'TheTVDB (sugárzási sorrend)';
+			case 'metadataEdit.tvdbAbsolute': return 'TheTVDB (abszolút sorrend)';
+			case 'metadataEdit.metadataLanguage': return 'Metaadatok nyelve';
+			case 'metadataEdit.useOriginalTitle': return 'Eredeti cím használata';
+			case 'metadataEdit.preferredAudioLanguage': return 'Elsődleges hangnyelv';
+			case 'metadataEdit.preferredSubtitleLanguage': return 'Elsődleges feliratnyelv';
+			case 'metadataEdit.subtitleMode': return 'Automatikus feliratválasztási mód';
+			case 'metadataEdit.manuallySelected': return 'Kézzel kiválasztva';
+			case 'metadataEdit.shownWithForeignAudio': return 'Idegen nyelvű hang esetén megjelenítve';
+			case 'metadataEdit.alwaysEnabled': return 'Mindig engedélyezve';
+			case 'metadataEdit.tags': return 'Címkék';
+			case 'metadataEdit.addTag': return 'Címke hozzáadása';
+			case 'metadataEdit.genre': return 'Műfaj';
+			case 'metadataEdit.director': return 'Rendező';
+			case 'metadataEdit.writer': return 'Író';
+			case 'metadataEdit.producer': return 'Producer';
+			case 'metadataEdit.country': return 'Ország';
+			case 'metadataEdit.collection': return 'Gyűjtemény';
+			case 'metadataEdit.label': return 'Kiadó';
+			case 'metadataEdit.quickTag': return 'Gyors címke...';
+			case 'matchScreen.match': return 'Párosítás...';
+			case 'matchScreen.fixMatch': return 'Párosítás javítása...';
+			case 'matchScreen.unmatch': return 'Párosítás megszüntetése';
+			case 'matchScreen.unmatchConfirm': return 'Törlöd ezt a párosítást? A Plex párosítatlanként kezeli az újrapárosításig.';
+			case 'matchScreen.unmatchSuccess': return 'Párosítás megszüntetve';
+			case 'matchScreen.unmatchFailed': return 'Nem sikerült a párosítás megszüntetése';
+			case 'matchScreen.matchApplied': return 'Párosítás alkalmazva';
+			case 'matchScreen.matchFailed': return 'Nem sikerült a párosítás alkalmazása';
+			case 'matchScreen.titleHint': return 'Cím';
+			case 'matchScreen.yearHint': return 'Év';
+			case 'matchScreen.search': return 'Keresés';
+			case 'matchScreen.noMatchesFound': return 'Nincsenek egyezések';
+			case 'serverTasks.title': return 'Szerverfeladatok';
+			case 'serverTasks.failedToLoad': return 'Nem sikerült a feladatok betöltése';
+			case 'serverTasks.noTasks': return 'Nincsenek futó feladatok';
+			case 'trakt.title': return 'Trakt';
+			case 'trakt.connected': return 'Csatlakoztatva';
+			case 'trakt.connectedAs': return ({required Object username}) => '@${username} néven csatlakoztatva';
+			case 'trakt.disconnectConfirm': return 'Leválasztod a Trakt-fiókot?';
+			case 'trakt.disconnectConfirmBody': return 'A Plezy nem küld több eseményt a Traktnak. Bármikor újracsatlakozhatsz.';
+			case 'trakt.scrobble': return 'Valós idejű scrobbling';
+			case 'trakt.scrobbleDescription': return 'Lejátszási, szüneteltetési és leállítási események küldése a Traktnak lejátszás közben.';
+			case 'trakt.watchedSync': return 'Megtekintési állapot szinkronizálása';
+			case 'trakt.watchedSyncDescription': return 'Ha egy elemet megtekintettként jelölsz meg a Plezyben, a Trakt is megtekintettként jelöli.';
+			case 'seerr.title': return 'Seerr';
+			case 'seerr.connectTitle': return 'Seerr csatlakoztatása';
+			case 'seerr.serverUrl': return 'Szerver URL-címe';
+			case 'seerr.serverUrlHelper': return 'A Seerr példányod címe';
+			case 'seerr.checkServer': return 'Folytatás';
+			case 'seerr.signInWithJellyfin': return 'Bejelentkezés Jellyfinnel';
+			case 'seerr.signInWithEmby': return 'Bejelentkezés Emby-vel';
+			case 'seerr.signInWithLocal': return 'Helyi fiók használata';
+			case 'seerr.email': return 'E-mail';
+			case 'seerr.noSignInMethods': return 'Ez a Seerr példány nem kínál olyan bejelentkezési módot, amit a Plezy támogat.';
+			case 'seerr.instance': return 'Példány';
+			case 'seerr.disconnectConfirm': return 'Leválasztod a Seerr-kapcsolatot?';
+			case 'seerr.disconnectConfirmBody': return 'A Plezy elfelejti ezt a Seerr példányt. Bármikor újracsatlakozhatsz.';
+			case 'seerr.request': return 'Igénylés';
+			case 'seerr.request4k': return 'Igénylés 4K-ban';
+			case 'seerr.seasons': return 'Évadok';
+			case 'seerr.allSeasons': return 'Minden évad';
+			case 'seerr.advancedOptions': return 'Haladó';
+			case 'seerr.destinationServer': return 'Célszerver';
+			case 'seerr.qualityProfile': return 'Minőségi profil';
+			case 'seerr.rootFolder': return 'Gyökérmappa';
+			case 'seerr.languageProfile': return 'Nyelvi profil';
+			case 'seerr.tags': return 'Címkék';
+			case 'seerr.noTags': return 'Nincsenek címkék';
+			case 'seerr.defaultOption': return ({required Object name}) => '${name} (alapértelmezett)';
+			case 'seerr.animeNote': return 'Ez a sorozat anime.';
+			case 'seerr.requestSubmitted': return 'Igénylés elküldve';
+			case 'seerr.requestFailed': return ({required Object error}) => 'Az igénylés nem sikerült: ${error}';
+			case 'seerr.requestsLoadFailed': return 'Nem sikerült betölteni az igénylési opciókat';
+			case 'seerr.nothingToRequest': return 'Minden elem már elérhető vagy igényelve van.';
+			case 'seerr.statusAvailable': return 'Elérhető';
+			case 'seerr.statusPartiallyAvailable': return 'Részben elérhető';
+			case 'seerr.statusRequested': return 'Igényelve';
+			case 'seerr.statusProcessing': return 'Feldolgozás alatt';
+			case 'seerr.statusBlocklisted': return 'Tiltólistán';
+			case 'seerr.couldNotReach': return ({required Object url, required Object error}) => 'Nem sikerült elérni ezt: ${url}: ${error}';
+			case 'seerr.noInstanceAtUrl': return ({required Object url, required Object status}) => 'Nem található Seerr-példány ezen a címen: ${url} (HTTP ${status})';
+			case 'seerr.behindAuthProxy': return 'A Seerr helyett egy hitelesítő fordított proxy (SSO vagy HTTP-hitelesítés) válaszolt. A Plezy nem tud rajta bejelentkezni: engedd, hogy a Seerr /api/v1 útvonala megkerülje a proxyt ennél az alkalmazásnál, vagy használj olyan címet, amely közvetlenül eléri a Seerr-t.';
+			case 'seerr.invalidUrl': return 'Adj meg egy szervercímet, például: https://seerr.example.com';
+			case 'seerr.quickConnectUnsupported': return 'Ez a Seerr-példány nem támogatja a Quick Connectet. Seerr 3.4 vagy újabb verzió szükséges.';
+			case 'seerr.notInitialized': return 'Ennek a Seerr-példánynak a kezdeti beállítása még nem fejeződött be';
+			case 'seerr.noPlexTokenForReauth': return 'Nem áll rendelkezésre Plex-token az újbóli bejelentkezéshez';
+			case 'seerr.noStoredCredentials': return 'Nem állnak rendelkezésre mentett hitelesítő adatok az újbóli bejelentkezéshez';
+			case 'seerr.signInRejected': return 'A bejelentkezést elutasították';
+			case 'seerr.noSessionCookie': return 'A Seerr nem adott ki munkamenet-sütit';
+			case 'seerr.freshCookieRejected': return 'A Seerr elutasította az új munkamenet-sütit';
+			case 'seerr.noUserInformation': return 'A Seerr nem adott vissza felhasználói adatokat';
+			case 'seerr.sessionRejectedAfterReauth': return 'A munkamenetet az újbóli bejelentkezés után elutasították';
+			case 'seerr.permissionDenied': return 'A Seerr elutasította ezt a műveletet: a fiókod már nem rendelkezik a szükséges jogosultsággal';
+			case 'seerr.permissionRevoked': return 'Már nincs jogosultságod ennek az igényléséhez';
+			case 'services.title': return 'Szolgáltatások';
+			case 'services.hubSubtitle': return 'Megtekintési haladás szinkronizálása és új tartalmak igénylése.';
+			case 'services.integrations': return 'Integrációk';
+			case 'services.notConnected': return 'Nincs csatlakoztatva';
+			case 'services.connectedAs': return ({required Object username}) => '@${username} néven csatlakoztatva';
+			case 'services.scrobble': return 'Haladás automatikus követése';
+			case 'services.scrobbleDescription': return 'Lista frissítése, amikor befejezel egy epizódot vagy filmet.';
+			case 'services.disconnectConfirm': return ({required Object service}) => 'Leválasztod a(z) ${service} szolgáltatást?';
+			case 'services.disconnectConfirmBody': return ({required Object service}) => 'A Plezy nem frissíti többé a(z) ${service} adatait. Bármikor újracsatlakozhatsz.';
+			case 'services.connectFailed': return ({required Object service}) => 'Nem sikerült csatlakozni a következőhöz: ${service}. Próbáld újra.';
+			case 'services.names.mal': return 'MyAnimeList';
+			case 'services.names.anilist': return 'AniList';
+			case 'services.names.simkl': return 'Simkl';
+			case 'services.names.seerr': return 'Seerr';
+			case 'services.names.mdblist': return 'MDBList';
+			case 'services.simklReconnect.title': return 'Simkl újracsatlakoztatása';
+			case 'services.simklReconnect.subtitle': return 'A Simkl kivezeti a kapcsolat által használt bejelentkezési módot. Az újracsatlakozás megnyitja a simkl.com oldalt, ahol jóváhagyhatod a Plezyt — a Plezy sosem látja a jelszavadat. A megtekintési előzményeid a Simklen maradnak.';
+			case 'services.deviceCode.title': return ({required Object service}) => 'Plezy aktiválása a következőn: ${service}';
+			case 'services.deviceCode.instructions': return 'Olvasd be a QR-kódot, vagy nyisd meg az alábbi címet, és írd be ezt a kódot:';
+			case 'services.deviceCode.openToActivate': return ({required Object service}) => 'Nyisd meg a(z) ${service} oldalt az aktiváláshoz';
+			case 'services.deviceCode.copyCode': return 'Aktiválási kód másolása';
+			case 'services.deviceCode.waitingForAuthorization': return 'Várakozás az engedélyezésre…';
+			case 'services.deviceCode.codeCopied': return 'Kód másolva';
+			case 'services.oauthProxy.title': return ({required Object service}) => 'Bejelentkezés ide: ${service}';
+			case 'services.oauthProxy.body': return 'Olvasd be ezt a QR-kódot vagy nyisd meg az URL-t bármelyik eszközön.';
+			case 'services.oauthProxy.openToSignIn': return ({required Object service}) => 'Nyisd meg a(z) ${service} oldalt a bejelentkezéshez';
+			case 'services.pendingAuth.copyUrl': return 'Bejelentkezési URL másolása';
+			case 'services.pendingAuth.urlCopied': return 'URL másolva';
+			case 'services.libraryFilter.title': return 'Könyvtárszűrő';
+			case 'services.libraryFilter.subtitleAllSyncing': return 'Minden könyvtár szinkronizálása';
+			case 'services.libraryFilter.subtitleNoneSyncing': return 'Nincs szinkronizálás';
+			case 'services.libraryFilter.subtitleBlocked': return ({required Object count}) => '${count} kizárva';
+			case 'services.libraryFilter.subtitleAllowed': return ({required Object count}) => '${count} engedélyezve';
+			case 'services.libraryFilter.mode': return 'Szűrési mód';
+			case 'services.libraryFilter.modeBlacklist': return 'Tiltólista';
+			case 'services.libraryFilter.modeWhitelist': return 'Engedélyezőlista';
+			case 'services.libraryFilter.modeHintBlacklist': return 'Minden könyvtár szinkronizálása az alább bejelöltek kivételével.';
+			case 'services.libraryFilter.modeHintWhitelist': return 'Csak az alább bejelölt könyvtárak szinkronizálása.';
+			case 'services.libraryFilter.libraries': return 'Könyvtárak';
+			case 'services.libraryFilter.noLibraries': return 'Nincsenek elérhető könyvtárak';
+			case 'addServer.addMediaBrowserTitle': return ({required Object product}) => '${product} szerver hozzáadása';
+			case 'addServer.serverUrls': return 'Szerver URL-címei';
+			case 'addServer.serverUrlsHelper': return 'Több URL is megadható, vesszővel elválasztva.';
+			case 'addServer.findServer': return 'Szerver keresése';
+			case 'addServer.searchingLocalMediaBrowserServers': return ({required Object product}) => 'Helyi ${product} szerverek keresése...';
+			case 'addServer.localMediaBrowserServers': return ({required Object product}) => 'Helyi ${product} szerverek';
+			case 'addServer.username': return 'Felhasználónév';
+			case 'addServer.password': return 'Jelszó';
+			case 'addServer.signIn': return 'Bejelentkezés';
+			case 'addServer.change': return 'Módosítás';
+			case 'addServer.required': return 'Kötelező';
+			case 'addServer.couldNotReachServer': return ({required Object error}) => 'Nem sikerült elérni a szervert: ${error}';
+			case 'addServer.signInFailed': return ({required Object error}) => 'A bejelentkezés nem sikerült: ${error}';
+			case 'addServer.quickConnectFailed': return ({required Object error}) => 'A Quick Connect használata nem sikerült: ${error}';
+			case 'addServer.addPlexTitle': return 'Bejelentkezés Plexszel';
+			case 'addServer.pinExpired': return 'A PIN-kód a bejelentkezés előtt lejárt. Próbáld újra.';
+			case 'addServer.failedToRegisterAccount': return ({required Object error}) => 'Nem sikerült a fiók regisztrálása: ${error}';
+			case 'addServer.enterMediaBrowserUrlError': return ({required Object product}) => 'Adja meg a(z) ${product} szerver URL-jét';
+			case 'addServer.addConnectionTitle': return 'Kapcsolat hozzáadása';
+			case 'addServer.addConnectionTitleScoped': return ({required Object name}) => 'Hozzáadás a következőhöz: ${name}';
+			case 'addServer.signInWithPlexCard': return 'Bejelentkezés Plexszel';
+			case 'addServer.signInWithPlexCardSubtitle': return 'Eszköz engedélyezése. A megosztott szerverek hozzáadásra kerülnek.';
+			case 'addServer.signInWithPlexCardSubtitleScoped': return 'Plex-fiók engedélyezése. A Plex Home-felhasználókból profilok lesznek.';
+			case 'addServer.connectToMediaBrowserCard': return ({required Object product}) => 'Csatlakozás a(z) ${product} szolgáltatáshoz';
+			case 'addServer.connectToMediaBrowserCardSubtitle': return 'Adja meg a szerver URL-jét, felhasználónevét és jelszavát.';
+			case 'addServer.connectToMediaBrowserCardSubtitleScoped': return ({required Object product, required Object name}) => 'Jelentkezzen be a(z) ${product} szerverére. A(z) ${name} szolgáltatáshoz kötődik.';
+			case 'addServer.borrowFromAnotherProfile': return 'Kapcsolat használata másik profilból';
+			case 'addServer.borrowFromAnotherProfileSubtitle': return 'Egy másik profil kapcsolatának használata. A PIN-kóddal védett profilokhoz PIN-kód szükséges.';
+			case 'addServer.invalidCredentials': return 'Érvénytelen felhasználónév vagy jelszó';
+			case 'addServer.authResponseNotJson': return 'A hitelesítési válasz nem érvényes JSON';
+			case 'addServer.authResponseIncomplete': return 'A szerver bejelentkezési válasza hiányos volt';
+			case 'addServer.quickConnectRejected': return 'A szerver elutasította a Quick Connect-kérést';
+			case 'addServer.quickConnectNotJson': return 'A Quick Connect válasza nem érvényes JSON';
+			case 'addServer.quickConnectMissingFields': return 'A Quick Connect válaszából hiányzik a kód vagy a titkos kulcs';
+			case 'addServer.quickConnectPollRejected': return 'A szerver elutasította a Quick Connect lekérdezését';
+			case 'addServer.serverTimedOut': return 'A szerver nem válaszolt időben';
+			case 'addServer.responseNotJson': return 'A szerver válasza nem érvényes JSON';
+			case 'addServer.responseMissingIdentity': return ({required Object product}) => 'A válaszból hiányzik az azonosító vagy a szerver neve – ez valóban ${product}-szerver?';
+			case 'addServer.probeFailed': return ({required Object error}) => 'Nem sikerült elérni a szervert: ${error}';
+			case 'addServer.enterAtLeastOneUrl': return ({required Object product}) => 'Adj meg legalább egy ${product}-szerverhez tartozó URL-t';
+			case 'addServer.noReachableServer': return ({required Object product}) => 'Nem található elérhető ${product}-szerver';
+			case 'addServer.urlsPointToDifferentServers': return ({required Object product}) => 'Ezek az URL-ek különböző ${product}-szerverekre mutatnak';
+			case 'addServer.urlDoesNotMatchServer': return ({required Object product}) => 'Ez az URL nem egyezik a(z) ${product}-szerverrel';
+			case 'addServer.redirectUnsupported': return 'A szerver nem támogatott URL-re irányított át';
+			case 'addServer.redirectDifferentHost': return ({required Object product}) => 'A szerver egy másik gazdagépre irányított át. Add meg közvetlenül a végleges ${product} URL-t.';
+			case 'addServer.redirectInsecure': return 'A szerver HTTPS-ről nem biztonságos URL-re irányított át';
+			case 'addServer.redirectUnsupportedEnterFinal': return ({required Object product}) => 'A szerver nem támogatott URL-re irányított át. Add meg közvetlenül a végleges ${product} URL-t.';
+			default: return null;
+		}
 	}
 }
+

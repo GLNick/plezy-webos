@@ -2499,6 +2499,26 @@
       "modeHintWhitelist": "Nur die unten markierten Mediatheken synchronisieren.",
       "libraries": "Mediatheken",
       "noLibraries": "Keine Mediatheken verfügbar"
+    },
+    "malDiscovery": {
+      "title": "MyAnimeList-Entdecken",
+      "watching": "Schaue ich gerade",
+      "watchingDescription": "Anime einbeziehen, die du aktuell schaust",
+      "planToWatch": "Geplant",
+      "planToWatchDescription": "Anime von deiner Merkliste (Plan to Watch) einbeziehen",
+      "onHold": "Pausiert",
+      "onHoldDescription": "Pausierte Anime (On Hold) einbeziehen",
+      "completed": "Abgeschlossen",
+      "completedDescription": "Bereits abgeschlossene Anime einbeziehen",
+      "dropped": "Abgebrochen",
+      "droppedDescription": "Abgebrochene Anime einbeziehen",
+      "unreleasedTitle": "Unveröffentlichte Anime",
+      "unreleasedPushToEnd": "Ans Ende verschieben",
+      "unreleasedPushToEndDescription": "Bereits veröffentlichte und laufende Anime vor kommenden Titeln anzeigen",
+      "unreleasedHide": "Ausblenden",
+      "unreleasedHideDescription": "Noch nicht ausgestrahlte Anime vollständig ausschließen",
+      "unreleasedShowNormally": "Normal anzeigen",
+      "unreleasedShowNormallyDescription": "Listenreihenfolge beibehalten, ohne kommende Titel zurückzustufen"
     }
   },
   "addServer": {

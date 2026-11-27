@@ -32,6 +32,7 @@ class TrackerAccountSettingsBody extends StatelessWidget {
   final List<Widget> accountActions;
   final TrackerService service;
   final List<TrackerSettingsToggle> toggles;
+  final List<Widget> extraSections;
   final FutureOr<void> Function() onDisconnect;
 
   const TrackerAccountSettingsBody({
@@ -42,6 +43,7 @@ class TrackerAccountSettingsBody extends StatelessWidget {
     this.accountActions = const [],
     required this.service,
     required this.toggles,
+    this.extraSections = const [],
     required this.onDisconnect,
   });
 
@@ -82,6 +84,7 @@ class TrackerAccountSettingsBody extends StatelessWidget {
             ),
           ],
         ),
+        ...extraSections,
         const SizedBox(height: 24),
         SettingsGroup(
           children: [

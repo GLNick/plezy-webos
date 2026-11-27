@@ -1630,6 +1630,12 @@ class PlayerWebos extends PlayerBase {
           _matchingScratch.add(cue);
         }
       }
+      if (_matchingScratch.length > 1) {
+        final ordered = sortWebosSubtitleCues(_matchingScratch);
+        _matchingScratch
+          ..clear()
+          ..addAll(ordered);
+      }
     }
 
     if (!_sameCueIdentityList(activeSubtitleCues.value, _matchingScratch)) {

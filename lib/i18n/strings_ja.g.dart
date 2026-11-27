@@ -3,7 +3,6 @@
 ///
 // coverage:ignore-file
 // ignore_for_file: type=lint, unused_import
-// dart format off
 
 import 'package:flutter/widgets.dart';
 import 'package:intl/intl.dart';
@@ -11,7 +10,7 @@ import 'package:slang/generated.dart';
 import 'strings.g.dart';
 
 // Path: <root>
-class TranslationsJa extends Translations with BaseTranslations<AppLocale, Translations> {
+class TranslationsJa extends Translations {
 	/// You can call this constructor and build your own translation instance of this locale.
 	/// Constructing via the enum [AppLocale.build] is preferred.
 	TranslationsJa({Map<String, Node>? overrides, PluralResolver? cardinalResolver, PluralResolver? ordinalResolver, TranslationMetadata<AppLocale, Translations>? meta})
@@ -39,65 +38,67 @@ class TranslationsJa extends Translations with BaseTranslations<AppLocale, Trans
 	TranslationsJa $copyWith({TranslationMetadata<AppLocale, Translations>? meta}) => TranslationsJa(meta: meta ?? this.$meta);
 
 	// Translations
-	@override late final _Translations$app$ja app = _Translations$app$ja._(_root);
-	@override late final _Translations$appIcon$ja appIcon = _Translations$appIcon$ja._(_root);
-	@override late final _Translations$auth$ja auth = _Translations$auth$ja._(_root);
-	@override late final _Translations$common$ja common = _Translations$common$ja._(_root);
-	@override late final _Translations$screens$ja screens = _Translations$screens$ja._(_root);
-	@override late final _Translations$update$ja update = _Translations$update$ja._(_root);
-	@override late final _Translations$supporter$ja supporter = _Translations$supporter$ja._(_root);
-	@override late final _Translations$settings$ja settings = _Translations$settings$ja._(_root);
-	@override late final _Translations$themeEditor$ja themeEditor = _Translations$themeEditor$ja._(_root);
-	@override late final _Translations$search$ja search = _Translations$search$ja._(_root);
-	@override late final _Translations$hotkeys$ja hotkeys = _Translations$hotkeys$ja._(_root);
-	@override late final _Translations$fileInfo$ja fileInfo = _Translations$fileInfo$ja._(_root);
-	@override late final _Translations$mediaMenu$ja mediaMenu = _Translations$mediaMenu$ja._(_root);
-	@override late final _Translations$rateSheet$ja rateSheet = _Translations$rateSheet$ja._(_root);
-	@override late final _Translations$accessibility$ja accessibility = _Translations$accessibility$ja._(_root);
-	@override late final _Translations$tooltips$ja tooltips = _Translations$tooltips$ja._(_root);
-	@override late final _Translations$audioTracks$ja audioTracks = _Translations$audioTracks$ja._(_root);
-	@override late final _Translations$videoControls$ja videoControls = _Translations$videoControls$ja._(_root);
-	@override late final _Translations$messages$ja messages = _Translations$messages$ja._(_root);
-	@override late final _Translations$subtitlingStyling$ja subtitlingStyling = _Translations$subtitlingStyling$ja._(_root);
-	@override late final _Translations$mpvConfig$ja mpvConfig = _Translations$mpvConfig$ja._(_root);
-	@override late final _Translations$dialog$ja dialog = _Translations$dialog$ja._(_root);
-	@override late final _Translations$profiles$ja profiles = _Translations$profiles$ja._(_root);
-	@override late final _Translations$connections$ja connections = _Translations$connections$ja._(_root);
-	@override late final _Translations$accountPreferences$ja accountPreferences = _Translations$accountPreferences$ja._(_root);
-	@override late final _Translations$discover$ja discover = _Translations$discover$ja._(_root);
-	@override late final _Translations$errors$ja errors = _Translations$errors$ja._(_root);
-	@override late final _Translations$libraries$ja libraries = _Translations$libraries$ja._(_root);
-	@override late final _Translations$about$ja about = _Translations$about$ja._(_root);
-	@override late final _Translations$serverSelection$ja serverSelection = _Translations$serverSelection$ja._(_root);
-	@override late final _Translations$hubDetail$ja hubDetail = _Translations$hubDetail$ja._(_root);
-	@override late final _Translations$logs$ja logs = _Translations$logs$ja._(_root);
-	@override late final _Translations$startup$ja startup = _Translations$startup$ja._(_root);
-	@override late final _Translations$licenses$ja licenses = _Translations$licenses$ja._(_root);
-	@override late final _Translations$navigation$ja navigation = _Translations$navigation$ja._(_root);
-	@override late final _Translations$explore$ja explore = _Translations$explore$ja._(_root);
-	@override late final _Translations$liveTv$ja liveTv = _Translations$liveTv$ja._(_root);
-	@override late final _Translations$collections$ja collections = _Translations$collections$ja._(_root);
-	@override late final _Translations$playlists$ja playlists = _Translations$playlists$ja._(_root);
-	@override late final _Translations$music$ja music = _Translations$music$ja._(_root);
-	@override late final _Translations$watchTogether$ja watchTogether = _Translations$watchTogether$ja._(_root);
-	@override late final _Translations$downloads$ja downloads = _Translations$downloads$ja._(_root);
-	@override late final _Translations$shaders$ja shaders = _Translations$shaders$ja._(_root);
-	@override late final _Translations$companionRemote$ja companionRemote = _Translations$companionRemote$ja._(_root);
-	@override late final _Translations$videoSettings$ja videoSettings = _Translations$videoSettings$ja._(_root);
-	@override late final _Translations$performanceOverlay$ja performanceOverlay = _Translations$performanceOverlay$ja._(_root);
-	@override late final _Translations$externalPlayer$ja externalPlayer = _Translations$externalPlayer$ja._(_root);
-	@override late final _Translations$metadataEdit$ja metadataEdit = _Translations$metadataEdit$ja._(_root);
-	@override late final _Translations$matchScreen$ja matchScreen = _Translations$matchScreen$ja._(_root);
-	@override late final _Translations$serverTasks$ja serverTasks = _Translations$serverTasks$ja._(_root);
-	@override late final _Translations$trakt$ja trakt = _Translations$trakt$ja._(_root);
-	@override late final _Translations$seerr$ja seerr = _Translations$seerr$ja._(_root);
-	@override late final _Translations$services$ja services = _Translations$services$ja._(_root);
-	@override late final _Translations$addServer$ja addServer = _Translations$addServer$ja._(_root);
+	@override late final _TranslationsAppJa app = _TranslationsAppJa._(_root);
+	@override late final _TranslationsAppIconJa appIcon = _TranslationsAppIconJa._(_root);
+	@override late final _TranslationsAuthJa auth = _TranslationsAuthJa._(_root);
+	@override late final _TranslationsCommonJa common = _TranslationsCommonJa._(_root);
+	@override late final _TranslationsScreensJa screens = _TranslationsScreensJa._(_root);
+	@override late final _TranslationsUpdateJa update = _TranslationsUpdateJa._(_root);
+	@override late final _TranslationsSupporterJa supporter = _TranslationsSupporterJa._(_root);
+	@override late final _TranslationsSettingsJa settings = _TranslationsSettingsJa._(_root);
+	@override late final _TranslationsThemeEditorJa themeEditor = _TranslationsThemeEditorJa._(_root);
+	@override late final _TranslationsSearchJa search = _TranslationsSearchJa._(_root);
+	@override late final _TranslationsHotkeysJa hotkeys = _TranslationsHotkeysJa._(_root);
+	@override late final _TranslationsFileInfoJa fileInfo = _TranslationsFileInfoJa._(_root);
+	@override late final _TranslationsMediaMenuJa mediaMenu = _TranslationsMediaMenuJa._(_root);
+	@override late final _TranslationsRateSheetJa rateSheet = _TranslationsRateSheetJa._(_root);
+	@override late final _TranslationsAccessibilityJa accessibility = _TranslationsAccessibilityJa._(_root);
+	@override late final _TranslationsTooltipsJa tooltips = _TranslationsTooltipsJa._(_root);
+	@override late final _TranslationsAudioTracksJa audioTracks = _TranslationsAudioTracksJa._(_root);
+	@override late final _TranslationsVideoControlsJa videoControls = _TranslationsVideoControlsJa._(_root);
+	@override late final _TranslationsUserStatusJa userStatus = _TranslationsUserStatusJa._(_root);
+	@override late final _TranslationsMessagesJa messages = _TranslationsMessagesJa._(_root);
+	@override late final _TranslationsSubtitlingStylingJa subtitlingStyling = _TranslationsSubtitlingStylingJa._(_root);
+	@override late final _TranslationsMpvConfigJa mpvConfig = _TranslationsMpvConfigJa._(_root);
+	@override late final _TranslationsDialogJa dialog = _TranslationsDialogJa._(_root);
+	@override late final _TranslationsProfilesJa profiles = _TranslationsProfilesJa._(_root);
+	@override late final _TranslationsConnectionsJa connections = _TranslationsConnectionsJa._(_root);
+	@override late final _TranslationsAccountPreferencesJa accountPreferences = _TranslationsAccountPreferencesJa._(_root);
+	@override late final _TranslationsDiscoverJa discover = _TranslationsDiscoverJa._(_root);
+	@override late final _TranslationsErrorsJa errors = _TranslationsErrorsJa._(_root);
+	@override late final _TranslationsLibrariesJa libraries = _TranslationsLibrariesJa._(_root);
+	@override late final _TranslationsAboutJa about = _TranslationsAboutJa._(_root);
+	@override late final _TranslationsServerSelectionJa serverSelection = _TranslationsServerSelectionJa._(_root);
+	@override late final _TranslationsHubDetailJa hubDetail = _TranslationsHubDetailJa._(_root);
+	@override late final _TranslationsLogsJa logs = _TranslationsLogsJa._(_root);
+	@override late final _TranslationsStartupJa startup = _TranslationsStartupJa._(_root);
+	@override late final _TranslationsLicensesJa licenses = _TranslationsLicensesJa._(_root);
+	@override late final _TranslationsNavigationJa navigation = _TranslationsNavigationJa._(_root);
+	@override late final _TranslationsExploreJa explore = _TranslationsExploreJa._(_root);
+	@override late final _TranslationsLiveTvJa liveTv = _TranslationsLiveTvJa._(_root);
+	@override late final _TranslationsCollectionsJa collections = _TranslationsCollectionsJa._(_root);
+	@override late final _TranslationsPlaylistsJa playlists = _TranslationsPlaylistsJa._(_root);
+	@override late final _TranslationsMusicJa music = _TranslationsMusicJa._(_root);
+	@override late final _TranslationsWatchTogetherJa watchTogether = _TranslationsWatchTogetherJa._(_root);
+	@override late final _TranslationsDownloadsJa downloads = _TranslationsDownloadsJa._(_root);
+	@override late final _TranslationsShadersJa shaders = _TranslationsShadersJa._(_root);
+	@override late final _TranslationsCompanionRemoteJa companionRemote = _TranslationsCompanionRemoteJa._(_root);
+	@override late final _TranslationsVideoSettingsJa videoSettings = _TranslationsVideoSettingsJa._(_root);
+	@override late final _TranslationsPerformanceOverlayJa performanceOverlay = _TranslationsPerformanceOverlayJa._(_root);
+	@override late final _TranslationsExternalPlayerJa externalPlayer = _TranslationsExternalPlayerJa._(_root);
+	@override late final _TranslationsMetadataEditJa metadataEdit = _TranslationsMetadataEditJa._(_root);
+	@override late final _TranslationsMatchScreenJa matchScreen = _TranslationsMatchScreenJa._(_root);
+	@override late final _TranslationsServerTasksJa serverTasks = _TranslationsServerTasksJa._(_root);
+	@override late final _TranslationsTraktJa trakt = _TranslationsTraktJa._(_root);
+	@override late final _TranslationsSeerrJa seerr = _TranslationsSeerrJa._(_root);
+	@override late final _TranslationsServicesJa services = _TranslationsServicesJa._(_root);
+	@override late final _TranslationsAddServerJa addServer = _TranslationsAddServerJa._(_root);
+	@override late final _TranslationsDeepLinksJa deepLinks = _TranslationsDeepLinksJa._(_root);
 }
 
 // Path: app
-class _Translations$app$ja extends Translations$app$en {
-	_Translations$app$ja._(TranslationsJa root) : this._root = root, super.internal(root);
+class _TranslationsAppJa extends TranslationsAppEn {
+	_TranslationsAppJa._(TranslationsJa root) : this._root = root, super.internal(root);
 
 	final TranslationsJa _root; // ignore: unused_field
 
@@ -106,8 +107,8 @@ class _Translations$app$ja extends Translations$app$en {
 }
 
 // Path: appIcon
-class _Translations$appIcon$ja extends Translations$appIcon$en {
-	_Translations$appIcon$ja._(TranslationsJa root) : this._root = root, super.internal(root);
+class _TranslationsAppIconJa extends TranslationsAppIconEn {
+	_TranslationsAppIconJa._(TranslationsJa root) : this._root = root, super.internal(root);
 
 	final TranslationsJa _root; // ignore: unused_field
 
@@ -120,12 +121,12 @@ class _Translations$appIcon$ja extends Translations$appIcon$en {
 	@override String get changeFailed => 'アプリアイコンを変更できませんでした';
 	@override String get launcherHint => 'Plezyを離れると、ホーム画面に新しいアイコンが表示されます。';
 	@override String get tvLauncherHint => 'Plezyを離れると、新しいバナーが表示されます。Android TVでは、テレビを再起動するまで古いバナーが表示され続ける場合があります。';
-	@override late final _Translations$appIcon$names$ja names = _Translations$appIcon$names$ja._(_root);
+	@override late final _TranslationsAppIconNamesJa names = _TranslationsAppIconNamesJa._(_root);
 }
 
 // Path: auth
-class _Translations$auth$ja extends Translations$auth$en {
-	_Translations$auth$ja._(TranslationsJa root) : this._root = root, super.internal(root);
+class _TranslationsAuthJa extends TranslationsAuthEn {
+	_TranslationsAuthJa._(TranslationsJa root) : this._root = root, super.internal(root);
 
 	final TranslationsJa _root; // ignore: unused_field
 
@@ -150,8 +151,8 @@ class _Translations$auth$ja extends Translations$auth$en {
 }
 
 // Path: common
-class _Translations$common$ja extends Translations$common$en {
-	_Translations$common$ja._(TranslationsJa root) : this._root = root, super.internal(root);
+class _TranslationsCommonJa extends TranslationsCommonEn {
+	_TranslationsCommonJa._(TranslationsJa root) : this._root = root, super.internal(root);
 
 	final TranslationsJa _root; // ignore: unused_field
 
@@ -202,16 +203,16 @@ class _Translations$common$ja extends Translations$common$en {
 	@override String get fullscreen => 'フルスクリーン';
 	@override String get exitFullscreen => 'フルスクリーンを終了';
 	@override String get pressBackAgainToExit => 'もう一度押すと終了します';
-	@override late final _Translations$common$ratingSource$ja ratingSource = _Translations$common$ratingSource$ja._(_root);
+	@override late final _TranslationsCommonRatingSourceJa ratingSource = _TranslationsCommonRatingSourceJa._(_root);
 	@override String get notAvailable => 'N/A';
 	@override String get url => 'URL';
 	@override String get letterKeys => 'ABC';
-	@override late final _Translations$common$mediaKind$ja mediaKind = _Translations$common$mediaKind$ja._(_root);
+	@override late final _TranslationsCommonMediaKindJa mediaKind = _TranslationsCommonMediaKindJa._(_root);
 }
 
 // Path: screens
-class _Translations$screens$ja extends Translations$screens$en {
-	_Translations$screens$ja._(TranslationsJa root) : this._root = root, super.internal(root);
+class _TranslationsScreensJa extends TranslationsScreensEn {
+	_TranslationsScreensJa._(TranslationsJa root) : this._root = root, super.internal(root);
 
 	final TranslationsJa _root; // ignore: unused_field
 
@@ -224,8 +225,8 @@ class _Translations$screens$ja extends Translations$screens$en {
 }
 
 // Path: update
-class _Translations$update$ja extends Translations$update$en {
-	_Translations$update$ja._(TranslationsJa root) : this._root = root, super.internal(root);
+class _TranslationsUpdateJa extends TranslationsUpdateEn {
+	_TranslationsUpdateJa._(TranslationsJa root) : this._root = root, super.internal(root);
 
 	final TranslationsJa _root; // ignore: unused_field
 
@@ -240,8 +241,8 @@ class _Translations$update$ja extends Translations$update$en {
 }
 
 // Path: supporter
-class _Translations$supporter$ja extends Translations$supporter$en {
-	_Translations$supporter$ja._(TranslationsJa root) : this._root = root, super.internal(root);
+class _TranslationsSupporterJa extends TranslationsSupporterEn {
+	_TranslationsSupporterJa._(TranslationsJa root) : this._root = root, super.internal(root);
 
 	final TranslationsJa _root; // ignore: unused_field
 
@@ -263,12 +264,12 @@ class _Translations$supporter$ja extends Translations$supporter$en {
 	@override String get tileSubtitle => '1回限りの購入でテーマとアプリアイコンのロックを解除';
 	@override String get tileSubtitleThemesOnly => '1回限りの購入でテーマのロックを解除';
 	@override String get tileUnlocked => 'ロック解除済み — ご購入ありがとうございます';
-	@override late final _Translations$supporter$errors$ja errors = _Translations$supporter$errors$ja._(_root);
+	@override late final _TranslationsSupporterErrorsJa errors = _TranslationsSupporterErrorsJa._(_root);
 }
 
 // Path: settings
-class _Translations$settings$ja extends Translations$settings$en {
-	_Translations$settings$ja._(TranslationsJa root) : this._root = root, super.internal(root);
+class _TranslationsSettingsJa extends TranslationsSettingsEn {
+	_TranslationsSettingsJa._(TranslationsJa root) : this._root = root, super.internal(root);
 
 	final TranslationsJa _root; // ignore: unused_field
 
@@ -612,8 +613,8 @@ class _Translations$settings$ja extends Translations$settings$en {
 }
 
 // Path: themeEditor
-class _Translations$themeEditor$ja extends Translations$themeEditor$en {
-	_Translations$themeEditor$ja._(TranslationsJa root) : this._root = root, super.internal(root);
+class _TranslationsThemeEditorJa extends TranslationsThemeEditorEn {
+	_TranslationsThemeEditorJa._(TranslationsJa root) : this._root = root, super.internal(root);
 
 	final TranslationsJa _root; // ignore: unused_field
 
@@ -631,12 +632,12 @@ class _Translations$themeEditor$ja extends Translations$themeEditor$en {
 	@override String get startFromDescription => '別のテーマからすべての色をコピー';
 	@override String get colors => '色';
 	@override String get preview => 'プレビュー';
-	@override late final _Translations$themeEditor$slots$ja slots = _Translations$themeEditor$slots$ja._(_root);
+	@override late final _TranslationsThemeEditorSlotsJa slots = _TranslationsThemeEditorSlotsJa._(_root);
 	@override String get opacity => '不透明度';
 	@override String get hexHint => '#RRGGBB または #AARRGGBB';
 	@override String get fromOtherThemes => '他のテーマから';
 	@override String swatchLabel({required Object theme, required Object color}) => '${theme}の${color}';
-	@override late final _Translations$themeEditor$contrast$ja contrast = _Translations$themeEditor$contrast$ja._(_root);
+	@override late final _TranslationsThemeEditorContrastJa contrast = _TranslationsThemeEditorContrastJa._(_root);
 	@override String lowContrast({required Object pair, required Object ratio, required Object minimum}) => '${pair}: ${ratio}:1（推奨値の${minimum}:1未満）';
 	@override String get discardTitle => '変更を破棄しますか？';
 	@override String get discardMessage => '保存されていない色の変更は失われます。';
@@ -648,8 +649,8 @@ class _Translations$themeEditor$ja extends Translations$themeEditor$en {
 }
 
 // Path: search
-class _Translations$search$ja extends Translations$search$en {
-	_Translations$search$ja._(TranslationsJa root) : this._root = root, super.internal(root);
+class _TranslationsSearchJa extends TranslationsSearchEn {
+	_TranslationsSearchJa._(TranslationsJa root) : this._root = root, super.internal(root);
 
 	final TranslationsJa _root; // ignore: unused_field
 
@@ -662,8 +663,8 @@ class _Translations$search$ja extends Translations$search$en {
 }
 
 // Path: hotkeys
-class _Translations$hotkeys$ja extends Translations$hotkeys$en {
-	_Translations$hotkeys$ja._(TranslationsJa root) : this._root = root, super.internal(root);
+class _TranslationsHotkeysJa extends TranslationsHotkeysEn {
+	_TranslationsHotkeysJa._(TranslationsJa root) : this._root = root, super.internal(root);
 
 	final TranslationsJa _root; // ignore: unused_field
 
@@ -674,12 +675,12 @@ class _Translations$hotkeys$ja extends Translations$hotkeys$en {
 	@override String get currentShortcut => '現在のショートカット:';
 	@override String get pressToRecord => '選択してショートカットを記録';
 	@override String get recordingShortcut => 'ショートカットを押してください';
-	@override late final _Translations$hotkeys$actions$ja actions = _Translations$hotkeys$actions$ja._(_root);
+	@override late final _TranslationsHotkeysActionsJa actions = _TranslationsHotkeysActionsJa._(_root);
 }
 
 // Path: fileInfo
-class _Translations$fileInfo$ja extends Translations$fileInfo$en {
-	_Translations$fileInfo$ja._(TranslationsJa root) : this._root = root, super.internal(root);
+class _TranslationsFileInfoJa extends TranslationsFileInfoEn {
+	_TranslationsFileInfoJa._(TranslationsJa root) : this._root = root, super.internal(root);
 
 	final TranslationsJa _root; // ignore: unused_field
 
@@ -802,8 +803,8 @@ class _Translations$fileInfo$ja extends Translations$fileInfo$en {
 }
 
 // Path: mediaMenu
-class _Translations$mediaMenu$ja extends Translations$mediaMenu$en {
-	_Translations$mediaMenu$ja._(TranslationsJa root) : this._root = root, super.internal(root);
+class _TranslationsMediaMenuJa extends TranslationsMediaMenuEn {
+	_TranslationsMediaMenuJa._(TranslationsJa root) : this._root = root, super.internal(root);
 
 	final TranslationsJa _root; // ignore: unused_field
 
@@ -850,8 +851,8 @@ class _Translations$mediaMenu$ja extends Translations$mediaMenu$en {
 }
 
 // Path: rateSheet
-class _Translations$rateSheet$ja extends Translations$rateSheet$en {
-	_Translations$rateSheet$ja._(TranslationsJa root) : this._root = root, super.internal(root);
+class _TranslationsRateSheetJa extends TranslationsRateSheetEn {
+	_TranslationsRateSheetJa._(TranslationsJa root) : this._root = root, super.internal(root);
 
 	final TranslationsJa _root; // ignore: unused_field
 
@@ -866,8 +867,8 @@ class _Translations$rateSheet$ja extends Translations$rateSheet$en {
 }
 
 // Path: accessibility
-class _Translations$accessibility$ja extends Translations$accessibility$en {
-	_Translations$accessibility$ja._(TranslationsJa root) : this._root = root, super.internal(root);
+class _TranslationsAccessibilityJa extends TranslationsAccessibilityEn {
+	_TranslationsAccessibilityJa._(TranslationsJa root) : this._root = root, super.internal(root);
 
 	final TranslationsJa _root; // ignore: unused_field
 
@@ -902,8 +903,8 @@ class _Translations$accessibility$ja extends Translations$accessibility$en {
 }
 
 // Path: tooltips
-class _Translations$tooltips$ja extends Translations$tooltips$en {
-	_Translations$tooltips$ja._(TranslationsJa root) : this._root = root, super.internal(root);
+class _TranslationsTooltipsJa extends TranslationsTooltipsEn {
+	_TranslationsTooltipsJa._(TranslationsJa root) : this._root = root, super.internal(root);
 
 	final TranslationsJa _root; // ignore: unused_field
 
@@ -915,8 +916,8 @@ class _Translations$tooltips$ja extends Translations$tooltips$en {
 }
 
 // Path: audioTracks
-class _Translations$audioTracks$ja extends Translations$audioTracks$en {
-	_Translations$audioTracks$ja._(TranslationsJa root) : this._root = root, super.internal(root);
+class _TranslationsAudioTracksJa extends TranslationsAudioTracksEn {
+	_TranslationsAudioTracksJa._(TranslationsJa root) : this._root = root, super.internal(root);
 
 	final TranslationsJa _root; // ignore: unused_field
 
@@ -925,8 +926,8 @@ class _Translations$audioTracks$ja extends Translations$audioTracks$en {
 }
 
 // Path: videoControls
-class _Translations$videoControls$ja extends Translations$videoControls$en {
-	_Translations$videoControls$ja._(TranslationsJa root) : this._root = root, super.internal(root);
+class _TranslationsVideoControlsJa extends TranslationsVideoControlsEn {
+	_TranslationsVideoControlsJa._(TranslationsJa root) : this._root = root, super.internal(root);
 
 	final TranslationsJa _root; // ignore: unused_field
 
@@ -993,7 +994,7 @@ class _Translations$videoControls$ja extends Translations$videoControls$en {
 	@override String get screenshotFailed => 'スクリーンショットを撮影できませんでした';
 	@override String zoomPercent({required Object percent}) => 'ズーム ${percent}%';
 	@override String volumePercent({required Object percent}) => '音量 ${percent}%';
-	@override late final _Translations$videoControls$pipErrors$ja pipErrors = _Translations$videoControls$pipErrors$ja._(_root);
+	@override late final _TranslationsVideoControlsPipErrorsJa pipErrors = _TranslationsVideoControlsPipErrorsJa._(_root);
 	@override String get chapters => 'チャプター';
 	@override String get noChaptersAvailable => 'チャプターがありません';
 	@override String get queue => 'キュー';
@@ -1018,9 +1019,18 @@ class _Translations$videoControls$ja extends Translations$videoControls$en {
 	@override String osdAudio({required Object track}) => '音声: ${track}';
 }
 
+// Path: userStatus
+class _TranslationsUserStatusJa extends TranslationsUserStatusEn {
+	_TranslationsUserStatusJa._(TranslationsJa root) : this._root = root, super.internal(root);
+
+	final TranslationsJa _root; // ignore: unused_field
+
+	// Translations
+}
+
 // Path: messages
-class _Translations$messages$ja extends Translations$messages$en {
-	_Translations$messages$ja._(TranslationsJa root) : this._root = root, super.internal(root);
+class _TranslationsMessagesJa extends TranslationsMessagesEn {
+	_TranslationsMessagesJa._(TranslationsJa root) : this._root = root, super.internal(root);
 
 	final TranslationsJa _root; // ignore: unused_field
 
@@ -1097,8 +1107,8 @@ class _Translations$messages$ja extends Translations$messages$en {
 }
 
 // Path: subtitlingStyling
-class _Translations$subtitlingStyling$ja extends Translations$subtitlingStyling$en {
-	_Translations$subtitlingStyling$ja._(TranslationsJa root) : this._root = root, super.internal(root);
+class _TranslationsSubtitlingStylingJa extends TranslationsSubtitlingStylingEn {
+	_TranslationsSubtitlingStylingJa._(TranslationsJa root) : this._root = root, super.internal(root);
 
 	final TranslationsJa _root; // ignore: unused_field
 
@@ -1131,8 +1141,8 @@ class _Translations$subtitlingStyling$ja extends Translations$subtitlingStyling$
 }
 
 // Path: mpvConfig
-class _Translations$mpvConfig$ja extends Translations$mpvConfig$en {
-	_Translations$mpvConfig$ja._(TranslationsJa root) : this._root = root, super.internal(root);
+class _TranslationsMpvConfigJa extends TranslationsMpvConfigEn {
+	_TranslationsMpvConfigJa._(TranslationsJa root) : this._root = root, super.internal(root);
 
 	final TranslationsJa _root; // ignore: unused_field
 
@@ -1158,8 +1168,8 @@ class _Translations$mpvConfig$ja extends Translations$mpvConfig$en {
 }
 
 // Path: dialog
-class _Translations$dialog$ja extends Translations$dialog$en {
-	_Translations$dialog$ja._(TranslationsJa root) : this._root = root, super.internal(root);
+class _TranslationsDialogJa extends TranslationsDialogEn {
+	_TranslationsDialogJa._(TranslationsJa root) : this._root = root, super.internal(root);
 
 	final TranslationsJa _root; // ignore: unused_field
 
@@ -1168,8 +1178,8 @@ class _Translations$dialog$ja extends Translations$dialog$en {
 }
 
 // Path: profiles
-class _Translations$profiles$ja extends Translations$profiles$en {
-	_Translations$profiles$ja._(TranslationsJa root) : this._root = root, super.internal(root);
+class _TranslationsProfilesJa extends TranslationsProfilesEn {
+	_TranslationsProfilesJa._(TranslationsJa root) : this._root = root, super.internal(root);
 
 	final TranslationsJa _root; // ignore: unused_field
 
@@ -1242,8 +1252,8 @@ class _Translations$profiles$ja extends Translations$profiles$en {
 }
 
 // Path: connections
-class _Translations$connections$ja extends Translations$connections$en {
-	_Translations$connections$ja._(TranslationsJa root) : this._root = root, super.internal(root);
+class _TranslationsConnectionsJa extends TranslationsConnectionsEn {
+	_TranslationsConnectionsJa._(TranslationsJa root) : this._root = root, super.internal(root);
 
 	final TranslationsJa _root; // ignore: unused_field
 
@@ -1262,8 +1272,8 @@ class _Translations$connections$ja extends Translations$connections$en {
 }
 
 // Path: accountPreferences
-class _Translations$accountPreferences$ja extends Translations$accountPreferences$en {
-	_Translations$accountPreferences$ja._(TranslationsJa root) : this._root = root, super.internal(root);
+class _TranslationsAccountPreferencesJa extends TranslationsAccountPreferencesEn {
+	_TranslationsAccountPreferencesJa._(TranslationsJa root) : this._root = root, super.internal(root);
 
 	final TranslationsJa _root; // ignore: unused_field
 
@@ -1279,17 +1289,17 @@ class _Translations$accountPreferences$ja extends Translations$accountPreference
 	@override String get loadFailed => 'この設定を読み込めませんでした';
 	@override String get noPreference => '指定なし';
 	@override String get notSet => '未設定';
-	@override late final _Translations$accountPreferences$groups$ja groups = _Translations$accountPreferences$groups$ja._(_root);
+	@override late final _TranslationsAccountPreferencesGroupsJa groups = _TranslationsAccountPreferencesGroupsJa._(_root);
 	@override String get preferredAudioLanguage => '優先音声言語';
 	@override String get autoSelectAudio => '言語で音声を選択';
 	@override String get autoSelectAudioDescription => 'オフにすると、ファイルでデフォルトとマークされた音声トラックがそのまま使われます。';
 	@override String get preferredSubtitleLanguage => '優先字幕言語';
 	@override String get subtitleMode => '字幕の自動表示';
-	@override late final _Translations$accountPreferences$subtitleModes$ja subtitleModes = _Translations$accountPreferences$subtitleModes$ja._(_root);
+	@override late final _TranslationsAccountPreferencesSubtitleModesJa subtitleModes = _TranslationsAccountPreferencesSubtitleModesJa._(_root);
 	@override String get subtitleAccessibility => 'SDH字幕';
-	@override late final _Translations$accountPreferences$subtitleAccessibilityOptions$ja subtitleAccessibilityOptions = _Translations$accountPreferences$subtitleAccessibilityOptions$ja._(_root);
+	@override late final _TranslationsAccountPreferencesSubtitleAccessibilityOptionsJa subtitleAccessibilityOptions = _TranslationsAccountPreferencesSubtitleAccessibilityOptionsJa._(_root);
 	@override String get forcedSubtitles => '強制字幕';
-	@override late final _Translations$accountPreferences$forcedSubtitleOptions$ja forcedSubtitleOptions = _Translations$accountPreferences$forcedSubtitleOptions$ja._(_root);
+	@override late final _TranslationsAccountPreferencesForcedSubtitleOptionsJa forcedSubtitleOptions = _TranslationsAccountPreferencesForcedSubtitleOptionsJa._(_root);
 	@override String get displayMissingEpisodes => '欠落エピソードを表示';
 	@override String get displayMissingEpisodesDescription => 'サーバーが把握しているがファイルがないエピソードを一覧表示します。';
 	@override String get hidePlayedInLatest => '「最新」の視聴済みアイテムを非表示';
@@ -1299,14 +1309,14 @@ class _Translations$accountPreferences$ja extends Translations$accountPreference
 	@override String get rewatchingInNextUp => '再視聴した番組を「次のエピソード」に残す';
 	@override String get rewatchingInNextUpDescription => '番組を見終えた後に再び見始めると、「次のエピソード」は番組を外さずに再視聴に追従します。';
 	@override String get watchedIndicator => '視聴済みマーク';
-	@override late final _Translations$accountPreferences$watchedIndicatorOptions$ja watchedIndicatorOptions = _Translations$accountPreferences$watchedIndicatorOptions$ja._(_root);
+	@override late final _TranslationsAccountPreferencesWatchedIndicatorOptionsJa watchedIndicatorOptions = _TranslationsAccountPreferencesWatchedIndicatorOptionsJa._(_root);
 	@override String get mediaReviewsVisibility => '評価とレビュー';
-	@override late final _Translations$accountPreferences$mediaReviewsOptions$ja mediaReviewsOptions = _Translations$accountPreferences$mediaReviewsOptions$ja._(_root);
+	@override late final _TranslationsAccountPreferencesMediaReviewsOptionsJa mediaReviewsOptions = _TranslationsAccountPreferencesMediaReviewsOptionsJa._(_root);
 }
 
 // Path: discover
-class _Translations$discover$ja extends Translations$discover$en {
-	_Translations$discover$ja._(TranslationsJa root) : this._root = root, super.internal(root);
+class _TranslationsDiscoverJa extends TranslationsDiscoverEn {
+	_TranslationsDiscoverJa._(TranslationsJa root) : this._root = root, super.internal(root);
 
 	final TranslationsJa _root; // ignore: unused_field
 
@@ -1338,12 +1348,12 @@ class _Translations$discover$ja extends Translations$discover$en {
 	@override String titleCount({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('ja'))(n,
 		other: '${n}作品',
 	);
-	@override late final _Translations$discover$person$ja person = _Translations$discover$person$ja._(_root);
+	@override late final _TranslationsDiscoverPersonJa person = _TranslationsDiscoverPersonJa._(_root);
 }
 
 // Path: errors
-class _Translations$errors$ja extends Translations$errors$en {
-	_Translations$errors$ja._(TranslationsJa root) : this._root = root, super.internal(root);
+class _TranslationsErrorsJa extends TranslationsErrorsEn {
+	_TranslationsErrorsJa._(TranslationsJa root) : this._root = root, super.internal(root);
 
 	final TranslationsJa _root; // ignore: unused_field
 
@@ -1370,8 +1380,8 @@ class _Translations$errors$ja extends Translations$errors$en {
 }
 
 // Path: libraries
-class _Translations$libraries$ja extends Translations$libraries$en {
-	_Translations$libraries$ja._(TranslationsJa root) : this._root = root, super.internal(root);
+class _TranslationsLibrariesJa extends TranslationsLibrariesEn {
+	_TranslationsLibrariesJa._(TranslationsJa root) : this._root = root, super.internal(root);
 
 	final TranslationsJa _root; // ignore: unused_field
 
@@ -1417,16 +1427,16 @@ class _Translations$libraries$ja extends Translations$libraries$en {
 	@override String get noCollections => 'このライブラリにコレクションがありません';
 	@override String get noFoldersFound => 'フォルダが見つかりません';
 	@override String get folders => 'フォルダ';
-	@override late final _Translations$libraries$tabs$ja tabs = _Translations$libraries$tabs$ja._(_root);
-	@override late final _Translations$libraries$groupings$ja groupings = _Translations$libraries$groupings$ja._(_root);
-	@override late final _Translations$libraries$filterCategories$ja filterCategories = _Translations$libraries$filterCategories$ja._(_root);
-	@override late final _Translations$libraries$sortLabels$ja sortLabels = _Translations$libraries$sortLabels$ja._(_root);
-	@override late final _Translations$libraries$advancedFilters$ja advancedFilters = _Translations$libraries$advancedFilters$ja._(_root);
+	@override late final _TranslationsLibrariesTabsJa tabs = _TranslationsLibrariesTabsJa._(_root);
+	@override late final _TranslationsLibrariesGroupingsJa groupings = _TranslationsLibrariesGroupingsJa._(_root);
+	@override late final _TranslationsLibrariesFilterCategoriesJa filterCategories = _TranslationsLibrariesFilterCategoriesJa._(_root);
+	@override late final _TranslationsLibrariesSortLabelsJa sortLabels = _TranslationsLibrariesSortLabelsJa._(_root);
+	@override late final _TranslationsLibrariesAdvancedFiltersJa advancedFilters = _TranslationsLibrariesAdvancedFiltersJa._(_root);
 }
 
 // Path: about
-class _Translations$about$ja extends Translations$about$en {
-	_Translations$about$ja._(TranslationsJa root) : this._root = root, super.internal(root);
+class _TranslationsAboutJa extends TranslationsAboutEn {
+	_TranslationsAboutJa._(TranslationsJa root) : this._root = root, super.internal(root);
 
 	final TranslationsJa _root; // ignore: unused_field
 
@@ -1439,8 +1449,8 @@ class _Translations$about$ja extends Translations$about$en {
 }
 
 // Path: serverSelection
-class _Translations$serverSelection$ja extends Translations$serverSelection$en {
-	_Translations$serverSelection$ja._(TranslationsJa root) : this._root = root, super.internal(root);
+class _TranslationsServerSelectionJa extends TranslationsServerSelectionEn {
+	_TranslationsServerSelectionJa._(TranslationsJa root) : this._root = root, super.internal(root);
 
 	final TranslationsJa _root; // ignore: unused_field
 
@@ -1451,8 +1461,8 @@ class _Translations$serverSelection$ja extends Translations$serverSelection$en {
 }
 
 // Path: hubDetail
-class _Translations$hubDetail$ja extends Translations$hubDetail$en {
-	_Translations$hubDetail$ja._(TranslationsJa root) : this._root = root, super.internal(root);
+class _TranslationsHubDetailJa extends TranslationsHubDetailEn {
+	_TranslationsHubDetailJa._(TranslationsJa root) : this._root = root, super.internal(root);
 
 	final TranslationsJa _root; // ignore: unused_field
 
@@ -1465,8 +1475,8 @@ class _Translations$hubDetail$ja extends Translations$hubDetail$en {
 }
 
 // Path: logs
-class _Translations$logs$ja extends Translations$logs$en {
-	_Translations$logs$ja._(TranslationsJa root) : this._root = root, super.internal(root);
+class _TranslationsLogsJa extends TranslationsLogsEn {
+	_TranslationsLogsJa._(TranslationsJa root) : this._root = root, super.internal(root);
 
 	final TranslationsJa _root; // ignore: unused_field
 
@@ -1477,8 +1487,8 @@ class _Translations$logs$ja extends Translations$logs$en {
 }
 
 // Path: startup
-class _Translations$startup$ja extends Translations$startup$en {
-	_Translations$startup$ja._(TranslationsJa root) : this._root = root, super.internal(root);
+class _TranslationsStartupJa extends TranslationsStartupEn {
+	_TranslationsStartupJa._(TranslationsJa root) : this._root = root, super.internal(root);
 
 	final TranslationsJa _root; // ignore: unused_field
 
@@ -1516,8 +1526,8 @@ class _Translations$startup$ja extends Translations$startup$en {
 }
 
 // Path: licenses
-class _Translations$licenses$ja extends Translations$licenses$en {
-	_Translations$licenses$ja._(TranslationsJa root) : this._root = root, super.internal(root);
+class _TranslationsLicensesJa extends TranslationsLicensesEn {
+	_TranslationsLicensesJa._(TranslationsJa root) : this._root = root, super.internal(root);
 
 	final TranslationsJa _root; // ignore: unused_field
 
@@ -1529,8 +1539,8 @@ class _Translations$licenses$ja extends Translations$licenses$en {
 }
 
 // Path: navigation
-class _Translations$navigation$ja extends Translations$navigation$en {
-	_Translations$navigation$ja._(TranslationsJa root) : this._root = root, super.internal(root);
+class _TranslationsNavigationJa extends TranslationsNavigationEn {
+	_TranslationsNavigationJa._(TranslationsJa root) : this._root = root, super.internal(root);
 
 	final TranslationsJa _root; // ignore: unused_field
 
@@ -1542,16 +1552,16 @@ class _Translations$navigation$ja extends Translations$navigation$en {
 }
 
 // Path: explore
-class _Translations$explore$ja extends Translations$explore$en {
-	_Translations$explore$ja._(TranslationsJa root) : this._root = root, super.internal(root);
+class _TranslationsExploreJa extends TranslationsExploreEn {
+	_TranslationsExploreJa._(TranslationsJa root) : this._root = root, super.internal(root);
 
 	final TranslationsJa _root; // ignore: unused_field
 
 	// Translations
 	@override String get title => '見つける';
 	@override String get selectSource => 'ソースを選択';
-	@override late final _Translations$explore$rows$ja rows = _Translations$explore$rows$ja._(_root);
-	@override late final _Translations$explore$status$ja status = _Translations$explore$status$ja._(_root);
+	@override late final _TranslationsExploreRowsJa rows = _TranslationsExploreRowsJa._(_root);
+	@override late final _TranslationsExploreStatusJa status = _TranslationsExploreStatusJa._(_root);
 	@override String episodeCount({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('ja'))(n,
 		other: '${n}話',
 	);
@@ -1575,24 +1585,24 @@ class _Translations$explore$ja extends Translations$explore$en {
 	@override String searchEmpty({required Object query}) => '「${query}」の結果が見つかりません';
 	@override String searchPrompt({required Object source}) => '${source}で映画やテレビ番組を検索します。';
 	@override String get searchFailed => '検索に失敗しました。接続を確認してもう一度お試しください。';
-	@override late final _Translations$explore$badge$ja badge = _Translations$explore$badge$ja._(_root);
-	@override late final _Translations$explore$stats$ja stats = _Translations$explore$stats$ja._(_root);
-	@override late final _Translations$explore$season$ja season = _Translations$explore$season$ja._(_root);
-	@override late final _Translations$explore$format$ja format = _Translations$explore$format$ja._(_root);
-	@override late final _Translations$explore$sourceMaterial$ja sourceMaterial = _Translations$explore$sourceMaterial$ja._(_root);
-	@override late final _Translations$explore$creditRole$ja creditRole = _Translations$explore$creditRole$ja._(_root);
-	@override late final _Translations$explore$relation$ja relation = _Translations$explore$relation$ja._(_root);
+	@override late final _TranslationsExploreBadgeJa badge = _TranslationsExploreBadgeJa._(_root);
+	@override late final _TranslationsExploreStatsJa stats = _TranslationsExploreStatsJa._(_root);
+	@override late final _TranslationsExploreSeasonJa season = _TranslationsExploreSeasonJa._(_root);
+	@override late final _TranslationsExploreFormatJa format = _TranslationsExploreFormatJa._(_root);
+	@override late final _TranslationsExploreSourceMaterialJa sourceMaterial = _TranslationsExploreSourceMaterialJa._(_root);
+	@override late final _TranslationsExploreCreditRoleJa creditRole = _TranslationsExploreCreditRoleJa._(_root);
+	@override late final _TranslationsExploreRelationJa relation = _TranslationsExploreRelationJa._(_root);
 	@override String broadcast({required Object day, required Object time}) => '${day} ${time}に放送';
 	@override String broadcastWithZone({required Object day, required Object time, required Object timezone}) => '${day} ${time}（${timezone}）に放送';
-	@override late final _Translations$explore$detail$ja detail = _Translations$explore$detail$ja._(_root);
+	@override late final _TranslationsExploreDetailJa detail = _TranslationsExploreDetailJa._(_root);
 	@override String totalResults({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('ja'))(n,
 		other: '${n}件の結果',
 	);
 }
 
 // Path: liveTv
-class _Translations$liveTv$ja extends Translations$liveTv$en {
-	_Translations$liveTv$ja._(TranslationsJa root) : this._root = root, super.internal(root);
+class _TranslationsLiveTvJa extends TranslationsLiveTvEn {
+	_TranslationsLiveTvJa._(TranslationsJa root) : this._root = root, super.internal(root);
 
 	final TranslationsJa _root; // ignore: unused_field
 
@@ -1674,7 +1684,7 @@ class _Translations$liveTv$ja extends Translations$liveTv$en {
 	@override String get rulesProcessRequested => '録画ルールの再評価をリクエストしました';
 	@override String get rulesProcessFailed => '録画ルールを再適用できませんでした';
 	@override String get recordShow => '番組を録画';
-	@override late final _Translations$liveTv$recordSettings$ja recordSettings = _Translations$liveTv$recordSettings$ja._(_root);
+	@override late final _TranslationsLiveTvRecordSettingsJa recordSettings = _TranslationsLiveTvRecordSettingsJa._(_root);
 	@override String startingInMinutes({required Object minutes}) => '${minutes}分後に開始';
 	@override String dayAtTime({required Object day, required Object time}) => '${day} ${time}';
 	@override String invalidPlaybackData({required Object product}) => '${product}から無効なライブTV再生データが返されました';
@@ -1685,8 +1695,8 @@ class _Translations$liveTv$ja extends Translations$liveTv$en {
 }
 
 // Path: collections
-class _Translations$collections$ja extends Translations$collections$en {
-	_Translations$collections$ja._(TranslationsJa root) : this._root = root, super.internal(root);
+class _TranslationsCollectionsJa extends TranslationsCollectionsEn {
+	_TranslationsCollectionsJa._(TranslationsJa root) : this._root = root, super.internal(root);
 
 	final TranslationsJa _root; // ignore: unused_field
 
@@ -1714,8 +1724,8 @@ class _Translations$collections$ja extends Translations$collections$en {
 }
 
 // Path: playlists
-class _Translations$playlists$ja extends Translations$playlists$en {
-	_Translations$playlists$ja._(TranslationsJa root) : this._root = root, super.internal(root);
+class _TranslationsPlaylistsJa extends TranslationsPlaylistsEn {
+	_TranslationsPlaylistsJa._(TranslationsJa root) : this._root = root, super.internal(root);
 
 	final TranslationsJa _root; // ignore: unused_field
 
@@ -1749,8 +1759,8 @@ class _Translations$playlists$ja extends Translations$playlists$en {
 }
 
 // Path: music
-class _Translations$music$ja extends Translations$music$en {
-	_Translations$music$ja._(TranslationsJa root) : this._root = root, super.internal(root);
+class _TranslationsMusicJa extends TranslationsMusicEn {
+	_TranslationsMusicJa._(TranslationsJa root) : this._root = root, super.internal(root);
 
 	final TranslationsJa _root; // ignore: unused_field
 
@@ -1783,12 +1793,12 @@ class _Translations$music$ja extends Translations$music$en {
 	@override String get instantMixFailed => 'インスタントミックスを読み込めませんでした';
 	@override String get instantMixEmpty => 'インスタントミックスにトラックがありませんでした';
 	@override String noAudioUrl({required Object track}) => '${track}で利用可能な音声URLがありません';
-	@override late final _Translations$music$discography$ja discography = _Translations$music$discography$ja._(_root);
+	@override late final _TranslationsMusicDiscographyJa discography = _TranslationsMusicDiscographyJa._(_root);
 }
 
 // Path: watchTogether
-class _Translations$watchTogether$ja extends Translations$watchTogether$en {
-	_Translations$watchTogether$ja._(TranslationsJa root) : this._root = root, super.internal(root);
+class _TranslationsWatchTogetherJa extends TranslationsWatchTogetherEn {
+	_TranslationsWatchTogetherJa._(TranslationsJa root) : this._root = root, super.internal(root);
 
 	final TranslationsJa _root; // ignore: unused_field
 
@@ -1897,15 +1907,15 @@ class _Translations$watchTogether$ja extends Translations$watchTogether$en {
 	@override String get end => '終了';
 	@override String get playBlockedTitle => '再生が開始されませんでした';
 	@override String get playBlockedDescription => '再生を押して、ルームのみんなと一緒に視聴を始めてください。';
-	@override late final _Translations$watchTogether$notices$ja notices = _Translations$watchTogether$notices$ja._(_root);
-	@override late final _Translations$watchTogether$ended$ja ended = _Translations$watchTogether$ended$ja._(_root);
-	@override late final _Translations$watchTogether$errors$ja errors = _Translations$watchTogether$errors$ja._(_root);
+	@override late final _TranslationsWatchTogetherNoticesJa notices = _TranslationsWatchTogetherNoticesJa._(_root);
+	@override late final _TranslationsWatchTogetherEndedJa ended = _TranslationsWatchTogetherEndedJa._(_root);
+	@override late final _TranslationsWatchTogetherErrorsJa errors = _TranslationsWatchTogetherErrorsJa._(_root);
 	@override String untitledEpisode({required Object number}) => 'エピソード${number}';
 }
 
 // Path: downloads
-class _Translations$downloads$ja extends Translations$downloads$en {
-	_Translations$downloads$ja._(TranslationsJa root) : this._root = root, super.internal(root);
+class _TranslationsDownloadsJa extends TranslationsDownloadsEn {
+	_TranslationsDownloadsJa._(TranslationsJa root) : this._root = root, super.internal(root);
 
 	final TranslationsJa _root; // ignore: unused_field
 
@@ -1991,9 +2001,9 @@ class _Translations$downloads$ja extends Translations$downloads$en {
 	@override String get syncRuleNotAvailableForProfile => '現在のプロフィールでは利用できません';
 	@override String get syncRuleUnknownServer => '不明なサーバー';
 	@override String get syncRuleListCreated => '同期ルールを作成しました';
-	@override late final _Translations$downloads$backgroundWarning$ja backgroundWarning = _Translations$downloads$backgroundWarning$ja._(_root);
+	@override late final _TranslationsDownloadsBackgroundWarningJa backgroundWarning = _TranslationsDownloadsBackgroundWarningJa._(_root);
 	@override String get options => 'ダウンロードのオプション';
-	@override late final _Translations$downloads$groupings$ja groupings = _Translations$downloads$groupings$ja._(_root);
+	@override late final _TranslationsDownloadsGroupingsJa groupings = _TranslationsDownloadsGroupingsJa._(_root);
 	@override String get unknownLibrary => '不明なライブラリ';
 	@override String get unknownShow => '不明な番組';
 	@override String get unknownSeason => '不明なシーズン';
@@ -2014,8 +2024,8 @@ class _Translations$downloads$ja extends Translations$downloads$en {
 }
 
 // Path: shaders
-class _Translations$shaders$ja extends Translations$shaders$en {
-	_Translations$shaders$ja._(TranslationsJa root) : this._root = root, super.internal(root);
+class _TranslationsShadersJa extends TranslationsShadersEn {
+	_TranslationsShadersJa._(TranslationsJa root) : this._root = root, super.internal(root);
 
 	final TranslationsJa _root; // ignore: unused_field
 
@@ -2038,8 +2048,8 @@ class _Translations$shaders$ja extends Translations$shaders$en {
 }
 
 // Path: companionRemote
-class _Translations$companionRemote$ja extends Translations$companionRemote$en {
-	_Translations$companionRemote$ja._(TranslationsJa root) : this._root = root, super.internal(root);
+class _TranslationsCompanionRemoteJa extends TranslationsCompanionRemoteEn {
+	_TranslationsCompanionRemoteJa._(TranslationsJa root) : this._root = root, super.internal(root);
 
 	final TranslationsJa _root; // ignore: unused_field
 
@@ -2047,16 +2057,16 @@ class _Translations$companionRemote$ja extends Translations$companionRemote$en {
 	@override String get title => 'コンパニオンリモート';
 	@override String connectedTo({required Object name}) => '${name}に接続中';
 	@override String get unknownDevice => '不明なデバイス';
-	@override late final _Translations$companionRemote$session$ja session = _Translations$companionRemote$session$ja._(_root);
-	@override late final _Translations$companionRemote$pairing$ja pairing = _Translations$companionRemote$pairing$ja._(_root);
-	@override late final _Translations$companionRemote$remote$ja remote = _Translations$companionRemote$remote$ja._(_root);
-	@override late final _Translations$companionRemote$errors$ja errors = _Translations$companionRemote$errors$ja._(_root);
+	@override late final _TranslationsCompanionRemoteSessionJa session = _TranslationsCompanionRemoteSessionJa._(_root);
+	@override late final _TranslationsCompanionRemotePairingJa pairing = _TranslationsCompanionRemotePairingJa._(_root);
+	@override late final _TranslationsCompanionRemoteRemoteJa remote = _TranslationsCompanionRemoteRemoteJa._(_root);
+	@override late final _TranslationsCompanionRemoteErrorsJa errors = _TranslationsCompanionRemoteErrorsJa._(_root);
 	@override String get closedBeforeAuth => '認証前に接続が切断されました';
 }
 
 // Path: videoSettings
-class _Translations$videoSettings$ja extends Translations$videoSettings$en {
-	_Translations$videoSettings$ja._(TranslationsJa root) : this._root = root, super.internal(root);
+class _TranslationsVideoSettingsJa extends TranslationsVideoSettingsEn {
+	_TranslationsVideoSettingsJa._(TranslationsJa root) : this._root = root, super.internal(root);
 
 	final TranslationsJa _root; // ignore: unused_field
 
@@ -2088,8 +2098,8 @@ class _Translations$videoSettings$ja extends Translations$videoSettings$en {
 }
 
 // Path: performanceOverlay
-class _Translations$performanceOverlay$ja extends Translations$performanceOverlay$en {
-	_Translations$performanceOverlay$ja._(TranslationsJa root) : this._root = root, super.internal(root);
+class _TranslationsPerformanceOverlayJa extends TranslationsPerformanceOverlayEn {
+	_TranslationsPerformanceOverlayJa._(TranslationsJa root) : this._root = root, super.internal(root);
 
 	final TranslationsJa _root; // ignore: unused_field
 
@@ -2150,8 +2160,8 @@ class _Translations$performanceOverlay$ja extends Translations$performanceOverla
 }
 
 // Path: externalPlayer
-class _Translations$externalPlayer$ja extends Translations$externalPlayer$en {
-	_Translations$externalPlayer$ja._(TranslationsJa root) : this._root = root, super.internal(root);
+class _TranslationsExternalPlayerJa extends TranslationsExternalPlayerEn {
+	_TranslationsExternalPlayerJa._(TranslationsJa root) : this._root = root, super.internal(root);
 
 	final TranslationsJa _root; // ignore: unused_field
 
@@ -2175,8 +2185,8 @@ class _Translations$externalPlayer$ja extends Translations$externalPlayer$en {
 }
 
 // Path: metadataEdit
-class _Translations$metadataEdit$ja extends Translations$metadataEdit$en {
-	_Translations$metadataEdit$ja._(TranslationsJa root) : this._root = root, super.internal(root);
+class _TranslationsMetadataEditJa extends TranslationsMetadataEditEn {
+	_TranslationsMetadataEditJa._(TranslationsJa root) : this._root = root, super.internal(root);
 
 	final TranslationsJa _root; // ignore: unused_field
 
@@ -2259,8 +2269,8 @@ class _Translations$metadataEdit$ja extends Translations$metadataEdit$en {
 }
 
 // Path: matchScreen
-class _Translations$matchScreen$ja extends Translations$matchScreen$en {
-	_Translations$matchScreen$ja._(TranslationsJa root) : this._root = root, super.internal(root);
+class _TranslationsMatchScreenJa extends TranslationsMatchScreenEn {
+	_TranslationsMatchScreenJa._(TranslationsJa root) : this._root = root, super.internal(root);
 
 	final TranslationsJa _root; // ignore: unused_field
 
@@ -2280,8 +2290,8 @@ class _Translations$matchScreen$ja extends Translations$matchScreen$en {
 }
 
 // Path: serverTasks
-class _Translations$serverTasks$ja extends Translations$serverTasks$en {
-	_Translations$serverTasks$ja._(TranslationsJa root) : this._root = root, super.internal(root);
+class _TranslationsServerTasksJa extends TranslationsServerTasksEn {
+	_TranslationsServerTasksJa._(TranslationsJa root) : this._root = root, super.internal(root);
 
 	final TranslationsJa _root; // ignore: unused_field
 
@@ -2292,8 +2302,8 @@ class _Translations$serverTasks$ja extends Translations$serverTasks$en {
 }
 
 // Path: trakt
-class _Translations$trakt$ja extends Translations$trakt$en {
-	_Translations$trakt$ja._(TranslationsJa root) : this._root = root, super.internal(root);
+class _TranslationsTraktJa extends TranslationsTraktEn {
+	_TranslationsTraktJa._(TranslationsJa root) : this._root = root, super.internal(root);
 
 	final TranslationsJa _root; // ignore: unused_field
 
@@ -2310,8 +2320,8 @@ class _Translations$trakt$ja extends Translations$trakt$en {
 }
 
 // Path: seerr
-class _Translations$seerr$ja extends Translations$seerr$en {
-	_Translations$seerr$ja._(TranslationsJa root) : this._root = root, super.internal(root);
+class _TranslationsSeerrJa extends TranslationsSeerrEn {
+	_TranslationsSeerrJa._(TranslationsJa root) : this._root = root, super.internal(root);
 
 	final TranslationsJa _root; // ignore: unused_field
 
@@ -2369,8 +2379,8 @@ class _Translations$seerr$ja extends Translations$seerr$en {
 }
 
 // Path: services
-class _Translations$services$ja extends Translations$services$en {
-	_Translations$services$ja._(TranslationsJa root) : this._root = root, super.internal(root);
+class _TranslationsServicesJa extends TranslationsServicesEn {
+	_TranslationsServicesJa._(TranslationsJa root) : this._root = root, super.internal(root);
 
 	final TranslationsJa _root; // ignore: unused_field
 
@@ -2385,17 +2395,17 @@ class _Translations$services$ja extends Translations$services$en {
 	@override String disconnectConfirm({required Object service}) => '${service} の接続を解除しますか？';
 	@override String disconnectConfirmBody({required Object service}) => 'Plezyは${service}の更新を停止します。いつでも再接続できます。';
 	@override String connectFailed({required Object service}) => '${service} に接続できませんでした。もう一度お試しください。';
-	@override late final _Translations$services$names$ja names = _Translations$services$names$ja._(_root);
-	@override late final _Translations$services$simklReconnect$ja simklReconnect = _Translations$services$simklReconnect$ja._(_root);
-	@override late final _Translations$services$deviceCode$ja deviceCode = _Translations$services$deviceCode$ja._(_root);
-	@override late final _Translations$services$oauthProxy$ja oauthProxy = _Translations$services$oauthProxy$ja._(_root);
-	@override late final _Translations$services$pendingAuth$ja pendingAuth = _Translations$services$pendingAuth$ja._(_root);
-	@override late final _Translations$services$libraryFilter$ja libraryFilter = _Translations$services$libraryFilter$ja._(_root);
+	@override late final _TranslationsServicesNamesJa names = _TranslationsServicesNamesJa._(_root);
+	@override late final _TranslationsServicesSimklReconnectJa simklReconnect = _TranslationsServicesSimklReconnectJa._(_root);
+	@override late final _TranslationsServicesDeviceCodeJa deviceCode = _TranslationsServicesDeviceCodeJa._(_root);
+	@override late final _TranslationsServicesOauthProxyJa oauthProxy = _TranslationsServicesOauthProxyJa._(_root);
+	@override late final _TranslationsServicesPendingAuthJa pendingAuth = _TranslationsServicesPendingAuthJa._(_root);
+	@override late final _TranslationsServicesLibraryFilterJa libraryFilter = _TranslationsServicesLibraryFilterJa._(_root);
 }
 
 // Path: addServer
-class _Translations$addServer$ja extends Translations$addServer$en {
-	_Translations$addServer$ja._(TranslationsJa root) : this._root = root, super.internal(root);
+class _TranslationsAddServerJa extends TranslationsAddServerEn {
+	_TranslationsAddServerJa._(TranslationsJa root) : this._root = root, super.internal(root);
 
 	final TranslationsJa _root; // ignore: unused_field
 
@@ -2449,9 +2459,18 @@ class _Translations$addServer$ja extends Translations$addServer$en {
 	@override String redirectUnsupportedEnterFinal({required Object product}) => 'サーバーからサポートされていないURLにリダイレクトされました。最終的な${product}のURLを直接入力してください。';
 }
 
+// Path: deepLinks
+class _TranslationsDeepLinksJa extends TranslationsDeepLinksEn {
+	_TranslationsDeepLinksJa._(TranslationsJa root) : this._root = root, super.internal(root);
+
+	final TranslationsJa _root; // ignore: unused_field
+
+	// Translations
+}
+
 // Path: appIcon.names
-class _Translations$appIcon$names$ja extends Translations$appIcon$names$en {
-	_Translations$appIcon$names$ja._(TranslationsJa root) : this._root = root, super.internal(root);
+class _TranslationsAppIconNamesJa extends TranslationsAppIconNamesEn {
+	_TranslationsAppIconNamesJa._(TranslationsJa root) : this._root = root, super.internal(root);
 
 	final TranslationsJa _root; // ignore: unused_field
 
@@ -2482,8 +2501,8 @@ class _Translations$appIcon$names$ja extends Translations$appIcon$names$en {
 }
 
 // Path: common.ratingSource
-class _Translations$common$ratingSource$ja extends Translations$common$ratingSource$en {
-	_Translations$common$ratingSource$ja._(TranslationsJa root) : this._root = root, super.internal(root);
+class _TranslationsCommonRatingSourceJa extends TranslationsCommonRatingSourceEn {
+	_TranslationsCommonRatingSourceJa._(TranslationsJa root) : this._root = root, super.internal(root);
 
 	final TranslationsJa _root; // ignore: unused_field
 
@@ -2504,8 +2523,8 @@ class _Translations$common$ratingSource$ja extends Translations$common$ratingSou
 }
 
 // Path: common.mediaKind
-class _Translations$common$mediaKind$ja extends Translations$common$mediaKind$en {
-	_Translations$common$mediaKind$ja._(TranslationsJa root) : this._root = root, super.internal(root);
+class _TranslationsCommonMediaKindJa extends TranslationsCommonMediaKindEn {
+	_TranslationsCommonMediaKindJa._(TranslationsJa root) : this._root = root, super.internal(root);
 
 	final TranslationsJa _root; // ignore: unused_field
 
@@ -2525,8 +2544,8 @@ class _Translations$common$mediaKind$ja extends Translations$common$mediaKind$en
 }
 
 // Path: supporter.errors
-class _Translations$supporter$errors$ja extends Translations$supporter$errors$en {
-	_Translations$supporter$errors$ja._(TranslationsJa root) : this._root = root, super.internal(root);
+class _TranslationsSupporterErrorsJa extends TranslationsSupporterErrorsEn {
+	_TranslationsSupporterErrorsJa._(TranslationsJa root) : this._root = root, super.internal(root);
 
 	final TranslationsJa _root; // ignore: unused_field
 
@@ -2540,8 +2559,8 @@ class _Translations$supporter$errors$ja extends Translations$supporter$errors$en
 }
 
 // Path: themeEditor.slots
-class _Translations$themeEditor$slots$ja extends Translations$themeEditor$slots$en {
-	_Translations$themeEditor$slots$ja._(TranslationsJa root) : this._root = root, super.internal(root);
+class _TranslationsThemeEditorSlotsJa extends TranslationsThemeEditorSlotsEn {
+	_TranslationsThemeEditorSlotsJa._(TranslationsJa root) : this._root = root, super.internal(root);
 
 	final TranslationsJa _root; // ignore: unused_field
 
@@ -2555,8 +2574,8 @@ class _Translations$themeEditor$slots$ja extends Translations$themeEditor$slots$
 }
 
 // Path: themeEditor.contrast
-class _Translations$themeEditor$contrast$ja extends Translations$themeEditor$contrast$en {
-	_Translations$themeEditor$contrast$ja._(TranslationsJa root) : this._root = root, super.internal(root);
+class _TranslationsThemeEditorContrastJa extends TranslationsThemeEditorContrastEn {
+	_TranslationsThemeEditorContrastJa._(TranslationsJa root) : this._root = root, super.internal(root);
 
 	final TranslationsJa _root; // ignore: unused_field
 
@@ -2571,8 +2590,8 @@ class _Translations$themeEditor$contrast$ja extends Translations$themeEditor$con
 }
 
 // Path: hotkeys.actions
-class _Translations$hotkeys$actions$ja extends Translations$hotkeys$actions$en {
-	_Translations$hotkeys$actions$ja._(TranslationsJa root) : this._root = root, super.internal(root);
+class _TranslationsHotkeysActionsJa extends TranslationsHotkeysActionsEn {
+	_TranslationsHotkeysActionsJa._(TranslationsJa root) : this._root = root, super.internal(root);
 
 	final TranslationsJa _root; // ignore: unused_field
 
@@ -2605,8 +2624,8 @@ class _Translations$hotkeys$actions$ja extends Translations$hotkeys$actions$en {
 }
 
 // Path: videoControls.pipErrors
-class _Translations$videoControls$pipErrors$ja extends Translations$videoControls$pipErrors$en {
-	_Translations$videoControls$pipErrors$ja._(TranslationsJa root) : this._root = root, super.internal(root);
+class _TranslationsVideoControlsPipErrorsJa extends TranslationsVideoControlsPipErrorsEn {
+	_TranslationsVideoControlsPipErrorsJa._(TranslationsJa root) : this._root = root, super.internal(root);
 
 	final TranslationsJa _root; // ignore: unused_field
 
@@ -2622,8 +2641,8 @@ class _Translations$videoControls$pipErrors$ja extends Translations$videoControl
 }
 
 // Path: accountPreferences.groups
-class _Translations$accountPreferences$groups$ja extends Translations$accountPreferences$groups$en {
-	_Translations$accountPreferences$groups$ja._(TranslationsJa root) : this._root = root, super.internal(root);
+class _TranslationsAccountPreferencesGroupsJa extends TranslationsAccountPreferencesGroupsEn {
+	_TranslationsAccountPreferencesGroupsJa._(TranslationsJa root) : this._root = root, super.internal(root);
 
 	final TranslationsJa _root; // ignore: unused_field
 
@@ -2634,8 +2653,8 @@ class _Translations$accountPreferences$groups$ja extends Translations$accountPre
 }
 
 // Path: accountPreferences.subtitleModes
-class _Translations$accountPreferences$subtitleModes$ja extends Translations$accountPreferences$subtitleModes$en {
-	_Translations$accountPreferences$subtitleModes$ja._(TranslationsJa root) : this._root = root, super.internal(root);
+class _TranslationsAccountPreferencesSubtitleModesJa extends TranslationsAccountPreferencesSubtitleModesEn {
+	_TranslationsAccountPreferencesSubtitleModesJa._(TranslationsJa root) : this._root = root, super.internal(root);
 
 	final TranslationsJa _root; // ignore: unused_field
 
@@ -2653,8 +2672,8 @@ class _Translations$accountPreferences$subtitleModes$ja extends Translations$acc
 }
 
 // Path: accountPreferences.subtitleAccessibilityOptions
-class _Translations$accountPreferences$subtitleAccessibilityOptions$ja extends Translations$accountPreferences$subtitleAccessibilityOptions$en {
-	_Translations$accountPreferences$subtitleAccessibilityOptions$ja._(TranslationsJa root) : this._root = root, super.internal(root);
+class _TranslationsAccountPreferencesSubtitleAccessibilityOptionsJa extends TranslationsAccountPreferencesSubtitleAccessibilityOptionsEn {
+	_TranslationsAccountPreferencesSubtitleAccessibilityOptionsJa._(TranslationsJa root) : this._root = root, super.internal(root);
 
 	final TranslationsJa _root; // ignore: unused_field
 
@@ -2666,8 +2685,8 @@ class _Translations$accountPreferences$subtitleAccessibilityOptions$ja extends T
 }
 
 // Path: accountPreferences.forcedSubtitleOptions
-class _Translations$accountPreferences$forcedSubtitleOptions$ja extends Translations$accountPreferences$forcedSubtitleOptions$en {
-	_Translations$accountPreferences$forcedSubtitleOptions$ja._(TranslationsJa root) : this._root = root, super.internal(root);
+class _TranslationsAccountPreferencesForcedSubtitleOptionsJa extends TranslationsAccountPreferencesForcedSubtitleOptionsEn {
+	_TranslationsAccountPreferencesForcedSubtitleOptionsJa._(TranslationsJa root) : this._root = root, super.internal(root);
 
 	final TranslationsJa _root; // ignore: unused_field
 
@@ -2679,8 +2698,8 @@ class _Translations$accountPreferences$forcedSubtitleOptions$ja extends Translat
 }
 
 // Path: accountPreferences.watchedIndicatorOptions
-class _Translations$accountPreferences$watchedIndicatorOptions$ja extends Translations$accountPreferences$watchedIndicatorOptions$en {
-	_Translations$accountPreferences$watchedIndicatorOptions$ja._(TranslationsJa root) : this._root = root, super.internal(root);
+class _TranslationsAccountPreferencesWatchedIndicatorOptionsJa extends TranslationsAccountPreferencesWatchedIndicatorOptionsEn {
+	_TranslationsAccountPreferencesWatchedIndicatorOptionsJa._(TranslationsJa root) : this._root = root, super.internal(root);
 
 	final TranslationsJa _root; // ignore: unused_field
 
@@ -2692,8 +2711,8 @@ class _Translations$accountPreferences$watchedIndicatorOptions$ja extends Transl
 }
 
 // Path: accountPreferences.mediaReviewsOptions
-class _Translations$accountPreferences$mediaReviewsOptions$ja extends Translations$accountPreferences$mediaReviewsOptions$en {
-	_Translations$accountPreferences$mediaReviewsOptions$ja._(TranslationsJa root) : this._root = root, super.internal(root);
+class _TranslationsAccountPreferencesMediaReviewsOptionsJa extends TranslationsAccountPreferencesMediaReviewsOptionsEn {
+	_TranslationsAccountPreferencesMediaReviewsOptionsJa._(TranslationsJa root) : this._root = root, super.internal(root);
 
 	final TranslationsJa _root; // ignore: unused_field
 
@@ -2705,8 +2724,8 @@ class _Translations$accountPreferences$mediaReviewsOptions$ja extends Translatio
 }
 
 // Path: discover.person
-class _Translations$discover$person$ja extends Translations$discover$person$en {
-	_Translations$discover$person$ja._(TranslationsJa root) : this._root = root, super.internal(root);
+class _TranslationsDiscoverPersonJa extends TranslationsDiscoverPersonEn {
+	_TranslationsDiscoverPersonJa._(TranslationsJa root) : this._root = root, super.internal(root);
 
 	final TranslationsJa _root; // ignore: unused_field
 
@@ -2719,8 +2738,8 @@ class _Translations$discover$person$ja extends Translations$discover$person$en {
 }
 
 // Path: libraries.tabs
-class _Translations$libraries$tabs$ja extends Translations$libraries$tabs$en {
-	_Translations$libraries$tabs$ja._(TranslationsJa root) : this._root = root, super.internal(root);
+class _TranslationsLibrariesTabsJa extends TranslationsLibrariesTabsEn {
+	_TranslationsLibrariesTabsJa._(TranslationsJa root) : this._root = root, super.internal(root);
 
 	final TranslationsJa _root; // ignore: unused_field
 
@@ -2732,8 +2751,8 @@ class _Translations$libraries$tabs$ja extends Translations$libraries$tabs$en {
 }
 
 // Path: libraries.groupings
-class _Translations$libraries$groupings$ja extends Translations$libraries$groupings$en {
-	_Translations$libraries$groupings$ja._(TranslationsJa root) : this._root = root, super.internal(root);
+class _TranslationsLibrariesGroupingsJa extends TranslationsLibrariesGroupingsEn {
+	_TranslationsLibrariesGroupingsJa._(TranslationsJa root) : this._root = root, super.internal(root);
 
 	final TranslationsJa _root; // ignore: unused_field
 
@@ -2751,8 +2770,8 @@ class _Translations$libraries$groupings$ja extends Translations$libraries$groupi
 }
 
 // Path: libraries.filterCategories
-class _Translations$libraries$filterCategories$ja extends Translations$libraries$filterCategories$en {
-	_Translations$libraries$filterCategories$ja._(TranslationsJa root) : this._root = root, super.internal(root);
+class _TranslationsLibrariesFilterCategoriesJa extends TranslationsLibrariesFilterCategoriesEn {
+	_TranslationsLibrariesFilterCategoriesJa._(TranslationsJa root) : this._root = root, super.internal(root);
 
 	final TranslationsJa _root; // ignore: unused_field
 
@@ -2768,8 +2787,8 @@ class _Translations$libraries$filterCategories$ja extends Translations$libraries
 }
 
 // Path: libraries.sortLabels
-class _Translations$libraries$sortLabels$ja extends Translations$libraries$sortLabels$en {
-	_Translations$libraries$sortLabels$ja._(TranslationsJa root) : this._root = root, super.internal(root);
+class _TranslationsLibrariesSortLabelsJa extends TranslationsLibrariesSortLabelsEn {
+	_TranslationsLibrariesSortLabelsJa._(TranslationsJa root) : this._root = root, super.internal(root);
 
 	final TranslationsJa _root; // ignore: unused_field
 
@@ -2800,8 +2819,8 @@ class _Translations$libraries$sortLabels$ja extends Translations$libraries$sortL
 }
 
 // Path: libraries.advancedFilters
-class _Translations$libraries$advancedFilters$ja extends Translations$libraries$advancedFilters$en {
-	_Translations$libraries$advancedFilters$ja._(TranslationsJa root) : this._root = root, super.internal(root);
+class _TranslationsLibrariesAdvancedFiltersJa extends TranslationsLibrariesAdvancedFiltersEn {
+	_TranslationsLibrariesAdvancedFiltersJa._(TranslationsJa root) : this._root = root, super.internal(root);
 
 	final TranslationsJa _root; // ignore: unused_field
 
@@ -2835,8 +2854,8 @@ class _Translations$libraries$advancedFilters$ja extends Translations$libraries$
 }
 
 // Path: explore.rows
-class _Translations$explore$rows$ja extends Translations$explore$rows$en {
-	_Translations$explore$rows$ja._(TranslationsJa root) : this._root = root, super.internal(root);
+class _TranslationsExploreRowsJa extends TranslationsExploreRowsEn {
+	_TranslationsExploreRowsJa._(TranslationsJa root) : this._root = root, super.internal(root);
 
 	final TranslationsJa _root; // ignore: unused_field
 
@@ -2858,8 +2877,8 @@ class _Translations$explore$rows$ja extends Translations$explore$rows$en {
 }
 
 // Path: explore.status
-class _Translations$explore$status$ja extends Translations$explore$status$en {
-	_Translations$explore$status$ja._(TranslationsJa root) : this._root = root, super.internal(root);
+class _TranslationsExploreStatusJa extends TranslationsExploreStatusEn {
+	_TranslationsExploreStatusJa._(TranslationsJa root) : this._root = root, super.internal(root);
 
 	final TranslationsJa _root; // ignore: unused_field
 
@@ -2871,8 +2890,8 @@ class _Translations$explore$status$ja extends Translations$explore$status$en {
 }
 
 // Path: explore.badge
-class _Translations$explore$badge$ja extends Translations$explore$badge$en {
-	_Translations$explore$badge$ja._(TranslationsJa root) : this._root = root, super.internal(root);
+class _TranslationsExploreBadgeJa extends TranslationsExploreBadgeEn {
+	_TranslationsExploreBadgeJa._(TranslationsJa root) : this._root = root, super.internal(root);
 
 	final TranslationsJa _root; // ignore: unused_field
 
@@ -2901,8 +2920,8 @@ class _Translations$explore$badge$ja extends Translations$explore$badge$en {
 }
 
 // Path: explore.stats
-class _Translations$explore$stats$ja extends Translations$explore$stats$en {
-	_Translations$explore$stats$ja._(TranslationsJa root) : this._root = root, super.internal(root);
+class _TranslationsExploreStatsJa extends TranslationsExploreStatsEn {
+	_TranslationsExploreStatsJa._(TranslationsJa root) : this._root = root, super.internal(root);
 
 	final TranslationsJa _root; // ignore: unused_field
 
@@ -2927,8 +2946,8 @@ class _Translations$explore$stats$ja extends Translations$explore$stats$en {
 }
 
 // Path: explore.season
-class _Translations$explore$season$ja extends Translations$explore$season$en {
-	_Translations$explore$season$ja._(TranslationsJa root) : this._root = root, super.internal(root);
+class _TranslationsExploreSeasonJa extends TranslationsExploreSeasonEn {
+	_TranslationsExploreSeasonJa._(TranslationsJa root) : this._root = root, super.internal(root);
 
 	final TranslationsJa _root; // ignore: unused_field
 
@@ -2941,8 +2960,8 @@ class _Translations$explore$season$ja extends Translations$explore$season$en {
 }
 
 // Path: explore.format
-class _Translations$explore$format$ja extends Translations$explore$format$en {
-	_Translations$explore$format$ja._(TranslationsJa root) : this._root = root, super.internal(root);
+class _TranslationsExploreFormatJa extends TranslationsExploreFormatEn {
+	_TranslationsExploreFormatJa._(TranslationsJa root) : this._root = root, super.internal(root);
 
 	final TranslationsJa _root; // ignore: unused_field
 
@@ -2958,8 +2977,8 @@ class _Translations$explore$format$ja extends Translations$explore$format$en {
 }
 
 // Path: explore.sourceMaterial
-class _Translations$explore$sourceMaterial$ja extends Translations$explore$sourceMaterial$en {
-	_Translations$explore$sourceMaterial$ja._(TranslationsJa root) : this._root = root, super.internal(root);
+class _TranslationsExploreSourceMaterialJa extends TranslationsExploreSourceMaterialEn {
+	_TranslationsExploreSourceMaterialJa._(TranslationsJa root) : this._root = root, super.internal(root);
 
 	final TranslationsJa _root; // ignore: unused_field
 
@@ -2976,8 +2995,8 @@ class _Translations$explore$sourceMaterial$ja extends Translations$explore$sourc
 }
 
 // Path: explore.creditRole
-class _Translations$explore$creditRole$ja extends Translations$explore$creditRole$en {
-	_Translations$explore$creditRole$ja._(TranslationsJa root) : this._root = root, super.internal(root);
+class _TranslationsExploreCreditRoleJa extends TranslationsExploreCreditRoleEn {
+	_TranslationsExploreCreditRoleJa._(TranslationsJa root) : this._root = root, super.internal(root);
 
 	final TranslationsJa _root; // ignore: unused_field
 
@@ -2991,8 +3010,8 @@ class _Translations$explore$creditRole$ja extends Translations$explore$creditRol
 }
 
 // Path: explore.relation
-class _Translations$explore$relation$ja extends Translations$explore$relation$en {
-	_Translations$explore$relation$ja._(TranslationsJa root) : this._root = root, super.internal(root);
+class _TranslationsExploreRelationJa extends TranslationsExploreRelationEn {
+	_TranslationsExploreRelationJa._(TranslationsJa root) : this._root = root, super.internal(root);
 
 	final TranslationsJa _root; // ignore: unused_field
 
@@ -3009,8 +3028,8 @@ class _Translations$explore$relation$ja extends Translations$explore$relation$en
 }
 
 // Path: explore.detail
-class _Translations$explore$detail$ja extends Translations$explore$detail$en {
-	_Translations$explore$detail$ja._(TranslationsJa root) : this._root = root, super.internal(root);
+class _TranslationsExploreDetailJa extends TranslationsExploreDetailEn {
+	_TranslationsExploreDetailJa._(TranslationsJa root) : this._root = root, super.internal(root);
 
 	final TranslationsJa _root; // ignore: unused_field
 
@@ -3051,8 +3070,8 @@ class _Translations$explore$detail$ja extends Translations$explore$detail$en {
 }
 
 // Path: liveTv.recordSettings
-class _Translations$liveTv$recordSettings$ja extends Translations$liveTv$recordSettings$en {
-	_Translations$liveTv$recordSettings$ja._(TranslationsJa root) : this._root = root, super.internal(root);
+class _TranslationsLiveTvRecordSettingsJa extends TranslationsLiveTvRecordSettingsEn {
+	_TranslationsLiveTvRecordSettingsJa._(TranslationsJa root) : this._root = root, super.internal(root);
 
 	final TranslationsJa _root; // ignore: unused_field
 
@@ -3068,8 +3087,8 @@ class _Translations$liveTv$recordSettings$ja extends Translations$liveTv$recordS
 }
 
 // Path: music.discography
-class _Translations$music$discography$ja extends Translations$music$discography$en {
-	_Translations$music$discography$ja._(TranslationsJa root) : this._root = root, super.internal(root);
+class _TranslationsMusicDiscographyJa extends TranslationsMusicDiscographyEn {
+	_TranslationsMusicDiscographyJa._(TranslationsJa root) : this._root = root, super.internal(root);
 
 	final TranslationsJa _root; // ignore: unused_field
 
@@ -3080,8 +3099,8 @@ class _Translations$music$discography$ja extends Translations$music$discography$
 }
 
 // Path: watchTogether.notices
-class _Translations$watchTogether$notices$ja extends Translations$watchTogether$notices$en {
-	_Translations$watchTogether$notices$ja._(TranslationsJa root) : this._root = root, super.internal(root);
+class _TranslationsWatchTogetherNoticesJa extends TranslationsWatchTogetherNoticesEn {
+	_TranslationsWatchTogetherNoticesJa._(TranslationsJa root) : this._root = root, super.internal(root);
 
 	final TranslationsJa _root; // ignore: unused_field
 
@@ -3114,8 +3133,8 @@ class _Translations$watchTogether$notices$ja extends Translations$watchTogether$
 }
 
 // Path: watchTogether.ended
-class _Translations$watchTogether$ended$ja extends Translations$watchTogether$ended$en {
-	_Translations$watchTogether$ended$ja._(TranslationsJa root) : this._root = root, super.internal(root);
+class _TranslationsWatchTogetherEndedJa extends TranslationsWatchTogetherEndedEn {
+	_TranslationsWatchTogetherEndedJa._(TranslationsJa root) : this._root = root, super.internal(root);
 
 	final TranslationsJa _root; // ignore: unused_field
 
@@ -3128,8 +3147,8 @@ class _Translations$watchTogether$ended$ja extends Translations$watchTogether$en
 }
 
 // Path: watchTogether.errors
-class _Translations$watchTogether$errors$ja extends Translations$watchTogether$errors$en {
-	_Translations$watchTogether$errors$ja._(TranslationsJa root) : this._root = root, super.internal(root);
+class _TranslationsWatchTogetherErrorsJa extends TranslationsWatchTogetherErrorsEn {
+	_TranslationsWatchTogetherErrorsJa._(TranslationsJa root) : this._root = root, super.internal(root);
 
 	final TranslationsJa _root; // ignore: unused_field
 
@@ -3151,8 +3170,8 @@ class _Translations$watchTogether$errors$ja extends Translations$watchTogether$e
 }
 
 // Path: downloads.backgroundWarning
-class _Translations$downloads$backgroundWarning$ja extends Translations$downloads$backgroundWarning$en {
-	_Translations$downloads$backgroundWarning$ja._(TranslationsJa root) : this._root = root, super.internal(root);
+class _TranslationsDownloadsBackgroundWarningJa extends TranslationsDownloadsBackgroundWarningEn {
+	_TranslationsDownloadsBackgroundWarningJa._(TranslationsJa root) : this._root = root, super.internal(root);
 
 	final TranslationsJa _root; // ignore: unused_field
 
@@ -3186,8 +3205,8 @@ class _Translations$downloads$backgroundWarning$ja extends Translations$download
 }
 
 // Path: downloads.groupings
-class _Translations$downloads$groupings$ja extends Translations$downloads$groupings$en {
-	_Translations$downloads$groupings$ja._(TranslationsJa root) : this._root = root, super.internal(root);
+class _TranslationsDownloadsGroupingsJa extends TranslationsDownloadsGroupingsEn {
+	_TranslationsDownloadsGroupingsJa._(TranslationsJa root) : this._root = root, super.internal(root);
 
 	final TranslationsJa _root; // ignore: unused_field
 
@@ -3197,8 +3216,8 @@ class _Translations$downloads$groupings$ja extends Translations$downloads$groupi
 }
 
 // Path: companionRemote.session
-class _Translations$companionRemote$session$ja extends Translations$companionRemote$session$en {
-	_Translations$companionRemote$session$ja._(TranslationsJa root) : this._root = root, super.internal(root);
+class _TranslationsCompanionRemoteSessionJa extends TranslationsCompanionRemoteSessionEn {
+	_TranslationsCompanionRemoteSessionJa._(TranslationsJa root) : this._root = root, super.internal(root);
 
 	final TranslationsJa _root; // ignore: unused_field
 
@@ -3218,8 +3237,8 @@ class _Translations$companionRemote$session$ja extends Translations$companionRem
 }
 
 // Path: companionRemote.pairing
-class _Translations$companionRemote$pairing$ja extends Translations$companionRemote$pairing$en {
-	_Translations$companionRemote$pairing$ja._(TranslationsJa root) : this._root = root, super.internal(root);
+class _TranslationsCompanionRemotePairingJa extends TranslationsCompanionRemotePairingEn {
+	_TranslationsCompanionRemotePairingJa._(TranslationsJa root) : this._root = root, super.internal(root);
 
 	final TranslationsJa _root; // ignore: unused_field
 
@@ -3242,8 +3261,8 @@ class _Translations$companionRemote$pairing$ja extends Translations$companionRem
 }
 
 // Path: companionRemote.remote
-class _Translations$companionRemote$remote$ja extends Translations$companionRemote$remote$en {
-	_Translations$companionRemote$remote$ja._(TranslationsJa root) : this._root = root, super.internal(root);
+class _TranslationsCompanionRemoteRemoteJa extends TranslationsCompanionRemoteRemoteEn {
+	_TranslationsCompanionRemoteRemoteJa._(TranslationsJa root) : this._root = root, super.internal(root);
 
 	final TranslationsJa _root; // ignore: unused_field
 
@@ -3278,8 +3297,8 @@ class _Translations$companionRemote$remote$ja extends Translations$companionRemo
 }
 
 // Path: companionRemote.errors
-class _Translations$companionRemote$errors$ja extends Translations$companionRemote$errors$en {
-	_Translations$companionRemote$errors$ja._(TranslationsJa root) : this._root = root, super.internal(root);
+class _TranslationsCompanionRemoteErrorsJa extends TranslationsCompanionRemoteErrorsEn {
+	_TranslationsCompanionRemoteErrorsJa._(TranslationsJa root) : this._root = root, super.internal(root);
 
 	final TranslationsJa _root; // ignore: unused_field
 
@@ -3295,8 +3314,8 @@ class _Translations$companionRemote$errors$ja extends Translations$companionRemo
 }
 
 // Path: services.names
-class _Translations$services$names$ja extends Translations$services$names$en {
-	_Translations$services$names$ja._(TranslationsJa root) : this._root = root, super.internal(root);
+class _TranslationsServicesNamesJa extends TranslationsServicesNamesEn {
+	_TranslationsServicesNamesJa._(TranslationsJa root) : this._root = root, super.internal(root);
 
 	final TranslationsJa _root; // ignore: unused_field
 
@@ -3309,8 +3328,8 @@ class _Translations$services$names$ja extends Translations$services$names$en {
 }
 
 // Path: services.simklReconnect
-class _Translations$services$simklReconnect$ja extends Translations$services$simklReconnect$en {
-	_Translations$services$simklReconnect$ja._(TranslationsJa root) : this._root = root, super.internal(root);
+class _TranslationsServicesSimklReconnectJa extends TranslationsServicesSimklReconnectEn {
+	_TranslationsServicesSimklReconnectJa._(TranslationsJa root) : this._root = root, super.internal(root);
 
 	final TranslationsJa _root; // ignore: unused_field
 
@@ -3320,8 +3339,8 @@ class _Translations$services$simklReconnect$ja extends Translations$services$sim
 }
 
 // Path: services.deviceCode
-class _Translations$services$deviceCode$ja extends Translations$services$deviceCode$en {
-	_Translations$services$deviceCode$ja._(TranslationsJa root) : this._root = root, super.internal(root);
+class _TranslationsServicesDeviceCodeJa extends TranslationsServicesDeviceCodeEn {
+	_TranslationsServicesDeviceCodeJa._(TranslationsJa root) : this._root = root, super.internal(root);
 
 	final TranslationsJa _root; // ignore: unused_field
 
@@ -3335,8 +3354,8 @@ class _Translations$services$deviceCode$ja extends Translations$services$deviceC
 }
 
 // Path: services.oauthProxy
-class _Translations$services$oauthProxy$ja extends Translations$services$oauthProxy$en {
-	_Translations$services$oauthProxy$ja._(TranslationsJa root) : this._root = root, super.internal(root);
+class _TranslationsServicesOauthProxyJa extends TranslationsServicesOauthProxyEn {
+	_TranslationsServicesOauthProxyJa._(TranslationsJa root) : this._root = root, super.internal(root);
 
 	final TranslationsJa _root; // ignore: unused_field
 
@@ -3347,8 +3366,8 @@ class _Translations$services$oauthProxy$ja extends Translations$services$oauthPr
 }
 
 // Path: services.pendingAuth
-class _Translations$services$pendingAuth$ja extends Translations$services$pendingAuth$en {
-	_Translations$services$pendingAuth$ja._(TranslationsJa root) : this._root = root, super.internal(root);
+class _TranslationsServicesPendingAuthJa extends TranslationsServicesPendingAuthEn {
+	_TranslationsServicesPendingAuthJa._(TranslationsJa root) : this._root = root, super.internal(root);
 
 	final TranslationsJa _root; // ignore: unused_field
 
@@ -3358,8 +3377,8 @@ class _Translations$services$pendingAuth$ja extends Translations$services$pendin
 }
 
 // Path: services.libraryFilter
-class _Translations$services$libraryFilter$ja extends Translations$services$libraryFilter$en {
-	_Translations$services$libraryFilter$ja._(TranslationsJa root) : this._root = root, super.internal(root);
+class _TranslationsServicesLibraryFilterJa extends TranslationsServicesLibraryFilterEn {
+	_TranslationsServicesLibraryFilterJa._(TranslationsJa root) : this._root = root, super.internal(root);
 
 	final TranslationsJa _root; // ignore: unused_field
 
@@ -3378,2326 +3397,2340 @@ class _Translations$services$libraryFilter$ja extends Translations$services$libr
 	@override String get noLibraries => '利用できるライブラリがありません';
 }
 
-/// The flat map containing all translations for locale <ja>.
+/// Flat map(s) containing all translations.
 /// Only for edge cases! For simple maps, use the map function of this library.
-///
-/// The Dart AOT compiler has issues with very large switch statements,
-/// so the map is split into smaller functions (512 entries each).
 extension on TranslationsJa {
 	dynamic _flatMapFunction(String path) {
-		return switch (path) {
-			'app.title' => 'Plezy',
-			'appIcon.title' => 'アプリアイコン',
-			'appIcon.defaultIcon' => 'デフォルト',
-			'appIcon.current' => '現在のアイコン',
-			'appIcon.locked' => 'テーマ＆アイコンパックに含まれます',
-			'appIcon.lockedHint' => '別のアイコンはテーマ＆アイコンパックに含まれます。',
-			'appIcon.changeFailed' => 'アプリアイコンを変更できませんでした',
-			'appIcon.launcherHint' => 'Plezyを離れると、ホーム画面に新しいアイコンが表示されます。',
-			'appIcon.tvLauncherHint' => 'Plezyを離れると、新しいバナーが表示されます。Android TVでは、テレビを再起動するまで古いバナーが表示され続ける場合があります。',
-			'appIcon.names.midnight' => 'ミッドナイト',
-			'appIcon.names.ember' => '残り火',
-			'appIcon.names.paper' => 'ペーパー',
-			'appIcon.names.oled' => 'OLED',
-			'appIcon.names.line' => 'ライン',
-			'appIcon.names.ocean' => 'オーシャン',
-			'appIcon.names.ultraviolet' => 'ウルトラバイオレット',
-			'appIcon.names.matcha' => '抹茶',
-			'appIcon.names.sunset' => 'サンセット',
-			'appIcon.names.gold' => 'ゴールド',
-			'appIcon.names.titanium' => 'チタニウム',
-			'appIcon.names.glass' => 'ガラス',
-			'appIcon.names.crt' => 'CRT',
-			'appIcon.names.vhs' => 'VHS',
-			'appIcon.names.synthwave' => 'シンセウェイブ',
-			'appIcon.names.pixel' => 'ピクセル',
-			'appIcon.names.neon' => 'ネオン',
-			'appIcon.names.sticker' => 'ステッカー',
-			'appIcon.names.ticket' => 'チケット',
-			'appIcon.names.pop' => 'ポップ',
-			'appIcon.names.strata' => '地層',
-			'appIcon.names.facet' => 'ファセット',
-			'appIcon.names.tilde' => 'チルダ',
-			'auth.signInWithPlex' => 'Plexでサインイン',
-			'auth.showQRCode' => 'QRコードを表示',
-			'auth.authenticate' => '認証',
-			'auth.authenticationTimeout' => '認証がタイムアウトしました。もう一度お試しください。',
-			'auth.scanQRToSignIn' => 'このQRコードをスキャンしてサインイン',
-			'auth.waitingForAuth' => '認証を待っています…\nブラウザでサインインしてください。',
-			'auth.useBrowser' => 'ブラウザを使用',
-			'auth.or' => 'または',
-			'auth.connectToMediaBrowser' => ({required Object product}) => '${product}に接続',
-			'auth.quickConnect' => 'Quick Connect',
-			'auth.useQuickConnect' => 'Quick Connect を使う',
-			'auth.quickConnectInstructions' => 'JellyfinでQuick Connectを開き、このコードを入力してください。',
-			'auth.quickConnectWaiting' => '承認を待っています…',
-			'auth.quickConnectCancel' => 'キャンセル',
-			'auth.quickConnectExpired' => 'Quick Connectの有効期限が切れました。もう一度お試しください。',
-			'auth.localDataRecoveryRequired' => 'ローカルのサインイン情報と保留中の再生データを安全に復元できませんでした。もう一度サインインしてください。',
-			'auth.pinCheckRejected' => 'Plex PINの確認が拒否されました',
-			'common.cancel' => 'キャンセル',
-			'common.save' => '保存',
-			'common.close' => '閉じる',
-			'common.clear' => 'クリア',
-			'common.reset' => 'リセット',
-			'common.later' => '後で',
-			'common.submit' => '送信',
-			'common.confirm' => '確認',
-			'common.retry' => '再試行',
-			'common.logout' => 'ログアウト',
-			'common.unknown' => '不明',
-			'common.refresh' => '更新',
-			'common.yes' => 'はい',
-			'common.no' => 'いいえ',
-			'common.delete' => '削除',
-			'common.edit' => '編集',
-			'common.shuffle' => 'シャッフル',
-			'common.addTo' => '追加先…',
-			'common.createNew' => '新規作成',
-			'common.connect' => '接続',
-			'common.disconnect' => '切断',
-			'common.play' => '再生',
-			'common.pause' => '一時停止',
-			'common.resume' => '再開',
-			'common.error' => 'エラー',
-			'common.search' => '検索',
-			'common.home' => 'ホーム',
-			'common.back' => '戻る',
-			'common.settings' => '設定',
-			'common.mute' => 'ミュート',
-			'common.ok' => 'OK',
-			'common.off' => 'オフ',
-			'common.options' => 'オプション',
-			'common.seasonNumber' => ({required Object number}) => 'シーズン${number}',
-			'common.episodeNumberTitle' => ({required Object number, required Object title}) => 'エピソード${number} - ${title}',
-			'common.chapterNumber' => ({required Object number}) => 'チャプター${number}',
-			'common.reconnect' => '再接続',
-			'common.viewAll' => 'すべて表示',
-			'common.checkingNetwork' => 'ネットワークを確認中…',
-			'common.loadingServers' => 'サーバーを読み込み中…',
-			'common.connectingToServers' => 'サーバーに接続中…',
-			'common.startingOfflineMode' => 'オフラインモードを開始中…',
-			'common.loading' => '読み込み中…',
-			'common.fullscreen' => 'フルスクリーン',
-			'common.exitFullscreen' => 'フルスクリーンを終了',
-			'common.pressBackAgainToExit' => 'もう一度押すと終了します',
-			'common.ratingSource.critic' => '批評家',
-			'common.ratingSource.audience' => '観客',
-			'common.ratingSource.imdb' => 'IMDb',
-			'common.ratingSource.tmdb' => 'TMDB',
-			'common.ratingSource.rottenTomatoes' => 'Rotten Tomatoes',
-			'common.ratingSource.simkl' => 'Simkl',
-			'common.ratingSource.mal' => 'MyAnimeList',
-			'common.ratingSource.anilist' => 'AniList',
-			'common.ratingSource.trakt' => 'Trakt',
-			'common.ratingSource.rottenTomatoesCritic' => 'Rotten Tomatoes 批評家',
-			'common.ratingSource.rottenTomatoesAudience' => 'Rotten Tomatoes 観客',
-			'common.ratingSource.metacritic' => 'Metacritic',
-			'common.ratingSource.letterboxd' => 'Letterboxd',
-			'common.notAvailable' => 'N/A',
-			'common.url' => 'URL',
-			'common.letterKeys' => 'ABC',
-			'common.mediaKind.movie' => '映画',
-			'common.mediaKind.show' => 'テレビ番組',
-			'common.mediaKind.season' => 'シーズン',
-			'common.mediaKind.episode' => 'エピソード',
-			'common.mediaKind.artist' => 'アーティスト',
-			'common.mediaKind.album' => 'アルバム',
-			'common.mediaKind.track' => '曲',
-			'common.mediaKind.collection' => 'コレクション',
-			'common.mediaKind.playlist' => 'プレイリスト',
-			'common.mediaKind.clip' => 'クリップ',
-			'common.mediaKind.photo' => '写真',
-			'common.mediaKind.folder' => 'フォルダ',
-			'screens.licenses' => 'ライセンス',
-			'screens.switchProfile' => 'プロフィール切替',
-			'screens.subtitleStyling' => '字幕スタイル',
-			'screens.mpvConfig' => 'mpv.conf',
-			'screens.logs' => 'ログ',
-			'update.available' => 'アップデート利用可能',
-			'update.versionAvailable' => ({required Object version}) => 'バージョン ${version} が利用可能です',
-			'update.currentVersion' => ({required Object version}) => '現在: ${version}',
-			'update.skipVersion' => 'このバージョンをスキップ',
-			'update.viewRelease' => 'リリースを表示',
-			'update.latestVersion' => '最新バージョンです',
-			'update.checkFailed' => 'アップデートの確認に失敗しました',
-			'supporter.title' => 'テーマ＆アイコンパック',
-			'supporter.intro' => '見た目の特典を追加する、任意の1回限りの購入です：',
-			'supporter.presetThemes' => 'プリセットテーマ',
-			'supporter.presetThemesDescription' => '残り火、氷河、森、プラム、ペーパー',
-			'supporter.customTheme' => 'カスタムテーマ',
-			'supporter.customThemeDescription' => 'すべての色を自分で選択',
-			'supporter.appIcons' => 'アプリアイコン',
-			'supporter.appIconsDescription' => 'Plezyの別のアイコンを選択',
-			'supporter.buy' => ({required Object price}) => '${price}で購入',
-			'supporter.loadingPrice' => '価格を読み込み中…',
-			'supporter.restore' => '購入を復元',
-			'supporter.pending' => '購入は支払いまたは承認を待っています。ストアでの処理が完了すると、すぐに特典のロックが解除されます。',
-			'supporter.thankYouTitle' => 'ご購入ありがとうございます',
-			'supporter.thankYouBody' => 'テーマ＆アイコンパックのロックが解除されました。',
-			'supporter.tileSubtitle' => '1回限りの購入でテーマとアプリアイコンのロックを解除',
-			'supporter.tileSubtitleThemesOnly' => '1回限りの購入でテーマのロックを解除',
-			'supporter.tileUnlocked' => 'ロック解除済み — ご購入ありがとうございます',
-			'supporter.errors.storeUnavailable' => '購入を利用できません。ストアにサインインしていること、およびこのデバイスで購入が許可されていることを確認してください。',
-			'supporter.errors.productNotFound' => '現在、お使いのストアではテーマ＆アイコンパックを購入できません。',
-			'supporter.errors.productQueryFailed' => '価格を読み込めませんでした。接続を確認してもう一度お試しください。',
-			'supporter.errors.purchaseFailed' => '購入を完了できませんでした。もう一度お試しください。',
-			'supporter.errors.restoreFailed' => '購入を復元するためにストアに接続できませんでした。もう一度お試しください。',
-			'supporter.errors.nothingToRestore' => 'このストアアカウントではテーマ＆アイコンパックの購入が見つかりませんでした。',
-			'settings.title' => '設定',
-			'settings.supportDeveloper' => 'Plezyを支援',
-			'settings.supportDeveloperDescription' => 'Liberapayで寄付して開発を支援',
-			'settings.language' => '言語',
-			'settings.theme' => 'テーマ',
-			'settings.appearance' => '外観',
-			'settings.videoPlayback' => '動画再生',
-			'settings.videoPlaybackDescription' => '再生動作を設定',
-			'settings.advanced' => '詳細',
-			'settings.episodePosterMode' => 'エピソードポスタースタイル',
-			'settings.seriesPoster' => 'シリーズポスター',
-			'settings.seasonPoster' => 'シーズンポスター',
-			'settings.episodeThumbnail' => 'サムネイル',
-			'settings.showHeroSectionDescription' => 'ホーム画面に注目コンテンツのカルーセルを表示',
-			'settings.secondsLabel' => '秒',
-			'settings.minutesLabel' => '分',
-			'settings.secondsShort' => '秒',
-			'settings.minutesShort' => '分',
-			'settings.durationHint' => ({required Object min, required Object max}) => '時間を入力 (${min}-${max})',
-			'settings.systemTheme' => 'システム',
-			'settings.lightTheme' => 'ライト',
-			'settings.darkTheme' => 'ダーク',
-			'settings.oledTheme' => 'OLED',
-			'settings.emberTheme' => '残り火',
-			'settings.glacierTheme' => '氷河',
-			'settings.forestTheme' => '森',
-			'settings.plumTheme' => 'プラム',
-			'settings.paperTheme' => 'ペーパー',
-			'settings.libraryDensity' => 'ライブラリの密度',
-			'settings.displayScale' => '表示スケール',
-			'settings.compact' => 'コンパクト',
-			'settings.comfortable' => 'ゆったり',
-			'settings.gridSpacing' => 'グリッド間隔',
-			'settings.gridSpacingTight' => '密',
-			'settings.gridSpacingNormal' => '標準',
-			'settings.gridSpacingSpacious' => 'ゆったり',
-			'settings.tvCornerSpotlightBackdrop' => '画面隅の注目コンテンツ背景',
-			'settings.tvCornerSpotlightBackdropDescription' => '画面全体ではなく、右上隅に注目コンテンツのアートワークを表示します',
-			'settings.viewMode' => '表示モード',
-			'settings.gridView' => 'グリッド',
-			'settings.listView' => 'リスト',
-			'settings.showHeroSection' => '注目コンテンツを表示',
-			'settings.continueWatchingAction' => '視聴中の操作',
-			'settings.continueWatchingPlay' => '再生',
-			'settings.continueWatchingDetails' => '詳細を開く',
-			'settings.episodeAction' => 'エピソードの操作',
-			'settings.episodePlay' => '再生',
-			'settings.episodeDetails' => '詳細を開く',
-			'settings.useGlobalHubs' => 'ホームレイアウトを使用',
-			'settings.useGlobalHubsDescription' => '統合ホームハブを表示します。オフの場合はライブラリのおすすめを使用します。',
-			'settings.showServerNameOnHubs' => 'ハブにサーバー名を表示',
-			'settings.showServerNameOnHubsDescription' => 'ハブのタイトルに常にサーバー名を表示します。',
-			'settings.groupLibrariesByServer' => 'サーバーごとにライブラリをグループ化',
-			'settings.groupLibrariesByServerDescription' => 'サイドバーのライブラリをメディアサーバーごとにまとめます。',
-			'settings.alwaysKeepSidebarOpen' => 'サイドバーを常に開いておく',
-			'settings.alwaysKeepSidebarOpenDescription' => 'サイドバーを展開したままにし、コンテンツ領域を幅に合わせて調整します',
-			'settings.showUnwatchedCount' => '未視聴数を表示',
-			'settings.showUnwatchedCountDescription' => '番組とシーズンに未視聴エピソード数を表示',
-			'settings.showWatchedIndicators' => '視聴済みマークを表示',
-			'settings.showWatchedIndicatorsDescription' => '視聴済みの映画、番組、エピソードにチェックマークを表示します',
-			'settings.showEpisodeNumberOnCards' => 'カードにエピソード番号を表示',
-			'settings.showEpisodeNumberOnCardsDescription' => 'エピソードカードにシーズン番号とエピソード番号を表示します',
-			'settings.showSeasonPostersOnTabs' => 'タブにシーズンポスターを表示',
-			'settings.showSeasonPostersOnTabsDescription' => '各シーズンのポスターをタブの上に表示します',
-			'settings.tvFullCardLayout' => 'フルTVカード',
-			'settings.tvFullCardLayoutDescription' => 'TVカードを画像のみで表示し、出演者名を重ねて表示します',
-			'settings.focusGlow' => 'フォーカス時の光彩',
-			'settings.focusGlowDescription' => 'フォーカス中のカードの周りに柔らかい光彩を表示します',
-			'settings.visualEffects' => '視覚効果',
-			'settings.visualEffectsAuto' => '自動',
-			'settings.visualEffectsAutoDescription' => '低性能なデバイスでは効果を自動的に減らします',
-			'settings.visualEffectsFull' => 'フル',
-			'settings.visualEffectsReduced' => '軽減',
-			'settings.visualEffectsReducedDescription' => 'アニメーションを減らし、低解像度のアートワークを使用します',
-			'settings.hideSpoilers' => '未視聴エピソードのネタバレを非表示',
-			'settings.hideSpoilersDescription' => '未視聴エピソードのサムネイルと説明をぼかします',
-			'settings.playerBackend' => 'プレーヤーバックエンド',
-			'settings.exoPlayer' => 'ExoPlayer',
-			'settings.mpv' => 'mpv',
-			'settings.hardwareDecoding' => 'ハードウェアデコード',
-			'settings.hardwareDecodingDescription' => '利用可能な場合にハードウェアアクセラレーションを使用',
-			'settings.playbackBuffer' => '再生バッファー',
-			'settings.playbackBufferAuto' => '自動（推奨）',
-			'settings.playbackBufferLarge' => '大',
-			'settings.playbackBufferExtraLarge' => '特大',
-			'settings.playbackBufferDescription' => '不安定な接続に備えてより多くのバッファーを使用します。バッファーサイズによっても制限されます。',
-			'settings.defaultQualityTitle' => 'デフォルト画質',
-			'settings.cellularQualityTitle' => 'モバイルデータ通信時のデフォルト画質',
-			'settings.cellularQualitySameAsDefault' => 'デフォルト画質と同じ',
-			'settings.directPlayCoveredQuality' => '小さい動画をオリジナル画質で再生',
-			'settings.directPlayCoveredQualityDescription' => '画質制限内の動画はトランスコードせずにダイレクト再生します',
-			'settings.videoCodecs' => 'ビデオコーデック',
-			'settings.videoCodecsDescription' => 'チェックを外したコーデックはサーバーがトランスコードします',
-			'settings.videoCodecsAlwaysAccepted' => '常に許可',
-			'settings.musicQualityTitle' => '音楽の音質',
-			'settings.subtitleStyling' => '字幕スタイル',
-			'settings.subtitleStylingDescription' => '字幕の外観をカスタマイズ',
-			'settings.smallSkipDuration' => '短いスキップ時間',
-			'settings.largeSkipDuration' => '長いスキップ時間',
-			'settings.rewindOnResume' => '再開時に巻き戻し',
-			'settings.secondsUnit' => ({required Object seconds}) => '${seconds}秒',
-			'settings.defaultSleepTimer' => 'デフォルトスリープタイマー',
-			'settings.minutesUnit' => ({required Object minutes}) => '${minutes}分',
-			'settings.rememberTrackSelections' => '番組/映画ごとにトラック選択を記憶',
-			'settings.rememberTrackSelectionsDescription' => 'タイトルごとに音声と字幕の選択を記憶します',
-			'settings.rememberTrackSelectionsBackendRule' => 'Plexはファイルごとに選択をサーバーに保存します。Jellyfinはアカウントの「選択を記憶」も有効にします。Embyはサポートされていません',
-			'settings.followServerTrackSelections' => 'サーバーのエピソードごとのトラック選択を使用',
-			'settings.followServerTrackSelectionsDescription' => 'エピソード切り替え時に、現在の選択を引き継ぐ代わりにサーバーで選択された音声と字幕を適用します',
-			'settings.resumeMusicOnLaunch' => '音楽セッションを記憶',
-			'settings.resumeMusicOnLaunchDescription' => 'アプリ起動時に最後の曲を停止位置で一時停止のまま開きます',
-			'settings.showChapterMarkersOnTimeline' => 'シークバーにチャプターマーカーを表示',
-			'settings.showChapterMarkersOnTimelineDescription' => 'チャプターの境界でシークバーを区切る',
-			'settings.specialsOrdering' => 'エピソード順にスペシャルを表示',
-			'settings.specialsOrderingDescription' => 'シリーズの視聴順でスペシャルを再生する位置',
-			'settings.specialsOrderingServer' => 'サーバーの順序に従う',
-			'settings.specialsOrderingAirDate' => '放送日順に挿入',
-			'settings.specialsOrderingLast' => '通常シーズンの後',
-			'settings.clickVideoTogglesPlayback' => '動画クリックで再生/一時停止を切替',
-			'settings.clickVideoTogglesPlaybackDescription' => 'コントロール表示ではなく、動画クリックで再生/一時停止します。',
-			'settings.videoPlayerControls' => '動画プレーヤーコントロール',
-			'settings.keyboardShortcuts' => 'キーボードショートカット',
-			'settings.keyboardShortcutsDescription' => 'キーボードショートカットをカスタマイズ',
-			'settings.videoPlayerNavigation' => '動画プレーヤーナビゲーション',
-			'settings.videoPlayerNavigationDescription' => '矢印キーで動画プレーヤーコントロールを操作',
-			'settings.watchTogetherRelay' => '一緒に視聴リレーサーバー',
-			'settings.watchTogetherRelayDescription' => '独自のリレーサーバーを設定しない限り、公開のOpen Watch Partyリレーサーバーを使用します',
-			'settings.watchTogetherRelayHint' => 'https://my-relay.example.com',
-			'settings.watchTogetherRelayInvalid' => '有効なHTTPまたはHTTPSのリレーサーバーURLを入力してください。',
-			'settings.crashReporting' => 'クラッシュレポート',
-			'settings.crashReportingDescription' => 'アプリの改善に役立つクラッシュレポートを送信',
-			'settings.debugLogging' => 'デバッグログ',
-			'settings.debugLoggingDescription' => 'トラブルシューティング用の詳細なログを有効化',
-			'settings.viewLogs' => 'ログを表示',
-			'settings.viewLogsDescription' => 'アプリケーションログを表示',
-			'settings.clearImageCache' => '画像キャッシュをクリア',
-			'settings.clearImageCacheDescription' => 'キャッシュされたアートワークとサムネイルをクリアします。再度ダウンロードされるまで画像の読み込みが遅くなる場合があります。',
-			'settings.clearImageCacheSuccess' => '画像キャッシュを正常にクリアしました',
-			'settings.resetSettings' => '設定をリセット',
-			'settings.resetSettingsDescription' => '設定を既定に戻します。元に戻せません。',
-			'settings.resetSettingsSuccess' => '設定を正常にリセットしました',
-			'settings.backup' => 'バックアップ',
-			'settings.exportSettings' => '設定をエクスポート',
-			'settings.exportSettingsDescription' => '設定をファイルに保存',
-			'settings.exportSettingsSuccess' => '設定をエクスポートしました',
-			'settings.importSettings' => '設定をインポート',
-			'settings.importSettingsDescription' => 'ファイルから設定を復元',
-			'settings.importSettingsConfirm' => '現在の設定を置き換えます。続行しますか？',
-			'settings.importSettingsSuccess' => '設定をインポートしました',
-			'settings.importSettingsInvalidFile' => 'このファイルは有効なPlezyの設定エクスポートではありません',
-			'settings.importSettingsNoUser' => '設定をインポートする前にサインインしてください',
-			'settings.shortcutsReset' => 'ショートカットをデフォルトにリセットしました',
-			'settings.resetShortcutsConfirm' => 'カスタムショートカットがデフォルトに置き換えられます。続行しますか？',
-			'settings.about' => 'アプリについて',
-			'settings.aboutDescription' => 'アプリ情報とライセンス',
-			'settings.updates' => 'アップデート',
-			'settings.updateAvailable' => 'アップデート利用可能',
-			'settings.checkForUpdates' => 'アップデートを確認',
-			'settings.autoCheckUpdatesOnStartup' => '起動時にアップデートを自動的に確認',
-			'settings.autoCheckUpdatesOnStartupDescription' => '起動時にアップデートがある場合は通知します',
-			'settings.validationErrorEnterNumber' => '有効な数値を入力してください',
-			'settings.validationErrorDuration' => ({required Object min, required Object max, required Object unit}) => '時間は${min}から${max} ${unit}の間である必要があります',
-			'settings.shortcutAlreadyAssigned' => ({required Object action}) => 'ショートカットは既に${action}に割り当てられています',
-			'settings.shortcutUpdated' => ({required Object action}) => '${action}のショートカットを更新しました',
-			'settings.saveFailed' => '変更を保存できませんでした。もう一度お試しください。',
-			'settings.autoPlayAndSkip' => '自動再生とスキップ',
-			'settings.autoPlayNextEpisode' => '次のエピソードを自動再生',
-			'settings.autoPlayNextEpisodeDescription' => 'エピソードが終了すると、次のエピソードを自動的に再生します',
-			'settings.shuffleStartsFromBeginning' => 'シャッフルは最初から再生',
-			'settings.shuffleStartsFromBeginningDescription' => 'シャッフル時に各エピソードを再開位置ではなく最初から再生します',
-			'settings.playNextCountdown' => '次回再生のカウントダウン',
-			'settings.playNextCountdownImmediate' => 'すぐに再生',
-			'settings.skipIntroMode' => 'イントロをスキップ',
-			'settings.skipIntroModeOffDescription' => 'スキップボタンなしでイントロを通常どおり再生します',
-			'settings.skipIntroModeButtonDescription' => 'イントロ開始時にスキップボタンを表示します',
-			'settings.skipIntroModeAutoDescription' => '下記の遅延後にイントロを自動的にスキップします',
-			'settings.skipCreditsMode' => 'クレジットをスキップ',
-			'settings.skipCreditsModeOffDescription' => 'スキップボタンなしでクレジットを通常どおり再生します',
-			'settings.skipCreditsModeButtonDescription' => 'クレジット開始時にスキップボタンを表示します',
-			'settings.skipCreditsModeAutoDescription' => 'クレジットを自動的にスキップして次のエピソードを再生します',
-			'settings.skipMarkerModeOff' => 'オフ',
-			'settings.skipMarkerModeButton' => 'ボタンを表示',
-			'settings.skipMarkerModeAuto' => '自動',
-			'settings.forceSkipMarkerFallback' => 'フォールバックマーカーを強制',
-			'settings.forceSkipMarkerFallbackDescription' => 'Plexにマーカーがある場合でもチャプタータイトルのパターンを使用します',
-			'settings.autoSkipDelay' => '自動スキップの遅延',
-			'settings.autoSkipDelayDescription' => ({required Object seconds}) => '自動スキップまで${seconds}秒待機',
-			'settings.introPattern' => 'イントロマーカーパターン',
-			'settings.introPatternDescription' => 'チャプタータイトルのイントロマーカーに一致する正規表現パターン',
-			'settings.creditsPattern' => 'クレジットマーカーパターン',
-			'settings.creditsPatternDescription' => 'チャプタータイトルのクレジットマーカーに一致する正規表現パターン',
-			'settings.invalidRegex' => '無効な正規表現',
-			'settings.regex' => '正規表現',
-			'settings.downloads' => 'ダウンロード',
-			'settings.downloadLocationDescription' => 'ダウンロードコンテンツの保存場所を選択',
-			'settings.downloadLocationDefault' => 'デフォルト（アプリストレージ）',
-			'settings.downloadLocationCustom' => 'カスタムの場所',
-			'settings.selectFolder' => 'フォルダを選択',
-			'settings.resetToDefault' => 'デフォルトに戻す',
-			'settings.currentPath' => ({required Object path}) => '現在: ${path}',
-			'settings.downloadLocationChanged' => 'ダウンロード場所を変更しました',
-			'settings.downloadLocationReset' => 'ダウンロード場所をデフォルトにリセットしました',
-			'settings.downloadLocationInvalid' => '選択したフォルダは書き込みできません',
-			'settings.downloadLocationPickerUnavailable' => 'このデバイスではフォルダを選択できません',
-			'settings.downloadOnWifiOnly' => 'Wi-Fi接続時のみダウンロード',
-			'settings.downloadOnWifiOnlyDescription' => 'モバイルデータ通信中のダウンロードを防ぎます',
-			'settings.autoRemoveWatchedDownloads' => '視聴済みダウンロードの自動削除',
-			'settings.autoRemoveWatchedDownloadsDescription' => '視聴済みのダウンロードを自動削除します',
-			'settings.cellularDownloadBlocked' => 'モバイルデータ通信中はダウンロードできません。Wi-Fiを使用するか、設定を変更してください。',
-			'settings.maxVolume' => '最大音量',
-			'settings.maxVolumeDescription' => '静かなメディアに対して100%以上の音量ブーストを許可',
-			'settings.maxVolumePercent' => ({required Object percent}) => '${percent}%',
-			'settings.discordRichPresence' => 'Discord Rich Presence',
-			'settings.discordRichPresenceDescription' => 'Discordで視聴中の内容を表示',
-			'settings.services' => 'サービス',
-			'settings.servicesDescription' => 'Trakt、MyAnimeList、Seerrなどを接続',
-			'settings.manageLibrariesDescription' => 'ライブラリを並べ替えたり非表示にしたりできます',
-			'settings.companionRemoteServer' => 'コンパニオンリモートサーバー',
-			'settings.companionRemoteServerDescription' => 'ネットワーク上のモバイルデバイスからこのアプリを操作できるようにする',
-			'settings.companionRemoteServerStartFailed' => 'コンパニオンリモートサーバーを開始できませんでした',
-			'settings.companionRemoteServerStopFailed' => 'コンパニオンリモートサーバーを停止できませんでした',
-			'settings.autoPip' => '自動ピクチャーインピクチャー',
-			'settings.autoPipDescription' => '再生中にアプリを離れると、自動的にピクチャーインピクチャーに切り替えます',
-			'settings.matchContentFrameRate' => 'コンテンツのフレームレートに合わせる',
-			'settings.matchContentFrameRateDescription' => '表示のリフレッシュレートを動画コンテンツに合わせます',
-			'settings.matchContentResolution' => 'コンテンツの解像度に合わせる',
-			'settings.matchContentResolutionDescription' => 'テレビ側でアップスケーリングを処理できるよう、ディスプレイを映像本来の解像度に切り替えます。再生中はメニューや字幕もアップスケールされます',
-			'settings.matchRefreshRate' => 'リフレッシュレートを合わせる',
-			'settings.matchRefreshRateDescription' => '全画面時に表示のリフレッシュレートを合わせます',
-			'settings.matchDynamicRange' => 'ダイナミックレンジを合わせる',
-			'settings.matchDynamicRangeDescription' => 'HDRコンテンツではHDRに切り替え、その後SDRに戻します',
-			'settings.displaySwitchDelay' => 'ディスプレイ切り替え遅延',
-			'settings.tunneledPlayback' => 'トンネル再生',
-			'settings.tunneledPlaybackDescription' => '動画トンネリングを使用します。HDR再生で画面が黒くなる場合や動きがカクつく場合は無効にしてください。',
-			'settings.audioPassthrough' => 'オーディオパススルー',
-			'settings.audioPassthroughDescription' => 'Dolby/DTS音声を再エンコードせずにレシーバーやテレビに送り、サラウンドを維持します。音が出ない場合は無効にしてください。',
-			'settings.audioPassthroughDescriptionApple' => 'Dolby Atmosを含むDolby Digital PlusにはApple標準のDolbyデコーダーを使用します。DTSとTrueHDは引き続きマルチチャンネルPCMで再生されます。音が出ない場合は無効にしてください。',
-			'settings.audioPassthroughDescriptionAppleSpatial' => 'Dolby Atmosを含むDolby Digital PlusにはApple標準のDolbyデコーダーを使用します。iOS、iPadOS、tvOS 26以降では、TrueHD AtmosとDTS:Xが空間オーディオとして再生されます。その他のDTSとTrueHDのトラックはマルチチャンネルPCMで再生されます。音が出ない場合は無効にしてください。',
-			'settings.audioPassthroughOverriddenByNormalization' => 'ラウドネス正規化がオンの間はオフ',
-			'settings.audioChannelLimit' => '音声チャンネル',
-			'settings.audioChannelLimitDescription' => 'すべてのチャンネルを再生できないスピーカー、ヘッドホン、HDMI環境に合わせて、デコードした音声をダウンミックスします',
-			'settings.audioChannelLimitOriginal' => 'オリジナル',
-			'settings.audioChannelLimitOriginalDescription' => 'トラックのすべてのチャンネルを再生します',
-			'settings.audioChannelLimitSurround51' => '最大5.1ch',
-			'settings.audioChannelLimitSurround51Description' => '5.1chのPCMにしか対応していないテレビやレシーバー向けに、7.1chを5.1chにダウンミックスします。パススルーには影響しません。',
-			'settings.audioChannelLimitStereo' => 'ステレオ',
-			'settings.audioChannelLimitStereoDescription' => 'ステレオスピーカーやヘッドホン向けに2チャンネルにダウンミックスします。パススルーはオフになります。',
-			'settings.downmixCenterBoost' => 'センターチャンネルブースト',
-			'settings.downmixCenterBoostValue' => ({required Object db}) => '${db} dB',
-			'settings.downmixCenterBoostLabel' => 'ブースト (dB)',
-			'settings.downmixCenterBoostShort' => 'dB',
-			'settings.audioDownmixNormalize' => 'ダウンミックス時の音量正規化',
-			'settings.audioDownmixNormalizeDescription' => 'クリッピングを防ぐためにミックス音量を下げます。オフにすると元の音量を維持します（大音量シーンで歪む場合があります）。',
-			'settings.dvConversionMode' => 'Dolby Vision 変換',
-			'settings.dvConversionModeDescription' => 'Dolby Vision Profile 7 ファイルの処理方法を選択します。',
-			'settings.dvConversionAuto' => '自動',
-			'settings.dvConversionNative' => 'ネイティブ / 無効',
-			'settings.dvConversionDv81' => 'P7 → P8.1',
-			'settings.dvConversionHevcStrip' => 'P7 → HEVC',
-			'settings.dvConversionAutoDescription' => 'デバイスの機能検出と通常のフォールバック動作を使用します',
-			'settings.dvConversionNativeDescription' => 'ネイティブ DV7 を強制し、DV 変換の再試行を抑制します',
-			'settings.dvConversionDv81Description' => 'Dolby Vision プロファイル 8.1 へのインライン RPU 変換を強制します',
-			'settings.dvConversionHevcStripDescription' => 'Dolby Vision の RPU/EL レイヤーを削除し、通常の HEVC として扱います',
-			'settings.disableDolbyVision' => 'Dolby Vision を無効にする',
-			'settings.disableDolbyVisionDescription' => 'ファイルに HDR10 または HLG レイヤーがある場合は、Dolby Vision の代わりにそれを再生します',
-			'settings.hdrSdrConversion' => 'HDRからSDRへの変換',
-			'settings.hdrSdrConversionDescription' => 'ディスプレイがHDRを表示できないときに、HDR映像を何で変換するかを選択します。',
-			'settings.hdrSdrConversionAuto' => '自動',
-			'settings.hdrSdrConversionAutoDescription' => 'Android 9以降はデバイス、それより前のバージョンではプレーヤー',
-			'settings.hdrSdrConversionDevice' => 'デバイス',
-			'settings.hdrSdrConversionDeviceDescription' => 'デバイスの映像ハードウェアで変換します。最も高速ですが、色はデバイスによって異なります',
-			'settings.hdrSdrConversionPlayer' => 'プレーヤー',
-			'settings.hdrSdrConversionPlayerDescription' => 'プレーヤーで変換します。色は一定ですが、低価格なTVボックスでは4Kがカクつくことがあります',
-			'settings.deinterlace' => 'デインターレース',
-			'settings.deinterlaceDescription' => 'インターレース映像のくし型ノイズを除去します（mpvプレーヤーのみ）',
-			'settings.deinterlaceOff' => 'オフ',
-			'settings.deinterlaceOffDescription' => 'インターレース映像をデコードされたまま表示します',
-			'settings.deinterlaceVideo' => 'ビデオ',
-			'settings.deinterlaceVideoDescription' => '各フィールドを1つのフレームに変換します。スポーツ、ニュース、コンサートなど、テレビ用に撮影された映像向けです',
-			'settings.deinterlaceFilm' => 'フィルム',
-			'settings.deinterlaceFilmDescription' => 'NTSC DVDによくある、29.97fpsにテレシネされた映画やアニメの元のフレームを復元します。テレビ用に撮影された映像はカクつきます。ライブTVでは「ビデオ」を使用します',
-			'settings.requireProfileSelectionOnOpen' => 'アプリ起動時にプロフィールを確認',
-			'settings.requireProfileSelectionOnOpenDescription' => 'アプリを開くたびにプロフィール選択を表示',
-			'settings.forceTvMode' => 'TVモードを強制',
-			'settings.forceTvModeDescription' => 'TVレイアウトを強制します。自動検出しないデバイス向けです。再起動が必要です。',
-			'settings.startInFullscreen' => '全画面表示で起動',
-			'settings.startInFullscreenDescription' => '起動時にPlezyを全画面モードで開きます',
-			'settings.exitFullscreenOnPlayerClose' => 'プレイヤーを閉じたときに全画面を終了',
-			'settings.exitFullscreenOnPlayerCloseDescription' => 'ビデオプレイヤーを閉じたときに自動的に全画面モードを終了します',
-			'settings.autoHidePerformanceOverlay' => 'パフォーマンスオーバーレイを自動非表示',
-			'settings.autoHidePerformanceOverlayDescription' => '再生コントロールと一緒にパフォーマンスオーバーレイをフェードする',
-			'settings.showNavBarLabels' => 'ナビゲーションバーのラベルを表示',
-			'settings.showNavBarLabelsDescription' => 'ナビゲーションバーのアイコンの下にテキストラベルを表示',
-			'settings.startupSection' => '起動時のセクション',
-			'settings.showExploreTab' => '「探す」タブを表示',
-			'settings.showExploreTabDescription' => 'Plex Discoverと接続済みのトラッカーのコンテンツを「探す」タブに表示します',
-			'settings.liveTvDefaultFavorites' => 'お気に入りチャンネルをデフォルトに',
-			'settings.liveTvDefaultFavoritesDescription' => 'ライブTVを開いたときにお気に入りチャンネルのみ表示',
-			'settings.general' => '一般',
-			'settings.generalDescription' => '言語、起動、ウィンドウの動作',
-			'settings.languageAndRegion' => '言語と地域',
-			'settings.startup' => '起動',
-			'settings.display' => 'ディスプレイ',
-			'settings.libraryAndCards' => 'ライブラリとカード',
-			'settings.homeScreen' => 'ホーム画面',
-			'settings.navigation' => 'ナビゲーション',
-			'settings.window' => 'ウィンドウ',
-			'settings.liveTv' => 'ライブTV',
-			'settings.player' => 'プレーヤー',
-			'settings.videoAndDisplay' => '映像とディスプレイ',
-			'settings.audio' => '音声',
-			'settings.quality' => '画質',
-			'settings.subtitles' => '字幕',
-			'settings.seekAndTiming' => 'シークとタイミング',
-			'settings.behavior' => '動作',
-			'settings.gestures' => 'ジェスチャー',
-			'settings.gestureBrightnessSwipe' => '明るさスワイプ',
-			'settings.gestureBrightnessSwipeDescription' => '左端を上下にスワイプして明るさを調整します',
-			'settings.gestureVolumeSwipe' => '音量スワイプ',
-			'settings.gestureVolumeSwipeDescription' => '右端を上下にスワイプして音量を調整します',
-			'settings.gesturePinchToZoom' => 'ピンチでズーム',
-			'settings.gesturePinchToZoomDescription' => '動画をピンチしてズームイン・アウト',
-			'settings.rememberBrightnessLevel' => '明るさを記憶',
-			'settings.rememberBrightnessLevelDescription' => '前回スワイプで設定した明るさで再生を開始します',
-			'settings.controls' => 'コントロール',
-			'settings.rememberPlayerChanges' => 'プレーヤーの変更を記憶',
-			'settings.rememberPlayerChangesDescription' => '再生中に行った変更を保存し、再適用する場所',
-			'settings.scopePlaybackSpeed' => '再生速度',
-			'settings.scopeShaderPreset' => 'シェーダープリセット',
-			'settings.scopeAspectRatio' => 'アスペクト比',
-			'settings.scopeZoom' => 'ズーム',
-			'settings.scopeSyncOffsets' => '音声と字幕の同期',
-			'settings.playerScopeOff' => '保存しない',
-			'settings.playerScopeGlobal' => 'すべて',
-			'settings.playerScopeLibrary' => 'ライブラリごと',
-			'settings.playerScopeTitle' => '作品ごと',
-			'settings.exportDialogTitle' => 'Plezyの設定をエクスポート',
-			'themeEditor.builtIn' => '標準',
-			'themeEditor.presets' => 'プリセット',
-			'themeEditor.custom' => 'カスタム',
-			'themeEditor.customEmpty' => '未作成',
-			'themeEditor.editCustom' => 'カスタムテーマを編集',
-			'themeEditor.editCustomDescription' => 'すべての色を自分で選択',
-			'themeEditor.locked' => 'テーマ＆アイコンパックでロック解除',
-			'themeEditor.savedLocked' => '保存済み — テーマ＆アイコンパックでロック解除',
-			'themeEditor.title' => 'カスタムテーマ',
-			'themeEditor.startFrom' => '元にするテーマ',
-			'themeEditor.startFromDescription' => '別のテーマからすべての色をコピー',
-			'themeEditor.colors' => '色',
-			'themeEditor.preview' => 'プレビュー',
-			'themeEditor.slots.bg' => '背景',
-			'themeEditor.slots.surface' => 'サーフェス',
-			'themeEditor.slots.outline' => '枠線',
-			'themeEditor.slots.text' => 'テキスト',
-			'themeEditor.slots.textMuted' => '補助テキスト',
-			_ => null,
-		} ?? switch (path) {
-			'themeEditor.slots.accent' => 'アクセント',
-			'themeEditor.opacity' => '不透明度',
-			'themeEditor.hexHint' => '#RRGGBB または #AARRGGBB',
-			'themeEditor.fromOtherThemes' => '他のテーマから',
-			'themeEditor.swatchLabel' => ({required Object theme, required Object color}) => '${theme}の${color}',
-			'themeEditor.contrast.textOnBg' => '背景上のテキスト',
-			'themeEditor.contrast.textOnSurface' => 'サーフェス上のテキスト',
-			'themeEditor.contrast.textMutedOnBg' => '背景上の補助テキスト',
-			'themeEditor.contrast.textMutedOnSurface' => 'サーフェス上の補助テキスト',
-			'themeEditor.contrast.accentOnBg' => '背景上のアクセント',
-			'themeEditor.contrast.accentOnSurface' => 'サーフェス上のアクセント',
-			'themeEditor.contrast.labelOnAccent' => 'アクセント上のボタンラベル',
-			'themeEditor.lowContrast' => ({required Object pair, required Object ratio, required Object minimum}) => '${pair}: ${ratio}:1（推奨値の${minimum}:1未満）',
-			'themeEditor.discardTitle' => '変更を破棄しますか？',
-			'themeEditor.discardMessage' => '保存されていない色の変更は失われます。',
-			'themeEditor.discard' => '破棄',
-			'themeEditor.previewCardTitle' => ({required Object number}) => 'エピソード${number}',
-			'themeEditor.previewCardSubtitle' => ({required Object minutes}) => '残り${minutes}分',
-			'themeEditor.previewSwitch' => '自動再生',
-			'themeEditor.previewMutedText' => '補助テキストはこのように表示されます',
-			'search.hint' => '映画、番組、音楽を検索…',
-			'search.tryDifferentTerm' => '別の検索語をお試しください',
-			'search.searchYourMedia' => 'メディアを検索',
-			'search.enterTitleActorOrKeyword' => 'タイトル、俳優、またはキーワードを入力',
-			'search.people' => '人物',
-			'hotkeys.setShortcutFor' => ({required Object actionName}) => '${actionName}のショートカットを設定',
-			'hotkeys.clearShortcut' => 'ショートカットをクリア',
-			'hotkeys.noShortcutSet' => 'ショートカット未設定',
-			'hotkeys.currentShortcut' => '現在のショートカット:',
-			'hotkeys.pressToRecord' => '選択してショートカットを記録',
-			'hotkeys.recordingShortcut' => 'ショートカットを押してください',
-			'hotkeys.actions.playPause' => '再生/一時停止',
-			'hotkeys.actions.volumeUp' => '音量を上げる',
-			'hotkeys.actions.volumeDown' => '音量を下げる',
-			'hotkeys.actions.seekForward' => ({required Object seconds}) => '早送り（${seconds}秒）',
-			'hotkeys.actions.seekBackward' => ({required Object seconds}) => '巻き戻し（${seconds}秒）',
-			'hotkeys.actions.fullscreenToggle' => 'フルスクリーン切替',
-			'hotkeys.actions.muteToggle' => 'ミュート切替',
-			'hotkeys.actions.subtitleToggle' => '字幕切替',
-			'hotkeys.actions.audioTrackNext' => '次の音声トラック',
-			'hotkeys.actions.subtitleTrackNext' => '次の字幕トラック',
-			'hotkeys.actions.chapterNext' => '次のチャプター',
-			'hotkeys.actions.chapterPrevious' => '前のチャプター',
-			'hotkeys.actions.episodeNext' => '次のエピソード',
-			'hotkeys.actions.episodePrevious' => '前のエピソード',
-			'hotkeys.actions.speedIncrease' => '速度を上げる',
-			'hotkeys.actions.speedDecrease' => '速度を下げる',
-			'hotkeys.actions.speedReset' => '速度をリセット',
-			'hotkeys.actions.zoomIn' => 'ズームイン',
-			'hotkeys.actions.zoomOut' => 'ズームアウト',
-			'hotkeys.actions.zoomReset' => 'ズームをリセット',
-			'hotkeys.actions.subSeekNext' => '次の字幕にシーク',
-			'hotkeys.actions.subSeekPrev' => '前の字幕にシーク',
-			'hotkeys.actions.shaderToggle' => 'シェーダー切替',
-			'hotkeys.actions.skipMarker' => 'イントロ/クレジットをスキップ',
-			'hotkeys.actions.screenshot' => 'スクリーンショットを撮る',
-			'fileInfo.title' => 'ファイル情報',
-			'fileInfo.overview' => '概要',
-			'fileInfo.video' => '映像',
-			'fileInfo.audio' => '音声',
-			'fileInfo.subtitles' => '字幕',
-			'fileInfo.images' => '埋め込み画像',
-			'fileInfo.dataStreams' => 'データストリーム',
-			'fileInfo.lyrics' => '歌詞',
-			'fileInfo.file' => 'ファイル',
-			'fileInfo.attachments' => '添付ファイル',
-			'fileInfo.delivery' => '配信',
-			'fileInfo.versionCounter' => ({required Object index, required Object count}) => 'バージョン ${index} / ${count}',
-			'fileInfo.fileCounter' => ({required Object index, required Object count}) => 'ファイル ${index} / ${count}',
-			'fileInfo.noStreams' => 'サーバーはこのファイルにストリームがないと報告しました。',
-			'fileInfo.copyPath' => 'パスをコピー',
-			'fileInfo.pathCopied' => 'ファイルパスをコピーしました',
-			'fileInfo.codec' => 'コーデック',
-			'fileInfo.codecTag' => 'コーデックタグ',
-			'fileInfo.resolution' => '解像度',
-			'fileInfo.codedResolution' => '符号化解像度',
-			'fileInfo.bitrate' => 'ビットレート',
-			'fileInfo.frameRate' => 'フレームレート',
-			'fileInfo.rotation' => '回転',
-			'fileInfo.comment' => 'コメント',
-			'fileInfo.audioDescription' => '音声解説',
-			'fileInfo.headerCompression' => 'ヘッダー圧縮',
-			'fileInfo.sidecarFile' => 'サイドカーファイル',
-			'fileInfo.transportTimestamp' => 'トランスポートタイムスタンプ',
-			'fileInfo.displayOffset' => '表示オフセット',
-			'fileInfo.previewFailureCode' => 'プレビュー失敗コード',
-			'fileInfo.previewRetries' => 'プレビュー再試行回数',
-			'fileInfo.aspectRatio' => 'アスペクト比',
-			'fileInfo.pixelAspectRatio' => 'ピクセルアスペクト比',
-			'fileInfo.profile' => 'プロファイル',
-			'fileInfo.level' => 'レベル',
-			'fileInfo.bitDepth' => 'ビット深度',
-			'fileInfo.pixelFormat' => 'ピクセルフォーマット',
-			'fileInfo.colorSpace' => '色空間',
-			'fileInfo.colorRange' => '色範囲',
-			'fileInfo.colorPrimaries' => '色原色',
-			'fileInfo.colorTransfer' => 'カラートランスファー',
-			'fileInfo.chromaSubsampling' => 'クロマサブサンプリング',
-			'fileInfo.chromaLocation' => 'クロマ位置',
-			'fileInfo.scanType' => 'スキャンタイプ',
-			'fileInfo.interlaced' => 'インターレース',
-			'fileInfo.anamorphic' => 'アナモルフィック',
-			'fileInfo.referenceFrames' => '参照フレーム数',
-			'fileInfo.dynamicRange' => 'ダイナミックレンジ',
-			'fileInfo.dolbyVision' => 'Dolby Vision',
-			'fileInfo.dolbyVisionLevel' => 'Dolby Vision レベル',
-			'fileInfo.dolbyVisionVersion' => 'Dolby Vision バージョン',
-			'fileInfo.dolbyVisionLayers' => 'Dolby Vision レイヤー',
-			'fileInfo.baseLayerCompatibility' => 'ベースレイヤー互換性',
-			'fileInfo.avcBitstream' => 'AVC ビットストリーム',
-			'fileInfo.nalLengthSize' => 'NAL 長さサイズ',
-			'fileInfo.scalingMatrix' => 'カスタムスケーリングマトリックス',
-			'fileInfo.streamIdentifier' => 'ストリーム識別子',
-			'fileInfo.streamIndex' => 'ストリームインデックス',
-			'fileInfo.streamId' => 'ストリーム ID',
-			'fileInfo.language' => '言語',
-			'fileInfo.languageCode' => '言語コード',
-			'fileInfo.streamTitle' => 'トラックタイトル',
-			'fileInfo.channels' => 'チャンネル',
-			'fileInfo.sampleRate' => 'サンプルレート',
-			'fileInfo.spatialAudio' => '空間オーディオ',
-			'fileInfo.textBased' => 'テキストベース',
-			'fileInfo.subtitleFormat' => 'サイドカーフォーマット',
-			'fileInfo.provider' => 'プロバイダー',
-			'fileInfo.matchScore' => '一致スコア',
-			'fileInfo.externalDelivery' => '個別に配信可能',
-			'fileInfo.sidecarPath' => 'サイドカーパス',
-			'fileInfo.sourceStream' => 'コピー元',
-			'fileInfo.temporary' => '一時的',
-			'fileInfo.timeBase' => 'タイムベース',
-			'fileInfo.overallBitrate' => '全体ビットレート',
-			'fileInfo.path' => 'パス',
-			'fileInfo.fileName' => 'ファイル名',
-			'fileInfo.size' => 'サイズ',
-			'fileInfo.totalSize' => '合計サイズ',
-			'fileInfo.container' => 'コンテナ',
-			'fileInfo.duration' => '長さ',
-			'fileInfo.previewThumbnails' => 'プレビューサムネイル',
-			'fileInfo.previewIndex' => 'プレビューインデックス',
-			'fileInfo.packetLength' => 'パケット長',
-			'fileInfo.filePresent' => 'ファイルあり',
-			'fileInfo.fileReadable' => 'サーバーから読み取り可能',
-			'fileInfo.streamPath' => 'ストリームパス',
-			'fileInfo.optimizedForStreaming' => 'ストリーミング最適化',
-			'fileInfo.has64bitOffsets' => '64ビットオフセット',
-			'fileInfo.protocol' => 'プロトコル',
-			'fileInfo.mediaType' => 'メディアタイプ',
-			'fileInfo.sourceKind' => 'ソース種別',
-			'fileInfo.optimizedVersion' => '最適化バージョン',
-			'fileInfo.optimizationTarget' => '最適化ターゲット',
-			'fileInfo.deletedAt' => '削除済み',
-			'fileInfo.remoteSource' => 'リモートソース',
-			'fileInfo.infiniteStream' => '無限ストリーム',
-			'fileInfo.directPlay' => 'ダイレクト再生',
-			'fileInfo.directStream' => 'ダイレクトストリーム',
-			'fileInfo.transcoding' => 'トランスコード',
-			'fileInfo.etag' => 'ETag',
-			'fileInfo.versionId' => 'バージョン ID',
-			'fileInfo.fileId' => 'ファイル ID',
-			'fileInfo.defaultAudioTrack' => 'デフォルト音声トラック',
-			'fileInfo.defaultSubtitleTrack' => 'デフォルト字幕トラック',
-			'fileInfo.subtitlesOff' => 'オフ',
-			'fileInfo.flagDefault' => 'デフォルト',
-			'fileInfo.flagForced' => '強制',
-			'fileInfo.flagSelected' => '選択済み',
-			'fileInfo.flagExternal' => '外部',
-			'fileInfo.flagHearingImpaired' => '聴覚障害者向け',
-			'fileInfo.flagDub' => '吹替',
-			'fileInfo.flagOriginal' => 'オリジナル',
-			'fileInfo.channelsMono' => 'モノラル',
-			'fileInfo.dolbyVisionProfile' => ({required Object profile}) => 'プロファイル${profile}',
-			'mediaMenu.markAsWatched' => '視聴済みにする',
-			'mediaMenu.markAsUnwatched' => '未視聴にする',
-			'mediaMenu.removeFromContinueWatching' => '視聴中から削除',
-			'mediaMenu.viewDetails' => '詳細を表示',
-			'mediaMenu.goToSeries' => 'シリーズへ移動',
-			'mediaMenu.shufflePlay' => 'シャッフル再生',
-			'mediaMenu.shuffleNotAvailableOffline' => 'オフラインではシャッフルを利用できません',
-			'mediaMenu.fileInfo' => 'ファイル情報',
-			'mediaMenu.deleteEpisodeFromServer' => 'サーバーからエピソードを削除',
-			'mediaMenu.deleteSeasonFromServer' => 'サーバーからシーズンを削除',
-			'mediaMenu.deleteShowFromServer' => 'サーバーから番組を削除',
-			'mediaMenu.deleteMovieFromServer' => 'サーバーから映画を削除',
-			'mediaMenu.deleteEpisodeTitle' => 'このエピソードを削除しますか？',
-			'mediaMenu.deleteSeasonTitle' => 'このシーズンを削除しますか？',
-			'mediaMenu.deleteShowTitle' => 'この番組を削除しますか？',
-			'mediaMenu.deleteMovieTitle' => 'この映画を削除しますか？',
-			'mediaMenu.deleteEpisodeConfirm' => 'エピソードを削除',
-			'mediaMenu.deleteSeasonConfirm' => 'シーズンを削除',
-			'mediaMenu.deleteShowConfirm' => '番組を削除',
-			'mediaMenu.deleteMovieConfirm' => '映画を削除',
-			'mediaMenu.deleteAnyway' => 'それでも削除',
-			'mediaMenu.confirmDeleteTarget' => ({required Object title}) => 'サーバーから「${title}」を完全に削除しますか？',
-			'mediaMenu.deleteMultipleWarning' => 'すべてのエピソードとそのファイルが含まれます。',
-			'mediaMenu.deleteEpisodeCountWarning' => ({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('ja'))(n, other: '中の全${n}エピソードとそのファイルが削除されます。', ), 
-			'mediaMenu.deleteMultiPartWarning' => ({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('ja'))(n, other: 'このアイテムは${n}個のファイルにまたがって保存されており、すべて削除されます。', ), 
-			'mediaMenu.deleteSharedFileHeading' => ({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('ja'))(n, other: '同じファイルに保存されている他の${n}エピソードも削除されます：', ), 
-			'mediaMenu.deleteScopeUnverifiedProbeFailed' => 'Plezyは削除対象のファイルを確認できなかったため、上記のアイテム以上に削除される可能性があります。キャンセルして再試行するか、それでも削除してください。',
-			'mediaMenu.deleteScopeUnverifiedNoFileInfo' => 'サーバーがこのアイテムのファイル情報を提供しなかったため、Plezyは削除対象のファイルを確認できません。上記のアイテム以上に削除される可能性があります。',
-			'mediaMenu.mediaDeletedSuccessfully' => 'メディアアイテムを正常に削除しました',
-			'mediaMenu.mediaFailedToDelete' => 'メディアアイテムの削除に失敗しました',
-			'mediaMenu.rate' => '評価',
-			'mediaMenu.playFromBeginning' => '最初から再生',
-			'mediaMenu.playVersion' => 'バージョンを選んで再生…',
-			'rateSheet.title' => '評価',
-			'rateSheet.server' => 'サーバー',
-			'rateSheet.favorite' => 'お気に入り',
-			'rateSheet.favorited' => 'お気に入りに追加済み',
-			'rateSheet.saved' => '保存済み',
-			'rateSheet.notAvailable' => '一致なし',
-			'rateSheet.noConnectedServices' => '評価するには、設定でサービスを接続してください。',
-			'accessibility.mediaCardMovie' => ({required Object title}) => '${title}、映画',
-			'accessibility.mediaCardShow' => ({required Object title}) => '${title}、テレビ番組',
-			'accessibility.mediaCardEpisode' => ({required Object title, required Object episodeInfo}) => '${title}、${episodeInfo}',
-			'accessibility.mediaCardSeason' => ({required Object title, required Object seasonInfo}) => '${title}、${seasonInfo}',
-			'accessibility.mediaCardWatched' => '視聴済み',
-			'accessibility.mediaCardPartiallyWatched' => ({required Object percent}) => '${percent}パーセント視聴済み',
-			'accessibility.mediaCardUnwatched' => '未視聴',
-			'accessibility.tapToPlay' => 'タップして再生',
-			'accessibility.decrease' => '下げる',
-			'accessibility.increase' => '上げる',
-			'accessibility.decreaseValue' => ({required Object label}) => '${label}を下げる',
-			'accessibility.increaseValue' => ({required Object label}) => '${label}を上げる',
-			'accessibility.hue' => '色相',
-			'accessibility.saturation' => '彩度',
-			'accessibility.brightness' => '明るさ',
-			'accessibility.hexColor' => '16進カラー',
-			'accessibility.expandText' => 'テキストを展開',
-			'accessibility.collapseText' => 'テキストを折りたたむ',
-			'accessibility.alphabetNavigation' => 'アルファベットナビゲーション',
-			'accessibility.alphabetScrollHint' => '上下にスワイプして文字ごとに移動',
-			'accessibility.rowColumnPosition' => ({required Object rowCount, required Object row, required Object columnCount, required Object column}) => '${rowCount}行中${row}行、${columnCount}列中${column}列',
-			'accessibility.rowPosition' => ({required Object rowCount, required Object row}) => '${rowCount}行中${row}行',
-			'accessibility.autoScrollPlay' => '自動スクロールを再生',
-			'accessibility.autoScrollPause' => '自動スクロールを一時停止',
-			'accessibility.hueShort' => 'H',
-			'accessibility.saturationShort' => 'S',
-			'accessibility.valueShort' => 'V',
-			'tooltips.shufflePlay' => 'シャッフル再生',
-			'tooltips.playTrailer' => '予告編を再生',
-			'tooltips.markAsWatched' => '視聴済みにする',
-			'tooltips.markAsUnwatched' => '未視聴にする',
-			'audioTracks.track' => ({required Object n}) => '音声トラック${n}',
-			'videoControls.audioLabel' => '音声',
-			'videoControls.subtitlesLabel' => '字幕',
-			'videoControls.addTime' => ({required Object amount, required Object unit}) => '+${amount}${unit}',
-			'videoControls.letterbox' => 'レターボックス',
-			'videoControls.fillScreen' => '画面を埋める',
-			'videoControls.stretch' => '引き延ばす',
-			'videoControls.lockRotation' => '回転をロック',
-			'videoControls.unlockRotation' => '回転のロックを解除',
-			'videoControls.timerActive' => 'タイマー動作中',
-			'videoControls.playbackWillPauseIn' => ({required Object duration}) => '再生は${duration}後に一時停止します',
-			'videoControls.sleepTimerEndOfVideo' => '現在の動画の最後',
-			'videoControls.sleepTimerStopAtHeader' => '停止のタイミング',
-			'videoControls.sleepTimerDurationHeader' => 'タイマー',
-			'videoControls.playbackWillPauseAtEnd' => '再生はこの動画の最後に一時停止します',
-			'videoControls.stillWatching' => 'まだ視聴中ですか？',
-			'videoControls.pausingIn' => ({required Object seconds}) => '${seconds}秒後に一時停止',
-			'videoControls.continueWatching' => '続ける',
-			'videoControls.autoPlayNext' => '次を自動再生',
-			'videoControls.playNext' => '次を再生',
-			'videoControls.playButton' => '再生',
-			'videoControls.pauseButton' => '一時停止',
-			'videoControls.playbackPaused' => '一時停止中',
-			'videoControls.playbackResumed' => '再生中',
-			'videoControls.loadingVideo' => '動画を読み込み中',
-			'videoControls.showPlaybackControls' => '再生コントロールを表示',
-			'videoControls.hidePlaybackControls' => '再生コントロールを非表示',
-			'videoControls.seekBackwardButton' => ({required Object seconds}) => '${seconds}秒戻る',
-			'videoControls.seekForwardButton' => ({required Object seconds}) => '${seconds}秒進む',
-			'videoControls.previousButton' => '前のエピソード',
-			'videoControls.nextButton' => '次のエピソード',
-			'videoControls.previousChapterButton' => '前のチャプター',
-			'videoControls.nextChapterButton' => '次のチャプター',
-			'videoControls.muteButton' => 'ミュート',
-			'videoControls.unmuteButton' => 'ミュート解除',
-			'videoControls.settingsButton' => '再生設定',
-			'videoControls.tracksButton' => '音声と字幕',
-			'videoControls.chaptersButton' => 'チャプター',
-			'videoControls.versionQualityButton' => 'バージョンと画質',
-			'videoControls.versionColumnHeader' => 'バージョン',
-			'videoControls.qualityColumnHeader' => '画質',
-			'videoControls.qualityOriginal' => 'オリジナル',
-			'videoControls.qualityPresetLabel' => ({required Object resolution, required Object bitrate}) => '${resolution}p ${bitrate} Mbps',
-			'videoControls.transcodeUnavailableFallback' => 'トランスコードは利用できません — オリジナル画質で再生中',
-			'videoControls.subtitleUnavailableFallback' => '選択した字幕を読み込めませんでした — 字幕なしで再生を続けます',
-			'videoControls.pipButton' => 'ピクチャーインピクチャーモード',
-			'videoControls.aspectRatioButton' => 'アスペクト比',
-			'videoControls.ambientLighting' => 'アンビエントライティング',
-			'videoControls.fullscreenButton' => 'フルスクリーンに入る',
-			'videoControls.exitFullscreenButton' => 'フルスクリーンを終了',
-			'videoControls.alwaysOnTopButton' => '常に前面に表示',
-			'videoControls.rotationLockButton' => '回転ロック',
-			'videoControls.lockScreen' => '画面をロック',
-			'videoControls.screenLockButton' => '画面ロック',
-			'videoControls.timelineSlider' => '動画タイムライン',
-			'videoControls.volumeSlider' => '音量レベル',
-			'videoControls.endsAt' => ({required Object time}) => '${time}に終了',
-			'videoControls.pipActive' => 'ピクチャーインピクチャーで再生中',
-			'videoControls.pipFailed' => 'ピクチャーインピクチャーの開始に失敗しました',
-			'videoControls.screenshotSaved' => 'スクリーンショットを保存しました',
-			'videoControls.screenshotFailed' => 'スクリーンショットを撮影できませんでした',
-			'videoControls.zoomPercent' => ({required Object percent}) => 'ズーム ${percent}%',
-			'videoControls.volumePercent' => ({required Object percent}) => '音量 ${percent}%',
-			'videoControls.pipErrors.androidVersion' => 'Android 8.0以降が必要です',
-			'videoControls.pipErrors.iosVersion' => 'iOS 15.0以降が必要です',
-			'videoControls.pipErrors.permissionDisabled' => 'ピクチャーインピクチャーが無効です。システム設定で有効にしてください。',
-			'videoControls.pipErrors.notSupported' => 'デバイスはピクチャーインピクチャーモードをサポートしていません',
-			'videoControls.pipErrors.voSwitchFailed' => 'ピクチャーインピクチャーの映像出力切替に失敗しました',
-			'videoControls.pipErrors.failed' => 'ピクチャーインピクチャーの開始に失敗しました',
-			'videoControls.pipErrors.prepareFailed' => 'ピクチャーインピクチャーを準備できませんでした',
-			'videoControls.pipErrors.unknown' => ({required Object error}) => 'エラーが発生しました: ${error}',
-			'videoControls.chapters' => 'チャプター',
-			'videoControls.noChaptersAvailable' => 'チャプターがありません',
-			'videoControls.queue' => 'キュー',
-			'videoControls.noQueueItems' => 'キューにアイテムがありません',
-			'videoControls.noAudioDevicesAvailable' => 'オーディオデバイスがありません',
-			'videoControls.searchSubtitles' => '字幕を検索',
-			'videoControls.language' => '言語',
-			'videoControls.noSubtitlesFound' => '字幕が見つかりません',
-			'videoControls.subtitleDownloaded' => '字幕をダウンロードしました',
-			'videoControls.subtitleDownloadedNotApplied' => '字幕はダウンロードされましたが、選択できませんでした',
-			'videoControls.subtitleDownloadFailed' => '字幕のダウンロードに失敗しました',
-			'videoControls.subtitleDownloadTimedOut' => '字幕が時間内に追加されませんでした。ダウンロードに失敗した可能性があります',
-			'videoControls.searchLanguages' => '言語を検索…',
-			'videoControls.skipIntro' => 'イントロをスキップ',
-			'videoControls.skipCredits' => 'クレジットをスキップ',
-			'videoControls.nextEpisode' => '次のエピソード',
-			'videoControls.subtitleTrack' => ({required Object n}) => 'トラック${n}',
-			'videoControls.subtitleFile' => ({required Object name}) => '字幕${name}',
-			'videoControls.forcedTrack' => ({required Object label}) => '${label}（強制）',
-			'videoControls.osdSubtitlesOff' => '字幕: オフ',
-			'videoControls.osdSubtitles' => ({required Object track}) => '字幕: ${track}',
-			'videoControls.osdAudio' => ({required Object track}) => '音声: ${track}',
-			'messages.markedAsWatched' => '視聴済みにしました',
-			'messages.markedAsUnwatched' => '未視聴にしました',
-			'messages.markedAsWatchedOffline' => '視聴済みにしました（オンライン時に同期）',
-			'messages.markedAsUnwatchedOffline' => '未視聴にしました（オンライン時に同期）',
-			'messages.autoRemovedWatchedDownload' => ({required Object title}) => '自動削除: ${title}',
-			'messages.autoRemovedWatchedDownloads' => ({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('ja'))(n, other: '視聴済みダウンロードを${n}件自動削除しました', ), 
-			'messages.removedFromContinueWatching' => '視聴中から削除しました',
-			'messages.errorLoading' => ({required Object error}) => 'エラー: ${error}',
-			'messages.searchPartialResults' => '一部のメディアサーバーを検索できませんでした。利用可能な結果を表示しています。',
-			'messages.streamInterrupted' => 'ストリームが中断されました。再生を押すかシークして再試行してください。',
-			'messages.liveStreamInterrupted' => 'ライブストリームが中断されました。再生を押して再試行してください。',
-			'messages.fileInfoNotAvailable' => 'ファイル情報が利用できません',
-			'messages.playbackAuthenticationRequired' => 'このアイテムを再生するには、メディアサーバーにもう一度サインインしてください。',
-			'messages.playbackServerUnavailable' => 'メディアサーバーを利用できません。しばらくしてからもう一度お試しください。',
-			'messages.playbackDataInvalid' => 'サーバーから無効な再生情報が返されました。',
-			'messages.playbackCancelled' => '再生がキャンセルされました。',
-			'messages.playbackFailed' => '再生を開始できませんでした。',
-			'messages.playbackFailedDetail' => ({required Object error}) => '再生を開始できませんでした: ${error}',
-			'messages.audioOutputFailed' => 'オーディオ出力が応答しなくなりました。テレビやレシーバーの音声接続を確認してください。他のアプリでも音が出ない場合は、デバイスを再起動してください。',
-			'messages.mediaUnavailable' => 'このコンテンツは利用できなくなりました。',
-			'messages.errorLoadingFileInfo' => ({required Object error}) => 'ファイル情報の読み込みエラー: ${error}',
-			'messages.errorLoadingSeries' => 'シリーズの読み込みエラー',
-			'messages.musicNotSupported' => '音楽の再生はまだサポートされていません',
-			'messages.noDescriptionAvailable' => '説明はありません',
-			'messages.noProfilesAvailable' => '利用可能なプロフィールがありません',
-			'messages.contactAdminForProfiles' => 'プロフィールを追加するには、サーバー管理者に連絡してください',
-			'messages.unableToDetermineLibrarySection' => 'このアイテムのライブラリセクションを判別できません',
-			'messages.logsCleared' => 'ログをクリアしました',
-			'messages.logsCopied' => 'ログをクリップボードにコピーしました',
-			'messages.noLogsAvailable' => 'ログがありません',
-			'messages.libraryScanning' => ({required Object title}) => '「${title}」をスキャン中…',
-			'messages.libraryScanStarted' => ({required Object title}) => '"${title}"のライブラリスキャンを開始しました',
-			'messages.libraryScanFailed' => ({required Object error}) => 'ライブラリのスキャンに失敗しました: ${error}',
-			'messages.metadataRefreshing' => ({required Object title}) => '「${title}」のメタデータを更新中…',
-			'messages.metadataRefreshStarted' => ({required Object title}) => '"${title}"のメタデータ更新を開始しました',
-			'messages.metadataRefreshFailed' => ({required Object error}) => 'メタデータの更新に失敗しました: ${error}',
-			'messages.logoutConfirm' => 'ログアウトしてもよろしいですか？',
-			'messages.noSeasonsFound' => 'シーズンが見つかりません',
-			'messages.seasonsLoadFailed' => 'シーズンを読み込めませんでした',
-			'messages.noEpisodesFound' => '最初のシーズンにエピソードが見つかりません',
-			'messages.noEpisodesFoundGeneral' => 'エピソードが見つかりません',
-			'messages.episodesLoadFailed' => 'エピソードを読み込めませんでした',
-			'messages.noResultsFound' => '結果が見つかりません',
-			'messages.sleepTimerSet' => ({required Object label}) => 'スリープタイマーを${label}に設定しました',
-			'messages.noItemsAvailable' => 'アイテムがありません',
-			'messages.failedToCreatePlayQueueNoItems' => '再生キューを作成できませんでした — アイテムがありません',
-			'messages.failedPlayback' => ({required Object action, required Object error}) => '${action}に失敗しました: ${error}',
-			'messages.switchingToCompatiblePlayer' => '互換性のあるプレーヤーに切り替え中…',
-			'messages.serverLimitTitle' => '再生に失敗しました',
-			'messages.serverLimitBody' => 'サーバーエラー（HTTP 500）。帯域幅/トランスコード制限により拒否された可能性があります。所有者に調整を依頼してください。',
-			'messages.mediaUnreadableTitle' => 'ファイルを利用できません',
-			'messages.mediaUnreadableBody' => 'サーバーはこのアイテムを見つけましたが、そのファイルを読み取れませんでした（HTTP 404）。ファイルが移動・削除されたか、ストレージがオフラインの可能性があります。サーバーの管理者にファイルの確認とライブラリの再スキャンを依頼してください。',
-			'messages.serverBusyTitle' => 'ストリームを利用できません',
-			'messages.serverBusyBody' => 'サーバーがこのファイルのストリーミングを繰り返し拒否しました（HTTP 503）。サーバーが再起動中またはビジー状態か、ファイルのストレージがオフラインの可能性があります。しばらくしてからもう一度お試しください。問題が続く場合は、サーバーの所有者にサーバーとファイルのストレージを確認するよう依頼してください。',
-			'messages.playbackNotAllowedTitle' => '再生が許可されていません',
-			'messages.playbackNotAllowedBody' => 'サーバーがこのアイテムのストリーミングを拒否しました（HTTP 403）。お使いのアカウントに再生の権限がないか、サーバーがローカルネットワーク内での再生のみを許可している可能性があります。',
-			'messages.logsUploaded' => 'ログをアップロードしました',
-			'messages.logsUploadFailed' => 'ログのアップロードに失敗しました',
-			'messages.logId' => 'ログID',
-			'messages.burnedSubtitlesUseMenu' => '字幕はこのストリームに焼き付けられています。字幕メニューから変更してください。',
-			'messages.noVideoUrl' => '利用可能な動画URLがありません',
-			'messages.playbackNoMediaSources' => 'サーバーから再生可能なメディアソースが返されませんでした',
-			'messages.playbackDataNotPrepared' => '再生データの準備が完了する前に再生が開始されました',
-			'messages.streamSelectionUnavailable' => 'このソースではストリームを選択できません',
-			'messages.streamSelectionFailed' => '選択したストリームを適用できませんでした',
-			'messages.trackSelectionNotRemembered' => 'このトラック選択は現在の再生にのみ適用されます。',
-			'messages.serverUnavailableForProfile' => '現在のプロフィールで利用可能なサーバーがありません',
-			'subtitlingStyling.text' => 'テキスト',
-			'subtitlingStyling.border' => '枠線',
-			'subtitlingStyling.background' => '背景',
-			'subtitlingStyling.fontSize' => 'フォントサイズ',
-			'subtitlingStyling.textColor' => 'テキストの色',
-			'subtitlingStyling.borderSize' => '枠線サイズ',
-			'subtitlingStyling.borderColor' => '枠線の色',
-			'subtitlingStyling.backgroundOpacity' => '背景の不透明度',
-			'subtitlingStyling.backgroundColor' => '背景色',
-			'subtitlingStyling.position' => '位置',
-			'subtitlingStyling.assOverride' => 'ASSオーバーライド',
-			'subtitlingStyling.overrideScale' => '拡大縮小',
-			'subtitlingStyling.overrideForce' => '強制',
-			'subtitlingStyling.overrideStrip' => 'スタイルを削除',
-			'subtitlingStyling.positionTop' => '上',
-			'subtitlingStyling.positionBottom' => '下',
-			'subtitlingStyling.useMargins' => '余白を使用',
-			'subtitlingStyling.useMarginsDescription' => 'テキスト字幕を動画の外側の領域に表示できるようにします。スタイル付き字幕は元の配置を維持する場合があります。',
-			'subtitlingStyling.anchorToScreen' => '画面に固定',
-			'subtitlingStyling.anchorToScreenDescription' => 'ワイドスクリーン映像の下にある黒帯にテキスト字幕を表示します',
-			'subtitlingStyling.bold' => '太字',
-			'subtitlingStyling.italic' => '斜体',
-			'subtitlingStyling.renderResolution' => 'レンダリング解像度',
-			'subtitlingStyling.renderResolutionScreen' => '画面解像度',
-			'subtitlingStyling.renderResolutionVideo' => '動画解像度',
-			'mpvConfig.title' => 'mpv.conf',
-			'mpvConfig.description' => '高度な動画プレーヤー設定',
-			'mpvConfig.presets' => 'プリセット',
-			'mpvConfig.noPresets' => '保存済みプリセットがありません',
-			'mpvConfig.saveAsPreset' => 'プリセットとして保存…',
-			'mpvConfig.presetName' => 'プリセット名',
-			'mpvConfig.presetNameHint' => 'プリセットの名前を入力',
-			'mpvConfig.loadPreset' => '読み込み',
-			'mpvConfig.deletePreset' => '削除',
-			'mpvConfig.presetSaved' => 'プリセットを保存しました',
-			'mpvConfig.presetLoaded' => 'プリセットを読み込みました',
-			'mpvConfig.presetDeleted' => 'プリセットを削除しました',
-			'mpvConfig.confirmDeletePreset' => 'このプリセットを削除してもよろしいですか？',
-			'mpvConfig.configPlaceholder' => 'gpu-api=vulkan\nhwdec=auto\n# comment',
-			'mpvConfig.lineHint' => 'option=value',
-			'mpvConfig.addLine' => '行を追加',
-			'mpvConfig.removeLine' => '行を削除',
-			'mpvConfig.embeddedVoHint' => 'Linux では vo、gpu-context、gpu-api は無視されます。埋め込み動画は常にビデオプレーン上で vo=libmpv を通してレンダリングされ、gpu-next（ArtCNN のようなコンピュートシェーダーに必要）は埋め込みでは実行できません。',
-			'dialog.confirmAction' => '操作の確認',
-			'profiles.addPlezyProfile' => 'Plezyプロフィールを追加',
-			'profiles.switchingProfile' => 'プロフィールを切り替え中…',
-			'profiles.deleteThisProfileTitle' => 'このプロフィールを削除しますか？',
-			'profiles.deleteThisProfileMessage' => ({required Object displayName}) => '${displayName}を削除します。接続には影響しません。',
-			'profiles.active' => 'アクティブ',
-			'profiles.manage' => '管理',
-			'profiles.delete' => '削除',
-			'profiles.signOut' => 'サインアウト',
-			'profiles.signOutPlexTitle' => 'Plexからサインアウトしますか？',
-			'profiles.signOutPlexMessage' => ({required Object displayName}) => '${displayName}とすべてのPlex Homeユーザーを削除しますか？いつでも再度サインインできます。',
-			'profiles.signOutPlexDeleteDownloads' => 'ダウンロードも削除',
-			'profiles.signOutPlexDeleteDownloadsDescription' => '削除しない場合、ダウンロードはこのデバイスに残り、このアカウントに再度サインインすると再び利用できます。',
-			'profiles.signedOutPlex' => 'Plexからサインアウトしました。',
-			'profiles.signOutFailed' => 'サインアウトに失敗しました。',
-			'profiles.sectionTitle' => 'プロフィール',
-			'profiles.summarySingle' => 'プロフィールを追加すると、管理対象ユーザーとローカルユーザーを併用できます',
-			'profiles.summaryMultipleWithActive' => ({required Object count, required Object activeName}) => '${count}個のプロフィール · 使用中: ${activeName}',
-			'profiles.summaryMultiple' => ({required Object count}) => '${count}個のプロフィール',
-			'profiles.removeConnectionTitle' => '接続を削除しますか？',
-			'profiles.removeConnectionMessage' => ({required Object displayName, required Object connectionLabel}) => '${displayName}の${connectionLabel}へのアクセスを削除します。他のプロフィールには残ります。',
-			'profiles.deleteProfileTitle' => 'プロフィールを削除しますか？',
-			'profiles.deleteProfileMessage' => ({required Object displayName}) => '${displayName}とその接続を削除します。サーバーは引き続き利用できます。',
-			'profiles.profileNameLabel' => 'プロフィール名',
-			'profiles.pinProtectionLabel' => 'PIN保護',
-			'profiles.pinManagedByPlex' => 'PINはPlexで管理されています。plex.tvで編集してください。',
-			'profiles.noPinSetEditOnPlex' => 'PINが設定されていません。PINを必須にするには、plex.tvでHomeユーザーを編集してください。',
-			'profiles.setPin' => 'PINを設定',
-			'profiles.setPinTitle' => 'PINを設定',
-			'profiles.confirmPinTitle' => 'PINを確認',
-			'profiles.pinSet' => 'PIN設定済み',
-			'profiles.changePin' => '変更',
-			'profiles.removePin' => '削除',
-			'profiles.connectionsLabel' => '接続',
-			'profiles.add' => '追加',
-			'profiles.deleteProfileButton' => 'プロフィールを削除',
-			'profiles.noConnectionsHint' => '接続がありません — このプロフィールを使うには接続を追加してください。',
-			'profiles.noConnections' => '接続がありません',
-			'profiles.plexHomeAccount' => 'Plex Homeアカウント',
-			'profiles.plexAccountChip' => ({required Object account}) => 'Plexアカウント: ${account}',
-			'profiles.plexAccountUserChip' => ({required Object account, required Object user}) => '${account}経由の${user}',
-			'profiles.connectionDefault' => 'デフォルト',
-			'profiles.connectionAs' => ({required Object displayName}) => '${displayName}として',
-			'profiles.makeDefault' => 'デフォルトに設定',
-			'profiles.removeConnection' => '削除',
-			'profiles.profileRenamed' => 'プロフィール名を変更しました。',
-			'profiles.borrowAddTo' => ({required Object displayName}) => '${displayName}に追加',
-			'profiles.borrowExplain' => '別のプロフィールの接続を利用します。PINで保護されたプロフィールにはPINが必要です。',
-			'profiles.borrowEmpty' => '利用できる接続はまだありません。',
-			'profiles.borrowEmptySubtitle' => 'まず、別のプロフィールをPlex、JellyfinまたはEmbyに接続してください。',
-			'profiles.borrowLoadFailed' => '利用可能な接続を読み込めませんでした。もう一度お試しください。',
-			'profiles.borrowFromProfile' => ({required Object displayName}) => '${displayName}から利用',
-			'profiles.borrowConnectionBorrowed' => '接続を追加しました。',
-			'profiles.borrowFailed' => '接続を追加できませんでした。',
-			'profiles.incorrectPin' => 'PINが正しくありません。',
-			'profiles.incorrectPinTryAgain' => 'PINが正しくありません。もう一度お試しください。',
-			'profiles.sourceProfileMissingParentAccount' => '元のプロフィールに親アカウントがありません。',
-			'profiles.failedToLoadHomeUsers' => 'Plex Homeユーザーを読み込めませんでした。接続を確認して、もう一度お試しください。',
-			'profiles.failedToVerifyPin' => 'PINを確認できませんでした。',
-			'profiles.newProfile' => '新しいプロフィール',
-			'profiles.profileNameHint' => '例：ゲスト、キッズ、ファミリールーム',
-			'profiles.pinProtectionOptional' => 'PIN保護（オプション）',
-			'profiles.pinExplain' => 'プロフィール切り替えには4桁のPINが必要です。',
-			'profiles.continueButton' => '続ける',
-			'profiles.pinsDontMatch' => 'PINが一致しません',
-			'profiles.tokenIdentityMismatch' => 'Plexプロフィールのトークンから予期しないサーバーが特定されました',
-			'connections.sectionTitle' => '接続',
-			_ => null,
-		} ?? switch (path) {
-			'connections.addConnection' => '接続を追加',
-			'connections.addConnectionSubtitleNoProfile' => 'Plexでサインインするか、JellyfinまたはEmbyサーバーに接続',
-			'connections.addConnectionSubtitleScoped' => ({required Object displayName}) => '${displayName}に追加：Plex、Jellyfin、Emby、または別のプロフィールの接続',
-			'connections.sessionExpiredOne' => ({required Object name}) => '${name} のセッションの有効期限が切れました',
-			'connections.sessionExpiredMany' => ({required Object count}) => '${count} 台のサーバーのセッションの有効期限が切れました',
-			'connections.accessDeniedOne' => ({required Object name}) => '${name} がこのアカウントへのアクセスを拒否しました',
-			'connections.accessDeniedMany' => ({required Object count}) => '${count} 台のサーバーがこのアカウントへのアクセスを拒否しました',
-			'connections.signInAgain' => '再度サインイン',
-			'connections.editMediaBrowserTitle' => ({required Object product}) => '${product}接続を編集',
-			'connections.editMediaBrowserIntro' => ({required Object serverName}) => '${serverName}のURLを追加または削除します。Plezyは到達可能なURLのうち、レイテンシーが最も低いものを使用します。',
-			'accountPreferences.sectionTitle' => 'アカウント設定',
-			'accountPreferences.hubSubtitleSingle' => ({required Object account}) => '音声・字幕・ライブラリのオプションは${account}に保存されています',
-			'accountPreferences.hubSubtitleMultiple' => ({required Object count}) => '音声・字幕・ライブラリのオプションは${count}個のアカウントに保存されています',
-			'accountPreferences.pickAccount' => '各アカウントに独自の設定が保存されています。編集するアカウントを選択してください。',
-			'accountPreferences.storedOnAccount' => 'これらのオプションはアカウント自体に保存されるため、サインインしているすべてのアプリ（他のデバイスのPlezyを含む）で使用されます。',
-			'accountPreferences.noAccounts' => '設定できるアカウントがありません',
-			'accountPreferences.noAccountsHint' => 'Plexにサインインするか、JellyfinまたはEmbyサーバーに接続すると、そのアカウントに保存された設定がここに表示されます。',
-			'accountPreferences.unavailable' => 'このアカウントにアクセスできません',
-			'accountPreferences.loadFailed' => 'この設定を読み込めませんでした',
-			'accountPreferences.noPreference' => '指定なし',
-			'accountPreferences.notSet' => '未設定',
-			'accountPreferences.groups.audioAndSubtitles' => '音声と字幕',
-			'accountPreferences.groups.libraryDisplay' => 'ライブラリ',
-			'accountPreferences.groups.personalMedia' => '個人メディア',
-			'accountPreferences.preferredAudioLanguage' => '優先音声言語',
-			'accountPreferences.autoSelectAudio' => '言語で音声を選択',
-			'accountPreferences.autoSelectAudioDescription' => 'オフにすると、ファイルでデフォルトとマークされた音声トラックがそのまま使われます。',
-			'accountPreferences.preferredSubtitleLanguage' => '優先字幕言語',
-			'accountPreferences.subtitleMode' => '字幕の自動表示',
-			'accountPreferences.subtitleModes.none' => '手動選択',
-			'accountPreferences.subtitleModes.noneDescription' => '自動では字幕をオンにしません。',
-			'accountPreferences.subtitleModes.defaultMode' => 'トラックのフラグに従う',
-			'accountPreferences.subtitleModes.defaultModeDescription' => '各字幕トラックに保存されたデフォルトと強制のフラグを使用します。',
-			'accountPreferences.subtitleModes.always' => '常に有効',
-			'accountPreferences.subtitleModes.alwaysDescription' => '優先言語の字幕トラックがあれば、常にオンにします。',
-			'accountPreferences.subtitleModes.onlyForced' => '強制字幕のみ',
-			'accountPreferences.subtitleModes.onlyForcedDescription' => '強制とマークされたトラックのみ読み込みます。',
-			'accountPreferences.subtitleModes.smart' => '外国語音声時に表示',
-			'accountPreferences.subtitleModes.smartDescription' => '音声が別の言語の場合にのみ字幕をオンにします。',
-			'accountPreferences.subtitleAccessibility' => 'SDH字幕',
-			'accountPreferences.subtitleAccessibilityOptions.preferNonSdh' => '非SDH字幕を優先',
-			'accountPreferences.subtitleAccessibilityOptions.preferSdh' => 'SDH字幕を優先',
-			'accountPreferences.subtitleAccessibilityOptions.onlySdh' => 'SDH字幕のみ',
-			'accountPreferences.subtitleAccessibilityOptions.onlyNonSdh' => '非SDH字幕のみ',
-			'accountPreferences.forcedSubtitles' => '強制字幕',
-			'accountPreferences.forcedSubtitleOptions.preferNonForced' => '非強制字幕を優先',
-			'accountPreferences.forcedSubtitleOptions.preferForced' => '強制字幕を優先',
-			'accountPreferences.forcedSubtitleOptions.onlyForced' => '強制字幕のみ',
-			'accountPreferences.forcedSubtitleOptions.onlyNonForced' => '非強制字幕のみ',
-			'accountPreferences.displayMissingEpisodes' => '欠落エピソードを表示',
-			'accountPreferences.displayMissingEpisodesDescription' => 'サーバーが把握しているがファイルがないエピソードを一覧表示します。',
-			'accountPreferences.hidePlayedInLatest' => '「最新」の視聴済みアイテムを非表示',
-			'accountPreferences.hidePlayedInLatestDescription' => 'すでに視聴したアイテムは、サーバーの「最新」に表示されません。',
-			'accountPreferences.displayCollectionsView' => 'コレクションビューを表示',
-			'accountPreferences.displayCollectionsViewDescription' => 'ライブラリに加えて、サーバーのコレクションビューを表示します。',
-			'accountPreferences.rewatchingInNextUp' => '再視聴した番組を「次のエピソード」に残す',
-			'accountPreferences.rewatchingInNextUpDescription' => '番組を見終えた後に再び見始めると、「次のエピソード」は番組を外さずに再視聴に追従します。',
-			'accountPreferences.watchedIndicator' => '視聴済みマーク',
-			'accountPreferences.watchedIndicatorOptions.none' => 'しない',
-			'accountPreferences.watchedIndicatorOptions.moviesAndShows' => '映画とテレビ番組',
-			'accountPreferences.watchedIndicatorOptions.movies' => '映画のみ',
-			'accountPreferences.watchedIndicatorOptions.shows' => 'テレビ番組のみ',
-			'accountPreferences.mediaReviewsVisibility' => '評価とレビュー',
-			'accountPreferences.mediaReviewsOptions.usersAndCritics' => 'ユーザーと批評家',
-			'accountPreferences.mediaReviewsOptions.usersOnly' => 'ユーザーのみ',
-			'accountPreferences.mediaReviewsOptions.criticsOnly' => '批評家のみ',
-			'accountPreferences.mediaReviewsOptions.nobody' => '非表示',
-			'discover.title' => '探す',
-			'discover.noContentAvailable' => 'コンテンツがありません',
-			'discover.addMediaToLibraries' => 'ライブラリにメディアを追加してください',
-			'discover.continueWatching' => '視聴を続ける',
-			'discover.continueWatchingIn' => ({required Object library}) => '${library}の視聴を続ける',
-			'discover.nextUp' => '次のエピソード',
-			'discover.nextUpIn' => ({required Object library}) => '${library}の次のエピソード',
-			'discover.recentlyAdded' => '最近追加されたコンテンツ',
-			'discover.recentlyAddedIn' => ({required Object library}) => '${library}に最近追加されたコンテンツ',
-			'discover.latestAlbumsIn' => ({required Object library}) => '${library}の最新アルバム',
-			'discover.recentlyPlayedIn' => ({required Object library}) => '${library}で最近再生したコンテンツ',
-			'discover.mostPlayedIn' => ({required Object library}) => '${library}で最も再生したコンテンツ',
-			'discover.playEpisode' => ({required Object season, required Object episode}) => 'S${season}E${episode}',
-			'discover.overview' => 'あらすじ',
-			'discover.cast' => 'キャスト',
-			'discover.extras' => '予告編とエクストラ',
-			'discover.studio' => 'スタジオ',
-			'discover.rating' => '評価',
-			'discover.director' => '監督',
-			'discover.directors' => '監督',
-			'discover.movie' => '映画',
-			'discover.tvShow' => 'テレビ番組',
-			'discover.minutesLeft' => ({required Object minutes}) => '残り${minutes}分',
-			'discover.moreLikeThis' => '似ている作品',
-			'discover.titleCount' => ({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('ja'))(n, other: '${n}作品', ), 
-			'discover.person.born' => '生年月日',
-			'discover.person.died' => '没年月日',
-			'discover.person.birthplace' => '出生地',
-			'discover.person.dateWithAge' => ({required Object date, required Object age}) => '${date}（${age}歳）',
-			'discover.person.dateWithAgeAtDeath' => ({required Object date, required Object age}) => '${date}（${age}歳没）',
-			'errors.searchFailed' => ({required Object error}) => '検索に失敗しました: ${error}',
-			'errors.searchUnavailable' => '検索中にメディアサーバーへ接続できませんでした。',
-			'errors.connectionTimeout' => ({required Object context}) => '${context}の読み込み中に接続がタイムアウトしました',
-			'errors.connectionFailed' => 'メディアサーバーに接続できません',
-			'errors.unableToLoad' => ({required Object context}) => '${context}を読み込めませんでした。もう一度お試しください。',
-			'errors.noClientAvailable' => 'クライアントが利用できません',
-			'errors.pleaseEnterToken' => 'トークンを入力してください',
-			'errors.invalidToken' => '無効なトークン',
-			'errors.failedToVerifyToken' => ({required Object error}) => 'トークンの検証に失敗しました: ${error}',
-			'errors.failedToSwitchProfile' => ({required Object displayName}) => '${displayName}への切替に失敗しました',
-			'errors.failedToDeleteProfile' => ({required Object displayName}) => '${displayName}の削除に失敗しました',
-			'errors.failedToRate' => '評価を更新できませんでした',
-			'errors.reasonTimedOut' => '接続がタイムアウトしました',
-			'errors.reasonUnreachable' => 'メディアサーバーに接続できませんでした',
-			'errors.reasonRefused' => 'メディアサーバーがリクエストを拒否しました',
-			'errors.reasonNotFound' => 'この項目はメディアサーバー上に存在しません',
-			'errors.reasonServerError' => 'メディアサーバーでエラーが発生しました',
-			'errors.reasonCancelled' => 'リクエストがキャンセルされました',
-			'errors.reasonUnexpected' => '予期しないエラーが発生しました',
-			'libraries.title' => 'ライブラリ',
-			'libraries.fallbackTitle' => 'ライブラリ',
-			'libraries.scanLibraryFiles' => 'ライブラリファイルをスキャン',
-			'libraries.scanLibrary' => 'ライブラリをスキャン',
-			'libraries.analyze' => '解析',
-			'libraries.analyzeLibrary' => 'ライブラリを解析',
-			'libraries.refreshMetadata' => 'メタデータを更新',
-			'libraries.emptyTrash' => 'ゴミ箱を空にする',
-			'libraries.emptyingTrash' => ({required Object title}) => '「${title}」のゴミ箱を空にしています…',
-			'libraries.trashEmptied' => ({required Object title}) => '「${title}」のゴミ箱を空にしました',
-			'libraries.failedToEmptyTrash' => ({required Object error}) => 'ゴミ箱を空にできませんでした: ${error}',
-			'libraries.analyzing' => ({required Object title}) => '「${title}」を解析中…',
-			'libraries.analysisStarted' => ({required Object title}) => '「${title}」の解析を開始しました',
-			'libraries.failedToAnalyze' => ({required Object error}) => 'ライブラリの解析に失敗しました: ${error}',
-			'libraries.noLibrariesFound' => 'ライブラリが見つかりません',
-			'libraries.allLibrariesHidden' => 'すべてのライブラリが非表示です',
-			'libraries.hiddenLibrariesCount' => ({required Object count}) => '非表示のライブラリ (${count})',
-			'libraries.thisLibraryIsEmpty' => 'このライブラリは空です',
-			'libraries.noItemsMatchFilters' => '有効なフィルターに一致する項目はありません',
-			'libraries.resetFilters' => 'フィルターをリセット',
-			'libraries.all' => 'すべて',
-			'libraries.clearAll' => 'すべてクリア',
-			'libraries.scanLibraryConfirm' => ({required Object title}) => '"${title}"をスキャンしてもよろしいですか？',
-			'libraries.analyzeLibraryConfirm' => ({required Object title}) => '"${title}"を解析してもよろしいですか？',
-			'libraries.refreshMetadataConfirm' => ({required Object title}) => '"${title}"のメタデータを更新してもよろしいですか？',
-			'libraries.emptyTrashConfirm' => ({required Object title}) => '"${title}"のゴミ箱を空にしてもよろしいですか？',
-			'libraries.manageLibraries' => 'ライブラリを管理',
-			'libraries.sort' => '並べ替え',
-			'libraries.sortBy' => '並べ替え順',
-			'libraries.filters' => 'フィルター',
-			'libraries.confirmActionMessage' => 'この操作を実行してもよろしいですか？',
-			'libraries.showLibrary' => 'ライブラリを表示',
-			'libraries.hideLibrary' => 'ライブラリを非表示',
-			'libraries.libraryOptions' => 'ライブラリオプション',
-			'libraries.content' => 'ライブラリコンテンツ',
-			'libraries.selectLibrary' => 'ライブラリを選択',
-			'libraries.filtersWithCount' => ({required Object count}) => 'フィルター (${count})',
-			'libraries.noRecommendations' => 'おすすめがありません',
-			'libraries.noCollections' => 'このライブラリにコレクションがありません',
-			'libraries.noFoldersFound' => 'フォルダが見つかりません',
-			'libraries.folders' => 'フォルダ',
-			'libraries.tabs.recommended' => 'おすすめ',
-			'libraries.tabs.browse' => 'ブラウズ',
-			'libraries.tabs.collections' => 'コレクション',
-			'libraries.tabs.playlists' => 'プレイリスト',
-			'libraries.groupings.title' => 'グループ',
-			'libraries.groupings.all' => 'すべて',
-			'libraries.groupings.movies' => '映画',
-			'libraries.groupings.shows' => 'テレビ番組',
-			'libraries.groupings.seasons' => 'シーズン',
-			'libraries.groupings.episodes' => 'エピソード',
-			'libraries.groupings.artists' => 'アーティスト',
-			'libraries.groupings.albums' => 'アルバム',
-			'libraries.groupings.tracks' => '曲',
-			'libraries.groupings.folders' => 'フォルダ',
-			'libraries.filterCategories.genre' => 'ジャンル',
-			'libraries.filterCategories.year' => '年',
-			'libraries.filterCategories.contentRating' => '視聴年齢区分',
-			'libraries.filterCategories.tag' => 'タグ',
-			'libraries.filterCategories.unwatched' => '未視聴',
-			'libraries.filterCategories.unplayed' => '未再生',
-			'libraries.filterCategories.favorites' => 'お気に入り',
-			'libraries.filterCategories.filePath' => 'ファイルパス',
-			'libraries.sortLabels.title' => 'タイトル',
-			'libraries.sortLabels.dateAdded' => '追加日',
-			'libraries.sortLabels.releaseDate' => 'リリース日',
-			'libraries.sortLabels.rating' => '評価',
-			'libraries.sortLabels.communityRating' => 'コミュニティ評価',
-			'libraries.sortLabels.criticRating' => '批評家評価',
-			'libraries.sortLabels.userRating' => 'ユーザー評価',
-			'libraries.sortLabels.datePlayed' => '再生日',
-			'libraries.sortLabels.playCount' => '再生回数',
-			'libraries.sortLabels.productionYear' => '製作年',
-			'libraries.sortLabels.runtime' => '再生時間',
-			'libraries.sortLabels.officialRating' => '公式レーティング',
-			'libraries.sortLabels.premiereDate' => '初公開日',
-			'libraries.sortLabels.startDate' => '開始日',
-			'libraries.sortLabels.airTime' => '放送時刻',
-			'libraries.sortLabels.studio' => 'スタジオ',
-			'libraries.sortLabels.random' => 'ランダム',
-			'libraries.sortLabels.dateShared' => '共有日',
-			'libraries.sortLabels.latestEpisodeAirDate' => '最新エピソード放送日',
-			'libraries.sortLabels.lastEpisodeDateAdded' => '最新エピソード追加日',
-			'libraries.sortLabels.dateDownloaded' => 'ダウンロード日',
-			'libraries.sortLabels.size' => 'サイズ',
-			'libraries.sortLabels.library' => 'ライブラリ',
-			'libraries.advancedFilters.include' => '含める',
-			'libraries.advancedFilters.exclude' => '除外',
-			'libraries.advancedFilters.any' => '指定なし',
-			'libraries.advancedFilters.yes' => 'はい',
-			'libraries.advancedFilters.no' => 'いいえ',
-			'libraries.advancedFilters.not' => ({required Object value}) => '${value}以外',
-			'libraries.advancedFilters.valueCount' => ({required Object count}) => '${count}件選択',
-			'libraries.advancedFilters.valueCountExcluded' => ({required Object count}) => '${count}件除外',
-			'libraries.advancedFilters.searchValues' => '値を検索',
-			'libraries.advancedFilters.noValues' => '値がありません',
-			'libraries.advancedFilters.matchContains' => '含む',
-			'libraries.advancedFilters.matchNotContains' => '含まない',
-			'libraries.advancedFilters.matchIs' => '一致する',
-			'libraries.advancedFilters.matchIsNot' => '一致しない',
-			'libraries.advancedFilters.matchBeginsWith' => '前方一致',
-			'libraries.advancedFilters.matchEndsWith' => '後方一致',
-			'libraries.advancedFilters.textHint' => 'テキストを入力',
-			'libraries.advancedFilters.from' => '下限',
-			'libraries.advancedFilters.to' => '上限',
-			'libraries.advancedFilters.range' => ({required Object from, required Object to}) => '${from}〜${to}',
-			'libraries.advancedFilters.atLeast' => ({required Object value}) => '${value}以上',
-			'libraries.advancedFilters.atMost' => ({required Object value}) => '${value}以下',
-			'libraries.advancedFilters.dateLastDays' => ({required Object count}) => '過去${count}日間',
-			'libraries.advancedFilters.dateLastYear' => '過去1年間',
-			'libraries.advancedFilters.dateOlderThanDays' => ({required Object count}) => '${count}日以上前',
-			'libraries.advancedFilters.dateOlderThanYear' => '1年以上前',
-			'about.title' => 'アプリについて',
-			'about.openSourceLicenses' => 'オープンソースライセンス',
-			'about.versionLabel' => ({required Object version}) => 'バージョン ${version}',
-			'about.appDescription' => 'Flutter製の美しいPlex・Jellyfin・Embyクライアント',
-			'about.viewLicensesDescription' => 'サードパーティライブラリのライセンスを表示',
-			'serverSelection.noServersFoundForAccount' => ({required Object username, required Object email}) => '${username} (${email})のサーバーが見つかりません',
-			'serverSelection.failedToLoadServers' => ({required Object error}) => 'サーバーの読み込みに失敗しました: ${error}',
-			'serverSelection.noValidServers' => 'このアカウントで利用可能なサーバーが見つかりませんでした',
-			'hubDetail.title' => 'タイトル',
-			'hubDetail.releaseYear' => '公開年',
-			'hubDetail.dateAdded' => '追加日',
-			'hubDetail.rating' => '評価',
-			'hubDetail.noItemsFound' => 'アイテムが見つかりません',
-			'logs.clearLogs' => 'ログをクリア',
-			'logs.copyLogs' => 'ログをコピー',
-			'logs.uploadLogs' => 'ログをアップロード',
-			'startup.failedTitle' => 'Plezyを起動できませんでした',
-			'startup.failedBody' => '起動中に問題が発生しました。以下の詳細に失敗の原因が示されています。',
-			'startup.failedBodyRepairable' => 'Plezyの保存済み設定ファイルが破損しているため、Plezyを起動する前に再構築する必要があります。再試行しても解決しません —「ストレージを修復」を選択してください。',
-			'startup.phaseLabel' => 'ステップ',
-			'startup.showDetails' => '詳細を表示',
-			'startup.hideDetails' => '詳細を非表示',
-			'startup.copyDetails' => '詳細をコピー',
-			'startup.detailsCopied' => '詳細をクリップボードにコピーしました',
-			'startup.uploadDetails' => '詳細をアップロード',
-			'startup.repairStorage' => 'ストレージを修復',
-			'startup.repairTitle' => '保存データを修復しますか？',
-			'startup.repairBodyCommon' => 'Plezyの設定ファイルが破損しており読み取れません。修復するとすべての設定がデフォルトにリセットされます。',
-			'startup.repairBodyOneCredential' => '保存済みのサインインの1つが破損しており読み取れません。修復するとその1つだけが削除され、他の設定には影響しません。',
-			'startup.repairBodySignInsKept' => 'サーバーとプロフィールはサインインしたままになります。',
-			'startup.repairBodySignInsLost' => '保存済みのサインインを保護するキーをこのファイルから復元できないため、すべてのサーバーとプロフィールに再度サインインする必要があります。メディアサーバー上のデータには影響ありません。',
-			'startup.repairBodySessionsUncertain' => 'トラッカー（MAL、AniList、Simkl、Trakt）とSeerrは別途保存されており、保持されるかどうかは不明です。Plezyは保持した内容を正確にお知らせします。',
-			'startup.repairConfirm' => '修復',
-			'startup.repairSucceeded' => 'ストレージを修復しました',
-			'startup.repairNeedsRestart' => 'ストレージを修復しました — 再起動が必要です',
-			'startup.restartRequiredBody' => 'データは修復されましたが、Plezyはそれを使用する前に再起動する必要があります。Plezyを閉じて再度開いてください。',
-			'startup.quitPlezy' => 'Plezyを終了',
-			'startup.repairFailed' => '修復に失敗しました',
-			'startup.repairKeptSignIns' => 'サーバーとプロフィールはサインインしたままです。',
-			'startup.repairLostSignIns' => '保存済みのサインインを保護するキーを復元できませんでした。すべてのサーバーとプロフィールに再度サインインする必要があります。',
-			'startup.repairLostSessions' => '少なくとも1つのトラッカーまたはSeerr接続が失われたため、再接続が必要です。',
-			'startup.backupTitle' => '破損したファイルのコピーを保持しました',
-			'startup.backupWarning' => 'このコピーにはサインイン資格情報が含まれています。アップロードや共有はしないでください。',
-			'startup.deleteBackup' => 'コピーを削除',
-			'startup.backupDeleted' => 'コピーを削除しました。',
-			'startup.previousFailureTitle' => '前回、Plezyは起動に失敗しました',
-			'licenses.relatedPackages' => '関連パッケージ',
-			'licenses.license' => 'ライセンス',
-			'licenses.licenseNumber' => ({required Object number}) => 'ライセンス ${number}',
-			'licenses.licensesCount' => ({required Object count}) => '${count}件のライセンス',
-			'navigation.libraries' => 'ライブラリ',
-			'navigation.downloads' => 'ダウンロード',
-			'navigation.liveTv' => 'ライブTV',
-			'navigation.explore' => '見つける',
-			'explore.title' => '見つける',
-			'explore.selectSource' => 'ソースを選択',
-			'explore.rows.watchlist' => 'ウォッチリスト',
-			'explore.rows.recommendedMovies' => 'おすすめの映画',
-			'explore.rows.recommendedShows' => 'おすすめのテレビ番組',
-			'explore.rows.trendingMovies' => 'トレンドの映画',
-			'explore.rows.trendingShows' => 'トレンドのテレビ番組',
-			'explore.rows.popularMovies' => '人気の映画',
-			'explore.rows.popularShows' => '人気のテレビ番組',
-			'explore.rows.trendingAnime' => 'トレンドのアニメ',
-			'explore.rows.suggestedAnime' => 'おすすめのアニメ',
-			'explore.rows.airingAnime' => '放送中の注目アニメ',
-			'explore.rows.popularAnime' => '人気のアニメ',
-			'explore.rows.trending' => 'トレンド',
-			'explore.rows.upcomingMovies' => '近日公開の映画',
-			'explore.rows.upcomingShows' => '放送予定の番組',
-			'explore.status.airing' => '放送中',
-			'explore.status.ended' => '放送終了',
-			'explore.status.canceled' => '打ち切り',
-			'explore.status.upcoming' => '放送予定',
-			'explore.episodeCount' => ({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('ja'))(n, other: '${n}話', ), 
-			'explore.cast' => 'キャスト',
-			'explore.characters' => 'キャラクター',
-			'explore.addToWatchlist' => 'ウォッチリストに追加',
-			'explore.removeFromWatchlist' => 'ウォッチリストから削除',
-			'explore.addedToWatchlist' => 'ウォッチリストに追加しました',
-			'explore.removedFromWatchlist' => 'ウォッチリストから削除しました',
-			'explore.watchlistUpdateFailed' => 'ウォッチリストを更新できませんでした',
-			'explore.watchlistNoMatch' => 'このアイテムに一致するウォッチリスト項目が見つかりませんでした',
-			'explore.notInLibrary' => 'ライブラリにありません',
-			'explore.inTheseLibraries' => 'これらのライブラリにあります',
-			'explore.checkingLibrary' => 'ライブラリを確認中…',
-			'explore.libraryCheckFailed' => ({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('ja'))(n, other: '${n}台のサーバーを確認できませんでした', ), 
-			'explore.emptyTitle' => 'まだ何もありません',
-			'explore.emptyMessage' => ({required Object source}) => '${source}にコンテンツが追加されると、ここに表示されます。',
-			'explore.searchHint' => ({required Object source}) => '${source}を検索',
-			'explore.searchEmpty' => ({required Object query}) => '「${query}」の結果が見つかりません',
-			'explore.searchPrompt' => ({required Object source}) => '${source}で映画やテレビ番組を検索します。',
-			'explore.searchFailed' => '検索に失敗しました。接続を確認してもう一度お試しください。',
-			'explore.badge.rankPopular' => ({required Object n}) => '人気 #${n}',
-			'explore.badge.rankAiring' => ({required Object n}) => '放送中 #${n}',
-			'explore.badge.rankRated' => ({required Object n}) => '評価 #${n}',
-			'explore.badge.rankTrending' => ({required Object n}) => '急上昇 #${n}',
-			'explore.badge.rankSeasonal' => ({required Object n, required Object season}) => '#${n}（${season}）',
-			'explore.badge.watchingNow' => ({required Object n}) => '${n}人視聴中',
-			'explore.badge.available' => '視聴可能',
-			'explore.badge.partiallyAvailable' => '一部視聴可能',
-			'explore.badge.availableIn4k' => '4K対応',
-			'explore.badge.requested' => 'リクエスト済み',
-			'explore.badge.pendingApproval' => '承認待ち',
-			'explore.badge.processing' => '処理中',
-			'explore.badge.declined' => '却下',
-			'explore.badge.requestFailed' => 'リクエスト失敗',
-			'explore.badge.requested4k' => '4Kリクエスト済み',
-			'explore.badge.seasonsAvailable' => ({required Object available, required Object total}) => 'シーズン ${available}/${total}',
-			'explore.badge.nextEpisodeIn' => ({required Object episode, required Object duration}) => 'エピソード${episode} あと${duration}',
-			'explore.badge.nextAiringIn' => ({required Object duration}) => '次回 あと${duration}',
-			'explore.badge.episodesShort' => ({required Object n}) => '${n}話',
-			'explore.badge.minutesPerEpisode' => ({required Object n}) => '${n}分/話',
-			'explore.badge.adult' => '18+',
-			'explore.stats.listed' => ({required Object n}) => '登録者 ${n}人',
-			'explore.stats.viewersDay' => ({required Object n}) => '本日${n}人が視聴',
-			'explore.stats.viewersWeek' => ({required Object n}) => '今週${n}人が視聴',
-			'explore.stats.viewersMonth' => ({required Object n}) => '今月${n}人が視聴',
-			'explore.stats.viewersYear' => ({required Object n}) => '今年${n}人が視聴',
-			'explore.stats.viewersAllTime' => ({required Object n}) => '累計視聴者${n}人',
-			'explore.stats.planning' => ({required Object n}) => '${n}人が視聴予定',
-			'explore.stats.favorited' => ({required Object n}) => 'お気に入り ${n}件',
-			'explore.stats.dropRate' => ({required Object percent}) => '${percent}が視聴中止',
-			'explore.stats.comments' => ({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('ja'))(n, other: 'コメント ${n}件', ), 
-			'explore.stats.votes' => ({required Object n}) => '投票 ${n}件',
-			'explore.stats.watching' => ({required Object n}) => '${n}人が視聴中',
-			'explore.stats.completed' => ({required Object n}) => '${n}人が視聴済み',
-			'explore.stats.onHold' => ({required Object n}) => '${n}人が保留中',
-			'explore.stats.dropped' => ({required Object n}) => '${n}人が視聴中止',
-			'explore.season.winter' => '冬',
-			'explore.season.spring' => '春',
-			'explore.season.summer' => '夏',
-			'explore.season.fall' => '秋',
-			'explore.season.withYear' => ({required Object season, required Object year}) => '${season} ${year}',
-			'explore.format.tv' => 'TV',
-			'explore.format.tvShort' => 'TV短編',
-			'explore.format.movie' => '映画',
-			'explore.format.special' => 'スペシャル',
-			'explore.format.ova' => 'OVA',
-			'explore.format.ona' => 'ONA',
-			'explore.format.music' => '音楽',
-			'explore.format.other' => 'その他',
-			'explore.sourceMaterial.original' => 'オリジナル',
-			'explore.sourceMaterial.manga' => '漫画',
-			'explore.sourceMaterial.lightNovel' => 'ライトノベル',
-			'explore.sourceMaterial.novel' => '小説',
-			'explore.sourceMaterial.visualNovel' => 'ビジュアルノベル',
-			'explore.sourceMaterial.game' => 'ゲーム',
-			'explore.sourceMaterial.webComic' => 'Web漫画',
-			'explore.sourceMaterial.musicRelease' => '音楽',
-			'explore.sourceMaterial.otherMedia' => 'その他',
-			'explore.creditRole.actor' => '俳優',
-			'explore.creditRole.director' => '監督',
-			'explore.creditRole.writer' => '脚本',
-			'explore.creditRole.producer' => 'プロデューサー',
-			'explore.creditRole.creator' => '原作者',
-			'explore.creditRole.composer' => '作曲家',
-			'explore.relation.prequel' => '前日譚',
-			'explore.relation.sequel' => '続編',
-			'explore.relation.sideStory' => 'サイドストーリー',
-			'explore.relation.spinOff' => 'スピンオフ',
-			'explore.relation.alternativeVersion' => '別バージョン',
-			'explore.relation.summary' => '総集編',
-			'explore.relation.parentStory' => '親作品',
-			'explore.relation.adaptation' => '原作',
-			'explore.relation.other' => '関連作品',
-			'explore.broadcast' => ({required Object day, required Object time}) => '${day} ${time}に放送',
-			'explore.broadcastWithZone' => ({required Object day, required Object time, required Object timezone}) => '${day} ${time}（${timezone}）に放送',
-			'explore.detail.originalTitle' => '原題',
-			'explore.detail.alsoKnownAs' => '別名',
-			'explore.detail.studios' => '制作会社',
-			'explore.detail.country' => '国',
-			'explore.detail.language' => '言語',
-			'explore.detail.released' => '公開日',
-			'explore.detail.physicalRelease' => 'ディスク発売',
-			'explore.detail.ended' => '放送終了',
-			'explore.detail.addedOn' => ({required Object date}) => '${date}に追加',
-			'explore.detail.yourRating' => 'あなたの評価',
-			'explore.detail.budget' => '制作費',
-			'explore.detail.revenue' => '興行収入',
-			'explore.detail.contentAdvisory' => '年齢区分',
-			'explore.detail.tags' => 'タグ',
-			'explore.detail.revealSpoilerTags' => 'ネタバレタグを表示',
-			'explore.detail.links' => 'リンク',
-			'explore.detail.watchOn' => '視聴先',
-			'explore.detail.watchTrailer' => '予告編を見る',
-			'explore.detail.openOn' => ({required Object site}) => '${site}で開く',
-			'explore.detail.trailerUnavailable' => 'この端末では予告編を開けませんでした',
-			'explore.detail.linkUnavailable' => 'この端末ではリンクを開けませんでした',
-			'explore.detail.crew' => 'スタッフ',
-			'explore.detail.ratings' => '評価',
-			'explore.detail.schedule' => '放送予定',
-			'explore.detail.recommendedByUsers' => ({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('ja'))(n, other: '${n}人のユーザーがおすすめ', ), 
-			'explore.detail.recommendedBy' => ({required Object who}) => '${who}がおすすめ',
-			'explore.detail.favoritedBy' => ({required Object who}) => '${who}がお気に入り登録',
-			'explore.detail.unairedEpisodes' => ({required Object n}) => '未放送 ${n}話',
-			'explore.detail.recommendedByPercent' => ({required Object percent}) => '視聴者の${percent}がおすすめ',
-			'explore.detail.relatedTitles' => '関連作品',
-			'explore.detail.background' => '背景',
-			'explore.totalResults' => ({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('ja'))(n, other: '${n}件の結果', ), 
-			'liveTv.title' => 'ライブTV',
-			'liveTv.guide' => '番組表',
-			'liveTv.noChannels' => 'チャンネルがありません',
-			'liveTv.noDvr' => 'どのサーバーにもDVRが設定されていません',
-			'liveTv.serverUnavailable' => 'ライブTVサーバーを利用できません。',
-			'liveTv.serverNotConnected' => 'ライブTVサーバーに接続されていません。',
-			'liveTv.noPrograms' => '番組データがありません',
-			'liveTv.liveStreamFailed' => 'ライブストリームに失敗しました',
-			'liveTv.unknownProgram' => '不明な番組',
-			'liveTv.unknownHub' => '不明',
-			'liveTv.unknownError' => '不明なエラー',
-			'liveTv.channelNumber' => ({required Object number}) => 'チャンネル ${number}',
-			'liveTv.unknownChannel' => '不明なチャンネル',
-			'liveTv.live' => 'ライブ',
-			'liveTv.reloadGuide' => '番組表を再読み込み',
-			'liveTv.searchGuide' => '番組表を検索',
-			'liveTv.searchHint' => 'チャンネル・番組を検索',
-			'liveTv.searchNoResults' => ({required Object query}) => '「${query}」に一致するものがありません',
-			'liveTv.channelsSection' => 'チャンネル',
-			'liveTv.programsSection' => '番組',
-			'liveTv.now' => '現在',
-			'liveTv.today' => '今日',
-			'liveTv.tomorrow' => '明日',
-			'liveTv.midnight' => '午前0時',
-			'liveTv.overnight' => '深夜',
-			'liveTv.morning' => '朝',
-			'liveTv.daytime' => '日中',
-			'liveTv.evening' => '夕方',
-			'liveTv.lateNight' => '夜更け',
-			'liveTv.whatsOn' => '放送中',
-			'liveTv.watchChannel' => 'チャンネルを視聴',
-			'liveTv.favorites' => 'お気に入り',
-			'liveTv.reorderFavorites' => 'お気に入りを並べ替え',
-			'liveTv.noFavoriteChannels' => 'お気に入りのチャンネルがありません',
-			'liveTv.noFavoriteChannelsHint' => 'すべてのチャンネルを表示し、チャンネルを長押ししてお気に入りに追加してください。',
-			'liveTv.showAllChannels' => 'すべてのチャンネルを表示',
-			'liveTv.favoritesLoadFailed' => 'お気に入りを読み込めませんでした。接続を確認してもう一度お試しください。',
-			'liveTv.favoritesUpdateFailed' => 'お気に入りを更新できませんでした。接続を確認してもう一度お試しください。',
-			'liveTv.joinSession' => '進行中のセッションに参加',
-			'liveTv.watchFromStart' => ({required Object minutes}) => '最初から視聴（${minutes}分前に開始）',
-			'liveTv.watchLive' => 'ライブで視聴',
-			'liveTv.goToLive' => 'ライブに移動',
-			'liveTv.record' => '録画',
-			'liveTv.recordEpisode' => 'このエピソードを録画',
-			'liveTv.recordSeries' => 'シリーズを録画',
-			'liveTv.recordOptions' => '録画オプション',
-			'liveTv.saveTo' => '保存先',
-			'liveTv.recordings' => '録画',
-			'liveTv.scheduledRecordings' => '予約',
-			'liveTv.recordingRules' => '録画ルール',
-			'liveTv.noScheduledRecordings' => '予約された録画はありません',
-			'liveTv.manageRecording' => '録画を管理',
-			'liveTv.cancelRecording' => '録画をキャンセル',
-			'liveTv.cancelRecordingTitle' => 'この録画をキャンセルしますか？',
-			'liveTv.cancelRecordingMessage' => ({required Object title}) => '${title}は録画されなくなります。',
-			'liveTv.deleteRule' => 'ルールを削除',
-			'liveTv.deleteRuleTitle' => '録画ルールを削除しますか？',
-			'liveTv.deleteRuleMessage' => ({required Object title}) => '${title}の今後のエピソードは録画されません。',
-			'liveTv.recordingScheduled' => '録画を予約しました',
-			'liveTv.alreadyScheduled' => 'この番組はすでに予約されています',
-			'liveTv.dvrAdminRequired' => 'DVR設定には管理者アカウントが必要です',
-			'liveTv.recordingFailed' => '録画を予約できませんでした',
-			'liveTv.recordingTargetMissing' => '録画ライブラリを特定できませんでした',
-			'liveTv.recordNotAvailable' => 'この番組は録画できません',
-			'liveTv.recordingCancelled' => '録画をキャンセルしました',
-			'liveTv.recordingRuleDeleted' => '録画ルールを削除しました',
-			'liveTv.processRecordingRules' => 'ルールを再評価',
-			'liveTv.recordingInProgress' => '録画中',
-			'liveTv.recordingsCount' => ({required Object count}) => '${count}件予約済み',
-			'liveTv.editRule' => 'ルールを編集',
-			'liveTv.editRuleAction' => '編集',
-			'liveTv.recordingRuleUpdated' => '録画ルールを更新しました',
-			'liveTv.guideReloadRequested' => '番組表の更新をリクエストしました',
-			'liveTv.guideReloadFailed' => '番組表を再読み込みできませんでした',
-			'liveTv.rulesProcessRequested' => '録画ルールの再評価をリクエストしました',
-			'liveTv.rulesProcessFailed' => '録画ルールを再適用できませんでした',
-			'liveTv.recordShow' => '番組を録画',
-			'liveTv.recordSettings.startEarly' => '早めに開始（秒）',
-			'liveTv.recordSettings.endLate' => '遅めに終了（秒）',
-			'liveTv.recordSettings.newOnly' => '新しいエピソードのみ',
-			'liveTv.recordSettings.anyChannel' => 'すべてのチャンネルで録画',
-			'liveTv.recordSettings.anyTime' => 'すべての時間帯で録画',
-			'liveTv.recordSettings.skipInLibrary' => 'ライブラリにあるエピソードをスキップ',
-			'liveTv.recordSettings.keepUpTo' => '保持するエピソード数',
-			_ => null,
-		} ?? switch (path) {
-			'liveTv.recordSettings.keepUpToHint' => '0 ですべてのエピソードを保持',
-			'liveTv.startingInMinutes' => ({required Object minutes}) => '${minutes}分後に開始',
-			'liveTv.dayAtTime' => ({required Object day, required Object time}) => '${day} ${time}',
-			'liveTv.invalidPlaybackData' => ({required Object product}) => '${product}から無効なライブTV再生データが返されました',
-			'liveTv.failedToStartChannel' => 'ライブチャンネルを開始できませんでした',
-			'liveTv.failedToBuildStreamUrl' => 'ストリームURLを生成できませんでした',
-			'liveTv.playbackStartFailed' => ({required Object reason}) => 'チャンネルを再生できませんでした: ${reason}',
-			'liveTv.channelSwitchFailed' => ({required Object reason}) => 'チャンネルを切り替えられませんでした: ${reason}',
-			'collections.title' => 'コレクション',
-			'collections.collection' => 'コレクション',
-			'collections.empty' => 'コレクションは空です',
-			'collections.deleteCollection' => 'コレクションを削除',
-			'collections.deleteConfirm' => ({required Object title}) => '「${title}」を削除しますか？この操作は元に戻せません。',
-			'collections.deleted' => 'コレクションを削除しました',
-			'collections.deleteFailed' => 'コレクションの削除に失敗しました',
-			'collections.deleteFailedWithError' => ({required Object error}) => 'コレクションの削除に失敗しました: ${error}',
-			'collections.selectCollection' => 'コレクションを選択',
-			'collections.collectionName' => 'コレクション名',
-			'collections.enterCollectionName' => 'コレクション名を入力',
-			'collections.addedToCollection' => 'コレクションに追加しました',
-			'collections.errorAddingToCollection' => 'コレクションへの追加に失敗しました',
-			'collections.created' => 'コレクションを作成しました',
-			'collections.removeFromCollection' => 'コレクションから削除',
-			'collections.removeFromCollectionConfirm' => ({required Object title}) => '「${title}」をこのコレクションから削除しますか？',
-			'collections.removedFromCollection' => 'コレクションから削除しました',
-			'collections.removeFromCollectionFailed' => 'コレクションからの削除に失敗しました',
-			'collections.removeFromCollectionError' => ({required Object error}) => 'コレクションからの削除エラー: ${error}',
-			'collections.searchCollections' => 'コレクションを検索…',
-			'playlists.title' => 'プレイリスト',
-			'playlists.playlist' => 'プレイリスト',
-			'playlists.noPlaylists' => 'プレイリストが見つかりません',
-			'playlists.create' => 'プレイリストを作成',
-			'playlists.playlistName' => 'プレイリスト名',
-			'playlists.enterPlaylistName' => 'プレイリスト名を入力',
-			'playlists.delete' => 'プレイリストを削除',
-			'playlists.removeItem' => 'プレイリストから削除',
-			'playlists.smartPlaylist' => 'スマートプレイリスト',
-			'playlists.itemCount' => ({required Object count}) => '${count}件',
-			'playlists.oneItem' => '1件',
-			'playlists.emptyPlaylist' => 'このプレイリストは空です',
-			'playlists.deleteConfirm' => 'プレイリストを削除しますか？',
-			'playlists.deleteMessage' => ({required Object name}) => '「${name}」を削除しますか？',
-			'playlists.created' => 'プレイリストを作成しました',
-			'playlists.deleted' => 'プレイリストを削除しました',
-			'playlists.itemAdded' => 'プレイリストに追加しました',
-			'playlists.itemRemoved' => 'プレイリストから削除しました',
-			'playlists.selectPlaylist' => 'プレイリストを選択',
-			'playlists.searchPlaylists' => 'プレイリストを検索…',
-			'playlists.errorCreating' => 'プレイリストの作成に失敗しました',
-			'playlists.errorDeleting' => 'プレイリストの削除に失敗しました',
-			'playlists.errorLoading' => 'プレイリストの読み込みに失敗しました',
-			'playlists.errorAdding' => 'プレイリストへの追加に失敗しました',
-			'playlists.errorReordering' => 'プレイリストアイテムの並べ替えに失敗しました',
-			'playlists.errorRemoving' => 'プレイリストからの削除に失敗しました',
-			'music.goToAlbum' => 'アルバムへ移動',
-			'music.goToArtist' => 'アーティストへ移動',
-			'music.instantMix' => 'インスタントミックス',
-			'music.playNext' => '次に再生',
-			'music.addToQueue' => 'キューに追加',
-			'music.discNumber' => ({required Object n}) => 'ディスク ${n}',
-			'music.trackCount' => ({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('ja'))(n, other: '${n}曲', ), 
-			'music.nowPlaying' => '再生中',
-			'music.playingFrom' => ({required Object title}) => '${title}から再生',
-			'music.queue' => '再生キュー',
-			'music.clearQueue' => 'キューをクリア',
-			'music.lyrics' => '歌詞',
-			'music.noLyrics' => '歌詞がありません',
-			'music.sleepTimer' => 'スリープタイマー',
-			'music.sleepTimerEndOfTrack' => '曲の終わり',
-			'music.sleepTimerMinutes' => ({required Object n}) => '${n} 分',
-			'music.stopPlayback' => '再生を停止',
-			'music.previousTrack' => '前の曲',
-			'music.nextTrack' => '次の曲',
-			'music.repeat' => 'リピート',
-			'music.repeatAll' => '全曲リピート',
-			'music.repeatOne' => '1曲リピート',
-			'music.instantMixNoServer' => 'インスタントミックスに利用できるサーバーがありません',
-			'music.instantMixFailed' => 'インスタントミックスを読み込めませんでした',
-			'music.instantMixEmpty' => 'インスタントミックスにトラックがありませんでした',
-			'music.noAudioUrl' => ({required Object track}) => '${track}で利用可能な音声URLがありません',
-			'music.discography.singlesAndEps' => 'シングル・EP',
-			'music.discography.live' => 'ライブ',
-			'music.discography.compilations' => 'コンピレーション',
-			'watchTogether.title' => '一緒に見る',
-			'watchTogether.description' => '友達や家族と同期してコンテンツを視聴',
-			'watchTogether.createRoom' => 'ルームを作成',
-			'watchTogether.creatingRoom' => 'ルームを作成中…',
-			'watchTogether.joinRoom' => 'ルームに参加',
-			'watchTogether.joiningRoom' => 'ルームに参加中…',
-			'watchTogether.connecting' => '接続中…',
-			'watchTogether.relayPublic' => 'ルームは公開のOpen Watch Partyリレーサーバーを使用します。',
-			'watchTogether.relayCustom' => ({required Object url}) => 'ルームは${url}のリレーサーバーを使用します。',
-			'watchTogether.recentRooms' => '最近のルーム',
-			'watchTogether.roomActions' => 'ルームの操作',
-			'watchTogether.renameRoom' => 'ルーム名を変更',
-			'watchTogether.removeRoom' => '削除',
-			'watchTogether.enterRoomCode' => 'ホストから共有された6文字のコードを入力してください。',
-			'watchTogether.roomCode' => 'ルームコード',
-			'watchTogether.paste' => '貼り付け',
-			'watchTogether.noCodeInClipboard' => 'クリップボードにルームコードがありません',
-			'watchTogether.copyCode' => 'コードをコピー',
-			'watchTogether.codeCopied' => 'ルームコードをコピーしました',
-			'watchTogether.shareInvite' => '招待を共有',
-			'watchTogether.inviteCopied' => '招待をコピーしました。メッセージに貼り付けてください。',
-			'watchTogether.inviteMessage' => ({required Object code}) => 'Plezyの「一緒に見る」ルームに参加しませんか？「一緒に見る」を開いて「ルームに参加」を選び、${code}を入力してください。',
-			'watchTogether.openSessionControls' => '「一緒に見る」セッションのコントロールを開く',
-			'watchTogether.reconnecting' => '再接続中…',
-			'watchTogether.reconnectingDescription' => '接続が切断されました。自動的にルームに再参加します。',
-			'watchTogether.connected' => '接続済み',
-			'watchTogether.disconnected' => '切断されました',
-			'watchTogether.youAreHost' => 'あなたはホストです',
-			'watchTogether.hostedBy' => ({required Object name}) => 'ホスト: ${name}',
-			'watchTogether.hostControlsPlayback' => 'ホストが再生を制御',
-			'watchTogether.anyoneCanControl' => '全員が再生を制御可能',
-			'watchTogether.roomLocked' => 'ルームはロック中',
-			'watchTogether.nowPlaying' => '再生中',
-			'watchTogether.nothingPlaying' => '再生中のコンテンツはありません',
-			'watchTogether.nothingPlayingHost' => 'いずれかのライブラリから再生すると、ルームで共有されます。',
-			'watchTogether.nothingPlayingGuest' => 'ホストが再生を始めると、ここに表示されます。',
-			'watchTogether.notShareable' => 'この動画はカタログ情報と一致しないため、同じサーバーにアクセスできる人しか再生できません。',
-			'watchTogether.searching' => 'ライブラリでこの動画を探しています…',
-			'watchTogether.yourCopy' => 'あなたのコピー',
-			'watchTogether.sharingYourCopy' => 'あなたのコピーを共有しています',
-			'watchTogether.playingOtherLength' => ({required Object difference}) => 'あなたのコピーを再生中（${difference}）',
-			'watchTogether.mismatchTitle' => 'コピーの長さが異なります',
-			'watchTogether.mismatchDescription' => ({required Object difference}) => '最も近いコピーはルームの動画より${difference}です。別の編集版やバージョンの可能性があります。',
-			'watchTogether.playAnyway' => 'このまま再生',
-			'watchTogether.chooseAnotherCopy' => '別のコピーを選択',
-			'watchTogether.dontPlay' => '再生しない',
-			'watchTogether.unavailableTitle' => 'この動画がありません',
-			'watchTogether.unavailableDescription' => 'Plezyはライブラリでこの動画を見つけられませんでした。自分でコピーを選ぶか、もう一度検索してください。',
-			'watchTogether.chooseCopy' => 'コピーを選択',
-			'watchTogether.searchAgain' => '再検索',
-			'watchTogether.noCandidates' => 'ライブラリにコピーが見つかりません。',
-			'watchTogether.choiceFailed' => 'このコピーをルームで再生できませんでした',
-			'watchTogether.lengthLonger' => ({required Object duration}) => '${duration}長い',
-			'watchTogether.lengthShorter' => ({required Object duration}) => '${duration}短い',
-			'watchTogether.lengthSame' => '同じ長さ',
-			'watchTogether.lengthUnknown' => '長さ不明',
-			'watchTogether.joinCurrentPlayback' => '現在の再生に参加',
-			'watchTogether.joinCurrentPlaybackDescription' => 'ホストが現在視聴中のコンテンツに戻る',
-			'watchTogether.stopMedia' => '全員の動画を停止',
-			'watchTogether.syncOffset' => '同期オフセット',
-			'watchTogether.syncOffsetDescription' => '動画がルームより進んでいる、または遅れている場合にずらします。',
-			'watchTogether.offsetHint' => ({required Object difference}) => 'あなたのコピーはルームの動画より${difference}です。',
-			'watchTogether.applyDifference' => ({required Object offset}) => '${offset}を適用',
-			'watchTogether.offsetMinusSecond' => '-1秒',
-			'watchTogether.offsetMinusTenth' => '-100ms',
-			'watchTogether.offsetPlusTenth' => '+100ms',
-			'watchTogether.offsetPlusSecond' => '+1秒',
-			'watchTogether.participants' => '参加者',
-			'watchTogether.participantCount' => ({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('ja'))(n, other: '参加者${n}人', ), 
-			'watchTogether.hostBadge' => 'ホスト',
-			'watchTogether.nameYou' => ({required Object name}) => '${name}（あなた）',
-			'watchTogether.playerIdle' => '待機中',
-			'watchTogether.playerLoading' => '読み込み中',
-			'watchTogether.playerReady' => '準備完了',
-			'watchTogether.playerBuffering' => 'バッファリング中',
-			'watchTogether.matchSearching' => '検索中',
-			'watchTogether.matchMatched' => '動画あり',
-			'watchTogether.matchMismatched' => '長さが異なる',
-			'watchTogether.matchUnavailable' => '動画なし',
-			'watchTogether.participantOffset' => ({required Object offset}) => 'オフセット ${offset}',
-			'watchTogether.makeHost' => 'ホストにする',
-			'watchTogether.makeHostQuestion' => 'ホストを移譲しますか？',
-			'watchTogether.makeHostConfirm' => ({required Object name}) => '${name}が再生を制御し、全員のセッションを主導します。',
-			'watchTogether.transfer' => '移譲',
-			'watchTogether.removeParticipant' => 'ルームから削除',
-			'watchTogether.removeParticipantQuestion' => ({required Object name}) => '${name}を削除しますか？',
-			'watchTogether.removeParticipantConfirm' => ({required Object name}) => '${name}をルームから退出させます。ルームをロックしない限り、コードを使って再度参加できます。',
-			'watchTogether.remove' => '削除',
-			'watchTogether.roomSettings' => 'ルーム設定',
-			'watchTogether.letEveryoneControl' => '全員に再生の操作を許可',
-			'watchTogether.lockRoom' => 'ルームをロック',
-			'watchTogether.lockRoomDescription' => '新しい参加者は参加できなくなります',
-			'watchTogether.leaveRoom' => 'ルームを退出',
-			'watchTogether.leaveRoomQuestion' => 'ルームを退出しますか？',
-			'watchTogether.leaveRoomConfirm' => 'ルームコードを使って再度参加できます。',
-			'watchTogether.leave' => '退出',
-			'watchTogether.endRoom' => 'ルームを終了',
-			'watchTogether.endRoomQuestion' => 'ルームを終了しますか？',
-			'watchTogether.endRoomConfirm' => '参加者全員のルームが終了します。',
-			'watchTogether.end' => '終了',
-			'watchTogether.playBlockedTitle' => '再生が開始されませんでした',
-			'watchTogether.playBlockedDescription' => '再生を押して、ルームのみんなと一緒に視聴を始めてください。',
-			'watchTogether.notices.pressedPlay' => ({required Object name}) => '${name}が再生しました',
-			'watchTogether.notices.playbackStarted' => '再生が開始されました',
-			'watchTogether.notices.paused' => ({required Object name}) => '${name}が一時停止しました',
-			'watchTogether.notices.playbackPaused' => '再生が一時停止されました',
-			'watchTogether.notices.jumpedTo' => ({required Object name, required Object position}) => '${name}が${position}にジャンプしました',
-			'watchTogether.notices.roomJumpedTo' => ({required Object position}) => '${position}にジャンプしました',
-			'watchTogether.notices.changedSpeed' => ({required Object name, required Object speed}) => '${name}が速度を${speed}に設定しました',
-			'watchTogether.notices.speedChanged' => ({required Object speed}) => '速度が${speed}に設定されました',
-			'watchTogether.notices.startedMedia' => ({required Object name, required Object title}) => '${name}が${title}を再生しました',
-			'watchTogether.notices.mediaStarted' => ({required Object title}) => '${title}を再生中',
-			'watchTogether.notices.stoppedMedia' => ({required Object name}) => '${name}が動画を停止しました',
-			'watchTogether.notices.mediaStopped' => '動画が停止しました',
-			'watchTogether.notices.waitingFor' => ({required Object name}) => '${name}を待っています…',
-			'watchTogether.notices.waitingForSomeone' => '他の参加者が追いつくのを待っています…',
-			'watchTogether.notices.finished' => '再生終了',
-			'watchTogether.notices.hostChangedTo' => ({required Object name}) => '${name}がホストになりました',
-			'watchTogether.notices.youAreNowHost' => 'あなたがホストになりました',
-			'watchTogether.notices.joined' => ({required Object name}) => '${name}が参加しました',
-			'watchTogether.notices.left' => ({required Object name}) => '${name}が退出しました',
-			'watchTogether.notices.controlRefused' => '再生を操作できるのはホストのみです',
-			'watchTogether.notices.searchFailed' => '一部のサーバーでルームの動画を検索できませんでした',
-			'watchTogether.notices.playBlocked' => '再生を押して開始してください',
-			'watchTogether.notices.shareFailed' => 'この動画をルームと共有できませんでした',
-			'watchTogether.notices.downloadNotShared' => 'サーバーがオフラインの間、ダウンロードはルームと共有されません',
-			'watchTogether.notices.openFailed' => 'ルームの動画を開けませんでした',
-			'watchTogether.ended.ended' => 'ホストがルームを終了しました',
-			'watchTogether.ended.kicked' => 'ルームから削除されました',
-			'watchTogether.ended.expired' => 'ルームの有効期限が切れました',
-			'watchTogether.ended.replaced' => '別のデバイスでこのルームに参加しました',
-			'watchTogether.ended.lost' => 'ルームとの接続が切れました',
-			'watchTogether.errors.invalidCode' => 'ルームコードではありません。コードは0、1、I、L、Oを含まない6文字の英数字です。',
-			'watchTogether.errors.roomNotFound' => 'そのコードのルームはありません。終了した可能性があります。',
-			'watchTogether.errors.roomFull' => 'そのルームは満員です。',
-			'watchTogether.errors.roomLocked' => 'ホストがそのルームをロックしています。',
-			'watchTogether.errors.relayFull' => '「一緒に見る」は現在混み合っています。しばらくしてからもう一度お試しください。',
-			'watchTogether.errors.unreachable' => '「一緒に見る」のリレーサーバーに接続できませんでした。接続を確認してください。',
-			'watchTogether.errors.rateLimited' => '試行回数が多すぎます。しばらく待ってからもう一度お試しください。',
-			'watchTogether.errors.clientBlocked' => 'このバージョンのPlezyではリレーサーバーを使用できません。アプリをアップデートしてください。',
-			'watchTogether.errors.forbidden' => 'その操作はホストのみ可能です。',
-			'watchTogether.errors.notInRoom' => 'ルームに参加していません。',
-			'watchTogether.errors.alreadyInRoom' => 'すでにルームに参加しています。',
-			'watchTogether.errors.resumeFailed' => 'ルームに再参加できませんでした。',
-			'watchTogether.errors.unsupported' => 'リレーサーバーがこの操作に対応していません。',
-			'watchTogether.errors.generic' => '問題が発生しました。もう一度お試しください。',
-			'watchTogether.untitledEpisode' => ({required Object number}) => 'エピソード${number}',
-			'downloads.title' => 'ダウンロード',
-			'downloads.manage' => '管理',
-			'downloads.tvShows' => 'テレビ番組',
-			'downloads.movies' => '映画',
-			'downloads.music' => '音楽',
-			'downloads.tracksQueued' => ({required Object count}) => '${count} 曲をダウンロード待機中',
-			'downloads.noDownloads' => 'ダウンロードはまだありません',
-			'downloads.noDownloadsDescription' => 'ダウンロードしたコンテンツはここに表示され、オフラインで視聴できます',
-			'downloads.downloadNow' => 'ダウンロード',
-			'downloads.deleteDownload' => 'ダウンロードを削除',
-			'downloads.retryDownload' => 'ダウンロードを再試行',
-			'downloads.downloadQueued' => 'ダウンロードをキューに追加しました',
-			'downloads.downloadResumed' => 'ダウンロードを再開しました',
-			'downloads.serverErrorBitrate' => 'サーバーエラー: ファイルがリモートビットレート制限を超えている可能性があります',
-			'downloads.storageFull' => '空き容量を確保するため、ダウンロードを停止しました。空き容量を確保するか、別のダウンロード先を選んでから、もう一度お試しください。',
-			'downloads.storageUnavailable' => '空き容量を確認できなかったため、ダウンロードを停止しました。ダウンロード先を確認してから、もう一度お試しください。',
-			'downloads.episodesQueued' => ({required Object count}) => '${count}エピソードをダウンロードキューに追加しました',
-			'downloads.downloadDeleted' => 'ダウンロードを削除しました',
-			'downloads.deleteConfirm' => ({required Object title}) => 'このデバイスから「${title}」を削除しますか？',
-			'downloads.deleteCollectionDownloads' => 'ダウンロードを削除',
-			'downloads.deleteCollectionDownloadsConfirm' => ({required Object title}) => '「${title}」のすべてのダウンロードをこのデバイスから削除しますか？',
-			'downloads.collectionDownloadsDeleted' => 'ダウンロードを削除しました',
-			'downloads.cancelledDownloadTitle' => 'キャンセル済みのダウンロード',
-			'downloads.cancelledDownloadMessage' => 'このダウンロードはキャンセルされました。どうしますか？',
-			'downloads.allEpisodesAlreadyDownloaded' => 'すべてのエピソードはすでにダウンロード済みです',
-			'downloads.resumeDownload' => 'ダウンロードを再開',
-			'downloads.cancelledDownload' => 'キャンセル済みのダウンロード',
-			'downloads.syncingFile' => ({required Object file, required Object status}) => '${file}（${status}を同期中）',
-			'downloads.downloadedFileClickToComplete' => ({required Object file}) => '${file}をダウンロード済み — クリックして完了',
-			'downloads.partialDownloadClickToComplete' => '一部ダウンロード済み — クリックして完了',
-			'downloads.deleting' => '削除中…',
-			'downloads.deletingWithProgress' => ({required Object title, required Object current, required Object total}) => '${title}を削除中…（${current}/${total}）',
-			'downloads.queuedTooltip' => 'キュー',
-			'downloads.queuedFilesTooltip' => ({required Object files}) => 'キュー：${files}',
-			'downloads.downloadingTooltip' => 'ダウンロード中…',
-			'downloads.downloadingFilesTooltip' => ({required Object files}) => '${files}をダウンロード中',
-			'downloads.noDownloadsTree' => 'ダウンロードなし',
-			'downloads.pauseAll' => 'すべて一時停止',
-			'downloads.resumeAll' => 'すべて再開',
-			'downloads.retryAll' => 'すべて再試行',
-			'downloads.retryFailed' => '失敗したダウンロードを再試行',
-			'downloads.deleteAll' => 'すべて削除',
-			'downloads.selectVersion' => 'バージョンを選択',
-			'downloads.allEpisodes' => 'すべてのエピソード',
-			'downloads.unwatchedOnly' => '未視聴のみ',
-			'downloads.nextNUnwatched' => ({required Object count}) => '次の${count}件の未視聴',
-			'downloads.customAmount' => '数を指定…',
-			'downloads.includeSpecials' => 'スペシャルを含める',
-			'downloads.howManyEpisodes' => 'エピソード数',
-			'downloads.invalidEpisodeCount' => '有効なエピソード数を入力してください。',
-			'downloads.keepSynced' => '同期を維持',
-			'downloads.downloadOnce' => '一度だけダウンロード',
-			'downloads.keepNUnwatched' => ({required Object count}) => '未視聴を${count}件保持',
-			'downloads.editSyncRule' => '同期ルールを編集',
-			'downloads.removeSyncRule' => '同期ルールを削除',
-			'downloads.removeSyncRuleConfirm' => ({required Object title}) => '「${title}」の同期を停止しますか？ダウンロード済みのエピソードは保持されます。',
-			'downloads.removeListSyncRuleConfirm' => ({required Object title}) => '「${title}」の同期を停止しますか？',
-			'downloads.deleteSyncRuleDownloads' => '関連するダウンロードも削除',
-			'downloads.deleteSyncRuleDownloadsDescription' => '別の同期ルールやプロフィールで使用されているダウンロードは保持されます。',
-			'downloads.syncRuleCreated' => ({required Object count}) => '同期ルールを作成しました — 未視聴のエピソードを${count}件保持',
-			'downloads.syncRuleUpdated' => '同期ルールを更新しました',
-			'downloads.syncRuleRemoved' => '同期ルールを削除しました',
-			'downloads.syncRuleAndDownloadsRemoved' => '同期ルールと関連するダウンロードを削除しました',
-			'downloads.syncRuleCleanupBusy' => '同期ルールが更新中です。しばらくしてからもう一度お試しください。',
-			'downloads.syncRuleCleanupUnavailable' => '関連するダウンロードを安全に特定できませんでした。サーバーに再接続して再試行するか、ダウンロードを削除せずにルールを削除してください。',
-			'downloads.syncedNewEpisodes' => ({required Object title, required Object count}) => '${title}の新しいエピソードを${count}件同期しました',
-			'downloads.activeSyncRules' => '同期ルール',
-			'downloads.noSyncRules' => '同期ルールなし',
-			'downloads.manageSyncRule' => '同期を管理',
-			'downloads.editEpisodeCount' => 'エピソード数',
-			'downloads.editSyncFilter' => '同期フィルター',
-			'downloads.syncAllItems' => 'すべてのアイテムを同期中',
-			'downloads.syncUnwatchedItems' => '未視聴のアイテムを同期中',
-			'downloads.syncRuleServerContext' => ({required Object server, required Object status}) => 'サーバー: ${server} • ${status}',
-			'downloads.syncRuleAvailable' => '利用可能',
-			'downloads.syncRuleOffline' => 'オフライン',
-			'downloads.syncRuleSignInRequired' => 'サインインが必要',
-			'downloads.syncRuleAccessDenied' => 'アクセスが拒否されました',
-			'downloads.syncRuleNotAvailableForProfile' => '現在のプロフィールでは利用できません',
-			'downloads.syncRuleUnknownServer' => '不明なサーバー',
-			'downloads.syncRuleListCreated' => '同期ルールを作成しました',
-			'downloads.backgroundWarning.bannerBlocked' => 'アプリの画面を離れると、ダウンロードが停止します',
-			'downloads.backgroundWarning.bannerDegraded' => 'バックグラウンドダウンロードが制限される場合があります',
-			'downloads.backgroundWarning.bannerAction' => '詳細',
-			'downloads.backgroundWarning.sheetTitle' => 'バックグラウンドダウンロードはブロックされています',
-			'downloads.backgroundWarning.sheetTitleDegraded' => 'バックグラウンドダウンロードが制限される場合があります',
-			'downloads.backgroundWarning.sheetIntro' => 'Androidにより、Plezyはバックグラウンドで安定してダウンロードできません。',
-			'downloads.backgroundWarning.sheetIntroDegraded' => '端末により、Plezyがバックグラウンドでダウンロードできるタイミングが制限されています。',
-			'downloads.backgroundWarning.reasonBackgroundRestricted' => 'Plezyのバックグラウンド使用が制限されています。バッテリー使用量またはバックグラウンド使用を「制限なし」に設定してください。',
-			'downloads.backgroundWarning.reasonStandbyRestricted' => 'Androidにより、Plezyが制限付きのスタンバイ状態に設定されています。バッテリー使用量を「制限なし」に設定してください。',
-			'downloads.backgroundWarning.reasonDownloadChannelBlocked' => 'ダウンロード通知がオフのため、進行状況や操作ボタンを利用できない場合があります。',
-			'downloads.backgroundWarning.reasonNotificationsDisabled' => '通知がオフです。Android 13以降では、長時間のバックグラウンドダウンロードに通知が必要です。',
-			'downloads.backgroundWarning.reasonDataSaver' => 'データセーバーがオンのため、モバイルデータ通信ではバックグラウンドダウンロードがブロックされます。Wi-Fiでは引き続きダウンロードできるはずです。',
-			'downloads.backgroundWarning.reasonOemUnknown' => 'Plezyがバックグラウンドで動作中に、ダウンロードが繰り返し停止しました。Plezyのバッテリー使用量またはバックグラウンド使用の設定を確認してください。',
-			'downloads.backgroundWarning.openSettings' => '設定を開く',
-			'downloads.backgroundWarning.stillNotWorking' => '端末別のヘルプ',
-			'downloads.backgroundWarning.stillNotWorkingDescription' => 'お使いの端末向けの手順を確認してください。問題が続く場合は、設定 › ログを表示 からログを送信してください。',
-			'downloads.backgroundWarning.dialogTitle' => 'ダウンロードが完了しない可能性があります',
-			'downloads.backgroundWarning.dialogDownloadAnyway' => 'このままダウンロード',
-			'downloads.backgroundWarning.dialogFixFirst' => '先に設定を修正',
-			'downloads.backgroundWarning.statusTile' => 'バックグラウンドダウンロード',
-			'downloads.backgroundWarning.statusOk' => 'バックグラウンドで実行可能',
-			'downloads.backgroundWarning.statusBlocked' => 'システム設定によりブロック',
-			'downloads.backgroundWarning.statusDegraded' => 'システム設定により制限',
-			'downloads.backgroundWarning.statusUnknown' => '未確認',
-			'downloads.backgroundWarning.settingsUnavailable' => 'この端末ではシステム設定を開けませんでした',
-			'downloads.backgroundWarning.linkUnavailable' => 'この端末ではdontkillmyapp.comを開けませんでした',
-			'downloads.options' => 'ダウンロードのオプション',
-			'downloads.groupings.library' => 'ライブラリ',
-			'downloads.groupings.collections' => 'コレクション',
-			'downloads.unknownLibrary' => '不明なライブラリ',
-			'downloads.unknownShow' => '不明な番組',
-			'downloads.unknownSeason' => '不明なシーズン',
-			'downloads.unknownAlbum' => '不明なアルバム',
-			'downloads.completedOfTotal' => ({required Object completed, required Object total}) => '${completed}/${total}完了',
-			'downloads.errorFileNotFound' => 'ファイルが見つかりません（404）',
-			'downloads.errorDownloadNotAllowed' => 'サーバーがダウンロードを許可していません（403）',
-			'downloads.errorDownloadFailed' => 'ダウンロードに失敗しました',
-			'downloads.errorDownloadFailedWithReason' => ({required Object reason}) => 'ダウンロードに失敗しました: ${reason}',
-			'downloads.errorHttpStatus' => ({required Object status}) => 'ダウンロードに失敗しました（HTTP ${status}）',
-			'downloads.errorPostProcessing' => ({required Object reason}) => '後処理に失敗しました: ${reason}',
-			'downloads.reasonFileNotSaved' => 'このデバイスにファイルを保存できませんでした',
-			'downloads.reasonCannotResume' => '途中までのダウンロードを再開できませんでした',
-			'downloads.reasonDeviceStorageFull' => 'このデバイスのストレージが不足しています',
-			'downloads.notificationDownloading' => 'ダウンロード中…',
-			'downloads.notificationComplete' => 'ダウンロードが完了しました',
-			'downloads.notificationPaused' => 'ダウンロードを一時停止しました',
-			'shaders.title' => 'シェーダー',
-			'shaders.noShaderDescription' => '映像補正なし',
-			'shaders.nvscalerDescription' => 'NVIDIA画像スケーリングで映像をより鮮明にします',
-			'shaders.artcnnVariantNeutral' => 'ニュートラル',
-			'shaders.artcnnVariantDenoise' => 'ノイズ除去',
-			'shaders.artcnnVariantDenoiseSharpen' => 'ノイズ除去 + シャープ',
-			'shaders.qualityFast' => '高速',
-			'shaders.qualityHQ' => '高品質',
-			'shaders.mode' => 'モード',
-			'shaders.importShader' => 'シェーダーをインポート',
-			'shaders.customShaderDescription' => 'カスタムGLSLシェーダー',
-			'shaders.shaderImported' => 'シェーダーをインポートしました',
-			'shaders.shaderImportFailed' => 'シェーダーのインポートに失敗しました',
-			'shaders.deleteShader' => 'シェーダーを削除',
-			'shaders.deleteShaderConfirm' => ({required Object name}) => '「${name}」を削除しますか？',
-			'companionRemote.title' => 'コンパニオンリモート',
-			'companionRemote.connectedTo' => ({required Object name}) => '${name}に接続中',
-			'companionRemote.unknownDevice' => '不明なデバイス',
-			'companionRemote.session.startingServer' => 'リモートサーバーを起動中…',
-			'companionRemote.session.hostAddress' => 'ホストアドレス',
-			'companionRemote.session.connected' => '接続済み',
-			'companionRemote.session.serverRunning' => 'リモートサーバー稼働中',
-			'companionRemote.session.serverStopped' => 'リモートサーバー停止',
-			'companionRemote.session.serverRunningDescription' => 'ネットワーク上のモバイルデバイスがこのアプリに接続できます',
-			'companionRemote.session.serverStoppedDescription' => 'モバイルデバイスの接続を許可するにはサーバーを起動してください',
-			'companionRemote.session.usePhoneToControl' => 'モバイルデバイスでこのアプリを操作できます',
-			'companionRemote.session.startServer' => 'サーバーを起動',
-			'companionRemote.session.stopServer' => 'サーバーを停止',
-			'companionRemote.session.minimize' => '最小化',
-			'companionRemote.session.manualAddressHint' => '手動接続アドレス:',
-			'companionRemote.pairing.discoveryDescription' => '同じPlexアカウントを使用しているPlezyデバイスがここに表示されます',
-			'companionRemote.pairing.hostAddressHint' => '192.168.1.100:48632',
-			'companionRemote.pairing.connecting' => '接続中…',
-			'companionRemote.pairing.searchingForDevices' => 'デバイスを検索中…',
-			'companionRemote.pairing.noDevicesFound' => 'ネットワーク上にデバイスが見つかりません',
-			'companionRemote.pairing.noDevicesHint' => 'デスクトップでPlezyを開き、同じWi-Fiネットワークに接続してください',
-			'companionRemote.pairing.availableDevices' => '利用可能なデバイス',
-			'companionRemote.pairing.manualConnection' => '手動接続',
-			'companionRemote.pairing.cryptoInitFailed' => '安全な接続を開始できませんでした。先にPlexにサインインしてください。',
-			'companionRemote.pairing.validationHostRequired' => 'ホストアドレスを入力してください',
-			'companionRemote.pairing.validationHostFormat' => '形式はIP:ポートである必要があります（例: 192.168.1.100:48632）',
-			'companionRemote.pairing.connectionTimedOut' => '接続がタイムアウトしました。両方のデバイスで同じネットワークを使用してください。',
-			'companionRemote.pairing.sessionNotFound' => 'デバイスが見つかりません。ホストでPlezyが実行中か確認してください。',
-			'companionRemote.pairing.authFailed' => '認証に失敗しました。両方のデバイスで同じPlexアカウントが必要です。',
-			'companionRemote.pairing.failedToConnect' => ({required Object error}) => '接続に失敗しました: ${error}',
-			'companionRemote.remote.disconnectConfirm' => 'リモートセッションを切断しますか？',
-			'companionRemote.remote.reconnecting' => '再接続中…',
-			'companionRemote.remote.attemptOf' => ({required Object current}) => '試行 ${current}/5',
-			'companionRemote.remote.retryNow' => '今すぐ再試行',
-			'companionRemote.remote.tabRemote' => 'リモコン',
-			'companionRemote.remote.tabPlay' => '再生',
-			'companionRemote.remote.tabMore' => 'その他',
-			'companionRemote.remote.menu' => 'メニュー',
-			'companionRemote.remote.tabNavigation' => 'タブナビゲーション',
-			'companionRemote.remote.tabDiscover' => '探す',
-			'companionRemote.remote.tabLibraries' => 'ライブラリ',
-			'companionRemote.remote.tabSearch' => '検索',
-			'companionRemote.remote.tabDownloads' => 'ダウンロード',
-			'companionRemote.remote.tabSettings' => '設定',
-			'companionRemote.remote.previous' => '前へ',
-			'companionRemote.remote.playPause' => '再生/一時停止',
-			'companionRemote.remote.next' => '次へ',
-			'companionRemote.remote.seekBack' => '巻き戻し',
-			'companionRemote.remote.stop' => '停止',
-			'companionRemote.remote.seekForward' => '早送り',
-			'companionRemote.remote.volume' => '音量',
-			'companionRemote.remote.volumeDown' => '下げる',
-			'companionRemote.remote.volumeUp' => '上げる',
-			'companionRemote.remote.fullscreen' => 'フルスクリーン',
-			'companionRemote.remote.subtitles' => '字幕',
-			'companionRemote.remote.audio' => '音声',
-			'companionRemote.remote.searchHint' => 'デスクトップで検索…',
-			'companionRemote.errors.noNetworkInterface' => 'ネットワークインターフェースが見つかりません',
-			'companionRemote.errors.authenticationFailed' => '認証に失敗しました',
-			'companionRemote.errors.serverStartFailed' => ({required Object error}) => 'リモートサーバーを起動できませんでした: ${error}',
-			'companionRemote.errors.commandFailed' => ({required Object error}) => 'リモートコマンドを送信できませんでした: ${error}',
-			'companionRemote.errors.joinTimedOut' => 'セッション参加がタイムアウトしました',
-			'companionRemote.errors.failedToConnectAnyAddress' => 'どのアドレスにも接続できませんでした',
-			'companionRemote.errors.connectionLostAfterAttempts' => ({required Object attempts}) => '${attempts}回試行後に接続が切断されました',
-			'companionRemote.errors.connectionLost' => '接続が切断されました',
-			'companionRemote.closedBeforeAuth' => '認証前に接続が切断されました',
-			'videoSettings.playbackSpeed' => '再生速度',
-			'videoSettings.normalSpeed' => '標準',
-			'videoSettings.sleepTimerActive' => ({required Object duration}) => '作動中（${duration}）',
-			'videoSettings.zoom' => 'ズーム',
-			'videoSettings.sleepTimer' => 'スリープタイマー',
-			'videoSettings.audioSync' => '音声同期',
-			'videoSettings.subtitleSync' => '字幕同期',
-			'videoSettings.hdr' => 'HDR',
-			'videoSettings.hdrUnsupported' => 'ここではHDRを利用できません。このデスクトップコンポジターまたは映像出力はHDRに対応していません。',
-			'videoSettings.hdrToneMapping' => 'HDRトーンマッピング',
-			'videoSettings.hdrToneMappingCompositor' => 'コンポジター',
-			'videoSettings.hdrToneMappingCompositorDescription' => 'ソースのHDRメタデータをそのまま渡し、デスクトップコンポジターにマッピングさせます。',
-			'videoSettings.hdrToneMappingPlayer' => 'プレーヤー',
-			'videoSettings.hdrToneMappingPlayerDescription' => 'プレーヤーでディスプレイのピーク輝度に合わせてマッピングし、その結果をコンポジターに通知します。',
-			'videoSettings.hdrToneMappingFailed' => 'HDRトーンマッピングを変更できませんでした。以前のモードが引き続き有効です。',
-			'videoSettings.audioOutput' => '音声出力',
-			'videoSettings.performanceOverlay' => 'パフォーマンスオーバーレイ',
-			'videoSettings.audioOutputDolbyAtmos' => 'Dolby Atmos',
-			'videoSettings.audioOutputDolbyAudio' => 'Dolby Audio',
-			'videoSettings.audioOutputSurround' => 'サラウンド',
-			'videoSettings.audioOutputSpatial' => '空間オーディオ',
-			'videoSettings.audioOutputStereo' => 'ステレオ',
-			'videoSettings.audioNormalization' => 'ラウドネス正規化',
-			'videoSettings.audioNormalizationDisablesPassthrough' => '音声をPCMにデコードします。オンの間はパススルーがオフになります',
-			'performanceOverlay.color' => '色',
-			'performanceOverlay.performance' => 'パフォーマンス',
-			'performanceOverlay.buffer' => 'バッファ',
-			'performanceOverlay.app' => 'アプリ',
-			'performanceOverlay.decoder' => 'デコーダー',
-			'performanceOverlay.rawDecoder' => 'Raw デコーダー',
-			'performanceOverlay.tunneling' => 'トンネリング',
-			'performanceOverlay.passthrough' => 'パススルー',
-			'performanceOverlay.aspect' => 'アスペクト',
-			'performanceOverlay.rotation' => '回転',
-			'performanceOverlay.dvSource' => 'DV ソース',
-			'performanceOverlay.dvPath' => 'DV パス',
-			'performanceOverlay.dvRouteDecoder' => 'Dolby Vision デコーダー',
-			'performanceOverlay.dvRouteDecoderP81' => 'Dolby Vision デコーダー（P7→8.1）',
-			'performanceOverlay.dvRouteBaseLayer' => 'ベースレイヤー',
-			'performanceOverlay.dvRouteBaseLayerHdr10' => 'HDR10 ベースレイヤー',
-			'performanceOverlay.dvRouteBaseLayerHlg' => 'HLG ベースレイヤー',
-			'performanceOverlay.dvRouteBaseLayerSdr' => 'SDR ベースレイヤー',
-			'performanceOverlay.dvRouteReshaped' => 'RPU リシェイプ（gpu-next）',
-			'performanceOverlay.p7Conversion' => 'P7 変換',
-			'performanceOverlay.sampleRate' => 'サンプルレート',
-			'performanceOverlay.pixelFormat' => 'ピクセル形式',
-			'performanceOverlay.hwFormat' => 'HW 形式',
-			'performanceOverlay.matrix' => 'マトリクス',
-			'performanceOverlay.primaries' => 'プライマリ',
-			'performanceOverlay.transfer' => '伝達特性',
-			'performanceOverlay.renderFps' => '描画 FPS',
-			'performanceOverlay.displayFps' => '表示 FPS',
-			'performanceOverlay.avSync' => 'A/V 同期',
-			'performanceOverlay.dropped' => 'ドロップ',
-			'performanceOverlay.dvRpus' => 'DV RPU',
-			'performanceOverlay.dvRpuAverage' => 'DV RPU 平均',
-			'performanceOverlay.dvSampleAverage' => 'DV サンプル平均',
-			'performanceOverlay.maxLuma' => '最大輝度',
-			'performanceOverlay.minLuma' => '最小輝度',
-			'performanceOverlay.maxCll' => 'MaxCLL',
-			'performanceOverlay.maxFall' => 'MaxFALL',
-			'performanceOverlay.cacheUsed' => '使用キャッシュ',
-			'performanceOverlay.cacheLimit' => 'キャッシュ上限',
-			'performanceOverlay.speed' => '速度',
-			'performanceOverlay.player' => 'プレーヤー',
-			'performanceOverlay.memory' => 'メモリ',
-			'performanceOverlay.uiFps' => 'UI FPS',
-			'performanceOverlay.fps' => 'FPS',
-			'performanceOverlay.decoderAndroidHw' => 'Android HW',
-			'performanceOverlay.decoderNvidiaHw' => 'NVIDIA HW',
-			'performanceOverlay.decoderQualcommHw' => 'Qualcomm HW',
-			'performanceOverlay.decoderMediatekHw' => 'MediaTek HW',
-			'performanceOverlay.decoderExynosHw' => 'Exynos HW',
-			'performanceOverlay.decoderSoftware' => 'ソフトウェア',
-			_ => null,
-		} ?? switch (path) {
-			'performanceOverlay.decoderHardware' => 'ハードウェア',
-			'performanceOverlay.tunnelingActive' => '有効',
-			'performanceOverlay.dvRpuFailed' => ({required Object converted, required Object failures}) => '${converted}（${failures}件失敗）',
-			'externalPlayer.title' => '外部プレーヤー',
-			'externalPlayer.useExternalPlayer' => '外部プレーヤーを使用',
-			'externalPlayer.useExternalPlayerDescription' => '動画を別のアプリで開きます',
-			'externalPlayer.selectPlayer' => 'プレーヤーを選択',
-			'externalPlayer.customPlayers' => 'カスタムプレーヤー',
-			'externalPlayer.systemDefault' => 'システム既定',
-			'externalPlayer.addCustomPlayer' => 'カスタムプレーヤーを追加',
-			'externalPlayer.playerName' => 'プレーヤー名',
-			'externalPlayer.playerNameHint' => 'マイプレーヤー',
-			'externalPlayer.playerCommand' => 'コマンド',
-			'externalPlayer.playerPackage' => 'パッケージ名',
-			'externalPlayer.playerUrlScheme' => 'URLスキーム',
-			'externalPlayer.off' => 'オフ',
-			'externalPlayer.launchFailed' => '外部プレーヤーの起動に失敗しました',
-			'externalPlayer.appNotInstalled' => ({required Object name}) => '${name}がインストールされていません',
-			'externalPlayer.playInExternalPlayer' => '外部プレーヤーで再生',
-			'metadataEdit.editMetadata' => '編集…',
-			'metadataEdit.screenTitle' => 'メタデータを編集',
-			'metadataEdit.basicInfo' => '基本情報',
-			'metadataEdit.artwork' => 'アートワーク',
-			'metadataEdit.advancedSettings' => '詳細設定',
-			'metadataEdit.title' => 'タイトル',
-			'metadataEdit.sortTitle' => 'ソートタイトル',
-			'metadataEdit.originalTitle' => '原題',
-			'metadataEdit.releaseDate' => '公開日',
-			'metadataEdit.contentRating' => 'コンテンツレーティング',
-			'metadataEdit.studio' => 'スタジオ',
-			'metadataEdit.tagline' => 'タグライン',
-			'metadataEdit.summary' => 'あらすじ',
-			'metadataEdit.poster' => 'ポスター',
-			'metadataEdit.background' => '背景',
-			'metadataEdit.logo' => 'ロゴ',
-			'metadataEdit.squareArt' => '正方形アート',
-			'metadataEdit.selectPoster' => 'ポスターを選択',
-			'metadataEdit.selectBackground' => '背景を選択',
-			'metadataEdit.selectLogo' => 'ロゴを選択',
-			'metadataEdit.selectSquareArt' => '正方形アートを選択',
-			'metadataEdit.fromUrl' => 'URLから',
-			'metadataEdit.uploadFile' => 'ファイルをアップロード',
-			'metadataEdit.enterImageUrl' => '画像URLを入力',
-			'metadataEdit.imageUrl' => '画像URL',
-			'metadataEdit.metadataUpdated' => 'メタデータを更新しました',
-			'metadataEdit.metadataUpdateFailed' => 'メタデータの更新に失敗しました',
-			'metadataEdit.artworkUpdated' => 'アートワークを更新しました',
-			'metadataEdit.artworkUpdateFailed' => 'アートワークの更新に失敗しました',
-			'metadataEdit.noArtworkAvailable' => 'アートワークがありません',
-			'metadataEdit.artworkOption' => ({required Object index}) => 'アートワークの選択肢 ${index}',
-			'metadataEdit.selectedArtworkOption' => ({required Object index}) => 'アートワークの選択肢 ${index}、選択済み',
-			'metadataEdit.notSet' => '未設定',
-			'metadataEdit.libraryDefault' => 'ライブラリのデフォルト',
-			'metadataEdit.accountDefault' => 'アカウントのデフォルト',
-			'metadataEdit.seriesDefault' => 'シリーズのデフォルト',
-			'metadataEdit.episodeSorting' => 'エピソードの並べ替え',
-			'metadataEdit.oldestFirst' => '古い順',
-			'metadataEdit.newestFirst' => '新しい順',
-			'metadataEdit.keep' => '保持',
-			'metadataEdit.allEpisodes' => 'すべてのエピソード',
-			'metadataEdit.latestEpisodes' => ({required Object count}) => '最新の${count}話',
-			'metadataEdit.latestEpisode' => '最新エピソード',
-			'metadataEdit.episodesAddedPastDays' => ({required Object count}) => '過去${count}日間に追加されたエピソード',
-			'metadataEdit.deleteAfterPlaying' => '再生後にエピソードを削除',
-			'metadataEdit.never' => 'しない',
-			'metadataEdit.afterADay' => '1日後',
-			'metadataEdit.afterAWeek' => '1週間後',
-			'metadataEdit.afterAMonth' => '1か月後',
-			'metadataEdit.onNextRefresh' => '次回更新時',
-			'metadataEdit.seasons' => 'シーズン',
-			'metadataEdit.show' => '表示',
-			'metadataEdit.hide' => '非表示',
-			'metadataEdit.episodeOrdering' => 'エピソードの順序',
-			'metadataEdit.tmdbAiring' => 'The Movie Database（放送順）',
-			'metadataEdit.tvdbAiring' => 'TheTVDB（放送順）',
-			'metadataEdit.tvdbAbsolute' => 'TheTVDB（絶対順）',
-			'metadataEdit.metadataLanguage' => 'メタデータの言語',
-			'metadataEdit.useOriginalTitle' => '原題を使用',
-			'metadataEdit.preferredAudioLanguage' => '優先音声言語',
-			'metadataEdit.preferredSubtitleLanguage' => '優先字幕言語',
-			'metadataEdit.subtitleMode' => '字幕自動選択モード',
-			'metadataEdit.manuallySelected' => '手動選択',
-			'metadataEdit.shownWithForeignAudio' => '外国語音声時に表示',
-			'metadataEdit.alwaysEnabled' => '常に有効',
-			'metadataEdit.tags' => 'タグ',
-			'metadataEdit.addTag' => 'タグを追加',
-			'metadataEdit.genre' => 'ジャンル',
-			'metadataEdit.director' => '監督',
-			'metadataEdit.writer' => '脚本',
-			'metadataEdit.producer' => 'プロデューサー',
-			'metadataEdit.country' => '国',
-			'metadataEdit.collection' => 'コレクション',
-			'metadataEdit.label' => 'ラベル',
-			'metadataEdit.quickTag' => 'クイックタグ…',
-			'matchScreen.match' => '照合…',
-			'matchScreen.fixMatch' => '照合を修正…',
-			'matchScreen.unmatch' => '照合を解除',
-			'matchScreen.unmatchConfirm' => 'この照合を解除しますか？再照合するまで、Plexでは未照合として扱われます。',
-			'matchScreen.unmatchSuccess' => '照合を解除しました',
-			'matchScreen.unmatchFailed' => '照合を解除できませんでした',
-			'matchScreen.matchApplied' => '照合結果を適用しました',
-			'matchScreen.matchFailed' => '照合結果を適用できませんでした',
-			'matchScreen.titleHint' => 'タイトル',
-			'matchScreen.yearHint' => '年',
-			'matchScreen.search' => '検索',
-			'matchScreen.noMatchesFound' => '一致する項目がありません',
-			'serverTasks.title' => 'サーバータスク',
-			'serverTasks.failedToLoad' => 'タスクの読み込みに失敗しました',
-			'serverTasks.noTasks' => '実行中のタスクはありません',
-			'trakt.title' => 'Trakt',
-			'trakt.connected' => '接続済み',
-			'trakt.connectedAs' => ({required Object username}) => '@${username}として接続済み',
-			'trakt.disconnectConfirm' => 'Traktアカウントとの接続を解除しますか？',
-			'trakt.disconnectConfirmBody' => 'PlezyはTraktへのイベント送信を停止します。いつでも再接続できます。',
-			'trakt.scrobble' => 'リアルタイムのスクロブル',
-			'trakt.scrobbleDescription' => '再生中に再生・一時停止・停止の各イベントをTraktに送信します。',
-			'trakt.watchedSync' => '視聴済みステータスを同期',
-			'trakt.watchedSyncDescription' => 'Plezyで項目を視聴済みにすると、Traktでも視聴済みになります。',
-			'seerr.title' => 'Seerr',
-			'seerr.connectTitle' => 'Seerrに接続',
-			'seerr.serverUrl' => 'サーバー URL',
-			'seerr.serverUrlHelper' => 'Seerr インスタンスのアドレス',
-			'seerr.checkServer' => '続ける',
-			'seerr.signInWithJellyfin' => 'Jellyfinでサインイン',
-			'seerr.signInWithEmby' => 'Embyでサインイン',
-			'seerr.signInWithLocal' => 'ローカルアカウントを使う',
-			'seerr.email' => 'メールアドレス',
-			'seerr.noSignInMethods' => 'この Seerr インスタンスには Plezy が対応しているサインイン方法がありません。',
-			'seerr.instance' => 'インスタンス',
-			'seerr.disconnectConfirm' => 'Seerr の接続を解除しますか？',
-			'seerr.disconnectConfirmBody' => 'Plezy はこの Seerr インスタンスの情報を削除します。いつでも再接続できます。',
-			'seerr.request' => 'リクエスト',
-			'seerr.request4k' => '4K でリクエスト',
-			'seerr.seasons' => 'シーズン',
-			'seerr.allSeasons' => '全シーズン',
-			'seerr.advancedOptions' => '詳細',
-			'seerr.destinationServer' => '宛先サーバー',
-			'seerr.qualityProfile' => '画質プロファイル',
-			'seerr.rootFolder' => 'ルートフォルダ',
-			'seerr.languageProfile' => '言語プロファイル',
-			'seerr.tags' => 'タグ',
-			'seerr.noTags' => 'タグなし',
-			'seerr.defaultOption' => ({required Object name}) => '${name}（デフォルト）',
-			'seerr.animeNote' => 'このシリーズはアニメです。',
-			'seerr.requestSubmitted' => 'リクエストを送信しました',
-			'seerr.requestFailed' => ({required Object error}) => 'リクエストに失敗しました: ${error}',
-			'seerr.requestsLoadFailed' => 'リクエストオプションを読み込めませんでした',
-			'seerr.nothingToRequest' => 'すべてすでに利用可能またはリクエスト済みです。',
-			'seerr.statusAvailable' => '利用可能',
-			'seerr.statusPartiallyAvailable' => '一部利用可能',
-			'seerr.statusRequested' => 'リクエスト済み',
-			'seerr.statusProcessing' => '処理中',
-			'seerr.statusBlocklisted' => 'ブロックリスト登録済み',
-			'seerr.couldNotReach' => ({required Object url, required Object error}) => '${url}に接続できませんでした: ${error}',
-			'seerr.noInstanceAtUrl' => ({required Object url, required Object status}) => '${url}にSeerrインスタンスがありません（HTTP ${status}）',
-			'seerr.behindAuthProxy' => 'Seerrではなく、認証が必要なリバースプロキシ（SSOまたはHTTP認証）が応答しました。Plezyはこれを通じてサインインできません。このアプリではSeerrの/api/v1パスをプロキシから除外するか、Seerrに直接到達するアドレスを使用してください。',
-			'seerr.invalidUrl' => 'https://seerr.example.comのようなサーバーアドレスを入力してください',
-			'seerr.quickConnectUnsupported' => 'このSeerrインスタンスはQuick Connectに対応していません。Seerr 3.4以降が必要です。',
-			'seerr.notInitialized' => 'このSeerrインスタンスでは初回セットアップが完了していません',
-			'seerr.noPlexTokenForReauth' => '再サインインに使用できるPlexトークンがありません',
-			'seerr.noStoredCredentials' => '再サインインに使用できる保存済みの認証情報がありません',
-			'seerr.signInRejected' => 'サインインが拒否されました',
-			'seerr.noSessionCookie' => 'Seerrからセッションクッキーが発行されませんでした',
-			'seerr.freshCookieRejected' => 'Seerrが新しいセッションクッキーを拒否しました',
-			'seerr.noUserInformation' => 'Seerrからユーザー情報が返されませんでした',
-			'seerr.sessionRejectedAfterReauth' => '再サインイン後にセッションが拒否されました',
-			'seerr.permissionDenied' => 'Seerrがこの操作を拒否しました: アカウントに必要な権限がありません',
-			'seerr.permissionRevoked' => 'これをリクエストする権限がなくなりました',
-			'services.title' => 'サービス',
-			'services.hubSubtitle' => '視聴の進捗を同期して、新しいタイトルをリクエストします。',
-			'services.integrations' => 'インテグレーション',
-			'services.notConnected' => '未接続',
-			'services.connectedAs' => ({required Object username}) => '@${username} として接続済み',
-			'services.scrobble' => '進捗を自動で記録',
-			'services.scrobbleDescription' => 'エピソードや映画を見終えたときにリストを更新します。',
-			'services.disconnectConfirm' => ({required Object service}) => '${service} の接続を解除しますか？',
-			'services.disconnectConfirmBody' => ({required Object service}) => 'Plezyは${service}の更新を停止します。いつでも再接続できます。',
-			'services.connectFailed' => ({required Object service}) => '${service} に接続できませんでした。もう一度お試しください。',
-			'services.names.mal' => 'MyAnimeList',
-			'services.names.anilist' => 'AniList',
-			'services.names.simkl' => 'Simkl',
-			'services.names.seerr' => 'Seerr',
-			'services.names.mdblist' => 'MDBList',
-			'services.simklReconnect.title' => 'Simklに再接続',
-			'services.simklReconnect.subtitle' => 'Simklはこの接続で使用しているサインイン方法を廃止します。再接続するとsimkl.comが開き、Plezyを承認できます。Plezyがパスワードを知ることはありません。視聴履歴はSimklに残ります。',
-			'services.deviceCode.title' => ({required Object service}) => '${service} で Plezy を有効化',
-			'services.deviceCode.instructions' => 'QRコードをスキャンするか、以下のアドレスにアクセスしてこのコードを入力してください:',
-			'services.deviceCode.openToActivate' => ({required Object service}) => '${service} を開いて有効化',
-			'services.deviceCode.copyCode' => 'アクティベーションコードをコピー',
-			'services.deviceCode.waitingForAuthorization' => '認証を待っています…',
-			'services.deviceCode.codeCopied' => 'コードをコピーしました',
-			'services.oauthProxy.title' => ({required Object service}) => '${service} にサインイン',
-			'services.oauthProxy.body' => 'このQRコードをスキャンするか、任意のデバイスでURLを開いてください。',
-			'services.oauthProxy.openToSignIn' => ({required Object service}) => '${service} を開いてサインイン',
-			'services.pendingAuth.copyUrl' => 'サインインURLをコピー',
-			'services.pendingAuth.urlCopied' => 'URLをコピーしました',
-			'services.libraryFilter.title' => 'ライブラリフィルター',
-			'services.libraryFilter.subtitleAllSyncing' => 'すべてのライブラリを同期中',
-			'services.libraryFilter.subtitleNoneSyncing' => '同期なし',
-			'services.libraryFilter.subtitleBlocked' => ({required Object count}) => '${count} 件をブロック',
-			'services.libraryFilter.subtitleAllowed' => ({required Object count}) => '${count} 件を許可',
-			'services.libraryFilter.mode' => 'フィルターモード',
-			'services.libraryFilter.modeBlacklist' => 'ブロックリスト',
-			'services.libraryFilter.modeWhitelist' => '許可リスト',
-			'services.libraryFilter.modeHintBlacklist' => '下でチェックしたライブラリ以外をすべて同期します。',
-			'services.libraryFilter.modeHintWhitelist' => '下でチェックしたライブラリのみ同期します。',
-			'services.libraryFilter.libraries' => 'ライブラリ',
-			'services.libraryFilter.noLibraries' => '利用できるライブラリがありません',
-			'addServer.addMediaBrowserTitle' => ({required Object product}) => '${product}サーバーを追加',
-			'addServer.serverUrls' => 'サーバーURL',
-			'addServer.serverUrlsHelper' => '複数のURLをカンマ区切りで入力できます。',
-			'addServer.findServer' => 'サーバーを検索',
-			'addServer.searchingLocalMediaBrowserServers' => ({required Object product}) => 'ローカルの${product}サーバーを検索中…',
-			'addServer.localMediaBrowserServers' => ({required Object product}) => 'ローカルの${product}サーバー',
-			'addServer.username' => 'ユーザー名',
-			'addServer.password' => 'パスワード',
-			'addServer.signIn' => 'サインイン',
-			'addServer.change' => '変更',
-			'addServer.required' => '必須',
-			'addServer.couldNotReachServer' => ({required Object error}) => 'サーバーに接続できませんでした: ${error}',
-			'addServer.signInFailed' => ({required Object error}) => 'サインインに失敗しました: ${error}',
-			'addServer.quickConnectFailed' => ({required Object error}) => 'Quick Connectに失敗しました: ${error}',
-			'addServer.addPlexTitle' => 'Plexでサインイン',
-			'addServer.pinExpired' => 'サインイン前にPINの有効期限が切れました。もう一度お試しください。',
-			'addServer.failedToRegisterAccount' => ({required Object error}) => 'アカウントの登録に失敗しました: ${error}',
-			'addServer.enterMediaBrowserUrlError' => ({required Object product}) => '${product}サーバーのURLを入力してください',
-			'addServer.addConnectionTitle' => '接続を追加',
-			'addServer.addConnectionTitleScoped' => ({required Object name}) => '${name}に追加',
-			'addServer.signInWithPlexCard' => 'Plexでサインイン',
-			'addServer.signInWithPlexCardSubtitle' => 'このデバイスを承認します。共有サーバーが追加されます。',
-			'addServer.signInWithPlexCardSubtitleScoped' => 'Plexアカウントを承認します。Homeユーザーはプロフィールになります。',
-			'addServer.connectToMediaBrowserCard' => ({required Object product}) => '${product}に接続',
-			'addServer.connectToMediaBrowserCardSubtitle' => 'サーバーのURL、ユーザー名、パスワードを入力してください。',
-			'addServer.connectToMediaBrowserCardSubtitleScoped' => ({required Object product, required Object name}) => '${product}サーバーにサインインします。「${name}」に紐付けられます。',
-			'addServer.borrowFromAnotherProfile' => '別のプロフィールの接続を利用',
-			'addServer.borrowFromAnotherProfileSubtitle' => '別のプロフィールの接続を再利用します。PINで保護されたプロフィールにはPINが必要です。',
-			'addServer.invalidCredentials' => 'ユーザー名またはパスワードが正しくありません',
-			'addServer.authResponseNotJson' => '認証レスポンスが有効なJSONではありません',
-			'addServer.authResponseIncomplete' => 'サーバーからのサインイン応答が不完全です',
-			'addServer.quickConnectRejected' => 'Quick Connectがサーバーに拒否されました',
-			'addServer.quickConnectNotJson' => 'Quick Connectのレスポンスが有効なJSONではありません',
-			'addServer.quickConnectMissingFields' => 'Quick Connectのレスポンスにコードまたはシークレットがありません',
-			'addServer.quickConnectPollRejected' => 'Quick Connectのポーリングがサーバーに拒否されました',
-			'addServer.serverTimedOut' => 'サーバーが時間内に応答しませんでした',
-			'addServer.responseNotJson' => 'サーバーのレスポンスが有効なJSONではありません',
-			'addServer.responseMissingIdentity' => ({required Object product}) => 'レスポンスにIDまたはサーバー名がありません。これは${product}サーバーですか？',
-			'addServer.probeFailed' => ({required Object error}) => 'サーバーに接続できませんでした: ${error}',
-			'addServer.enterAtLeastOneUrl' => ({required Object product}) => '${product}サーバーのURLを1つ以上入力してください',
-			'addServer.noReachableServer' => ({required Object product}) => '接続可能な${product}サーバーが見つかりませんでした',
-			'addServer.urlsPointToDifferentServers' => ({required Object product}) => 'これらのURLは異なる${product}サーバーを指しています',
-			'addServer.urlDoesNotMatchServer' => ({required Object product}) => 'このURLは${product}サーバーと一致しません',
-			'addServer.redirectUnsupported' => 'サーバーからサポートされていないURLにリダイレクトされました',
-			'addServer.redirectDifferentHost' => ({required Object product}) => 'サーバーから別のホストにリダイレクトされました。最終的な${product}のURLを直接入力してください。',
-			'addServer.redirectInsecure' => 'サーバーからHTTPSではない安全でないURLにリダイレクトされました',
-			'addServer.redirectUnsupportedEnterFinal' => ({required Object product}) => 'サーバーからサポートされていないURLにリダイレクトされました。最終的な${product}のURLを直接入力してください。',
-			_ => null,
-		};
+		switch (path) {
+			case 'app.title': return 'Plezy';
+			case 'appIcon.title': return 'アプリアイコン';
+			case 'appIcon.defaultIcon': return 'デフォルト';
+			case 'appIcon.current': return '現在のアイコン';
+			case 'appIcon.locked': return 'テーマ＆アイコンパックに含まれます';
+			case 'appIcon.lockedHint': return '別のアイコンはテーマ＆アイコンパックに含まれます。';
+			case 'appIcon.changeFailed': return 'アプリアイコンを変更できませんでした';
+			case 'appIcon.launcherHint': return 'Plezyを離れると、ホーム画面に新しいアイコンが表示されます。';
+			case 'appIcon.tvLauncherHint': return 'Plezyを離れると、新しいバナーが表示されます。Android TVでは、テレビを再起動するまで古いバナーが表示され続ける場合があります。';
+			case 'appIcon.names.midnight': return 'ミッドナイト';
+			case 'appIcon.names.ember': return '残り火';
+			case 'appIcon.names.paper': return 'ペーパー';
+			case 'appIcon.names.oled': return 'OLED';
+			case 'appIcon.names.line': return 'ライン';
+			case 'appIcon.names.ocean': return 'オーシャン';
+			case 'appIcon.names.ultraviolet': return 'ウルトラバイオレット';
+			case 'appIcon.names.matcha': return '抹茶';
+			case 'appIcon.names.sunset': return 'サンセット';
+			case 'appIcon.names.gold': return 'ゴールド';
+			case 'appIcon.names.titanium': return 'チタニウム';
+			case 'appIcon.names.glass': return 'ガラス';
+			case 'appIcon.names.crt': return 'CRT';
+			case 'appIcon.names.vhs': return 'VHS';
+			case 'appIcon.names.synthwave': return 'シンセウェイブ';
+			case 'appIcon.names.pixel': return 'ピクセル';
+			case 'appIcon.names.neon': return 'ネオン';
+			case 'appIcon.names.sticker': return 'ステッカー';
+			case 'appIcon.names.ticket': return 'チケット';
+			case 'appIcon.names.pop': return 'ポップ';
+			case 'appIcon.names.strata': return '地層';
+			case 'appIcon.names.facet': return 'ファセット';
+			case 'appIcon.names.tilde': return 'チルダ';
+			case 'auth.signInWithPlex': return 'Plexでサインイン';
+			case 'auth.showQRCode': return 'QRコードを表示';
+			case 'auth.authenticate': return '認証';
+			case 'auth.authenticationTimeout': return '認証がタイムアウトしました。もう一度お試しください。';
+			case 'auth.scanQRToSignIn': return 'このQRコードをスキャンしてサインイン';
+			case 'auth.waitingForAuth': return '認証を待っています…\nブラウザでサインインしてください。';
+			case 'auth.useBrowser': return 'ブラウザを使用';
+			case 'auth.or': return 'または';
+			case 'auth.connectToMediaBrowser': return ({required Object product}) => '${product}に接続';
+			case 'auth.quickConnect': return 'Quick Connect';
+			case 'auth.useQuickConnect': return 'Quick Connect を使う';
+			case 'auth.quickConnectInstructions': return 'JellyfinでQuick Connectを開き、このコードを入力してください。';
+			case 'auth.quickConnectWaiting': return '承認を待っています…';
+			case 'auth.quickConnectCancel': return 'キャンセル';
+			case 'auth.quickConnectExpired': return 'Quick Connectの有効期限が切れました。もう一度お試しください。';
+			case 'auth.localDataRecoveryRequired': return 'ローカルのサインイン情報と保留中の再生データを安全に復元できませんでした。もう一度サインインしてください。';
+			case 'auth.pinCheckRejected': return 'Plex PINの確認が拒否されました';
+			case 'common.cancel': return 'キャンセル';
+			case 'common.save': return '保存';
+			case 'common.close': return '閉じる';
+			case 'common.clear': return 'クリア';
+			case 'common.reset': return 'リセット';
+			case 'common.later': return '後で';
+			case 'common.submit': return '送信';
+			case 'common.confirm': return '確認';
+			case 'common.retry': return '再試行';
+			case 'common.logout': return 'ログアウト';
+			case 'common.unknown': return '不明';
+			case 'common.refresh': return '更新';
+			case 'common.yes': return 'はい';
+			case 'common.no': return 'いいえ';
+			case 'common.delete': return '削除';
+			case 'common.edit': return '編集';
+			case 'common.shuffle': return 'シャッフル';
+			case 'common.addTo': return '追加先…';
+			case 'common.createNew': return '新規作成';
+			case 'common.connect': return '接続';
+			case 'common.disconnect': return '切断';
+			case 'common.play': return '再生';
+			case 'common.pause': return '一時停止';
+			case 'common.resume': return '再開';
+			case 'common.error': return 'エラー';
+			case 'common.search': return '検索';
+			case 'common.home': return 'ホーム';
+			case 'common.back': return '戻る';
+			case 'common.settings': return '設定';
+			case 'common.mute': return 'ミュート';
+			case 'common.ok': return 'OK';
+			case 'common.off': return 'オフ';
+			case 'common.options': return 'オプション';
+			case 'common.seasonNumber': return ({required Object number}) => 'シーズン${number}';
+			case 'common.episodeNumberTitle': return ({required Object number, required Object title}) => 'エピソード${number} - ${title}';
+			case 'common.chapterNumber': return ({required Object number}) => 'チャプター${number}';
+			case 'common.reconnect': return '再接続';
+			case 'common.viewAll': return 'すべて表示';
+			case 'common.checkingNetwork': return 'ネットワークを確認中…';
+			case 'common.loadingServers': return 'サーバーを読み込み中…';
+			case 'common.connectingToServers': return 'サーバーに接続中…';
+			case 'common.startingOfflineMode': return 'オフラインモードを開始中…';
+			case 'common.loading': return '読み込み中…';
+			case 'common.fullscreen': return 'フルスクリーン';
+			case 'common.exitFullscreen': return 'フルスクリーンを終了';
+			case 'common.pressBackAgainToExit': return 'もう一度押すと終了します';
+			case 'common.ratingSource.critic': return '批評家';
+			case 'common.ratingSource.audience': return '観客';
+			case 'common.ratingSource.imdb': return 'IMDb';
+			case 'common.ratingSource.tmdb': return 'TMDB';
+			case 'common.ratingSource.rottenTomatoes': return 'Rotten Tomatoes';
+			case 'common.ratingSource.simkl': return 'Simkl';
+			case 'common.ratingSource.mal': return 'MyAnimeList';
+			case 'common.ratingSource.anilist': return 'AniList';
+			case 'common.ratingSource.trakt': return 'Trakt';
+			case 'common.ratingSource.rottenTomatoesCritic': return 'Rotten Tomatoes 批評家';
+			case 'common.ratingSource.rottenTomatoesAudience': return 'Rotten Tomatoes 観客';
+			case 'common.ratingSource.metacritic': return 'Metacritic';
+			case 'common.ratingSource.letterboxd': return 'Letterboxd';
+			case 'common.notAvailable': return 'N/A';
+			case 'common.url': return 'URL';
+			case 'common.letterKeys': return 'ABC';
+			case 'common.mediaKind.movie': return '映画';
+			case 'common.mediaKind.show': return 'テレビ番組';
+			case 'common.mediaKind.season': return 'シーズン';
+			case 'common.mediaKind.episode': return 'エピソード';
+			case 'common.mediaKind.artist': return 'アーティスト';
+			case 'common.mediaKind.album': return 'アルバム';
+			case 'common.mediaKind.track': return '曲';
+			case 'common.mediaKind.collection': return 'コレクション';
+			case 'common.mediaKind.playlist': return 'プレイリスト';
+			case 'common.mediaKind.clip': return 'クリップ';
+			case 'common.mediaKind.photo': return '写真';
+			case 'common.mediaKind.folder': return 'フォルダ';
+			case 'screens.licenses': return 'ライセンス';
+			case 'screens.switchProfile': return 'プロフィール切替';
+			case 'screens.subtitleStyling': return '字幕スタイル';
+			case 'screens.mpvConfig': return 'mpv.conf';
+			case 'screens.logs': return 'ログ';
+			case 'update.available': return 'アップデート利用可能';
+			case 'update.versionAvailable': return ({required Object version}) => 'バージョン ${version} が利用可能です';
+			case 'update.currentVersion': return ({required Object version}) => '現在: ${version}';
+			case 'update.skipVersion': return 'このバージョンをスキップ';
+			case 'update.viewRelease': return 'リリースを表示';
+			case 'update.latestVersion': return '最新バージョンです';
+			case 'update.checkFailed': return 'アップデートの確認に失敗しました';
+			case 'supporter.title': return 'テーマ＆アイコンパック';
+			case 'supporter.intro': return '見た目の特典を追加する、任意の1回限りの購入です：';
+			case 'supporter.presetThemes': return 'プリセットテーマ';
+			case 'supporter.presetThemesDescription': return '残り火、氷河、森、プラム、ペーパー';
+			case 'supporter.customTheme': return 'カスタムテーマ';
+			case 'supporter.customThemeDescription': return 'すべての色を自分で選択';
+			case 'supporter.appIcons': return 'アプリアイコン';
+			case 'supporter.appIconsDescription': return 'Plezyの別のアイコンを選択';
+			case 'supporter.buy': return ({required Object price}) => '${price}で購入';
+			case 'supporter.loadingPrice': return '価格を読み込み中…';
+			case 'supporter.restore': return '購入を復元';
+			case 'supporter.pending': return '購入は支払いまたは承認を待っています。ストアでの処理が完了すると、すぐに特典のロックが解除されます。';
+			case 'supporter.thankYouTitle': return 'ご購入ありがとうございます';
+			case 'supporter.thankYouBody': return 'テーマ＆アイコンパックのロックが解除されました。';
+			case 'supporter.tileSubtitle': return '1回限りの購入でテーマとアプリアイコンのロックを解除';
+			case 'supporter.tileSubtitleThemesOnly': return '1回限りの購入でテーマのロックを解除';
+			case 'supporter.tileUnlocked': return 'ロック解除済み — ご購入ありがとうございます';
+			case 'supporter.errors.storeUnavailable': return '購入を利用できません。ストアにサインインしていること、およびこのデバイスで購入が許可されていることを確認してください。';
+			case 'supporter.errors.productNotFound': return '現在、お使いのストアではテーマ＆アイコンパックを購入できません。';
+			case 'supporter.errors.productQueryFailed': return '価格を読み込めませんでした。接続を確認してもう一度お試しください。';
+			case 'supporter.errors.purchaseFailed': return '購入を完了できませんでした。もう一度お試しください。';
+			case 'supporter.errors.restoreFailed': return '購入を復元するためにストアに接続できませんでした。もう一度お試しください。';
+			case 'supporter.errors.nothingToRestore': return 'このストアアカウントではテーマ＆アイコンパックの購入が見つかりませんでした。';
+			case 'settings.title': return '設定';
+			case 'settings.supportDeveloper': return 'Plezyを支援';
+			case 'settings.supportDeveloperDescription': return 'Liberapayで寄付して開発を支援';
+			case 'settings.language': return '言語';
+			case 'settings.theme': return 'テーマ';
+			case 'settings.appearance': return '外観';
+			case 'settings.videoPlayback': return '動画再生';
+			case 'settings.videoPlaybackDescription': return '再生動作を設定';
+			case 'settings.advanced': return '詳細';
+			case 'settings.episodePosterMode': return 'エピソードポスタースタイル';
+			case 'settings.seriesPoster': return 'シリーズポスター';
+			case 'settings.seasonPoster': return 'シーズンポスター';
+			case 'settings.episodeThumbnail': return 'サムネイル';
+			case 'settings.showHeroSectionDescription': return 'ホーム画面に注目コンテンツのカルーセルを表示';
+			case 'settings.secondsLabel': return '秒';
+			case 'settings.minutesLabel': return '分';
+			case 'settings.secondsShort': return '秒';
+			case 'settings.minutesShort': return '分';
+			case 'settings.durationHint': return ({required Object min, required Object max}) => '時間を入力 (${min}-${max})';
+			case 'settings.systemTheme': return 'システム';
+			case 'settings.lightTheme': return 'ライト';
+			case 'settings.darkTheme': return 'ダーク';
+			case 'settings.oledTheme': return 'OLED';
+			case 'settings.emberTheme': return '残り火';
+			case 'settings.glacierTheme': return '氷河';
+			case 'settings.forestTheme': return '森';
+			case 'settings.plumTheme': return 'プラム';
+			case 'settings.paperTheme': return 'ペーパー';
+			case 'settings.libraryDensity': return 'ライブラリの密度';
+			case 'settings.displayScale': return '表示スケール';
+			case 'settings.compact': return 'コンパクト';
+			case 'settings.comfortable': return 'ゆったり';
+			case 'settings.gridSpacing': return 'グリッド間隔';
+			case 'settings.gridSpacingTight': return '密';
+			case 'settings.gridSpacingNormal': return '標準';
+			case 'settings.gridSpacingSpacious': return 'ゆったり';
+			case 'settings.tvCornerSpotlightBackdrop': return '画面隅の注目コンテンツ背景';
+			case 'settings.tvCornerSpotlightBackdropDescription': return '画面全体ではなく、右上隅に注目コンテンツのアートワークを表示します';
+			case 'settings.viewMode': return '表示モード';
+			case 'settings.gridView': return 'グリッド';
+			case 'settings.listView': return 'リスト';
+			case 'settings.showHeroSection': return '注目コンテンツを表示';
+			case 'settings.continueWatchingAction': return '視聴中の操作';
+			case 'settings.continueWatchingPlay': return '再生';
+			case 'settings.continueWatchingDetails': return '詳細を開く';
+			case 'settings.episodeAction': return 'エピソードの操作';
+			case 'settings.episodePlay': return '再生';
+			case 'settings.episodeDetails': return '詳細を開く';
+			case 'settings.useGlobalHubs': return 'ホームレイアウトを使用';
+			case 'settings.useGlobalHubsDescription': return '統合ホームハブを表示します。オフの場合はライブラリのおすすめを使用します。';
+			case 'settings.showServerNameOnHubs': return 'ハブにサーバー名を表示';
+			case 'settings.showServerNameOnHubsDescription': return 'ハブのタイトルに常にサーバー名を表示します。';
+			case 'settings.groupLibrariesByServer': return 'サーバーごとにライブラリをグループ化';
+			case 'settings.groupLibrariesByServerDescription': return 'サイドバーのライブラリをメディアサーバーごとにまとめます。';
+			case 'settings.alwaysKeepSidebarOpen': return 'サイドバーを常に開いておく';
+			case 'settings.alwaysKeepSidebarOpenDescription': return 'サイドバーを展開したままにし、コンテンツ領域を幅に合わせて調整します';
+			case 'settings.showUnwatchedCount': return '未視聴数を表示';
+			case 'settings.showUnwatchedCountDescription': return '番組とシーズンに未視聴エピソード数を表示';
+			case 'settings.showWatchedIndicators': return '視聴済みマークを表示';
+			case 'settings.showWatchedIndicatorsDescription': return '視聴済みの映画、番組、エピソードにチェックマークを表示します';
+			case 'settings.showEpisodeNumberOnCards': return 'カードにエピソード番号を表示';
+			case 'settings.showEpisodeNumberOnCardsDescription': return 'エピソードカードにシーズン番号とエピソード番号を表示します';
+			case 'settings.showSeasonPostersOnTabs': return 'タブにシーズンポスターを表示';
+			case 'settings.showSeasonPostersOnTabsDescription': return '各シーズンのポスターをタブの上に表示します';
+			case 'settings.tvFullCardLayout': return 'フルTVカード';
+			case 'settings.tvFullCardLayoutDescription': return 'TVカードを画像のみで表示し、出演者名を重ねて表示します';
+			case 'settings.focusGlow': return 'フォーカス時の光彩';
+			case 'settings.focusGlowDescription': return 'フォーカス中のカードの周りに柔らかい光彩を表示します';
+			case 'settings.visualEffects': return '視覚効果';
+			case 'settings.visualEffectsAuto': return '自動';
+			case 'settings.visualEffectsAutoDescription': return '低性能なデバイスでは効果を自動的に減らします';
+			case 'settings.visualEffectsFull': return 'フル';
+			case 'settings.visualEffectsReduced': return '軽減';
+			case 'settings.visualEffectsReducedDescription': return 'アニメーションを減らし、低解像度のアートワークを使用します';
+			case 'settings.hideSpoilers': return '未視聴エピソードのネタバレを非表示';
+			case 'settings.hideSpoilersDescription': return '未視聴エピソードのサムネイルと説明をぼかします';
+			case 'settings.playerBackend': return 'プレーヤーバックエンド';
+			case 'settings.exoPlayer': return 'ExoPlayer';
+			case 'settings.mpv': return 'mpv';
+			case 'settings.hardwareDecoding': return 'ハードウェアデコード';
+			case 'settings.hardwareDecodingDescription': return '利用可能な場合にハードウェアアクセラレーションを使用';
+			case 'settings.playbackBuffer': return '再生バッファー';
+			case 'settings.playbackBufferAuto': return '自動（推奨）';
+			case 'settings.playbackBufferLarge': return '大';
+			case 'settings.playbackBufferExtraLarge': return '特大';
+			case 'settings.playbackBufferDescription': return '不安定な接続に備えてより多くのバッファーを使用します。バッファーサイズによっても制限されます。';
+			case 'settings.defaultQualityTitle': return 'デフォルト画質';
+			case 'settings.cellularQualityTitle': return 'モバイルデータ通信時のデフォルト画質';
+			case 'settings.cellularQualitySameAsDefault': return 'デフォルト画質と同じ';
+			case 'settings.directPlayCoveredQuality': return '小さい動画をオリジナル画質で再生';
+			case 'settings.directPlayCoveredQualityDescription': return '画質制限内の動画はトランスコードせずにダイレクト再生します';
+			case 'settings.videoCodecs': return 'ビデオコーデック';
+			case 'settings.videoCodecsDescription': return 'チェックを外したコーデックはサーバーがトランスコードします';
+			case 'settings.videoCodecsAlwaysAccepted': return '常に許可';
+			case 'settings.musicQualityTitle': return '音楽の音質';
+			case 'settings.subtitleStyling': return '字幕スタイル';
+			case 'settings.subtitleStylingDescription': return '字幕の外観をカスタマイズ';
+			case 'settings.smallSkipDuration': return '短いスキップ時間';
+			case 'settings.largeSkipDuration': return '長いスキップ時間';
+			case 'settings.rewindOnResume': return '再開時に巻き戻し';
+			case 'settings.secondsUnit': return ({required Object seconds}) => '${seconds}秒';
+			case 'settings.defaultSleepTimer': return 'デフォルトスリープタイマー';
+			case 'settings.minutesUnit': return ({required Object minutes}) => '${minutes}分';
+			case 'settings.rememberTrackSelections': return '番組/映画ごとにトラック選択を記憶';
+			case 'settings.rememberTrackSelectionsDescription': return 'タイトルごとに音声と字幕の選択を記憶します';
+			case 'settings.rememberTrackSelectionsBackendRule': return 'Plexはファイルごとに選択をサーバーに保存します。Jellyfinはアカウントの「選択を記憶」も有効にします。Embyはサポートされていません';
+			case 'settings.followServerTrackSelections': return 'サーバーのエピソードごとのトラック選択を使用';
+			case 'settings.followServerTrackSelectionsDescription': return 'エピソード切り替え時に、現在の選択を引き継ぐ代わりにサーバーで選択された音声と字幕を適用します';
+			case 'settings.resumeMusicOnLaunch': return '音楽セッションを記憶';
+			case 'settings.resumeMusicOnLaunchDescription': return 'アプリ起動時に最後の曲を停止位置で一時停止のまま開きます';
+			case 'settings.showChapterMarkersOnTimeline': return 'シークバーにチャプターマーカーを表示';
+			case 'settings.showChapterMarkersOnTimelineDescription': return 'チャプターの境界でシークバーを区切る';
+			case 'settings.specialsOrdering': return 'エピソード順にスペシャルを表示';
+			case 'settings.specialsOrderingDescription': return 'シリーズの視聴順でスペシャルを再生する位置';
+			case 'settings.specialsOrderingServer': return 'サーバーの順序に従う';
+			case 'settings.specialsOrderingAirDate': return '放送日順に挿入';
+			case 'settings.specialsOrderingLast': return '通常シーズンの後';
+			case 'settings.clickVideoTogglesPlayback': return '動画クリックで再生/一時停止を切替';
+			case 'settings.clickVideoTogglesPlaybackDescription': return 'コントロール表示ではなく、動画クリックで再生/一時停止します。';
+			case 'settings.videoPlayerControls': return '動画プレーヤーコントロール';
+			case 'settings.keyboardShortcuts': return 'キーボードショートカット';
+			case 'settings.keyboardShortcutsDescription': return 'キーボードショートカットをカスタマイズ';
+			case 'settings.videoPlayerNavigation': return '動画プレーヤーナビゲーション';
+			case 'settings.videoPlayerNavigationDescription': return '矢印キーで動画プレーヤーコントロールを操作';
+			case 'settings.watchTogetherRelay': return '一緒に視聴リレーサーバー';
+			case 'settings.watchTogetherRelayDescription': return '独自のリレーサーバーを設定しない限り、公開のOpen Watch Partyリレーサーバーを使用します';
+			case 'settings.watchTogetherRelayHint': return 'https://my-relay.example.com';
+			case 'settings.watchTogetherRelayInvalid': return '有効なHTTPまたはHTTPSのリレーサーバーURLを入力してください。';
+			case 'settings.crashReporting': return 'クラッシュレポート';
+			case 'settings.crashReportingDescription': return 'アプリの改善に役立つクラッシュレポートを送信';
+			case 'settings.debugLogging': return 'デバッグログ';
+			case 'settings.debugLoggingDescription': return 'トラブルシューティング用の詳細なログを有効化';
+			case 'settings.viewLogs': return 'ログを表示';
+			case 'settings.viewLogsDescription': return 'アプリケーションログを表示';
+			case 'settings.clearImageCache': return '画像キャッシュをクリア';
+			case 'settings.clearImageCacheDescription': return 'キャッシュされたアートワークとサムネイルをクリアします。再度ダウンロードされるまで画像の読み込みが遅くなる場合があります。';
+			case 'settings.clearImageCacheSuccess': return '画像キャッシュを正常にクリアしました';
+			case 'settings.resetSettings': return '設定をリセット';
+			case 'settings.resetSettingsDescription': return '設定を既定に戻します。元に戻せません。';
+			case 'settings.resetSettingsSuccess': return '設定を正常にリセットしました';
+			case 'settings.backup': return 'バックアップ';
+			case 'settings.exportSettings': return '設定をエクスポート';
+			case 'settings.exportSettingsDescription': return '設定をファイルに保存';
+			case 'settings.exportSettingsSuccess': return '設定をエクスポートしました';
+			case 'settings.importSettings': return '設定をインポート';
+			case 'settings.importSettingsDescription': return 'ファイルから設定を復元';
+			case 'settings.importSettingsConfirm': return '現在の設定を置き換えます。続行しますか？';
+			case 'settings.importSettingsSuccess': return '設定をインポートしました';
+			case 'settings.importSettingsInvalidFile': return 'このファイルは有効なPlezyの設定エクスポートではありません';
+			case 'settings.importSettingsNoUser': return '設定をインポートする前にサインインしてください';
+			case 'settings.shortcutsReset': return 'ショートカットをデフォルトにリセットしました';
+			case 'settings.resetShortcutsConfirm': return 'カスタムショートカットがデフォルトに置き換えられます。続行しますか？';
+			case 'settings.about': return 'アプリについて';
+			case 'settings.aboutDescription': return 'アプリ情報とライセンス';
+			case 'settings.updates': return 'アップデート';
+			case 'settings.updateAvailable': return 'アップデート利用可能';
+			case 'settings.checkForUpdates': return 'アップデートを確認';
+			case 'settings.autoCheckUpdatesOnStartup': return '起動時にアップデートを自動的に確認';
+			case 'settings.autoCheckUpdatesOnStartupDescription': return '起動時にアップデートがある場合は通知します';
+			case 'settings.validationErrorEnterNumber': return '有効な数値を入力してください';
+			case 'settings.validationErrorDuration': return ({required Object min, required Object max, required Object unit}) => '時間は${min}から${max} ${unit}の間である必要があります';
+			case 'settings.shortcutAlreadyAssigned': return ({required Object action}) => 'ショートカットは既に${action}に割り当てられています';
+			case 'settings.shortcutUpdated': return ({required Object action}) => '${action}のショートカットを更新しました';
+			case 'settings.saveFailed': return '変更を保存できませんでした。もう一度お試しください。';
+			case 'settings.autoPlayAndSkip': return '自動再生とスキップ';
+			case 'settings.autoPlayNextEpisode': return '次のエピソードを自動再生';
+			case 'settings.autoPlayNextEpisodeDescription': return 'エピソードが終了すると、次のエピソードを自動的に再生します';
+			case 'settings.shuffleStartsFromBeginning': return 'シャッフルは最初から再生';
+			case 'settings.shuffleStartsFromBeginningDescription': return 'シャッフル時に各エピソードを再開位置ではなく最初から再生します';
+			case 'settings.playNextCountdown': return '次回再生のカウントダウン';
+			case 'settings.playNextCountdownImmediate': return 'すぐに再生';
+			case 'settings.skipIntroMode': return 'イントロをスキップ';
+			case 'settings.skipIntroModeOffDescription': return 'スキップボタンなしでイントロを通常どおり再生します';
+			case 'settings.skipIntroModeButtonDescription': return 'イントロ開始時にスキップボタンを表示します';
+			case 'settings.skipIntroModeAutoDescription': return '下記の遅延後にイントロを自動的にスキップします';
+			case 'settings.skipCreditsMode': return 'クレジットをスキップ';
+			case 'settings.skipCreditsModeOffDescription': return 'スキップボタンなしでクレジットを通常どおり再生します';
+			case 'settings.skipCreditsModeButtonDescription': return 'クレジット開始時にスキップボタンを表示します';
+			case 'settings.skipCreditsModeAutoDescription': return 'クレジットを自動的にスキップして次のエピソードを再生します';
+			case 'settings.skipMarkerModeOff': return 'オフ';
+			case 'settings.skipMarkerModeButton': return 'ボタンを表示';
+			case 'settings.skipMarkerModeAuto': return '自動';
+			case 'settings.forceSkipMarkerFallback': return 'フォールバックマーカーを強制';
+			case 'settings.forceSkipMarkerFallbackDescription': return 'Plexにマーカーがある場合でもチャプタータイトルのパターンを使用します';
+			case 'settings.autoSkipDelay': return '自動スキップの遅延';
+			case 'settings.autoSkipDelayDescription': return ({required Object seconds}) => '自動スキップまで${seconds}秒待機';
+			case 'settings.introPattern': return 'イントロマーカーパターン';
+			case 'settings.introPatternDescription': return 'チャプタータイトルのイントロマーカーに一致する正規表現パターン';
+			case 'settings.creditsPattern': return 'クレジットマーカーパターン';
+			case 'settings.creditsPatternDescription': return 'チャプタータイトルのクレジットマーカーに一致する正規表現パターン';
+			case 'settings.invalidRegex': return '無効な正規表現';
+			case 'settings.regex': return '正規表現';
+			case 'settings.downloads': return 'ダウンロード';
+			case 'settings.downloadLocationDescription': return 'ダウンロードコンテンツの保存場所を選択';
+			case 'settings.downloadLocationDefault': return 'デフォルト（アプリストレージ）';
+			case 'settings.downloadLocationCustom': return 'カスタムの場所';
+			case 'settings.selectFolder': return 'フォルダを選択';
+			case 'settings.resetToDefault': return 'デフォルトに戻す';
+			case 'settings.currentPath': return ({required Object path}) => '現在: ${path}';
+			case 'settings.downloadLocationChanged': return 'ダウンロード場所を変更しました';
+			case 'settings.downloadLocationReset': return 'ダウンロード場所をデフォルトにリセットしました';
+			case 'settings.downloadLocationInvalid': return '選択したフォルダは書き込みできません';
+			case 'settings.downloadLocationPickerUnavailable': return 'このデバイスではフォルダを選択できません';
+			case 'settings.downloadOnWifiOnly': return 'Wi-Fi接続時のみダウンロード';
+			case 'settings.downloadOnWifiOnlyDescription': return 'モバイルデータ通信中のダウンロードを防ぎます';
+			case 'settings.autoRemoveWatchedDownloads': return '視聴済みダウンロードの自動削除';
+			case 'settings.autoRemoveWatchedDownloadsDescription': return '視聴済みのダウンロードを自動削除します';
+			case 'settings.cellularDownloadBlocked': return 'モバイルデータ通信中はダウンロードできません。Wi-Fiを使用するか、設定を変更してください。';
+			case 'settings.maxVolume': return '最大音量';
+			case 'settings.maxVolumeDescription': return '静かなメディアに対して100%以上の音量ブーストを許可';
+			case 'settings.maxVolumePercent': return ({required Object percent}) => '${percent}%';
+			case 'settings.discordRichPresence': return 'Discord Rich Presence';
+			case 'settings.discordRichPresenceDescription': return 'Discordで視聴中の内容を表示';
+			case 'settings.services': return 'サービス';
+			case 'settings.servicesDescription': return 'Trakt、MyAnimeList、Seerrなどを接続';
+			case 'settings.manageLibrariesDescription': return 'ライブラリを並べ替えたり非表示にしたりできます';
+			case 'settings.companionRemoteServer': return 'コンパニオンリモートサーバー';
+			case 'settings.companionRemoteServerDescription': return 'ネットワーク上のモバイルデバイスからこのアプリを操作できるようにする';
+			case 'settings.companionRemoteServerStartFailed': return 'コンパニオンリモートサーバーを開始できませんでした';
+			case 'settings.companionRemoteServerStopFailed': return 'コンパニオンリモートサーバーを停止できませんでした';
+			case 'settings.autoPip': return '自動ピクチャーインピクチャー';
+			case 'settings.autoPipDescription': return '再生中にアプリを離れると、自動的にピクチャーインピクチャーに切り替えます';
+			case 'settings.matchContentFrameRate': return 'コンテンツのフレームレートに合わせる';
+			case 'settings.matchContentFrameRateDescription': return '表示のリフレッシュレートを動画コンテンツに合わせます';
+			case 'settings.matchContentResolution': return 'コンテンツの解像度に合わせる';
+			case 'settings.matchContentResolutionDescription': return 'テレビ側でアップスケーリングを処理できるよう、ディスプレイを映像本来の解像度に切り替えます。再生中はメニューや字幕もアップスケールされます';
+			case 'settings.matchRefreshRate': return 'リフレッシュレートを合わせる';
+			case 'settings.matchRefreshRateDescription': return '全画面時に表示のリフレッシュレートを合わせます';
+			case 'settings.matchDynamicRange': return 'ダイナミックレンジを合わせる';
+			case 'settings.matchDynamicRangeDescription': return 'HDRコンテンツではHDRに切り替え、その後SDRに戻します';
+			case 'settings.displaySwitchDelay': return 'ディスプレイ切り替え遅延';
+			case 'settings.tunneledPlayback': return 'トンネル再生';
+			case 'settings.tunneledPlaybackDescription': return '動画トンネリングを使用します。HDR再生で画面が黒くなる場合や動きがカクつく場合は無効にしてください。';
+			case 'settings.audioPassthrough': return 'オーディオパススルー';
+			case 'settings.audioPassthroughDescription': return 'Dolby/DTS音声を再エンコードせずにレシーバーやテレビに送り、サラウンドを維持します。音が出ない場合は無効にしてください。';
+			case 'settings.audioPassthroughDescriptionApple': return 'Dolby Atmosを含むDolby Digital PlusにはApple標準のDolbyデコーダーを使用します。DTSとTrueHDは引き続きマルチチャンネルPCMで再生されます。音が出ない場合は無効にしてください。';
+			case 'settings.audioPassthroughDescriptionAppleSpatial': return 'Dolby Atmosを含むDolby Digital PlusにはApple標準のDolbyデコーダーを使用します。iOS、iPadOS、tvOS 26以降では、TrueHD AtmosとDTS:Xが空間オーディオとして再生されます。その他のDTSとTrueHDのトラックはマルチチャンネルPCMで再生されます。音が出ない場合は無効にしてください。';
+			case 'settings.audioPassthroughOverriddenByNormalization': return 'ラウドネス正規化がオンの間はオフ';
+			case 'settings.audioChannelLimit': return '音声チャンネル';
+			case 'settings.audioChannelLimitDescription': return 'すべてのチャンネルを再生できないスピーカー、ヘッドホン、HDMI環境に合わせて、デコードした音声をダウンミックスします';
+			case 'settings.audioChannelLimitOriginal': return 'オリジナル';
+			case 'settings.audioChannelLimitOriginalDescription': return 'トラックのすべてのチャンネルを再生します';
+			case 'settings.audioChannelLimitSurround51': return '最大5.1ch';
+			case 'settings.audioChannelLimitSurround51Description': return '5.1chのPCMにしか対応していないテレビやレシーバー向けに、7.1chを5.1chにダウンミックスします。パススルーには影響しません。';
+			case 'settings.audioChannelLimitStereo': return 'ステレオ';
+			case 'settings.audioChannelLimitStereoDescription': return 'ステレオスピーカーやヘッドホン向けに2チャンネルにダウンミックスします。パススルーはオフになります。';
+			case 'settings.downmixCenterBoost': return 'センターチャンネルブースト';
+			case 'settings.downmixCenterBoostValue': return ({required Object db}) => '${db} dB';
+			case 'settings.downmixCenterBoostLabel': return 'ブースト (dB)';
+			case 'settings.downmixCenterBoostShort': return 'dB';
+			case 'settings.audioDownmixNormalize': return 'ダウンミックス時の音量正規化';
+			case 'settings.audioDownmixNormalizeDescription': return 'クリッピングを防ぐためにミックス音量を下げます。オフにすると元の音量を維持します（大音量シーンで歪む場合があります）。';
+			case 'settings.dvConversionMode': return 'Dolby Vision 変換';
+			case 'settings.dvConversionModeDescription': return 'Dolby Vision Profile 7 ファイルの処理方法を選択します。';
+			case 'settings.dvConversionAuto': return '自動';
+			case 'settings.dvConversionNative': return 'ネイティブ / 無効';
+			case 'settings.dvConversionDv81': return 'P7 → P8.1';
+			case 'settings.dvConversionHevcStrip': return 'P7 → HEVC';
+			case 'settings.dvConversionAutoDescription': return 'デバイスの機能検出と通常のフォールバック動作を使用します';
+			case 'settings.dvConversionNativeDescription': return 'ネイティブ DV7 を強制し、DV 変換の再試行を抑制します';
+			case 'settings.dvConversionDv81Description': return 'Dolby Vision プロファイル 8.1 へのインライン RPU 変換を強制します';
+			case 'settings.dvConversionHevcStripDescription': return 'Dolby Vision の RPU/EL レイヤーを削除し、通常の HEVC として扱います';
+			case 'settings.disableDolbyVision': return 'Dolby Vision を無効にする';
+			case 'settings.disableDolbyVisionDescription': return 'ファイルに HDR10 または HLG レイヤーがある場合は、Dolby Vision の代わりにそれを再生します';
+			case 'settings.hdrSdrConversion': return 'HDRからSDRへの変換';
+			case 'settings.hdrSdrConversionDescription': return 'ディスプレイがHDRを表示できないときに、HDR映像を何で変換するかを選択します。';
+			case 'settings.hdrSdrConversionAuto': return '自動';
+			case 'settings.hdrSdrConversionAutoDescription': return 'Android 9以降はデバイス、それより前のバージョンではプレーヤー';
+			case 'settings.hdrSdrConversionDevice': return 'デバイス';
+			case 'settings.hdrSdrConversionDeviceDescription': return 'デバイスの映像ハードウェアで変換します。最も高速ですが、色はデバイスによって異なります';
+			case 'settings.hdrSdrConversionPlayer': return 'プレーヤー';
+			case 'settings.hdrSdrConversionPlayerDescription': return 'プレーヤーで変換します。色は一定ですが、低価格なTVボックスでは4Kがカクつくことがあります';
+			case 'settings.deinterlace': return 'デインターレース';
+			case 'settings.deinterlaceDescription': return 'インターレース映像のくし型ノイズを除去します（mpvプレーヤーのみ）';
+			case 'settings.deinterlaceOff': return 'オフ';
+			case 'settings.deinterlaceOffDescription': return 'インターレース映像をデコードされたまま表示します';
+			case 'settings.deinterlaceVideo': return 'ビデオ';
+			case 'settings.deinterlaceVideoDescription': return '各フィールドを1つのフレームに変換します。スポーツ、ニュース、コンサートなど、テレビ用に撮影された映像向けです';
+			case 'settings.deinterlaceFilm': return 'フィルム';
+			case 'settings.deinterlaceFilmDescription': return 'NTSC DVDによくある、29.97fpsにテレシネされた映画やアニメの元のフレームを復元します。テレビ用に撮影された映像はカクつきます。ライブTVでは「ビデオ」を使用します';
+			case 'settings.requireProfileSelectionOnOpen': return 'アプリ起動時にプロフィールを確認';
+			case 'settings.requireProfileSelectionOnOpenDescription': return 'アプリを開くたびにプロフィール選択を表示';
+			case 'settings.forceTvMode': return 'TVモードを強制';
+			case 'settings.forceTvModeDescription': return 'TVレイアウトを強制します。自動検出しないデバイス向けです。再起動が必要です。';
+			case 'settings.startInFullscreen': return '全画面表示で起動';
+			case 'settings.startInFullscreenDescription': return '起動時にPlezyを全画面モードで開きます';
+			case 'settings.exitFullscreenOnPlayerClose': return 'プレイヤーを閉じたときに全画面を終了';
+			case 'settings.exitFullscreenOnPlayerCloseDescription': return 'ビデオプレイヤーを閉じたときに自動的に全画面モードを終了します';
+			case 'settings.autoHidePerformanceOverlay': return 'パフォーマンスオーバーレイを自動非表示';
+			case 'settings.autoHidePerformanceOverlayDescription': return '再生コントロールと一緒にパフォーマンスオーバーレイをフェードする';
+			case 'settings.showNavBarLabels': return 'ナビゲーションバーのラベルを表示';
+			case 'settings.showNavBarLabelsDescription': return 'ナビゲーションバーのアイコンの下にテキストラベルを表示';
+			case 'settings.startupSection': return '起動時のセクション';
+			case 'settings.showExploreTab': return '「探す」タブを表示';
+			case 'settings.showExploreTabDescription': return 'Plex Discoverと接続済みのトラッカーのコンテンツを「探す」タブに表示します';
+			case 'settings.liveTvDefaultFavorites': return 'お気に入りチャンネルをデフォルトに';
+			case 'settings.liveTvDefaultFavoritesDescription': return 'ライブTVを開いたときにお気に入りチャンネルのみ表示';
+			case 'settings.general': return '一般';
+			case 'settings.generalDescription': return '言語、起動、ウィンドウの動作';
+			case 'settings.languageAndRegion': return '言語と地域';
+			case 'settings.startup': return '起動';
+			case 'settings.display': return 'ディスプレイ';
+			case 'settings.libraryAndCards': return 'ライブラリとカード';
+			case 'settings.homeScreen': return 'ホーム画面';
+			case 'settings.navigation': return 'ナビゲーション';
+			case 'settings.window': return 'ウィンドウ';
+			case 'settings.liveTv': return 'ライブTV';
+			case 'settings.player': return 'プレーヤー';
+			case 'settings.videoAndDisplay': return '映像とディスプレイ';
+			case 'settings.audio': return '音声';
+			case 'settings.quality': return '画質';
+			case 'settings.subtitles': return '字幕';
+			case 'settings.seekAndTiming': return 'シークとタイミング';
+			case 'settings.behavior': return '動作';
+			case 'settings.gestures': return 'ジェスチャー';
+			case 'settings.gestureBrightnessSwipe': return '明るさスワイプ';
+			case 'settings.gestureBrightnessSwipeDescription': return '左端を上下にスワイプして明るさを調整します';
+			case 'settings.gestureVolumeSwipe': return '音量スワイプ';
+			case 'settings.gestureVolumeSwipeDescription': return '右端を上下にスワイプして音量を調整します';
+			case 'settings.gesturePinchToZoom': return 'ピンチでズーム';
+			case 'settings.gesturePinchToZoomDescription': return '動画をピンチしてズームイン・アウト';
+			case 'settings.rememberBrightnessLevel': return '明るさを記憶';
+			case 'settings.rememberBrightnessLevelDescription': return '前回スワイプで設定した明るさで再生を開始します';
+			case 'settings.controls': return 'コントロール';
+			case 'settings.rememberPlayerChanges': return 'プレーヤーの変更を記憶';
+			case 'settings.rememberPlayerChangesDescription': return '再生中に行った変更を保存し、再適用する場所';
+			case 'settings.scopePlaybackSpeed': return '再生速度';
+			case 'settings.scopeShaderPreset': return 'シェーダープリセット';
+			case 'settings.scopeAspectRatio': return 'アスペクト比';
+			case 'settings.scopeZoom': return 'ズーム';
+			case 'settings.scopeSyncOffsets': return '音声と字幕の同期';
+			case 'settings.playerScopeOff': return '保存しない';
+			case 'settings.playerScopeGlobal': return 'すべて';
+			case 'settings.playerScopeLibrary': return 'ライブラリごと';
+			case 'settings.playerScopeTitle': return '作品ごと';
+			case 'settings.exportDialogTitle': return 'Plezyの設定をエクスポート';
+			case 'themeEditor.builtIn': return '標準';
+			case 'themeEditor.presets': return 'プリセット';
+			case 'themeEditor.custom': return 'カスタム';
+			case 'themeEditor.customEmpty': return '未作成';
+			case 'themeEditor.editCustom': return 'カスタムテーマを編集';
+			case 'themeEditor.editCustomDescription': return 'すべての色を自分で選択';
+			case 'themeEditor.locked': return 'テーマ＆アイコンパックでロック解除';
+			case 'themeEditor.savedLocked': return '保存済み — テーマ＆アイコンパックでロック解除';
+			case 'themeEditor.title': return 'カスタムテーマ';
+			case 'themeEditor.startFrom': return '元にするテーマ';
+			case 'themeEditor.startFromDescription': return '別のテーマからすべての色をコピー';
+			case 'themeEditor.colors': return '色';
+			case 'themeEditor.preview': return 'プレビュー';
+			case 'themeEditor.slots.bg': return '背景';
+			case 'themeEditor.slots.surface': return 'サーフェス';
+			case 'themeEditor.slots.outline': return '枠線';
+			case 'themeEditor.slots.text': return 'テキスト';
+			case 'themeEditor.slots.textMuted': return '補助テキスト';
+			case 'themeEditor.slots.accent': return 'アクセント';
+			case 'themeEditor.opacity': return '不透明度';
+			case 'themeEditor.hexHint': return '#RRGGBB または #AARRGGBB';
+			case 'themeEditor.fromOtherThemes': return '他のテーマから';
+			case 'themeEditor.swatchLabel': return ({required Object theme, required Object color}) => '${theme}の${color}';
+			case 'themeEditor.contrast.textOnBg': return '背景上のテキスト';
+			case 'themeEditor.contrast.textOnSurface': return 'サーフェス上のテキスト';
+			case 'themeEditor.contrast.textMutedOnBg': return '背景上の補助テキスト';
+			case 'themeEditor.contrast.textMutedOnSurface': return 'サーフェス上の補助テキスト';
+			case 'themeEditor.contrast.accentOnBg': return '背景上のアクセント';
+			case 'themeEditor.contrast.accentOnSurface': return 'サーフェス上のアクセント';
+			case 'themeEditor.contrast.labelOnAccent': return 'アクセント上のボタンラベル';
+			case 'themeEditor.lowContrast': return ({required Object pair, required Object ratio, required Object minimum}) => '${pair}: ${ratio}:1（推奨値の${minimum}:1未満）';
+			case 'themeEditor.discardTitle': return '変更を破棄しますか？';
+			case 'themeEditor.discardMessage': return '保存されていない色の変更は失われます。';
+			case 'themeEditor.discard': return '破棄';
+			case 'themeEditor.previewCardTitle': return ({required Object number}) => 'エピソード${number}';
+			case 'themeEditor.previewCardSubtitle': return ({required Object minutes}) => '残り${minutes}分';
+			case 'themeEditor.previewSwitch': return '自動再生';
+			case 'themeEditor.previewMutedText': return '補助テキストはこのように表示されます';
+			case 'search.hint': return '映画、番組、音楽を検索…';
+			case 'search.tryDifferentTerm': return '別の検索語をお試しください';
+			case 'search.searchYourMedia': return 'メディアを検索';
+			case 'search.enterTitleActorOrKeyword': return 'タイトル、俳優、またはキーワードを入力';
+			case 'search.people': return '人物';
+			case 'hotkeys.setShortcutFor': return ({required Object actionName}) => '${actionName}のショートカットを設定';
+			case 'hotkeys.clearShortcut': return 'ショートカットをクリア';
+			case 'hotkeys.noShortcutSet': return 'ショートカット未設定';
+			case 'hotkeys.currentShortcut': return '現在のショートカット:';
+			case 'hotkeys.pressToRecord': return '選択してショートカットを記録';
+			case 'hotkeys.recordingShortcut': return 'ショートカットを押してください';
+			case 'hotkeys.actions.playPause': return '再生/一時停止';
+			case 'hotkeys.actions.volumeUp': return '音量を上げる';
+			case 'hotkeys.actions.volumeDown': return '音量を下げる';
+			case 'hotkeys.actions.seekForward': return ({required Object seconds}) => '早送り（${seconds}秒）';
+			case 'hotkeys.actions.seekBackward': return ({required Object seconds}) => '巻き戻し（${seconds}秒）';
+			case 'hotkeys.actions.fullscreenToggle': return 'フルスクリーン切替';
+			case 'hotkeys.actions.muteToggle': return 'ミュート切替';
+			case 'hotkeys.actions.subtitleToggle': return '字幕切替';
+			case 'hotkeys.actions.audioTrackNext': return '次の音声トラック';
+			case 'hotkeys.actions.subtitleTrackNext': return '次の字幕トラック';
+			case 'hotkeys.actions.chapterNext': return '次のチャプター';
+			case 'hotkeys.actions.chapterPrevious': return '前のチャプター';
+			case 'hotkeys.actions.episodeNext': return '次のエピソード';
+			case 'hotkeys.actions.episodePrevious': return '前のエピソード';
+			case 'hotkeys.actions.speedIncrease': return '速度を上げる';
+			case 'hotkeys.actions.speedDecrease': return '速度を下げる';
+			case 'hotkeys.actions.speedReset': return '速度をリセット';
+			case 'hotkeys.actions.zoomIn': return 'ズームイン';
+			case 'hotkeys.actions.zoomOut': return 'ズームアウト';
+			case 'hotkeys.actions.zoomReset': return 'ズームをリセット';
+			case 'hotkeys.actions.subSeekNext': return '次の字幕にシーク';
+			case 'hotkeys.actions.subSeekPrev': return '前の字幕にシーク';
+			case 'hotkeys.actions.shaderToggle': return 'シェーダー切替';
+			case 'hotkeys.actions.skipMarker': return 'イントロ/クレジットをスキップ';
+			case 'hotkeys.actions.screenshot': return 'スクリーンショットを撮る';
+			case 'fileInfo.title': return 'ファイル情報';
+			case 'fileInfo.overview': return '概要';
+			case 'fileInfo.video': return '映像';
+			case 'fileInfo.audio': return '音声';
+			case 'fileInfo.subtitles': return '字幕';
+			case 'fileInfo.images': return '埋め込み画像';
+			case 'fileInfo.dataStreams': return 'データストリーム';
+			case 'fileInfo.lyrics': return '歌詞';
+			case 'fileInfo.file': return 'ファイル';
+			case 'fileInfo.attachments': return '添付ファイル';
+			case 'fileInfo.delivery': return '配信';
+			case 'fileInfo.versionCounter': return ({required Object index, required Object count}) => 'バージョン ${index} / ${count}';
+			case 'fileInfo.fileCounter': return ({required Object index, required Object count}) => 'ファイル ${index} / ${count}';
+			case 'fileInfo.noStreams': return 'サーバーはこのファイルにストリームがないと報告しました。';
+			case 'fileInfo.copyPath': return 'パスをコピー';
+			case 'fileInfo.pathCopied': return 'ファイルパスをコピーしました';
+			case 'fileInfo.codec': return 'コーデック';
+			case 'fileInfo.codecTag': return 'コーデックタグ';
+			case 'fileInfo.resolution': return '解像度';
+			case 'fileInfo.codedResolution': return '符号化解像度';
+			case 'fileInfo.bitrate': return 'ビットレート';
+			case 'fileInfo.frameRate': return 'フレームレート';
+			case 'fileInfo.rotation': return '回転';
+			case 'fileInfo.comment': return 'コメント';
+			case 'fileInfo.audioDescription': return '音声解説';
+			case 'fileInfo.headerCompression': return 'ヘッダー圧縮';
+			case 'fileInfo.sidecarFile': return 'サイドカーファイル';
+			case 'fileInfo.transportTimestamp': return 'トランスポートタイムスタンプ';
+			case 'fileInfo.displayOffset': return '表示オフセット';
+			case 'fileInfo.previewFailureCode': return 'プレビュー失敗コード';
+			case 'fileInfo.previewRetries': return 'プレビュー再試行回数';
+			case 'fileInfo.aspectRatio': return 'アスペクト比';
+			case 'fileInfo.pixelAspectRatio': return 'ピクセルアスペクト比';
+			case 'fileInfo.profile': return 'プロファイル';
+			case 'fileInfo.level': return 'レベル';
+			case 'fileInfo.bitDepth': return 'ビット深度';
+			case 'fileInfo.pixelFormat': return 'ピクセルフォーマット';
+			case 'fileInfo.colorSpace': return '色空間';
+			case 'fileInfo.colorRange': return '色範囲';
+			case 'fileInfo.colorPrimaries': return '色原色';
+			case 'fileInfo.colorTransfer': return 'カラートランスファー';
+			case 'fileInfo.chromaSubsampling': return 'クロマサブサンプリング';
+			case 'fileInfo.chromaLocation': return 'クロマ位置';
+			case 'fileInfo.scanType': return 'スキャンタイプ';
+			case 'fileInfo.interlaced': return 'インターレース';
+			case 'fileInfo.anamorphic': return 'アナモルフィック';
+			case 'fileInfo.referenceFrames': return '参照フレーム数';
+			case 'fileInfo.dynamicRange': return 'ダイナミックレンジ';
+			case 'fileInfo.dolbyVision': return 'Dolby Vision';
+			case 'fileInfo.dolbyVisionLevel': return 'Dolby Vision レベル';
+			case 'fileInfo.dolbyVisionVersion': return 'Dolby Vision バージョン';
+			case 'fileInfo.dolbyVisionLayers': return 'Dolby Vision レイヤー';
+			case 'fileInfo.baseLayerCompatibility': return 'ベースレイヤー互換性';
+			case 'fileInfo.avcBitstream': return 'AVC ビットストリーム';
+			case 'fileInfo.nalLengthSize': return 'NAL 長さサイズ';
+			case 'fileInfo.scalingMatrix': return 'カスタムスケーリングマトリックス';
+			case 'fileInfo.streamIdentifier': return 'ストリーム識別子';
+			case 'fileInfo.streamIndex': return 'ストリームインデックス';
+			case 'fileInfo.streamId': return 'ストリーム ID';
+			case 'fileInfo.language': return '言語';
+			case 'fileInfo.languageCode': return '言語コード';
+			case 'fileInfo.streamTitle': return 'トラックタイトル';
+			case 'fileInfo.channels': return 'チャンネル';
+			case 'fileInfo.sampleRate': return 'サンプルレート';
+			case 'fileInfo.spatialAudio': return '空間オーディオ';
+			case 'fileInfo.textBased': return 'テキストベース';
+			case 'fileInfo.subtitleFormat': return 'サイドカーフォーマット';
+			case 'fileInfo.provider': return 'プロバイダー';
+			case 'fileInfo.matchScore': return '一致スコア';
+			case 'fileInfo.externalDelivery': return '個別に配信可能';
+			case 'fileInfo.sidecarPath': return 'サイドカーパス';
+			case 'fileInfo.sourceStream': return 'コピー元';
+			case 'fileInfo.temporary': return '一時的';
+			case 'fileInfo.timeBase': return 'タイムベース';
+			case 'fileInfo.overallBitrate': return '全体ビットレート';
+			case 'fileInfo.path': return 'パス';
+			case 'fileInfo.fileName': return 'ファイル名';
+			case 'fileInfo.size': return 'サイズ';
+			case 'fileInfo.totalSize': return '合計サイズ';
+			case 'fileInfo.container': return 'コンテナ';
+			case 'fileInfo.duration': return '長さ';
+			case 'fileInfo.previewThumbnails': return 'プレビューサムネイル';
+			case 'fileInfo.previewIndex': return 'プレビューインデックス';
+			case 'fileInfo.packetLength': return 'パケット長';
+			case 'fileInfo.filePresent': return 'ファイルあり';
+			case 'fileInfo.fileReadable': return 'サーバーから読み取り可能';
+			case 'fileInfo.streamPath': return 'ストリームパス';
+			case 'fileInfo.optimizedForStreaming': return 'ストリーミング最適化';
+			case 'fileInfo.has64bitOffsets': return '64ビットオフセット';
+			case 'fileInfo.protocol': return 'プロトコル';
+			case 'fileInfo.mediaType': return 'メディアタイプ';
+			case 'fileInfo.sourceKind': return 'ソース種別';
+			case 'fileInfo.optimizedVersion': return '最適化バージョン';
+			case 'fileInfo.optimizationTarget': return '最適化ターゲット';
+			case 'fileInfo.deletedAt': return '削除済み';
+			case 'fileInfo.remoteSource': return 'リモートソース';
+			case 'fileInfo.infiniteStream': return '無限ストリーム';
+			case 'fileInfo.directPlay': return 'ダイレクト再生';
+			case 'fileInfo.directStream': return 'ダイレクトストリーム';
+			case 'fileInfo.transcoding': return 'トランスコード';
+			case 'fileInfo.etag': return 'ETag';
+			case 'fileInfo.versionId': return 'バージョン ID';
+			case 'fileInfo.fileId': return 'ファイル ID';
+			case 'fileInfo.defaultAudioTrack': return 'デフォルト音声トラック';
+			case 'fileInfo.defaultSubtitleTrack': return 'デフォルト字幕トラック';
+			case 'fileInfo.subtitlesOff': return 'オフ';
+			case 'fileInfo.flagDefault': return 'デフォルト';
+			case 'fileInfo.flagForced': return '強制';
+			case 'fileInfo.flagSelected': return '選択済み';
+			case 'fileInfo.flagExternal': return '外部';
+			case 'fileInfo.flagHearingImpaired': return '聴覚障害者向け';
+			case 'fileInfo.flagDub': return '吹替';
+			case 'fileInfo.flagOriginal': return 'オリジナル';
+			case 'fileInfo.channelsMono': return 'モノラル';
+			case 'fileInfo.dolbyVisionProfile': return ({required Object profile}) => 'プロファイル${profile}';
+			case 'mediaMenu.markAsWatched': return '視聴済みにする';
+			case 'mediaMenu.markAsUnwatched': return '未視聴にする';
+			case 'mediaMenu.removeFromContinueWatching': return '視聴中から削除';
+			case 'mediaMenu.viewDetails': return '詳細を表示';
+			case 'mediaMenu.goToSeries': return 'シリーズへ移動';
+			case 'mediaMenu.shufflePlay': return 'シャッフル再生';
+			case 'mediaMenu.shuffleNotAvailableOffline': return 'オフラインではシャッフルを利用できません';
+			case 'mediaMenu.fileInfo': return 'ファイル情報';
+			case 'mediaMenu.deleteEpisodeFromServer': return 'サーバーからエピソードを削除';
+			case 'mediaMenu.deleteSeasonFromServer': return 'サーバーからシーズンを削除';
+			case 'mediaMenu.deleteShowFromServer': return 'サーバーから番組を削除';
+			case 'mediaMenu.deleteMovieFromServer': return 'サーバーから映画を削除';
+			case 'mediaMenu.deleteEpisodeTitle': return 'このエピソードを削除しますか？';
+			case 'mediaMenu.deleteSeasonTitle': return 'このシーズンを削除しますか？';
+			case 'mediaMenu.deleteShowTitle': return 'この番組を削除しますか？';
+			case 'mediaMenu.deleteMovieTitle': return 'この映画を削除しますか？';
+			case 'mediaMenu.deleteEpisodeConfirm': return 'エピソードを削除';
+			case 'mediaMenu.deleteSeasonConfirm': return 'シーズンを削除';
+			case 'mediaMenu.deleteShowConfirm': return '番組を削除';
+			case 'mediaMenu.deleteMovieConfirm': return '映画を削除';
+			case 'mediaMenu.deleteAnyway': return 'それでも削除';
+			case 'mediaMenu.confirmDeleteTarget': return ({required Object title}) => 'サーバーから「${title}」を完全に削除しますか？';
+			case 'mediaMenu.deleteMultipleWarning': return 'すべてのエピソードとそのファイルが含まれます。';
+			case 'mediaMenu.deleteEpisodeCountWarning': return ({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('ja'))(n,
+				other: '中の全${n}エピソードとそのファイルが削除されます。',
+			);
+			case 'mediaMenu.deleteMultiPartWarning': return ({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('ja'))(n,
+				other: 'このアイテムは${n}個のファイルにまたがって保存されており、すべて削除されます。',
+			);
+			case 'mediaMenu.deleteSharedFileHeading': return ({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('ja'))(n,
+				other: '同じファイルに保存されている他の${n}エピソードも削除されます：',
+			);
+			case 'mediaMenu.deleteScopeUnverifiedProbeFailed': return 'Plezyは削除対象のファイルを確認できなかったため、上記のアイテム以上に削除される可能性があります。キャンセルして再試行するか、それでも削除してください。';
+			case 'mediaMenu.deleteScopeUnverifiedNoFileInfo': return 'サーバーがこのアイテムのファイル情報を提供しなかったため、Plezyは削除対象のファイルを確認できません。上記のアイテム以上に削除される可能性があります。';
+			case 'mediaMenu.mediaDeletedSuccessfully': return 'メディアアイテムを正常に削除しました';
+			case 'mediaMenu.mediaFailedToDelete': return 'メディアアイテムの削除に失敗しました';
+			case 'mediaMenu.rate': return '評価';
+			case 'mediaMenu.playFromBeginning': return '最初から再生';
+			case 'mediaMenu.playVersion': return 'バージョンを選んで再生…';
+			case 'rateSheet.title': return '評価';
+			case 'rateSheet.server': return 'サーバー';
+			case 'rateSheet.favorite': return 'お気に入り';
+			case 'rateSheet.favorited': return 'お気に入りに追加済み';
+			case 'rateSheet.saved': return '保存済み';
+			case 'rateSheet.notAvailable': return '一致なし';
+			case 'rateSheet.noConnectedServices': return '評価するには、設定でサービスを接続してください。';
+			case 'accessibility.mediaCardMovie': return ({required Object title}) => '${title}、映画';
+			case 'accessibility.mediaCardShow': return ({required Object title}) => '${title}、テレビ番組';
+			case 'accessibility.mediaCardEpisode': return ({required Object title, required Object episodeInfo}) => '${title}、${episodeInfo}';
+			case 'accessibility.mediaCardSeason': return ({required Object title, required Object seasonInfo}) => '${title}、${seasonInfo}';
+			case 'accessibility.mediaCardWatched': return '視聴済み';
+			case 'accessibility.mediaCardPartiallyWatched': return ({required Object percent}) => '${percent}パーセント視聴済み';
+			case 'accessibility.mediaCardUnwatched': return '未視聴';
+			case 'accessibility.tapToPlay': return 'タップして再生';
+			case 'accessibility.decrease': return '下げる';
+			case 'accessibility.increase': return '上げる';
+			case 'accessibility.decreaseValue': return ({required Object label}) => '${label}を下げる';
+			case 'accessibility.increaseValue': return ({required Object label}) => '${label}を上げる';
+			case 'accessibility.hue': return '色相';
+			case 'accessibility.saturation': return '彩度';
+			case 'accessibility.brightness': return '明るさ';
+			case 'accessibility.hexColor': return '16進カラー';
+			case 'accessibility.expandText': return 'テキストを展開';
+			case 'accessibility.collapseText': return 'テキストを折りたたむ';
+			case 'accessibility.alphabetNavigation': return 'アルファベットナビゲーション';
+			case 'accessibility.alphabetScrollHint': return '上下にスワイプして文字ごとに移動';
+			case 'accessibility.rowColumnPosition': return ({required Object rowCount, required Object row, required Object columnCount, required Object column}) => '${rowCount}行中${row}行、${columnCount}列中${column}列';
+			case 'accessibility.rowPosition': return ({required Object rowCount, required Object row}) => '${rowCount}行中${row}行';
+			case 'accessibility.autoScrollPlay': return '自動スクロールを再生';
+			case 'accessibility.autoScrollPause': return '自動スクロールを一時停止';
+			case 'accessibility.hueShort': return 'H';
+			case 'accessibility.saturationShort': return 'S';
+			case 'accessibility.valueShort': return 'V';
+			case 'tooltips.shufflePlay': return 'シャッフル再生';
+			case 'tooltips.playTrailer': return '予告編を再生';
+			case 'tooltips.markAsWatched': return '視聴済みにする';
+			case 'tooltips.markAsUnwatched': return '未視聴にする';
+			case 'audioTracks.track': return ({required Object n}) => '音声トラック${n}';
+			case 'videoControls.audioLabel': return '音声';
+			case 'videoControls.subtitlesLabel': return '字幕';
+			case 'videoControls.addTime': return ({required Object amount, required Object unit}) => '+${amount}${unit}';
+			case 'videoControls.letterbox': return 'レターボックス';
+			case 'videoControls.fillScreen': return '画面を埋める';
+			case 'videoControls.stretch': return '引き延ばす';
+			case 'videoControls.lockRotation': return '回転をロック';
+			case 'videoControls.unlockRotation': return '回転のロックを解除';
+			case 'videoControls.timerActive': return 'タイマー動作中';
+			case 'videoControls.playbackWillPauseIn': return ({required Object duration}) => '再生は${duration}後に一時停止します';
+			case 'videoControls.sleepTimerEndOfVideo': return '現在の動画の最後';
+			case 'videoControls.sleepTimerStopAtHeader': return '停止のタイミング';
+			case 'videoControls.sleepTimerDurationHeader': return 'タイマー';
+			case 'videoControls.playbackWillPauseAtEnd': return '再生はこの動画の最後に一時停止します';
+			case 'videoControls.stillWatching': return 'まだ視聴中ですか？';
+			case 'videoControls.pausingIn': return ({required Object seconds}) => '${seconds}秒後に一時停止';
+			case 'videoControls.continueWatching': return '続ける';
+			case 'videoControls.autoPlayNext': return '次を自動再生';
+			case 'videoControls.playNext': return '次を再生';
+			case 'videoControls.playButton': return '再生';
+			case 'videoControls.pauseButton': return '一時停止';
+			case 'videoControls.playbackPaused': return '一時停止中';
+			case 'videoControls.playbackResumed': return '再生中';
+			case 'videoControls.loadingVideo': return '動画を読み込み中';
+			case 'videoControls.showPlaybackControls': return '再生コントロールを表示';
+			case 'videoControls.hidePlaybackControls': return '再生コントロールを非表示';
+			case 'videoControls.seekBackwardButton': return ({required Object seconds}) => '${seconds}秒戻る';
+			case 'videoControls.seekForwardButton': return ({required Object seconds}) => '${seconds}秒進む';
+			case 'videoControls.previousButton': return '前のエピソード';
+			case 'videoControls.nextButton': return '次のエピソード';
+			case 'videoControls.previousChapterButton': return '前のチャプター';
+			case 'videoControls.nextChapterButton': return '次のチャプター';
+			case 'videoControls.muteButton': return 'ミュート';
+			case 'videoControls.unmuteButton': return 'ミュート解除';
+			case 'videoControls.settingsButton': return '再生設定';
+			case 'videoControls.tracksButton': return '音声と字幕';
+			case 'videoControls.chaptersButton': return 'チャプター';
+			case 'videoControls.versionQualityButton': return 'バージョンと画質';
+			case 'videoControls.versionColumnHeader': return 'バージョン';
+			case 'videoControls.qualityColumnHeader': return '画質';
+			case 'videoControls.qualityOriginal': return 'オリジナル';
+			case 'videoControls.qualityPresetLabel': return ({required Object resolution, required Object bitrate}) => '${resolution}p ${bitrate} Mbps';
+			case 'videoControls.transcodeUnavailableFallback': return 'トランスコードは利用できません — オリジナル画質で再生中';
+			case 'videoControls.subtitleUnavailableFallback': return '選択した字幕を読み込めませんでした — 字幕なしで再生を続けます';
+			case 'videoControls.pipButton': return 'ピクチャーインピクチャーモード';
+			case 'videoControls.aspectRatioButton': return 'アスペクト比';
+			case 'videoControls.ambientLighting': return 'アンビエントライティング';
+			case 'videoControls.fullscreenButton': return 'フルスクリーンに入る';
+			case 'videoControls.exitFullscreenButton': return 'フルスクリーンを終了';
+			case 'videoControls.alwaysOnTopButton': return '常に前面に表示';
+			case 'videoControls.rotationLockButton': return '回転ロック';
+			case 'videoControls.lockScreen': return '画面をロック';
+			case 'videoControls.screenLockButton': return '画面ロック';
+			case 'videoControls.timelineSlider': return '動画タイムライン';
+			case 'videoControls.volumeSlider': return '音量レベル';
+			case 'videoControls.endsAt': return ({required Object time}) => '${time}に終了';
+			case 'videoControls.pipActive': return 'ピクチャーインピクチャーで再生中';
+			case 'videoControls.pipFailed': return 'ピクチャーインピクチャーの開始に失敗しました';
+			case 'videoControls.screenshotSaved': return 'スクリーンショットを保存しました';
+			case 'videoControls.screenshotFailed': return 'スクリーンショットを撮影できませんでした';
+			case 'videoControls.zoomPercent': return ({required Object percent}) => 'ズーム ${percent}%';
+			case 'videoControls.volumePercent': return ({required Object percent}) => '音量 ${percent}%';
+			case 'videoControls.pipErrors.androidVersion': return 'Android 8.0以降が必要です';
+			case 'videoControls.pipErrors.iosVersion': return 'iOS 15.0以降が必要です';
+			case 'videoControls.pipErrors.permissionDisabled': return 'ピクチャーインピクチャーが無効です。システム設定で有効にしてください。';
+			case 'videoControls.pipErrors.notSupported': return 'デバイスはピクチャーインピクチャーモードをサポートしていません';
+			case 'videoControls.pipErrors.voSwitchFailed': return 'ピクチャーインピクチャーの映像出力切替に失敗しました';
+			case 'videoControls.pipErrors.failed': return 'ピクチャーインピクチャーの開始に失敗しました';
+			case 'videoControls.pipErrors.prepareFailed': return 'ピクチャーインピクチャーを準備できませんでした';
+			case 'videoControls.pipErrors.unknown': return ({required Object error}) => 'エラーが発生しました: ${error}';
+			case 'videoControls.chapters': return 'チャプター';
+			case 'videoControls.noChaptersAvailable': return 'チャプターがありません';
+			case 'videoControls.queue': return 'キュー';
+			case 'videoControls.noQueueItems': return 'キューにアイテムがありません';
+			case 'videoControls.noAudioDevicesAvailable': return 'オーディオデバイスがありません';
+			case 'videoControls.searchSubtitles': return '字幕を検索';
+			case 'videoControls.language': return '言語';
+			case 'videoControls.noSubtitlesFound': return '字幕が見つかりません';
+			case 'videoControls.subtitleDownloaded': return '字幕をダウンロードしました';
+			case 'videoControls.subtitleDownloadedNotApplied': return '字幕はダウンロードされましたが、選択できませんでした';
+			case 'videoControls.subtitleDownloadFailed': return '字幕のダウンロードに失敗しました';
+			case 'videoControls.subtitleDownloadTimedOut': return '字幕が時間内に追加されませんでした。ダウンロードに失敗した可能性があります';
+			case 'videoControls.searchLanguages': return '言語を検索…';
+			case 'videoControls.skipIntro': return 'イントロをスキップ';
+			case 'videoControls.skipCredits': return 'クレジットをスキップ';
+			case 'videoControls.nextEpisode': return '次のエピソード';
+			case 'videoControls.subtitleTrack': return ({required Object n}) => 'トラック${n}';
+			case 'videoControls.subtitleFile': return ({required Object name}) => '字幕${name}';
+			case 'videoControls.forcedTrack': return ({required Object label}) => '${label}（強制）';
+			case 'videoControls.osdSubtitlesOff': return '字幕: オフ';
+			case 'videoControls.osdSubtitles': return ({required Object track}) => '字幕: ${track}';
+			case 'videoControls.osdAudio': return ({required Object track}) => '音声: ${track}';
+			case 'messages.markedAsWatched': return '視聴済みにしました';
+			case 'messages.markedAsUnwatched': return '未視聴にしました';
+			case 'messages.markedAsWatchedOffline': return '視聴済みにしました（オンライン時に同期）';
+			case 'messages.markedAsUnwatchedOffline': return '未視聴にしました（オンライン時に同期）';
+			case 'messages.autoRemovedWatchedDownload': return ({required Object title}) => '自動削除: ${title}';
+			case 'messages.autoRemovedWatchedDownloads': return ({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('ja'))(n,
+				other: '視聴済みダウンロードを${n}件自動削除しました',
+			);
+			case 'messages.removedFromContinueWatching': return '視聴中から削除しました';
+			case 'messages.errorLoading': return ({required Object error}) => 'エラー: ${error}';
+			case 'messages.searchPartialResults': return '一部のメディアサーバーを検索できませんでした。利用可能な結果を表示しています。';
+			case 'messages.streamInterrupted': return 'ストリームが中断されました。再生を押すかシークして再試行してください。';
+			case 'messages.liveStreamInterrupted': return 'ライブストリームが中断されました。再生を押して再試行してください。';
+			case 'messages.fileInfoNotAvailable': return 'ファイル情報が利用できません';
+			case 'messages.playbackAuthenticationRequired': return 'このアイテムを再生するには、メディアサーバーにもう一度サインインしてください。';
+			case 'messages.playbackServerUnavailable': return 'メディアサーバーを利用できません。しばらくしてからもう一度お試しください。';
+			case 'messages.playbackDataInvalid': return 'サーバーから無効な再生情報が返されました。';
+			case 'messages.playbackCancelled': return '再生がキャンセルされました。';
+			case 'messages.playbackFailed': return '再生を開始できませんでした。';
+			case 'messages.playbackFailedDetail': return ({required Object error}) => '再生を開始できませんでした: ${error}';
+			case 'messages.audioOutputFailed': return 'オーディオ出力が応答しなくなりました。テレビやレシーバーの音声接続を確認してください。他のアプリでも音が出ない場合は、デバイスを再起動してください。';
+			case 'messages.mediaUnavailable': return 'このコンテンツは利用できなくなりました。';
+			case 'messages.errorLoadingFileInfo': return ({required Object error}) => 'ファイル情報の読み込みエラー: ${error}';
+			case 'messages.errorLoadingSeries': return 'シリーズの読み込みエラー';
+			case 'messages.musicNotSupported': return '音楽の再生はまだサポートされていません';
+			case 'messages.noDescriptionAvailable': return '説明はありません';
+			case 'messages.noProfilesAvailable': return '利用可能なプロフィールがありません';
+			case 'messages.contactAdminForProfiles': return 'プロフィールを追加するには、サーバー管理者に連絡してください';
+			case 'messages.unableToDetermineLibrarySection': return 'このアイテムのライブラリセクションを判別できません';
+			case 'messages.logsCleared': return 'ログをクリアしました';
+			case 'messages.logsCopied': return 'ログをクリップボードにコピーしました';
+			case 'messages.noLogsAvailable': return 'ログがありません';
+			case 'messages.libraryScanning': return ({required Object title}) => '「${title}」をスキャン中…';
+			case 'messages.libraryScanStarted': return ({required Object title}) => '"${title}"のライブラリスキャンを開始しました';
+			case 'messages.libraryScanFailed': return ({required Object error}) => 'ライブラリのスキャンに失敗しました: ${error}';
+			case 'messages.metadataRefreshing': return ({required Object title}) => '「${title}」のメタデータを更新中…';
+			case 'messages.metadataRefreshStarted': return ({required Object title}) => '"${title}"のメタデータ更新を開始しました';
+			case 'messages.metadataRefreshFailed': return ({required Object error}) => 'メタデータの更新に失敗しました: ${error}';
+			case 'messages.logoutConfirm': return 'ログアウトしてもよろしいですか？';
+			case 'messages.noSeasonsFound': return 'シーズンが見つかりません';
+			case 'messages.seasonsLoadFailed': return 'シーズンを読み込めませんでした';
+			case 'messages.noEpisodesFound': return '最初のシーズンにエピソードが見つかりません';
+			case 'messages.noEpisodesFoundGeneral': return 'エピソードが見つかりません';
+			case 'messages.episodesLoadFailed': return 'エピソードを読み込めませんでした';
+			case 'messages.noResultsFound': return '結果が見つかりません';
+			case 'messages.sleepTimerSet': return ({required Object label}) => 'スリープタイマーを${label}に設定しました';
+			case 'messages.noItemsAvailable': return 'アイテムがありません';
+			case 'messages.failedToCreatePlayQueueNoItems': return '再生キューを作成できませんでした — アイテムがありません';
+			case 'messages.failedPlayback': return ({required Object action, required Object error}) => '${action}に失敗しました: ${error}';
+			case 'messages.switchingToCompatiblePlayer': return '互換性のあるプレーヤーに切り替え中…';
+			case 'messages.serverLimitTitle': return '再生に失敗しました';
+			case 'messages.serverLimitBody': return 'サーバーエラー（HTTP 500）。帯域幅/トランスコード制限により拒否された可能性があります。所有者に調整を依頼してください。';
+			case 'messages.mediaUnreadableTitle': return 'ファイルを利用できません';
+			case 'messages.mediaUnreadableBody': return 'サーバーはこのアイテムを見つけましたが、そのファイルを読み取れませんでした（HTTP 404）。ファイルが移動・削除されたか、ストレージがオフラインの可能性があります。サーバーの管理者にファイルの確認とライブラリの再スキャンを依頼してください。';
+			case 'messages.serverBusyTitle': return 'ストリームを利用できません';
+			case 'messages.serverBusyBody': return 'サーバーがこのファイルのストリーミングを繰り返し拒否しました（HTTP 503）。サーバーが再起動中またはビジー状態か、ファイルのストレージがオフラインの可能性があります。しばらくしてからもう一度お試しください。問題が続く場合は、サーバーの所有者にサーバーとファイルのストレージを確認するよう依頼してください。';
+			case 'messages.playbackNotAllowedTitle': return '再生が許可されていません';
+			case 'messages.playbackNotAllowedBody': return 'サーバーがこのアイテムのストリーミングを拒否しました（HTTP 403）。お使いのアカウントに再生の権限がないか、サーバーがローカルネットワーク内での再生のみを許可している可能性があります。';
+			case 'messages.logsUploaded': return 'ログをアップロードしました';
+			case 'messages.logsUploadFailed': return 'ログのアップロードに失敗しました';
+			case 'messages.logId': return 'ログID';
+			case 'messages.burnedSubtitlesUseMenu': return '字幕はこのストリームに焼き付けられています。字幕メニューから変更してください。';
+			case 'messages.noVideoUrl': return '利用可能な動画URLがありません';
+			case 'messages.playbackNoMediaSources': return 'サーバーから再生可能なメディアソースが返されませんでした';
+			case 'messages.playbackDataNotPrepared': return '再生データの準備が完了する前に再生が開始されました';
+			case 'messages.streamSelectionUnavailable': return 'このソースではストリームを選択できません';
+			case 'messages.streamSelectionFailed': return '選択したストリームを適用できませんでした';
+			case 'messages.trackSelectionNotRemembered': return 'このトラック選択は現在の再生にのみ適用されます。';
+			case 'messages.serverUnavailableForProfile': return '現在のプロフィールで利用可能なサーバーがありません';
+			case 'subtitlingStyling.text': return 'テキスト';
+			case 'subtitlingStyling.border': return '枠線';
+			case 'subtitlingStyling.background': return '背景';
+			case 'subtitlingStyling.fontSize': return 'フォントサイズ';
+			case 'subtitlingStyling.textColor': return 'テキストの色';
+			case 'subtitlingStyling.borderSize': return '枠線サイズ';
+			case 'subtitlingStyling.borderColor': return '枠線の色';
+			case 'subtitlingStyling.backgroundOpacity': return '背景の不透明度';
+			case 'subtitlingStyling.backgroundColor': return '背景色';
+			case 'subtitlingStyling.position': return '位置';
+			case 'subtitlingStyling.assOverride': return 'ASSオーバーライド';
+			case 'subtitlingStyling.overrideScale': return '拡大縮小';
+			case 'subtitlingStyling.overrideForce': return '強制';
+			case 'subtitlingStyling.overrideStrip': return 'スタイルを削除';
+			case 'subtitlingStyling.positionTop': return '上';
+			case 'subtitlingStyling.positionBottom': return '下';
+			case 'subtitlingStyling.useMargins': return '余白を使用';
+			case 'subtitlingStyling.useMarginsDescription': return 'テキスト字幕を動画の外側の領域に表示できるようにします。スタイル付き字幕は元の配置を維持する場合があります。';
+			case 'subtitlingStyling.anchorToScreen': return '画面に固定';
+			case 'subtitlingStyling.anchorToScreenDescription': return 'ワイドスクリーン映像の下にある黒帯にテキスト字幕を表示します';
+			case 'subtitlingStyling.bold': return '太字';
+			case 'subtitlingStyling.italic': return '斜体';
+			case 'subtitlingStyling.renderResolution': return 'レンダリング解像度';
+			case 'subtitlingStyling.renderResolutionScreen': return '画面解像度';
+			case 'subtitlingStyling.renderResolutionVideo': return '動画解像度';
+			case 'mpvConfig.title': return 'mpv.conf';
+			case 'mpvConfig.description': return '高度な動画プレーヤー設定';
+			case 'mpvConfig.presets': return 'プリセット';
+			case 'mpvConfig.noPresets': return '保存済みプリセットがありません';
+			case 'mpvConfig.saveAsPreset': return 'プリセットとして保存…';
+			case 'mpvConfig.presetName': return 'プリセット名';
+			case 'mpvConfig.presetNameHint': return 'プリセットの名前を入力';
+			case 'mpvConfig.loadPreset': return '読み込み';
+			case 'mpvConfig.deletePreset': return '削除';
+			case 'mpvConfig.presetSaved': return 'プリセットを保存しました';
+			case 'mpvConfig.presetLoaded': return 'プリセットを読み込みました';
+			case 'mpvConfig.presetDeleted': return 'プリセットを削除しました';
+			case 'mpvConfig.confirmDeletePreset': return 'このプリセットを削除してもよろしいですか？';
+			case 'mpvConfig.configPlaceholder': return 'gpu-api=vulkan\nhwdec=auto\n# comment';
+			case 'mpvConfig.lineHint': return 'option=value';
+			case 'mpvConfig.addLine': return '行を追加';
+			case 'mpvConfig.removeLine': return '行を削除';
+			case 'mpvConfig.embeddedVoHint': return 'Linux では vo、gpu-context、gpu-api は無視されます。埋め込み動画は常にビデオプレーン上で vo=libmpv を通してレンダリングされ、gpu-next（ArtCNN のようなコンピュートシェーダーに必要）は埋め込みでは実行できません。';
+			case 'dialog.confirmAction': return '操作の確認';
+			case 'profiles.addPlezyProfile': return 'Plezyプロフィールを追加';
+			case 'profiles.switchingProfile': return 'プロフィールを切り替え中…';
+			case 'profiles.deleteThisProfileTitle': return 'このプロフィールを削除しますか？';
+			case 'profiles.deleteThisProfileMessage': return ({required Object displayName}) => '${displayName}を削除します。接続には影響しません。';
+			case 'profiles.active': return 'アクティブ';
+			case 'profiles.manage': return '管理';
+			case 'profiles.delete': return '削除';
+			case 'profiles.signOut': return 'サインアウト';
+			case 'profiles.signOutPlexTitle': return 'Plexからサインアウトしますか？';
+			case 'profiles.signOutPlexMessage': return ({required Object displayName}) => '${displayName}とすべてのPlex Homeユーザーを削除しますか？いつでも再度サインインできます。';
+			case 'profiles.signOutPlexDeleteDownloads': return 'ダウンロードも削除';
+			case 'profiles.signOutPlexDeleteDownloadsDescription': return '削除しない場合、ダウンロードはこのデバイスに残り、このアカウントに再度サインインすると再び利用できます。';
+			case 'profiles.signedOutPlex': return 'Plexからサインアウトしました。';
+			case 'profiles.signOutFailed': return 'サインアウトに失敗しました。';
+			case 'profiles.sectionTitle': return 'プロフィール';
+			case 'profiles.summarySingle': return 'プロフィールを追加すると、管理対象ユーザーとローカルユーザーを併用できます';
+			case 'profiles.summaryMultipleWithActive': return ({required Object count, required Object activeName}) => '${count}個のプロフィール · 使用中: ${activeName}';
+			case 'profiles.summaryMultiple': return ({required Object count}) => '${count}個のプロフィール';
+			case 'profiles.removeConnectionTitle': return '接続を削除しますか？';
+			case 'profiles.removeConnectionMessage': return ({required Object displayName, required Object connectionLabel}) => '${displayName}の${connectionLabel}へのアクセスを削除します。他のプロフィールには残ります。';
+			case 'profiles.deleteProfileTitle': return 'プロフィールを削除しますか？';
+			case 'profiles.deleteProfileMessage': return ({required Object displayName}) => '${displayName}とその接続を削除します。サーバーは引き続き利用できます。';
+			case 'profiles.profileNameLabel': return 'プロフィール名';
+			case 'profiles.pinProtectionLabel': return 'PIN保護';
+			case 'profiles.pinManagedByPlex': return 'PINはPlexで管理されています。plex.tvで編集してください。';
+			case 'profiles.noPinSetEditOnPlex': return 'PINが設定されていません。PINを必須にするには、plex.tvでHomeユーザーを編集してください。';
+			case 'profiles.setPin': return 'PINを設定';
+			case 'profiles.setPinTitle': return 'PINを設定';
+			case 'profiles.confirmPinTitle': return 'PINを確認';
+			case 'profiles.pinSet': return 'PIN設定済み';
+			case 'profiles.changePin': return '変更';
+			case 'profiles.removePin': return '削除';
+			case 'profiles.connectionsLabel': return '接続';
+			case 'profiles.add': return '追加';
+			case 'profiles.deleteProfileButton': return 'プロフィールを削除';
+			case 'profiles.noConnectionsHint': return '接続がありません — このプロフィールを使うには接続を追加してください。';
+			case 'profiles.noConnections': return '接続がありません';
+			case 'profiles.plexHomeAccount': return 'Plex Homeアカウント';
+			case 'profiles.plexAccountChip': return ({required Object account}) => 'Plexアカウント: ${account}';
+			case 'profiles.plexAccountUserChip': return ({required Object account, required Object user}) => '${account}経由の${user}';
+			case 'profiles.connectionDefault': return 'デフォルト';
+			case 'profiles.connectionAs': return ({required Object displayName}) => '${displayName}として';
+			case 'profiles.makeDefault': return 'デフォルトに設定';
+			case 'profiles.removeConnection': return '削除';
+			case 'profiles.profileRenamed': return 'プロフィール名を変更しました。';
+			case 'profiles.borrowAddTo': return ({required Object displayName}) => '${displayName}に追加';
+			case 'profiles.borrowExplain': return '別のプロフィールの接続を利用します。PINで保護されたプロフィールにはPINが必要です。';
+			case 'profiles.borrowEmpty': return '利用できる接続はまだありません。';
+			case 'profiles.borrowEmptySubtitle': return 'まず、別のプロフィールをPlex、JellyfinまたはEmbyに接続してください。';
+			case 'profiles.borrowLoadFailed': return '利用可能な接続を読み込めませんでした。もう一度お試しください。';
+			case 'profiles.borrowFromProfile': return ({required Object displayName}) => '${displayName}から利用';
+			case 'profiles.borrowConnectionBorrowed': return '接続を追加しました。';
+			case 'profiles.borrowFailed': return '接続を追加できませんでした。';
+			case 'profiles.incorrectPin': return 'PINが正しくありません。';
+			case 'profiles.incorrectPinTryAgain': return 'PINが正しくありません。もう一度お試しください。';
+			case 'profiles.sourceProfileMissingParentAccount': return '元のプロフィールに親アカウントがありません。';
+			case 'profiles.failedToLoadHomeUsers': return 'Plex Homeユーザーを読み込めませんでした。接続を確認して、もう一度お試しください。';
+			case 'profiles.failedToVerifyPin': return 'PINを確認できませんでした。';
+			case 'profiles.newProfile': return '新しいプロフィール';
+			case 'profiles.profileNameHint': return '例：ゲスト、キッズ、ファミリールーム';
+			case 'profiles.pinProtectionOptional': return 'PIN保護（オプション）';
+			case 'profiles.pinExplain': return 'プロフィール切り替えには4桁のPINが必要です。';
+			case 'profiles.continueButton': return '続ける';
+			case 'profiles.pinsDontMatch': return 'PINが一致しません';
+			case 'profiles.tokenIdentityMismatch': return 'Plexプロフィールのトークンから予期しないサーバーが特定されました';
+			case 'connections.sectionTitle': return '接続';
+			case 'connections.addConnection': return '接続を追加';
+			case 'connections.addConnectionSubtitleNoProfile': return 'Plexでサインインするか、JellyfinまたはEmbyサーバーに接続';
+			case 'connections.addConnectionSubtitleScoped': return ({required Object displayName}) => '${displayName}に追加：Plex、Jellyfin、Emby、または別のプロフィールの接続';
+			case 'connections.sessionExpiredOne': return ({required Object name}) => '${name} のセッションの有効期限が切れました';
+			case 'connections.sessionExpiredMany': return ({required Object count}) => '${count} 台のサーバーのセッションの有効期限が切れました';
+			case 'connections.accessDeniedOne': return ({required Object name}) => '${name} がこのアカウントへのアクセスを拒否しました';
+			case 'connections.accessDeniedMany': return ({required Object count}) => '${count} 台のサーバーがこのアカウントへのアクセスを拒否しました';
+			case 'connections.signInAgain': return '再度サインイン';
+			case 'connections.editMediaBrowserTitle': return ({required Object product}) => '${product}接続を編集';
+			case 'connections.editMediaBrowserIntro': return ({required Object serverName}) => '${serverName}のURLを追加または削除します。Plezyは到達可能なURLのうち、レイテンシーが最も低いものを使用します。';
+			case 'accountPreferences.sectionTitle': return 'アカウント設定';
+			case 'accountPreferences.hubSubtitleSingle': return ({required Object account}) => '音声・字幕・ライブラリのオプションは${account}に保存されています';
+			case 'accountPreferences.hubSubtitleMultiple': return ({required Object count}) => '音声・字幕・ライブラリのオプションは${count}個のアカウントに保存されています';
+			case 'accountPreferences.pickAccount': return '各アカウントに独自の設定が保存されています。編集するアカウントを選択してください。';
+			case 'accountPreferences.storedOnAccount': return 'これらのオプションはアカウント自体に保存されるため、サインインしているすべてのアプリ（他のデバイスのPlezyを含む）で使用されます。';
+			case 'accountPreferences.noAccounts': return '設定できるアカウントがありません';
+			case 'accountPreferences.noAccountsHint': return 'Plexにサインインするか、JellyfinまたはEmbyサーバーに接続すると、そのアカウントに保存された設定がここに表示されます。';
+			case 'accountPreferences.unavailable': return 'このアカウントにアクセスできません';
+			case 'accountPreferences.loadFailed': return 'この設定を読み込めませんでした';
+			case 'accountPreferences.noPreference': return '指定なし';
+			case 'accountPreferences.notSet': return '未設定';
+			case 'accountPreferences.groups.audioAndSubtitles': return '音声と字幕';
+			case 'accountPreferences.groups.libraryDisplay': return 'ライブラリ';
+			case 'accountPreferences.groups.personalMedia': return '個人メディア';
+			case 'accountPreferences.preferredAudioLanguage': return '優先音声言語';
+			case 'accountPreferences.autoSelectAudio': return '言語で音声を選択';
+			case 'accountPreferences.autoSelectAudioDescription': return 'オフにすると、ファイルでデフォルトとマークされた音声トラックがそのまま使われます。';
+			case 'accountPreferences.preferredSubtitleLanguage': return '優先字幕言語';
+			case 'accountPreferences.subtitleMode': return '字幕の自動表示';
+			case 'accountPreferences.subtitleModes.none': return '手動選択';
+			case 'accountPreferences.subtitleModes.noneDescription': return '自動では字幕をオンにしません。';
+			case 'accountPreferences.subtitleModes.defaultMode': return 'トラックのフラグに従う';
+			case 'accountPreferences.subtitleModes.defaultModeDescription': return '各字幕トラックに保存されたデフォルトと強制のフラグを使用します。';
+			case 'accountPreferences.subtitleModes.always': return '常に有効';
+			case 'accountPreferences.subtitleModes.alwaysDescription': return '優先言語の字幕トラックがあれば、常にオンにします。';
+			case 'accountPreferences.subtitleModes.onlyForced': return '強制字幕のみ';
+			case 'accountPreferences.subtitleModes.onlyForcedDescription': return '強制とマークされたトラックのみ読み込みます。';
+			case 'accountPreferences.subtitleModes.smart': return '外国語音声時に表示';
+			case 'accountPreferences.subtitleModes.smartDescription': return '音声が別の言語の場合にのみ字幕をオンにします。';
+			case 'accountPreferences.subtitleAccessibility': return 'SDH字幕';
+			case 'accountPreferences.subtitleAccessibilityOptions.preferNonSdh': return '非SDH字幕を優先';
+			case 'accountPreferences.subtitleAccessibilityOptions.preferSdh': return 'SDH字幕を優先';
+			case 'accountPreferences.subtitleAccessibilityOptions.onlySdh': return 'SDH字幕のみ';
+			case 'accountPreferences.subtitleAccessibilityOptions.onlyNonSdh': return '非SDH字幕のみ';
+			case 'accountPreferences.forcedSubtitles': return '強制字幕';
+			case 'accountPreferences.forcedSubtitleOptions.preferNonForced': return '非強制字幕を優先';
+			case 'accountPreferences.forcedSubtitleOptions.preferForced': return '強制字幕を優先';
+			case 'accountPreferences.forcedSubtitleOptions.onlyForced': return '強制字幕のみ';
+			case 'accountPreferences.forcedSubtitleOptions.onlyNonForced': return '非強制字幕のみ';
+			case 'accountPreferences.displayMissingEpisodes': return '欠落エピソードを表示';
+			case 'accountPreferences.displayMissingEpisodesDescription': return 'サーバーが把握しているがファイルがないエピソードを一覧表示します。';
+			case 'accountPreferences.hidePlayedInLatest': return '「最新」の視聴済みアイテムを非表示';
+			case 'accountPreferences.hidePlayedInLatestDescription': return 'すでに視聴したアイテムは、サーバーの「最新」に表示されません。';
+			case 'accountPreferences.displayCollectionsView': return 'コレクションビューを表示';
+			case 'accountPreferences.displayCollectionsViewDescription': return 'ライブラリに加えて、サーバーのコレクションビューを表示します。';
+			case 'accountPreferences.rewatchingInNextUp': return '再視聴した番組を「次のエピソード」に残す';
+			case 'accountPreferences.rewatchingInNextUpDescription': return '番組を見終えた後に再び見始めると、「次のエピソード」は番組を外さずに再視聴に追従します。';
+			case 'accountPreferences.watchedIndicator': return '視聴済みマーク';
+			case 'accountPreferences.watchedIndicatorOptions.none': return 'しない';
+			case 'accountPreferences.watchedIndicatorOptions.moviesAndShows': return '映画とテレビ番組';
+			case 'accountPreferences.watchedIndicatorOptions.movies': return '映画のみ';
+			case 'accountPreferences.watchedIndicatorOptions.shows': return 'テレビ番組のみ';
+			case 'accountPreferences.mediaReviewsVisibility': return '評価とレビュー';
+			case 'accountPreferences.mediaReviewsOptions.usersAndCritics': return 'ユーザーと批評家';
+			case 'accountPreferences.mediaReviewsOptions.usersOnly': return 'ユーザーのみ';
+			case 'accountPreferences.mediaReviewsOptions.criticsOnly': return '批評家のみ';
+			case 'accountPreferences.mediaReviewsOptions.nobody': return '非表示';
+			case 'discover.title': return '探す';
+			case 'discover.noContentAvailable': return 'コンテンツがありません';
+			case 'discover.addMediaToLibraries': return 'ライブラリにメディアを追加してください';
+			case 'discover.continueWatching': return '視聴を続ける';
+			case 'discover.continueWatchingIn': return ({required Object library}) => '${library}の視聴を続ける';
+			case 'discover.nextUp': return '次のエピソード';
+			case 'discover.nextUpIn': return ({required Object library}) => '${library}の次のエピソード';
+			case 'discover.recentlyAdded': return '最近追加されたコンテンツ';
+			case 'discover.recentlyAddedIn': return ({required Object library}) => '${library}に最近追加されたコンテンツ';
+			case 'discover.latestAlbumsIn': return ({required Object library}) => '${library}の最新アルバム';
+			case 'discover.recentlyPlayedIn': return ({required Object library}) => '${library}で最近再生したコンテンツ';
+			case 'discover.mostPlayedIn': return ({required Object library}) => '${library}で最も再生したコンテンツ';
+			case 'discover.playEpisode': return ({required Object season, required Object episode}) => 'S${season}E${episode}';
+			case 'discover.overview': return 'あらすじ';
+			case 'discover.cast': return 'キャスト';
+			case 'discover.extras': return '予告編とエクストラ';
+			case 'discover.studio': return 'スタジオ';
+			case 'discover.rating': return '評価';
+			case 'discover.director': return '監督';
+			case 'discover.directors': return '監督';
+			case 'discover.movie': return '映画';
+			case 'discover.tvShow': return 'テレビ番組';
+			case 'discover.minutesLeft': return ({required Object minutes}) => '残り${minutes}分';
+			case 'discover.moreLikeThis': return '似ている作品';
+			case 'discover.titleCount': return ({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('ja'))(n,
+				other: '${n}作品',
+			);
+			case 'discover.person.born': return '生年月日';
+			case 'discover.person.died': return '没年月日';
+			case 'discover.person.birthplace': return '出生地';
+			case 'discover.person.dateWithAge': return ({required Object date, required Object age}) => '${date}（${age}歳）';
+			case 'discover.person.dateWithAgeAtDeath': return ({required Object date, required Object age}) => '${date}（${age}歳没）';
+			case 'errors.searchFailed': return ({required Object error}) => '検索に失敗しました: ${error}';
+			case 'errors.searchUnavailable': return '検索中にメディアサーバーへ接続できませんでした。';
+			case 'errors.connectionTimeout': return ({required Object context}) => '${context}の読み込み中に接続がタイムアウトしました';
+			case 'errors.connectionFailed': return 'メディアサーバーに接続できません';
+			case 'errors.unableToLoad': return ({required Object context}) => '${context}を読み込めませんでした。もう一度お試しください。';
+			case 'errors.noClientAvailable': return 'クライアントが利用できません';
+			case 'errors.pleaseEnterToken': return 'トークンを入力してください';
+			case 'errors.invalidToken': return '無効なトークン';
+			case 'errors.failedToVerifyToken': return ({required Object error}) => 'トークンの検証に失敗しました: ${error}';
+			case 'errors.failedToSwitchProfile': return ({required Object displayName}) => '${displayName}への切替に失敗しました';
+			case 'errors.failedToDeleteProfile': return ({required Object displayName}) => '${displayName}の削除に失敗しました';
+			case 'errors.failedToRate': return '評価を更新できませんでした';
+			case 'errors.reasonTimedOut': return '接続がタイムアウトしました';
+			case 'errors.reasonUnreachable': return 'メディアサーバーに接続できませんでした';
+			case 'errors.reasonRefused': return 'メディアサーバーがリクエストを拒否しました';
+			case 'errors.reasonNotFound': return 'この項目はメディアサーバー上に存在しません';
+			case 'errors.reasonServerError': return 'メディアサーバーでエラーが発生しました';
+			case 'errors.reasonCancelled': return 'リクエストがキャンセルされました';
+			case 'errors.reasonUnexpected': return '予期しないエラーが発生しました';
+			case 'libraries.title': return 'ライブラリ';
+			case 'libraries.fallbackTitle': return 'ライブラリ';
+			case 'libraries.scanLibraryFiles': return 'ライブラリファイルをスキャン';
+			case 'libraries.scanLibrary': return 'ライブラリをスキャン';
+			case 'libraries.analyze': return '解析';
+			case 'libraries.analyzeLibrary': return 'ライブラリを解析';
+			case 'libraries.refreshMetadata': return 'メタデータを更新';
+			case 'libraries.emptyTrash': return 'ゴミ箱を空にする';
+			case 'libraries.emptyingTrash': return ({required Object title}) => '「${title}」のゴミ箱を空にしています…';
+			case 'libraries.trashEmptied': return ({required Object title}) => '「${title}」のゴミ箱を空にしました';
+			case 'libraries.failedToEmptyTrash': return ({required Object error}) => 'ゴミ箱を空にできませんでした: ${error}';
+			case 'libraries.analyzing': return ({required Object title}) => '「${title}」を解析中…';
+			case 'libraries.analysisStarted': return ({required Object title}) => '「${title}」の解析を開始しました';
+			case 'libraries.failedToAnalyze': return ({required Object error}) => 'ライブラリの解析に失敗しました: ${error}';
+			case 'libraries.noLibrariesFound': return 'ライブラリが見つかりません';
+			case 'libraries.allLibrariesHidden': return 'すべてのライブラリが非表示です';
+			case 'libraries.hiddenLibrariesCount': return ({required Object count}) => '非表示のライブラリ (${count})';
+			case 'libraries.thisLibraryIsEmpty': return 'このライブラリは空です';
+			case 'libraries.noItemsMatchFilters': return '有効なフィルターに一致する項目はありません';
+			case 'libraries.resetFilters': return 'フィルターをリセット';
+			case 'libraries.all': return 'すべて';
+			case 'libraries.clearAll': return 'すべてクリア';
+			case 'libraries.scanLibraryConfirm': return ({required Object title}) => '"${title}"をスキャンしてもよろしいですか？';
+			case 'libraries.analyzeLibraryConfirm': return ({required Object title}) => '"${title}"を解析してもよろしいですか？';
+			case 'libraries.refreshMetadataConfirm': return ({required Object title}) => '"${title}"のメタデータを更新してもよろしいですか？';
+			case 'libraries.emptyTrashConfirm': return ({required Object title}) => '"${title}"のゴミ箱を空にしてもよろしいですか？';
+			case 'libraries.manageLibraries': return 'ライブラリを管理';
+			case 'libraries.sort': return '並べ替え';
+			case 'libraries.sortBy': return '並べ替え順';
+			case 'libraries.filters': return 'フィルター';
+			case 'libraries.confirmActionMessage': return 'この操作を実行してもよろしいですか？';
+			case 'libraries.showLibrary': return 'ライブラリを表示';
+			case 'libraries.hideLibrary': return 'ライブラリを非表示';
+			case 'libraries.libraryOptions': return 'ライブラリオプション';
+			case 'libraries.content': return 'ライブラリコンテンツ';
+			case 'libraries.selectLibrary': return 'ライブラリを選択';
+			case 'libraries.filtersWithCount': return ({required Object count}) => 'フィルター (${count})';
+			case 'libraries.noRecommendations': return 'おすすめがありません';
+			case 'libraries.noCollections': return 'このライブラリにコレクションがありません';
+			case 'libraries.noFoldersFound': return 'フォルダが見つかりません';
+			case 'libraries.folders': return 'フォルダ';
+			case 'libraries.tabs.recommended': return 'おすすめ';
+			case 'libraries.tabs.browse': return 'ブラウズ';
+			case 'libraries.tabs.collections': return 'コレクション';
+			case 'libraries.tabs.playlists': return 'プレイリスト';
+			case 'libraries.groupings.title': return 'グループ';
+			case 'libraries.groupings.all': return 'すべて';
+			case 'libraries.groupings.movies': return '映画';
+			case 'libraries.groupings.shows': return 'テレビ番組';
+			case 'libraries.groupings.seasons': return 'シーズン';
+			case 'libraries.groupings.episodes': return 'エピソード';
+			case 'libraries.groupings.artists': return 'アーティスト';
+			case 'libraries.groupings.albums': return 'アルバム';
+			case 'libraries.groupings.tracks': return '曲';
+			case 'libraries.groupings.folders': return 'フォルダ';
+			case 'libraries.filterCategories.genre': return 'ジャンル';
+			case 'libraries.filterCategories.year': return '年';
+			case 'libraries.filterCategories.contentRating': return '視聴年齢区分';
+			case 'libraries.filterCategories.tag': return 'タグ';
+			case 'libraries.filterCategories.unwatched': return '未視聴';
+			case 'libraries.filterCategories.unplayed': return '未再生';
+			case 'libraries.filterCategories.favorites': return 'お気に入り';
+			case 'libraries.filterCategories.filePath': return 'ファイルパス';
+			case 'libraries.sortLabels.title': return 'タイトル';
+			case 'libraries.sortLabels.dateAdded': return '追加日';
+			case 'libraries.sortLabels.releaseDate': return 'リリース日';
+			case 'libraries.sortLabels.rating': return '評価';
+			case 'libraries.sortLabels.communityRating': return 'コミュニティ評価';
+			case 'libraries.sortLabels.criticRating': return '批評家評価';
+			case 'libraries.sortLabels.userRating': return 'ユーザー評価';
+			case 'libraries.sortLabels.datePlayed': return '再生日';
+			case 'libraries.sortLabels.playCount': return '再生回数';
+			case 'libraries.sortLabels.productionYear': return '製作年';
+			case 'libraries.sortLabels.runtime': return '再生時間';
+			case 'libraries.sortLabels.officialRating': return '公式レーティング';
+			case 'libraries.sortLabels.premiereDate': return '初公開日';
+			case 'libraries.sortLabels.startDate': return '開始日';
+			case 'libraries.sortLabels.airTime': return '放送時刻';
+			case 'libraries.sortLabels.studio': return 'スタジオ';
+			case 'libraries.sortLabels.random': return 'ランダム';
+			case 'libraries.sortLabels.dateShared': return '共有日';
+			case 'libraries.sortLabels.latestEpisodeAirDate': return '最新エピソード放送日';
+			case 'libraries.sortLabels.lastEpisodeDateAdded': return '最新エピソード追加日';
+			case 'libraries.sortLabels.dateDownloaded': return 'ダウンロード日';
+			case 'libraries.sortLabels.size': return 'サイズ';
+			case 'libraries.sortLabels.library': return 'ライブラリ';
+			case 'libraries.advancedFilters.include': return '含める';
+			case 'libraries.advancedFilters.exclude': return '除外';
+			case 'libraries.advancedFilters.any': return '指定なし';
+			case 'libraries.advancedFilters.yes': return 'はい';
+			case 'libraries.advancedFilters.no': return 'いいえ';
+			case 'libraries.advancedFilters.not': return ({required Object value}) => '${value}以外';
+			case 'libraries.advancedFilters.valueCount': return ({required Object count}) => '${count}件選択';
+			case 'libraries.advancedFilters.valueCountExcluded': return ({required Object count}) => '${count}件除外';
+			case 'libraries.advancedFilters.searchValues': return '値を検索';
+			case 'libraries.advancedFilters.noValues': return '値がありません';
+			case 'libraries.advancedFilters.matchContains': return '含む';
+			case 'libraries.advancedFilters.matchNotContains': return '含まない';
+			case 'libraries.advancedFilters.matchIs': return '一致する';
+			case 'libraries.advancedFilters.matchIsNot': return '一致しない';
+			case 'libraries.advancedFilters.matchBeginsWith': return '前方一致';
+			case 'libraries.advancedFilters.matchEndsWith': return '後方一致';
+			case 'libraries.advancedFilters.textHint': return 'テキストを入力';
+			case 'libraries.advancedFilters.from': return '下限';
+			case 'libraries.advancedFilters.to': return '上限';
+			case 'libraries.advancedFilters.range': return ({required Object from, required Object to}) => '${from}〜${to}';
+			case 'libraries.advancedFilters.atLeast': return ({required Object value}) => '${value}以上';
+			case 'libraries.advancedFilters.atMost': return ({required Object value}) => '${value}以下';
+			case 'libraries.advancedFilters.dateLastDays': return ({required Object count}) => '過去${count}日間';
+			case 'libraries.advancedFilters.dateLastYear': return '過去1年間';
+			case 'libraries.advancedFilters.dateOlderThanDays': return ({required Object count}) => '${count}日以上前';
+			case 'libraries.advancedFilters.dateOlderThanYear': return '1年以上前';
+			case 'about.title': return 'アプリについて';
+			case 'about.openSourceLicenses': return 'オープンソースライセンス';
+			case 'about.versionLabel': return ({required Object version}) => 'バージョン ${version}';
+			case 'about.appDescription': return 'Flutter製の美しいPlex・Jellyfin・Embyクライアント';
+			case 'about.viewLicensesDescription': return 'サードパーティライブラリのライセンスを表示';
+			case 'serverSelection.noServersFoundForAccount': return ({required Object username, required Object email}) => '${username} (${email})のサーバーが見つかりません';
+			case 'serverSelection.failedToLoadServers': return ({required Object error}) => 'サーバーの読み込みに失敗しました: ${error}';
+			case 'serverSelection.noValidServers': return 'このアカウントで利用可能なサーバーが見つかりませんでした';
+			case 'hubDetail.title': return 'タイトル';
+			case 'hubDetail.releaseYear': return '公開年';
+			case 'hubDetail.dateAdded': return '追加日';
+			case 'hubDetail.rating': return '評価';
+			case 'hubDetail.noItemsFound': return 'アイテムが見つかりません';
+			case 'logs.clearLogs': return 'ログをクリア';
+			case 'logs.copyLogs': return 'ログをコピー';
+			case 'logs.uploadLogs': return 'ログをアップロード';
+			case 'startup.failedTitle': return 'Plezyを起動できませんでした';
+			case 'startup.failedBody': return '起動中に問題が発生しました。以下の詳細に失敗の原因が示されています。';
+			case 'startup.failedBodyRepairable': return 'Plezyの保存済み設定ファイルが破損しているため、Plezyを起動する前に再構築する必要があります。再試行しても解決しません —「ストレージを修復」を選択してください。';
+			case 'startup.phaseLabel': return 'ステップ';
+			case 'startup.showDetails': return '詳細を表示';
+			case 'startup.hideDetails': return '詳細を非表示';
+			case 'startup.copyDetails': return '詳細をコピー';
+			case 'startup.detailsCopied': return '詳細をクリップボードにコピーしました';
+			case 'startup.uploadDetails': return '詳細をアップロード';
+			case 'startup.repairStorage': return 'ストレージを修復';
+			case 'startup.repairTitle': return '保存データを修復しますか？';
+			case 'startup.repairBodyCommon': return 'Plezyの設定ファイルが破損しており読み取れません。修復するとすべての設定がデフォルトにリセットされます。';
+			case 'startup.repairBodyOneCredential': return '保存済みのサインインの1つが破損しており読み取れません。修復するとその1つだけが削除され、他の設定には影響しません。';
+			case 'startup.repairBodySignInsKept': return 'サーバーとプロフィールはサインインしたままになります。';
+			case 'startup.repairBodySignInsLost': return '保存済みのサインインを保護するキーをこのファイルから復元できないため、すべてのサーバーとプロフィールに再度サインインする必要があります。メディアサーバー上のデータには影響ありません。';
+			case 'startup.repairBodySessionsUncertain': return 'トラッカー（MAL、AniList、Simkl、Trakt）とSeerrは別途保存されており、保持されるかどうかは不明です。Plezyは保持した内容を正確にお知らせします。';
+			case 'startup.repairConfirm': return '修復';
+			case 'startup.repairSucceeded': return 'ストレージを修復しました';
+			case 'startup.repairNeedsRestart': return 'ストレージを修復しました — 再起動が必要です';
+			case 'startup.restartRequiredBody': return 'データは修復されましたが、Plezyはそれを使用する前に再起動する必要があります。Plezyを閉じて再度開いてください。';
+			case 'startup.quitPlezy': return 'Plezyを終了';
+			case 'startup.repairFailed': return '修復に失敗しました';
+			case 'startup.repairKeptSignIns': return 'サーバーとプロフィールはサインインしたままです。';
+			case 'startup.repairLostSignIns': return '保存済みのサインインを保護するキーを復元できませんでした。すべてのサーバーとプロフィールに再度サインインする必要があります。';
+			case 'startup.repairLostSessions': return '少なくとも1つのトラッカーまたはSeerr接続が失われたため、再接続が必要です。';
+			case 'startup.backupTitle': return '破損したファイルのコピーを保持しました';
+			case 'startup.backupWarning': return 'このコピーにはサインイン資格情報が含まれています。アップロードや共有はしないでください。';
+			case 'startup.deleteBackup': return 'コピーを削除';
+			case 'startup.backupDeleted': return 'コピーを削除しました。';
+			case 'startup.previousFailureTitle': return '前回、Plezyは起動に失敗しました';
+			case 'licenses.relatedPackages': return '関連パッケージ';
+			case 'licenses.license': return 'ライセンス';
+			case 'licenses.licenseNumber': return ({required Object number}) => 'ライセンス ${number}';
+			case 'licenses.licensesCount': return ({required Object count}) => '${count}件のライセンス';
+			case 'navigation.libraries': return 'ライブラリ';
+			case 'navigation.downloads': return 'ダウンロード';
+			case 'navigation.liveTv': return 'ライブTV';
+			case 'navigation.explore': return '見つける';
+			case 'explore.title': return '見つける';
+			case 'explore.selectSource': return 'ソースを選択';
+			case 'explore.rows.watchlist': return 'ウォッチリスト';
+			case 'explore.rows.recommendedMovies': return 'おすすめの映画';
+			case 'explore.rows.recommendedShows': return 'おすすめのテレビ番組';
+			case 'explore.rows.trendingMovies': return 'トレンドの映画';
+			case 'explore.rows.trendingShows': return 'トレンドのテレビ番組';
+			case 'explore.rows.popularMovies': return '人気の映画';
+			case 'explore.rows.popularShows': return '人気のテレビ番組';
+			case 'explore.rows.trendingAnime': return 'トレンドのアニメ';
+			case 'explore.rows.suggestedAnime': return 'おすすめのアニメ';
+			case 'explore.rows.airingAnime': return '放送中の注目アニメ';
+			case 'explore.rows.popularAnime': return '人気のアニメ';
+			case 'explore.rows.trending': return 'トレンド';
+			case 'explore.rows.upcomingMovies': return '近日公開の映画';
+			case 'explore.rows.upcomingShows': return '放送予定の番組';
+			case 'explore.status.airing': return '放送中';
+			case 'explore.status.ended': return '放送終了';
+			case 'explore.status.canceled': return '打ち切り';
+			case 'explore.status.upcoming': return '放送予定';
+			case 'explore.episodeCount': return ({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('ja'))(n,
+				other: '${n}話',
+			);
+			case 'explore.cast': return 'キャスト';
+			case 'explore.characters': return 'キャラクター';
+			case 'explore.addToWatchlist': return 'ウォッチリストに追加';
+			case 'explore.removeFromWatchlist': return 'ウォッチリストから削除';
+			case 'explore.addedToWatchlist': return 'ウォッチリストに追加しました';
+			case 'explore.removedFromWatchlist': return 'ウォッチリストから削除しました';
+			case 'explore.watchlistUpdateFailed': return 'ウォッチリストを更新できませんでした';
+			case 'explore.watchlistNoMatch': return 'このアイテムに一致するウォッチリスト項目が見つかりませんでした';
+			case 'explore.notInLibrary': return 'ライブラリにありません';
+			case 'explore.inTheseLibraries': return 'これらのライブラリにあります';
+			case 'explore.checkingLibrary': return 'ライブラリを確認中…';
+			case 'explore.libraryCheckFailed': return ({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('ja'))(n,
+				other: '${n}台のサーバーを確認できませんでした',
+			);
+			case 'explore.emptyTitle': return 'まだ何もありません';
+			case 'explore.emptyMessage': return ({required Object source}) => '${source}にコンテンツが追加されると、ここに表示されます。';
+			case 'explore.searchHint': return ({required Object source}) => '${source}を検索';
+			case 'explore.searchEmpty': return ({required Object query}) => '「${query}」の結果が見つかりません';
+			case 'explore.searchPrompt': return ({required Object source}) => '${source}で映画やテレビ番組を検索します。';
+			case 'explore.searchFailed': return '検索に失敗しました。接続を確認してもう一度お試しください。';
+			case 'explore.badge.rankPopular': return ({required Object n}) => '人気 #${n}';
+			case 'explore.badge.rankAiring': return ({required Object n}) => '放送中 #${n}';
+			case 'explore.badge.rankRated': return ({required Object n}) => '評価 #${n}';
+			case 'explore.badge.rankTrending': return ({required Object n}) => '急上昇 #${n}';
+			case 'explore.badge.rankSeasonal': return ({required Object n, required Object season}) => '#${n}（${season}）';
+			case 'explore.badge.watchingNow': return ({required Object n}) => '${n}人視聴中';
+			case 'explore.badge.available': return '視聴可能';
+			case 'explore.badge.partiallyAvailable': return '一部視聴可能';
+			case 'explore.badge.availableIn4k': return '4K対応';
+			case 'explore.badge.requested': return 'リクエスト済み';
+			case 'explore.badge.pendingApproval': return '承認待ち';
+			case 'explore.badge.processing': return '処理中';
+			case 'explore.badge.declined': return '却下';
+			case 'explore.badge.requestFailed': return 'リクエスト失敗';
+			case 'explore.badge.requested4k': return '4Kリクエスト済み';
+			case 'explore.badge.seasonsAvailable': return ({required Object available, required Object total}) => 'シーズン ${available}/${total}';
+			case 'explore.badge.nextEpisodeIn': return ({required Object episode, required Object duration}) => 'エピソード${episode} あと${duration}';
+			case 'explore.badge.nextAiringIn': return ({required Object duration}) => '次回 あと${duration}';
+			case 'explore.badge.episodesShort': return ({required Object n}) => '${n}話';
+			case 'explore.badge.minutesPerEpisode': return ({required Object n}) => '${n}分/話';
+			case 'explore.badge.adult': return '18+';
+			case 'explore.stats.listed': return ({required Object n}) => '登録者 ${n}人';
+			case 'explore.stats.viewersDay': return ({required Object n}) => '本日${n}人が視聴';
+			case 'explore.stats.viewersWeek': return ({required Object n}) => '今週${n}人が視聴';
+			case 'explore.stats.viewersMonth': return ({required Object n}) => '今月${n}人が視聴';
+			case 'explore.stats.viewersYear': return ({required Object n}) => '今年${n}人が視聴';
+			case 'explore.stats.viewersAllTime': return ({required Object n}) => '累計視聴者${n}人';
+			case 'explore.stats.planning': return ({required Object n}) => '${n}人が視聴予定';
+			case 'explore.stats.favorited': return ({required Object n}) => 'お気に入り ${n}件';
+			case 'explore.stats.dropRate': return ({required Object percent}) => '${percent}が視聴中止';
+			case 'explore.stats.comments': return ({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('ja'))(n,
+				other: 'コメント ${n}件',
+			);
+			case 'explore.stats.votes': return ({required Object n}) => '投票 ${n}件';
+			case 'explore.stats.watching': return ({required Object n}) => '${n}人が視聴中';
+			case 'explore.stats.completed': return ({required Object n}) => '${n}人が視聴済み';
+			case 'explore.stats.onHold': return ({required Object n}) => '${n}人が保留中';
+			case 'explore.stats.dropped': return ({required Object n}) => '${n}人が視聴中止';
+			case 'explore.season.winter': return '冬';
+			case 'explore.season.spring': return '春';
+			case 'explore.season.summer': return '夏';
+			case 'explore.season.fall': return '秋';
+			case 'explore.season.withYear': return ({required Object season, required Object year}) => '${season} ${year}';
+			case 'explore.format.tv': return 'TV';
+			case 'explore.format.tvShort': return 'TV短編';
+			case 'explore.format.movie': return '映画';
+			case 'explore.format.special': return 'スペシャル';
+			case 'explore.format.ova': return 'OVA';
+			case 'explore.format.ona': return 'ONA';
+			case 'explore.format.music': return '音楽';
+			case 'explore.format.other': return 'その他';
+			case 'explore.sourceMaterial.original': return 'オリジナル';
+			case 'explore.sourceMaterial.manga': return '漫画';
+			case 'explore.sourceMaterial.lightNovel': return 'ライトノベル';
+			case 'explore.sourceMaterial.novel': return '小説';
+			case 'explore.sourceMaterial.visualNovel': return 'ビジュアルノベル';
+			case 'explore.sourceMaterial.game': return 'ゲーム';
+			case 'explore.sourceMaterial.webComic': return 'Web漫画';
+			case 'explore.sourceMaterial.musicRelease': return '音楽';
+			case 'explore.sourceMaterial.otherMedia': return 'その他';
+			case 'explore.creditRole.actor': return '俳優';
+			case 'explore.creditRole.director': return '監督';
+			case 'explore.creditRole.writer': return '脚本';
+			case 'explore.creditRole.producer': return 'プロデューサー';
+			case 'explore.creditRole.creator': return '原作者';
+			case 'explore.creditRole.composer': return '作曲家';
+			case 'explore.relation.prequel': return '前日譚';
+			case 'explore.relation.sequel': return '続編';
+			case 'explore.relation.sideStory': return 'サイドストーリー';
+			case 'explore.relation.spinOff': return 'スピンオフ';
+			case 'explore.relation.alternativeVersion': return '別バージョン';
+			case 'explore.relation.summary': return '総集編';
+			case 'explore.relation.parentStory': return '親作品';
+			case 'explore.relation.adaptation': return '原作';
+			case 'explore.relation.other': return '関連作品';
+			case 'explore.broadcast': return ({required Object day, required Object time}) => '${day} ${time}に放送';
+			case 'explore.broadcastWithZone': return ({required Object day, required Object time, required Object timezone}) => '${day} ${time}（${timezone}）に放送';
+			case 'explore.detail.originalTitle': return '原題';
+			case 'explore.detail.alsoKnownAs': return '別名';
+			case 'explore.detail.studios': return '制作会社';
+			case 'explore.detail.country': return '国';
+			case 'explore.detail.language': return '言語';
+			case 'explore.detail.released': return '公開日';
+			case 'explore.detail.physicalRelease': return 'ディスク発売';
+			case 'explore.detail.ended': return '放送終了';
+			case 'explore.detail.addedOn': return ({required Object date}) => '${date}に追加';
+			case 'explore.detail.yourRating': return 'あなたの評価';
+			case 'explore.detail.budget': return '制作費';
+			case 'explore.detail.revenue': return '興行収入';
+			case 'explore.detail.contentAdvisory': return '年齢区分';
+			case 'explore.detail.tags': return 'タグ';
+			case 'explore.detail.revealSpoilerTags': return 'ネタバレタグを表示';
+			case 'explore.detail.links': return 'リンク';
+			case 'explore.detail.watchOn': return '視聴先';
+			case 'explore.detail.watchTrailer': return '予告編を見る';
+			case 'explore.detail.openOn': return ({required Object site}) => '${site}で開く';
+			case 'explore.detail.trailerUnavailable': return 'この端末では予告編を開けませんでした';
+			case 'explore.detail.linkUnavailable': return 'この端末ではリンクを開けませんでした';
+			case 'explore.detail.crew': return 'スタッフ';
+			case 'explore.detail.ratings': return '評価';
+			case 'explore.detail.schedule': return '放送予定';
+			case 'explore.detail.recommendedByUsers': return ({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('ja'))(n,
+				other: '${n}人のユーザーがおすすめ',
+			);
+			case 'explore.detail.recommendedBy': return ({required Object who}) => '${who}がおすすめ';
+			case 'explore.detail.favoritedBy': return ({required Object who}) => '${who}がお気に入り登録';
+			case 'explore.detail.unairedEpisodes': return ({required Object n}) => '未放送 ${n}話';
+			case 'explore.detail.recommendedByPercent': return ({required Object percent}) => '視聴者の${percent}がおすすめ';
+			case 'explore.detail.relatedTitles': return '関連作品';
+			case 'explore.detail.background': return '背景';
+			case 'explore.totalResults': return ({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('ja'))(n,
+				other: '${n}件の結果',
+			);
+			case 'liveTv.title': return 'ライブTV';
+			case 'liveTv.guide': return '番組表';
+			case 'liveTv.noChannels': return 'チャンネルがありません';
+			case 'liveTv.noDvr': return 'どのサーバーにもDVRが設定されていません';
+			case 'liveTv.serverUnavailable': return 'ライブTVサーバーを利用できません。';
+			case 'liveTv.serverNotConnected': return 'ライブTVサーバーに接続されていません。';
+			case 'liveTv.noPrograms': return '番組データがありません';
+			case 'liveTv.liveStreamFailed': return 'ライブストリームに失敗しました';
+			case 'liveTv.unknownProgram': return '不明な番組';
+			case 'liveTv.unknownHub': return '不明';
+			case 'liveTv.unknownError': return '不明なエラー';
+			case 'liveTv.channelNumber': return ({required Object number}) => 'チャンネル ${number}';
+			case 'liveTv.unknownChannel': return '不明なチャンネル';
+			case 'liveTv.live': return 'ライブ';
+			case 'liveTv.reloadGuide': return '番組表を再読み込み';
+			case 'liveTv.searchGuide': return '番組表を検索';
+			case 'liveTv.searchHint': return 'チャンネル・番組を検索';
+			case 'liveTv.searchNoResults': return ({required Object query}) => '「${query}」に一致するものがありません';
+			case 'liveTv.channelsSection': return 'チャンネル';
+			case 'liveTv.programsSection': return '番組';
+			case 'liveTv.now': return '現在';
+			case 'liveTv.today': return '今日';
+			case 'liveTv.tomorrow': return '明日';
+			case 'liveTv.midnight': return '午前0時';
+			case 'liveTv.overnight': return '深夜';
+			case 'liveTv.morning': return '朝';
+			case 'liveTv.daytime': return '日中';
+			case 'liveTv.evening': return '夕方';
+			case 'liveTv.lateNight': return '夜更け';
+			case 'liveTv.whatsOn': return '放送中';
+			case 'liveTv.watchChannel': return 'チャンネルを視聴';
+			case 'liveTv.favorites': return 'お気に入り';
+			case 'liveTv.reorderFavorites': return 'お気に入りを並べ替え';
+			case 'liveTv.noFavoriteChannels': return 'お気に入りのチャンネルがありません';
+			case 'liveTv.noFavoriteChannelsHint': return 'すべてのチャンネルを表示し、チャンネルを長押ししてお気に入りに追加してください。';
+			case 'liveTv.showAllChannels': return 'すべてのチャンネルを表示';
+			case 'liveTv.favoritesLoadFailed': return 'お気に入りを読み込めませんでした。接続を確認してもう一度お試しください。';
+			case 'liveTv.favoritesUpdateFailed': return 'お気に入りを更新できませんでした。接続を確認してもう一度お試しください。';
+			case 'liveTv.joinSession': return '進行中のセッションに参加';
+			case 'liveTv.watchFromStart': return ({required Object minutes}) => '最初から視聴（${minutes}分前に開始）';
+			case 'liveTv.watchLive': return 'ライブで視聴';
+			case 'liveTv.goToLive': return 'ライブに移動';
+			case 'liveTv.record': return '録画';
+			case 'liveTv.recordEpisode': return 'このエピソードを録画';
+			case 'liveTv.recordSeries': return 'シリーズを録画';
+			case 'liveTv.recordOptions': return '録画オプション';
+			case 'liveTv.saveTo': return '保存先';
+			case 'liveTv.recordings': return '録画';
+			case 'liveTv.scheduledRecordings': return '予約';
+			case 'liveTv.recordingRules': return '録画ルール';
+			case 'liveTv.noScheduledRecordings': return '予約された録画はありません';
+			case 'liveTv.manageRecording': return '録画を管理';
+			case 'liveTv.cancelRecording': return '録画をキャンセル';
+			case 'liveTv.cancelRecordingTitle': return 'この録画をキャンセルしますか？';
+			case 'liveTv.cancelRecordingMessage': return ({required Object title}) => '${title}は録画されなくなります。';
+			case 'liveTv.deleteRule': return 'ルールを削除';
+			case 'liveTv.deleteRuleTitle': return '録画ルールを削除しますか？';
+			case 'liveTv.deleteRuleMessage': return ({required Object title}) => '${title}の今後のエピソードは録画されません。';
+			case 'liveTv.recordingScheduled': return '録画を予約しました';
+			case 'liveTv.alreadyScheduled': return 'この番組はすでに予約されています';
+			case 'liveTv.dvrAdminRequired': return 'DVR設定には管理者アカウントが必要です';
+			case 'liveTv.recordingFailed': return '録画を予約できませんでした';
+			case 'liveTv.recordingTargetMissing': return '録画ライブラリを特定できませんでした';
+			case 'liveTv.recordNotAvailable': return 'この番組は録画できません';
+			case 'liveTv.recordingCancelled': return '録画をキャンセルしました';
+			case 'liveTv.recordingRuleDeleted': return '録画ルールを削除しました';
+			case 'liveTv.processRecordingRules': return 'ルールを再評価';
+			case 'liveTv.recordingInProgress': return '録画中';
+			case 'liveTv.recordingsCount': return ({required Object count}) => '${count}件予約済み';
+			case 'liveTv.editRule': return 'ルールを編集';
+			case 'liveTv.editRuleAction': return '編集';
+			case 'liveTv.recordingRuleUpdated': return '録画ルールを更新しました';
+			case 'liveTv.guideReloadRequested': return '番組表の更新をリクエストしました';
+			case 'liveTv.guideReloadFailed': return '番組表を再読み込みできませんでした';
+			case 'liveTv.rulesProcessRequested': return '録画ルールの再評価をリクエストしました';
+			case 'liveTv.rulesProcessFailed': return '録画ルールを再適用できませんでした';
+			case 'liveTv.recordShow': return '番組を録画';
+			case 'liveTv.recordSettings.startEarly': return '早めに開始（秒）';
+			case 'liveTv.recordSettings.endLate': return '遅めに終了（秒）';
+			case 'liveTv.recordSettings.newOnly': return '新しいエピソードのみ';
+			case 'liveTv.recordSettings.anyChannel': return 'すべてのチャンネルで録画';
+			case 'liveTv.recordSettings.anyTime': return 'すべての時間帯で録画';
+			case 'liveTv.recordSettings.skipInLibrary': return 'ライブラリにあるエピソードをスキップ';
+			case 'liveTv.recordSettings.keepUpTo': return '保持するエピソード数';
+			case 'liveTv.recordSettings.keepUpToHint': return '0 ですべてのエピソードを保持';
+			case 'liveTv.startingInMinutes': return ({required Object minutes}) => '${minutes}分後に開始';
+			case 'liveTv.dayAtTime': return ({required Object day, required Object time}) => '${day} ${time}';
+			case 'liveTv.invalidPlaybackData': return ({required Object product}) => '${product}から無効なライブTV再生データが返されました';
+			case 'liveTv.failedToStartChannel': return 'ライブチャンネルを開始できませんでした';
+			case 'liveTv.failedToBuildStreamUrl': return 'ストリームURLを生成できませんでした';
+			case 'liveTv.playbackStartFailed': return ({required Object reason}) => 'チャンネルを再生できませんでした: ${reason}';
+			case 'liveTv.channelSwitchFailed': return ({required Object reason}) => 'チャンネルを切り替えられませんでした: ${reason}';
+			case 'collections.title': return 'コレクション';
+			case 'collections.collection': return 'コレクション';
+			case 'collections.empty': return 'コレクションは空です';
+			case 'collections.deleteCollection': return 'コレクションを削除';
+			case 'collections.deleteConfirm': return ({required Object title}) => '「${title}」を削除しますか？この操作は元に戻せません。';
+			case 'collections.deleted': return 'コレクションを削除しました';
+			case 'collections.deleteFailed': return 'コレクションの削除に失敗しました';
+			case 'collections.deleteFailedWithError': return ({required Object error}) => 'コレクションの削除に失敗しました: ${error}';
+			case 'collections.selectCollection': return 'コレクションを選択';
+			case 'collections.collectionName': return 'コレクション名';
+			case 'collections.enterCollectionName': return 'コレクション名を入力';
+			case 'collections.addedToCollection': return 'コレクションに追加しました';
+			case 'collections.errorAddingToCollection': return 'コレクションへの追加に失敗しました';
+			case 'collections.created': return 'コレクションを作成しました';
+			case 'collections.removeFromCollection': return 'コレクションから削除';
+			case 'collections.removeFromCollectionConfirm': return ({required Object title}) => '「${title}」をこのコレクションから削除しますか？';
+			case 'collections.removedFromCollection': return 'コレクションから削除しました';
+			case 'collections.removeFromCollectionFailed': return 'コレクションからの削除に失敗しました';
+			case 'collections.removeFromCollectionError': return ({required Object error}) => 'コレクションからの削除エラー: ${error}';
+			case 'collections.searchCollections': return 'コレクションを検索…';
+			case 'playlists.title': return 'プレイリスト';
+			case 'playlists.playlist': return 'プレイリスト';
+			case 'playlists.noPlaylists': return 'プレイリストが見つかりません';
+			case 'playlists.create': return 'プレイリストを作成';
+			case 'playlists.playlistName': return 'プレイリスト名';
+			case 'playlists.enterPlaylistName': return 'プレイリスト名を入力';
+			case 'playlists.delete': return 'プレイリストを削除';
+			case 'playlists.removeItem': return 'プレイリストから削除';
+			case 'playlists.smartPlaylist': return 'スマートプレイリスト';
+			case 'playlists.itemCount': return ({required Object count}) => '${count}件';
+			case 'playlists.oneItem': return '1件';
+			case 'playlists.emptyPlaylist': return 'このプレイリストは空です';
+			case 'playlists.deleteConfirm': return 'プレイリストを削除しますか？';
+			case 'playlists.deleteMessage': return ({required Object name}) => '「${name}」を削除しますか？';
+			case 'playlists.created': return 'プレイリストを作成しました';
+			case 'playlists.deleted': return 'プレイリストを削除しました';
+			case 'playlists.itemAdded': return 'プレイリストに追加しました';
+			case 'playlists.itemRemoved': return 'プレイリストから削除しました';
+			case 'playlists.selectPlaylist': return 'プレイリストを選択';
+			case 'playlists.searchPlaylists': return 'プレイリストを検索…';
+			case 'playlists.errorCreating': return 'プレイリストの作成に失敗しました';
+			case 'playlists.errorDeleting': return 'プレイリストの削除に失敗しました';
+			case 'playlists.errorLoading': return 'プレイリストの読み込みに失敗しました';
+			case 'playlists.errorAdding': return 'プレイリストへの追加に失敗しました';
+			case 'playlists.errorReordering': return 'プレイリストアイテムの並べ替えに失敗しました';
+			case 'playlists.errorRemoving': return 'プレイリストからの削除に失敗しました';
+			case 'music.goToAlbum': return 'アルバムへ移動';
+			case 'music.goToArtist': return 'アーティストへ移動';
+			case 'music.instantMix': return 'インスタントミックス';
+			case 'music.playNext': return '次に再生';
+			case 'music.addToQueue': return 'キューに追加';
+			case 'music.discNumber': return ({required Object n}) => 'ディスク ${n}';
+			case 'music.trackCount': return ({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('ja'))(n,
+				other: '${n}曲',
+			);
+			case 'music.nowPlaying': return '再生中';
+			case 'music.playingFrom': return ({required Object title}) => '${title}から再生';
+			case 'music.queue': return '再生キュー';
+			case 'music.clearQueue': return 'キューをクリア';
+			case 'music.lyrics': return '歌詞';
+			case 'music.noLyrics': return '歌詞がありません';
+			case 'music.sleepTimer': return 'スリープタイマー';
+			case 'music.sleepTimerEndOfTrack': return '曲の終わり';
+			case 'music.sleepTimerMinutes': return ({required Object n}) => '${n} 分';
+			case 'music.stopPlayback': return '再生を停止';
+			case 'music.previousTrack': return '前の曲';
+			case 'music.nextTrack': return '次の曲';
+			case 'music.repeat': return 'リピート';
+			case 'music.repeatAll': return '全曲リピート';
+			case 'music.repeatOne': return '1曲リピート';
+			case 'music.instantMixNoServer': return 'インスタントミックスに利用できるサーバーがありません';
+			case 'music.instantMixFailed': return 'インスタントミックスを読み込めませんでした';
+			case 'music.instantMixEmpty': return 'インスタントミックスにトラックがありませんでした';
+			case 'music.noAudioUrl': return ({required Object track}) => '${track}で利用可能な音声URLがありません';
+			case 'music.discography.singlesAndEps': return 'シングル・EP';
+			case 'music.discography.live': return 'ライブ';
+			case 'music.discography.compilations': return 'コンピレーション';
+			case 'watchTogether.title': return '一緒に見る';
+			case 'watchTogether.description': return '友達や家族と同期してコンテンツを視聴';
+			case 'watchTogether.createRoom': return 'ルームを作成';
+			case 'watchTogether.creatingRoom': return 'ルームを作成中…';
+			case 'watchTogether.joinRoom': return 'ルームに参加';
+			case 'watchTogether.joiningRoom': return 'ルームに参加中…';
+			case 'watchTogether.connecting': return '接続中…';
+			case 'watchTogether.relayPublic': return 'ルームは公開のOpen Watch Partyリレーサーバーを使用します。';
+			case 'watchTogether.relayCustom': return ({required Object url}) => 'ルームは${url}のリレーサーバーを使用します。';
+			case 'watchTogether.recentRooms': return '最近のルーム';
+			case 'watchTogether.roomActions': return 'ルームの操作';
+			case 'watchTogether.renameRoom': return 'ルーム名を変更';
+			case 'watchTogether.removeRoom': return '削除';
+			case 'watchTogether.enterRoomCode': return 'ホストから共有された6文字のコードを入力してください。';
+			case 'watchTogether.roomCode': return 'ルームコード';
+			case 'watchTogether.paste': return '貼り付け';
+			case 'watchTogether.noCodeInClipboard': return 'クリップボードにルームコードがありません';
+			case 'watchTogether.copyCode': return 'コードをコピー';
+			case 'watchTogether.codeCopied': return 'ルームコードをコピーしました';
+			case 'watchTogether.shareInvite': return '招待を共有';
+			case 'watchTogether.inviteCopied': return '招待をコピーしました。メッセージに貼り付けてください。';
+			case 'watchTogether.inviteMessage': return ({required Object code}) => 'Plezyの「一緒に見る」ルームに参加しませんか？「一緒に見る」を開いて「ルームに参加」を選び、${code}を入力してください。';
+			case 'watchTogether.openSessionControls': return '「一緒に見る」セッションのコントロールを開く';
+			case 'watchTogether.reconnecting': return '再接続中…';
+			case 'watchTogether.reconnectingDescription': return '接続が切断されました。自動的にルームに再参加します。';
+			case 'watchTogether.connected': return '接続済み';
+			case 'watchTogether.disconnected': return '切断されました';
+			case 'watchTogether.youAreHost': return 'あなたはホストです';
+			case 'watchTogether.hostedBy': return ({required Object name}) => 'ホスト: ${name}';
+			case 'watchTogether.hostControlsPlayback': return 'ホストが再生を制御';
+			case 'watchTogether.anyoneCanControl': return '全員が再生を制御可能';
+			case 'watchTogether.roomLocked': return 'ルームはロック中';
+			case 'watchTogether.nowPlaying': return '再生中';
+			case 'watchTogether.nothingPlaying': return '再生中のコンテンツはありません';
+			case 'watchTogether.nothingPlayingHost': return 'いずれかのライブラリから再生すると、ルームで共有されます。';
+			case 'watchTogether.nothingPlayingGuest': return 'ホストが再生を始めると、ここに表示されます。';
+			case 'watchTogether.notShareable': return 'この動画はカタログ情報と一致しないため、同じサーバーにアクセスできる人しか再生できません。';
+			case 'watchTogether.searching': return 'ライブラリでこの動画を探しています…';
+			case 'watchTogether.yourCopy': return 'あなたのコピー';
+			case 'watchTogether.sharingYourCopy': return 'あなたのコピーを共有しています';
+			case 'watchTogether.playingOtherLength': return ({required Object difference}) => 'あなたのコピーを再生中（${difference}）';
+			case 'watchTogether.mismatchTitle': return 'コピーの長さが異なります';
+			case 'watchTogether.mismatchDescription': return ({required Object difference}) => '最も近いコピーはルームの動画より${difference}です。別の編集版やバージョンの可能性があります。';
+			case 'watchTogether.playAnyway': return 'このまま再生';
+			case 'watchTogether.chooseAnotherCopy': return '別のコピーを選択';
+			case 'watchTogether.dontPlay': return '再生しない';
+			case 'watchTogether.unavailableTitle': return 'この動画がありません';
+			case 'watchTogether.unavailableDescription': return 'Plezyはライブラリでこの動画を見つけられませんでした。自分でコピーを選ぶか、もう一度検索してください。';
+			case 'watchTogether.chooseCopy': return 'コピーを選択';
+			case 'watchTogether.searchAgain': return '再検索';
+			case 'watchTogether.noCandidates': return 'ライブラリにコピーが見つかりません。';
+			case 'watchTogether.choiceFailed': return 'このコピーをルームで再生できませんでした';
+			case 'watchTogether.lengthLonger': return ({required Object duration}) => '${duration}長い';
+			case 'watchTogether.lengthShorter': return ({required Object duration}) => '${duration}短い';
+			case 'watchTogether.lengthSame': return '同じ長さ';
+			case 'watchTogether.lengthUnknown': return '長さ不明';
+			case 'watchTogether.joinCurrentPlayback': return '現在の再生に参加';
+			case 'watchTogether.joinCurrentPlaybackDescription': return 'ホストが現在視聴中のコンテンツに戻る';
+			case 'watchTogether.stopMedia': return '全員の動画を停止';
+			case 'watchTogether.syncOffset': return '同期オフセット';
+			case 'watchTogether.syncOffsetDescription': return '動画がルームより進んでいる、または遅れている場合にずらします。';
+			case 'watchTogether.offsetHint': return ({required Object difference}) => 'あなたのコピーはルームの動画より${difference}です。';
+			case 'watchTogether.applyDifference': return ({required Object offset}) => '${offset}を適用';
+			case 'watchTogether.offsetMinusSecond': return '-1秒';
+			case 'watchTogether.offsetMinusTenth': return '-100ms';
+			case 'watchTogether.offsetPlusTenth': return '+100ms';
+			case 'watchTogether.offsetPlusSecond': return '+1秒';
+			case 'watchTogether.participants': return '参加者';
+			case 'watchTogether.participantCount': return ({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('ja'))(n,
+				other: '参加者${n}人',
+			);
+			case 'watchTogether.hostBadge': return 'ホスト';
+			case 'watchTogether.nameYou': return ({required Object name}) => '${name}（あなた）';
+			case 'watchTogether.playerIdle': return '待機中';
+			case 'watchTogether.playerLoading': return '読み込み中';
+			case 'watchTogether.playerReady': return '準備完了';
+			case 'watchTogether.playerBuffering': return 'バッファリング中';
+			case 'watchTogether.matchSearching': return '検索中';
+			case 'watchTogether.matchMatched': return '動画あり';
+			case 'watchTogether.matchMismatched': return '長さが異なる';
+			case 'watchTogether.matchUnavailable': return '動画なし';
+			case 'watchTogether.participantOffset': return ({required Object offset}) => 'オフセット ${offset}';
+			case 'watchTogether.makeHost': return 'ホストにする';
+			case 'watchTogether.makeHostQuestion': return 'ホストを移譲しますか？';
+			case 'watchTogether.makeHostConfirm': return ({required Object name}) => '${name}が再生を制御し、全員のセッションを主導します。';
+			case 'watchTogether.transfer': return '移譲';
+			case 'watchTogether.removeParticipant': return 'ルームから削除';
+			case 'watchTogether.removeParticipantQuestion': return ({required Object name}) => '${name}を削除しますか？';
+			case 'watchTogether.removeParticipantConfirm': return ({required Object name}) => '${name}をルームから退出させます。ルームをロックしない限り、コードを使って再度参加できます。';
+			case 'watchTogether.remove': return '削除';
+			case 'watchTogether.roomSettings': return 'ルーム設定';
+			case 'watchTogether.letEveryoneControl': return '全員に再生の操作を許可';
+			case 'watchTogether.lockRoom': return 'ルームをロック';
+			case 'watchTogether.lockRoomDescription': return '新しい参加者は参加できなくなります';
+			case 'watchTogether.leaveRoom': return 'ルームを退出';
+			case 'watchTogether.leaveRoomQuestion': return 'ルームを退出しますか？';
+			case 'watchTogether.leaveRoomConfirm': return 'ルームコードを使って再度参加できます。';
+			case 'watchTogether.leave': return '退出';
+			case 'watchTogether.endRoom': return 'ルームを終了';
+			case 'watchTogether.endRoomQuestion': return 'ルームを終了しますか？';
+			case 'watchTogether.endRoomConfirm': return '参加者全員のルームが終了します。';
+			case 'watchTogether.end': return '終了';
+			case 'watchTogether.playBlockedTitle': return '再生が開始されませんでした';
+			case 'watchTogether.playBlockedDescription': return '再生を押して、ルームのみんなと一緒に視聴を始めてください。';
+			case 'watchTogether.notices.pressedPlay': return ({required Object name}) => '${name}が再生しました';
+			case 'watchTogether.notices.playbackStarted': return '再生が開始されました';
+			case 'watchTogether.notices.paused': return ({required Object name}) => '${name}が一時停止しました';
+			case 'watchTogether.notices.playbackPaused': return '再生が一時停止されました';
+			case 'watchTogether.notices.jumpedTo': return ({required Object name, required Object position}) => '${name}が${position}にジャンプしました';
+			case 'watchTogether.notices.roomJumpedTo': return ({required Object position}) => '${position}にジャンプしました';
+			case 'watchTogether.notices.changedSpeed': return ({required Object name, required Object speed}) => '${name}が速度を${speed}に設定しました';
+			case 'watchTogether.notices.speedChanged': return ({required Object speed}) => '速度が${speed}に設定されました';
+			case 'watchTogether.notices.startedMedia': return ({required Object name, required Object title}) => '${name}が${title}を再生しました';
+			case 'watchTogether.notices.mediaStarted': return ({required Object title}) => '${title}を再生中';
+			case 'watchTogether.notices.stoppedMedia': return ({required Object name}) => '${name}が動画を停止しました';
+			case 'watchTogether.notices.mediaStopped': return '動画が停止しました';
+			case 'watchTogether.notices.waitingFor': return ({required Object name}) => '${name}を待っています…';
+			case 'watchTogether.notices.waitingForSomeone': return '他の参加者が追いつくのを待っています…';
+			case 'watchTogether.notices.finished': return '再生終了';
+			case 'watchTogether.notices.hostChangedTo': return ({required Object name}) => '${name}がホストになりました';
+			case 'watchTogether.notices.youAreNowHost': return 'あなたがホストになりました';
+			case 'watchTogether.notices.joined': return ({required Object name}) => '${name}が参加しました';
+			case 'watchTogether.notices.left': return ({required Object name}) => '${name}が退出しました';
+			case 'watchTogether.notices.controlRefused': return '再生を操作できるのはホストのみです';
+			case 'watchTogether.notices.searchFailed': return '一部のサーバーでルームの動画を検索できませんでした';
+			case 'watchTogether.notices.playBlocked': return '再生を押して開始してください';
+			case 'watchTogether.notices.shareFailed': return 'この動画をルームと共有できませんでした';
+			case 'watchTogether.notices.downloadNotShared': return 'サーバーがオフラインの間、ダウンロードはルームと共有されません';
+			case 'watchTogether.notices.openFailed': return 'ルームの動画を開けませんでした';
+			case 'watchTogether.ended.ended': return 'ホストがルームを終了しました';
+			case 'watchTogether.ended.kicked': return 'ルームから削除されました';
+			case 'watchTogether.ended.expired': return 'ルームの有効期限が切れました';
+			case 'watchTogether.ended.replaced': return '別のデバイスでこのルームに参加しました';
+			case 'watchTogether.ended.lost': return 'ルームとの接続が切れました';
+			case 'watchTogether.errors.invalidCode': return 'ルームコードではありません。コードは0、1、I、L、Oを含まない6文字の英数字です。';
+			case 'watchTogether.errors.roomNotFound': return 'そのコードのルームはありません。終了した可能性があります。';
+			case 'watchTogether.errors.roomFull': return 'そのルームは満員です。';
+			case 'watchTogether.errors.roomLocked': return 'ホストがそのルームをロックしています。';
+			case 'watchTogether.errors.relayFull': return '「一緒に見る」は現在混み合っています。しばらくしてからもう一度お試しください。';
+			case 'watchTogether.errors.unreachable': return '「一緒に見る」のリレーサーバーに接続できませんでした。接続を確認してください。';
+			case 'watchTogether.errors.rateLimited': return '試行回数が多すぎます。しばらく待ってからもう一度お試しください。';
+			case 'watchTogether.errors.clientBlocked': return 'このバージョンのPlezyではリレーサーバーを使用できません。アプリをアップデートしてください。';
+			case 'watchTogether.errors.forbidden': return 'その操作はホストのみ可能です。';
+			case 'watchTogether.errors.notInRoom': return 'ルームに参加していません。';
+			case 'watchTogether.errors.alreadyInRoom': return 'すでにルームに参加しています。';
+			case 'watchTogether.errors.resumeFailed': return 'ルームに再参加できませんでした。';
+			case 'watchTogether.errors.unsupported': return 'リレーサーバーがこの操作に対応していません。';
+			case 'watchTogether.errors.generic': return '問題が発生しました。もう一度お試しください。';
+			case 'watchTogether.untitledEpisode': return ({required Object number}) => 'エピソード${number}';
+			case 'downloads.title': return 'ダウンロード';
+			case 'downloads.manage': return '管理';
+			case 'downloads.tvShows': return 'テレビ番組';
+			case 'downloads.movies': return '映画';
+			case 'downloads.music': return '音楽';
+			case 'downloads.tracksQueued': return ({required Object count}) => '${count} 曲をダウンロード待機中';
+			case 'downloads.noDownloads': return 'ダウンロードはまだありません';
+			case 'downloads.noDownloadsDescription': return 'ダウンロードしたコンテンツはここに表示され、オフラインで視聴できます';
+			case 'downloads.downloadNow': return 'ダウンロード';
+			case 'downloads.deleteDownload': return 'ダウンロードを削除';
+			case 'downloads.retryDownload': return 'ダウンロードを再試行';
+			case 'downloads.downloadQueued': return 'ダウンロードをキューに追加しました';
+			case 'downloads.downloadResumed': return 'ダウンロードを再開しました';
+			case 'downloads.serverErrorBitrate': return 'サーバーエラー: ファイルがリモートビットレート制限を超えている可能性があります';
+			case 'downloads.storageFull': return '空き容量を確保するため、ダウンロードを停止しました。空き容量を確保するか、別のダウンロード先を選んでから、もう一度お試しください。';
+			case 'downloads.storageUnavailable': return '空き容量を確認できなかったため、ダウンロードを停止しました。ダウンロード先を確認してから、もう一度お試しください。';
+			case 'downloads.episodesQueued': return ({required Object count}) => '${count}エピソードをダウンロードキューに追加しました';
+			case 'downloads.downloadDeleted': return 'ダウンロードを削除しました';
+			case 'downloads.deleteConfirm': return ({required Object title}) => 'このデバイスから「${title}」を削除しますか？';
+			case 'downloads.deleteCollectionDownloads': return 'ダウンロードを削除';
+			case 'downloads.deleteCollectionDownloadsConfirm': return ({required Object title}) => '「${title}」のすべてのダウンロードをこのデバイスから削除しますか？';
+			case 'downloads.collectionDownloadsDeleted': return 'ダウンロードを削除しました';
+			case 'downloads.cancelledDownloadTitle': return 'キャンセル済みのダウンロード';
+			case 'downloads.cancelledDownloadMessage': return 'このダウンロードはキャンセルされました。どうしますか？';
+			case 'downloads.allEpisodesAlreadyDownloaded': return 'すべてのエピソードはすでにダウンロード済みです';
+			case 'downloads.resumeDownload': return 'ダウンロードを再開';
+			case 'downloads.cancelledDownload': return 'キャンセル済みのダウンロード';
+			case 'downloads.syncingFile': return ({required Object file, required Object status}) => '${file}（${status}を同期中）';
+			case 'downloads.downloadedFileClickToComplete': return ({required Object file}) => '${file}をダウンロード済み — クリックして完了';
+			case 'downloads.partialDownloadClickToComplete': return '一部ダウンロード済み — クリックして完了';
+			case 'downloads.deleting': return '削除中…';
+			case 'downloads.deletingWithProgress': return ({required Object title, required Object current, required Object total}) => '${title}を削除中…（${current}/${total}）';
+			case 'downloads.queuedTooltip': return 'キュー';
+			case 'downloads.queuedFilesTooltip': return ({required Object files}) => 'キュー：${files}';
+			case 'downloads.downloadingTooltip': return 'ダウンロード中…';
+			case 'downloads.downloadingFilesTooltip': return ({required Object files}) => '${files}をダウンロード中';
+			case 'downloads.noDownloadsTree': return 'ダウンロードなし';
+			case 'downloads.pauseAll': return 'すべて一時停止';
+			case 'downloads.resumeAll': return 'すべて再開';
+			case 'downloads.retryAll': return 'すべて再試行';
+			case 'downloads.retryFailed': return '失敗したダウンロードを再試行';
+			case 'downloads.deleteAll': return 'すべて削除';
+			case 'downloads.selectVersion': return 'バージョンを選択';
+			case 'downloads.allEpisodes': return 'すべてのエピソード';
+			case 'downloads.unwatchedOnly': return '未視聴のみ';
+			case 'downloads.nextNUnwatched': return ({required Object count}) => '次の${count}件の未視聴';
+			case 'downloads.customAmount': return '数を指定…';
+			case 'downloads.includeSpecials': return 'スペシャルを含める';
+			case 'downloads.howManyEpisodes': return 'エピソード数';
+			case 'downloads.invalidEpisodeCount': return '有効なエピソード数を入力してください。';
+			case 'downloads.keepSynced': return '同期を維持';
+			case 'downloads.downloadOnce': return '一度だけダウンロード';
+			case 'downloads.keepNUnwatched': return ({required Object count}) => '未視聴を${count}件保持';
+			case 'downloads.editSyncRule': return '同期ルールを編集';
+			case 'downloads.removeSyncRule': return '同期ルールを削除';
+			case 'downloads.removeSyncRuleConfirm': return ({required Object title}) => '「${title}」の同期を停止しますか？ダウンロード済みのエピソードは保持されます。';
+			case 'downloads.removeListSyncRuleConfirm': return ({required Object title}) => '「${title}」の同期を停止しますか？';
+			case 'downloads.deleteSyncRuleDownloads': return '関連するダウンロードも削除';
+			case 'downloads.deleteSyncRuleDownloadsDescription': return '別の同期ルールやプロフィールで使用されているダウンロードは保持されます。';
+			case 'downloads.syncRuleCreated': return ({required Object count}) => '同期ルールを作成しました — 未視聴のエピソードを${count}件保持';
+			case 'downloads.syncRuleUpdated': return '同期ルールを更新しました';
+			case 'downloads.syncRuleRemoved': return '同期ルールを削除しました';
+			case 'downloads.syncRuleAndDownloadsRemoved': return '同期ルールと関連するダウンロードを削除しました';
+			case 'downloads.syncRuleCleanupBusy': return '同期ルールが更新中です。しばらくしてからもう一度お試しください。';
+			case 'downloads.syncRuleCleanupUnavailable': return '関連するダウンロードを安全に特定できませんでした。サーバーに再接続して再試行するか、ダウンロードを削除せずにルールを削除してください。';
+			case 'downloads.syncedNewEpisodes': return ({required Object title, required Object count}) => '${title}の新しいエピソードを${count}件同期しました';
+			case 'downloads.activeSyncRules': return '同期ルール';
+			case 'downloads.noSyncRules': return '同期ルールなし';
+			case 'downloads.manageSyncRule': return '同期を管理';
+			case 'downloads.editEpisodeCount': return 'エピソード数';
+			case 'downloads.editSyncFilter': return '同期フィルター';
+			case 'downloads.syncAllItems': return 'すべてのアイテムを同期中';
+			case 'downloads.syncUnwatchedItems': return '未視聴のアイテムを同期中';
+			case 'downloads.syncRuleServerContext': return ({required Object server, required Object status}) => 'サーバー: ${server} • ${status}';
+			case 'downloads.syncRuleAvailable': return '利用可能';
+			case 'downloads.syncRuleOffline': return 'オフライン';
+			case 'downloads.syncRuleSignInRequired': return 'サインインが必要';
+			case 'downloads.syncRuleAccessDenied': return 'アクセスが拒否されました';
+			case 'downloads.syncRuleNotAvailableForProfile': return '現在のプロフィールでは利用できません';
+			case 'downloads.syncRuleUnknownServer': return '不明なサーバー';
+			case 'downloads.syncRuleListCreated': return '同期ルールを作成しました';
+			case 'downloads.backgroundWarning.bannerBlocked': return 'アプリの画面を離れると、ダウンロードが停止します';
+			case 'downloads.backgroundWarning.bannerDegraded': return 'バックグラウンドダウンロードが制限される場合があります';
+			case 'downloads.backgroundWarning.bannerAction': return '詳細';
+			case 'downloads.backgroundWarning.sheetTitle': return 'バックグラウンドダウンロードはブロックされています';
+			case 'downloads.backgroundWarning.sheetTitleDegraded': return 'バックグラウンドダウンロードが制限される場合があります';
+			case 'downloads.backgroundWarning.sheetIntro': return 'Androidにより、Plezyはバックグラウンドで安定してダウンロードできません。';
+			case 'downloads.backgroundWarning.sheetIntroDegraded': return '端末により、Plezyがバックグラウンドでダウンロードできるタイミングが制限されています。';
+			case 'downloads.backgroundWarning.reasonBackgroundRestricted': return 'Plezyのバックグラウンド使用が制限されています。バッテリー使用量またはバックグラウンド使用を「制限なし」に設定してください。';
+			case 'downloads.backgroundWarning.reasonStandbyRestricted': return 'Androidにより、Plezyが制限付きのスタンバイ状態に設定されています。バッテリー使用量を「制限なし」に設定してください。';
+			case 'downloads.backgroundWarning.reasonDownloadChannelBlocked': return 'ダウンロード通知がオフのため、進行状況や操作ボタンを利用できない場合があります。';
+			case 'downloads.backgroundWarning.reasonNotificationsDisabled': return '通知がオフです。Android 13以降では、長時間のバックグラウンドダウンロードに通知が必要です。';
+			case 'downloads.backgroundWarning.reasonDataSaver': return 'データセーバーがオンのため、モバイルデータ通信ではバックグラウンドダウンロードがブロックされます。Wi-Fiでは引き続きダウンロードできるはずです。';
+			case 'downloads.backgroundWarning.reasonOemUnknown': return 'Plezyがバックグラウンドで動作中に、ダウンロードが繰り返し停止しました。Plezyのバッテリー使用量またはバックグラウンド使用の設定を確認してください。';
+			case 'downloads.backgroundWarning.openSettings': return '設定を開く';
+			case 'downloads.backgroundWarning.stillNotWorking': return '端末別のヘルプ';
+			case 'downloads.backgroundWarning.stillNotWorkingDescription': return 'お使いの端末向けの手順を確認してください。問題が続く場合は、設定 › ログを表示 からログを送信してください。';
+			case 'downloads.backgroundWarning.dialogTitle': return 'ダウンロードが完了しない可能性があります';
+			case 'downloads.backgroundWarning.dialogDownloadAnyway': return 'このままダウンロード';
+			case 'downloads.backgroundWarning.dialogFixFirst': return '先に設定を修正';
+			case 'downloads.backgroundWarning.statusTile': return 'バックグラウンドダウンロード';
+			case 'downloads.backgroundWarning.statusOk': return 'バックグラウンドで実行可能';
+			case 'downloads.backgroundWarning.statusBlocked': return 'システム設定によりブロック';
+			case 'downloads.backgroundWarning.statusDegraded': return 'システム設定により制限';
+			case 'downloads.backgroundWarning.statusUnknown': return '未確認';
+			case 'downloads.backgroundWarning.settingsUnavailable': return 'この端末ではシステム設定を開けませんでした';
+			case 'downloads.backgroundWarning.linkUnavailable': return 'この端末ではdontkillmyapp.comを開けませんでした';
+			case 'downloads.options': return 'ダウンロードのオプション';
+			case 'downloads.groupings.library': return 'ライブラリ';
+			case 'downloads.groupings.collections': return 'コレクション';
+			case 'downloads.unknownLibrary': return '不明なライブラリ';
+			case 'downloads.unknownShow': return '不明な番組';
+			case 'downloads.unknownSeason': return '不明なシーズン';
+			case 'downloads.unknownAlbum': return '不明なアルバム';
+			case 'downloads.completedOfTotal': return ({required Object completed, required Object total}) => '${completed}/${total}完了';
+			case 'downloads.errorFileNotFound': return 'ファイルが見つかりません（404）';
+			case 'downloads.errorDownloadNotAllowed': return 'サーバーがダウンロードを許可していません（403）';
+			case 'downloads.errorDownloadFailed': return 'ダウンロードに失敗しました';
+			case 'downloads.errorDownloadFailedWithReason': return ({required Object reason}) => 'ダウンロードに失敗しました: ${reason}';
+			case 'downloads.errorHttpStatus': return ({required Object status}) => 'ダウンロードに失敗しました（HTTP ${status}）';
+			case 'downloads.errorPostProcessing': return ({required Object reason}) => '後処理に失敗しました: ${reason}';
+			case 'downloads.reasonFileNotSaved': return 'このデバイスにファイルを保存できませんでした';
+			case 'downloads.reasonCannotResume': return '途中までのダウンロードを再開できませんでした';
+			case 'downloads.reasonDeviceStorageFull': return 'このデバイスのストレージが不足しています';
+			case 'downloads.notificationDownloading': return 'ダウンロード中…';
+			case 'downloads.notificationComplete': return 'ダウンロードが完了しました';
+			case 'downloads.notificationPaused': return 'ダウンロードを一時停止しました';
+			case 'shaders.title': return 'シェーダー';
+			case 'shaders.noShaderDescription': return '映像補正なし';
+			case 'shaders.nvscalerDescription': return 'NVIDIA画像スケーリングで映像をより鮮明にします';
+			case 'shaders.artcnnVariantNeutral': return 'ニュートラル';
+			case 'shaders.artcnnVariantDenoise': return 'ノイズ除去';
+			case 'shaders.artcnnVariantDenoiseSharpen': return 'ノイズ除去 + シャープ';
+			case 'shaders.qualityFast': return '高速';
+			case 'shaders.qualityHQ': return '高品質';
+			case 'shaders.mode': return 'モード';
+			case 'shaders.importShader': return 'シェーダーをインポート';
+			case 'shaders.customShaderDescription': return 'カスタムGLSLシェーダー';
+			case 'shaders.shaderImported': return 'シェーダーをインポートしました';
+			case 'shaders.shaderImportFailed': return 'シェーダーのインポートに失敗しました';
+			case 'shaders.deleteShader': return 'シェーダーを削除';
+			case 'shaders.deleteShaderConfirm': return ({required Object name}) => '「${name}」を削除しますか？';
+			case 'companionRemote.title': return 'コンパニオンリモート';
+			case 'companionRemote.connectedTo': return ({required Object name}) => '${name}に接続中';
+			case 'companionRemote.unknownDevice': return '不明なデバイス';
+			case 'companionRemote.session.startingServer': return 'リモートサーバーを起動中…';
+			case 'companionRemote.session.hostAddress': return 'ホストアドレス';
+			case 'companionRemote.session.connected': return '接続済み';
+			case 'companionRemote.session.serverRunning': return 'リモートサーバー稼働中';
+			case 'companionRemote.session.serverStopped': return 'リモートサーバー停止';
+			case 'companionRemote.session.serverRunningDescription': return 'ネットワーク上のモバイルデバイスがこのアプリに接続できます';
+			case 'companionRemote.session.serverStoppedDescription': return 'モバイルデバイスの接続を許可するにはサーバーを起動してください';
+			case 'companionRemote.session.usePhoneToControl': return 'モバイルデバイスでこのアプリを操作できます';
+			case 'companionRemote.session.startServer': return 'サーバーを起動';
+			case 'companionRemote.session.stopServer': return 'サーバーを停止';
+			case 'companionRemote.session.minimize': return '最小化';
+			case 'companionRemote.session.manualAddressHint': return '手動接続アドレス:';
+			case 'companionRemote.pairing.discoveryDescription': return '同じPlexアカウントを使用しているPlezyデバイスがここに表示されます';
+			case 'companionRemote.pairing.hostAddressHint': return '192.168.1.100:48632';
+			case 'companionRemote.pairing.connecting': return '接続中…';
+			case 'companionRemote.pairing.searchingForDevices': return 'デバイスを検索中…';
+			case 'companionRemote.pairing.noDevicesFound': return 'ネットワーク上にデバイスが見つかりません';
+			case 'companionRemote.pairing.noDevicesHint': return 'デスクトップでPlezyを開き、同じWi-Fiネットワークに接続してください';
+			case 'companionRemote.pairing.availableDevices': return '利用可能なデバイス';
+			case 'companionRemote.pairing.manualConnection': return '手動接続';
+			case 'companionRemote.pairing.cryptoInitFailed': return '安全な接続を開始できませんでした。先にPlexにサインインしてください。';
+			case 'companionRemote.pairing.validationHostRequired': return 'ホストアドレスを入力してください';
+			case 'companionRemote.pairing.validationHostFormat': return '形式はIP:ポートである必要があります（例: 192.168.1.100:48632）';
+			case 'companionRemote.pairing.connectionTimedOut': return '接続がタイムアウトしました。両方のデバイスで同じネットワークを使用してください。';
+			case 'companionRemote.pairing.sessionNotFound': return 'デバイスが見つかりません。ホストでPlezyが実行中か確認してください。';
+			case 'companionRemote.pairing.authFailed': return '認証に失敗しました。両方のデバイスで同じPlexアカウントが必要です。';
+			case 'companionRemote.pairing.failedToConnect': return ({required Object error}) => '接続に失敗しました: ${error}';
+			case 'companionRemote.remote.disconnectConfirm': return 'リモートセッションを切断しますか？';
+			case 'companionRemote.remote.reconnecting': return '再接続中…';
+			case 'companionRemote.remote.attemptOf': return ({required Object current}) => '試行 ${current}/5';
+			case 'companionRemote.remote.retryNow': return '今すぐ再試行';
+			case 'companionRemote.remote.tabRemote': return 'リモコン';
+			case 'companionRemote.remote.tabPlay': return '再生';
+			case 'companionRemote.remote.tabMore': return 'その他';
+			case 'companionRemote.remote.menu': return 'メニュー';
+			case 'companionRemote.remote.tabNavigation': return 'タブナビゲーション';
+			case 'companionRemote.remote.tabDiscover': return '探す';
+			case 'companionRemote.remote.tabLibraries': return 'ライブラリ';
+			case 'companionRemote.remote.tabSearch': return '検索';
+			case 'companionRemote.remote.tabDownloads': return 'ダウンロード';
+			case 'companionRemote.remote.tabSettings': return '設定';
+			case 'companionRemote.remote.previous': return '前へ';
+			case 'companionRemote.remote.playPause': return '再生/一時停止';
+			case 'companionRemote.remote.next': return '次へ';
+			case 'companionRemote.remote.seekBack': return '巻き戻し';
+			case 'companionRemote.remote.stop': return '停止';
+			case 'companionRemote.remote.seekForward': return '早送り';
+			case 'companionRemote.remote.volume': return '音量';
+			case 'companionRemote.remote.volumeDown': return '下げる';
+			case 'companionRemote.remote.volumeUp': return '上げる';
+			case 'companionRemote.remote.fullscreen': return 'フルスクリーン';
+			case 'companionRemote.remote.subtitles': return '字幕';
+			case 'companionRemote.remote.audio': return '音声';
+			case 'companionRemote.remote.searchHint': return 'デスクトップで検索…';
+			case 'companionRemote.errors.noNetworkInterface': return 'ネットワークインターフェースが見つかりません';
+			case 'companionRemote.errors.authenticationFailed': return '認証に失敗しました';
+			case 'companionRemote.errors.serverStartFailed': return ({required Object error}) => 'リモートサーバーを起動できませんでした: ${error}';
+			case 'companionRemote.errors.commandFailed': return ({required Object error}) => 'リモートコマンドを送信できませんでした: ${error}';
+			case 'companionRemote.errors.joinTimedOut': return 'セッション参加がタイムアウトしました';
+			case 'companionRemote.errors.failedToConnectAnyAddress': return 'どのアドレスにも接続できませんでした';
+			case 'companionRemote.errors.connectionLostAfterAttempts': return ({required Object attempts}) => '${attempts}回試行後に接続が切断されました';
+			case 'companionRemote.errors.connectionLost': return '接続が切断されました';
+			case 'companionRemote.closedBeforeAuth': return '認証前に接続が切断されました';
+			case 'videoSettings.playbackSpeed': return '再生速度';
+			case 'videoSettings.normalSpeed': return '標準';
+			case 'videoSettings.sleepTimerActive': return ({required Object duration}) => '作動中（${duration}）';
+			case 'videoSettings.zoom': return 'ズーム';
+			case 'videoSettings.sleepTimer': return 'スリープタイマー';
+			case 'videoSettings.audioSync': return '音声同期';
+			case 'videoSettings.subtitleSync': return '字幕同期';
+			case 'videoSettings.hdr': return 'HDR';
+			case 'videoSettings.hdrUnsupported': return 'ここではHDRを利用できません。このデスクトップコンポジターまたは映像出力はHDRに対応していません。';
+			case 'videoSettings.hdrToneMapping': return 'HDRトーンマッピング';
+			case 'videoSettings.hdrToneMappingCompositor': return 'コンポジター';
+			case 'videoSettings.hdrToneMappingCompositorDescription': return 'ソースのHDRメタデータをそのまま渡し、デスクトップコンポジターにマッピングさせます。';
+			case 'videoSettings.hdrToneMappingPlayer': return 'プレーヤー';
+			case 'videoSettings.hdrToneMappingPlayerDescription': return 'プレーヤーでディスプレイのピーク輝度に合わせてマッピングし、その結果をコンポジターに通知します。';
+			case 'videoSettings.hdrToneMappingFailed': return 'HDRトーンマッピングを変更できませんでした。以前のモードが引き続き有効です。';
+			case 'videoSettings.audioOutput': return '音声出力';
+			case 'videoSettings.performanceOverlay': return 'パフォーマンスオーバーレイ';
+			case 'videoSettings.audioOutputDolbyAtmos': return 'Dolby Atmos';
+			case 'videoSettings.audioOutputDolbyAudio': return 'Dolby Audio';
+			case 'videoSettings.audioOutputSurround': return 'サラウンド';
+			case 'videoSettings.audioOutputSpatial': return '空間オーディオ';
+			case 'videoSettings.audioOutputStereo': return 'ステレオ';
+			case 'videoSettings.audioNormalization': return 'ラウドネス正規化';
+			case 'videoSettings.audioNormalizationDisablesPassthrough': return '音声をPCMにデコードします。オンの間はパススルーがオフになります';
+			case 'performanceOverlay.color': return '色';
+			case 'performanceOverlay.performance': return 'パフォーマンス';
+			case 'performanceOverlay.buffer': return 'バッファ';
+			case 'performanceOverlay.app': return 'アプリ';
+			case 'performanceOverlay.decoder': return 'デコーダー';
+			case 'performanceOverlay.rawDecoder': return 'Raw デコーダー';
+			case 'performanceOverlay.tunneling': return 'トンネリング';
+			case 'performanceOverlay.passthrough': return 'パススルー';
+			case 'performanceOverlay.aspect': return 'アスペクト';
+			case 'performanceOverlay.rotation': return '回転';
+			case 'performanceOverlay.dvSource': return 'DV ソース';
+			case 'performanceOverlay.dvPath': return 'DV パス';
+			case 'performanceOverlay.dvRouteDecoder': return 'Dolby Vision デコーダー';
+			case 'performanceOverlay.dvRouteDecoderP81': return 'Dolby Vision デコーダー（P7→8.1）';
+			case 'performanceOverlay.dvRouteBaseLayer': return 'ベースレイヤー';
+			case 'performanceOverlay.dvRouteBaseLayerHdr10': return 'HDR10 ベースレイヤー';
+			case 'performanceOverlay.dvRouteBaseLayerHlg': return 'HLG ベースレイヤー';
+			case 'performanceOverlay.dvRouteBaseLayerSdr': return 'SDR ベースレイヤー';
+			case 'performanceOverlay.dvRouteReshaped': return 'RPU リシェイプ（gpu-next）';
+			case 'performanceOverlay.p7Conversion': return 'P7 変換';
+			case 'performanceOverlay.sampleRate': return 'サンプルレート';
+			case 'performanceOverlay.pixelFormat': return 'ピクセル形式';
+			case 'performanceOverlay.hwFormat': return 'HW 形式';
+			case 'performanceOverlay.matrix': return 'マトリクス';
+			case 'performanceOverlay.primaries': return 'プライマリ';
+			case 'performanceOverlay.transfer': return '伝達特性';
+			case 'performanceOverlay.renderFps': return '描画 FPS';
+			case 'performanceOverlay.displayFps': return '表示 FPS';
+			case 'performanceOverlay.avSync': return 'A/V 同期';
+			case 'performanceOverlay.dropped': return 'ドロップ';
+			case 'performanceOverlay.dvRpus': return 'DV RPU';
+			case 'performanceOverlay.dvRpuAverage': return 'DV RPU 平均';
+			case 'performanceOverlay.dvSampleAverage': return 'DV サンプル平均';
+			case 'performanceOverlay.maxLuma': return '最大輝度';
+			case 'performanceOverlay.minLuma': return '最小輝度';
+			case 'performanceOverlay.maxCll': return 'MaxCLL';
+			case 'performanceOverlay.maxFall': return 'MaxFALL';
+			case 'performanceOverlay.cacheUsed': return '使用キャッシュ';
+			case 'performanceOverlay.cacheLimit': return 'キャッシュ上限';
+			case 'performanceOverlay.speed': return '速度';
+			case 'performanceOverlay.player': return 'プレーヤー';
+			case 'performanceOverlay.memory': return 'メモリ';
+			case 'performanceOverlay.uiFps': return 'UI FPS';
+			case 'performanceOverlay.fps': return 'FPS';
+			case 'performanceOverlay.decoderAndroidHw': return 'Android HW';
+			case 'performanceOverlay.decoderNvidiaHw': return 'NVIDIA HW';
+			case 'performanceOverlay.decoderQualcommHw': return 'Qualcomm HW';
+			case 'performanceOverlay.decoderMediatekHw': return 'MediaTek HW';
+			case 'performanceOverlay.decoderExynosHw': return 'Exynos HW';
+			case 'performanceOverlay.decoderSoftware': return 'ソフトウェア';
+			case 'performanceOverlay.decoderHardware': return 'ハードウェア';
+			case 'performanceOverlay.tunnelingActive': return '有効';
+			case 'performanceOverlay.dvRpuFailed': return ({required Object converted, required Object failures}) => '${converted}（${failures}件失敗）';
+			case 'externalPlayer.title': return '外部プレーヤー';
+			case 'externalPlayer.useExternalPlayer': return '外部プレーヤーを使用';
+			case 'externalPlayer.useExternalPlayerDescription': return '動画を別のアプリで開きます';
+			case 'externalPlayer.selectPlayer': return 'プレーヤーを選択';
+			case 'externalPlayer.customPlayers': return 'カスタムプレーヤー';
+			case 'externalPlayer.systemDefault': return 'システム既定';
+			case 'externalPlayer.addCustomPlayer': return 'カスタムプレーヤーを追加';
+			case 'externalPlayer.playerName': return 'プレーヤー名';
+			case 'externalPlayer.playerNameHint': return 'マイプレーヤー';
+			case 'externalPlayer.playerCommand': return 'コマンド';
+			case 'externalPlayer.playerPackage': return 'パッケージ名';
+			case 'externalPlayer.playerUrlScheme': return 'URLスキーム';
+			case 'externalPlayer.off': return 'オフ';
+			case 'externalPlayer.launchFailed': return '外部プレーヤーの起動に失敗しました';
+			case 'externalPlayer.appNotInstalled': return ({required Object name}) => '${name}がインストールされていません';
+			case 'externalPlayer.playInExternalPlayer': return '外部プレーヤーで再生';
+			case 'metadataEdit.editMetadata': return '編集…';
+			case 'metadataEdit.screenTitle': return 'メタデータを編集';
+			case 'metadataEdit.basicInfo': return '基本情報';
+			case 'metadataEdit.artwork': return 'アートワーク';
+			case 'metadataEdit.advancedSettings': return '詳細設定';
+			case 'metadataEdit.title': return 'タイトル';
+			case 'metadataEdit.sortTitle': return 'ソートタイトル';
+			case 'metadataEdit.originalTitle': return '原題';
+			case 'metadataEdit.releaseDate': return '公開日';
+			case 'metadataEdit.contentRating': return 'コンテンツレーティング';
+			case 'metadataEdit.studio': return 'スタジオ';
+			case 'metadataEdit.tagline': return 'タグライン';
+			case 'metadataEdit.summary': return 'あらすじ';
+			case 'metadataEdit.poster': return 'ポスター';
+			case 'metadataEdit.background': return '背景';
+			case 'metadataEdit.logo': return 'ロゴ';
+			case 'metadataEdit.squareArt': return '正方形アート';
+			case 'metadataEdit.selectPoster': return 'ポスターを選択';
+			case 'metadataEdit.selectBackground': return '背景を選択';
+			case 'metadataEdit.selectLogo': return 'ロゴを選択';
+			case 'metadataEdit.selectSquareArt': return '正方形アートを選択';
+			case 'metadataEdit.fromUrl': return 'URLから';
+			case 'metadataEdit.uploadFile': return 'ファイルをアップロード';
+			case 'metadataEdit.enterImageUrl': return '画像URLを入力';
+			case 'metadataEdit.imageUrl': return '画像URL';
+			case 'metadataEdit.metadataUpdated': return 'メタデータを更新しました';
+			case 'metadataEdit.metadataUpdateFailed': return 'メタデータの更新に失敗しました';
+			case 'metadataEdit.artworkUpdated': return 'アートワークを更新しました';
+			case 'metadataEdit.artworkUpdateFailed': return 'アートワークの更新に失敗しました';
+			case 'metadataEdit.noArtworkAvailable': return 'アートワークがありません';
+			case 'metadataEdit.artworkOption': return ({required Object index}) => 'アートワークの選択肢 ${index}';
+			case 'metadataEdit.selectedArtworkOption': return ({required Object index}) => 'アートワークの選択肢 ${index}、選択済み';
+			case 'metadataEdit.notSet': return '未設定';
+			case 'metadataEdit.libraryDefault': return 'ライブラリのデフォルト';
+			case 'metadataEdit.accountDefault': return 'アカウントのデフォルト';
+			case 'metadataEdit.seriesDefault': return 'シリーズのデフォルト';
+			case 'metadataEdit.episodeSorting': return 'エピソードの並べ替え';
+			case 'metadataEdit.oldestFirst': return '古い順';
+			case 'metadataEdit.newestFirst': return '新しい順';
+			case 'metadataEdit.keep': return '保持';
+			case 'metadataEdit.allEpisodes': return 'すべてのエピソード';
+			case 'metadataEdit.latestEpisodes': return ({required Object count}) => '最新の${count}話';
+			case 'metadataEdit.latestEpisode': return '最新エピソード';
+			case 'metadataEdit.episodesAddedPastDays': return ({required Object count}) => '過去${count}日間に追加されたエピソード';
+			case 'metadataEdit.deleteAfterPlaying': return '再生後にエピソードを削除';
+			case 'metadataEdit.never': return 'しない';
+			case 'metadataEdit.afterADay': return '1日後';
+			case 'metadataEdit.afterAWeek': return '1週間後';
+			case 'metadataEdit.afterAMonth': return '1か月後';
+			case 'metadataEdit.onNextRefresh': return '次回更新時';
+			case 'metadataEdit.seasons': return 'シーズン';
+			case 'metadataEdit.show': return '表示';
+			case 'metadataEdit.hide': return '非表示';
+			case 'metadataEdit.episodeOrdering': return 'エピソードの順序';
+			case 'metadataEdit.tmdbAiring': return 'The Movie Database（放送順）';
+			case 'metadataEdit.tvdbAiring': return 'TheTVDB（放送順）';
+			case 'metadataEdit.tvdbAbsolute': return 'TheTVDB（絶対順）';
+			case 'metadataEdit.metadataLanguage': return 'メタデータの言語';
+			case 'metadataEdit.useOriginalTitle': return '原題を使用';
+			case 'metadataEdit.preferredAudioLanguage': return '優先音声言語';
+			case 'metadataEdit.preferredSubtitleLanguage': return '優先字幕言語';
+			case 'metadataEdit.subtitleMode': return '字幕自動選択モード';
+			case 'metadataEdit.manuallySelected': return '手動選択';
+			case 'metadataEdit.shownWithForeignAudio': return '外国語音声時に表示';
+			case 'metadataEdit.alwaysEnabled': return '常に有効';
+			case 'metadataEdit.tags': return 'タグ';
+			case 'metadataEdit.addTag': return 'タグを追加';
+			case 'metadataEdit.genre': return 'ジャンル';
+			case 'metadataEdit.director': return '監督';
+			case 'metadataEdit.writer': return '脚本';
+			case 'metadataEdit.producer': return 'プロデューサー';
+			case 'metadataEdit.country': return '国';
+			case 'metadataEdit.collection': return 'コレクション';
+			case 'metadataEdit.label': return 'ラベル';
+			case 'metadataEdit.quickTag': return 'クイックタグ…';
+			case 'matchScreen.match': return '照合…';
+			case 'matchScreen.fixMatch': return '照合を修正…';
+			case 'matchScreen.unmatch': return '照合を解除';
+			case 'matchScreen.unmatchConfirm': return 'この照合を解除しますか？再照合するまで、Plexでは未照合として扱われます。';
+			case 'matchScreen.unmatchSuccess': return '照合を解除しました';
+			case 'matchScreen.unmatchFailed': return '照合を解除できませんでした';
+			case 'matchScreen.matchApplied': return '照合結果を適用しました';
+			case 'matchScreen.matchFailed': return '照合結果を適用できませんでした';
+			case 'matchScreen.titleHint': return 'タイトル';
+			case 'matchScreen.yearHint': return '年';
+			case 'matchScreen.search': return '検索';
+			case 'matchScreen.noMatchesFound': return '一致する項目がありません';
+			case 'serverTasks.title': return 'サーバータスク';
+			case 'serverTasks.failedToLoad': return 'タスクの読み込みに失敗しました';
+			case 'serverTasks.noTasks': return '実行中のタスクはありません';
+			case 'trakt.title': return 'Trakt';
+			case 'trakt.connected': return '接続済み';
+			case 'trakt.connectedAs': return ({required Object username}) => '@${username}として接続済み';
+			case 'trakt.disconnectConfirm': return 'Traktアカウントとの接続を解除しますか？';
+			case 'trakt.disconnectConfirmBody': return 'PlezyはTraktへのイベント送信を停止します。いつでも再接続できます。';
+			case 'trakt.scrobble': return 'リアルタイムのスクロブル';
+			case 'trakt.scrobbleDescription': return '再生中に再生・一時停止・停止の各イベントをTraktに送信します。';
+			case 'trakt.watchedSync': return '視聴済みステータスを同期';
+			case 'trakt.watchedSyncDescription': return 'Plezyで項目を視聴済みにすると、Traktでも視聴済みになります。';
+			case 'seerr.title': return 'Seerr';
+			case 'seerr.connectTitle': return 'Seerrに接続';
+			case 'seerr.serverUrl': return 'サーバー URL';
+			case 'seerr.serverUrlHelper': return 'Seerr インスタンスのアドレス';
+			case 'seerr.checkServer': return '続ける';
+			case 'seerr.signInWithJellyfin': return 'Jellyfinでサインイン';
+			case 'seerr.signInWithEmby': return 'Embyでサインイン';
+			case 'seerr.signInWithLocal': return 'ローカルアカウントを使う';
+			case 'seerr.email': return 'メールアドレス';
+			case 'seerr.noSignInMethods': return 'この Seerr インスタンスには Plezy が対応しているサインイン方法がありません。';
+			case 'seerr.instance': return 'インスタンス';
+			case 'seerr.disconnectConfirm': return 'Seerr の接続を解除しますか？';
+			case 'seerr.disconnectConfirmBody': return 'Plezy はこの Seerr インスタンスの情報を削除します。いつでも再接続できます。';
+			case 'seerr.request': return 'リクエスト';
+			case 'seerr.request4k': return '4K でリクエスト';
+			case 'seerr.seasons': return 'シーズン';
+			case 'seerr.allSeasons': return '全シーズン';
+			case 'seerr.advancedOptions': return '詳細';
+			case 'seerr.destinationServer': return '宛先サーバー';
+			case 'seerr.qualityProfile': return '画質プロファイル';
+			case 'seerr.rootFolder': return 'ルートフォルダ';
+			case 'seerr.languageProfile': return '言語プロファイル';
+			case 'seerr.tags': return 'タグ';
+			case 'seerr.noTags': return 'タグなし';
+			case 'seerr.defaultOption': return ({required Object name}) => '${name}（デフォルト）';
+			case 'seerr.animeNote': return 'このシリーズはアニメです。';
+			case 'seerr.requestSubmitted': return 'リクエストを送信しました';
+			case 'seerr.requestFailed': return ({required Object error}) => 'リクエストに失敗しました: ${error}';
+			case 'seerr.requestsLoadFailed': return 'リクエストオプションを読み込めませんでした';
+			case 'seerr.nothingToRequest': return 'すべてすでに利用可能またはリクエスト済みです。';
+			case 'seerr.statusAvailable': return '利用可能';
+			case 'seerr.statusPartiallyAvailable': return '一部利用可能';
+			case 'seerr.statusRequested': return 'リクエスト済み';
+			case 'seerr.statusProcessing': return '処理中';
+			case 'seerr.statusBlocklisted': return 'ブロックリスト登録済み';
+			case 'seerr.couldNotReach': return ({required Object url, required Object error}) => '${url}に接続できませんでした: ${error}';
+			case 'seerr.noInstanceAtUrl': return ({required Object url, required Object status}) => '${url}にSeerrインスタンスがありません（HTTP ${status}）';
+			case 'seerr.behindAuthProxy': return 'Seerrではなく、認証が必要なリバースプロキシ（SSOまたはHTTP認証）が応答しました。Plezyはこれを通じてサインインできません。このアプリではSeerrの/api/v1パスをプロキシから除外するか、Seerrに直接到達するアドレスを使用してください。';
+			case 'seerr.invalidUrl': return 'https://seerr.example.comのようなサーバーアドレスを入力してください';
+			case 'seerr.quickConnectUnsupported': return 'このSeerrインスタンスはQuick Connectに対応していません。Seerr 3.4以降が必要です。';
+			case 'seerr.notInitialized': return 'このSeerrインスタンスでは初回セットアップが完了していません';
+			case 'seerr.noPlexTokenForReauth': return '再サインインに使用できるPlexトークンがありません';
+			case 'seerr.noStoredCredentials': return '再サインインに使用できる保存済みの認証情報がありません';
+			case 'seerr.signInRejected': return 'サインインが拒否されました';
+			case 'seerr.noSessionCookie': return 'Seerrからセッションクッキーが発行されませんでした';
+			case 'seerr.freshCookieRejected': return 'Seerrが新しいセッションクッキーを拒否しました';
+			case 'seerr.noUserInformation': return 'Seerrからユーザー情報が返されませんでした';
+			case 'seerr.sessionRejectedAfterReauth': return '再サインイン後にセッションが拒否されました';
+			case 'seerr.permissionDenied': return 'Seerrがこの操作を拒否しました: アカウントに必要な権限がありません';
+			case 'seerr.permissionRevoked': return 'これをリクエストする権限がなくなりました';
+			case 'services.title': return 'サービス';
+			case 'services.hubSubtitle': return '視聴の進捗を同期して、新しいタイトルをリクエストします。';
+			case 'services.integrations': return 'インテグレーション';
+			case 'services.notConnected': return '未接続';
+			case 'services.connectedAs': return ({required Object username}) => '@${username} として接続済み';
+			case 'services.scrobble': return '進捗を自動で記録';
+			case 'services.scrobbleDescription': return 'エピソードや映画を見終えたときにリストを更新します。';
+			case 'services.disconnectConfirm': return ({required Object service}) => '${service} の接続を解除しますか？';
+			case 'services.disconnectConfirmBody': return ({required Object service}) => 'Plezyは${service}の更新を停止します。いつでも再接続できます。';
+			case 'services.connectFailed': return ({required Object service}) => '${service} に接続できませんでした。もう一度お試しください。';
+			case 'services.names.mal': return 'MyAnimeList';
+			case 'services.names.anilist': return 'AniList';
+			case 'services.names.simkl': return 'Simkl';
+			case 'services.names.seerr': return 'Seerr';
+			case 'services.names.mdblist': return 'MDBList';
+			case 'services.simklReconnect.title': return 'Simklに再接続';
+			case 'services.simklReconnect.subtitle': return 'Simklはこの接続で使用しているサインイン方法を廃止します。再接続するとsimkl.comが開き、Plezyを承認できます。Plezyがパスワードを知ることはありません。視聴履歴はSimklに残ります。';
+			case 'services.deviceCode.title': return ({required Object service}) => '${service} で Plezy を有効化';
+			case 'services.deviceCode.instructions': return 'QRコードをスキャンするか、以下のアドレスにアクセスしてこのコードを入力してください:';
+			case 'services.deviceCode.openToActivate': return ({required Object service}) => '${service} を開いて有効化';
+			case 'services.deviceCode.copyCode': return 'アクティベーションコードをコピー';
+			case 'services.deviceCode.waitingForAuthorization': return '認証を待っています…';
+			case 'services.deviceCode.codeCopied': return 'コードをコピーしました';
+			case 'services.oauthProxy.title': return ({required Object service}) => '${service} にサインイン';
+			case 'services.oauthProxy.body': return 'このQRコードをスキャンするか、任意のデバイスでURLを開いてください。';
+			case 'services.oauthProxy.openToSignIn': return ({required Object service}) => '${service} を開いてサインイン';
+			case 'services.pendingAuth.copyUrl': return 'サインインURLをコピー';
+			case 'services.pendingAuth.urlCopied': return 'URLをコピーしました';
+			case 'services.libraryFilter.title': return 'ライブラリフィルター';
+			case 'services.libraryFilter.subtitleAllSyncing': return 'すべてのライブラリを同期中';
+			case 'services.libraryFilter.subtitleNoneSyncing': return '同期なし';
+			case 'services.libraryFilter.subtitleBlocked': return ({required Object count}) => '${count} 件をブロック';
+			case 'services.libraryFilter.subtitleAllowed': return ({required Object count}) => '${count} 件を許可';
+			case 'services.libraryFilter.mode': return 'フィルターモード';
+			case 'services.libraryFilter.modeBlacklist': return 'ブロックリスト';
+			case 'services.libraryFilter.modeWhitelist': return '許可リスト';
+			case 'services.libraryFilter.modeHintBlacklist': return '下でチェックしたライブラリ以外をすべて同期します。';
+			case 'services.libraryFilter.modeHintWhitelist': return '下でチェックしたライブラリのみ同期します。';
+			case 'services.libraryFilter.libraries': return 'ライブラリ';
+			case 'services.libraryFilter.noLibraries': return '利用できるライブラリがありません';
+			case 'addServer.addMediaBrowserTitle': return ({required Object product}) => '${product}サーバーを追加';
+			case 'addServer.serverUrls': return 'サーバーURL';
+			case 'addServer.serverUrlsHelper': return '複数のURLをカンマ区切りで入力できます。';
+			case 'addServer.findServer': return 'サーバーを検索';
+			case 'addServer.searchingLocalMediaBrowserServers': return ({required Object product}) => 'ローカルの${product}サーバーを検索中…';
+			case 'addServer.localMediaBrowserServers': return ({required Object product}) => 'ローカルの${product}サーバー';
+			case 'addServer.username': return 'ユーザー名';
+			case 'addServer.password': return 'パスワード';
+			case 'addServer.signIn': return 'サインイン';
+			case 'addServer.change': return '変更';
+			case 'addServer.required': return '必須';
+			case 'addServer.couldNotReachServer': return ({required Object error}) => 'サーバーに接続できませんでした: ${error}';
+			case 'addServer.signInFailed': return ({required Object error}) => 'サインインに失敗しました: ${error}';
+			case 'addServer.quickConnectFailed': return ({required Object error}) => 'Quick Connectに失敗しました: ${error}';
+			case 'addServer.addPlexTitle': return 'Plexでサインイン';
+			case 'addServer.pinExpired': return 'サインイン前にPINの有効期限が切れました。もう一度お試しください。';
+			case 'addServer.failedToRegisterAccount': return ({required Object error}) => 'アカウントの登録に失敗しました: ${error}';
+			case 'addServer.enterMediaBrowserUrlError': return ({required Object product}) => '${product}サーバーのURLを入力してください';
+			case 'addServer.addConnectionTitle': return '接続を追加';
+			case 'addServer.addConnectionTitleScoped': return ({required Object name}) => '${name}に追加';
+			case 'addServer.signInWithPlexCard': return 'Plexでサインイン';
+			case 'addServer.signInWithPlexCardSubtitle': return 'このデバイスを承認します。共有サーバーが追加されます。';
+			case 'addServer.signInWithPlexCardSubtitleScoped': return 'Plexアカウントを承認します。Homeユーザーはプロフィールになります。';
+			case 'addServer.connectToMediaBrowserCard': return ({required Object product}) => '${product}に接続';
+			case 'addServer.connectToMediaBrowserCardSubtitle': return 'サーバーのURL、ユーザー名、パスワードを入力してください。';
+			case 'addServer.connectToMediaBrowserCardSubtitleScoped': return ({required Object product, required Object name}) => '${product}サーバーにサインインします。「${name}」に紐付けられます。';
+			case 'addServer.borrowFromAnotherProfile': return '別のプロフィールの接続を利用';
+			case 'addServer.borrowFromAnotherProfileSubtitle': return '別のプロフィールの接続を再利用します。PINで保護されたプロフィールにはPINが必要です。';
+			case 'addServer.invalidCredentials': return 'ユーザー名またはパスワードが正しくありません';
+			case 'addServer.authResponseNotJson': return '認証レスポンスが有効なJSONではありません';
+			case 'addServer.authResponseIncomplete': return 'サーバーからのサインイン応答が不完全です';
+			case 'addServer.quickConnectRejected': return 'Quick Connectがサーバーに拒否されました';
+			case 'addServer.quickConnectNotJson': return 'Quick Connectのレスポンスが有効なJSONではありません';
+			case 'addServer.quickConnectMissingFields': return 'Quick Connectのレスポンスにコードまたはシークレットがありません';
+			case 'addServer.quickConnectPollRejected': return 'Quick Connectのポーリングがサーバーに拒否されました';
+			case 'addServer.serverTimedOut': return 'サーバーが時間内に応答しませんでした';
+			case 'addServer.responseNotJson': return 'サーバーのレスポンスが有効なJSONではありません';
+			case 'addServer.responseMissingIdentity': return ({required Object product}) => 'レスポンスにIDまたはサーバー名がありません。これは${product}サーバーですか？';
+			case 'addServer.probeFailed': return ({required Object error}) => 'サーバーに接続できませんでした: ${error}';
+			case 'addServer.enterAtLeastOneUrl': return ({required Object product}) => '${product}サーバーのURLを1つ以上入力してください';
+			case 'addServer.noReachableServer': return ({required Object product}) => '接続可能な${product}サーバーが見つかりませんでした';
+			case 'addServer.urlsPointToDifferentServers': return ({required Object product}) => 'これらのURLは異なる${product}サーバーを指しています';
+			case 'addServer.urlDoesNotMatchServer': return ({required Object product}) => 'このURLは${product}サーバーと一致しません';
+			case 'addServer.redirectUnsupported': return 'サーバーからサポートされていないURLにリダイレクトされました';
+			case 'addServer.redirectDifferentHost': return ({required Object product}) => 'サーバーから別のホストにリダイレクトされました。最終的な${product}のURLを直接入力してください。';
+			case 'addServer.redirectInsecure': return 'サーバーからHTTPSではない安全でないURLにリダイレクトされました';
+			case 'addServer.redirectUnsupportedEnterFinal': return ({required Object product}) => 'サーバーからサポートされていないURLにリダイレクトされました。最終的な${product}のURLを直接入力してください。';
+			default: return null;
+		}
 	}
 }
+

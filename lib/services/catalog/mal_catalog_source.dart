@@ -1,4 +1,5 @@
 import 'package:collection/collection.dart';
+import 'package:flutter/foundation.dart';
 
 import '../../media/media_kind.dart';
 import '../../media/media_rating.dart';
@@ -9,13 +10,40 @@ import '../../models/mal/mal_anime.dart';
 import '../../models/trackers/fribb_mapping_row.dart';
 import '../../utils/app_logger.dart';
 import '../../utils/external_ids.dart';
+import '../settings_service.dart';
 import '../trackers/anime_mappings_store.dart';
 import '../trackers/fribb_index.dart';
 import '../trackers/mal/mal_client.dart';
 import '../trackers/mal/mal_constants.dart';
+import '../trackers/mal/mal_page.dart';
 import '../trackers/tracker_exceptions.dart';
 import 'catalog_source.dart';
 import 'catalog_watchlist_machinery.dart';
+
+/// Snapshot of user-configured MyAnimeList Discovery filter & sort settings.
+class MalDiscoveryFilterConfig {
+  final Set<MalListStatusFilter> enabledStatuses;
+  final MalUnreleasedMode unreleasedMode;
+
+  const MalDiscoveryFilterConfig({
+    this.enabledStatuses = const {MalListStatusFilter.watching, MalListStatusFilter.planToWatch},
+    this.unreleasedMode = MalUnreleasedMode.pushToEnd,
+  });
+
+  factory MalDiscoveryFilterConfig.fromSettings(SettingsService? settings) {
+    if (settings == null) return const MalDiscoveryFilterConfig();
+    return MalDiscoveryFilterConfig(
+      enabledStatuses: {
+        if (settings.read(SettingsService.malIncludeWatching)) MalListStatusFilter.watching,
+        if (settings.read(SettingsService.malIncludePlanToWatch)) MalListStatusFilter.planToWatch,
+        if (settings.read(SettingsService.malIncludeOnHold)) MalListStatusFilter.onHold,
+        if (settings.read(SettingsService.malIncludeCompleted)) MalListStatusFilter.completed,
+        if (settings.read(SettingsService.malIncludeDropped)) MalListStatusFilter.dropped,
+      },
+      unreleasedMode: settings.read(SettingsService.malUnreleasedMode),
+    );
+  }
+}
 
 /// [CatalogSource] backed by the MyAnimeList API.
 ///
@@ -31,8 +59,18 @@ import 'catalog_watchlist_machinery.dart';
 class MalCatalogSource with CatalogWatchlistMachinery implements CatalogSource, CatalogCommunityRatings {
   final MalClient _client;
   final FribbMappingLookup _fribb;
+  final MalDiscoveryFilterConfig Function() _readFilterConfig;
+  final DateTime Function() _now;
 
-  MalCatalogSource(this._client, {FribbMappingLookup? fribb}) : _fribb = fribb ?? AnimeMappingsStore.instance;
+  MalCatalogSource(
+    this._client, {
+    FribbMappingLookup? fribb,
+    MalDiscoveryFilterConfig Function()? filterConfig,
+    DateTime Function()? now,
+  }) : _fribb = fribb ?? AnimeMappingsStore.instance,
+       _readFilterConfig =
+           filterConfig ?? (() => MalDiscoveryFilterConfig.fromSettings(SettingsService.instanceOrNull)),
+       _now = now ?? DateTime.now;
 
   @override
   String get watchlistLogLabel => 'MAL: Plan to Watch';
@@ -62,11 +100,16 @@ class MalCatalogSource with CatalogWatchlistMachinery implements CatalogSource, 
 
   @override
   Future<CatalogPage> fetchRow(CatalogRowId row, {int page = 1, int limit = 25}) async {
+    final config = _readFilterConfig();
+    final now = _now();
+    if (row == CatalogRowId.watchlist) {
+      return _fetchUserAnimeListRow(config: config, now: now, page: page, limit: limit);
+    }
     final res = switch (row) {
-      CatalogRowId.watchlist => await _client.getPlanToWatch(page: page, limit: limit),
       CatalogRowId.suggestedAnime => await _client.getSuggestedAnime(page: page, limit: limit),
       CatalogRowId.airingAnime => await _client.getAnimeRanking(MalRankingType.airing, page: page, limit: limit),
       CatalogRowId.popularAnime => await _client.getAnimeRanking(MalRankingType.bypopularity, page: page, limit: limit),
+      CatalogRowId.watchlist ||
       CatalogRowId.recommendedMovies ||
       CatalogRowId.recommendedShows ||
       CatalogRowId.trendingMovies ||
@@ -83,10 +126,162 @@ class MalCatalogSource with CatalogWatchlistMachinery implements CatalogSource, 
       CatalogRowId.popularAnime => CatalogRankScope.popular,
       _ => null,
     };
+    final ordered = _applyUnreleasedModeToMalPage(res, config.unreleasedMode, now);
     return CatalogPage(
-      items: await _toCatalogItems(res.items, rankingRanks: res.rankingRanks, rankingScope: rankingScope),
-      hasMore: res.hasMore,
+      items: await _toCatalogItems(
+        ordered.items,
+        rankingRanks: ordered.rankingRanks,
+        rankingScope: rankingScope,
+      ),
+      hasMore: ordered.hasMore,
     );
+  }
+
+  Future<CatalogPage> _fetchUserAnimeListRow({
+    required MalDiscoveryFilterConfig config,
+    required DateTime now,
+    required int page,
+    required int limit,
+  }) async {
+    final orderedStatuses = [
+      for (final status in MalListStatusFilter.values)
+        if (config.enabledStatuses.contains(status)) status,
+    ];
+    if (orderedStatuses.isEmpty) {
+      return const CatalogPage(items: []);
+    }
+
+    final List<({MalListStatusFilter? requestedStatus, MalPage<MalAnime> page})> pages;
+    if (orderedStatuses.length == MalListStatusFilter.values.length) {
+      pages = [
+        (requestedStatus: null, page: await _client.getUserAnimeList(page: page, limit: limit)),
+      ];
+    } else {
+      final fetched = await Future.wait([
+        for (final status in orderedStatuses)
+          _client.getUserAnimeList(status: status, page: page, limit: limit),
+      ]);
+      pages = [
+        for (var i = 0; i < orderedStatuses.length; i++)
+          (requestedStatus: orderedStatuses[i], page: fetched[i]),
+      ];
+    }
+
+    final seenIds = <int>{};
+    final candidates = <({
+      MalAnime anime,
+      MalListStatusFilter? status,
+      DateTime? updatedAt,
+      int originalIndex,
+    })>[];
+    var nextOriginalIndex = 0;
+
+    for (final entry in pages) {
+      final malPage = entry.page;
+      for (var i = 0; i < malPage.items.length; i++) {
+        final anime = malPage.items[i];
+        final sidecar = i < malPage.listStatuses.length ? malPage.listStatuses[i] : null;
+        final parsedStatus = MalListStatusFilter.tryParse(sidecar?.status);
+        if (parsedStatus != null && !config.enabledStatuses.contains(parsedStatus)) {
+          continue;
+        }
+        final id = anime.id;
+        if (id != null && !seenIds.add(id)) continue;
+        final effectiveStatus = parsedStatus ?? entry.requestedStatus;
+        if (config.unreleasedMode == MalUnreleasedMode.hide && isUnreleasedAnime(anime, now: now)) {
+          continue;
+        }
+        candidates.add((
+          anime: anime,
+          status: effectiveStatus,
+          updatedAt: sidecar?.updatedAt,
+          originalIndex: nextOriginalIndex++,
+        ));
+      }
+    }
+
+    candidates.sort((a, b) {
+      if (config.unreleasedMode == MalUnreleasedMode.pushToEnd) {
+        final uCmp = (isUnreleasedAnime(a.anime, now: now) ? 1 : 0).compareTo(
+          isUnreleasedAnime(b.anime, now: now) ? 1 : 0,
+        );
+        if (uCmp != 0) return uCmp;
+      }
+      final sCmp = (a.status?.index ?? 99).compareTo(b.status?.index ?? 99);
+      if (sCmp != 0) return sCmp;
+      if (a.updatedAt != null && b.updatedAt != null) {
+        final tCmp = b.updatedAt!.compareTo(a.updatedAt!);
+        if (tCmp != 0) return tCmp;
+      }
+      final oCmp = a.originalIndex.compareTo(b.originalIndex);
+      if (oCmp != 0) return oCmp;
+      return (a.anime.id ?? 0).compareTo(b.anime.id ?? 0);
+    });
+
+    return CatalogPage(
+      items: await _toCatalogItems([for (final c in candidates) c.anime]),
+      hasMore: pages.any((p) => p.page.hasMore),
+    );
+  }
+
+  static MalPage<MalAnime> _applyUnreleasedModeToMalPage(
+    MalPage<MalAnime> source,
+    MalUnreleasedMode mode,
+    DateTime now,
+  ) {
+    if (mode == MalUnreleasedMode.showNormally || source.items.isEmpty) return source;
+    final indexed = <({MalAnime anime, int? rank, int index})>[
+      for (var i = 0; i < source.items.length; i++)
+        if (mode != MalUnreleasedMode.hide || !isUnreleasedAnime(source.items[i], now: now))
+          (
+            anime: source.items[i],
+            rank: i < source.rankingRanks.length ? source.rankingRanks[i] : null,
+            index: i,
+          ),
+    ];
+    if (mode == MalUnreleasedMode.pushToEnd) {
+      indexed.sort((a, b) {
+        final uCmp = (isUnreleasedAnime(a.anime, now: now) ? 1 : 0).compareTo(
+          isUnreleasedAnime(b.anime, now: now) ? 1 : 0,
+        );
+        if (uCmp != 0) return uCmp;
+        final iCmp = a.index.compareTo(b.index);
+        if (iCmp != 0) return iCmp;
+        return (a.anime.id ?? 0).compareTo(b.anime.id ?? 0);
+      });
+    }
+    return MalPage(
+      items: [for (final entry in indexed) entry.anime],
+      rankingRanks: [for (final entry in indexed) entry.rank],
+      hasMore: source.hasMore,
+    );
+  }
+
+  /// True when [anime] is marked `not_yet_aired` or carries a `start_date`
+  /// (`YYYY-MM-DD`, `YYYY-MM`, or `YYYY`) strictly after [now].
+  @visibleForTesting
+  static bool isUnreleasedAnime(MalAnime anime, {DateTime? now}) {
+    if (anime.status == 'not_yet_aired') return true;
+    final rawDate = anime.startDate?.trim();
+    if (rawDate == null || rawDate.isEmpty) return false;
+    final ref = now ?? DateTime.now();
+    final parts = rawDate.split('-');
+    final year = int.tryParse(parts[0]);
+    if (year == null) return false;
+    if (parts.length == 1) {
+      return year > ref.year;
+    }
+    final month = int.tryParse(parts[1]);
+    if (month == null) return false;
+    if (parts.length == 2) {
+      return year > ref.year || (year == ref.year && month > ref.month);
+    }
+    final day = int.tryParse(parts[2]);
+    if (day == null) {
+      return year > ref.year || (year == ref.year && month > ref.month);
+    }
+    final today = DateTime(ref.year, ref.month, ref.day);
+    return DateTime(year, month, day).isAfter(today);
   }
 
   /// MAL rejects queries under 3 characters (`invalid q`) — return empty

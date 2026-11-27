@@ -15,7 +15,10 @@ import '../../widgets/app_icon.dart';
 import '../../widgets/device_code_dialog.dart';
 import '../../widgets/focusable_list_tile.dart';
 import '../../widgets/oauth_proxy_dialog.dart';
+import '../../widgets/setting_tile.dart';
 import '../../widgets/settings_page.dart';
+import '../../widgets/settings_section.dart';
+import 'settings_utils.dart';
 import 'tracker_account_settings_body.dart';
 import 'tracker_connect_launcher.dart';
 
@@ -103,6 +106,9 @@ class TrackerConfig {
   /// Extra rows for the account section, shown under the account tile.
   final List<Widget> Function(BuildContext context, TrackersProvider account)? accountActions;
 
+  /// Optional service-specific settings sections rendered below Behavior.
+  final List<Widget> Function(BuildContext context)? extraSections;
+
   const TrackerConfig({
     required this.service,
     required this.displayName,
@@ -110,9 +116,16 @@ class TrackerConfig {
     required this.username,
     required this.disconnect,
     this.accountActions,
+    this.extraSections,
   });
 
   Pref<bool> get scrobblePref => SettingsService.scrobblePref(service);
+
+  static String _malUnreleasedLabel(MalUnreleasedMode mode) => switch (mode) {
+    MalUnreleasedMode.pushToEnd => t.services.malDiscovery.unreleasedPushToEnd,
+    MalUnreleasedMode.hide => t.services.malDiscovery.unreleasedHide,
+    MalUnreleasedMode.showNormally => t.services.malDiscovery.unreleasedShowNormally,
+  };
 
   static TrackerConfig mal() => TrackerConfig(
     service: TrackerService.mal,
@@ -120,6 +133,66 @@ class TrackerConfig {
     isConnected: (a) => a.isMalConnected,
     username: (a) => a.malUsername,
     disconnect: (a) => a.disconnectMal(),
+    extraSections: (_) => [
+      SettingsGroup(
+        title: t.services.malDiscovery.title,
+        children: [
+          SettingSwitchTile(
+            pref: SettingsService.malIncludeWatching,
+            icon: Symbols.play_circle_rounded,
+            title: t.services.malDiscovery.watching,
+            subtitle: t.services.malDiscovery.watchingDescription,
+          ),
+          SettingSwitchTile(
+            pref: SettingsService.malIncludePlanToWatch,
+            icon: Symbols.bookmark_rounded,
+            title: t.services.malDiscovery.planToWatch,
+            subtitle: t.services.malDiscovery.planToWatchDescription,
+          ),
+          SettingSwitchTile(
+            pref: SettingsService.malIncludeOnHold,
+            icon: Symbols.pause_circle_rounded,
+            title: t.services.malDiscovery.onHold,
+            subtitle: t.services.malDiscovery.onHoldDescription,
+          ),
+          SettingSwitchTile(
+            pref: SettingsService.malIncludeCompleted,
+            icon: Symbols.check_circle_rounded,
+            title: t.services.malDiscovery.completed,
+            subtitle: t.services.malDiscovery.completedDescription,
+          ),
+          SettingSwitchTile(
+            pref: SettingsService.malIncludeDropped,
+            icon: Symbols.cancel_rounded,
+            title: t.services.malDiscovery.dropped,
+            subtitle: t.services.malDiscovery.droppedDescription,
+          ),
+          SettingSelectionTile<MalUnreleasedMode>(
+            pref: SettingsService.malUnreleasedMode,
+            icon: Symbols.event_upcoming_rounded,
+            title: t.services.malDiscovery.unreleasedTitle,
+            subtitleBuilder: _malUnreleasedLabel,
+            options: [
+              DialogOption(
+                value: MalUnreleasedMode.pushToEnd,
+                title: t.services.malDiscovery.unreleasedPushToEnd,
+                subtitle: t.services.malDiscovery.unreleasedPushToEndDescription,
+              ),
+              DialogOption(
+                value: MalUnreleasedMode.hide,
+                title: t.services.malDiscovery.unreleasedHide,
+                subtitle: t.services.malDiscovery.unreleasedHideDescription,
+              ),
+              DialogOption(
+                value: MalUnreleasedMode.showNormally,
+                title: t.services.malDiscovery.unreleasedShowNormally,
+                subtitle: t.services.malDiscovery.unreleasedShowNormallyDescription,
+              ),
+            ],
+          ),
+        ],
+      ),
+    ],
   );
 
   static TrackerConfig anilist() => TrackerConfig(
@@ -205,6 +278,7 @@ class TrackerSettingsScreen extends StatelessWidget {
               subtitle: t.services.scrobbleDescription,
             ),
           ],
+          extraSections: config.extraSections?.call(context) ?? const [],
           onDisconnect: () => _disconnect(context, account),
         );
       },

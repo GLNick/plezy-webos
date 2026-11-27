@@ -120,6 +120,10 @@ class MalClient implements DisposableTrackerClient {
       'status,studios,num_scoring_users,broadcast,popularity,num_list_users,rank,'
       'nsfw,source,end_date';
 
+  /// Fields requested for `/users/@me/animelist` Discovery queries (`status`,
+  /// `start_date`, and `list_status` alongside [catalogFields]).
+  static const String userAnimeListFields = '$catalogFields,list_status';
+
   /// The existing detail request widened by +22.3% in the measured sample
   /// (18,624 -> 22,772 bytes) — less since the unused `pictures` gallery came
   /// back out — still with no additional round trip.
@@ -142,6 +146,25 @@ class MalClient implements DisposableTrackerClient {
     {'status': 'plan_to_watch', 'sort': 'list_updated_at', 'nsfw': 'true'},
     page: page,
     limit: limit,
+  );
+
+  /// Queries `/users/@me/animelist` for Discovery, optionally scoped to one
+  /// [status] (MAL API v2 rejects comma-separated status values; omit [status]
+  /// when all list statuses are enabled). Requests [userAnimeListFields].
+  Future<MalPage<MalAnime>> getUserAnimeList({
+    MalListStatusFilter? status,
+    int page = 1,
+    int limit = 100,
+  }) => _getAnimePage(
+    '/users/@me/animelist',
+    {
+      if (status != null) 'status': status.queryValue,
+      'sort': 'list_updated_at',
+      'nsfw': 'true',
+    },
+    page: page,
+    limit: limit,
+    fields: userAnimeListFields,
   );
 
   /// Personalized recommendations. Empty for accounts without history.
@@ -169,13 +192,14 @@ class MalClient implements DisposableTrackerClient {
     Map<String, String> params, {
     required int page,
     required int limit,
+    String fields = catalogFields,
   }) async {
     final query = Uri(
       queryParameters: {
         ...params,
         'limit': '$limit',
         if (page > 1) 'offset': '${(page - 1) * limit}',
-        'fields': catalogFields,
+        'fields': fields,
       },
     ).query;
     final res = await _request('GET', '$path?$query');

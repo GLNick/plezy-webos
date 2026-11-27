@@ -549,6 +549,45 @@ void main() {
       expect(settings.isLibraryAllowedForTracker(TrackerService.trakt, 'server:allowed'), isTrue);
     });
   });
+
+  group('SettingsService MAL Discovery prefs', () {
+    test('defaults match spec, persist across restarts, and reset cleanly', () async {
+      var settings = await SettingsService.getInstance();
+
+      expect(settings.read(SettingsService.malIncludeWatching), isTrue);
+      expect(settings.read(SettingsService.malIncludePlanToWatch), isTrue);
+      expect(settings.read(SettingsService.malIncludeOnHold), isFalse);
+      expect(settings.read(SettingsService.malIncludeCompleted), isFalse);
+      expect(settings.read(SettingsService.malIncludeDropped), isFalse);
+      expect(settings.read(SettingsService.malUnreleasedMode), MalUnreleasedMode.pushToEnd);
+
+      await settings.write(SettingsService.malIncludeWatching, false);
+      await settings.write(SettingsService.malIncludeOnHold, true);
+      await settings.write(SettingsService.malIncludeCompleted, true);
+      await settings.write(SettingsService.malIncludeDropped, true);
+      await settings.write(SettingsService.malUnreleasedMode, MalUnreleasedMode.hide);
+
+      BaseSharedPreferencesService.resetForTesting();
+      SettingsService.resetForTesting();
+      settings = await SettingsService.getInstance();
+
+      expect(settings.read(SettingsService.malIncludeWatching), isFalse);
+      expect(settings.read(SettingsService.malIncludePlanToWatch), isTrue);
+      expect(settings.read(SettingsService.malIncludeOnHold), isTrue);
+      expect(settings.read(SettingsService.malIncludeCompleted), isTrue);
+      expect(settings.read(SettingsService.malIncludeDropped), isTrue);
+      expect(settings.read(SettingsService.malUnreleasedMode), MalUnreleasedMode.hide);
+
+      await settings.resetAllSettings();
+
+      expect(settings.read(SettingsService.malIncludeWatching), isTrue);
+      expect(settings.read(SettingsService.malIncludePlanToWatch), isTrue);
+      expect(settings.read(SettingsService.malIncludeOnHold), isFalse);
+      expect(settings.read(SettingsService.malIncludeCompleted), isFalse);
+      expect(settings.read(SettingsService.malIncludeDropped), isFalse);
+      expect(settings.read(SettingsService.malUnreleasedMode), MalUnreleasedMode.pushToEnd);
+    });
+  });
   group('BaseSharedPreferencesService initialization generations', () {
     test('a reset-raced initialization resolves to the replacement backend', () async {
       resetSharedPreferencesForTest(initialAsync: const {'generation_marker': 'old'});

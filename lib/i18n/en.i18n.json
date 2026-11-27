@@ -2501,6 +2501,26 @@
       "modeHintWhitelist": "Sync only the libraries checked below.",
       "libraries": "Libraries",
       "noLibraries": "No libraries available"
+    },
+    "malDiscovery": {
+      "title": "MyAnimeList Discovery",
+      "watching": "Watching",
+      "watchingDescription": "Include anime you are currently watching",
+      "planToWatch": "Plan to Watch",
+      "planToWatchDescription": "Include anime on your Plan to Watch list",
+      "onHold": "On Hold",
+      "onHoldDescription": "Include paused anime on your On Hold list",
+      "completed": "Completed",
+      "completedDescription": "Include anime you have finished watching",
+      "dropped": "Dropped",
+      "droppedDescription": "Include anime you have dropped",
+      "unreleasedTitle": "Unreleased anime",
+      "unreleasedPushToEnd": "Push to end",
+      "unreleasedPushToEndDescription": "Show released and currently airing anime before upcoming titles",
+      "unreleasedHide": "Hide",
+      "unreleasedHideDescription": "Exclude anime that have not aired yet",
+      "unreleasedShowNormally": "Show normally",
+      "unreleasedShowNormallyDescription": "Keep list order without demoting or hiding upcoming titles"
     }
   },
   "addServer": {

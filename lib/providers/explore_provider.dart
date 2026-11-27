@@ -6,7 +6,9 @@ import '../i18n/strings.g.dart';
 import '../media/media_hub.dart';
 import '../media/media_item.dart';
 import '../mixins/disposable_change_notifier_mixin.dart';
+import '../models/catalog/catalog_item.dart';
 import '../services/catalog/catalog_source.dart';
+import '../services/settings_service.dart';
 import '../services/trackers/future_coalescer.dart';
 import '../utils/app_logger.dart';
 import 'catalog_sources_provider.dart';
@@ -56,10 +58,12 @@ class ExploreProvider extends ChangeNotifier with DisposableChangeNotifierMixin 
     _catalogSources.addListener(_onSourcesChanged);
     _source = _catalogSources.activeSource;
     _source?.watchlistChanges.addListener(_onWatchlistChanged);
+    _attachMalSettingsListener();
   }
 
   final CatalogSourcesProvider _catalogSources;
   CatalogSource? _source;
+  Listenable? _malSettingsListenable;
 
   Map<CatalogRowId, CatalogPage> _rows = {};
   List<CatalogHub> _providerHubs = const [];
@@ -165,6 +169,7 @@ class ExploreProvider extends ChangeNotifier with DisposableChangeNotifierMixin 
   /// Load if never loaded, after an error, or when the content has gone
   /// stale. Called on first build and every time the tab is shown.
   void ensureFresh() {
+    _attachMalSettingsListener();
     if (_source == null) return;
     if (_state == ExploreLoadState.initial || _state == ExploreLoadState.error) {
       unawaited(load());
@@ -184,7 +189,44 @@ class ExploreProvider extends ChangeNotifier with DisposableChangeNotifierMixin 
   /// calls coalesce into the in-flight pass; a source switch resets the
   /// coalescer (see [_onSourcesChanged]) so the new source's load starts
   /// instead of joining the doomed one.
-  Future<void> load() => _loadCoalescer.run(_loadOnce);
+  Future<void> load() {
+    _attachMalSettingsListener();
+    return _loadCoalescer.run(_loadOnce);
+  }
+
+  void _attachMalSettingsListener() {
+    if (_malSettingsListenable != null || isDisposed) return;
+    final settings = SettingsService.instanceOrNull;
+    if (settings == null) return;
+    _malSettingsListenable = settings.listenableOfAll(SettingsService.malDiscoveryPrefs)
+      ..addListener(_onMalSettingsChanged);
+  }
+
+  void _onMalSettingsChanged() {
+    invalidateSource(CatalogSourceId.mal);
+  }
+
+  /// Clears cached Explore rows for [sourceId] when its filter/sort settings
+  /// change and triggers an immediate reload if it was already loaded/loading.
+  void invalidateSource(CatalogSourceId sourceId, {bool reload = true}) {
+    if (isDisposed || _source?.id != sourceId) return;
+    final wasActive = _state != ExploreLoadState.initial;
+    _generation++;
+    _watchlistRefreshTimer?.cancel();
+    _loadCoalescer.reset();
+    _watchlistRefreshCoalescer.reset();
+    _watchlistMutationEpoch = 0;
+    _watchlistRowFetchedEpoch = 0;
+    _watchlistHubRetryEpoch = -1;
+    _rows = {};
+    _providerHubs = const [];
+    _loadedAt = null;
+    _errorMessage = null;
+    _state = ExploreLoadState.initial;
+    _rowsEpoch++;
+    safeNotifyListeners();
+    if (reload && wasActive) unawaited(load());
+  }
 
   Future<void> _loadOnce() async {
     // Yield so a load() kicked off during build can't notify mid-build.
@@ -400,6 +442,7 @@ class ExploreProvider extends ChangeNotifier with DisposableChangeNotifierMixin 
   void dispose() {
     _catalogSources.removeListener(_onSourcesChanged);
     _source?.watchlistChanges.removeListener(_onWatchlistChanged);
+    _malSettingsListenable?.removeListener(_onMalSettingsChanged);
     _watchlistRefreshTimer?.cancel();
     super.dispose();
   }

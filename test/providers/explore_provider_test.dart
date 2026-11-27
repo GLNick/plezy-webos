@@ -8,7 +8,10 @@ import 'package:plezy/models/catalog/catalog_item.dart';
 import 'package:plezy/providers/catalog_sources_provider.dart';
 import 'package:plezy/providers/explore_provider.dart';
 import 'package:plezy/services/catalog/catalog_source.dart';
+import 'package:plezy/services/settings_service.dart';
 import 'package:plezy/utils/external_ids.dart';
+
+import '../test_helpers/prefs.dart';
 
 /// Minimal controllable source: rows resolve immediately unless [gate] is
 /// set, in which case fetches park on completers the test releases.
@@ -306,6 +309,39 @@ void main() {
       explore.ensureFresh();
       await _pumpMicrotasks();
       expect(source.hubFetches, 3);
+    });
+
+    test('toggling any MAL discovery setting immediately invalidates cached MAL rows and reloads', () async {
+      resetSharedPreferencesForTest();
+      SettingsService.resetForTesting();
+      final settings = await SettingsService.getInstance();
+      addTearDown(SettingsService.resetForTesting);
+
+      final mal = _FakeSource(
+        CatalogSourceId.mal,
+        rows: const [CatalogRowId.watchlist, CatalogRowId.popularAnime],
+      );
+      addTearDown(mal.dispose);
+
+      sources.setActive(mal);
+      await _pumpMicrotasks();
+      expect(explore.state, ExploreLoadState.loaded);
+      expect(mal.fetches[CatalogRowId.watchlist], 1);
+      expect(mal.fetches[CatalogRowId.popularAnime], 1);
+
+      await settings.write(SettingsService.malIncludeCompleted, true);
+      await _pumpMicrotasks();
+
+      expect(explore.state, ExploreLoadState.loaded);
+      expect(mal.fetches[CatalogRowId.watchlist], 2);
+      expect(mal.fetches[CatalogRowId.popularAnime], 2);
+
+      await settings.write(SettingsService.malUnreleasedMode, MalUnreleasedMode.hide);
+      await _pumpMicrotasks();
+
+      expect(explore.state, ExploreLoadState.loaded);
+      expect(mal.fetches[CatalogRowId.watchlist], 3);
+      expect(mal.fetches[CatalogRowId.popularAnime], 3);
     });
   });
 }

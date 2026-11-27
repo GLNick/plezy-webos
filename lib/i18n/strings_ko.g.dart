@@ -3,7 +3,6 @@
 ///
 // coverage:ignore-file
 // ignore_for_file: type=lint, unused_import
-// dart format off
 
 import 'package:flutter/widgets.dart';
 import 'package:intl/intl.dart';
@@ -11,7 +10,7 @@ import 'package:slang/generated.dart';
 import 'strings.g.dart';
 
 // Path: <root>
-class TranslationsKo extends Translations with BaseTranslations<AppLocale, Translations> {
+class TranslationsKo extends Translations {
 	/// You can call this constructor and build your own translation instance of this locale.
 	/// Constructing via the enum [AppLocale.build] is preferred.
 	TranslationsKo({Map<String, Node>? overrides, PluralResolver? cardinalResolver, PluralResolver? ordinalResolver, TranslationMetadata<AppLocale, Translations>? meta})
@@ -39,65 +38,67 @@ class TranslationsKo extends Translations with BaseTranslations<AppLocale, Trans
 	TranslationsKo $copyWith({TranslationMetadata<AppLocale, Translations>? meta}) => TranslationsKo(meta: meta ?? this.$meta);
 
 	// Translations
-	@override late final _Translations$app$ko app = _Translations$app$ko._(_root);
-	@override late final _Translations$appIcon$ko appIcon = _Translations$appIcon$ko._(_root);
-	@override late final _Translations$auth$ko auth = _Translations$auth$ko._(_root);
-	@override late final _Translations$common$ko common = _Translations$common$ko._(_root);
-	@override late final _Translations$screens$ko screens = _Translations$screens$ko._(_root);
-	@override late final _Translations$update$ko update = _Translations$update$ko._(_root);
-	@override late final _Translations$supporter$ko supporter = _Translations$supporter$ko._(_root);
-	@override late final _Translations$settings$ko settings = _Translations$settings$ko._(_root);
-	@override late final _Translations$themeEditor$ko themeEditor = _Translations$themeEditor$ko._(_root);
-	@override late final _Translations$search$ko search = _Translations$search$ko._(_root);
-	@override late final _Translations$hotkeys$ko hotkeys = _Translations$hotkeys$ko._(_root);
-	@override late final _Translations$fileInfo$ko fileInfo = _Translations$fileInfo$ko._(_root);
-	@override late final _Translations$mediaMenu$ko mediaMenu = _Translations$mediaMenu$ko._(_root);
-	@override late final _Translations$rateSheet$ko rateSheet = _Translations$rateSheet$ko._(_root);
-	@override late final _Translations$accessibility$ko accessibility = _Translations$accessibility$ko._(_root);
-	@override late final _Translations$tooltips$ko tooltips = _Translations$tooltips$ko._(_root);
-	@override late final _Translations$audioTracks$ko audioTracks = _Translations$audioTracks$ko._(_root);
-	@override late final _Translations$videoControls$ko videoControls = _Translations$videoControls$ko._(_root);
-	@override late final _Translations$messages$ko messages = _Translations$messages$ko._(_root);
-	@override late final _Translations$subtitlingStyling$ko subtitlingStyling = _Translations$subtitlingStyling$ko._(_root);
-	@override late final _Translations$mpvConfig$ko mpvConfig = _Translations$mpvConfig$ko._(_root);
-	@override late final _Translations$dialog$ko dialog = _Translations$dialog$ko._(_root);
-	@override late final _Translations$profiles$ko profiles = _Translations$profiles$ko._(_root);
-	@override late final _Translations$connections$ko connections = _Translations$connections$ko._(_root);
-	@override late final _Translations$accountPreferences$ko accountPreferences = _Translations$accountPreferences$ko._(_root);
-	@override late final _Translations$discover$ko discover = _Translations$discover$ko._(_root);
-	@override late final _Translations$errors$ko errors = _Translations$errors$ko._(_root);
-	@override late final _Translations$libraries$ko libraries = _Translations$libraries$ko._(_root);
-	@override late final _Translations$about$ko about = _Translations$about$ko._(_root);
-	@override late final _Translations$serverSelection$ko serverSelection = _Translations$serverSelection$ko._(_root);
-	@override late final _Translations$hubDetail$ko hubDetail = _Translations$hubDetail$ko._(_root);
-	@override late final _Translations$logs$ko logs = _Translations$logs$ko._(_root);
-	@override late final _Translations$startup$ko startup = _Translations$startup$ko._(_root);
-	@override late final _Translations$licenses$ko licenses = _Translations$licenses$ko._(_root);
-	@override late final _Translations$navigation$ko navigation = _Translations$navigation$ko._(_root);
-	@override late final _Translations$explore$ko explore = _Translations$explore$ko._(_root);
-	@override late final _Translations$liveTv$ko liveTv = _Translations$liveTv$ko._(_root);
-	@override late final _Translations$collections$ko collections = _Translations$collections$ko._(_root);
-	@override late final _Translations$playlists$ko playlists = _Translations$playlists$ko._(_root);
-	@override late final _Translations$music$ko music = _Translations$music$ko._(_root);
-	@override late final _Translations$watchTogether$ko watchTogether = _Translations$watchTogether$ko._(_root);
-	@override late final _Translations$downloads$ko downloads = _Translations$downloads$ko._(_root);
-	@override late final _Translations$shaders$ko shaders = _Translations$shaders$ko._(_root);
-	@override late final _Translations$companionRemote$ko companionRemote = _Translations$companionRemote$ko._(_root);
-	@override late final _Translations$videoSettings$ko videoSettings = _Translations$videoSettings$ko._(_root);
-	@override late final _Translations$performanceOverlay$ko performanceOverlay = _Translations$performanceOverlay$ko._(_root);
-	@override late final _Translations$externalPlayer$ko externalPlayer = _Translations$externalPlayer$ko._(_root);
-	@override late final _Translations$metadataEdit$ko metadataEdit = _Translations$metadataEdit$ko._(_root);
-	@override late final _Translations$matchScreen$ko matchScreen = _Translations$matchScreen$ko._(_root);
-	@override late final _Translations$serverTasks$ko serverTasks = _Translations$serverTasks$ko._(_root);
-	@override late final _Translations$trakt$ko trakt = _Translations$trakt$ko._(_root);
-	@override late final _Translations$seerr$ko seerr = _Translations$seerr$ko._(_root);
-	@override late final _Translations$services$ko services = _Translations$services$ko._(_root);
-	@override late final _Translations$addServer$ko addServer = _Translations$addServer$ko._(_root);
+	@override late final _TranslationsAppKo app = _TranslationsAppKo._(_root);
+	@override late final _TranslationsAppIconKo appIcon = _TranslationsAppIconKo._(_root);
+	@override late final _TranslationsAuthKo auth = _TranslationsAuthKo._(_root);
+	@override late final _TranslationsCommonKo common = _TranslationsCommonKo._(_root);
+	@override late final _TranslationsScreensKo screens = _TranslationsScreensKo._(_root);
+	@override late final _TranslationsUpdateKo update = _TranslationsUpdateKo._(_root);
+	@override late final _TranslationsSupporterKo supporter = _TranslationsSupporterKo._(_root);
+	@override late final _TranslationsSettingsKo settings = _TranslationsSettingsKo._(_root);
+	@override late final _TranslationsThemeEditorKo themeEditor = _TranslationsThemeEditorKo._(_root);
+	@override late final _TranslationsSearchKo search = _TranslationsSearchKo._(_root);
+	@override late final _TranslationsHotkeysKo hotkeys = _TranslationsHotkeysKo._(_root);
+	@override late final _TranslationsFileInfoKo fileInfo = _TranslationsFileInfoKo._(_root);
+	@override late final _TranslationsMediaMenuKo mediaMenu = _TranslationsMediaMenuKo._(_root);
+	@override late final _TranslationsRateSheetKo rateSheet = _TranslationsRateSheetKo._(_root);
+	@override late final _TranslationsAccessibilityKo accessibility = _TranslationsAccessibilityKo._(_root);
+	@override late final _TranslationsTooltipsKo tooltips = _TranslationsTooltipsKo._(_root);
+	@override late final _TranslationsAudioTracksKo audioTracks = _TranslationsAudioTracksKo._(_root);
+	@override late final _TranslationsVideoControlsKo videoControls = _TranslationsVideoControlsKo._(_root);
+	@override late final _TranslationsUserStatusKo userStatus = _TranslationsUserStatusKo._(_root);
+	@override late final _TranslationsMessagesKo messages = _TranslationsMessagesKo._(_root);
+	@override late final _TranslationsSubtitlingStylingKo subtitlingStyling = _TranslationsSubtitlingStylingKo._(_root);
+	@override late final _TranslationsMpvConfigKo mpvConfig = _TranslationsMpvConfigKo._(_root);
+	@override late final _TranslationsDialogKo dialog = _TranslationsDialogKo._(_root);
+	@override late final _TranslationsProfilesKo profiles = _TranslationsProfilesKo._(_root);
+	@override late final _TranslationsConnectionsKo connections = _TranslationsConnectionsKo._(_root);
+	@override late final _TranslationsAccountPreferencesKo accountPreferences = _TranslationsAccountPreferencesKo._(_root);
+	@override late final _TranslationsDiscoverKo discover = _TranslationsDiscoverKo._(_root);
+	@override late final _TranslationsErrorsKo errors = _TranslationsErrorsKo._(_root);
+	@override late final _TranslationsLibrariesKo libraries = _TranslationsLibrariesKo._(_root);
+	@override late final _TranslationsAboutKo about = _TranslationsAboutKo._(_root);
+	@override late final _TranslationsServerSelectionKo serverSelection = _TranslationsServerSelectionKo._(_root);
+	@override late final _TranslationsHubDetailKo hubDetail = _TranslationsHubDetailKo._(_root);
+	@override late final _TranslationsLogsKo logs = _TranslationsLogsKo._(_root);
+	@override late final _TranslationsStartupKo startup = _TranslationsStartupKo._(_root);
+	@override late final _TranslationsLicensesKo licenses = _TranslationsLicensesKo._(_root);
+	@override late final _TranslationsNavigationKo navigation = _TranslationsNavigationKo._(_root);
+	@override late final _TranslationsExploreKo explore = _TranslationsExploreKo._(_root);
+	@override late final _TranslationsLiveTvKo liveTv = _TranslationsLiveTvKo._(_root);
+	@override late final _TranslationsCollectionsKo collections = _TranslationsCollectionsKo._(_root);
+	@override late final _TranslationsPlaylistsKo playlists = _TranslationsPlaylistsKo._(_root);
+	@override late final _TranslationsMusicKo music = _TranslationsMusicKo._(_root);
+	@override late final _TranslationsWatchTogetherKo watchTogether = _TranslationsWatchTogetherKo._(_root);
+	@override late final _TranslationsDownloadsKo downloads = _TranslationsDownloadsKo._(_root);
+	@override late final _TranslationsShadersKo shaders = _TranslationsShadersKo._(_root);
+	@override late final _TranslationsCompanionRemoteKo companionRemote = _TranslationsCompanionRemoteKo._(_root);
+	@override late final _TranslationsVideoSettingsKo videoSettings = _TranslationsVideoSettingsKo._(_root);
+	@override late final _TranslationsPerformanceOverlayKo performanceOverlay = _TranslationsPerformanceOverlayKo._(_root);
+	@override late final _TranslationsExternalPlayerKo externalPlayer = _TranslationsExternalPlayerKo._(_root);
+	@override late final _TranslationsMetadataEditKo metadataEdit = _TranslationsMetadataEditKo._(_root);
+	@override late final _TranslationsMatchScreenKo matchScreen = _TranslationsMatchScreenKo._(_root);
+	@override late final _TranslationsServerTasksKo serverTasks = _TranslationsServerTasksKo._(_root);
+	@override late final _TranslationsTraktKo trakt = _TranslationsTraktKo._(_root);
+	@override late final _TranslationsSeerrKo seerr = _TranslationsSeerrKo._(_root);
+	@override late final _TranslationsServicesKo services = _TranslationsServicesKo._(_root);
+	@override late final _TranslationsAddServerKo addServer = _TranslationsAddServerKo._(_root);
+	@override late final _TranslationsDeepLinksKo deepLinks = _TranslationsDeepLinksKo._(_root);
 }
 
 // Path: app
-class _Translations$app$ko extends Translations$app$en {
-	_Translations$app$ko._(TranslationsKo root) : this._root = root, super.internal(root);
+class _TranslationsAppKo extends TranslationsAppEn {
+	_TranslationsAppKo._(TranslationsKo root) : this._root = root, super.internal(root);
 
 	final TranslationsKo _root; // ignore: unused_field
 
@@ -106,8 +107,8 @@ class _Translations$app$ko extends Translations$app$en {
 }
 
 // Path: appIcon
-class _Translations$appIcon$ko extends Translations$appIcon$en {
-	_Translations$appIcon$ko._(TranslationsKo root) : this._root = root, super.internal(root);
+class _TranslationsAppIconKo extends TranslationsAppIconEn {
+	_TranslationsAppIconKo._(TranslationsKo root) : this._root = root, super.internal(root);
 
 	final TranslationsKo _root; // ignore: unused_field
 
@@ -120,12 +121,12 @@ class _Translations$appIcon$ko extends Translations$appIcon$en {
 	@override String get changeFailed => '앱 아이콘을 변경하지 못했습니다';
 	@override String get launcherHint => 'Plezy를 나가면 홈 화면에 새 아이콘이 표시됩니다.';
 	@override String get tvLauncherHint => 'Plezy를 나가면 새 배너가 표시됩니다. Android TV에서는 TV를 다시 시작할 때까지 이전 배너가 계속 표시될 수 있습니다.';
-	@override late final _Translations$appIcon$names$ko names = _Translations$appIcon$names$ko._(_root);
+	@override late final _TranslationsAppIconNamesKo names = _TranslationsAppIconNamesKo._(_root);
 }
 
 // Path: auth
-class _Translations$auth$ko extends Translations$auth$en {
-	_Translations$auth$ko._(TranslationsKo root) : this._root = root, super.internal(root);
+class _TranslationsAuthKo extends TranslationsAuthEn {
+	_TranslationsAuthKo._(TranslationsKo root) : this._root = root, super.internal(root);
 
 	final TranslationsKo _root; // ignore: unused_field
 
@@ -150,8 +151,8 @@ class _Translations$auth$ko extends Translations$auth$en {
 }
 
 // Path: common
-class _Translations$common$ko extends Translations$common$en {
-	_Translations$common$ko._(TranslationsKo root) : this._root = root, super.internal(root);
+class _TranslationsCommonKo extends TranslationsCommonEn {
+	_TranslationsCommonKo._(TranslationsKo root) : this._root = root, super.internal(root);
 
 	final TranslationsKo _root; // ignore: unused_field
 
@@ -202,16 +203,16 @@ class _Translations$common$ko extends Translations$common$en {
 	@override String get fullscreen => '전체 화면';
 	@override String get exitFullscreen => '전체 화면 종료';
 	@override String get pressBackAgainToExit => '한 번 더 누르면 종료됩니다';
-	@override late final _Translations$common$ratingSource$ko ratingSource = _Translations$common$ratingSource$ko._(_root);
+	@override late final _TranslationsCommonRatingSourceKo ratingSource = _TranslationsCommonRatingSourceKo._(_root);
 	@override String get notAvailable => 'N/A';
 	@override String get url => 'URL';
 	@override String get letterKeys => 'ABC';
-	@override late final _Translations$common$mediaKind$ko mediaKind = _Translations$common$mediaKind$ko._(_root);
+	@override late final _TranslationsCommonMediaKindKo mediaKind = _TranslationsCommonMediaKindKo._(_root);
 }
 
 // Path: screens
-class _Translations$screens$ko extends Translations$screens$en {
-	_Translations$screens$ko._(TranslationsKo root) : this._root = root, super.internal(root);
+class _TranslationsScreensKo extends TranslationsScreensEn {
+	_TranslationsScreensKo._(TranslationsKo root) : this._root = root, super.internal(root);
 
 	final TranslationsKo _root; // ignore: unused_field
 
@@ -224,8 +225,8 @@ class _Translations$screens$ko extends Translations$screens$en {
 }
 
 // Path: update
-class _Translations$update$ko extends Translations$update$en {
-	_Translations$update$ko._(TranslationsKo root) : this._root = root, super.internal(root);
+class _TranslationsUpdateKo extends TranslationsUpdateEn {
+	_TranslationsUpdateKo._(TranslationsKo root) : this._root = root, super.internal(root);
 
 	final TranslationsKo _root; // ignore: unused_field
 
@@ -240,8 +241,8 @@ class _Translations$update$ko extends Translations$update$en {
 }
 
 // Path: supporter
-class _Translations$supporter$ko extends Translations$supporter$en {
-	_Translations$supporter$ko._(TranslationsKo root) : this._root = root, super.internal(root);
+class _TranslationsSupporterKo extends TranslationsSupporterEn {
+	_TranslationsSupporterKo._(TranslationsKo root) : this._root = root, super.internal(root);
 
 	final TranslationsKo _root; // ignore: unused_field
 
@@ -263,12 +264,12 @@ class _Translations$supporter$ko extends Translations$supporter$en {
 	@override String get tileSubtitle => '1회성 구매로 테마와 앱 아이콘 잠금 해제';
 	@override String get tileSubtitleThemesOnly => '1회성 구매로 테마 잠금 해제';
 	@override String get tileUnlocked => '잠금 해제됨 — 구매해 주셔서 감사합니다';
-	@override late final _Translations$supporter$errors$ko errors = _Translations$supporter$errors$ko._(_root);
+	@override late final _TranslationsSupporterErrorsKo errors = _TranslationsSupporterErrorsKo._(_root);
 }
 
 // Path: settings
-class _Translations$settings$ko extends Translations$settings$en {
-	_Translations$settings$ko._(TranslationsKo root) : this._root = root, super.internal(root);
+class _TranslationsSettingsKo extends TranslationsSettingsEn {
+	_TranslationsSettingsKo._(TranslationsKo root) : this._root = root, super.internal(root);
 
 	final TranslationsKo _root; // ignore: unused_field
 
@@ -612,8 +613,8 @@ class _Translations$settings$ko extends Translations$settings$en {
 }
 
 // Path: themeEditor
-class _Translations$themeEditor$ko extends Translations$themeEditor$en {
-	_Translations$themeEditor$ko._(TranslationsKo root) : this._root = root, super.internal(root);
+class _TranslationsThemeEditorKo extends TranslationsThemeEditorEn {
+	_TranslationsThemeEditorKo._(TranslationsKo root) : this._root = root, super.internal(root);
 
 	final TranslationsKo _root; // ignore: unused_field
 
@@ -631,12 +632,12 @@ class _Translations$themeEditor$ko extends Translations$themeEditor$en {
 	@override String get startFromDescription => '다른 테마의 모든 색상을 복사합니다';
 	@override String get colors => '색상';
 	@override String get preview => '미리보기';
-	@override late final _Translations$themeEditor$slots$ko slots = _Translations$themeEditor$slots$ko._(_root);
+	@override late final _TranslationsThemeEditorSlotsKo slots = _TranslationsThemeEditorSlotsKo._(_root);
 	@override String get opacity => '불투명도';
 	@override String get hexHint => '#RRGGBB 또는 #AARRGGBB';
 	@override String get fromOtherThemes => '다른 테마에서';
 	@override String swatchLabel({required Object theme, required Object color}) => '${theme} ${color}';
-	@override late final _Translations$themeEditor$contrast$ko contrast = _Translations$themeEditor$contrast$ko._(_root);
+	@override late final _TranslationsThemeEditorContrastKo contrast = _TranslationsThemeEditorContrastKo._(_root);
 	@override String lowContrast({required Object pair, required Object ratio, required Object minimum}) => '${pair}: ${ratio}:1, 권장 기준 ${minimum}:1 미만';
 	@override String get discardTitle => '변경 사항을 버리시겠습니까?';
 	@override String get discardMessage => '저장하지 않은 색상 변경 사항이 사라집니다.';
@@ -648,8 +649,8 @@ class _Translations$themeEditor$ko extends Translations$themeEditor$en {
 }
 
 // Path: search
-class _Translations$search$ko extends Translations$search$en {
-	_Translations$search$ko._(TranslationsKo root) : this._root = root, super.internal(root);
+class _TranslationsSearchKo extends TranslationsSearchEn {
+	_TranslationsSearchKo._(TranslationsKo root) : this._root = root, super.internal(root);
 
 	final TranslationsKo _root; // ignore: unused_field
 
@@ -662,8 +663,8 @@ class _Translations$search$ko extends Translations$search$en {
 }
 
 // Path: hotkeys
-class _Translations$hotkeys$ko extends Translations$hotkeys$en {
-	_Translations$hotkeys$ko._(TranslationsKo root) : this._root = root, super.internal(root);
+class _TranslationsHotkeysKo extends TranslationsHotkeysEn {
+	_TranslationsHotkeysKo._(TranslationsKo root) : this._root = root, super.internal(root);
 
 	final TranslationsKo _root; // ignore: unused_field
 
@@ -674,12 +675,12 @@ class _Translations$hotkeys$ko extends Translations$hotkeys$en {
 	@override String get currentShortcut => '현재 단축키:';
 	@override String get pressToRecord => '단축키를 기록하려면 선택';
 	@override String get recordingShortcut => '지금 단축키를 누르세요';
-	@override late final _Translations$hotkeys$actions$ko actions = _Translations$hotkeys$actions$ko._(_root);
+	@override late final _TranslationsHotkeysActionsKo actions = _TranslationsHotkeysActionsKo._(_root);
 }
 
 // Path: fileInfo
-class _Translations$fileInfo$ko extends Translations$fileInfo$en {
-	_Translations$fileInfo$ko._(TranslationsKo root) : this._root = root, super.internal(root);
+class _TranslationsFileInfoKo extends TranslationsFileInfoEn {
+	_TranslationsFileInfoKo._(TranslationsKo root) : this._root = root, super.internal(root);
 
 	final TranslationsKo _root; // ignore: unused_field
 
@@ -802,8 +803,8 @@ class _Translations$fileInfo$ko extends Translations$fileInfo$en {
 }
 
 // Path: mediaMenu
-class _Translations$mediaMenu$ko extends Translations$mediaMenu$en {
-	_Translations$mediaMenu$ko._(TranslationsKo root) : this._root = root, super.internal(root);
+class _TranslationsMediaMenuKo extends TranslationsMediaMenuEn {
+	_TranslationsMediaMenuKo._(TranslationsKo root) : this._root = root, super.internal(root);
 
 	final TranslationsKo _root; // ignore: unused_field
 
@@ -850,8 +851,8 @@ class _Translations$mediaMenu$ko extends Translations$mediaMenu$en {
 }
 
 // Path: rateSheet
-class _Translations$rateSheet$ko extends Translations$rateSheet$en {
-	_Translations$rateSheet$ko._(TranslationsKo root) : this._root = root, super.internal(root);
+class _TranslationsRateSheetKo extends TranslationsRateSheetEn {
+	_TranslationsRateSheetKo._(TranslationsKo root) : this._root = root, super.internal(root);
 
 	final TranslationsKo _root; // ignore: unused_field
 
@@ -866,8 +867,8 @@ class _Translations$rateSheet$ko extends Translations$rateSheet$en {
 }
 
 // Path: accessibility
-class _Translations$accessibility$ko extends Translations$accessibility$en {
-	_Translations$accessibility$ko._(TranslationsKo root) : this._root = root, super.internal(root);
+class _TranslationsAccessibilityKo extends TranslationsAccessibilityEn {
+	_TranslationsAccessibilityKo._(TranslationsKo root) : this._root = root, super.internal(root);
 
 	final TranslationsKo _root; // ignore: unused_field
 
@@ -902,8 +903,8 @@ class _Translations$accessibility$ko extends Translations$accessibility$en {
 }
 
 // Path: tooltips
-class _Translations$tooltips$ko extends Translations$tooltips$en {
-	_Translations$tooltips$ko._(TranslationsKo root) : this._root = root, super.internal(root);
+class _TranslationsTooltipsKo extends TranslationsTooltipsEn {
+	_TranslationsTooltipsKo._(TranslationsKo root) : this._root = root, super.internal(root);
 
 	final TranslationsKo _root; // ignore: unused_field
 
@@ -915,8 +916,8 @@ class _Translations$tooltips$ko extends Translations$tooltips$en {
 }
 
 // Path: audioTracks
-class _Translations$audioTracks$ko extends Translations$audioTracks$en {
-	_Translations$audioTracks$ko._(TranslationsKo root) : this._root = root, super.internal(root);
+class _TranslationsAudioTracksKo extends TranslationsAudioTracksEn {
+	_TranslationsAudioTracksKo._(TranslationsKo root) : this._root = root, super.internal(root);
 
 	final TranslationsKo _root; // ignore: unused_field
 
@@ -925,8 +926,8 @@ class _Translations$audioTracks$ko extends Translations$audioTracks$en {
 }
 
 // Path: videoControls
-class _Translations$videoControls$ko extends Translations$videoControls$en {
-	_Translations$videoControls$ko._(TranslationsKo root) : this._root = root, super.internal(root);
+class _TranslationsVideoControlsKo extends TranslationsVideoControlsEn {
+	_TranslationsVideoControlsKo._(TranslationsKo root) : this._root = root, super.internal(root);
 
 	final TranslationsKo _root; // ignore: unused_field
 
@@ -993,7 +994,7 @@ class _Translations$videoControls$ko extends Translations$videoControls$en {
 	@override String get screenshotFailed => '스크린샷을 찍지 못했습니다';
 	@override String zoomPercent({required Object percent}) => '확대/축소 ${percent}%';
 	@override String volumePercent({required Object percent}) => '볼륨 ${percent}%';
-	@override late final _Translations$videoControls$pipErrors$ko pipErrors = _Translations$videoControls$pipErrors$ko._(_root);
+	@override late final _TranslationsVideoControlsPipErrorsKo pipErrors = _TranslationsVideoControlsPipErrorsKo._(_root);
 	@override String get chapters => '챕터';
 	@override String get noChaptersAvailable => '사용 가능한 챕터가 없습니다';
 	@override String get queue => '재생 대기열';
@@ -1018,9 +1019,18 @@ class _Translations$videoControls$ko extends Translations$videoControls$en {
 	@override String osdAudio({required Object track}) => '오디오: ${track}';
 }
 
+// Path: userStatus
+class _TranslationsUserStatusKo extends TranslationsUserStatusEn {
+	_TranslationsUserStatusKo._(TranslationsKo root) : this._root = root, super.internal(root);
+
+	final TranslationsKo _root; // ignore: unused_field
+
+	// Translations
+}
+
 // Path: messages
-class _Translations$messages$ko extends Translations$messages$en {
-	_Translations$messages$ko._(TranslationsKo root) : this._root = root, super.internal(root);
+class _TranslationsMessagesKo extends TranslationsMessagesEn {
+	_TranslationsMessagesKo._(TranslationsKo root) : this._root = root, super.internal(root);
 
 	final TranslationsKo _root; // ignore: unused_field
 
@@ -1097,8 +1107,8 @@ class _Translations$messages$ko extends Translations$messages$en {
 }
 
 // Path: subtitlingStyling
-class _Translations$subtitlingStyling$ko extends Translations$subtitlingStyling$en {
-	_Translations$subtitlingStyling$ko._(TranslationsKo root) : this._root = root, super.internal(root);
+class _TranslationsSubtitlingStylingKo extends TranslationsSubtitlingStylingEn {
+	_TranslationsSubtitlingStylingKo._(TranslationsKo root) : this._root = root, super.internal(root);
 
 	final TranslationsKo _root; // ignore: unused_field
 
@@ -1131,8 +1141,8 @@ class _Translations$subtitlingStyling$ko extends Translations$subtitlingStyling$
 }
 
 // Path: mpvConfig
-class _Translations$mpvConfig$ko extends Translations$mpvConfig$en {
-	_Translations$mpvConfig$ko._(TranslationsKo root) : this._root = root, super.internal(root);
+class _TranslationsMpvConfigKo extends TranslationsMpvConfigEn {
+	_TranslationsMpvConfigKo._(TranslationsKo root) : this._root = root, super.internal(root);
 
 	final TranslationsKo _root; // ignore: unused_field
 
@@ -1158,8 +1168,8 @@ class _Translations$mpvConfig$ko extends Translations$mpvConfig$en {
 }
 
 // Path: dialog
-class _Translations$dialog$ko extends Translations$dialog$en {
-	_Translations$dialog$ko._(TranslationsKo root) : this._root = root, super.internal(root);
+class _TranslationsDialogKo extends TranslationsDialogEn {
+	_TranslationsDialogKo._(TranslationsKo root) : this._root = root, super.internal(root);
 
 	final TranslationsKo _root; // ignore: unused_field
 
@@ -1168,8 +1178,8 @@ class _Translations$dialog$ko extends Translations$dialog$en {
 }
 
 // Path: profiles
-class _Translations$profiles$ko extends Translations$profiles$en {
-	_Translations$profiles$ko._(TranslationsKo root) : this._root = root, super.internal(root);
+class _TranslationsProfilesKo extends TranslationsProfilesEn {
+	_TranslationsProfilesKo._(TranslationsKo root) : this._root = root, super.internal(root);
 
 	final TranslationsKo _root; // ignore: unused_field
 
@@ -1242,8 +1252,8 @@ class _Translations$profiles$ko extends Translations$profiles$en {
 }
 
 // Path: connections
-class _Translations$connections$ko extends Translations$connections$en {
-	_Translations$connections$ko._(TranslationsKo root) : this._root = root, super.internal(root);
+class _TranslationsConnectionsKo extends TranslationsConnectionsEn {
+	_TranslationsConnectionsKo._(TranslationsKo root) : this._root = root, super.internal(root);
 
 	final TranslationsKo _root; // ignore: unused_field
 
@@ -1262,8 +1272,8 @@ class _Translations$connections$ko extends Translations$connections$en {
 }
 
 // Path: accountPreferences
-class _Translations$accountPreferences$ko extends Translations$accountPreferences$en {
-	_Translations$accountPreferences$ko._(TranslationsKo root) : this._root = root, super.internal(root);
+class _TranslationsAccountPreferencesKo extends TranslationsAccountPreferencesEn {
+	_TranslationsAccountPreferencesKo._(TranslationsKo root) : this._root = root, super.internal(root);
 
 	final TranslationsKo _root; // ignore: unused_field
 
@@ -1279,17 +1289,17 @@ class _Translations$accountPreferences$ko extends Translations$accountPreference
 	@override String get loadFailed => '이 기본 설정을 불러올 수 없습니다';
 	@override String get noPreference => '기본 설정 없음';
 	@override String get notSet => '설정되지 않음';
-	@override late final _Translations$accountPreferences$groups$ko groups = _Translations$accountPreferences$groups$ko._(_root);
+	@override late final _TranslationsAccountPreferencesGroupsKo groups = _TranslationsAccountPreferencesGroupsKo._(_root);
 	@override String get preferredAudioLanguage => '선호 오디오 언어';
 	@override String get autoSelectAudio => '언어별로 오디오 선택';
 	@override String get autoSelectAudioDescription => '끄면 파일이 기본으로 표시한 오디오 트랙을 유지합니다.';
 	@override String get preferredSubtitleLanguage => '선호 자막 언어';
 	@override String get subtitleMode => '자막 자동 켜기';
-	@override late final _Translations$accountPreferences$subtitleModes$ko subtitleModes = _Translations$accountPreferences$subtitleModes$ko._(_root);
+	@override late final _TranslationsAccountPreferencesSubtitleModesKo subtitleModes = _TranslationsAccountPreferencesSubtitleModesKo._(_root);
 	@override String get subtitleAccessibility => 'SDH 자막';
-	@override late final _Translations$accountPreferences$subtitleAccessibilityOptions$ko subtitleAccessibilityOptions = _Translations$accountPreferences$subtitleAccessibilityOptions$ko._(_root);
+	@override late final _TranslationsAccountPreferencesSubtitleAccessibilityOptionsKo subtitleAccessibilityOptions = _TranslationsAccountPreferencesSubtitleAccessibilityOptionsKo._(_root);
 	@override String get forcedSubtitles => '강제 자막';
-	@override late final _Translations$accountPreferences$forcedSubtitleOptions$ko forcedSubtitleOptions = _Translations$accountPreferences$forcedSubtitleOptions$ko._(_root);
+	@override late final _TranslationsAccountPreferencesForcedSubtitleOptionsKo forcedSubtitleOptions = _TranslationsAccountPreferencesForcedSubtitleOptionsKo._(_root);
 	@override String get displayMissingEpisodes => '누락된 에피소드 표시';
 	@override String get displayMissingEpisodesDescription => '서버가 알고 있지만 파일이 없는 에피소드를 나열합니다.';
 	@override String get hidePlayedInLatest => '최신 항목에서 시청한 항목 숨기기';
@@ -1299,14 +1309,14 @@ class _Translations$accountPreferences$ko extends Translations$accountPreference
 	@override String get rewatchingInNextUp => '재시청한 프로그램을 다음 에피소드에 유지';
 	@override String get rewatchingInNextUpDescription => '프로그램을 끝까지 본 뒤 다시 시작하면, 목록에서 제거하는 대신 다음 에피소드가 재시청을 따라갑니다.';
 	@override String get watchedIndicator => '시청 표시';
-	@override late final _Translations$accountPreferences$watchedIndicatorOptions$ko watchedIndicatorOptions = _Translations$accountPreferences$watchedIndicatorOptions$ko._(_root);
+	@override late final _TranslationsAccountPreferencesWatchedIndicatorOptionsKo watchedIndicatorOptions = _TranslationsAccountPreferencesWatchedIndicatorOptionsKo._(_root);
 	@override String get mediaReviewsVisibility => '평점 및 리뷰';
-	@override late final _Translations$accountPreferences$mediaReviewsOptions$ko mediaReviewsOptions = _Translations$accountPreferences$mediaReviewsOptions$ko._(_root);
+	@override late final _TranslationsAccountPreferencesMediaReviewsOptionsKo mediaReviewsOptions = _TranslationsAccountPreferencesMediaReviewsOptionsKo._(_root);
 }
 
 // Path: discover
-class _Translations$discover$ko extends Translations$discover$en {
-	_Translations$discover$ko._(TranslationsKo root) : this._root = root, super.internal(root);
+class _TranslationsDiscoverKo extends TranslationsDiscoverEn {
+	_TranslationsDiscoverKo._(TranslationsKo root) : this._root = root, super.internal(root);
 
 	final TranslationsKo _root; // ignore: unused_field
 
@@ -1338,12 +1348,12 @@ class _Translations$discover$ko extends Translations$discover$en {
 	@override String titleCount({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('ko'))(n,
 		other: '${n}개 타이틀',
 	);
-	@override late final _Translations$discover$person$ko person = _Translations$discover$person$ko._(_root);
+	@override late final _TranslationsDiscoverPersonKo person = _TranslationsDiscoverPersonKo._(_root);
 }
 
 // Path: errors
-class _Translations$errors$ko extends Translations$errors$en {
-	_Translations$errors$ko._(TranslationsKo root) : this._root = root, super.internal(root);
+class _TranslationsErrorsKo extends TranslationsErrorsEn {
+	_TranslationsErrorsKo._(TranslationsKo root) : this._root = root, super.internal(root);
 
 	final TranslationsKo _root; // ignore: unused_field
 
@@ -1370,8 +1380,8 @@ class _Translations$errors$ko extends Translations$errors$en {
 }
 
 // Path: libraries
-class _Translations$libraries$ko extends Translations$libraries$en {
-	_Translations$libraries$ko._(TranslationsKo root) : this._root = root, super.internal(root);
+class _TranslationsLibrariesKo extends TranslationsLibrariesEn {
+	_TranslationsLibrariesKo._(TranslationsKo root) : this._root = root, super.internal(root);
 
 	final TranslationsKo _root; // ignore: unused_field
 
@@ -1417,16 +1427,16 @@ class _Translations$libraries$ko extends Translations$libraries$en {
 	@override String get noCollections => '이 미디어 라이브러리에는 컬렉션이 없습니다';
 	@override String get noFoldersFound => '폴더를 찾을 수 없습니다';
 	@override String get folders => '폴더';
-	@override late final _Translations$libraries$tabs$ko tabs = _Translations$libraries$tabs$ko._(_root);
-	@override late final _Translations$libraries$groupings$ko groupings = _Translations$libraries$groupings$ko._(_root);
-	@override late final _Translations$libraries$filterCategories$ko filterCategories = _Translations$libraries$filterCategories$ko._(_root);
-	@override late final _Translations$libraries$sortLabels$ko sortLabels = _Translations$libraries$sortLabels$ko._(_root);
-	@override late final _Translations$libraries$advancedFilters$ko advancedFilters = _Translations$libraries$advancedFilters$ko._(_root);
+	@override late final _TranslationsLibrariesTabsKo tabs = _TranslationsLibrariesTabsKo._(_root);
+	@override late final _TranslationsLibrariesGroupingsKo groupings = _TranslationsLibrariesGroupingsKo._(_root);
+	@override late final _TranslationsLibrariesFilterCategoriesKo filterCategories = _TranslationsLibrariesFilterCategoriesKo._(_root);
+	@override late final _TranslationsLibrariesSortLabelsKo sortLabels = _TranslationsLibrariesSortLabelsKo._(_root);
+	@override late final _TranslationsLibrariesAdvancedFiltersKo advancedFilters = _TranslationsLibrariesAdvancedFiltersKo._(_root);
 }
 
 // Path: about
-class _Translations$about$ko extends Translations$about$en {
-	_Translations$about$ko._(TranslationsKo root) : this._root = root, super.internal(root);
+class _TranslationsAboutKo extends TranslationsAboutEn {
+	_TranslationsAboutKo._(TranslationsKo root) : this._root = root, super.internal(root);
 
 	final TranslationsKo _root; // ignore: unused_field
 
@@ -1439,8 +1449,8 @@ class _Translations$about$ko extends Translations$about$en {
 }
 
 // Path: serverSelection
-class _Translations$serverSelection$ko extends Translations$serverSelection$en {
-	_Translations$serverSelection$ko._(TranslationsKo root) : this._root = root, super.internal(root);
+class _TranslationsServerSelectionKo extends TranslationsServerSelectionEn {
+	_TranslationsServerSelectionKo._(TranslationsKo root) : this._root = root, super.internal(root);
 
 	final TranslationsKo _root; // ignore: unused_field
 
@@ -1451,8 +1461,8 @@ class _Translations$serverSelection$ko extends Translations$serverSelection$en {
 }
 
 // Path: hubDetail
-class _Translations$hubDetail$ko extends Translations$hubDetail$en {
-	_Translations$hubDetail$ko._(TranslationsKo root) : this._root = root, super.internal(root);
+class _TranslationsHubDetailKo extends TranslationsHubDetailEn {
+	_TranslationsHubDetailKo._(TranslationsKo root) : this._root = root, super.internal(root);
 
 	final TranslationsKo _root; // ignore: unused_field
 
@@ -1465,8 +1475,8 @@ class _Translations$hubDetail$ko extends Translations$hubDetail$en {
 }
 
 // Path: logs
-class _Translations$logs$ko extends Translations$logs$en {
-	_Translations$logs$ko._(TranslationsKo root) : this._root = root, super.internal(root);
+class _TranslationsLogsKo extends TranslationsLogsEn {
+	_TranslationsLogsKo._(TranslationsKo root) : this._root = root, super.internal(root);
 
 	final TranslationsKo _root; // ignore: unused_field
 
@@ -1477,8 +1487,8 @@ class _Translations$logs$ko extends Translations$logs$en {
 }
 
 // Path: startup
-class _Translations$startup$ko extends Translations$startup$en {
-	_Translations$startup$ko._(TranslationsKo root) : this._root = root, super.internal(root);
+class _TranslationsStartupKo extends TranslationsStartupEn {
+	_TranslationsStartupKo._(TranslationsKo root) : this._root = root, super.internal(root);
 
 	final TranslationsKo _root; // ignore: unused_field
 
@@ -1516,8 +1526,8 @@ class _Translations$startup$ko extends Translations$startup$en {
 }
 
 // Path: licenses
-class _Translations$licenses$ko extends Translations$licenses$en {
-	_Translations$licenses$ko._(TranslationsKo root) : this._root = root, super.internal(root);
+class _TranslationsLicensesKo extends TranslationsLicensesEn {
+	_TranslationsLicensesKo._(TranslationsKo root) : this._root = root, super.internal(root);
 
 	final TranslationsKo _root; // ignore: unused_field
 
@@ -1529,8 +1539,8 @@ class _Translations$licenses$ko extends Translations$licenses$en {
 }
 
 // Path: navigation
-class _Translations$navigation$ko extends Translations$navigation$en {
-	_Translations$navigation$ko._(TranslationsKo root) : this._root = root, super.internal(root);
+class _TranslationsNavigationKo extends TranslationsNavigationEn {
+	_TranslationsNavigationKo._(TranslationsKo root) : this._root = root, super.internal(root);
 
 	final TranslationsKo _root; // ignore: unused_field
 
@@ -1542,16 +1552,16 @@ class _Translations$navigation$ko extends Translations$navigation$en {
 }
 
 // Path: explore
-class _Translations$explore$ko extends Translations$explore$en {
-	_Translations$explore$ko._(TranslationsKo root) : this._root = root, super.internal(root);
+class _TranslationsExploreKo extends TranslationsExploreEn {
+	_TranslationsExploreKo._(TranslationsKo root) : this._root = root, super.internal(root);
 
 	final TranslationsKo _root; // ignore: unused_field
 
 	// Translations
 	@override String get title => '탐색';
 	@override String get selectSource => '소스 선택';
-	@override late final _Translations$explore$rows$ko rows = _Translations$explore$rows$ko._(_root);
-	@override late final _Translations$explore$status$ko status = _Translations$explore$status$ko._(_root);
+	@override late final _TranslationsExploreRowsKo rows = _TranslationsExploreRowsKo._(_root);
+	@override late final _TranslationsExploreStatusKo status = _TranslationsExploreStatusKo._(_root);
 	@override String episodeCount({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('ko'))(n,
 		other: '${n}화',
 	);
@@ -1575,24 +1585,24 @@ class _Translations$explore$ko extends Translations$explore$en {
 	@override String searchEmpty({required Object query}) => '「${query}」에 대한 결과가 없습니다';
 	@override String searchPrompt({required Object source}) => '${source}에서 영화와 TV 프로그램을 검색하세요.';
 	@override String get searchFailed => '검색에 실패했습니다. 연결을 확인하고 다시 시도하세요.';
-	@override late final _Translations$explore$badge$ko badge = _Translations$explore$badge$ko._(_root);
-	@override late final _Translations$explore$stats$ko stats = _Translations$explore$stats$ko._(_root);
-	@override late final _Translations$explore$season$ko season = _Translations$explore$season$ko._(_root);
-	@override late final _Translations$explore$format$ko format = _Translations$explore$format$ko._(_root);
-	@override late final _Translations$explore$sourceMaterial$ko sourceMaterial = _Translations$explore$sourceMaterial$ko._(_root);
-	@override late final _Translations$explore$creditRole$ko creditRole = _Translations$explore$creditRole$ko._(_root);
-	@override late final _Translations$explore$relation$ko relation = _Translations$explore$relation$ko._(_root);
+	@override late final _TranslationsExploreBadgeKo badge = _TranslationsExploreBadgeKo._(_root);
+	@override late final _TranslationsExploreStatsKo stats = _TranslationsExploreStatsKo._(_root);
+	@override late final _TranslationsExploreSeasonKo season = _TranslationsExploreSeasonKo._(_root);
+	@override late final _TranslationsExploreFormatKo format = _TranslationsExploreFormatKo._(_root);
+	@override late final _TranslationsExploreSourceMaterialKo sourceMaterial = _TranslationsExploreSourceMaterialKo._(_root);
+	@override late final _TranslationsExploreCreditRoleKo creditRole = _TranslationsExploreCreditRoleKo._(_root);
+	@override late final _TranslationsExploreRelationKo relation = _TranslationsExploreRelationKo._(_root);
 	@override String broadcast({required Object day, required Object time}) => '${day} ${time} 방영';
 	@override String broadcastWithZone({required Object day, required Object time, required Object timezone}) => '${day} ${time} ${timezone} 방영';
-	@override late final _Translations$explore$detail$ko detail = _Translations$explore$detail$ko._(_root);
+	@override late final _TranslationsExploreDetailKo detail = _TranslationsExploreDetailKo._(_root);
 	@override String totalResults({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('ko'))(n,
 		other: '결과 ${n}개',
 	);
 }
 
 // Path: liveTv
-class _Translations$liveTv$ko extends Translations$liveTv$en {
-	_Translations$liveTv$ko._(TranslationsKo root) : this._root = root, super.internal(root);
+class _TranslationsLiveTvKo extends TranslationsLiveTvEn {
+	_TranslationsLiveTvKo._(TranslationsKo root) : this._root = root, super.internal(root);
 
 	final TranslationsKo _root; // ignore: unused_field
 
@@ -1674,7 +1684,7 @@ class _Translations$liveTv$ko extends Translations$liveTv$en {
 	@override String get rulesProcessRequested => '규칙 재평가 요청됨';
 	@override String get rulesProcessFailed => '녹화 규칙을 다시 적용할 수 없습니다';
 	@override String get recordShow => '프로그램 녹화';
-	@override late final _Translations$liveTv$recordSettings$ko recordSettings = _Translations$liveTv$recordSettings$ko._(_root);
+	@override late final _TranslationsLiveTvRecordSettingsKo recordSettings = _TranslationsLiveTvRecordSettingsKo._(_root);
 	@override String startingInMinutes({required Object minutes}) => '${minutes}분 후 시작';
 	@override String dayAtTime({required Object day, required Object time}) => '${day} ${time}';
 	@override String invalidPlaybackData({required Object product}) => '${product}에서 잘못된 실시간 TV 재생 데이터를 반환했습니다';
@@ -1685,8 +1695,8 @@ class _Translations$liveTv$ko extends Translations$liveTv$en {
 }
 
 // Path: collections
-class _Translations$collections$ko extends Translations$collections$en {
-	_Translations$collections$ko._(TranslationsKo root) : this._root = root, super.internal(root);
+class _TranslationsCollectionsKo extends TranslationsCollectionsEn {
+	_TranslationsCollectionsKo._(TranslationsKo root) : this._root = root, super.internal(root);
 
 	final TranslationsKo _root; // ignore: unused_field
 
@@ -1714,8 +1724,8 @@ class _Translations$collections$ko extends Translations$collections$en {
 }
 
 // Path: playlists
-class _Translations$playlists$ko extends Translations$playlists$en {
-	_Translations$playlists$ko._(TranslationsKo root) : this._root = root, super.internal(root);
+class _TranslationsPlaylistsKo extends TranslationsPlaylistsEn {
+	_TranslationsPlaylistsKo._(TranslationsKo root) : this._root = root, super.internal(root);
 
 	final TranslationsKo _root; // ignore: unused_field
 
@@ -1749,8 +1759,8 @@ class _Translations$playlists$ko extends Translations$playlists$en {
 }
 
 // Path: music
-class _Translations$music$ko extends Translations$music$en {
-	_Translations$music$ko._(TranslationsKo root) : this._root = root, super.internal(root);
+class _TranslationsMusicKo extends TranslationsMusicEn {
+	_TranslationsMusicKo._(TranslationsKo root) : this._root = root, super.internal(root);
 
 	final TranslationsKo _root; // ignore: unused_field
 
@@ -1783,12 +1793,12 @@ class _Translations$music$ko extends Translations$music$en {
 	@override String get instantMixFailed => '인스턴트 믹스를 불러오지 못했습니다';
 	@override String get instantMixEmpty => '인스턴트 믹스에 트랙이 없습니다';
 	@override String noAudioUrl({required Object track}) => '${track}에 사용할 수 있는 오디오 URL이 없습니다';
-	@override late final _Translations$music$discography$ko discography = _Translations$music$discography$ko._(_root);
+	@override late final _TranslationsMusicDiscographyKo discography = _TranslationsMusicDiscographyKo._(_root);
 }
 
 // Path: watchTogether
-class _Translations$watchTogether$ko extends Translations$watchTogether$en {
-	_Translations$watchTogether$ko._(TranslationsKo root) : this._root = root, super.internal(root);
+class _TranslationsWatchTogetherKo extends TranslationsWatchTogetherEn {
+	_TranslationsWatchTogetherKo._(TranslationsKo root) : this._root = root, super.internal(root);
 
 	final TranslationsKo _root; // ignore: unused_field
 
@@ -1897,15 +1907,15 @@ class _Translations$watchTogether$ko extends Translations$watchTogether$en {
 	@override String get end => '종료';
 	@override String get playBlockedTitle => '재생이 시작되지 않았습니다';
 	@override String get playBlockedDescription => '재생을 눌러 방 참가자들과 함께 시청을 시작하세요.';
-	@override late final _Translations$watchTogether$notices$ko notices = _Translations$watchTogether$notices$ko._(_root);
-	@override late final _Translations$watchTogether$ended$ko ended = _Translations$watchTogether$ended$ko._(_root);
-	@override late final _Translations$watchTogether$errors$ko errors = _Translations$watchTogether$errors$ko._(_root);
+	@override late final _TranslationsWatchTogetherNoticesKo notices = _TranslationsWatchTogetherNoticesKo._(_root);
+	@override late final _TranslationsWatchTogetherEndedKo ended = _TranslationsWatchTogetherEndedKo._(_root);
+	@override late final _TranslationsWatchTogetherErrorsKo errors = _TranslationsWatchTogetherErrorsKo._(_root);
 	@override String untitledEpisode({required Object number}) => '${number}화';
 }
 
 // Path: downloads
-class _Translations$downloads$ko extends Translations$downloads$en {
-	_Translations$downloads$ko._(TranslationsKo root) : this._root = root, super.internal(root);
+class _TranslationsDownloadsKo extends TranslationsDownloadsEn {
+	_TranslationsDownloadsKo._(TranslationsKo root) : this._root = root, super.internal(root);
 
 	final TranslationsKo _root; // ignore: unused_field
 
@@ -1991,9 +2001,9 @@ class _Translations$downloads$ko extends Translations$downloads$en {
 	@override String get syncRuleNotAvailableForProfile => '현재 프로필에서 사용할 수 없음';
 	@override String get syncRuleUnknownServer => '알 수 없는 서버';
 	@override String get syncRuleListCreated => '동기화 규칙이 생성되었습니다';
-	@override late final _Translations$downloads$backgroundWarning$ko backgroundWarning = _Translations$downloads$backgroundWarning$ko._(_root);
+	@override late final _TranslationsDownloadsBackgroundWarningKo backgroundWarning = _TranslationsDownloadsBackgroundWarningKo._(_root);
 	@override String get options => '다운로드 옵션';
-	@override late final _Translations$downloads$groupings$ko groupings = _Translations$downloads$groupings$ko._(_root);
+	@override late final _TranslationsDownloadsGroupingsKo groupings = _TranslationsDownloadsGroupingsKo._(_root);
 	@override String get unknownLibrary => '알 수 없는 라이브러리';
 	@override String get unknownShow => '알 수 없는 프로그램';
 	@override String get unknownSeason => '알 수 없는 시즌';
@@ -2014,8 +2024,8 @@ class _Translations$downloads$ko extends Translations$downloads$en {
 }
 
 // Path: shaders
-class _Translations$shaders$ko extends Translations$shaders$en {
-	_Translations$shaders$ko._(TranslationsKo root) : this._root = root, super.internal(root);
+class _TranslationsShadersKo extends TranslationsShadersEn {
+	_TranslationsShadersKo._(TranslationsKo root) : this._root = root, super.internal(root);
 
 	final TranslationsKo _root; // ignore: unused_field
 
@@ -2038,8 +2048,8 @@ class _Translations$shaders$ko extends Translations$shaders$en {
 }
 
 // Path: companionRemote
-class _Translations$companionRemote$ko extends Translations$companionRemote$en {
-	_Translations$companionRemote$ko._(TranslationsKo root) : this._root = root, super.internal(root);
+class _TranslationsCompanionRemoteKo extends TranslationsCompanionRemoteEn {
+	_TranslationsCompanionRemoteKo._(TranslationsKo root) : this._root = root, super.internal(root);
 
 	final TranslationsKo _root; // ignore: unused_field
 
@@ -2047,16 +2057,16 @@ class _Translations$companionRemote$ko extends Translations$companionRemote$en {
 	@override String get title => '컴패니언 리모컨';
 	@override String connectedTo({required Object name}) => '${name}에 연결됨';
 	@override String get unknownDevice => '알 수 없는 기기';
-	@override late final _Translations$companionRemote$session$ko session = _Translations$companionRemote$session$ko._(_root);
-	@override late final _Translations$companionRemote$pairing$ko pairing = _Translations$companionRemote$pairing$ko._(_root);
-	@override late final _Translations$companionRemote$remote$ko remote = _Translations$companionRemote$remote$ko._(_root);
-	@override late final _Translations$companionRemote$errors$ko errors = _Translations$companionRemote$errors$ko._(_root);
+	@override late final _TranslationsCompanionRemoteSessionKo session = _TranslationsCompanionRemoteSessionKo._(_root);
+	@override late final _TranslationsCompanionRemotePairingKo pairing = _TranslationsCompanionRemotePairingKo._(_root);
+	@override late final _TranslationsCompanionRemoteRemoteKo remote = _TranslationsCompanionRemoteRemoteKo._(_root);
+	@override late final _TranslationsCompanionRemoteErrorsKo errors = _TranslationsCompanionRemoteErrorsKo._(_root);
 	@override String get closedBeforeAuth => '인증 전에 연결이 종료되었습니다';
 }
 
 // Path: videoSettings
-class _Translations$videoSettings$ko extends Translations$videoSettings$en {
-	_Translations$videoSettings$ko._(TranslationsKo root) : this._root = root, super.internal(root);
+class _TranslationsVideoSettingsKo extends TranslationsVideoSettingsEn {
+	_TranslationsVideoSettingsKo._(TranslationsKo root) : this._root = root, super.internal(root);
 
 	final TranslationsKo _root; // ignore: unused_field
 
@@ -2088,8 +2098,8 @@ class _Translations$videoSettings$ko extends Translations$videoSettings$en {
 }
 
 // Path: performanceOverlay
-class _Translations$performanceOverlay$ko extends Translations$performanceOverlay$en {
-	_Translations$performanceOverlay$ko._(TranslationsKo root) : this._root = root, super.internal(root);
+class _TranslationsPerformanceOverlayKo extends TranslationsPerformanceOverlayEn {
+	_TranslationsPerformanceOverlayKo._(TranslationsKo root) : this._root = root, super.internal(root);
 
 	final TranslationsKo _root; // ignore: unused_field
 
@@ -2150,8 +2160,8 @@ class _Translations$performanceOverlay$ko extends Translations$performanceOverla
 }
 
 // Path: externalPlayer
-class _Translations$externalPlayer$ko extends Translations$externalPlayer$en {
-	_Translations$externalPlayer$ko._(TranslationsKo root) : this._root = root, super.internal(root);
+class _TranslationsExternalPlayerKo extends TranslationsExternalPlayerEn {
+	_TranslationsExternalPlayerKo._(TranslationsKo root) : this._root = root, super.internal(root);
 
 	final TranslationsKo _root; // ignore: unused_field
 
@@ -2175,8 +2185,8 @@ class _Translations$externalPlayer$ko extends Translations$externalPlayer$en {
 }
 
 // Path: metadataEdit
-class _Translations$metadataEdit$ko extends Translations$metadataEdit$en {
-	_Translations$metadataEdit$ko._(TranslationsKo root) : this._root = root, super.internal(root);
+class _TranslationsMetadataEditKo extends TranslationsMetadataEditEn {
+	_TranslationsMetadataEditKo._(TranslationsKo root) : this._root = root, super.internal(root);
 
 	final TranslationsKo _root; // ignore: unused_field
 
@@ -2259,8 +2269,8 @@ class _Translations$metadataEdit$ko extends Translations$metadataEdit$en {
 }
 
 // Path: matchScreen
-class _Translations$matchScreen$ko extends Translations$matchScreen$en {
-	_Translations$matchScreen$ko._(TranslationsKo root) : this._root = root, super.internal(root);
+class _TranslationsMatchScreenKo extends TranslationsMatchScreenEn {
+	_TranslationsMatchScreenKo._(TranslationsKo root) : this._root = root, super.internal(root);
 
 	final TranslationsKo _root; // ignore: unused_field
 
@@ -2280,8 +2290,8 @@ class _Translations$matchScreen$ko extends Translations$matchScreen$en {
 }
 
 // Path: serverTasks
-class _Translations$serverTasks$ko extends Translations$serverTasks$en {
-	_Translations$serverTasks$ko._(TranslationsKo root) : this._root = root, super.internal(root);
+class _TranslationsServerTasksKo extends TranslationsServerTasksEn {
+	_TranslationsServerTasksKo._(TranslationsKo root) : this._root = root, super.internal(root);
 
 	final TranslationsKo _root; // ignore: unused_field
 
@@ -2292,8 +2302,8 @@ class _Translations$serverTasks$ko extends Translations$serverTasks$en {
 }
 
 // Path: trakt
-class _Translations$trakt$ko extends Translations$trakt$en {
-	_Translations$trakt$ko._(TranslationsKo root) : this._root = root, super.internal(root);
+class _TranslationsTraktKo extends TranslationsTraktEn {
+	_TranslationsTraktKo._(TranslationsKo root) : this._root = root, super.internal(root);
 
 	final TranslationsKo _root; // ignore: unused_field
 
@@ -2310,8 +2320,8 @@ class _Translations$trakt$ko extends Translations$trakt$en {
 }
 
 // Path: seerr
-class _Translations$seerr$ko extends Translations$seerr$en {
-	_Translations$seerr$ko._(TranslationsKo root) : this._root = root, super.internal(root);
+class _TranslationsSeerrKo extends TranslationsSeerrEn {
+	_TranslationsSeerrKo._(TranslationsKo root) : this._root = root, super.internal(root);
 
 	final TranslationsKo _root; // ignore: unused_field
 
@@ -2369,8 +2379,8 @@ class _Translations$seerr$ko extends Translations$seerr$en {
 }
 
 // Path: services
-class _Translations$services$ko extends Translations$services$en {
-	_Translations$services$ko._(TranslationsKo root) : this._root = root, super.internal(root);
+class _TranslationsServicesKo extends TranslationsServicesEn {
+	_TranslationsServicesKo._(TranslationsKo root) : this._root = root, super.internal(root);
 
 	final TranslationsKo _root; // ignore: unused_field
 
@@ -2385,17 +2395,17 @@ class _Translations$services$ko extends Translations$services$en {
 	@override String disconnectConfirm({required Object service}) => '${service} 연결을 해제하시겠습니까?';
 	@override String disconnectConfirmBody({required Object service}) => 'Plezy가 ${service} 업데이트를 중지합니다. 언제든 다시 연결할 수 있습니다.';
 	@override String connectFailed({required Object service}) => '${service}에 연결할 수 없습니다. 다시 시도하세요.';
-	@override late final _Translations$services$names$ko names = _Translations$services$names$ko._(_root);
-	@override late final _Translations$services$simklReconnect$ko simklReconnect = _Translations$services$simklReconnect$ko._(_root);
-	@override late final _Translations$services$deviceCode$ko deviceCode = _Translations$services$deviceCode$ko._(_root);
-	@override late final _Translations$services$oauthProxy$ko oauthProxy = _Translations$services$oauthProxy$ko._(_root);
-	@override late final _Translations$services$pendingAuth$ko pendingAuth = _Translations$services$pendingAuth$ko._(_root);
-	@override late final _Translations$services$libraryFilter$ko libraryFilter = _Translations$services$libraryFilter$ko._(_root);
+	@override late final _TranslationsServicesNamesKo names = _TranslationsServicesNamesKo._(_root);
+	@override late final _TranslationsServicesSimklReconnectKo simklReconnect = _TranslationsServicesSimklReconnectKo._(_root);
+	@override late final _TranslationsServicesDeviceCodeKo deviceCode = _TranslationsServicesDeviceCodeKo._(_root);
+	@override late final _TranslationsServicesOauthProxyKo oauthProxy = _TranslationsServicesOauthProxyKo._(_root);
+	@override late final _TranslationsServicesPendingAuthKo pendingAuth = _TranslationsServicesPendingAuthKo._(_root);
+	@override late final _TranslationsServicesLibraryFilterKo libraryFilter = _TranslationsServicesLibraryFilterKo._(_root);
 }
 
 // Path: addServer
-class _Translations$addServer$ko extends Translations$addServer$en {
-	_Translations$addServer$ko._(TranslationsKo root) : this._root = root, super.internal(root);
+class _TranslationsAddServerKo extends TranslationsAddServerEn {
+	_TranslationsAddServerKo._(TranslationsKo root) : this._root = root, super.internal(root);
 
 	final TranslationsKo _root; // ignore: unused_field
 
@@ -2449,9 +2459,18 @@ class _Translations$addServer$ko extends Translations$addServer$en {
 	@override String redirectUnsupportedEnterFinal({required Object product}) => '서버가 지원되지 않는 URL로 리디렉션했습니다. 최종 ${product} URL을 직접 입력하세요.';
 }
 
+// Path: deepLinks
+class _TranslationsDeepLinksKo extends TranslationsDeepLinksEn {
+	_TranslationsDeepLinksKo._(TranslationsKo root) : this._root = root, super.internal(root);
+
+	final TranslationsKo _root; // ignore: unused_field
+
+	// Translations
+}
+
 // Path: appIcon.names
-class _Translations$appIcon$names$ko extends Translations$appIcon$names$en {
-	_Translations$appIcon$names$ko._(TranslationsKo root) : this._root = root, super.internal(root);
+class _TranslationsAppIconNamesKo extends TranslationsAppIconNamesEn {
+	_TranslationsAppIconNamesKo._(TranslationsKo root) : this._root = root, super.internal(root);
 
 	final TranslationsKo _root; // ignore: unused_field
 
@@ -2482,8 +2501,8 @@ class _Translations$appIcon$names$ko extends Translations$appIcon$names$en {
 }
 
 // Path: common.ratingSource
-class _Translations$common$ratingSource$ko extends Translations$common$ratingSource$en {
-	_Translations$common$ratingSource$ko._(TranslationsKo root) : this._root = root, super.internal(root);
+class _TranslationsCommonRatingSourceKo extends TranslationsCommonRatingSourceEn {
+	_TranslationsCommonRatingSourceKo._(TranslationsKo root) : this._root = root, super.internal(root);
 
 	final TranslationsKo _root; // ignore: unused_field
 
@@ -2504,8 +2523,8 @@ class _Translations$common$ratingSource$ko extends Translations$common$ratingSou
 }
 
 // Path: common.mediaKind
-class _Translations$common$mediaKind$ko extends Translations$common$mediaKind$en {
-	_Translations$common$mediaKind$ko._(TranslationsKo root) : this._root = root, super.internal(root);
+class _TranslationsCommonMediaKindKo extends TranslationsCommonMediaKindEn {
+	_TranslationsCommonMediaKindKo._(TranslationsKo root) : this._root = root, super.internal(root);
 
 	final TranslationsKo _root; // ignore: unused_field
 
@@ -2525,8 +2544,8 @@ class _Translations$common$mediaKind$ko extends Translations$common$mediaKind$en
 }
 
 // Path: supporter.errors
-class _Translations$supporter$errors$ko extends Translations$supporter$errors$en {
-	_Translations$supporter$errors$ko._(TranslationsKo root) : this._root = root, super.internal(root);
+class _TranslationsSupporterErrorsKo extends TranslationsSupporterErrorsEn {
+	_TranslationsSupporterErrorsKo._(TranslationsKo root) : this._root = root, super.internal(root);
 
 	final TranslationsKo _root; // ignore: unused_field
 
@@ -2540,8 +2559,8 @@ class _Translations$supporter$errors$ko extends Translations$supporter$errors$en
 }
 
 // Path: themeEditor.slots
-class _Translations$themeEditor$slots$ko extends Translations$themeEditor$slots$en {
-	_Translations$themeEditor$slots$ko._(TranslationsKo root) : this._root = root, super.internal(root);
+class _TranslationsThemeEditorSlotsKo extends TranslationsThemeEditorSlotsEn {
+	_TranslationsThemeEditorSlotsKo._(TranslationsKo root) : this._root = root, super.internal(root);
 
 	final TranslationsKo _root; // ignore: unused_field
 
@@ -2555,8 +2574,8 @@ class _Translations$themeEditor$slots$ko extends Translations$themeEditor$slots$
 }
 
 // Path: themeEditor.contrast
-class _Translations$themeEditor$contrast$ko extends Translations$themeEditor$contrast$en {
-	_Translations$themeEditor$contrast$ko._(TranslationsKo root) : this._root = root, super.internal(root);
+class _TranslationsThemeEditorContrastKo extends TranslationsThemeEditorContrastEn {
+	_TranslationsThemeEditorContrastKo._(TranslationsKo root) : this._root = root, super.internal(root);
 
 	final TranslationsKo _root; // ignore: unused_field
 
@@ -2571,8 +2590,8 @@ class _Translations$themeEditor$contrast$ko extends Translations$themeEditor$con
 }
 
 // Path: hotkeys.actions
-class _Translations$hotkeys$actions$ko extends Translations$hotkeys$actions$en {
-	_Translations$hotkeys$actions$ko._(TranslationsKo root) : this._root = root, super.internal(root);
+class _TranslationsHotkeysActionsKo extends TranslationsHotkeysActionsEn {
+	_TranslationsHotkeysActionsKo._(TranslationsKo root) : this._root = root, super.internal(root);
 
 	final TranslationsKo _root; // ignore: unused_field
 
@@ -2605,8 +2624,8 @@ class _Translations$hotkeys$actions$ko extends Translations$hotkeys$actions$en {
 }
 
 // Path: videoControls.pipErrors
-class _Translations$videoControls$pipErrors$ko extends Translations$videoControls$pipErrors$en {
-	_Translations$videoControls$pipErrors$ko._(TranslationsKo root) : this._root = root, super.internal(root);
+class _TranslationsVideoControlsPipErrorsKo extends TranslationsVideoControlsPipErrorsEn {
+	_TranslationsVideoControlsPipErrorsKo._(TranslationsKo root) : this._root = root, super.internal(root);
 
 	final TranslationsKo _root; // ignore: unused_field
 
@@ -2622,8 +2641,8 @@ class _Translations$videoControls$pipErrors$ko extends Translations$videoControl
 }
 
 // Path: accountPreferences.groups
-class _Translations$accountPreferences$groups$ko extends Translations$accountPreferences$groups$en {
-	_Translations$accountPreferences$groups$ko._(TranslationsKo root) : this._root = root, super.internal(root);
+class _TranslationsAccountPreferencesGroupsKo extends TranslationsAccountPreferencesGroupsEn {
+	_TranslationsAccountPreferencesGroupsKo._(TranslationsKo root) : this._root = root, super.internal(root);
 
 	final TranslationsKo _root; // ignore: unused_field
 
@@ -2634,8 +2653,8 @@ class _Translations$accountPreferences$groups$ko extends Translations$accountPre
 }
 
 // Path: accountPreferences.subtitleModes
-class _Translations$accountPreferences$subtitleModes$ko extends Translations$accountPreferences$subtitleModes$en {
-	_Translations$accountPreferences$subtitleModes$ko._(TranslationsKo root) : this._root = root, super.internal(root);
+class _TranslationsAccountPreferencesSubtitleModesKo extends TranslationsAccountPreferencesSubtitleModesEn {
+	_TranslationsAccountPreferencesSubtitleModesKo._(TranslationsKo root) : this._root = root, super.internal(root);
 
 	final TranslationsKo _root; // ignore: unused_field
 
@@ -2653,8 +2672,8 @@ class _Translations$accountPreferences$subtitleModes$ko extends Translations$acc
 }
 
 // Path: accountPreferences.subtitleAccessibilityOptions
-class _Translations$accountPreferences$subtitleAccessibilityOptions$ko extends Translations$accountPreferences$subtitleAccessibilityOptions$en {
-	_Translations$accountPreferences$subtitleAccessibilityOptions$ko._(TranslationsKo root) : this._root = root, super.internal(root);
+class _TranslationsAccountPreferencesSubtitleAccessibilityOptionsKo extends TranslationsAccountPreferencesSubtitleAccessibilityOptionsEn {
+	_TranslationsAccountPreferencesSubtitleAccessibilityOptionsKo._(TranslationsKo root) : this._root = root, super.internal(root);
 
 	final TranslationsKo _root; // ignore: unused_field
 
@@ -2666,8 +2685,8 @@ class _Translations$accountPreferences$subtitleAccessibilityOptions$ko extends T
 }
 
 // Path: accountPreferences.forcedSubtitleOptions
-class _Translations$accountPreferences$forcedSubtitleOptions$ko extends Translations$accountPreferences$forcedSubtitleOptions$en {
-	_Translations$accountPreferences$forcedSubtitleOptions$ko._(TranslationsKo root) : this._root = root, super.internal(root);
+class _TranslationsAccountPreferencesForcedSubtitleOptionsKo extends TranslationsAccountPreferencesForcedSubtitleOptionsEn {
+	_TranslationsAccountPreferencesForcedSubtitleOptionsKo._(TranslationsKo root) : this._root = root, super.internal(root);
 
 	final TranslationsKo _root; // ignore: unused_field
 
@@ -2679,8 +2698,8 @@ class _Translations$accountPreferences$forcedSubtitleOptions$ko extends Translat
 }
 
 // Path: accountPreferences.watchedIndicatorOptions
-class _Translations$accountPreferences$watchedIndicatorOptions$ko extends Translations$accountPreferences$watchedIndicatorOptions$en {
-	_Translations$accountPreferences$watchedIndicatorOptions$ko._(TranslationsKo root) : this._root = root, super.internal(root);
+class _TranslationsAccountPreferencesWatchedIndicatorOptionsKo extends TranslationsAccountPreferencesWatchedIndicatorOptionsEn {
+	_TranslationsAccountPreferencesWatchedIndicatorOptionsKo._(TranslationsKo root) : this._root = root, super.internal(root);
 
 	final TranslationsKo _root; // ignore: unused_field
 
@@ -2692,8 +2711,8 @@ class _Translations$accountPreferences$watchedIndicatorOptions$ko extends Transl
 }
 
 // Path: accountPreferences.mediaReviewsOptions
-class _Translations$accountPreferences$mediaReviewsOptions$ko extends Translations$accountPreferences$mediaReviewsOptions$en {
-	_Translations$accountPreferences$mediaReviewsOptions$ko._(TranslationsKo root) : this._root = root, super.internal(root);
+class _TranslationsAccountPreferencesMediaReviewsOptionsKo extends TranslationsAccountPreferencesMediaReviewsOptionsEn {
+	_TranslationsAccountPreferencesMediaReviewsOptionsKo._(TranslationsKo root) : this._root = root, super.internal(root);
 
 	final TranslationsKo _root; // ignore: unused_field
 
@@ -2705,8 +2724,8 @@ class _Translations$accountPreferences$mediaReviewsOptions$ko extends Translatio
 }
 
 // Path: discover.person
-class _Translations$discover$person$ko extends Translations$discover$person$en {
-	_Translations$discover$person$ko._(TranslationsKo root) : this._root = root, super.internal(root);
+class _TranslationsDiscoverPersonKo extends TranslationsDiscoverPersonEn {
+	_TranslationsDiscoverPersonKo._(TranslationsKo root) : this._root = root, super.internal(root);
 
 	final TranslationsKo _root; // ignore: unused_field
 
@@ -2719,8 +2738,8 @@ class _Translations$discover$person$ko extends Translations$discover$person$en {
 }
 
 // Path: libraries.tabs
-class _Translations$libraries$tabs$ko extends Translations$libraries$tabs$en {
-	_Translations$libraries$tabs$ko._(TranslationsKo root) : this._root = root, super.internal(root);
+class _TranslationsLibrariesTabsKo extends TranslationsLibrariesTabsEn {
+	_TranslationsLibrariesTabsKo._(TranslationsKo root) : this._root = root, super.internal(root);
 
 	final TranslationsKo _root; // ignore: unused_field
 
@@ -2732,8 +2751,8 @@ class _Translations$libraries$tabs$ko extends Translations$libraries$tabs$en {
 }
 
 // Path: libraries.groupings
-class _Translations$libraries$groupings$ko extends Translations$libraries$groupings$en {
-	_Translations$libraries$groupings$ko._(TranslationsKo root) : this._root = root, super.internal(root);
+class _TranslationsLibrariesGroupingsKo extends TranslationsLibrariesGroupingsEn {
+	_TranslationsLibrariesGroupingsKo._(TranslationsKo root) : this._root = root, super.internal(root);
 
 	final TranslationsKo _root; // ignore: unused_field
 
@@ -2751,8 +2770,8 @@ class _Translations$libraries$groupings$ko extends Translations$libraries$groupi
 }
 
 // Path: libraries.filterCategories
-class _Translations$libraries$filterCategories$ko extends Translations$libraries$filterCategories$en {
-	_Translations$libraries$filterCategories$ko._(TranslationsKo root) : this._root = root, super.internal(root);
+class _TranslationsLibrariesFilterCategoriesKo extends TranslationsLibrariesFilterCategoriesEn {
+	_TranslationsLibrariesFilterCategoriesKo._(TranslationsKo root) : this._root = root, super.internal(root);
 
 	final TranslationsKo _root; // ignore: unused_field
 
@@ -2768,8 +2787,8 @@ class _Translations$libraries$filterCategories$ko extends Translations$libraries
 }
 
 // Path: libraries.sortLabels
-class _Translations$libraries$sortLabels$ko extends Translations$libraries$sortLabels$en {
-	_Translations$libraries$sortLabels$ko._(TranslationsKo root) : this._root = root, super.internal(root);
+class _TranslationsLibrariesSortLabelsKo extends TranslationsLibrariesSortLabelsEn {
+	_TranslationsLibrariesSortLabelsKo._(TranslationsKo root) : this._root = root, super.internal(root);
 
 	final TranslationsKo _root; // ignore: unused_field
 
@@ -2800,8 +2819,8 @@ class _Translations$libraries$sortLabels$ko extends Translations$libraries$sortL
 }
 
 // Path: libraries.advancedFilters
-class _Translations$libraries$advancedFilters$ko extends Translations$libraries$advancedFilters$en {
-	_Translations$libraries$advancedFilters$ko._(TranslationsKo root) : this._root = root, super.internal(root);
+class _TranslationsLibrariesAdvancedFiltersKo extends TranslationsLibrariesAdvancedFiltersEn {
+	_TranslationsLibrariesAdvancedFiltersKo._(TranslationsKo root) : this._root = root, super.internal(root);
 
 	final TranslationsKo _root; // ignore: unused_field
 
@@ -2835,8 +2854,8 @@ class _Translations$libraries$advancedFilters$ko extends Translations$libraries$
 }
 
 // Path: explore.rows
-class _Translations$explore$rows$ko extends Translations$explore$rows$en {
-	_Translations$explore$rows$ko._(TranslationsKo root) : this._root = root, super.internal(root);
+class _TranslationsExploreRowsKo extends TranslationsExploreRowsEn {
+	_TranslationsExploreRowsKo._(TranslationsKo root) : this._root = root, super.internal(root);
 
 	final TranslationsKo _root; // ignore: unused_field
 
@@ -2858,8 +2877,8 @@ class _Translations$explore$rows$ko extends Translations$explore$rows$en {
 }
 
 // Path: explore.status
-class _Translations$explore$status$ko extends Translations$explore$status$en {
-	_Translations$explore$status$ko._(TranslationsKo root) : this._root = root, super.internal(root);
+class _TranslationsExploreStatusKo extends TranslationsExploreStatusEn {
+	_TranslationsExploreStatusKo._(TranslationsKo root) : this._root = root, super.internal(root);
 
 	final TranslationsKo _root; // ignore: unused_field
 
@@ -2871,8 +2890,8 @@ class _Translations$explore$status$ko extends Translations$explore$status$en {
 }
 
 // Path: explore.badge
-class _Translations$explore$badge$ko extends Translations$explore$badge$en {
-	_Translations$explore$badge$ko._(TranslationsKo root) : this._root = root, super.internal(root);
+class _TranslationsExploreBadgeKo extends TranslationsExploreBadgeEn {
+	_TranslationsExploreBadgeKo._(TranslationsKo root) : this._root = root, super.internal(root);
 
 	final TranslationsKo _root; // ignore: unused_field
 
@@ -2901,8 +2920,8 @@ class _Translations$explore$badge$ko extends Translations$explore$badge$en {
 }
 
 // Path: explore.stats
-class _Translations$explore$stats$ko extends Translations$explore$stats$en {
-	_Translations$explore$stats$ko._(TranslationsKo root) : this._root = root, super.internal(root);
+class _TranslationsExploreStatsKo extends TranslationsExploreStatsEn {
+	_TranslationsExploreStatsKo._(TranslationsKo root) : this._root = root, super.internal(root);
 
 	final TranslationsKo _root; // ignore: unused_field
 
@@ -2927,8 +2946,8 @@ class _Translations$explore$stats$ko extends Translations$explore$stats$en {
 }
 
 // Path: explore.season
-class _Translations$explore$season$ko extends Translations$explore$season$en {
-	_Translations$explore$season$ko._(TranslationsKo root) : this._root = root, super.internal(root);
+class _TranslationsExploreSeasonKo extends TranslationsExploreSeasonEn {
+	_TranslationsExploreSeasonKo._(TranslationsKo root) : this._root = root, super.internal(root);
 
 	final TranslationsKo _root; // ignore: unused_field
 
@@ -2941,8 +2960,8 @@ class _Translations$explore$season$ko extends Translations$explore$season$en {
 }
 
 // Path: explore.format
-class _Translations$explore$format$ko extends Translations$explore$format$en {
-	_Translations$explore$format$ko._(TranslationsKo root) : this._root = root, super.internal(root);
+class _TranslationsExploreFormatKo extends TranslationsExploreFormatEn {
+	_TranslationsExploreFormatKo._(TranslationsKo root) : this._root = root, super.internal(root);
 
 	final TranslationsKo _root; // ignore: unused_field
 
@@ -2958,8 +2977,8 @@ class _Translations$explore$format$ko extends Translations$explore$format$en {
 }
 
 // Path: explore.sourceMaterial
-class _Translations$explore$sourceMaterial$ko extends Translations$explore$sourceMaterial$en {
-	_Translations$explore$sourceMaterial$ko._(TranslationsKo root) : this._root = root, super.internal(root);
+class _TranslationsExploreSourceMaterialKo extends TranslationsExploreSourceMaterialEn {
+	_TranslationsExploreSourceMaterialKo._(TranslationsKo root) : this._root = root, super.internal(root);
 
 	final TranslationsKo _root; // ignore: unused_field
 
@@ -2976,8 +2995,8 @@ class _Translations$explore$sourceMaterial$ko extends Translations$explore$sourc
 }
 
 // Path: explore.creditRole
-class _Translations$explore$creditRole$ko extends Translations$explore$creditRole$en {
-	_Translations$explore$creditRole$ko._(TranslationsKo root) : this._root = root, super.internal(root);
+class _TranslationsExploreCreditRoleKo extends TranslationsExploreCreditRoleEn {
+	_TranslationsExploreCreditRoleKo._(TranslationsKo root) : this._root = root, super.internal(root);
 
 	final TranslationsKo _root; // ignore: unused_field
 
@@ -2991,8 +3010,8 @@ class _Translations$explore$creditRole$ko extends Translations$explore$creditRol
 }
 
 // Path: explore.relation
-class _Translations$explore$relation$ko extends Translations$explore$relation$en {
-	_Translations$explore$relation$ko._(TranslationsKo root) : this._root = root, super.internal(root);
+class _TranslationsExploreRelationKo extends TranslationsExploreRelationEn {
+	_TranslationsExploreRelationKo._(TranslationsKo root) : this._root = root, super.internal(root);
 
 	final TranslationsKo _root; // ignore: unused_field
 
@@ -3009,8 +3028,8 @@ class _Translations$explore$relation$ko extends Translations$explore$relation$en
 }
 
 // Path: explore.detail
-class _Translations$explore$detail$ko extends Translations$explore$detail$en {
-	_Translations$explore$detail$ko._(TranslationsKo root) : this._root = root, super.internal(root);
+class _TranslationsExploreDetailKo extends TranslationsExploreDetailEn {
+	_TranslationsExploreDetailKo._(TranslationsKo root) : this._root = root, super.internal(root);
 
 	final TranslationsKo _root; // ignore: unused_field
 
@@ -3051,8 +3070,8 @@ class _Translations$explore$detail$ko extends Translations$explore$detail$en {
 }
 
 // Path: liveTv.recordSettings
-class _Translations$liveTv$recordSettings$ko extends Translations$liveTv$recordSettings$en {
-	_Translations$liveTv$recordSettings$ko._(TranslationsKo root) : this._root = root, super.internal(root);
+class _TranslationsLiveTvRecordSettingsKo extends TranslationsLiveTvRecordSettingsEn {
+	_TranslationsLiveTvRecordSettingsKo._(TranslationsKo root) : this._root = root, super.internal(root);
 
 	final TranslationsKo _root; // ignore: unused_field
 
@@ -3068,8 +3087,8 @@ class _Translations$liveTv$recordSettings$ko extends Translations$liveTv$recordS
 }
 
 // Path: music.discography
-class _Translations$music$discography$ko extends Translations$music$discography$en {
-	_Translations$music$discography$ko._(TranslationsKo root) : this._root = root, super.internal(root);
+class _TranslationsMusicDiscographyKo extends TranslationsMusicDiscographyEn {
+	_TranslationsMusicDiscographyKo._(TranslationsKo root) : this._root = root, super.internal(root);
 
 	final TranslationsKo _root; // ignore: unused_field
 
@@ -3080,8 +3099,8 @@ class _Translations$music$discography$ko extends Translations$music$discography$
 }
 
 // Path: watchTogether.notices
-class _Translations$watchTogether$notices$ko extends Translations$watchTogether$notices$en {
-	_Translations$watchTogether$notices$ko._(TranslationsKo root) : this._root = root, super.internal(root);
+class _TranslationsWatchTogetherNoticesKo extends TranslationsWatchTogetherNoticesEn {
+	_TranslationsWatchTogetherNoticesKo._(TranslationsKo root) : this._root = root, super.internal(root);
 
 	final TranslationsKo _root; // ignore: unused_field
 
@@ -3114,8 +3133,8 @@ class _Translations$watchTogether$notices$ko extends Translations$watchTogether$
 }
 
 // Path: watchTogether.ended
-class _Translations$watchTogether$ended$ko extends Translations$watchTogether$ended$en {
-	_Translations$watchTogether$ended$ko._(TranslationsKo root) : this._root = root, super.internal(root);
+class _TranslationsWatchTogetherEndedKo extends TranslationsWatchTogetherEndedEn {
+	_TranslationsWatchTogetherEndedKo._(TranslationsKo root) : this._root = root, super.internal(root);
 
 	final TranslationsKo _root; // ignore: unused_field
 
@@ -3128,8 +3147,8 @@ class _Translations$watchTogether$ended$ko extends Translations$watchTogether$en
 }
 
 // Path: watchTogether.errors
-class _Translations$watchTogether$errors$ko extends Translations$watchTogether$errors$en {
-	_Translations$watchTogether$errors$ko._(TranslationsKo root) : this._root = root, super.internal(root);
+class _TranslationsWatchTogetherErrorsKo extends TranslationsWatchTogetherErrorsEn {
+	_TranslationsWatchTogetherErrorsKo._(TranslationsKo root) : this._root = root, super.internal(root);
 
 	final TranslationsKo _root; // ignore: unused_field
 
@@ -3151,8 +3170,8 @@ class _Translations$watchTogether$errors$ko extends Translations$watchTogether$e
 }
 
 // Path: downloads.backgroundWarning
-class _Translations$downloads$backgroundWarning$ko extends Translations$downloads$backgroundWarning$en {
-	_Translations$downloads$backgroundWarning$ko._(TranslationsKo root) : this._root = root, super.internal(root);
+class _TranslationsDownloadsBackgroundWarningKo extends TranslationsDownloadsBackgroundWarningEn {
+	_TranslationsDownloadsBackgroundWarningKo._(TranslationsKo root) : this._root = root, super.internal(root);
 
 	final TranslationsKo _root; // ignore: unused_field
 
@@ -3186,8 +3205,8 @@ class _Translations$downloads$backgroundWarning$ko extends Translations$download
 }
 
 // Path: downloads.groupings
-class _Translations$downloads$groupings$ko extends Translations$downloads$groupings$en {
-	_Translations$downloads$groupings$ko._(TranslationsKo root) : this._root = root, super.internal(root);
+class _TranslationsDownloadsGroupingsKo extends TranslationsDownloadsGroupingsEn {
+	_TranslationsDownloadsGroupingsKo._(TranslationsKo root) : this._root = root, super.internal(root);
 
 	final TranslationsKo _root; // ignore: unused_field
 
@@ -3197,8 +3216,8 @@ class _Translations$downloads$groupings$ko extends Translations$downloads$groupi
 }
 
 // Path: companionRemote.session
-class _Translations$companionRemote$session$ko extends Translations$companionRemote$session$en {
-	_Translations$companionRemote$session$ko._(TranslationsKo root) : this._root = root, super.internal(root);
+class _TranslationsCompanionRemoteSessionKo extends TranslationsCompanionRemoteSessionEn {
+	_TranslationsCompanionRemoteSessionKo._(TranslationsKo root) : this._root = root, super.internal(root);
 
 	final TranslationsKo _root; // ignore: unused_field
 
@@ -3218,8 +3237,8 @@ class _Translations$companionRemote$session$ko extends Translations$companionRem
 }
 
 // Path: companionRemote.pairing
-class _Translations$companionRemote$pairing$ko extends Translations$companionRemote$pairing$en {
-	_Translations$companionRemote$pairing$ko._(TranslationsKo root) : this._root = root, super.internal(root);
+class _TranslationsCompanionRemotePairingKo extends TranslationsCompanionRemotePairingEn {
+	_TranslationsCompanionRemotePairingKo._(TranslationsKo root) : this._root = root, super.internal(root);
 
 	final TranslationsKo _root; // ignore: unused_field
 
@@ -3242,8 +3261,8 @@ class _Translations$companionRemote$pairing$ko extends Translations$companionRem
 }
 
 // Path: companionRemote.remote
-class _Translations$companionRemote$remote$ko extends Translations$companionRemote$remote$en {
-	_Translations$companionRemote$remote$ko._(TranslationsKo root) : this._root = root, super.internal(root);
+class _TranslationsCompanionRemoteRemoteKo extends TranslationsCompanionRemoteRemoteEn {
+	_TranslationsCompanionRemoteRemoteKo._(TranslationsKo root) : this._root = root, super.internal(root);
 
 	final TranslationsKo _root; // ignore: unused_field
 
@@ -3278,8 +3297,8 @@ class _Translations$companionRemote$remote$ko extends Translations$companionRemo
 }
 
 // Path: companionRemote.errors
-class _Translations$companionRemote$errors$ko extends Translations$companionRemote$errors$en {
-	_Translations$companionRemote$errors$ko._(TranslationsKo root) : this._root = root, super.internal(root);
+class _TranslationsCompanionRemoteErrorsKo extends TranslationsCompanionRemoteErrorsEn {
+	_TranslationsCompanionRemoteErrorsKo._(TranslationsKo root) : this._root = root, super.internal(root);
 
 	final TranslationsKo _root; // ignore: unused_field
 
@@ -3295,8 +3314,8 @@ class _Translations$companionRemote$errors$ko extends Translations$companionRemo
 }
 
 // Path: services.names
-class _Translations$services$names$ko extends Translations$services$names$en {
-	_Translations$services$names$ko._(TranslationsKo root) : this._root = root, super.internal(root);
+class _TranslationsServicesNamesKo extends TranslationsServicesNamesEn {
+	_TranslationsServicesNamesKo._(TranslationsKo root) : this._root = root, super.internal(root);
 
 	final TranslationsKo _root; // ignore: unused_field
 
@@ -3309,8 +3328,8 @@ class _Translations$services$names$ko extends Translations$services$names$en {
 }
 
 // Path: services.simklReconnect
-class _Translations$services$simklReconnect$ko extends Translations$services$simklReconnect$en {
-	_Translations$services$simklReconnect$ko._(TranslationsKo root) : this._root = root, super.internal(root);
+class _TranslationsServicesSimklReconnectKo extends TranslationsServicesSimklReconnectEn {
+	_TranslationsServicesSimklReconnectKo._(TranslationsKo root) : this._root = root, super.internal(root);
 
 	final TranslationsKo _root; // ignore: unused_field
 
@@ -3320,8 +3339,8 @@ class _Translations$services$simklReconnect$ko extends Translations$services$sim
 }
 
 // Path: services.deviceCode
-class _Translations$services$deviceCode$ko extends Translations$services$deviceCode$en {
-	_Translations$services$deviceCode$ko._(TranslationsKo root) : this._root = root, super.internal(root);
+class _TranslationsServicesDeviceCodeKo extends TranslationsServicesDeviceCodeEn {
+	_TranslationsServicesDeviceCodeKo._(TranslationsKo root) : this._root = root, super.internal(root);
 
 	final TranslationsKo _root; // ignore: unused_field
 
@@ -3335,8 +3354,8 @@ class _Translations$services$deviceCode$ko extends Translations$services$deviceC
 }
 
 // Path: services.oauthProxy
-class _Translations$services$oauthProxy$ko extends Translations$services$oauthProxy$en {
-	_Translations$services$oauthProxy$ko._(TranslationsKo root) : this._root = root, super.internal(root);
+class _TranslationsServicesOauthProxyKo extends TranslationsServicesOauthProxyEn {
+	_TranslationsServicesOauthProxyKo._(TranslationsKo root) : this._root = root, super.internal(root);
 
 	final TranslationsKo _root; // ignore: unused_field
 
@@ -3347,8 +3366,8 @@ class _Translations$services$oauthProxy$ko extends Translations$services$oauthPr
 }
 
 // Path: services.pendingAuth
-class _Translations$services$pendingAuth$ko extends Translations$services$pendingAuth$en {
-	_Translations$services$pendingAuth$ko._(TranslationsKo root) : this._root = root, super.internal(root);
+class _TranslationsServicesPendingAuthKo extends TranslationsServicesPendingAuthEn {
+	_TranslationsServicesPendingAuthKo._(TranslationsKo root) : this._root = root, super.internal(root);
 
 	final TranslationsKo _root; // ignore: unused_field
 
@@ -3358,8 +3377,8 @@ class _Translations$services$pendingAuth$ko extends Translations$services$pendin
 }
 
 // Path: services.libraryFilter
-class _Translations$services$libraryFilter$ko extends Translations$services$libraryFilter$en {
-	_Translations$services$libraryFilter$ko._(TranslationsKo root) : this._root = root, super.internal(root);
+class _TranslationsServicesLibraryFilterKo extends TranslationsServicesLibraryFilterEn {
+	_TranslationsServicesLibraryFilterKo._(TranslationsKo root) : this._root = root, super.internal(root);
 
 	final TranslationsKo _root; // ignore: unused_field
 
@@ -3378,2326 +3397,2340 @@ class _Translations$services$libraryFilter$ko extends Translations$services$libr
 	@override String get noLibraries => '사용 가능한 라이브러리가 없습니다';
 }
 
-/// The flat map containing all translations for locale <ko>.
+/// Flat map(s) containing all translations.
 /// Only for edge cases! For simple maps, use the map function of this library.
-///
-/// The Dart AOT compiler has issues with very large switch statements,
-/// so the map is split into smaller functions (512 entries each).
 extension on TranslationsKo {
 	dynamic _flatMapFunction(String path) {
-		return switch (path) {
-			'app.title' => 'Plezy',
-			'appIcon.title' => '앱 아이콘',
-			'appIcon.defaultIcon' => '기본',
-			'appIcon.current' => '현재 아이콘',
-			'appIcon.locked' => '테마 & 아이콘 팩에 포함',
-			'appIcon.lockedHint' => '대체 아이콘은 테마 & 아이콘 팩에 포함되어 있습니다.',
-			'appIcon.changeFailed' => '앱 아이콘을 변경하지 못했습니다',
-			'appIcon.launcherHint' => 'Plezy를 나가면 홈 화면에 새 아이콘이 표시됩니다.',
-			'appIcon.tvLauncherHint' => 'Plezy를 나가면 새 배너가 표시됩니다. Android TV에서는 TV를 다시 시작할 때까지 이전 배너가 계속 표시될 수 있습니다.',
-			'appIcon.names.midnight' => '한밤',
-			'appIcon.names.ember' => '불씨',
-			'appIcon.names.paper' => '종이',
-			'appIcon.names.oled' => 'OLED',
-			'appIcon.names.line' => '라인',
-			'appIcon.names.ocean' => '바다',
-			'appIcon.names.ultraviolet' => '자외선',
-			'appIcon.names.matcha' => '말차',
-			'appIcon.names.sunset' => '노을',
-			'appIcon.names.gold' => '골드',
-			'appIcon.names.titanium' => '티타늄',
-			'appIcon.names.glass' => '유리',
-			'appIcon.names.crt' => 'CRT',
-			'appIcon.names.vhs' => 'VHS',
-			'appIcon.names.synthwave' => '신스웨이브',
-			'appIcon.names.pixel' => '픽셀',
-			'appIcon.names.neon' => '네온',
-			'appIcon.names.sticker' => '스티커',
-			'appIcon.names.ticket' => '티켓',
-			'appIcon.names.pop' => '팝',
-			'appIcon.names.strata' => '지층',
-			'appIcon.names.facet' => '패싯',
-			'appIcon.names.tilde' => '물결',
-			'auth.signInWithPlex' => 'Plex 계정으로 로그인',
-			'auth.showQRCode' => 'QR 코드 표시',
-			'auth.authenticate' => '인증',
-			'auth.authenticationTimeout' => '인증 시간이 초과되었습니다. 다시 시도해 주세요.',
-			'auth.scanQRToSignIn' => '로그인하려면 이 QR 코드를 스캔하세요',
-			'auth.waitingForAuth' => '인증 대기 중...\n브라우저에서 로그인하세요.',
-			'auth.useBrowser' => '브라우저 사용',
-			'auth.or' => '또는',
-			'auth.connectToMediaBrowser' => ({required Object product}) => '${product}에 연결',
-			'auth.quickConnect' => 'Quick Connect',
-			'auth.useQuickConnect' => 'Quick Connect 사용',
-			'auth.quickConnectInstructions' => 'Jellyfin에서 Quick Connect를 열고 이 코드를 입력하세요.',
-			'auth.quickConnectWaiting' => '승인 대기 중…',
-			'auth.quickConnectCancel' => '취소',
-			'auth.quickConnectExpired' => 'Quick Connect가 만료되었습니다. 다시 시도하세요.',
-			'auth.localDataRecoveryRequired' => 'Plezy에서 로컬 로그인 정보와 대기 중인 재생 데이터를 안전하게 복구하지 못했습니다. 다시 로그인해 주세요.',
-			'auth.pinCheckRejected' => 'Plex PIN 확인이 거부되었습니다',
-			'common.cancel' => '취소',
-			'common.save' => '저장',
-			'common.close' => '닫기',
-			'common.clear' => '지우기',
-			'common.reset' => '초기화',
-			'common.later' => '나중에',
-			'common.submit' => '제출',
-			'common.confirm' => '확인',
-			'common.retry' => '재시도',
-			'common.logout' => '로그아웃',
-			'common.unknown' => '알 수 없는',
-			'common.refresh' => '새로고침',
-			'common.yes' => '예',
-			'common.no' => '아니오',
-			'common.delete' => '삭제',
-			'common.edit' => '편집',
-			'common.shuffle' => '무작위 재생',
-			'common.addTo' => '추가하기...',
-			'common.createNew' => '새로 만들기',
-			'common.connect' => '연결',
-			'common.disconnect' => '연결 해제',
-			'common.play' => '재생',
-			'common.pause' => '일시정지',
-			'common.resume' => '재개',
-			'common.error' => '오류',
-			'common.search' => '검색',
-			'common.home' => '홈',
-			'common.back' => '뒤로',
-			'common.settings' => '설정',
-			'common.mute' => '음소거',
-			'common.ok' => '확인',
-			'common.off' => '꺼짐',
-			'common.options' => '옵션',
-			'common.seasonNumber' => ({required Object number}) => '시즌 ${number}',
-			'common.episodeNumberTitle' => ({required Object number, required Object title}) => '${number}화 - ${title}',
-			'common.chapterNumber' => ({required Object number}) => '챕터 ${number}',
-			'common.reconnect' => '다시 연결',
-			'common.viewAll' => '모두 보기',
-			'common.checkingNetwork' => '네트워크 확인 중...',
-			'common.loadingServers' => '서버 로딩 중...',
-			'common.connectingToServers' => '서버 연결 중...',
-			'common.startingOfflineMode' => '오프라인 모드 시작 중...',
-			'common.loading' => '로딩 중...',
-			'common.fullscreen' => '전체 화면',
-			'common.exitFullscreen' => '전체 화면 종료',
-			'common.pressBackAgainToExit' => '한 번 더 누르면 종료됩니다',
-			'common.ratingSource.critic' => '평론가',
-			'common.ratingSource.audience' => '관객',
-			'common.ratingSource.imdb' => 'IMDb',
-			'common.ratingSource.tmdb' => 'TMDB',
-			'common.ratingSource.rottenTomatoes' => 'Rotten Tomatoes',
-			'common.ratingSource.simkl' => 'Simkl',
-			'common.ratingSource.mal' => 'MyAnimeList',
-			'common.ratingSource.anilist' => 'AniList',
-			'common.ratingSource.trakt' => 'Trakt',
-			'common.ratingSource.rottenTomatoesCritic' => 'Rotten Tomatoes 평론가',
-			'common.ratingSource.rottenTomatoesAudience' => 'Rotten Tomatoes 관객',
-			'common.ratingSource.metacritic' => 'Metacritic',
-			'common.ratingSource.letterboxd' => 'Letterboxd',
-			'common.notAvailable' => 'N/A',
-			'common.url' => 'URL',
-			'common.letterKeys' => 'ABC',
-			'common.mediaKind.movie' => '영화',
-			'common.mediaKind.show' => '시리즈',
-			'common.mediaKind.season' => '시즌',
-			'common.mediaKind.episode' => '에피소드',
-			'common.mediaKind.artist' => '아티스트',
-			'common.mediaKind.album' => '앨범',
-			'common.mediaKind.track' => '트랙',
-			'common.mediaKind.collection' => '컬렉션',
-			'common.mediaKind.playlist' => '재생목록',
-			'common.mediaKind.clip' => '클립',
-			'common.mediaKind.photo' => '사진',
-			'common.mediaKind.folder' => '폴더',
-			'screens.licenses' => '라이선스',
-			'screens.switchProfile' => '프로필 전환',
-			'screens.subtitleStyling' => '자막 스타일 설정',
-			'screens.mpvConfig' => 'mpv.conf',
-			'screens.logs' => '로그',
-			'update.available' => '업데이트 있음',
-			'update.versionAvailable' => ({required Object version}) => '${version} 버전을 사용할 수 있습니다',
-			'update.currentVersion' => ({required Object version}) => '현재 버전: ${version}',
-			'update.skipVersion' => '이 버전 건너뛰기',
-			'update.viewRelease' => '릴리스 정보 보기',
-			'update.latestVersion' => '최신 버전을 사용 중입니다',
-			'update.checkFailed' => '업데이트 확인 실패',
-			'supporter.title' => '테마 & 아이콘 팩',
-			'supporter.intro' => '외형 꾸미기 기능을 추가하는 선택형 1회성 구매입니다:',
-			'supporter.presetThemes' => '프리셋 테마',
-			'supporter.presetThemesDescription' => '불씨, 빙하, 숲, 자두, 종이',
-			'supporter.customTheme' => '사용자 지정 테마',
-			'supporter.customThemeDescription' => '모든 색상을 직접 선택',
-			'supporter.appIcons' => '앱 아이콘',
-			'supporter.appIconsDescription' => '대체 Plezy 아이콘 선택',
-			'supporter.buy' => ({required Object price}) => '${price}에 구매',
-			'supporter.loadingPrice' => '가격 불러오는 중...',
-			'supporter.restore' => '구매 복원',
-			'supporter.pending' => '구매가 결제 또는 승인 대기 중입니다. 스토어에서 처리가 완료되는 즉시 추가 기능이 잠금 해제됩니다.',
-			'supporter.thankYouTitle' => '구매해 주셔서 감사합니다',
-			'supporter.thankYouBody' => '테마 & 아이콘 팩이 잠금 해제되었습니다.',
-			'supporter.tileSubtitle' => '1회성 구매로 테마와 앱 아이콘 잠금 해제',
-			'supporter.tileSubtitleThemesOnly' => '1회성 구매로 테마 잠금 해제',
-			'supporter.tileUnlocked' => '잠금 해제됨 — 구매해 주셔서 감사합니다',
-			'supporter.errors.storeUnavailable' => '구매를 이용할 수 없습니다. 스토어에 로그인되어 있고 이 기기에서 구매가 허용되어 있는지 확인하세요.',
-			'supporter.errors.productNotFound' => '현재 스토어에서 테마 & 아이콘 팩을 구매할 수 없습니다.',
-			'supporter.errors.productQueryFailed' => '가격을 불러오지 못했습니다. 연결을 확인하고 다시 시도하세요.',
-			'supporter.errors.purchaseFailed' => '구매가 완료되지 않았습니다. 다시 시도하세요.',
-			'supporter.errors.restoreFailed' => '구매를 복원하기 위해 스토어에 연결하지 못했습니다. 다시 시도하세요.',
-			'supporter.errors.nothingToRestore' => '이 스토어 계정에서 테마 & 아이콘 팩 구매 내역을 찾을 수 없습니다.',
-			'settings.title' => '설정',
-			'settings.supportDeveloper' => 'Plezy 후원하기',
-			'settings.supportDeveloperDescription' => 'Liberapay로 후원하여 개발 지원',
-			'settings.language' => '언어',
-			'settings.theme' => '테마',
-			'settings.appearance' => '디자인',
-			'settings.videoPlayback' => '비디오 재생',
-			'settings.videoPlaybackDescription' => '재생 동작 설정',
-			'settings.advanced' => '고급',
-			'settings.episodePosterMode' => '에피소드 포스터 스타일',
-			'settings.seriesPoster' => '시리즈 포스터',
-			'settings.seasonPoster' => '시즌 포스터',
-			'settings.episodeThumbnail' => '썸네일',
-			'settings.showHeroSectionDescription' => '홈 화면에 주요 콘텐츠 캐러셀(슬라이드) 표시',
-			'settings.secondsLabel' => '초',
-			'settings.minutesLabel' => '분',
-			'settings.secondsShort' => '초',
-			'settings.minutesShort' => '분',
-			'settings.durationHint' => ({required Object min, required Object max}) => '기간 입력 (${min}-${max})',
-			'settings.systemTheme' => '시스템',
-			'settings.lightTheme' => '라이트',
-			'settings.darkTheme' => '다크',
-			'settings.oledTheme' => 'OLED',
-			'settings.emberTheme' => '불씨',
-			'settings.glacierTheme' => '빙하',
-			'settings.forestTheme' => '숲',
-			'settings.plumTheme' => '자두',
-			'settings.paperTheme' => '종이',
-			'settings.libraryDensity' => '라이브러리 표시 밀도',
-			'settings.displayScale' => '표시 배율',
-			'settings.compact' => '조밀하게',
-			'settings.comfortable' => '여유롭게',
-			'settings.gridSpacing' => '그리드 간격',
-			'settings.gridSpacingTight' => '조밀하게',
-			'settings.gridSpacingNormal' => '보통',
-			'settings.gridSpacingSpacious' => '여유롭게',
-			'settings.tvCornerSpotlightBackdrop' => '모서리 스포트라이트 배경',
-			'settings.tvCornerSpotlightBackdropDescription' => '화면 전체를 채우는 대신 오른쪽 상단에 스포트라이트 아트워크를 표시합니다',
-			'settings.viewMode' => '보기 모드',
-			'settings.gridView' => '그리드 보기',
-			'settings.listView' => '목록 보기',
-			'settings.showHeroSection' => '주요 추천 영역 표시',
-			'settings.continueWatchingAction' => '계속 보기 동작',
-			'settings.continueWatchingPlay' => '재생',
-			'settings.continueWatchingDetails' => '상세 정보 열기',
-			'settings.episodeAction' => '에피소드 동작',
-			'settings.episodePlay' => '재생',
-			'settings.episodeDetails' => '상세 정보 열기',
-			'settings.useGlobalHubs' => '홈 레이아웃 사용',
-			'settings.useGlobalHubsDescription' => '통합 홈 허브를 표시합니다. 끄면 라이브러리 추천을 사용합니다.',
-			'settings.showServerNameOnHubs' => '허브에 서버 이름 표시',
-			'settings.showServerNameOnHubsDescription' => '허브 제목에 항상 서버 이름을 표시합니다.',
-			'settings.groupLibrariesByServer' => '서버별로 라이브러리 그룹화',
-			'settings.groupLibrariesByServerDescription' => '사이드바 라이브러리를 미디어 서버별로 그룹화합니다.',
-			'settings.alwaysKeepSidebarOpen' => '사이드바 항상 열어두기',
-			'settings.alwaysKeepSidebarOpenDescription' => '사이드바가 확장된 상태로 유지되고 콘텐츠 영역이 맞춰집니다',
-			'settings.showUnwatchedCount' => '미시청 수 표시',
-			'settings.showUnwatchedCountDescription' => '시리즈 및 시즌에 미시청 에피소드 수 표시',
-			'settings.showWatchedIndicators' => '시청 표시 보이기',
-			'settings.showWatchedIndicatorsDescription' => '시청한 영화, 프로그램, 에피소드에 체크 표시를 표시합니다',
-			'settings.showEpisodeNumberOnCards' => '카드에 에피소드 번호 표시',
-			'settings.showEpisodeNumberOnCardsDescription' => '에피소드 카드에 시즌 및 에피소드 번호 표시',
-			'settings.showSeasonPostersOnTabs' => '탭에 시즌 포스터 표시',
-			'settings.showSeasonPostersOnTabsDescription' => '각 시즌 포스터를 탭 위에 표시',
-			'settings.tvFullCardLayout' => '전체 TV 카드',
-			'settings.tvFullCardLayoutDescription' => 'TV 카드에 이미지만 표시하고 배우 이름을 오버레이로 표시',
-			'settings.focusGlow' => '포커스 글로우',
-			'settings.focusGlowDescription' => '포커스된 카드 주위에 은은한 빛 효과를 표시',
-			'settings.visualEffects' => '시각 효과',
-			'settings.visualEffectsAuto' => '자동',
-			'settings.visualEffectsAutoDescription' => '저전력 기기에서 효과를 자동으로 줄입니다',
-			'settings.visualEffectsFull' => '전체',
-			'settings.visualEffectsReduced' => '축소',
-			'settings.visualEffectsReducedDescription' => '애니메이션을 줄이고 아트워크 해상도를 낮춥니다',
-			'settings.hideSpoilers' => '미시청 에피소드 스포일러 숨기기',
-			'settings.hideSpoilersDescription' => '시청하지 않은 에피소드의 썸네일과 설명을 흐리게 처리',
-			'settings.playerBackend' => '플레이어 백엔드',
-			'settings.exoPlayer' => 'ExoPlayer',
-			'settings.mpv' => 'mpv',
-			'settings.hardwareDecoding' => '하드웨어 디코딩',
-			'settings.hardwareDecodingDescription' => '가능한 경우 하드웨어 가속을 사용합니다',
-			'settings.playbackBuffer' => '재생 버퍼',
-			'settings.playbackBufferAuto' => '자동 (권장)',
-			'settings.playbackBufferLarge' => '대형',
-			'settings.playbackBufferExtraLarge' => '초대형',
-			'settings.playbackBufferDescription' => '불안정한 연결에 대비해 더 많은 버퍼를 사용합니다. 버퍼 크기에 의해서도 제한됩니다.',
-			'settings.defaultQualityTitle' => '기본 화질',
-			'settings.cellularQualityTitle' => '셀룰러에서 기본 화질',
-			'settings.cellularQualitySameAsDefault' => '기본 화질과 동일',
-			'settings.directPlayCoveredQuality' => '작은 동영상을 원본 화질로 재생',
-			'settings.directPlayCoveredQualityDescription' => '화질 제한 내의 동영상은 트랜스코딩하지 않고 Direct Play합니다',
-			'settings.videoCodecs' => '비디오 코덱',
-			'settings.videoCodecsDescription' => '선택 해제한 코덱은 서버가 트랜스코딩합니다',
-			'settings.videoCodecsAlwaysAccepted' => '항상 허용',
-			'settings.musicQualityTitle' => '음악 음질',
-			'settings.subtitleStyling' => '자막 스타일',
-			'settings.subtitleStylingDescription' => '자막 모양을 사용자 지정합니다',
-			'settings.smallSkipDuration' => '짧은 건너뛰기 시간',
-			'settings.largeSkipDuration' => '긴 건너뛰기 시간',
-			'settings.rewindOnResume' => '재개 시 되감기',
-			'settings.secondsUnit' => ({required Object seconds}) => '${seconds}초',
-			'settings.defaultSleepTimer' => '기본 취침 타이머',
-			'settings.minutesUnit' => ({required Object minutes}) => '${minutes}분',
-			'settings.rememberTrackSelections' => '시리즈/영화별 트랙 선택 기억',
-			'settings.rememberTrackSelectionsDescription' => '작품별 오디오 및 자막 선택 기억',
-			'settings.rememberTrackSelectionsBackendRule' => 'Plex는 파일별로 각 선택을 서버에 저장합니다. Jellyfin은 계정의 선택 기억도 활성화합니다. Emby는 지원되지 않습니다',
-			'settings.followServerTrackSelections' => '서버의 에피소드별 트랙 선택 사용',
-			'settings.followServerTrackSelectionsDescription' => '에피소드 전환 시 현재 선택을 유지하는 대신 서버에서 선택된 오디오와 자막을 적용합니다',
-			'settings.resumeMusicOnLaunch' => '음악 세션 기억',
-			'settings.resumeMusicOnLaunchDescription' => '앱 시작 시 마지막 곡을 멈춘 위치에서 일시정지 상태로 엽니다',
-			'settings.showChapterMarkersOnTimeline' => '탐색 막대에 챕터 마커 표시',
-			'settings.showChapterMarkersOnTimelineDescription' => '챕터 경계에서 탐색 막대 구분',
-			'settings.specialsOrdering' => '에피소드 순서로 스페셜 표시',
-			'settings.specialsOrderingDescription' => '시리즈 시청 순서에서 스페셜이 재생되는 위치',
-			'settings.specialsOrderingServer' => '서버 순서 따르기',
-			'settings.specialsOrderingAirDate' => '방영일 순서로 삽입',
-			'settings.specialsOrderingLast' => '일반 시즌 뒤',
-			'settings.clickVideoTogglesPlayback' => '동영상 클릭으로 재생/일시정지 전환',
-			'settings.clickVideoTogglesPlaybackDescription' => '컨트롤을 표시하는 대신 동영상을 클릭하여 재생하거나 일시정지합니다.',
-			'settings.videoPlayerControls' => '비디오 플레이어 컨트롤',
-			'settings.keyboardShortcuts' => '키보드 단축키',
-			'settings.keyboardShortcutsDescription' => '키보드 단축키를 사용자 지정합니다',
-			'settings.videoPlayerNavigation' => '비디오 플레이어 탐색',
-			'settings.videoPlayerNavigationDescription' => '방향 키로 비디오 플레이어 컨트롤을 탐색합니다',
-			'settings.watchTogetherRelay' => '함께 보기 릴레이',
-			'settings.watchTogetherRelayDescription' => '직접 설정하지 않으면 공개 Open Watch Party 릴레이를 사용합니다',
-			'settings.watchTogetherRelayHint' => 'https://my-relay.example.com',
-			'settings.watchTogetherRelayInvalid' => '올바른 HTTP 또는 HTTPS 릴레이 기본 URL을 입력하세요.',
-			'settings.crashReporting' => '충돌 보고',
-			'settings.crashReportingDescription' => '앱 개선을 위해 충돌 보고서 전송',
-			'settings.debugLogging' => '디버그 로깅',
-			'settings.debugLoggingDescription' => '문제 해결을 위해 상세 로깅 활성화',
-			'settings.viewLogs' => '로그 보기',
-			'settings.viewLogsDescription' => '애플리케이션 로그 확인',
-			'settings.clearImageCache' => '이미지 캐시 지우기',
-			'settings.clearImageCacheDescription' => '캐시된 아트워크와 썸네일을 지웁니다. 다시 다운로드할 때까지 이미지가 느리게 로드될 수 있습니다.',
-			'settings.clearImageCacheSuccess' => '이미지 캐시를 성공적으로 지웠습니다',
-			'settings.resetSettings' => '설정 재설정',
-			'settings.resetSettingsDescription' => '기본 설정으로 복원합니다. 되돌릴 수 없습니다.',
-			'settings.resetSettingsSuccess' => '설정 재설정 성공',
-			'settings.backup' => '백업',
-			'settings.exportSettings' => '설정 내보내기',
-			'settings.exportSettingsDescription' => '기본 설정을 파일로 저장',
-			'settings.exportSettingsSuccess' => '설정 내보내기 완료',
-			'settings.importSettings' => '설정 가져오기',
-			'settings.importSettingsDescription' => '파일에서 기본 설정 복원',
-			'settings.importSettingsConfirm' => '현재 설정을 대체합니다. 계속하시겠습니까?',
-			'settings.importSettingsSuccess' => '설정 가져오기 완료',
-			'settings.importSettingsInvalidFile' => '유효한 Plezy 설정 내보내기 파일이 아닙니다',
-			'settings.importSettingsNoUser' => '설정을 가져오기 전에 로그인하세요',
-			'settings.shortcutsReset' => '단축키가 기본값으로 재설정되었습니다',
-			'settings.resetShortcutsConfirm' => '사용자 지정 단축키가 기본값으로 대체됩니다. 계속하시겠습니까?',
-			'settings.about' => '정보',
-			'settings.aboutDescription' => '앱 정보 및 라이선스',
-			'settings.updates' => '업데이트',
-			'settings.updateAvailable' => '사용 가능한 업데이트 있음',
-			'settings.checkForUpdates' => '업데이트 확인',
-			'settings.autoCheckUpdatesOnStartup' => '시작 시 자동으로 업데이트 확인',
-			'settings.autoCheckUpdatesOnStartupDescription' => '실행 시 업데이트가 있으면 알림',
-			'settings.validationErrorEnterNumber' => '유효한 숫자를 입력하세요',
-			'settings.validationErrorDuration' => ({required Object min, required Object max, required Object unit}) => '기간은 ${min}과 ${max} ${unit} 사이여야 합니다',
-			'settings.shortcutAlreadyAssigned' => ({required Object action}) => '단축키가 이미 ${action}에 할당되었습니다',
-			'settings.shortcutUpdated' => ({required Object action}) => '${action} 단축키가 업데이트되었습니다',
-			'settings.saveFailed' => '변경 사항을 저장하지 못했습니다. 다시 시도하세요.',
-			'settings.autoPlayAndSkip' => '자동 재생 및 건너뛰기',
-			'settings.autoPlayNextEpisode' => '다음 에피소드 자동 재생',
-			'settings.autoPlayNextEpisodeDescription' => '에피소드가 끝나면 다음 에피소드를 자동으로 재생',
-			'settings.shuffleStartsFromBeginning' => '무작위 재생 시 처음부터 시작',
-			'settings.shuffleStartsFromBeginningDescription' => '무작위 재생 시 이어보기 대신 각 에피소드를 처음부터 재생합니다',
-			'settings.playNextCountdown' => '다음 재생 카운트다운',
-			'settings.playNextCountdownImmediate' => '즉시 재생',
-			'settings.skipIntroMode' => '인트로 건너뛰기',
-			'settings.skipIntroModeOffDescription' => '건너뛰기 버튼 없이 인트로를 정상적으로 재생합니다',
-			'settings.skipIntroModeButtonDescription' => '인트로가 시작되면 건너뛰기 버튼을 표시합니다',
-			'settings.skipIntroModeAutoDescription' => '아래 지연 시간 후 인트로를 자동으로 건너뜁니다',
-			'settings.skipCreditsMode' => '크레딧 건너뛰기',
-			'settings.skipCreditsModeOffDescription' => '건너뛰기 버튼 없이 크레딧을 정상적으로 재생합니다',
-			'settings.skipCreditsModeButtonDescription' => '크레딧이 시작되면 건너뛰기 버튼을 표시합니다',
-			'settings.skipCreditsModeAutoDescription' => '크레딧을 자동으로 건너뛰고 다음 에피소드를 재생합니다',
-			'settings.skipMarkerModeOff' => '끄기',
-			'settings.skipMarkerModeButton' => '버튼 표시',
-			'settings.skipMarkerModeAuto' => '자동',
-			'settings.forceSkipMarkerFallback' => '대체 마커 강제 사용',
-			'settings.forceSkipMarkerFallbackDescription' => 'Plex에 마커가 있어도 챕터 제목 패턴 사용',
-			'settings.autoSkipDelay' => '자동 건너뛰기 지연',
-			'settings.autoSkipDelayDescription' => ({required Object seconds}) => '자동으로 건너뛰기 전 ${seconds}초 대기',
-			'settings.introPattern' => '인트로 마커 패턴',
-			'settings.introPatternDescription' => '챕터 제목에서 인트로 마커를 인식하는 정규식 패턴',
-			'settings.creditsPattern' => '크레딧 마커 패턴',
-			'settings.creditsPatternDescription' => '챕터 제목에서 크레딧 마커를 인식하는 정규식 패턴',
-			'settings.invalidRegex' => '잘못된 정규식',
-			'settings.regex' => '정규식',
-			'settings.downloads' => '다운로드',
-			'settings.downloadLocationDescription' => '다운로드 콘텐츠 저장 위치 선택',
-			'settings.downloadLocationDefault' => '기본값 (앱 저장소)',
-			'settings.downloadLocationCustom' => '사용자 지정 위치',
-			'settings.selectFolder' => '폴더 선택',
-			'settings.resetToDefault' => '기본값으로 재설정',
-			'settings.currentPath' => ({required Object path}) => '현재: ${path}',
-			'settings.downloadLocationChanged' => '다운로드 위치가 변경되었습니다',
-			'settings.downloadLocationReset' => '다운로드 위치가 기본값으로 재설정되었습니다',
-			'settings.downloadLocationInvalid' => '선택한 폴더에 쓰기 권한이 없습니다',
-			'settings.downloadLocationPickerUnavailable' => '이 기기에서는 폴더를 선택할 수 없습니다',
-			'settings.downloadOnWifiOnly' => 'Wi-Fi 연결 시에만 다운로드',
-			'settings.downloadOnWifiOnlyDescription' => '셀룰러 데이터 사용 중에는 다운로드하지 않습니다',
-			'settings.autoRemoveWatchedDownloads' => '시청한 다운로드 항목 자동 삭제',
-			'settings.autoRemoveWatchedDownloadsDescription' => '시청한 다운로드 항목을 자동으로 삭제합니다',
-			'settings.cellularDownloadBlocked' => '셀룰러에서는 다운로드가 차단됩니다. Wi-Fi를 사용하거나 설정을 변경하세요.',
-			'settings.maxVolume' => '최대 볼륨',
-			'settings.maxVolumeDescription' => '음량이 작은 콘텐츠를 위해 100% 이상의 볼륨을 허용합니다',
-			'settings.maxVolumePercent' => ({required Object percent}) => '${percent}%',
-			'settings.discordRichPresence' => 'Discord Rich Presence',
-			'settings.discordRichPresenceDescription' => 'Discord에서 시청 중인 콘텐츠 표시',
-			'settings.services' => '서비스',
-			'settings.servicesDescription' => 'Trakt, MyAnimeList, Seerr 등 연결',
-			'settings.manageLibrariesDescription' => '라이브러리 순서를 변경하거나 숨깁니다',
-			'settings.companionRemoteServer' => '컴패니언 리모트 서버',
-			'settings.companionRemoteServerDescription' => '네트워크의 모바일 기기가 이 앱을 제어할 수 있도록 허용',
-			'settings.companionRemoteServerStartFailed' => '컴패니언 리모트 서버를 시작할 수 없습니다',
-			'settings.companionRemoteServerStopFailed' => '컴패니언 리모트 서버를 중지할 수 없습니다',
-			'settings.autoPip' => '자동 PIP 모드',
-			'settings.autoPipDescription' => '재생 중 앱을 떠나면 자동으로 화면 속 화면 모드로 전환합니다',
-			'settings.matchContentFrameRate' => '콘텐츠 프레임 레이트 맞춤',
-			'settings.matchContentFrameRateDescription' => '디스플레이 새로 고침 빈도를 동영상 콘텐츠에 맞춤',
-			'settings.matchContentResolution' => '콘텐츠 해상도에 맞추기',
-			'settings.matchContentResolutionDescription' => 'TV가 업스케일링을 처리하도록 디스플레이를 영상 본래 해상도로 전환합니다. 재생 중에는 메뉴와 자막도 함께 업스케일됩니다',
-			'settings.matchRefreshRate' => '주사율 맞춤',
-			'settings.matchRefreshRateDescription' => '전체 화면에서 디스플레이 새로 고침 빈도 맞춤',
-			'settings.matchDynamicRange' => '다이나믹 레인지 맞춤',
-			'settings.matchDynamicRangeDescription' => 'HDR 콘텐츠에서는 HDR로 전환한 뒤 SDR로 되돌림',
-			'settings.displaySwitchDelay' => '디스플레이 전환 지연',
-			'settings.tunneledPlayback' => '터널 재생',
-			'settings.tunneledPlaybackDescription' => '비디오 터널링을 사용합니다. HDR 재생 시 검은 화면이 보이거나 움직임이 끊기면 비활성화하세요.',
-			'settings.audioPassthrough' => '오디오 패스스루',
-			'settings.audioPassthroughDescription' => 'Dolby/DTS 오디오를 재인코딩 없이 리시버나 TV로 전송하여 서라운드 사운드를 유지합니다. 소리가 나지 않으면 비활성화하세요.',
-			'settings.audioPassthroughDescriptionApple' => 'Dolby Digital Plus(Atmos 포함)에 Apple의 기본 Dolby 디코더를 사용합니다. DTS와 TrueHD는 계속 멀티채널 PCM으로 재생됩니다. 소리가 나지 않으면 비활성화하세요.',
-			'settings.audioPassthroughDescriptionAppleSpatial' => 'Dolby Digital Plus(Atmos 포함)에 Apple의 기본 Dolby 디코더를 사용합니다. iOS, iPadOS, tvOS 26 이상에서는 TrueHD Atmos와 DTS:X가 공간 오디오로 재생됩니다. 그 밖의 DTS 및 TrueHD 트랙은 멀티채널 PCM으로 재생됩니다. 소리가 나지 않으면 비활성화하세요.',
-			'settings.audioPassthroughOverriddenByNormalization' => '음량 정규화가 켜져 있는 동안 꺼짐',
-			'settings.audioChannelLimit' => '오디오 채널',
-			'settings.audioChannelLimitDescription' => '모든 채널을 재생할 수 없는 스피커, 헤드폰 또는 HDMI 환경에 맞게 디코딩된 오디오를 다운믹스합니다',
-			'settings.audioChannelLimitOriginal' => '원본',
-			'settings.audioChannelLimitOriginalDescription' => '트랙의 모든 채널을 재생합니다',
-			'settings.audioChannelLimitSurround51' => '최대 5.1',
-			'settings.audioChannelLimitSurround51Description' => '5.1 PCM만 지원하는 TV와 리시버를 위해 7.1을 5.1로 다운믹스합니다. 패스스루에는 영향을 주지 않습니다.',
-			'settings.audioChannelLimitStereo' => '스테레오',
-			'settings.audioChannelLimitStereoDescription' => '스테레오 스피커나 헤드폰에 맞게 2채널로 다운믹스합니다. 패스스루가 꺼집니다.',
-			'settings.downmixCenterBoost' => '센터 채널 부스트',
-			'settings.downmixCenterBoostValue' => ({required Object db}) => '${db} dB',
-			'settings.downmixCenterBoostLabel' => '부스트 (dB)',
-			'settings.downmixCenterBoostShort' => 'dB',
-			'settings.audioDownmixNormalize' => '다운믹스 시 음량 정규화',
-			'settings.audioDownmixNormalizeDescription' => '클리핑을 방지하기 위해 믹스 음량을 낮춥니다. 원래 음량을 유지하려면 끄세요(큰 소리 장면에서 왜곡될 수 있음).',
-			'settings.dvConversionMode' => 'Dolby Vision 변환',
-			'settings.dvConversionModeDescription' => 'Dolby Vision Profile 7 파일을 처리하는 방식을 선택합니다.',
-			'settings.dvConversionAuto' => '자동',
-			'settings.dvConversionNative' => '네이티브 / 비활성화',
-			'settings.dvConversionDv81' => 'P7 → P8.1',
-			'settings.dvConversionHevcStrip' => 'P7 → HEVC',
-			'settings.dvConversionAutoDescription' => '기기 기능 감지와 일반 폴백 동작을 사용합니다',
-			'settings.dvConversionNativeDescription' => '네이티브 DV7을 강제하고 DV 변환 재시도를 억제합니다',
-			'settings.dvConversionDv81Description' => 'Dolby Vision 프로필 8.1로 인라인 RPU 변환을 강제합니다',
-			'settings.dvConversionHevcStripDescription' => 'Dolby Vision RPU/EL 레이어를 제거하고 일반 HEVC로 제공합니다',
-			'settings.disableDolbyVision' => 'Dolby Vision 끄기',
-			'settings.disableDolbyVisionDescription' => '파일에 HDR10 또는 HLG 레이어가 있으면 Dolby Vision 대신 해당 레이어를 재생합니다',
-			'settings.hdrSdrConversion' => 'HDR을 SDR로 변환',
-			'settings.hdrSdrConversionDescription' => '디스플레이가 HDR을 표시할 수 없을 때 HDR 동영상을 무엇으로 변환할지 선택합니다.',
-			'settings.hdrSdrConversionAuto' => '자동',
-			'settings.hdrSdrConversionAutoDescription' => 'Android 9 이상에서는 기기, 이전 버전에서는 플레이어',
-			'settings.hdrSdrConversionDevice' => '기기',
-			'settings.hdrSdrConversionDeviceDescription' => '기기의 비디오 하드웨어가 변환합니다. 가장 빠르지만 색상은 기기에 따라 다릅니다',
-			'settings.hdrSdrConversionPlayer' => '플레이어',
-			'settings.hdrSdrConversionPlayerDescription' => '플레이어가 변환합니다. 색상은 일정하지만 저사양 TV 박스에서는 4K가 끊길 수 있습니다',
-			'settings.deinterlace' => '디인터레이싱',
-			'settings.deinterlaceDescription' => '인터레이스 비디오의 빗살 무늬 아티팩트를 제거합니다 (mpv 플레이어만 해당)',
-			'settings.deinterlaceOff' => '끄기',
-			'settings.deinterlaceOffDescription' => '인터레이스 비디오를 디코딩된 그대로 표시합니다',
-			'settings.deinterlaceVideo' => '비디오',
-			'settings.deinterlaceVideoDescription' => '각 필드를 완전한 프레임으로 변환합니다. 스포츠, 뉴스, 콘서트처럼 TV용으로 촬영된 영상에 적합합니다',
-			'settings.deinterlaceFilm' => '필름',
-			'settings.deinterlaceFilmDescription' => 'NTSC DVD에서 흔한, 29.97fps로 텔레시네된 영화와 애니메이션의 원본 프레임을 복원합니다. TV용으로 촬영된 영상은 끊겨 보입니다. 라이브 TV에는 비디오 모드가 사용됩니다',
-			'settings.requireProfileSelectionOnOpen' => '앱 실행 시 프로필 선택',
-			'settings.requireProfileSelectionOnOpenDescription' => '앱을 열 때마다 프로필 선택 화면을 표시합니다',
-			'settings.forceTvMode' => 'TV 모드 강제 사용',
-			'settings.forceTvModeDescription' => 'TV 레이아웃을 강제합니다. 자동 감지되지 않는 기기용입니다. 재시작이 필요합니다.',
-			'settings.startInFullscreen' => '전체 화면으로 시작',
-			'settings.startInFullscreenDescription' => '실행 시 Plezy를 전체 화면 모드로 엽니다',
-			'settings.exitFullscreenOnPlayerClose' => '플레이어를 닫을 때 전체 화면 종료',
-			'settings.exitFullscreenOnPlayerCloseDescription' => '비디오 플레이어를 닫을 때 자동으로 전체 화면을 종료합니다',
-			'settings.autoHidePerformanceOverlay' => '성능 오버레이 자동 숨기기',
-			'settings.autoHidePerformanceOverlayDescription' => '재생 컨트롤과 함께 성능 오버레이를 페이드 처리',
-			'settings.showNavBarLabels' => '내비게이션 바 라벨 표시',
-			'settings.showNavBarLabelsDescription' => '내비게이션 바 아이콘 아래에 텍스트 라벨을 표시합니다',
-			'settings.startupSection' => '시작 섹션',
-			'settings.showExploreTab' => '둘러보기 탭 표시',
-			'settings.showExploreTabDescription' => 'Plex Discover와 연결된 트래커의 콘텐츠가 포함된 둘러보기 탭을 표시합니다',
-			'settings.liveTvDefaultFavorites' => '즐겨찾기 채널 기본 설정',
-			'settings.liveTvDefaultFavoritesDescription' => '라이브 TV를 열 때 즐겨찾기 채널만 표시',
-			'settings.general' => '일반',
-			'settings.generalDescription' => '언어, 시작 및 창 동작',
-			'settings.languageAndRegion' => '언어 및 지역',
-			'settings.startup' => '시작',
-			'settings.display' => '디스플레이',
-			'settings.libraryAndCards' => '라이브러리 및 카드',
-			'settings.homeScreen' => '홈 화면',
-			'settings.navigation' => '탐색',
-			'settings.window' => '창',
-			'settings.liveTv' => '라이브 TV',
-			'settings.player' => '플레이어',
-			'settings.videoAndDisplay' => '비디오 및 디스플레이',
-			'settings.audio' => '오디오',
-			'settings.quality' => '화질',
-			'settings.subtitles' => '자막',
-			'settings.seekAndTiming' => '탐색 및 타이밍',
-			'settings.behavior' => '동작',
-			'settings.gestures' => '제스처',
-			'settings.gestureBrightnessSwipe' => '밝기 스와이프',
-			'settings.gestureBrightnessSwipeDescription' => '왼쪽 가장자리에서 위아래로 스와이프하여 밝기를 조절합니다',
-			'settings.gestureVolumeSwipe' => '볼륨 스와이프',
-			'settings.gestureVolumeSwipeDescription' => '오른쪽 가장자리에서 위아래로 스와이프하여 볼륨을 조절합니다',
-			'settings.gesturePinchToZoom' => '핀치 줌',
-			'settings.gesturePinchToZoomDescription' => '비디오에서 핀치하여 확대하거나 축소합니다',
-			'settings.rememberBrightnessLevel' => '밝기 수준 기억',
-			'settings.rememberBrightnessLevelDescription' => '마지막으로 스와이프하여 설정한 밝기로 재생을 시작합니다',
-			'settings.controls' => '컨트롤',
-			'settings.rememberPlayerChanges' => '플레이어 변경 사항 기억',
-			'settings.rememberPlayerChangesDescription' => '재생 중 변경한 사항을 저장하고 다시 적용할 위치',
-			'settings.scopePlaybackSpeed' => '재생 속도',
-			'settings.scopeShaderPreset' => '셰이더 프리셋',
-			'settings.scopeAspectRatio' => '화면 비율',
-			'settings.scopeZoom' => '확대/축소',
-			'settings.scopeSyncOffsets' => '오디오 및 자막 동기화',
-			'settings.playerScopeOff' => '저장하지 않음',
-			'settings.playerScopeGlobal' => '모든 곳',
-			'settings.playerScopeLibrary' => '라이브러리별',
-			'settings.playerScopeTitle' => '시리즈 또는 영화별',
-			'settings.exportDialogTitle' => 'Plezy 설정 내보내기',
-			'themeEditor.builtIn' => '기본 제공',
-			'themeEditor.presets' => '프리셋',
-			'themeEditor.custom' => '사용자 지정',
-			'themeEditor.customEmpty' => '아직 만들지 않음',
-			'themeEditor.editCustom' => '사용자 지정 테마 편집',
-			'themeEditor.editCustomDescription' => '모든 색상을 직접 선택',
-			'themeEditor.locked' => '테마 & 아이콘 팩으로 잠금 해제',
-			'themeEditor.savedLocked' => '저장됨 — 테마 & 아이콘 팩으로 잠금 해제',
-			'themeEditor.title' => '사용자 지정 테마',
-			'themeEditor.startFrom' => '기반 테마',
-			'themeEditor.startFromDescription' => '다른 테마의 모든 색상을 복사합니다',
-			'themeEditor.colors' => '색상',
-			'themeEditor.preview' => '미리보기',
-			'themeEditor.slots.bg' => '배경',
-			'themeEditor.slots.surface' => '표면',
-			'themeEditor.slots.outline' => '윤곽선',
-			'themeEditor.slots.text' => '텍스트',
-			'themeEditor.slots.textMuted' => '보조 텍스트',
-			_ => null,
-		} ?? switch (path) {
-			'themeEditor.slots.accent' => '강조색',
-			'themeEditor.opacity' => '불투명도',
-			'themeEditor.hexHint' => '#RRGGBB 또는 #AARRGGBB',
-			'themeEditor.fromOtherThemes' => '다른 테마에서',
-			'themeEditor.swatchLabel' => ({required Object theme, required Object color}) => '${theme} ${color}',
-			'themeEditor.contrast.textOnBg' => '배경 위 텍스트',
-			'themeEditor.contrast.textOnSurface' => '표면 위 텍스트',
-			'themeEditor.contrast.textMutedOnBg' => '배경 위 보조 텍스트',
-			'themeEditor.contrast.textMutedOnSurface' => '표면 위 보조 텍스트',
-			'themeEditor.contrast.accentOnBg' => '배경 위 강조색',
-			'themeEditor.contrast.accentOnSurface' => '표면 위 강조색',
-			'themeEditor.contrast.labelOnAccent' => '강조색 위 버튼 라벨',
-			'themeEditor.lowContrast' => ({required Object pair, required Object ratio, required Object minimum}) => '${pair}: ${ratio}:1, 권장 기준 ${minimum}:1 미만',
-			'themeEditor.discardTitle' => '변경 사항을 버리시겠습니까?',
-			'themeEditor.discardMessage' => '저장하지 않은 색상 변경 사항이 사라집니다.',
-			'themeEditor.discard' => '버리기',
-			'themeEditor.previewCardTitle' => ({required Object number}) => '${number}화',
-			'themeEditor.previewCardSubtitle' => ({required Object minutes}) => '${minutes}분 남음',
-			'themeEditor.previewSwitch' => '자동 재생',
-			'themeEditor.previewMutedText' => '보조 텍스트는 이렇게 표시됩니다',
-			'search.hint' => '영화, 시리즈, 음악 등을 검색하세요...',
-			'search.tryDifferentTerm' => '다른 검색어를 시도해 보세요',
-			'search.searchYourMedia' => '미디어 검색',
-			'search.enterTitleActorOrKeyword' => '제목, 배우 또는 키워드를 입력하세요',
-			'search.people' => '인물',
-			'hotkeys.setShortcutFor' => ({required Object actionName}) => '${actionName}에 대한 단축키 설정',
-			'hotkeys.clearShortcut' => '단축키 삭제',
-			'hotkeys.noShortcutSet' => '설정된 단축키 없음',
-			'hotkeys.currentShortcut' => '현재 단축키:',
-			'hotkeys.pressToRecord' => '단축키를 기록하려면 선택',
-			'hotkeys.recordingShortcut' => '지금 단축키를 누르세요',
-			'hotkeys.actions.playPause' => '재생/일시정지',
-			'hotkeys.actions.volumeUp' => '볼륨 높이기',
-			'hotkeys.actions.volumeDown' => '볼륨 낮추기',
-			'hotkeys.actions.seekForward' => ({required Object seconds}) => '앞으로 이동 (${seconds}초)',
-			'hotkeys.actions.seekBackward' => ({required Object seconds}) => '뒤로 이동 (${seconds}초)',
-			'hotkeys.actions.fullscreenToggle' => '전체 화면 전환',
-			'hotkeys.actions.muteToggle' => '음소거 전환',
-			'hotkeys.actions.subtitleToggle' => '자막 전환',
-			'hotkeys.actions.audioTrackNext' => '다음 오디오 트랙',
-			'hotkeys.actions.subtitleTrackNext' => '다음 자막 트랙',
-			'hotkeys.actions.chapterNext' => '다음 챕터',
-			'hotkeys.actions.chapterPrevious' => '이전 챕터',
-			'hotkeys.actions.episodeNext' => '다음 에피소드',
-			'hotkeys.actions.episodePrevious' => '이전 에피소드',
-			'hotkeys.actions.speedIncrease' => '속도 높이기',
-			'hotkeys.actions.speedDecrease' => '속도 낮추기',
-			'hotkeys.actions.speedReset' => '속도 초기화',
-			'hotkeys.actions.zoomIn' => '확대',
-			'hotkeys.actions.zoomOut' => '축소',
-			'hotkeys.actions.zoomReset' => '확대/축소 초기화',
-			'hotkeys.actions.subSeekNext' => '다음 자막으로 이동',
-			'hotkeys.actions.subSeekPrev' => '이전 자막으로 이동',
-			'hotkeys.actions.shaderToggle' => '셰이더 전환',
-			'hotkeys.actions.skipMarker' => '인트로/크레딧 건너뛰기',
-			'hotkeys.actions.screenshot' => '스크린샷 찍기',
-			'fileInfo.title' => '파일 정보',
-			'fileInfo.overview' => '개요',
-			'fileInfo.video' => '비디오',
-			'fileInfo.audio' => '오디오',
-			'fileInfo.subtitles' => '자막',
-			'fileInfo.images' => '내장 이미지',
-			'fileInfo.dataStreams' => '데이터 스트림',
-			'fileInfo.lyrics' => '가사',
-			'fileInfo.file' => '파일',
-			'fileInfo.attachments' => '첨부 파일',
-			'fileInfo.delivery' => '재생 방식',
-			'fileInfo.versionCounter' => ({required Object index, required Object count}) => '버전 ${index} / ${count}',
-			'fileInfo.fileCounter' => ({required Object index, required Object count}) => '파일 ${index} / ${count}',
-			'fileInfo.noStreams' => '서버에서 이 파일에 대한 스트림 정보를 보고하지 않았습니다.',
-			'fileInfo.copyPath' => '경로 복사',
-			'fileInfo.pathCopied' => '파일 경로가 복사되었습니다',
-			'fileInfo.codec' => '코덱',
-			'fileInfo.codecTag' => '코덱 태그',
-			'fileInfo.resolution' => '해상도',
-			'fileInfo.codedResolution' => '코딩 해상도',
-			'fileInfo.bitrate' => '비트레이트',
-			'fileInfo.frameRate' => '프레임 속도',
-			'fileInfo.rotation' => '회전',
-			'fileInfo.comment' => '주석',
-			'fileInfo.audioDescription' => '오디오 설명',
-			'fileInfo.headerCompression' => '헤더 압축',
-			'fileInfo.sidecarFile' => '사이드카 파일',
-			'fileInfo.transportTimestamp' => '전송 타임스탬프',
-			'fileInfo.displayOffset' => '표시 오프셋',
-			'fileInfo.previewFailureCode' => '미리보기 오류 코드',
-			'fileInfo.previewRetries' => '미리보기 재시도 횟수',
-			'fileInfo.aspectRatio' => '종횡비',
-			'fileInfo.pixelAspectRatio' => '픽셀 종횡비',
-			'fileInfo.profile' => '프로파일',
-			'fileInfo.level' => '레벨',
-			'fileInfo.bitDepth' => '비트 심도',
-			'fileInfo.pixelFormat' => '픽셀 포맷',
-			'fileInfo.colorSpace' => '색 공간',
-			'fileInfo.colorRange' => '색 범위',
-			'fileInfo.colorPrimaries' => '색 원색',
-			'fileInfo.colorTransfer' => '색상 전송',
-			'fileInfo.chromaSubsampling' => '색차 서브샘플링',
-			'fileInfo.chromaLocation' => '크로마 위치',
-			'fileInfo.scanType' => '주사 방식',
-			'fileInfo.interlaced' => '비월 주사',
-			'fileInfo.anamorphic' => '아나모픽',
-			'fileInfo.referenceFrames' => '참조 프레임',
-			'fileInfo.dynamicRange' => '동적 범위',
-			'fileInfo.dolbyVision' => 'Dolby Vision',
-			'fileInfo.dolbyVisionLevel' => 'Dolby Vision 레벨',
-			'fileInfo.dolbyVisionVersion' => 'Dolby Vision 버전',
-			'fileInfo.dolbyVisionLayers' => 'Dolby Vision 레이어',
-			'fileInfo.baseLayerCompatibility' => '베이스 레이어 호환성',
-			'fileInfo.avcBitstream' => 'AVC 비트스트림',
-			'fileInfo.nalLengthSize' => 'NAL 길이 크기',
-			'fileInfo.scalingMatrix' => '사용자 지정 스케일링 매트릭스',
-			'fileInfo.streamIdentifier' => '스트림 식별자',
-			'fileInfo.streamIndex' => '스트림 인덱스',
-			'fileInfo.streamId' => '스트림 ID',
-			'fileInfo.language' => '언어',
-			'fileInfo.languageCode' => '언어 코드',
-			'fileInfo.streamTitle' => '트랙 제목',
-			'fileInfo.channels' => '채널',
-			'fileInfo.sampleRate' => '샘플 레이트',
-			'fileInfo.spatialAudio' => '공간 오디오',
-			'fileInfo.textBased' => '텍스트 기반',
-			'fileInfo.subtitleFormat' => '사이드카 포맷',
-			'fileInfo.provider' => '제공자',
-			'fileInfo.matchScore' => '일치 점수',
-			'fileInfo.externalDelivery' => '별도 제공 가능',
-			'fileInfo.sidecarPath' => '사이드카 경로',
-			'fileInfo.sourceStream' => '복사 출처',
-			'fileInfo.temporary' => '임시',
-			'fileInfo.timeBase' => '시간 기준',
-			'fileInfo.overallBitrate' => '전체 비트레이트',
-			'fileInfo.path' => '경로',
-			'fileInfo.fileName' => '파일 이름',
-			'fileInfo.size' => '크기',
-			'fileInfo.totalSize' => '총 크기',
-			'fileInfo.container' => '컨테이너',
-			'fileInfo.duration' => '재생 시간',
-			'fileInfo.previewThumbnails' => '미리보기 썸네일',
-			'fileInfo.previewIndex' => '미리보기 인덱스',
-			'fileInfo.packetLength' => '패킷 길이',
-			'fileInfo.filePresent' => '파일 있음',
-			'fileInfo.fileReadable' => '서버에서 읽기 가능',
-			'fileInfo.streamPath' => '스트림 경로',
-			'fileInfo.optimizedForStreaming' => '스트리밍 최적화',
-			'fileInfo.has64bitOffsets' => '64비트 오프셋',
-			'fileInfo.protocol' => '프로토콜',
-			'fileInfo.mediaType' => '미디어 유형',
-			'fileInfo.sourceKind' => '소스 종류',
-			'fileInfo.optimizedVersion' => '최적화 버전',
-			'fileInfo.optimizationTarget' => '최적화 대상',
-			'fileInfo.deletedAt' => '삭제됨',
-			'fileInfo.remoteSource' => '원격 소스',
-			'fileInfo.infiniteStream' => '무한 스트림',
-			'fileInfo.directPlay' => 'Direct Play',
-			'fileInfo.directStream' => 'Direct Stream',
-			'fileInfo.transcoding' => '트랜스코딩',
-			'fileInfo.etag' => 'ETag',
-			'fileInfo.versionId' => '버전 ID',
-			'fileInfo.fileId' => '파일 ID',
-			'fileInfo.defaultAudioTrack' => '기본 오디오 트랙',
-			'fileInfo.defaultSubtitleTrack' => '기본 자막 트랙',
-			'fileInfo.subtitlesOff' => '꺼짐',
-			'fileInfo.flagDefault' => '기본',
-			'fileInfo.flagForced' => '강제',
-			'fileInfo.flagSelected' => '선택됨',
-			'fileInfo.flagExternal' => '외부',
-			'fileInfo.flagHearingImpaired' => '청각 장애인용',
-			'fileInfo.flagDub' => '더빙',
-			'fileInfo.flagOriginal' => '원본',
-			'fileInfo.channelsMono' => '모노',
-			'fileInfo.dolbyVisionProfile' => ({required Object profile}) => '프로파일 ${profile}',
-			'mediaMenu.markAsWatched' => '시청 완료로 표시',
-			'mediaMenu.markAsUnwatched' => '미시청으로 표시',
-			'mediaMenu.removeFromContinueWatching' => '계속 보기에서 제거',
-			'mediaMenu.viewDetails' => '상세 정보 보기',
-			'mediaMenu.goToSeries' => '시리즈로 이동',
-			'mediaMenu.shufflePlay' => '무작위 재생',
-			'mediaMenu.shuffleNotAvailableOffline' => '오프라인에서는 무작위 재생을 사용할 수 없습니다',
-			'mediaMenu.fileInfo' => '파일 정보',
-			'mediaMenu.deleteEpisodeFromServer' => '서버에서 에피소드 삭제',
-			'mediaMenu.deleteSeasonFromServer' => '서버에서 시즌 삭제',
-			'mediaMenu.deleteShowFromServer' => '서버에서 프로그램 삭제',
-			'mediaMenu.deleteMovieFromServer' => '서버에서 영화 삭제',
-			'mediaMenu.deleteEpisodeTitle' => '이 에피소드를 삭제할까요?',
-			'mediaMenu.deleteSeasonTitle' => '이 시즌을 삭제할까요?',
-			'mediaMenu.deleteShowTitle' => '이 프로그램을 삭제할까요?',
-			'mediaMenu.deleteMovieTitle' => '이 영화를 삭제할까요?',
-			'mediaMenu.deleteEpisodeConfirm' => '에피소드 삭제',
-			'mediaMenu.deleteSeasonConfirm' => '시즌 삭제',
-			'mediaMenu.deleteShowConfirm' => '프로그램 삭제',
-			'mediaMenu.deleteMovieConfirm' => '영화 삭제',
-			'mediaMenu.deleteAnyway' => '그래도 삭제',
-			'mediaMenu.confirmDeleteTarget' => ({required Object title}) => '서버에서 ${title}을(를) 영구 삭제할까요?',
-			'mediaMenu.deleteMultipleWarning' => '모든 에피소드와 파일이 포함됩니다.',
-			'mediaMenu.deleteEpisodeCountWarning' => ({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('ko'))(n, other: '포함된 에피소드 ${n}개와 해당 파일이 모두 삭제됩니다.', ), 
-			'mediaMenu.deleteMultiPartWarning' => ({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('ko'))(n, other: '이 항목은 파일 ${n}개에 걸쳐 저장되어 있으며, 모든 파일이 삭제됩니다.', ), 
-			'mediaMenu.deleteSharedFileHeading' => ({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('ko'))(n, other: '같은 파일에 저장된 다른 에피소드 ${n}개도 함께 삭제됩니다:', ), 
-			'mediaMenu.deleteScopeUnverifiedProbeFailed' => 'Plezy가 어떤 파일이 삭제될지 확인하지 못해 위 항목보다 더 많은 파일이 삭제될 수 있습니다. 취소하고 다시 시도하거나 그래도 삭제하세요.',
-			'mediaMenu.deleteScopeUnverifiedNoFileInfo' => '서버가 이 항목의 파일 정보를 제공하지 않아 Plezy가 어떤 파일이 삭제될지 확인할 수 없습니다. 위 항목보다 더 많은 파일이 삭제될 수 있습니다.',
-			'mediaMenu.mediaDeletedSuccessfully' => '미디어 항목이 성공적으로 삭제되었습니다',
-			'mediaMenu.mediaFailedToDelete' => '미디어 항목 삭제 실패',
-			'mediaMenu.rate' => '평가',
-			'mediaMenu.playFromBeginning' => '처음부터 재생',
-			'mediaMenu.playVersion' => '버전 재생...',
-			'rateSheet.title' => '평가',
-			'rateSheet.server' => '서버',
-			'rateSheet.favorite' => '즐겨찾기',
-			'rateSheet.favorited' => '즐겨찾기됨',
-			'rateSheet.saved' => '저장됨',
-			'rateSheet.notAvailable' => '일치 항목 없음',
-			'rateSheet.noConnectedServices' => '평가하려면 설정에서 서비스를 연결하세요.',
-			'accessibility.mediaCardMovie' => ({required Object title}) => '${title}, 영화',
-			'accessibility.mediaCardShow' => ({required Object title}) => '${title}, TV 프로그램',
-			'accessibility.mediaCardEpisode' => ({required Object title, required Object episodeInfo}) => '${title}, ${episodeInfo}',
-			'accessibility.mediaCardSeason' => ({required Object title, required Object seasonInfo}) => '${title}, ${seasonInfo}',
-			'accessibility.mediaCardWatched' => '시청 완료',
-			'accessibility.mediaCardPartiallyWatched' => ({required Object percent}) => '${percent}% 시청 완료',
-			'accessibility.mediaCardUnwatched' => '미시청',
-			'accessibility.tapToPlay' => '탭하여 재생',
-			'accessibility.decrease' => '낮추기',
-			'accessibility.increase' => '높이기',
-			'accessibility.decreaseValue' => ({required Object label}) => '${label} 낮추기',
-			'accessibility.increaseValue' => ({required Object label}) => '${label} 높이기',
-			'accessibility.hue' => '색조',
-			'accessibility.saturation' => '채도',
-			'accessibility.brightness' => '밝기',
-			'accessibility.hexColor' => '16진수 색상',
-			'accessibility.expandText' => '텍스트 펼치기',
-			'accessibility.collapseText' => '텍스트 접기',
-			'accessibility.alphabetNavigation' => '알파벳 탐색',
-			'accessibility.alphabetScrollHint' => '위아래로 스와이프하여 글자별로 이동',
-			'accessibility.rowColumnPosition' => ({required Object rowCount, required Object row, required Object columnCount, required Object column}) => '${rowCount}행 중 ${row}행, ${columnCount}열 중 ${column}열',
-			'accessibility.rowPosition' => ({required Object rowCount, required Object row}) => '${rowCount}행 중 ${row}행',
-			'accessibility.autoScrollPlay' => '자동 스크롤 재생',
-			'accessibility.autoScrollPause' => '자동 스크롤 일시정지',
-			'accessibility.hueShort' => 'H',
-			'accessibility.saturationShort' => 'S',
-			'accessibility.valueShort' => 'V',
-			'tooltips.shufflePlay' => '무작위 재생',
-			'tooltips.playTrailer' => '예고편 재생',
-			'tooltips.markAsWatched' => '시청 완료로 표시',
-			'tooltips.markAsUnwatched' => '미시청으로 표시',
-			'audioTracks.track' => ({required Object n}) => '오디오 트랙 ${n}',
-			'videoControls.audioLabel' => '오디오',
-			'videoControls.subtitlesLabel' => '자막',
-			'videoControls.addTime' => ({required Object amount, required Object unit}) => '+${amount}${unit}',
-			'videoControls.letterbox' => '레터박스 모드',
-			'videoControls.fillScreen' => '화면 채우기',
-			'videoControls.stretch' => '확장',
-			'videoControls.lockRotation' => '회전 잠금',
-			'videoControls.unlockRotation' => '회전 잠금 해제',
-			'videoControls.timerActive' => '타이머 활성화됨',
-			'videoControls.playbackWillPauseIn' => ({required Object duration}) => '${duration} 후 재생이 일시정지됩니다',
-			'videoControls.sleepTimerEndOfVideo' => '현재 비디오의 끝',
-			'videoControls.sleepTimerStopAtHeader' => '정지 시점',
-			'videoControls.sleepTimerDurationHeader' => '타이머',
-			'videoControls.playbackWillPauseAtEnd' => '재생이 이 비디오의 끝에서 일시 중지됩니다',
-			'videoControls.stillWatching' => '아직 시청 중이신가요?',
-			'videoControls.pausingIn' => ({required Object seconds}) => '${seconds}초 후 일시 정지',
-			'videoControls.continueWatching' => '계속',
-			'videoControls.autoPlayNext' => '다음 자동 재생',
-			'videoControls.playNext' => '다음 재생',
-			'videoControls.playButton' => '재생',
-			'videoControls.pauseButton' => '일시정지',
-			'videoControls.playbackPaused' => '일시정지됨',
-			'videoControls.playbackResumed' => '재생 중',
-			'videoControls.loadingVideo' => '동영상 로딩 중...',
-			'videoControls.showPlaybackControls' => '재생 컨트롤 표시',
-			'videoControls.hidePlaybackControls' => '재생 컨트롤 숨기기',
-			'videoControls.seekBackwardButton' => ({required Object seconds}) => '${seconds}초 뒤로 이동',
-			'videoControls.seekForwardButton' => ({required Object seconds}) => '${seconds}초 앞으로 이동',
-			'videoControls.previousButton' => '이전 에피소드',
-			'videoControls.nextButton' => '다음 에피소드',
-			'videoControls.previousChapterButton' => '이전 챕터',
-			'videoControls.nextChapterButton' => '다음 챕터',
-			'videoControls.muteButton' => '음소거',
-			'videoControls.unmuteButton' => '음소거 해제',
-			'videoControls.settingsButton' => '재생 설정',
-			'videoControls.tracksButton' => '오디오 및 자막',
-			'videoControls.chaptersButton' => '챕터',
-			'videoControls.versionQualityButton' => '버전 및 화질',
-			'videoControls.versionColumnHeader' => '버전',
-			'videoControls.qualityColumnHeader' => '화질',
-			'videoControls.qualityOriginal' => '원본',
-			'videoControls.qualityPresetLabel' => ({required Object resolution, required Object bitrate}) => '${resolution}p ${bitrate} Mbps',
-			'videoControls.transcodeUnavailableFallback' => '트랜스코딩을 사용할 수 없음 — 원본 화질로 재생',
-			'videoControls.subtitleUnavailableFallback' => '선택한 자막을 불러올 수 없어 자막 없이 재생을 계속합니다',
-			'videoControls.pipButton' => '픽처 인 픽처 모드',
-			'videoControls.aspectRatioButton' => '화면비율',
-			'videoControls.ambientLighting' => '주변 조명',
-			'videoControls.fullscreenButton' => '전체 화면',
-			'videoControls.exitFullscreenButton' => '전체 화면 종료',
-			'videoControls.alwaysOnTopButton' => '창 최상위 고정',
-			'videoControls.rotationLockButton' => '회전 잠금',
-			'videoControls.lockScreen' => '화면 잠금',
-			'videoControls.screenLockButton' => '화면 잠금',
-			'videoControls.timelineSlider' => '타임라인',
-			'videoControls.volumeSlider' => '볼륨 조절',
-			'videoControls.endsAt' => ({required Object time}) => '${time}에 종료',
-			'videoControls.pipActive' => '화면 속 화면으로 재생 중',
-			'videoControls.pipFailed' => '화면 속 화면 모드를 시작할 수 없습니다',
-			'videoControls.screenshotSaved' => '스크린샷 저장됨',
-			'videoControls.screenshotFailed' => '스크린샷을 찍지 못했습니다',
-			'videoControls.zoomPercent' => ({required Object percent}) => '확대/축소 ${percent}%',
-			'videoControls.volumePercent' => ({required Object percent}) => '볼륨 ${percent}%',
-			'videoControls.pipErrors.androidVersion' => 'Android 8.0 이상이 필요합니다',
-			'videoControls.pipErrors.iosVersion' => 'iOS 15.0 이상이 필요합니다',
-			'videoControls.pipErrors.permissionDisabled' => '화면 속 화면이 비활성화되어 있습니다. 시스템 설정에서 활성화하세요.',
-			'videoControls.pipErrors.notSupported' => '이 기기는 화면 속 화면 모드를 지원하지 않습니다',
-			'videoControls.pipErrors.voSwitchFailed' => '화면 속 화면을 위한 비디오 출력 전환에 실패했습니다',
-			'videoControls.pipErrors.failed' => '화면 속 화면 모드를 시작할 수 없습니다',
-			'videoControls.pipErrors.prepareFailed' => '화면 속 화면을 준비할 수 없습니다',
-			'videoControls.pipErrors.unknown' => ({required Object error}) => '오류가 발생했습니다: ${error}',
-			'videoControls.chapters' => '챕터',
-			'videoControls.noChaptersAvailable' => '사용 가능한 챕터가 없습니다',
-			'videoControls.queue' => '재생 대기열',
-			'videoControls.noQueueItems' => '대기열에 항목이 없습니다',
-			'videoControls.noAudioDevicesAvailable' => '사용 가능한 오디오 기기가 없습니다',
-			'videoControls.searchSubtitles' => '자막 검색',
-			'videoControls.language' => '언어',
-			'videoControls.noSubtitlesFound' => '자막을 찾을 수 없습니다',
-			'videoControls.subtitleDownloaded' => '자막이 다운로드되었습니다',
-			'videoControls.subtitleDownloadedNotApplied' => '자막을 다운로드했지만 선택할 수 없습니다',
-			'videoControls.subtitleDownloadFailed' => '자막 다운로드에 실패했습니다',
-			'videoControls.subtitleDownloadTimedOut' => '자막이 제시간에 나타나지 않았습니다. 다운로드에 실패했을 수 있습니다',
-			'videoControls.searchLanguages' => '언어 검색...',
-			'videoControls.skipIntro' => '인트로 건너뛰기',
-			'videoControls.skipCredits' => '크레딧 건너뛰기',
-			'videoControls.nextEpisode' => '다음 에피소드',
-			'videoControls.subtitleTrack' => ({required Object n}) => '트랙 ${n}',
-			'videoControls.subtitleFile' => ({required Object name}) => '자막 ${name}',
-			'videoControls.forcedTrack' => ({required Object label}) => '${label} (강제)',
-			'videoControls.osdSubtitlesOff' => '자막: 꺼짐',
-			'videoControls.osdSubtitles' => ({required Object track}) => '자막: ${track}',
-			'videoControls.osdAudio' => ({required Object track}) => '오디오: ${track}',
-			'messages.markedAsWatched' => '시청 완료로 표시됨',
-			'messages.markedAsUnwatched' => '미시청으로 표시됨',
-			'messages.markedAsWatchedOffline' => '시청 완료로 표시됨 (연결 시 동기화됨)',
-			'messages.markedAsUnwatchedOffline' => '미시청으로 표시됨 (연결 시 동기화됨)',
-			'messages.autoRemovedWatchedDownload' => ({required Object title}) => '자동 삭제됨: ${title}',
-			'messages.autoRemovedWatchedDownloads' => ({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('ko'))(n, other: '시청한 다운로드 ${n}개를 자동 삭제했습니다', ), 
-			'messages.removedFromContinueWatching' => '계속 시청 목록에서 제거됨',
-			'messages.errorLoading' => ({required Object error}) => '오류: ${error}',
-			'messages.searchPartialResults' => '일부 미디어 서버를 검색하지 못했습니다. 사용 가능한 결과만 표시합니다.',
-			'messages.streamInterrupted' => '스트림이 중단되었습니다. 재생을 누르거나 탐색하여 다시 시도하세요.',
-			'messages.liveStreamInterrupted' => '라이브 스트림이 중단되었습니다. 재생을 눌러 다시 시도하세요.',
-			'messages.fileInfoNotAvailable' => '파일 정보가 없습니다',
-			'messages.playbackAuthenticationRequired' => '이 항목을 재생하려면 미디어 서버에 다시 로그인하세요.',
-			'messages.playbackServerUnavailable' => '미디어 서버를 사용할 수 없습니다. 나중에 다시 시도하세요.',
-			'messages.playbackDataInvalid' => '서버에서 잘못된 재생 정보를 반환했습니다.',
-			'messages.playbackCancelled' => '재생이 취소되었습니다.',
-			'messages.playbackFailed' => '재생을 시작할 수 없습니다.',
-			'messages.playbackFailedDetail' => ({required Object error}) => '재생을 시작할 수 없습니다: ${error}',
-			'messages.audioOutputFailed' => '오디오 출력이 응답하지 않습니다. TV 또는 리시버의 오디오 연결을 확인하세요. 다른 앱에서도 소리가 나지 않으면 기기를 재시작하세요.',
-			'messages.mediaUnavailable' => '이 콘텐츠는 더 이상 사용할 수 없습니다.',
-			'messages.errorLoadingFileInfo' => ({required Object error}) => '파일 정보 로딩 중 오류: ${error}',
-			'messages.errorLoadingSeries' => '시리즈 로딩 중 오류',
-			'messages.musicNotSupported' => '음악 재생 미지원',
-			'messages.noDescriptionAvailable' => '설명이 없습니다',
-			'messages.noProfilesAvailable' => '사용 가능한 프로필이 없습니다',
-			'messages.contactAdminForProfiles' => '프로필을 추가하려면 서버 관리자에게 문의하세요',
-			'messages.unableToDetermineLibrarySection' => '이 항목의 라이브러리 섹션을 확인할 수 없습니다',
-			'messages.logsCleared' => '로그가 삭제되었습니다',
-			'messages.logsCopied' => '로그가 클립보드에 복사되었습니다',
-			'messages.noLogsAvailable' => '사용 가능한 로그가 없습니다',
-			'messages.libraryScanning' => ({required Object title}) => '"${title}"을(를) 스캔 중입니다...',
-			'messages.libraryScanStarted' => ({required Object title}) => '"${title}" 미디어 라이브러리 스캔 시작',
-			'messages.libraryScanFailed' => ({required Object error}) => '미디어 라이브러리 스캔 실패: ${error}',
-			'messages.metadataRefreshing' => ({required Object title}) => '"${title}" 메타데이터 새로고침 중...',
-			'messages.metadataRefreshStarted' => ({required Object title}) => '"${title}" 메타데이터 새로고침 시작됨',
-			'messages.metadataRefreshFailed' => ({required Object error}) => '메타데이터 새로고침 실패: ${error}',
-			'messages.logoutConfirm' => '로그아웃하시겠습니까?',
-			'messages.noSeasonsFound' => '시즌을 찾을 수 없음',
-			'messages.seasonsLoadFailed' => '시즌을 불러오지 못했습니다',
-			'messages.noEpisodesFound' => '시즌 1에서 에피소드를 찾을 수 없습니다',
-			'messages.noEpisodesFoundGeneral' => '에피소드를 찾을 수 없습니다',
-			'messages.episodesLoadFailed' => '에피소드를 불러오지 못했습니다',
-			'messages.noResultsFound' => '결과를 찾을 수 없습니다',
-			'messages.sleepTimerSet' => ({required Object label}) => '취침 타이머가 ${label}(으)로 설정되었습니다',
-			'messages.noItemsAvailable' => '사용 가능한 항목이 없습니다',
-			'messages.failedToCreatePlayQueueNoItems' => '재생 대기열을 만들지 못했습니다 — 항목이 없습니다',
-			'messages.failedPlayback' => ({required Object action, required Object error}) => '${action}을(를) 수행할 수 없습니다: ${error}',
-			'messages.switchingToCompatiblePlayer' => '호환되는 플레이어로 전환 중...',
-			'messages.serverLimitTitle' => '재생 실패',
-			'messages.serverLimitBody' => '서버 오류(HTTP 500). 대역폭/트랜스코딩 제한으로 세션이 거부된 것 같습니다. 소유자에게 조정을 요청하세요.',
-			'messages.mediaUnreadableTitle' => '파일을 사용할 수 없음',
-			'messages.mediaUnreadableBody' => '서버에서 이 항목을 찾았지만 파일을 읽을 수 없습니다(HTTP 404). 파일이 이동되거나 삭제되었거나 저장소가 오프라인 상태일 수 있습니다. 서버 관리자에게 파일 확인과 라이브러리 재스캔을 요청하세요.',
-			'messages.serverBusyTitle' => '스트림을 사용할 수 없음',
-			'messages.serverBusyBody' => '서버에서 이 파일의 스트리밍을 계속 거부했습니다(HTTP 503). 서버가 다시 시작 중이거나 사용량이 많을 수 있으며, 파일이 저장된 저장소가 오프라인일 수도 있습니다. 잠시 후 다시 시도하세요. 문제가 계속되면 서버 소유자에게 서버와 파일 저장소를 확인해 달라고 요청하세요.',
-			'messages.playbackNotAllowedTitle' => '재생이 허용되지 않음',
-			'messages.playbackNotAllowedBody' => '서버에서 이 항목의 스트리밍을 거부했습니다(HTTP 403). 계정에 재생 권한이 없거나 서버가 로컬 네트워크에서만 재생을 허용할 수 있습니다.',
-			'messages.logsUploaded' => '로그 업로드 완료',
-			'messages.logsUploadFailed' => '로그 업로드 실패',
-			'messages.logId' => '로그 ID',
-			'messages.burnedSubtitlesUseMenu' => '자막이 이 스트림에 입혀져 있습니다. 자막 메뉴에서 변경하세요.',
-			'messages.noVideoUrl' => '사용 가능한 비디오 URL이 없습니다',
-			'messages.playbackNoMediaSources' => '서버에서 재생 가능한 미디어 소스를 반환하지 않았습니다',
-			'messages.playbackDataNotPrepared' => '재생 데이터가 준비되기 전에 재생이 시작되었습니다',
-			'messages.streamSelectionUnavailable' => '이 소스에서는 스트림을 선택할 수 없습니다',
-			'messages.streamSelectionFailed' => '선택한 스트림을 적용할 수 없습니다',
-			'messages.trackSelectionNotRemembered' => '이 트랙 선택은 현재 재생에만 적용됩니다.',
-			'messages.serverUnavailableForProfile' => '활성 프로필에 사용할 수 있는 서버가 없습니다',
-			'subtitlingStyling.text' => '텍스트',
-			'subtitlingStyling.border' => '테두리',
-			'subtitlingStyling.background' => '배경',
-			'subtitlingStyling.fontSize' => '글자 크기',
-			'subtitlingStyling.textColor' => '텍스트 색상',
-			'subtitlingStyling.borderSize' => '테두리 크기',
-			'subtitlingStyling.borderColor' => '테두리 색상',
-			'subtitlingStyling.backgroundOpacity' => '배경 불투명도',
-			'subtitlingStyling.backgroundColor' => '배경색',
-			'subtitlingStyling.position' => '위치',
-			'subtitlingStyling.assOverride' => 'ASS 오버라이드',
-			'subtitlingStyling.overrideScale' => '크기 조정',
-			'subtitlingStyling.overrideForce' => '강제 적용',
-			'subtitlingStyling.overrideStrip' => '스타일 제거',
-			'subtitlingStyling.positionTop' => '위',
-			'subtitlingStyling.positionBottom' => '아래',
-			'subtitlingStyling.useMargins' => '여백 사용',
-			'subtitlingStyling.useMarginsDescription' => '텍스트 자막을 비디오 바깥 영역에 표시할 수 있습니다. 스타일이 적용된 자막은 원래 위치를 유지할 수 있습니다.',
-			'subtitlingStyling.anchorToScreen' => '화면에 고정',
-			'subtitlingStyling.anchorToScreenDescription' => '와이드스크린 비디오 아래의 검은 여백에 텍스트 자막을 표시합니다',
-			'subtitlingStyling.bold' => '굵게',
-			'subtitlingStyling.italic' => '기울임꼴',
-			'subtitlingStyling.renderResolution' => '렌더링 해상도',
-			'subtitlingStyling.renderResolutionScreen' => '화면 해상도',
-			'subtitlingStyling.renderResolutionVideo' => '영상 해상도',
-			'mpvConfig.title' => 'mpv.conf',
-			'mpvConfig.description' => '고급 비디오 플레이어 설정',
-			'mpvConfig.presets' => '프리셋',
-			'mpvConfig.noPresets' => '저장된 프리셋이 없습니다',
-			'mpvConfig.saveAsPreset' => '프리셋으로 저장...',
-			'mpvConfig.presetName' => '프리셋 이름',
-			'mpvConfig.presetNameHint' => '이 프리셋의 이름을 입력하세요',
-			'mpvConfig.loadPreset' => '불러오기',
-			'mpvConfig.deletePreset' => '삭제',
-			'mpvConfig.presetSaved' => '프리셋이 저장되었습니다',
-			'mpvConfig.presetLoaded' => '프리셋을 불러왔습니다',
-			'mpvConfig.presetDeleted' => '프리셋이 삭제되었습니다',
-			'mpvConfig.confirmDeletePreset' => '이 프리셋을 삭제하시겠습니까?',
-			'mpvConfig.configPlaceholder' => 'gpu-api=vulkan\nhwdec=auto\n# comment',
-			'mpvConfig.lineHint' => 'option=value',
-			'mpvConfig.addLine' => '줄 추가',
-			'mpvConfig.removeLine' => '줄 제거',
-			'mpvConfig.embeddedVoHint' => 'Linux에서는 vo, gpu-context, gpu-api가 무시됩니다. 내장 동영상은 항상 비디오 평면에서 vo=libmpv로 렌더링되며, gpu-next(ArtCNN 같은 컴퓨트 셰이더에 필요)는 내장 방식으로 실행할 수 없습니다.',
-			'dialog.confirmAction' => '작업 확인',
-			'profiles.addPlezyProfile' => 'Plezy 프로필 추가',
-			'profiles.switchingProfile' => '프로필 전환 중…',
-			'profiles.deleteThisProfileTitle' => '이 프로필을 삭제하시겠습니까?',
-			'profiles.deleteThisProfileMessage' => ({required Object displayName}) => '${displayName}을(를) 제거합니다. 연결에는 영향이 없습니다.',
-			'profiles.active' => '활성',
-			'profiles.manage' => '관리',
-			'profiles.delete' => '삭제',
-			'profiles.signOut' => '로그아웃',
-			'profiles.signOutPlexTitle' => 'Plex에서 로그아웃하시겠습니까?',
-			'profiles.signOutPlexMessage' => ({required Object displayName}) => '${displayName} 및 모든 Plex Home 사용자를 제거할까요? 언제든 다시 로그인할 수 있습니다.',
-			'profiles.signOutPlexDeleteDownloads' => '다운로드도 삭제',
-			'profiles.signOutPlexDeleteDownloadsDescription' => '삭제하지 않으면 다운로드가 이 기기에 남아 있다가 이 계정에 다시 로그인하면 다시 표시됩니다.',
-			'profiles.signedOutPlex' => 'Plex에서 로그아웃되었습니다.',
-			'profiles.signOutFailed' => '로그아웃에 실패했습니다.',
-			'profiles.sectionTitle' => '프로필',
-			'profiles.summarySingle' => '관리되는 사용자와 로컬 ID를 혼합하려면 프로필을 추가하세요',
-			'profiles.summaryMultipleWithActive' => ({required Object count, required Object activeName}) => '${count}개 프로필 · 활성: ${activeName}',
-			'profiles.summaryMultiple' => ({required Object count}) => '${count}개 프로필',
-			'profiles.removeConnectionTitle' => '연결을 제거하시겠습니까?',
-			'profiles.removeConnectionMessage' => ({required Object displayName, required Object connectionLabel}) => '${displayName}의 ${connectionLabel} 접근 권한을 제거합니다. 다른 프로필에는 유지됩니다.',
-			'profiles.deleteProfileTitle' => '프로필을 삭제하시겠습니까?',
-			'profiles.deleteProfileMessage' => ({required Object displayName}) => '${displayName} 및 해당 연결을 제거합니다. 서버는 계속 사용할 수 있습니다.',
-			'profiles.profileNameLabel' => '프로필 이름',
-			'profiles.pinProtectionLabel' => 'PIN 보호',
-			'profiles.pinManagedByPlex' => 'PIN은 Plex에서 관리됩니다. plex.tv에서 편집하세요.',
-			'profiles.noPinSetEditOnPlex' => '설정된 PIN이 없습니다. 요구하려면 plex.tv에서 Home 사용자를 편집하세요.',
-			'profiles.setPin' => 'PIN 설정',
-			'profiles.setPinTitle' => 'PIN 설정',
-			'profiles.confirmPinTitle' => 'PIN 확인',
-			'profiles.pinSet' => 'PIN 설정됨',
-			'profiles.changePin' => '변경',
-			'profiles.removePin' => '제거',
-			'profiles.connectionsLabel' => '연결',
-			'profiles.add' => '추가',
-			'profiles.deleteProfileButton' => '프로필 삭제',
-			'profiles.noConnectionsHint' => '연결이 없습니다 — 이 프로필을 사용하려면 하나 추가하세요.',
-			'profiles.noConnections' => '연결 없음',
-			'profiles.plexHomeAccount' => 'Plex Home 계정',
-			'profiles.plexAccountChip' => ({required Object account}) => 'Plex 계정: ${account}',
-			'profiles.plexAccountUserChip' => ({required Object account, required Object user}) => '${account} 계정의 ${user}',
-			'profiles.connectionDefault' => '기본값',
-			'profiles.connectionAs' => ({required Object displayName}) => '${displayName}(으)로',
-			'profiles.makeDefault' => '기본값으로 설정',
-			'profiles.removeConnection' => '제거',
-			'profiles.profileRenamed' => '프로필 이름이 변경되었습니다.',
-			'profiles.borrowAddTo' => ({required Object displayName}) => '${displayName}에 추가',
-			'profiles.borrowExplain' => '다른 프로필의 연결을 빌립니다. PIN으로 보호된 프로필에는 PIN이 필요합니다.',
-			'profiles.borrowEmpty' => '아직 빌릴 것이 없습니다.',
-			'profiles.borrowEmptySubtitle' => '먼저 다른 프로필에 Plex, Jellyfin 또는 Emby를 연결하세요.',
-			'profiles.borrowLoadFailed' => '사용 가능한 연결을 불러오지 못했습니다. 다시 시도하세요.',
-			'profiles.borrowFromProfile' => ({required Object displayName}) => '${displayName}에서',
-			'profiles.borrowConnectionBorrowed' => '연결을 빌렸습니다.',
-			'profiles.borrowFailed' => '연결을 빌리지 못했습니다.',
-			'profiles.incorrectPin' => 'PIN이 올바르지 않습니다.',
-			'profiles.incorrectPinTryAgain' => 'PIN이 올바르지 않습니다. 다시 시도하세요.',
-			'profiles.sourceProfileMissingParentAccount' => '원본 프로필에 상위 계정이 없습니다.',
-			'profiles.failedToLoadHomeUsers' => 'Plex Home 사용자를 불러올 수 없습니다. 연결을 확인하고 다시 시도하세요.',
-			'profiles.failedToVerifyPin' => 'PIN을 확인하지 못했습니다.',
-			'profiles.newProfile' => '새 프로필',
-			'profiles.profileNameHint' => '예: 손님, 어린이, 가족실',
-			'profiles.pinProtectionOptional' => 'PIN 보호 (선택 사항)',
-			'profiles.pinExplain' => '프로필 전환에는 4자리 PIN이 필요합니다.',
-			'profiles.continueButton' => '계속',
-			'profiles.pinsDontMatch' => 'PIN이 일치하지 않습니다',
-			'profiles.tokenIdentityMismatch' => 'Plex 프로필 토큰이 예상과 다른 서버로 확인되었습니다',
-			'connections.sectionTitle' => '연결',
-			_ => null,
-		} ?? switch (path) {
-			'connections.addConnection' => '연결 추가',
-			'connections.addConnectionSubtitleNoProfile' => 'Plex로 로그인하거나 Jellyfin 또는 Emby 서버에 연결',
-			'connections.addConnectionSubtitleScoped' => ({required Object displayName}) => '${displayName}에 추가: Plex, Jellyfin, Emby 또는 다른 프로필 연결',
-			'connections.sessionExpiredOne' => ({required Object name}) => '${name}의 세션이 만료되었습니다',
-			'connections.sessionExpiredMany' => ({required Object count}) => '${count}개 서버의 세션이 만료되었습니다',
-			'connections.accessDeniedOne' => ({required Object name}) => '${name}에서 이 계정의 접근을 거부했습니다',
-			'connections.accessDeniedMany' => ({required Object count}) => '${count}개 서버에서 이 계정의 접근을 거부했습니다',
-			'connections.signInAgain' => '다시 로그인',
-			'connections.editMediaBrowserTitle' => ({required Object product}) => '${product} 연결 편집',
-			'connections.editMediaBrowserIntro' => ({required Object serverName}) => '${serverName}의 URL을 추가하거나 제거하세요. Plezy는 연결 가능한 URL 중 지연 시간이 가장 낮은 URL을 사용합니다.',
-			'accountPreferences.sectionTitle' => '계정 기본 설정',
-			'accountPreferences.hubSubtitleSingle' => ({required Object account}) => '${account}에 저장된 오디오, 자막 및 라이브러리 옵션',
-			'accountPreferences.hubSubtitleMultiple' => ({required Object count}) => '${count}개 계정에 저장된 오디오, 자막 및 라이브러리 옵션',
-			'accountPreferences.pickAccount' => '각 계정은 고유한 기본 설정을 저장합니다. 편집할 계정을 선택하세요.',
-			'accountPreferences.storedOnAccount' => '이 옵션은 계정 자체에 저장되므로 해당 계정으로 로그인한 모든 앱에서 사용됩니다 — 다른 기기의 Plezy를 포함합니다.',
-			'accountPreferences.noAccounts' => '구성할 계정이 없습니다',
-			'accountPreferences.noAccountsHint' => 'Plex에 로그인하거나 Jellyfin 또는 Emby 서버에 연결하면 해당 계정에 저장된 기본 설정이 여기에 표시됩니다.',
-			'accountPreferences.unavailable' => '이 계정에 연결할 수 없습니다',
-			'accountPreferences.loadFailed' => '이 기본 설정을 불러올 수 없습니다',
-			'accountPreferences.noPreference' => '기본 설정 없음',
-			'accountPreferences.notSet' => '설정되지 않음',
-			'accountPreferences.groups.audioAndSubtitles' => '오디오 및 자막',
-			'accountPreferences.groups.libraryDisplay' => '라이브러리',
-			'accountPreferences.groups.personalMedia' => '개인 미디어',
-			'accountPreferences.preferredAudioLanguage' => '선호 오디오 언어',
-			'accountPreferences.autoSelectAudio' => '언어별로 오디오 선택',
-			'accountPreferences.autoSelectAudioDescription' => '끄면 파일이 기본으로 표시한 오디오 트랙을 유지합니다.',
-			'accountPreferences.preferredSubtitleLanguage' => '선호 자막 언어',
-			'accountPreferences.subtitleMode' => '자막 자동 켜기',
-			'accountPreferences.subtitleModes.none' => '수동 선택',
-			'accountPreferences.subtitleModes.noneDescription' => '자동으로 자막을 켜지 않습니다.',
-			'accountPreferences.subtitleModes.defaultMode' => '트랙 플래그 따르기',
-			'accountPreferences.subtitleModes.defaultModeDescription' => '각 자막 트랙에 저장된 기본 및 강제 플래그를 사용합니다.',
-			'accountPreferences.subtitleModes.always' => '항상 활성화',
-			'accountPreferences.subtitleModes.alwaysDescription' => '선호 언어의 자막 트랙이 있으면 항상 켭니다.',
-			'accountPreferences.subtitleModes.onlyForced' => '강제 자막만',
-			'accountPreferences.subtitleModes.onlyForcedDescription' => '강제로 표시된 트랙만 로드합니다.',
-			'accountPreferences.subtitleModes.smart' => '외국어 오디오 시 표시',
-			'accountPreferences.subtitleModes.smartDescription' => '오디오가 다른 언어일 때만 자막을 켭니다.',
-			'accountPreferences.subtitleAccessibility' => 'SDH 자막',
-			'accountPreferences.subtitleAccessibilityOptions.preferNonSdh' => 'SDH가 아닌 자막 선호',
-			'accountPreferences.subtitleAccessibilityOptions.preferSdh' => 'SDH 자막 선호',
-			'accountPreferences.subtitleAccessibilityOptions.onlySdh' => 'SDH 자막만',
-			'accountPreferences.subtitleAccessibilityOptions.onlyNonSdh' => 'SDH가 아닌 자막만',
-			'accountPreferences.forcedSubtitles' => '강제 자막',
-			'accountPreferences.forcedSubtitleOptions.preferNonForced' => '강제가 아닌 자막 선호',
-			'accountPreferences.forcedSubtitleOptions.preferForced' => '강제 자막 선호',
-			'accountPreferences.forcedSubtitleOptions.onlyForced' => '강제 자막만',
-			'accountPreferences.forcedSubtitleOptions.onlyNonForced' => '강제가 아닌 자막만',
-			'accountPreferences.displayMissingEpisodes' => '누락된 에피소드 표시',
-			'accountPreferences.displayMissingEpisodesDescription' => '서버가 알고 있지만 파일이 없는 에피소드를 나열합니다.',
-			'accountPreferences.hidePlayedInLatest' => '최신 항목에서 시청한 항목 숨기기',
-			'accountPreferences.hidePlayedInLatestDescription' => '이미 시청한 항목은 서버의 최신 행에서 제외합니다.',
-			'accountPreferences.displayCollectionsView' => '컬렉션 보기 표시',
-			'accountPreferences.displayCollectionsViewDescription' => '라이브러리와 함께 서버의 컬렉션 보기를 제공합니다.',
-			'accountPreferences.rewatchingInNextUp' => '재시청한 프로그램을 다음 에피소드에 유지',
-			'accountPreferences.rewatchingInNextUpDescription' => '프로그램을 끝까지 본 뒤 다시 시작하면, 목록에서 제거하는 대신 다음 에피소드가 재시청을 따라갑니다.',
-			'accountPreferences.watchedIndicator' => '시청 표시',
-			'accountPreferences.watchedIndicatorOptions.none' => '안 함',
-			'accountPreferences.watchedIndicatorOptions.moviesAndShows' => '영화 및 TV 프로그램',
-			'accountPreferences.watchedIndicatorOptions.movies' => '영화만',
-			'accountPreferences.watchedIndicatorOptions.shows' => 'TV 프로그램만',
-			'accountPreferences.mediaReviewsVisibility' => '평점 및 리뷰',
-			'accountPreferences.mediaReviewsOptions.usersAndCritics' => '사용자 및 평론가',
-			'accountPreferences.mediaReviewsOptions.usersOnly' => '사용자만',
-			'accountPreferences.mediaReviewsOptions.criticsOnly' => '평론가만',
-			'accountPreferences.mediaReviewsOptions.nobody' => '숨김',
-			'discover.title' => '둘러보기',
-			'discover.noContentAvailable' => '사용 가능한 콘텐츠가 없습니다',
-			'discover.addMediaToLibraries' => '미디어 라이브러리에 미디어를 추가해 주세요',
-			'discover.continueWatching' => '계속 시청',
-			'discover.continueWatchingIn' => ({required Object library}) => '${library}에서 계속 시청',
-			'discover.nextUp' => '다음 에피소드',
-			'discover.nextUpIn' => ({required Object library}) => '${library}의 다음 에피소드',
-			'discover.recentlyAdded' => '최근에 추가됨',
-			'discover.recentlyAddedIn' => ({required Object library}) => '${library}에 최근에 추가됨',
-			'discover.latestAlbumsIn' => ({required Object library}) => '${library}의 최신 앨범',
-			'discover.recentlyPlayedIn' => ({required Object library}) => '${library}에서 최근 재생',
-			'discover.mostPlayedIn' => ({required Object library}) => '${library}에서 가장 많이 재생',
-			'discover.playEpisode' => ({required Object season, required Object episode}) => 'S${season}E${episode}',
-			'discover.overview' => '개요',
-			'discover.cast' => '출연진',
-			'discover.extras' => '예고편 및 부가영상',
-			'discover.studio' => '제작사',
-			'discover.rating' => '연령 등급',
-			'discover.director' => '감독',
-			'discover.directors' => '감독',
-			'discover.movie' => '영화',
-			'discover.tvShow' => 'TV 시리즈',
-			'discover.minutesLeft' => ({required Object minutes}) => '${minutes}분 남음',
-			'discover.moreLikeThis' => '비슷한 콘텐츠',
-			'discover.titleCount' => ({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('ko'))(n, other: '${n}개 타이틀', ), 
-			'discover.person.born' => '출생',
-			'discover.person.died' => '사망',
-			'discover.person.birthplace' => '출생지',
-			'discover.person.dateWithAge' => ({required Object date, required Object age}) => '${date} (${age}세)',
-			'discover.person.dateWithAgeAtDeath' => ({required Object date, required Object age}) => '${date} (향년 ${age}세)',
-			'errors.searchFailed' => ({required Object error}) => '검색 실패: ${error}',
-			'errors.searchUnavailable' => '검색이 어떤 미디어 서버에도 연결할 수 없습니다.',
-			'errors.connectionTimeout' => ({required Object context}) => '${context} 로드 중 연결 시간 초과',
-			'errors.connectionFailed' => '미디어 서버에 연결할 수 없습니다',
-			'errors.unableToLoad' => ({required Object context}) => '${context}을(를) 불러올 수 없습니다. 다시 시도하세요.',
-			'errors.noClientAvailable' => '사용 가능한 클라이언트가 없습니다',
-			'errors.pleaseEnterToken' => '토큰을 입력해 주세요',
-			'errors.invalidToken' => '토큰이 유효하지 않습니다',
-			'errors.failedToVerifyToken' => ({required Object error}) => '토큰을 확인할 수 없습니다: ${error}',
-			'errors.failedToSwitchProfile' => ({required Object displayName}) => '${displayName}으로 전환할 수 없습니다',
-			'errors.failedToDeleteProfile' => ({required Object displayName}) => '${displayName}을(를) 삭제할 수 없습니다',
-			'errors.failedToRate' => '평점을 업데이트하지 못했습니다',
-			'errors.reasonTimedOut' => '연결 시간이 초과되었습니다',
-			'errors.reasonUnreachable' => '서버에 연결할 수 없습니다',
-			'errors.reasonRefused' => '서버가 요청을 거부했습니다',
-			'errors.reasonNotFound' => '항목이 더 이상 서버에 없습니다',
-			'errors.reasonServerError' => '서버에서 오류가 보고되었습니다',
-			'errors.reasonCancelled' => '요청이 취소되었습니다',
-			'errors.reasonUnexpected' => '예기치 않은 오류가 발생했습니다',
-			'libraries.title' => '미디어 라이브러리',
-			'libraries.fallbackTitle' => '라이브러리',
-			'libraries.scanLibraryFiles' => '미디어 라이브러리 파일 스캔',
-			'libraries.scanLibrary' => '미디어 라이브러리 스캔',
-			'libraries.analyze' => '분석',
-			'libraries.analyzeLibrary' => '미디어 라이브러리 분석',
-			'libraries.refreshMetadata' => '메타데이터 새로 고침',
-			'libraries.emptyTrash' => '휴지통 비우기',
-			'libraries.emptyingTrash' => ({required Object title}) => '「${title}」의 휴지통을 비우고 있습니다...',
-			'libraries.trashEmptied' => ({required Object title}) => '「${title}」의 휴지통을 비웠습니다',
-			'libraries.failedToEmptyTrash' => ({required Object error}) => '휴지통 비우기 실패: ${error}',
-			'libraries.analyzing' => ({required Object title}) => '"${title}" 분석 중...',
-			'libraries.analysisStarted' => ({required Object title}) => '"${title}" 분석 시작됨',
-			'libraries.failedToAnalyze' => ({required Object error}) => '미디어 라이브러리 분석 실패: ${error}',
-			'libraries.noLibrariesFound' => '미디어 라이브러리 없음',
-			'libraries.allLibrariesHidden' => '모든 라이브러리가 숨겨졌습니다',
-			'libraries.hiddenLibrariesCount' => ({required Object count}) => '숨겨진 라이브러리 (${count})',
-			'libraries.thisLibraryIsEmpty' => '이 미디어 라이브러리는 비어 있습니다',
-			'libraries.noItemsMatchFilters' => '활성화된 필터와 일치하는 항목이 없습니다',
-			'libraries.resetFilters' => '필터 초기화',
-			'libraries.all' => '전체',
-			'libraries.clearAll' => '모두 삭제',
-			'libraries.scanLibraryConfirm' => ({required Object title}) => '「${title}」을(를) 스캔하시겠습니까?',
-			'libraries.analyzeLibraryConfirm' => ({required Object title}) => '「${title}」을(를) 분석하시겠습니까?',
-			'libraries.refreshMetadataConfirm' => ({required Object title}) => '「${title}」의 메타데이터를 새로고침하시겠습니까?',
-			'libraries.emptyTrashConfirm' => ({required Object title}) => '${title}의 휴지통을 비우시겠습니까?',
-			'libraries.manageLibraries' => '미디어 라이브러리 관리',
-			'libraries.sort' => '정렬',
-			'libraries.sortBy' => '정렬 기준',
-			'libraries.filters' => '필터',
-			'libraries.confirmActionMessage' => '이 작업을 실행하시겠습니까?',
-			'libraries.showLibrary' => '미디어 라이브러리 표시',
-			'libraries.hideLibrary' => '미디어 라이브러리 숨기기',
-			'libraries.libraryOptions' => '미디어 라이브러리 옵션',
-			'libraries.content' => '미디어 라이브러리 콘텐츠',
-			'libraries.selectLibrary' => '미디어 라이브러리 선택',
-			'libraries.filtersWithCount' => ({required Object count}) => '필터 (${count})',
-			'libraries.noRecommendations' => '추천 없음',
-			'libraries.noCollections' => '이 미디어 라이브러리에는 컬렉션이 없습니다',
-			'libraries.noFoldersFound' => '폴더를 찾을 수 없습니다',
-			'libraries.folders' => '폴더',
-			'libraries.tabs.recommended' => '추천',
-			'libraries.tabs.browse' => '찾아보기',
-			'libraries.tabs.collections' => '컬렉션',
-			'libraries.tabs.playlists' => '재생 목록',
-			'libraries.groupings.title' => '그룹',
-			'libraries.groupings.all' => '전체',
-			'libraries.groupings.movies' => '영화',
-			'libraries.groupings.shows' => 'TV 프로그램',
-			'libraries.groupings.seasons' => '시즌',
-			'libraries.groupings.episodes' => '화',
-			'libraries.groupings.artists' => '아티스트',
-			'libraries.groupings.albums' => '앨범',
-			'libraries.groupings.tracks' => '트랙',
-			'libraries.groupings.folders' => '폴더',
-			'libraries.filterCategories.genre' => '장르',
-			'libraries.filterCategories.year' => '연도',
-			'libraries.filterCategories.contentRating' => '시청 등급',
-			'libraries.filterCategories.tag' => '태그',
-			'libraries.filterCategories.unwatched' => '미시청',
-			'libraries.filterCategories.unplayed' => '재생하지 않음',
-			'libraries.filterCategories.favorites' => '즐겨찾기',
-			'libraries.filterCategories.filePath' => '파일 경로',
-			'libraries.sortLabels.title' => '제목',
-			'libraries.sortLabels.dateAdded' => '추가된 날짜',
-			'libraries.sortLabels.releaseDate' => '출시일',
-			'libraries.sortLabels.rating' => '평점',
-			'libraries.sortLabels.communityRating' => '커뮤니티 평점',
-			'libraries.sortLabels.criticRating' => '평론가 평점',
-			'libraries.sortLabels.userRating' => '사용자 평점',
-			'libraries.sortLabels.datePlayed' => '재생일',
-			'libraries.sortLabels.playCount' => '재생 횟수',
-			'libraries.sortLabels.productionYear' => '제작 연도',
-			'libraries.sortLabels.runtime' => '재생 시간',
-			'libraries.sortLabels.officialRating' => '공식 등급',
-			'libraries.sortLabels.premiereDate' => '최초 공개일',
-			'libraries.sortLabels.startDate' => '시작일',
-			'libraries.sortLabels.airTime' => '방영 시간',
-			'libraries.sortLabels.studio' => '스튜디오',
-			'libraries.sortLabels.random' => '무작위',
-			'libraries.sortLabels.dateShared' => '공유된 날짜',
-			'libraries.sortLabels.latestEpisodeAirDate' => '최신 에피소드 방영일',
-			'libraries.sortLabels.lastEpisodeDateAdded' => '최신 에피소드 추가일',
-			'libraries.sortLabels.dateDownloaded' => '다운로드된 날짜',
-			'libraries.sortLabels.size' => '크기',
-			'libraries.sortLabels.library' => '라이브러리',
-			'libraries.advancedFilters.include' => '포함',
-			'libraries.advancedFilters.exclude' => '제외',
-			'libraries.advancedFilters.any' => '전체',
-			'libraries.advancedFilters.yes' => '예',
-			'libraries.advancedFilters.no' => '아니오',
-			'libraries.advancedFilters.not' => ({required Object value}) => '${value} 제외',
-			'libraries.advancedFilters.valueCount' => ({required Object count}) => '${count}개 선택됨',
-			'libraries.advancedFilters.valueCountExcluded' => ({required Object count}) => '${count}개 제외됨',
-			'libraries.advancedFilters.searchValues' => '값 검색',
-			'libraries.advancedFilters.noValues' => '값 없음',
-			'libraries.advancedFilters.matchContains' => '포함',
-			'libraries.advancedFilters.matchNotContains' => '포함하지 않음',
-			'libraries.advancedFilters.matchIs' => '같음',
-			'libraries.advancedFilters.matchIsNot' => '같지 않음',
-			'libraries.advancedFilters.matchBeginsWith' => '시작 문자',
-			'libraries.advancedFilters.matchEndsWith' => '끝 문자',
-			'libraries.advancedFilters.textHint' => '일치시킬 텍스트 입력',
-			'libraries.advancedFilters.from' => '시작',
-			'libraries.advancedFilters.to' => '끝',
-			'libraries.advancedFilters.range' => ({required Object from, required Object to}) => '${from}~${to}',
-			'libraries.advancedFilters.atLeast' => ({required Object value}) => '${value} 이상',
-			'libraries.advancedFilters.atMost' => ({required Object value}) => '${value} 이하',
-			'libraries.advancedFilters.dateLastDays' => ({required Object count}) => '최근 ${count}일',
-			'libraries.advancedFilters.dateLastYear' => '최근 1년',
-			'libraries.advancedFilters.dateOlderThanDays' => ({required Object count}) => '${count}일 이상 지남',
-			'libraries.advancedFilters.dateOlderThanYear' => '1년 이상 지남',
-			'about.title' => '소개',
-			'about.openSourceLicenses' => '오픈소스 라이선스',
-			'about.versionLabel' => ({required Object version}) => '버전 ${version}',
-			'about.appDescription' => 'Flutter로 만든 아름다운 Plex, Jellyfin 및 Emby 클라이언트',
-			'about.viewLicensesDescription' => '타사 라이브러리 라이선스 보기',
-			'serverSelection.noServersFoundForAccount' => ({required Object username, required Object email}) => '${username} (${email})의 서버를 찾을 수 없습니다.',
-			'serverSelection.failedToLoadServers' => ({required Object error}) => '서버를 로드할 수 없습니다: ${error}',
-			'serverSelection.noValidServers' => '이 계정에서 사용할 수 있는 서버를 찾지 못했습니다',
-			'hubDetail.title' => '제목',
-			'hubDetail.releaseYear' => '출시 연도',
-			'hubDetail.dateAdded' => '추가 날짜',
-			'hubDetail.rating' => '평점',
-			'hubDetail.noItemsFound' => '항목이 없습니다',
-			'logs.clearLogs' => '로그 지우기',
-			'logs.copyLogs' => '로그 복사',
-			'logs.uploadLogs' => '로그 업로드',
-			'startup.failedTitle' => 'Plezy를 시작하지 못했습니다',
-			'startup.failedBody' => '시작 중 문제가 발생했습니다. 아래 세부 정보에서 실패 원인을 확인할 수 있습니다.',
-			'startup.failedBodyRepairable' => 'Plezy의 저장된 설정 파일이 손상되어 Plezy를 시작하려면 먼저 파일을 다시 만들어야 합니다. 재시도해도 해결되지 않습니다 — 저장소 복구를 선택하세요.',
-			'startup.phaseLabel' => '단계',
-			'startup.showDetails' => '세부 정보 표시',
-			'startup.hideDetails' => '세부 정보 숨기기',
-			'startup.copyDetails' => '세부 정보 복사',
-			'startup.detailsCopied' => '세부 정보가 클립보드에 복사되었습니다',
-			'startup.uploadDetails' => '세부 정보 업로드',
-			'startup.repairStorage' => '저장소 복구',
-			'startup.repairTitle' => '저장된 데이터를 복구할까요?',
-			'startup.repairBodyCommon' => 'Plezy의 설정 파일이 손상되어 읽을 수 없습니다. 복구하면 모든 설정이 기본값으로 재설정됩니다.',
-			'startup.repairBodyOneCredential' => '저장된 로그인 정보 하나가 손상되어 읽을 수 없습니다. 복구하면 해당 로그인 정보만 제거되며 다른 설정은 그대로 유지됩니다.',
-			'startup.repairBodySignInsKept' => '서버와 프로필은 로그인 상태가 유지됩니다.',
-			'startup.repairBodySignInsLost' => '저장된 로그인 정보를 보호하는 키를 이 파일에서 복구할 수 없어 모든 서버와 프로필에 다시 로그인해야 합니다. 미디어 서버의 데이터에는 영향이 없습니다.',
-			'startup.repairBodySessionsUncertain' => '트래커(MAL, AniList, Simkl, Trakt)와 Seerr는 별도로 저장되며 유지 여부가 확실하지 않습니다. Plezy가 유지된 항목을 정확히 알려줄 것입니다.',
-			'startup.repairConfirm' => '복구',
-			'startup.repairSucceeded' => '저장소가 복구되었습니다',
-			'startup.repairNeedsRestart' => '저장소가 복구되었습니다 — 재시작 필요',
-			'startup.restartRequiredBody' => '데이터가 복구되었지만 Plezy는 이를 사용하려면 새로 시작해야 합니다. Plezy를 종료한 후 다시 열어주세요.',
-			'startup.quitPlezy' => 'Plezy 종료',
-			'startup.repairFailed' => '복구 실패',
-			'startup.repairKeptSignIns' => '서버와 프로필이 계속 로그인 상태입니다.',
-			'startup.repairLostSignIns' => '저장된 로그인 정보를 보호하는 키를 복구할 수 없었습니다. 모든 서버와 프로필에 다시 로그인해야 합니다.',
-			'startup.repairLostSessions' => '트래커 또는 Seerr 연결이 하나 이상 끊어져 다시 연결해야 합니다.',
-			'startup.backupTitle' => '손상된 파일의 복사본이 보관되었습니다',
-			'startup.backupWarning' => '로그인 자격 증명이 포함되어 있습니다. 업로드하거나 공유하지 마세요.',
-			'startup.deleteBackup' => '복사본 삭제',
-			'startup.backupDeleted' => '복사본이 삭제되었습니다.',
-			'startup.previousFailureTitle' => '지난번에 Plezy를 시작하지 못했습니다',
-			'licenses.relatedPackages' => '관련 소프트웨어 패키지',
-			'licenses.license' => '라이선스',
-			'licenses.licenseNumber' => ({required Object number}) => '라이선스 ${number}',
-			'licenses.licensesCount' => ({required Object count}) => '${count}개의 라이선스',
-			'navigation.libraries' => '미디어 라이브러리',
-			'navigation.downloads' => '다운로드',
-			'navigation.liveTv' => '실시간 TV',
-			'navigation.explore' => '탐색',
-			'explore.title' => '탐색',
-			'explore.selectSource' => '소스 선택',
-			'explore.rows.watchlist' => '관심 목록',
-			'explore.rows.recommendedMovies' => '추천 영화',
-			'explore.rows.recommendedShows' => '추천 TV 프로그램',
-			'explore.rows.trendingMovies' => '지금 뜨는 영화',
-			'explore.rows.trendingShows' => '지금 뜨는 TV 프로그램',
-			'explore.rows.popularMovies' => '인기 영화',
-			'explore.rows.popularShows' => '인기 TV 프로그램',
-			'explore.rows.trendingAnime' => '지금 뜨는 애니메이션',
-			'explore.rows.suggestedAnime' => '추천 애니메이션',
-			'explore.rows.airingAnime' => '방영 중인 인기 애니메이션',
-			'explore.rows.popularAnime' => '가장 인기 있는 애니메이션',
-			'explore.rows.trending' => '지금 뜨는 콘텐츠',
-			'explore.rows.upcomingMovies' => '개봉 예정 영화',
-			'explore.rows.upcomingShows' => '방영 예정 TV 프로그램',
-			'explore.status.airing' => '방영 중',
-			'explore.status.ended' => '종영',
-			'explore.status.canceled' => '취소됨',
-			'explore.status.upcoming' => '방영 예정',
-			'explore.episodeCount' => ({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('ko'))(n, other: '${n}화', ), 
-			'explore.cast' => '출연진',
-			'explore.characters' => '캐릭터',
-			'explore.addToWatchlist' => '관심 목록에 추가',
-			'explore.removeFromWatchlist' => '관심 목록에서 제거',
-			'explore.addedToWatchlist' => '관심 목록에 추가했습니다',
-			'explore.removedFromWatchlist' => '관심 목록에서 삭제했습니다',
-			'explore.watchlistUpdateFailed' => '관심 목록을 업데이트하지 못했습니다',
-			'explore.watchlistNoMatch' => '이 항목을 관심 목록과 연결할 수 없습니다',
-			'explore.notInLibrary' => '라이브러리에 없음',
-			'explore.inTheseLibraries' => '이 라이브러리에 있음',
-			'explore.checkingLibrary' => '라이브러리 확인 중...',
-			'explore.libraryCheckFailed' => ({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('ko'))(n, other: '서버 ${n}개를 확인할 수 없습니다', ), 
-			'explore.emptyTitle' => '아직 아무것도 없습니다',
-			'explore.emptyMessage' => ({required Object source}) => '${source}에 콘텐츠가 추가되면 여기에 표시됩니다.',
-			'explore.searchHint' => ({required Object source}) => '${source}에서 검색',
-			'explore.searchEmpty' => ({required Object query}) => '「${query}」에 대한 결과가 없습니다',
-			'explore.searchPrompt' => ({required Object source}) => '${source}에서 영화와 TV 프로그램을 검색하세요.',
-			'explore.searchFailed' => '검색에 실패했습니다. 연결을 확인하고 다시 시도하세요.',
-			'explore.badge.rankPopular' => ({required Object n}) => '#${n} 인기',
-			'explore.badge.rankAiring' => ({required Object n}) => '#${n} 방영 중',
-			'explore.badge.rankRated' => ({required Object n}) => '#${n} 평가',
-			'explore.badge.rankTrending' => ({required Object n}) => '#${n} 트렌드',
-			'explore.badge.rankSeasonal' => ({required Object n, required Object season}) => '#${n} ${season}',
-			'explore.badge.watchingNow' => ({required Object n}) => '${n}명 시청 중',
-			'explore.badge.available' => '이용 가능',
-			'explore.badge.partiallyAvailable' => '부분 이용 가능',
-			'explore.badge.availableIn4k' => '4K 이용 가능',
-			'explore.badge.requested' => '요청됨',
-			'explore.badge.pendingApproval' => '승인 대기 중',
-			'explore.badge.processing' => '처리 중',
-			'explore.badge.declined' => '거절됨',
-			'explore.badge.requestFailed' => '요청 실패',
-			'explore.badge.requested4k' => '4K 요청됨',
-			'explore.badge.seasonsAvailable' => ({required Object available, required Object total}) => '시즌 ${available}/${total}',
-			'explore.badge.nextEpisodeIn' => ({required Object episode, required Object duration}) => '${episode}화 · ${duration} 후',
-			'explore.badge.nextAiringIn' => ({required Object duration}) => '${duration} 후 다음 화',
-			'explore.badge.episodesShort' => ({required Object n}) => '${n}화',
-			'explore.badge.minutesPerEpisode' => ({required Object n}) => '${n}분/화',
-			'explore.badge.adult' => '18+',
-			'explore.stats.listed' => ({required Object n}) => '${n}명 등록',
-			'explore.stats.viewersDay' => ({required Object n}) => '오늘 ${n}명 시청',
-			'explore.stats.viewersWeek' => ({required Object n}) => '이번 주 ${n}명 시청',
-			'explore.stats.viewersMonth' => ({required Object n}) => '이번 달 ${n}명 시청',
-			'explore.stats.viewersYear' => ({required Object n}) => '올해 ${n}명 시청',
-			'explore.stats.viewersAllTime' => ({required Object n}) => '시청자 ${n}명',
-			'explore.stats.planning' => ({required Object n}) => '${n}명 볼 예정',
-			'explore.stats.favorited' => ({required Object n}) => '즐겨찾기 ${n}명',
-			'explore.stats.dropRate' => ({required Object percent}) => '${percent} 하차',
-			'explore.stats.comments' => ({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('ko'))(n, other: '댓글 ${n}개', ), 
-			'explore.stats.votes' => ({required Object n}) => '투표 ${n}개',
-			'explore.stats.watching' => ({required Object n}) => '시청 중 ${n}명',
-			'explore.stats.completed' => ({required Object n}) => '완료 ${n}명',
-			'explore.stats.onHold' => ({required Object n}) => '보류 ${n}명',
-			'explore.stats.dropped' => ({required Object n}) => '하차 ${n}명',
-			'explore.season.winter' => '겨울',
-			'explore.season.spring' => '봄',
-			'explore.season.summer' => '여름',
-			'explore.season.fall' => '가을',
-			'explore.season.withYear' => ({required Object season, required Object year}) => '${season} ${year}년',
-			'explore.format.tv' => 'TV',
-			'explore.format.tvShort' => 'TV 단편',
-			'explore.format.movie' => '영화',
-			'explore.format.special' => '스페셜',
-			'explore.format.ova' => 'OVA',
-			'explore.format.ona' => 'ONA',
-			'explore.format.music' => '음악',
-			'explore.format.other' => '기타',
-			'explore.sourceMaterial.original' => '오리지널',
-			'explore.sourceMaterial.manga' => '만화',
-			'explore.sourceMaterial.lightNovel' => '라이트 노벨',
-			'explore.sourceMaterial.novel' => '소설',
-			'explore.sourceMaterial.visualNovel' => '비주얼 노벨',
-			'explore.sourceMaterial.game' => '게임',
-			'explore.sourceMaterial.webComic' => '웹툰',
-			'explore.sourceMaterial.musicRelease' => '음악',
-			'explore.sourceMaterial.otherMedia' => '기타',
-			'explore.creditRole.actor' => '배우',
-			'explore.creditRole.director' => '감독',
-			'explore.creditRole.writer' => '각본',
-			'explore.creditRole.producer' => '프로듀서',
-			'explore.creditRole.creator' => '제작자',
-			'explore.creditRole.composer' => '작곡',
-			'explore.relation.prequel' => '프리퀄',
-			'explore.relation.sequel' => '시퀄',
-			'explore.relation.sideStory' => '사이드 스토리',
-			'explore.relation.spinOff' => '스핀오프',
-			'explore.relation.alternativeVersion' => '대체 버전',
-			'explore.relation.summary' => '요약',
-			'explore.relation.parentStory' => '원작',
-			'explore.relation.adaptation' => '각색',
-			'explore.relation.other' => '관련',
-			'explore.broadcast' => ({required Object day, required Object time}) => '${day} ${time} 방영',
-			'explore.broadcastWithZone' => ({required Object day, required Object time, required Object timezone}) => '${day} ${time} ${timezone} 방영',
-			'explore.detail.originalTitle' => '원제',
-			'explore.detail.alsoKnownAs' => '다른 이름',
-			'explore.detail.studios' => '스튜디오',
-			'explore.detail.country' => '국가',
-			'explore.detail.language' => '언어',
-			'explore.detail.released' => '출시일',
-			'explore.detail.physicalRelease' => '디스크 출시',
-			'explore.detail.ended' => '종영',
-			'explore.detail.addedOn' => ({required Object date}) => '${date}에 추가됨',
-			'explore.detail.yourRating' => '내 평점',
-			'explore.detail.budget' => '제작비',
-			'explore.detail.revenue' => '흥행 수익',
-			'explore.detail.contentAdvisory' => '연령 등급',
-			'explore.detail.tags' => '태그',
-			'explore.detail.revealSpoilerTags' => '스포일러 태그 표시',
-			'explore.detail.links' => '링크',
-			'explore.detail.watchOn' => '시청처',
-			'explore.detail.watchTrailer' => '예고편 보기',
-			'explore.detail.openOn' => ({required Object site}) => '${site}에서 열기',
-			'explore.detail.trailerUnavailable' => '이 기기에서 예고편을 열 수 없습니다',
-			'explore.detail.linkUnavailable' => '이 기기에서 링크를 열 수 없습니다',
-			'explore.detail.crew' => '제작진',
-			'explore.detail.ratings' => '평점',
-			'explore.detail.schedule' => '방영 일정',
-			'explore.detail.recommendedByUsers' => ({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('ko'))(n, other: '사용자 ${n}명이 추천', ), 
-			'explore.detail.recommendedBy' => ({required Object who}) => '${who} 추천',
-			'explore.detail.favoritedBy' => ({required Object who}) => '${who} 즐겨찾기',
-			'explore.detail.unairedEpisodes' => ({required Object n}) => '미방영 ${n}개',
-			'explore.detail.recommendedByPercent' => ({required Object percent}) => '시청자의 ${percent} 추천',
-			'explore.detail.relatedTitles' => '관련 작품',
-			'explore.detail.background' => '배경',
-			'explore.totalResults' => ({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('ko'))(n, other: '결과 ${n}개', ), 
-			'liveTv.title' => '실시간 TV',
-			'liveTv.guide' => '편성표',
-			'liveTv.noChannels' => '사용 가능한 채널이 없습니다',
-			'liveTv.noDvr' => '서버에 DVR이 구성되어 있지 않습니다',
-			'liveTv.serverUnavailable' => '라이브 TV 서버를 사용할 수 없습니다.',
-			'liveTv.serverNotConnected' => '라이브 TV 서버에 연결되어 있지 않습니다.',
-			'liveTv.noPrograms' => '프로그램 데이터가 없습니다',
-			'liveTv.liveStreamFailed' => '라이브 스트림 실패',
-			'liveTv.unknownProgram' => '알 수 없는 프로그램',
-			'liveTv.unknownHub' => '알 수 없음',
-			'liveTv.unknownError' => '알 수 없는 오류',
-			'liveTv.channelNumber' => ({required Object number}) => '채널 ${number}',
-			'liveTv.unknownChannel' => '알 수 없는 채널',
-			'liveTv.live' => '실시간',
-			'liveTv.reloadGuide' => '편성표 새로고침',
-			'liveTv.searchGuide' => '편성표 검색',
-			'liveTv.searchHint' => '채널 및 프로그램 검색',
-			'liveTv.searchNoResults' => ({required Object query}) => '「${query}」와(과) 일치하는 항목이 없습니다',
-			'liveTv.channelsSection' => '채널',
-			'liveTv.programsSection' => '프로그램',
-			'liveTv.now' => '지금',
-			'liveTv.today' => '오늘',
-			'liveTv.tomorrow' => '내일',
-			'liveTv.midnight' => '자정',
-			'liveTv.overnight' => '심야',
-			'liveTv.morning' => '아침',
-			'liveTv.daytime' => '낮',
-			'liveTv.evening' => '저녁',
-			'liveTv.lateNight' => '심야 방송',
-			'liveTv.whatsOn' => '지금 방송 중',
-			'liveTv.watchChannel' => '채널 시청',
-			'liveTv.favorites' => '즐겨찾기',
-			'liveTv.reorderFavorites' => '즐겨찾기 순서 변경',
-			'liveTv.noFavoriteChannels' => '즐겨찾기 채널 없음',
-			'liveTv.noFavoriteChannelsHint' => '모든 채널을 표시한 다음 채널을 길게 눌러 즐겨찾기에 추가하세요.',
-			'liveTv.showAllChannels' => '모든 채널 표시',
-			'liveTv.favoritesLoadFailed' => '즐겨찾기를 불러올 수 없습니다. 연결을 확인하고 다시 시도하세요.',
-			'liveTv.favoritesUpdateFailed' => '즐겨찾기를 업데이트할 수 없습니다. 연결을 확인하고 다시 시도하세요.',
-			'liveTv.joinSession' => '진행 중인 세션 참여',
-			'liveTv.watchFromStart' => ({required Object minutes}) => '처음부터 시청 (${minutes}분 전 시작)',
-			'liveTv.watchLive' => '실시간 시청',
-			'liveTv.goToLive' => '실시간으로 이동',
-			'liveTv.record' => '녹화',
-			'liveTv.recordEpisode' => '에피소드 녹화',
-			'liveTv.recordSeries' => '시리즈 녹화',
-			'liveTv.recordOptions' => '녹화 옵션',
-			'liveTv.saveTo' => '저장 위치',
-			'liveTv.recordings' => '녹화',
-			'liveTv.scheduledRecordings' => '예약됨',
-			'liveTv.recordingRules' => '녹화 규칙',
-			'liveTv.noScheduledRecordings' => '예약된 녹화 없음',
-			'liveTv.manageRecording' => '녹화 관리',
-			'liveTv.cancelRecording' => '녹화 취소',
-			'liveTv.cancelRecordingTitle' => '이 녹화를 취소할까요?',
-			'liveTv.cancelRecordingMessage' => ({required Object title}) => '${title}이(가) 더 이상 녹화되지 않습니다.',
-			'liveTv.deleteRule' => '규칙 삭제',
-			'liveTv.deleteRuleTitle' => '녹화 규칙을 삭제할까요?',
-			'liveTv.deleteRuleMessage' => ({required Object title}) => '${title}의 향후 에피소드는 녹화되지 않습니다.',
-			'liveTv.recordingScheduled' => '녹화 예약됨',
-			'liveTv.alreadyScheduled' => '이 프로그램은 이미 예약되어 있습니다',
-			'liveTv.dvrAdminRequired' => 'DVR 설정은 관리자 계정이 필요합니다',
-			'liveTv.recordingFailed' => '녹화를 예약할 수 없습니다',
-			'liveTv.recordingTargetMissing' => '녹화 라이브러리를 확인할 수 없습니다',
-			'liveTv.recordNotAvailable' => '이 프로그램은 녹화할 수 없습니다',
-			'liveTv.recordingCancelled' => '녹화 취소됨',
-			'liveTv.recordingRuleDeleted' => '녹화 규칙 삭제됨',
-			'liveTv.processRecordingRules' => '규칙 재평가',
-			'liveTv.recordingInProgress' => '녹화 중',
-			'liveTv.recordingsCount' => ({required Object count}) => '${count}개 예약됨',
-			'liveTv.editRule' => '규칙 편집',
-			'liveTv.editRuleAction' => '편집',
-			'liveTv.recordingRuleUpdated' => '녹화 규칙 업데이트됨',
-			'liveTv.guideReloadRequested' => '가이드 새로고침 요청됨',
-			'liveTv.guideReloadFailed' => '편성표를 새로고침할 수 없습니다',
-			'liveTv.rulesProcessRequested' => '규칙 재평가 요청됨',
-			'liveTv.rulesProcessFailed' => '녹화 규칙을 다시 적용할 수 없습니다',
-			'liveTv.recordShow' => '프로그램 녹화',
-			'liveTv.recordSettings.startEarly' => '일찍 시작 (초)',
-			'liveTv.recordSettings.endLate' => '늦게 종료 (초)',
-			'liveTv.recordSettings.newOnly' => '새 에피소드만',
-			'liveTv.recordSettings.anyChannel' => '모든 채널에서 녹화',
-			'liveTv.recordSettings.anyTime' => '모든 시간대에 녹화',
-			'liveTv.recordSettings.skipInLibrary' => '라이브러리에 이미 있는 에피소드 건너뛰기',
-			'liveTv.recordSettings.keepUpTo' => '보관할 에피소드 수',
-			_ => null,
-		} ?? switch (path) {
-			'liveTv.recordSettings.keepUpToHint' => '0이면 모든 에피소드 보관',
-			'liveTv.startingInMinutes' => ({required Object minutes}) => '${minutes}분 후 시작',
-			'liveTv.dayAtTime' => ({required Object day, required Object time}) => '${day} ${time}',
-			'liveTv.invalidPlaybackData' => ({required Object product}) => '${product}에서 잘못된 실시간 TV 재생 데이터를 반환했습니다',
-			'liveTv.failedToStartChannel' => '실시간 채널을 시작할 수 없습니다',
-			'liveTv.failedToBuildStreamUrl' => '스트림 URL을 생성할 수 없습니다',
-			'liveTv.playbackStartFailed' => ({required Object reason}) => '채널을 시작하지 못했습니다: ${reason}',
-			'liveTv.channelSwitchFailed' => ({required Object reason}) => '채널을 전환하지 못했습니다: ${reason}',
-			'collections.title' => '컬렉션',
-			'collections.collection' => '컬렉션',
-			'collections.empty' => '컬렉션이 비어 있습니다',
-			'collections.deleteCollection' => '컬렉션 삭제',
-			'collections.deleteConfirm' => ({required Object title}) => '"${title}"을(를) 삭제할까요? 되돌릴 수 없습니다.',
-			'collections.deleted' => '컬렉션 삭제됨',
-			'collections.deleteFailed' => '컬렉션 삭제 실패',
-			'collections.deleteFailedWithError' => ({required Object error}) => '컬렉션 삭제 실패: ${error}',
-			'collections.selectCollection' => '컬렉션 선택',
-			'collections.collectionName' => '컬렉션 이름',
-			'collections.enterCollectionName' => '컬렉션 이름 입력',
-			'collections.addedToCollection' => '컬렉션에 추가됨',
-			'collections.errorAddingToCollection' => '컬렉션에 추가 실패',
-			'collections.created' => '컬렉션 생성됨',
-			'collections.removeFromCollection' => '컬렉션에서 제거',
-			'collections.removeFromCollectionConfirm' => ({required Object title}) => '${title}을(를) 이 컬렉션에서 제거하시겠습니까?',
-			'collections.removedFromCollection' => '컬렉션에서 제거됨',
-			'collections.removeFromCollectionFailed' => '컬렉션에서 제거 실패',
-			'collections.removeFromCollectionError' => ({required Object error}) => '컬렉션에서 제거 중 오류 발생: ${error}',
-			'collections.searchCollections' => '컬렉션 검색...',
-			'playlists.title' => '플레이리스트',
-			'playlists.playlist' => '재생 목록',
-			'playlists.noPlaylists' => '재생 목록을 찾을 수 없습니다',
-			'playlists.create' => '재생 목록 생성',
-			'playlists.playlistName' => '재생 목록 이름',
-			'playlists.enterPlaylistName' => '재생 목록 이름 입력',
-			'playlists.delete' => '재생 목록 삭제',
-			'playlists.removeItem' => '재생 목록에서 항목 제거',
-			'playlists.smartPlaylist' => '스마트 재생 목록',
-			'playlists.itemCount' => ({required Object count}) => '${count}개 항목',
-			'playlists.oneItem' => '1개 항목',
-			'playlists.emptyPlaylist' => '이 재생 목록은 비어 있습니다',
-			'playlists.deleteConfirm' => '재생 목록을 삭제하시겠습니까?',
-			'playlists.deleteMessage' => ({required Object name}) => '"${name}"을(를) 삭제하시겠습니까?',
-			'playlists.created' => '재생 목록이 생성되었습니다',
-			'playlists.deleted' => '재생 목록이 삭제되었습니다',
-			'playlists.itemAdded' => '재생 목록에 추가되었습니다',
-			'playlists.itemRemoved' => '재생 목록에서 제거됨',
-			'playlists.selectPlaylist' => '재생 목록 선택',
-			'playlists.searchPlaylists' => '재생 목록 검색...',
-			'playlists.errorCreating' => '재생 목록 생성 실패',
-			'playlists.errorDeleting' => '재생 목록 삭제 실패',
-			'playlists.errorLoading' => '재생 목록 로드 실패',
-			'playlists.errorAdding' => '재생 목록에 추가 실패',
-			'playlists.errorReordering' => '재생 목록 항목 재정렬 실패',
-			'playlists.errorRemoving' => '재생 목록에서 제거 실패',
-			'music.goToAlbum' => '앨범으로 이동',
-			'music.goToArtist' => '아티스트로 이동',
-			'music.instantMix' => '인스턴트 믹스',
-			'music.playNext' => '다음에 재생',
-			'music.addToQueue' => '대기열에 추가',
-			'music.discNumber' => ({required Object n}) => '디스크 ${n}',
-			'music.trackCount' => ({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('ko'))(n, other: '${n}곡', ), 
-			'music.nowPlaying' => '재생 중',
-			'music.playingFrom' => ({required Object title}) => '${title}에서 재생 중',
-			'music.queue' => '재생 대기열',
-			'music.clearQueue' => '대기열 비우기',
-			'music.lyrics' => '가사',
-			'music.noLyrics' => '가사 없음',
-			'music.sleepTimer' => '취침 타이머',
-			'music.sleepTimerEndOfTrack' => '곡 종료 시',
-			'music.sleepTimerMinutes' => ({required Object n}) => '${n}분',
-			'music.stopPlayback' => '재생 중지',
-			'music.previousTrack' => '이전 곡',
-			'music.nextTrack' => '다음 곡',
-			'music.repeat' => '반복',
-			'music.repeatAll' => '전체 반복',
-			'music.repeatOne' => '한 곡 반복',
-			'music.instantMixNoServer' => '즉석 믹스에 사용할 수 있는 서버가 없습니다',
-			'music.instantMixFailed' => '인스턴트 믹스를 불러오지 못했습니다',
-			'music.instantMixEmpty' => '인스턴트 믹스에 트랙이 없습니다',
-			'music.noAudioUrl' => ({required Object track}) => '${track}에 사용할 수 있는 오디오 URL이 없습니다',
-			'music.discography.singlesAndEps' => '싱글 및 EP',
-			'music.discography.live' => '라이브',
-			'music.discography.compilations' => '컴필레이션',
-			'watchTogether.title' => '함께 보기',
-			'watchTogether.description' => '친구 및 가족과 콘텐츠를 동시에 시청하세요',
-			'watchTogether.createRoom' => '방 만들기',
-			'watchTogether.creatingRoom' => '방 만드는 중...',
-			'watchTogether.joinRoom' => '방 참여',
-			'watchTogether.joiningRoom' => '방에 참여하는 중...',
-			'watchTogether.connecting' => '연결 중...',
-			'watchTogether.relayPublic' => '방은 공개 Open Watch Party 릴레이를 사용합니다.',
-			'watchTogether.relayCustom' => ({required Object url}) => '방은 ${url}에 있는 내 릴레이를 사용합니다.',
-			'watchTogether.recentRooms' => '최근 참여한 방',
-			'watchTogether.roomActions' => '방 작업',
-			'watchTogether.renameRoom' => '방 이름 변경',
-			'watchTogether.removeRoom' => '제거',
-			'watchTogether.enterRoomCode' => '호스트에게 받은 6자리 코드를 입력하세요.',
-			'watchTogether.roomCode' => '방 코드',
-			'watchTogether.paste' => '붙여넣기',
-			'watchTogether.noCodeInClipboard' => '클립보드에 방 코드가 없습니다',
-			'watchTogether.copyCode' => '코드 복사',
-			'watchTogether.codeCopied' => '방 코드가 복사되었습니다',
-			'watchTogether.shareInvite' => '초대 공유',
-			'watchTogether.inviteCopied' => '초대 메시지가 복사되었습니다. 메시지에 붙여넣으세요.',
-			'watchTogether.inviteMessage' => ({required Object code}) => 'Plezy 함께 보기 방에 초대합니다. \'함께 보기\'를 열고 \'방 참여\'를 선택한 다음 ${code} 코드를 입력하세요.',
-			'watchTogether.openSessionControls' => '함께 보기 세션 제어 열기',
-			'watchTogether.reconnecting' => '재연결 중...',
-			'watchTogether.reconnectingDescription' => '연결이 끊어졌습니다. 자동으로 방에 다시 참여합니다.',
-			'watchTogether.connected' => '연결됨',
-			'watchTogether.disconnected' => '연결 끊김',
-			'watchTogether.youAreHost' => '호스트입니다',
-			'watchTogether.hostedBy' => ({required Object name}) => '호스트: ${name}',
-			'watchTogether.hostControlsPlayback' => '호스트 재생 제어',
-			'watchTogether.anyoneCanControl' => '누구나 재생 제어 가능',
-			'watchTogether.roomLocked' => '방 잠김',
-			'watchTogether.nowPlaying' => '지금 재생 중',
-			'watchTogether.nothingPlaying' => '재생 중인 항목 없음',
-			'watchTogether.nothingPlayingHost' => '라이브러리에서 아무 콘텐츠나 재생하면 방에 공유됩니다.',
-			'watchTogether.nothingPlayingGuest' => '호스트가 콘텐츠를 재생하면 여기에서 열립니다.',
-			'watchTogether.notShareable' => '이 비디오는 카탈로그와 일치하는 항목이 없어 같은 서버에 접근할 수 있는 사람만 재생할 수 있습니다.',
-			'watchTogether.searching' => '라이브러리에서 이 비디오를 찾는 중...',
-			'watchTogether.yourCopy' => '내 사본',
-			'watchTogether.sharingYourCopy' => '내 사본을 공유하는 중',
-			'watchTogether.playingOtherLength' => ({required Object difference}) => '내 사본 재생 중(${difference})',
-			'watchTogether.mismatchTitle' => '내 사본의 길이가 다릅니다',
-			'watchTogether.mismatchDescription' => ({required Object difference}) => '가장 근접한 내 사본이 방의 비디오와 길이가 다릅니다(${difference}). 다른 편집본이나 버전일 수 있습니다.',
-			'watchTogether.playAnyway' => '그래도 재생',
-			'watchTogether.chooseAnotherCopy' => '다른 사본 선택',
-			'watchTogether.dontPlay' => '재생 안 함',
-			'watchTogether.unavailableTitle' => '이 비디오가 없습니다',
-			'watchTogether.unavailableDescription' => 'Plezy가 라이브러리에서 이 비디오를 찾지 못했습니다. 직접 사본을 선택하거나 다시 검색하세요.',
-			'watchTogether.chooseCopy' => '사본 선택',
-			'watchTogether.searchAgain' => '다시 검색',
-			'watchTogether.noCandidates' => '라이브러리에서 사본을 찾을 수 없습니다.',
-			'watchTogether.choiceFailed' => '방에서 이 사본을 재생할 수 없습니다',
-			'watchTogether.lengthLonger' => ({required Object duration}) => '${duration} 더 김',
-			'watchTogether.lengthShorter' => ({required Object duration}) => '${duration} 더 짧음',
-			'watchTogether.lengthSame' => '길이 같음',
-			'watchTogether.lengthUnknown' => '길이 알 수 없음',
-			'watchTogether.joinCurrentPlayback' => '현재 재생 참여',
-			'watchTogether.joinCurrentPlaybackDescription' => '호스트가 현재 시청 중인 콘텐츠로 이동합니다',
-			'watchTogether.stopMedia' => '모든 참가자의 비디오 중지',
-			'watchTogether.syncOffset' => '동기화 오프셋',
-			'watchTogether.syncOffsetDescription' => '비디오가 방보다 앞서거나 뒤처지면 시간을 조정하세요.',
-			'watchTogether.offsetHint' => ({required Object difference}) => '내 사본이 방의 비디오와 길이가 다릅니다(${difference}).',
-			'watchTogether.applyDifference' => ({required Object offset}) => '${offset} 적용',
-			'watchTogether.offsetMinusSecond' => '-1초',
-			'watchTogether.offsetMinusTenth' => '-100ms',
-			'watchTogether.offsetPlusTenth' => '+100ms',
-			'watchTogether.offsetPlusSecond' => '+1초',
-			'watchTogether.participants' => '참가자',
-			'watchTogether.participantCount' => ({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('ko'))(n, other: '참가자 ${n}명', ), 
-			'watchTogether.hostBadge' => '호스트',
-			'watchTogether.nameYou' => ({required Object name}) => '${name}(나)',
-			'watchTogether.playerIdle' => '대기 중',
-			'watchTogether.playerLoading' => '로딩 중',
-			'watchTogether.playerReady' => '준비됨',
-			'watchTogether.playerBuffering' => '버퍼링 중',
-			'watchTogether.matchSearching' => '찾는 중',
-			'watchTogether.matchMatched' => '비디오 있음',
-			'watchTogether.matchMismatched' => '길이 다름',
-			'watchTogether.matchUnavailable' => '비디오 없음',
-			'watchTogether.participantOffset' => ({required Object offset}) => '오프셋 ${offset}',
-			'watchTogether.makeHost' => '호스트로 지정',
-			'watchTogether.makeHostQuestion' => '호스트를 이전하시겠습니까?',
-			'watchTogether.makeHostConfirm' => ({required Object name}) => '${name}님이 재생을 제어하고 모든 참가자의 세션을 이끕니다.',
-			'watchTogether.transfer' => '이전',
-			'watchTogether.removeParticipant' => '방에서 내보내기',
-			'watchTogether.removeParticipantQuestion' => ({required Object name}) => '${name}님을 내보내시겠습니까?',
-			'watchTogether.removeParticipantConfirm' => ({required Object name}) => '${name}님이 방에서 나가게 됩니다. 방을 잠그지 않으면 코드로 다시 참여할 수 있습니다.',
-			'watchTogether.remove' => '내보내기',
-			'watchTogether.roomSettings' => '방 설정',
-			'watchTogether.letEveryoneControl' => '모든 참가자에게 재생 제어 허용',
-			'watchTogether.lockRoom' => '방 잠그기',
-			'watchTogether.lockRoomDescription' => '새 참가자가 참여할 수 없습니다',
-			'watchTogether.leaveRoom' => '방 나가기',
-			'watchTogether.leaveRoomQuestion' => '방에서 나가시겠습니까?',
-			'watchTogether.leaveRoomConfirm' => '방 코드로 다시 참여할 수 있습니다.',
-			'watchTogether.leave' => '나가기',
-			'watchTogether.endRoom' => '방 종료',
-			'watchTogether.endRoomQuestion' => '방을 종료하시겠습니까?',
-			'watchTogether.endRoomConfirm' => '모든 참가자에게 방이 종료됩니다.',
-			'watchTogether.end' => '종료',
-			'watchTogether.playBlockedTitle' => '재생이 시작되지 않았습니다',
-			'watchTogether.playBlockedDescription' => '재생을 눌러 방 참가자들과 함께 시청을 시작하세요.',
-			'watchTogether.notices.pressedPlay' => ({required Object name}) => '${name}님이 재생을 눌렀습니다',
-			'watchTogether.notices.playbackStarted' => '재생이 시작되었습니다',
-			'watchTogether.notices.paused' => ({required Object name}) => '${name}님이 일시정지했습니다',
-			'watchTogether.notices.playbackPaused' => '재생이 일시정지되었습니다',
-			'watchTogether.notices.jumpedTo' => ({required Object name, required Object position}) => '${name}님이 ${position}(으)로 이동했습니다',
-			'watchTogether.notices.roomJumpedTo' => ({required Object position}) => '${position}(으)로 이동했습니다',
-			'watchTogether.notices.changedSpeed' => ({required Object name, required Object speed}) => '${name}님이 속도를 ${speed}(으)로 설정했습니다',
-			'watchTogether.notices.speedChanged' => ({required Object speed}) => '속도가 ${speed}(으)로 설정되었습니다',
-			'watchTogether.notices.startedMedia' => ({required Object name, required Object title}) => '${name}님이 ${title} 재생을 시작했습니다',
-			'watchTogether.notices.mediaStarted' => ({required Object title}) => '지금 재생 중: ${title}',
-			'watchTogether.notices.stoppedMedia' => ({required Object name}) => '${name}님이 비디오를 중지했습니다',
-			'watchTogether.notices.mediaStopped' => '비디오가 중지되었습니다',
-			'watchTogether.notices.waitingFor' => ({required Object name}) => '${name}님을 기다리는 중...',
-			'watchTogether.notices.waitingForSomeone' => '다른 참가자를 기다리는 중...',
-			'watchTogether.notices.finished' => '재생 완료',
-			'watchTogether.notices.hostChangedTo' => ({required Object name}) => '${name}님이 호스트가 되었습니다',
-			'watchTogether.notices.youAreNowHost' => '이제 호스트입니다',
-			'watchTogether.notices.joined' => ({required Object name}) => '${name}님이 참여했습니다',
-			'watchTogether.notices.left' => ({required Object name}) => '${name}님이 나갔습니다',
-			'watchTogether.notices.controlRefused' => '호스트만 재생을 제어할 수 있습니다',
-			'watchTogether.notices.searchFailed' => '일부 서버에서 방의 비디오를 검색하지 못했습니다',
-			'watchTogether.notices.playBlocked' => '재생을 눌러 시작하세요',
-			'watchTogether.notices.shareFailed' => '이 비디오를 방에 공유하지 못했습니다',
-			'watchTogether.notices.downloadNotShared' => '서버가 오프라인인 동안에는 다운로드한 항목이 방에 공유되지 않습니다',
-			'watchTogether.notices.openFailed' => '방의 비디오를 열지 못했습니다',
-			'watchTogether.ended.ended' => '호스트가 방을 종료했습니다',
-			'watchTogether.ended.kicked' => '방에서 내보내졌습니다',
-			'watchTogether.ended.expired' => '방이 만료되었습니다',
-			'watchTogether.ended.replaced' => '다른 기기에서 이 방에 참여했습니다',
-			'watchTogether.ended.lost' => '방과의 연결이 끊어졌습니다',
-			'watchTogether.errors.invalidCode' => '방 코드가 아닙니다. 코드는 0, 1, I, L 또는 O를 제외한 영문자와 숫자 6자리입니다.',
-			'watchTogether.errors.roomNotFound' => '해당 코드의 방이 없습니다. 종료되었을 수 있습니다.',
-			'watchTogether.errors.roomFull' => '방이 가득 찼습니다.',
-			'watchTogether.errors.roomLocked' => '호스트가 방을 잠갔습니다.',
-			'watchTogether.errors.relayFull' => '지금은 함께 보기 이용자가 많습니다. 나중에 다시 시도하세요.',
-			'watchTogether.errors.unreachable' => '함께 보기 릴레이에 연결할 수 없습니다. 연결을 확인하세요.',
-			'watchTogether.errors.rateLimited' => '시도 횟수가 너무 많습니다. 잠시 후 다시 시도하세요.',
-			'watchTogether.errors.clientBlocked' => '이 버전의 Plezy는 릴레이를 사용할 수 없습니다. 앱을 업데이트하세요.',
-			'watchTogether.errors.forbidden' => '호스트만 이 작업을 할 수 있습니다.',
-			'watchTogether.errors.notInRoom' => '방에 참여하고 있지 않습니다.',
-			'watchTogether.errors.alreadyInRoom' => '이미 방에 참여하고 있습니다.',
-			'watchTogether.errors.resumeFailed' => '방에 다시 참여하지 못했습니다.',
-			'watchTogether.errors.unsupported' => '릴레이에서 지원하지 않는 기능입니다.',
-			'watchTogether.errors.generic' => '문제가 발생했습니다. 다시 시도하세요.',
-			'watchTogether.untitledEpisode' => ({required Object number}) => '${number}화',
-			'downloads.title' => '다운로드',
-			'downloads.manage' => '관리',
-			'downloads.tvShows' => 'TV 프로그램',
-			'downloads.movies' => '영화',
-			'downloads.music' => '음악',
-			'downloads.tracksQueued' => ({required Object count}) => '${count}곡 다운로드 대기 중',
-			'downloads.noDownloads' => '다운로드 없음',
-			'downloads.noDownloadsDescription' => '다운로드한 콘텐츠는 오프라인 시청을 위해 여기에 표시됩니다',
-			'downloads.downloadNow' => '다운로드',
-			'downloads.deleteDownload' => '다운로드 삭제',
-			'downloads.retryDownload' => '다운로드 재시도',
-			'downloads.downloadQueued' => '다운로드 대기 중',
-			'downloads.downloadResumed' => '다운로드를 재개했습니다',
-			'downloads.serverErrorBitrate' => '서버 오류: 파일이 원격 비트레이트 제한을 초과할 수 있습니다',
-			'downloads.storageFull' => '사용 가능한 저장 공간을 보호하기 위해 다운로드를 중지했습니다. 공간을 확보하거나 다른 다운로드 위치를 선택한 후 다시 시도하세요.',
-			'downloads.storageUnavailable' => '사용 가능한 저장 공간을 확인할 수 없어 다운로드를 중지했습니다. 다운로드 위치를 확인한 후 다시 시도하세요.',
-			'downloads.episodesQueued' => ({required Object count}) => '에피소드 ${count}개가 다운로드 대기열에 추가되었습니다',
-			'downloads.downloadDeleted' => '다운로드 삭제됨',
-			'downloads.deleteConfirm' => ({required Object title}) => '이 기기에서 "${title}"을(를) 삭제할까요?',
-			'downloads.deleteCollectionDownloads' => '다운로드 삭제',
-			'downloads.deleteCollectionDownloadsConfirm' => ({required Object title}) => '이 기기에서 "${title}"의 모든 다운로드를 삭제할까요?',
-			'downloads.collectionDownloadsDeleted' => '다운로드 삭제됨',
-			'downloads.cancelledDownloadTitle' => '취소된 다운로드',
-			'downloads.cancelledDownloadMessage' => '이 다운로드가 취소되었습니다. 어떻게 하시겠습니까?',
-			'downloads.allEpisodesAlreadyDownloaded' => '모든 에피소드가 이미 다운로드되었습니다',
-			'downloads.resumeDownload' => '다운로드 재개',
-			'downloads.cancelledDownload' => '취소된 다운로드',
-			'downloads.syncingFile' => ({required Object file, required Object status}) => '${file} (${status} 동기화 중)',
-			'downloads.downloadedFileClickToComplete' => ({required Object file}) => '${file} 다운로드됨 — 클릭하여 완료',
-			'downloads.partialDownloadClickToComplete' => '부분 다운로드됨 — 클릭하여 완료',
-			'downloads.deleting' => '삭제 중...',
-			'downloads.deletingWithProgress' => ({required Object title, required Object current, required Object total}) => '${title} 삭제 중... (${current}/${total})',
-			'downloads.queuedTooltip' => '대기 중',
-			'downloads.queuedFilesTooltip' => ({required Object files}) => '대기 중: ${files}',
-			'downloads.downloadingTooltip' => '다운로드 중...',
-			'downloads.downloadingFilesTooltip' => ({required Object files}) => '${files} 다운로드 중',
-			'downloads.noDownloadsTree' => '다운로드 없음',
-			'downloads.pauseAll' => '모두 일시정지',
-			'downloads.resumeAll' => '모두 재개',
-			'downloads.retryAll' => '모두 재시도',
-			'downloads.retryFailed' => '실패한 다운로드 재시도',
-			'downloads.deleteAll' => '모두 삭제',
-			'downloads.selectVersion' => '버전 선택',
-			'downloads.allEpisodes' => '모든 에피소드',
-			'downloads.unwatchedOnly' => '시청하지 않은 것만',
-			'downloads.nextNUnwatched' => ({required Object count}) => '다음 ${count}개 미시청',
-			'downloads.customAmount' => '직접 입력...',
-			'downloads.includeSpecials' => '스페셜 포함',
-			'downloads.howManyEpisodes' => '몇 개의 에피소드?',
-			'downloads.invalidEpisodeCount' => '올바른 에피소드 수를 입력하세요.',
-			'downloads.keepSynced' => '동기화 유지',
-			'downloads.downloadOnce' => '한 번만 다운로드',
-			'downloads.keepNUnwatched' => ({required Object count}) => '미시청 ${count}개 유지',
-			'downloads.editSyncRule' => '동기화 규칙 편집',
-			'downloads.removeSyncRule' => '동기화 규칙 제거',
-			'downloads.removeSyncRuleConfirm' => ({required Object title}) => '"${title}" 동기화를 중단하시겠습니까? 다운로드된 에피소드는 유지됩니다.',
-			'downloads.removeListSyncRuleConfirm' => ({required Object title}) => '"${title}" 동기화를 중지할까요?',
-			'downloads.deleteSyncRuleDownloads' => '연결된 다운로드도 삭제',
-			'downloads.deleteSyncRuleDownloadsDescription' => '다른 동기화 규칙이나 프로필에서 사용하는 다운로드는 유지됩니다.',
-			'downloads.syncRuleCreated' => ({required Object count}) => '동기화 규칙 생성됨 — 미시청 에피소드 ${count}개 유지',
-			'downloads.syncRuleUpdated' => '동기화 규칙 업데이트됨',
-			'downloads.syncRuleRemoved' => '동기화 규칙 제거됨',
-			'downloads.syncRuleAndDownloadsRemoved' => '동기화 규칙과 연결된 다운로드가 삭제되었습니다',
-			'downloads.syncRuleCleanupBusy' => '동기화 규칙이 현재 업데이트 중입니다. 잠시 후 다시 시도하세요.',
-			'downloads.syncRuleCleanupUnavailable' => '연결된 다운로드를 안전하게 확인할 수 없습니다. 서버에 다시 연결한 후 시도하거나, 다운로드를 삭제하지 않고 규칙만 제거하세요.',
-			'downloads.syncedNewEpisodes' => ({required Object title, required Object count}) => '${title}의 새 에피소드 ${count}개 동기화됨',
-			'downloads.activeSyncRules' => '동기화 규칙',
-			'downloads.noSyncRules' => '동기화 규칙 없음',
-			'downloads.manageSyncRule' => '동기화 관리',
-			'downloads.editEpisodeCount' => '에피소드 수',
-			'downloads.editSyncFilter' => '동기화 필터',
-			'downloads.syncAllItems' => '모든 항목 동기화 중',
-			'downloads.syncUnwatchedItems' => '시청하지 않은 항목 동기화 중',
-			'downloads.syncRuleServerContext' => ({required Object server, required Object status}) => '서버: ${server} • ${status}',
-			'downloads.syncRuleAvailable' => '사용 가능',
-			'downloads.syncRuleOffline' => '오프라인',
-			'downloads.syncRuleSignInRequired' => '로그인 필요',
-			'downloads.syncRuleAccessDenied' => '접근 거부됨',
-			'downloads.syncRuleNotAvailableForProfile' => '현재 프로필에서 사용할 수 없음',
-			'downloads.syncRuleUnknownServer' => '알 수 없는 서버',
-			'downloads.syncRuleListCreated' => '동기화 규칙이 생성되었습니다',
-			'downloads.backgroundWarning.bannerBlocked' => '앱에서 나가면 다운로드가 중지됩니다',
-			'downloads.backgroundWarning.bannerDegraded' => '백그라운드 다운로드가 제한될 수 있습니다',
-			'downloads.backgroundWarning.bannerAction' => '세부정보',
-			'downloads.backgroundWarning.sheetTitle' => '백그라운드 다운로드가 차단됨',
-			'downloads.backgroundWarning.sheetTitleDegraded' => '백그라운드 다운로드가 제한될 수 있음',
-			'downloads.backgroundWarning.sheetIntro' => 'Android가 Plezy의 안정적인 백그라운드 다운로드를 차단하고 있습니다.',
-			'downloads.backgroundWarning.sheetIntroDegraded' => '기기에서 Plezy가 백그라운드로 다운로드할 수 있는 시점을 제한하고 있습니다.',
-			'downloads.backgroundWarning.reasonBackgroundRestricted' => 'Plezy의 백그라운드 사용이 제한되어 있습니다. 배터리 또는 백그라운드 사용을 "제한 없음"으로 설정하세요.',
-			'downloads.backgroundWarning.reasonStandbyRestricted' => 'Android가 Plezy를 제한된 대기 상태로 전환했습니다. 배터리 사용량을 "제한 없음"으로 설정하세요.',
-			'downloads.backgroundWarning.reasonDownloadChannelBlocked' => '다운로드 알림이 꺼져 있어 진행 상황과 제어 기능을 사용하지 못할 수 있습니다.',
-			'downloads.backgroundWarning.reasonNotificationsDisabled' => '알림이 꺼져 있습니다. Android 13 이상에서는 장시간 백그라운드 다운로드에 알림이 필요합니다.',
-			'downloads.backgroundWarning.reasonDataSaver' => '데이터 절약 모드가 켜져 있어 모바일 데이터로 백그라운드 다운로드를 할 수 없습니다. Wi-Fi에서는 계속 다운로드할 수 있습니다.',
-			'downloads.backgroundWarning.reasonOemUnknown' => 'Plezy가 백그라운드에 있을 때 다운로드가 반복해서 중지되었습니다. Plezy의 배터리 또는 백그라운드 사용 설정을 확인하세요.',
-			'downloads.backgroundWarning.openSettings' => '설정 열기',
-			'downloads.backgroundWarning.stillNotWorking' => '기기별 도움말',
-			'downloads.backgroundWarning.stillNotWorkingDescription' => '기기에 맞는 단계를 확인하세요. 문제가 계속되면 설정 › 로그 보기에서 로그를 보내 주세요.',
-			'downloads.backgroundWarning.dialogTitle' => '다운로드가 완료되지 않을 수 있음',
-			'downloads.backgroundWarning.dialogDownloadAnyway' => '그래도 다운로드',
-			'downloads.backgroundWarning.dialogFixFirst' => '먼저 문제 해결',
-			'downloads.backgroundWarning.statusTile' => '백그라운드 다운로드',
-			'downloads.backgroundWarning.statusOk' => '백그라운드 실행 허용됨',
-			'downloads.backgroundWarning.statusBlocked' => '시스템 설정에 의해 차단됨',
-			'downloads.backgroundWarning.statusDegraded' => '시스템 설정에 의해 제한됨',
-			'downloads.backgroundWarning.statusUnknown' => '아직 확인하지 않음',
-			'downloads.backgroundWarning.settingsUnavailable' => '이 기기에서 시스템 설정을 열 수 없습니다',
-			'downloads.backgroundWarning.linkUnavailable' => '이 기기에서 dontkillmyapp.com을 열 수 없습니다',
-			'downloads.options' => '다운로드 옵션',
-			'downloads.groupings.library' => '라이브러리',
-			'downloads.groupings.collections' => '컬렉션',
-			'downloads.unknownLibrary' => '알 수 없는 라이브러리',
-			'downloads.unknownShow' => '알 수 없는 프로그램',
-			'downloads.unknownSeason' => '알 수 없는 시즌',
-			'downloads.unknownAlbum' => '알 수 없는 앨범',
-			'downloads.completedOfTotal' => ({required Object completed, required Object total}) => '${completed}/${total} 완료',
-			'downloads.errorFileNotFound' => '파일을 찾을 수 없음(404)',
-			'downloads.errorDownloadNotAllowed' => '서버에서 다운로드를 허용하지 않음(403)',
-			'downloads.errorDownloadFailed' => '다운로드 실패',
-			'downloads.errorDownloadFailedWithReason' => ({required Object reason}) => '다운로드 실패: ${reason}',
-			'downloads.errorHttpStatus' => ({required Object status}) => '다운로드 실패(HTTP ${status})',
-			'downloads.errorPostProcessing' => ({required Object reason}) => '후처리 실패: ${reason}',
-			'downloads.reasonFileNotSaved' => '이 기기에 파일을 저장할 수 없습니다',
-			'downloads.reasonCannotResume' => '일부만 받은 다운로드를 이어서 받을 수 없습니다',
-			'downloads.reasonDeviceStorageFull' => '이 기기의 저장 공간이 부족합니다',
-			'downloads.notificationDownloading' => '다운로드 중...',
-			'downloads.notificationComplete' => '다운로드 완료',
-			'downloads.notificationPaused' => '다운로드 일시 중지',
-			'shaders.title' => '셰이더',
-			'shaders.noShaderDescription' => '비디오 향상 없음',
-			'shaders.nvscalerDescription' => '더 선명한 비디오를 위한 NVIDIA 이미지 스케일링',
-			'shaders.artcnnVariantNeutral' => '중립',
-			'shaders.artcnnVariantDenoise' => '노이즈 제거',
-			'shaders.artcnnVariantDenoiseSharpen' => '노이즈 제거 + 선명화',
-			'shaders.qualityFast' => '빠름',
-			'shaders.qualityHQ' => '고품질',
-			'shaders.mode' => '모드',
-			'shaders.importShader' => '셰이더 가져오기',
-			'shaders.customShaderDescription' => '사용자 정의 GLSL 셰이더',
-			'shaders.shaderImported' => '셰이더를 가져왔습니다',
-			'shaders.shaderImportFailed' => '셰이더 가져오기 실패',
-			'shaders.deleteShader' => '셰이더 삭제',
-			'shaders.deleteShaderConfirm' => ({required Object name}) => '"${name}"을(를) 삭제하시겠습니까?',
-			'companionRemote.title' => '컴패니언 리모컨',
-			'companionRemote.connectedTo' => ({required Object name}) => '${name}에 연결됨',
-			'companionRemote.unknownDevice' => '알 수 없는 기기',
-			'companionRemote.session.startingServer' => '원격 서버 시작 중...',
-			'companionRemote.session.hostAddress' => '호스트 주소',
-			'companionRemote.session.connected' => '연결됨',
-			'companionRemote.session.serverRunning' => '원격 서버 활성',
-			'companionRemote.session.serverStopped' => '원격 서버 중지됨',
-			'companionRemote.session.serverRunningDescription' => '네트워크의 모바일 기기가 이 앱에 연결할 수 있습니다',
-			'companionRemote.session.serverStoppedDescription' => '모바일 기기의 연결을 허용하려면 서버를 시작하세요',
-			'companionRemote.session.usePhoneToControl' => '모바일 기기로 이 앱을 제어하세요',
-			'companionRemote.session.startServer' => '서버 시작',
-			'companionRemote.session.stopServer' => '서버 중지',
-			'companionRemote.session.minimize' => '최소화',
-			'companionRemote.session.manualAddressHint' => '수동 연결 주소:',
-			'companionRemote.pairing.discoveryDescription' => '같은 Plex 계정의 Plezy 기기가 여기에 표시됩니다',
-			'companionRemote.pairing.hostAddressHint' => '192.168.1.100:48632',
-			'companionRemote.pairing.connecting' => '연결 중...',
-			'companionRemote.pairing.searchingForDevices' => '기기 검색 중...',
-			'companionRemote.pairing.noDevicesFound' => '네트워크에서 기기를 찾을 수 없습니다',
-			'companionRemote.pairing.noDevicesHint' => '데스크톱에서 Plezy를 열고 같은 Wi-Fi를 사용하세요',
-			'companionRemote.pairing.availableDevices' => '사용 가능한 기기',
-			'companionRemote.pairing.manualConnection' => '수동 연결',
-			'companionRemote.pairing.cryptoInitFailed' => '보안 연결을 시작할 수 없습니다. 먼저 Plex에 로그인하세요.',
-			'companionRemote.pairing.validationHostRequired' => '호스트 주소를 입력하세요',
-			'companionRemote.pairing.validationHostFormat' => '형식은 IP:포트여야 합니다 (예: 192.168.1.100:48632)',
-			'companionRemote.pairing.connectionTimedOut' => '연결 시간이 초과되었습니다. 두 기기에서 같은 네트워크를 사용하세요.',
-			'companionRemote.pairing.sessionNotFound' => '기기를 찾을 수 없습니다. 호스트에서 Plezy가 실행 중인지 확인하세요.',
-			'companionRemote.pairing.authFailed' => '인증에 실패했습니다. 두 기기 모두 같은 Plex 계정이 필요합니다.',
-			'companionRemote.pairing.failedToConnect' => ({required Object error}) => '연결 실패: ${error}',
-			'companionRemote.remote.disconnectConfirm' => '원격 세션 연결을 해제하시겠습니까?',
-			'companionRemote.remote.reconnecting' => '재연결 중...',
-			'companionRemote.remote.attemptOf' => ({required Object current}) => '${current}/5 시도 중',
-			'companionRemote.remote.retryNow' => '지금 재시도',
-			'companionRemote.remote.tabRemote' => '리모컨',
-			'companionRemote.remote.tabPlay' => '재생',
-			'companionRemote.remote.tabMore' => '더 보기',
-			'companionRemote.remote.menu' => '메뉴',
-			'companionRemote.remote.tabNavigation' => '탭 탐색',
-			'companionRemote.remote.tabDiscover' => '둘러보기',
-			'companionRemote.remote.tabLibraries' => '미디어 라이브러리',
-			'companionRemote.remote.tabSearch' => '검색',
-			'companionRemote.remote.tabDownloads' => '다운로드',
-			'companionRemote.remote.tabSettings' => '설정',
-			'companionRemote.remote.previous' => '이전',
-			'companionRemote.remote.playPause' => '재생/일시정지',
-			'companionRemote.remote.next' => '다음',
-			'companionRemote.remote.seekBack' => '되감기',
-			'companionRemote.remote.stop' => '정지',
-			'companionRemote.remote.seekForward' => '빨리감기',
-			'companionRemote.remote.volume' => '볼륨',
-			'companionRemote.remote.volumeDown' => '줄이기',
-			'companionRemote.remote.volumeUp' => '높이기',
-			'companionRemote.remote.fullscreen' => '전체 화면',
-			'companionRemote.remote.subtitles' => '자막',
-			'companionRemote.remote.audio' => '오디오',
-			'companionRemote.remote.searchHint' => '데스크톱에서 검색...',
-			'companionRemote.errors.noNetworkInterface' => '네트워크 인터페이스를 찾을 수 없습니다',
-			'companionRemote.errors.authenticationFailed' => '인증 실패',
-			'companionRemote.errors.serverStartFailed' => ({required Object error}) => '원격 서버를 시작하지 못했습니다: ${error}',
-			'companionRemote.errors.commandFailed' => ({required Object error}) => '원격 명령을 보내지 못했습니다: ${error}',
-			'companionRemote.errors.joinTimedOut' => '세션 참가 시간이 초과되었습니다',
-			'companionRemote.errors.failedToConnectAnyAddress' => '어떤 주소에도 연결하지 못했습니다',
-			'companionRemote.errors.connectionLostAfterAttempts' => ({required Object attempts}) => '${attempts}회 시도 후 연결이 끊어졌습니다',
-			'companionRemote.errors.connectionLost' => '연결이 끊어졌습니다',
-			'companionRemote.closedBeforeAuth' => '인증 전에 연결이 종료되었습니다',
-			'videoSettings.playbackSpeed' => '재생 속도',
-			'videoSettings.normalSpeed' => '보통',
-			'videoSettings.sleepTimerActive' => ({required Object duration}) => '활성 (${duration})',
-			'videoSettings.zoom' => '확대/축소',
-			'videoSettings.sleepTimer' => '취침 타이머',
-			'videoSettings.audioSync' => '오디오 동기화',
-			'videoSettings.subtitleSync' => '자막 동기화',
-			'videoSettings.hdr' => 'HDR',
-			'videoSettings.hdrUnsupported' => '여기서는 HDR을 사용할 수 없습니다. 이 데스크톱 컴포지터 또는 비디오 출력에서 HDR을 전달할 수 없습니다.',
-			'videoSettings.hdrToneMapping' => 'HDR 톤 매핑',
-			'videoSettings.hdrToneMappingCompositor' => '컴포지터',
-			'videoSettings.hdrToneMappingCompositorDescription' => '소스의 HDR 메타데이터를 그대로 전달하고 데스크톱 컴포지터에서 매핑하도록 합니다.',
-			'videoSettings.hdrToneMappingPlayer' => '플레이어',
-			'videoSettings.hdrToneMappingPlayerDescription' => '플레이어에서 디스플레이의 최대 밝기에 맞게 매핑한 다음 그 결과를 컴포지터에 전달합니다.',
-			'videoSettings.hdrToneMappingFailed' => 'HDR 톤 매핑을 변경할 수 없습니다. 이전 모드가 계속 적용됩니다.',
-			'videoSettings.audioOutput' => '오디오 출력',
-			'videoSettings.performanceOverlay' => '성능 오버레이',
-			'videoSettings.audioOutputDolbyAtmos' => 'Dolby Atmos',
-			'videoSettings.audioOutputDolbyAudio' => 'Dolby Audio',
-			'videoSettings.audioOutputSurround' => '서라운드',
-			'videoSettings.audioOutputSpatial' => '공간 음향',
-			'videoSettings.audioOutputStereo' => '스테레오',
-			'videoSettings.audioNormalization' => '음량 정규화',
-			'videoSettings.audioNormalizationDisablesPassthrough' => '오디오를 PCM으로 디코딩합니다. 켜져 있는 동안 패스스루가 꺼집니다',
-			'performanceOverlay.color' => '색상',
-			'performanceOverlay.performance' => '성능',
-			'performanceOverlay.buffer' => '버퍼',
-			'performanceOverlay.app' => '앱',
-			'performanceOverlay.decoder' => '디코더',
-			'performanceOverlay.rawDecoder' => '원본 디코더',
-			'performanceOverlay.tunneling' => '터널링',
-			'performanceOverlay.passthrough' => '패스스루',
-			'performanceOverlay.aspect' => '화면비',
-			'performanceOverlay.rotation' => '회전',
-			'performanceOverlay.dvSource' => 'DV 소스',
-			'performanceOverlay.dvPath' => 'DV 경로',
-			'performanceOverlay.dvRouteDecoder' => 'Dolby Vision 디코더',
-			'performanceOverlay.dvRouteDecoderP81' => 'Dolby Vision 디코더 (P7→8.1)',
-			'performanceOverlay.dvRouteBaseLayer' => '베이스 레이어',
-			'performanceOverlay.dvRouteBaseLayerHdr10' => 'HDR10 베이스 레이어',
-			'performanceOverlay.dvRouteBaseLayerHlg' => 'HLG 베이스 레이어',
-			'performanceOverlay.dvRouteBaseLayerSdr' => 'SDR 베이스 레이어',
-			'performanceOverlay.dvRouteReshaped' => 'RPU 리셰이핑 (gpu-next)',
-			'performanceOverlay.p7Conversion' => 'P7 변환',
-			'performanceOverlay.sampleRate' => '샘플 레이트',
-			'performanceOverlay.pixelFormat' => '픽셀 형식',
-			'performanceOverlay.hwFormat' => 'HW 형식',
-			'performanceOverlay.matrix' => '매트릭스',
-			'performanceOverlay.primaries' => '원색',
-			'performanceOverlay.transfer' => '전송',
-			'performanceOverlay.renderFps' => '렌더 FPS',
-			'performanceOverlay.displayFps' => '디스플레이 FPS',
-			'performanceOverlay.avSync' => 'A/V 동기화',
-			'performanceOverlay.dropped' => '드롭됨',
-			'performanceOverlay.dvRpus' => 'DV RPU',
-			'performanceOverlay.dvRpuAverage' => 'DV RPU 평균',
-			'performanceOverlay.dvSampleAverage' => 'DV 샘플 평균',
-			'performanceOverlay.maxLuma' => '최대 휘도',
-			'performanceOverlay.minLuma' => '최소 휘도',
-			'performanceOverlay.maxCll' => 'MaxCLL',
-			'performanceOverlay.maxFall' => 'MaxFALL',
-			'performanceOverlay.cacheUsed' => '사용 캐시',
-			'performanceOverlay.cacheLimit' => '캐시 제한',
-			'performanceOverlay.speed' => '속도',
-			'performanceOverlay.player' => '플레이어',
-			'performanceOverlay.memory' => '메모리',
-			'performanceOverlay.uiFps' => 'UI FPS',
-			'performanceOverlay.fps' => 'FPS',
-			'performanceOverlay.decoderAndroidHw' => 'Android HW',
-			'performanceOverlay.decoderNvidiaHw' => 'NVIDIA HW',
-			'performanceOverlay.decoderQualcommHw' => 'Qualcomm HW',
-			'performanceOverlay.decoderMediatekHw' => 'MediaTek HW',
-			'performanceOverlay.decoderExynosHw' => 'Exynos HW',
-			'performanceOverlay.decoderSoftware' => '소프트웨어',
-			_ => null,
-		} ?? switch (path) {
-			'performanceOverlay.decoderHardware' => '하드웨어',
-			'performanceOverlay.tunnelingActive' => '활성',
-			'performanceOverlay.dvRpuFailed' => ({required Object converted, required Object failures}) => '${converted} (${failures}개 실패)',
-			'externalPlayer.title' => '외부 플레이어',
-			'externalPlayer.useExternalPlayer' => '외부 플레이어 사용',
-			'externalPlayer.useExternalPlayerDescription' => '동영상을 다른 앱에서 열기',
-			'externalPlayer.selectPlayer' => '플레이어 선택',
-			'externalPlayer.customPlayers' => '사용자 정의 플레이어',
-			'externalPlayer.systemDefault' => '시스템 기본값',
-			'externalPlayer.addCustomPlayer' => '사용자 정의 플레이어 추가',
-			'externalPlayer.playerName' => '플레이어 이름',
-			'externalPlayer.playerNameHint' => '내 플레이어',
-			'externalPlayer.playerCommand' => '명령어',
-			'externalPlayer.playerPackage' => '패키지 이름',
-			'externalPlayer.playerUrlScheme' => 'URL 스킴',
-			'externalPlayer.off' => '꺼짐',
-			'externalPlayer.launchFailed' => '외부 플레이어를 열 수 없습니다',
-			'externalPlayer.appNotInstalled' => ({required Object name}) => '${name}이(가) 설치되어 있지 않습니다',
-			'externalPlayer.playInExternalPlayer' => '외부 플레이어에서 재생',
-			'metadataEdit.editMetadata' => '편집...',
-			'metadataEdit.screenTitle' => '메타데이터 편집',
-			'metadataEdit.basicInfo' => '기본 정보',
-			'metadataEdit.artwork' => '아트워크',
-			'metadataEdit.advancedSettings' => '고급 설정',
-			'metadataEdit.title' => '제목',
-			'metadataEdit.sortTitle' => '정렬 제목',
-			'metadataEdit.originalTitle' => '원제',
-			'metadataEdit.releaseDate' => '출시일',
-			'metadataEdit.contentRating' => '콘텐츠 등급',
-			'metadataEdit.studio' => '스튜디오',
-			'metadataEdit.tagline' => '태그라인',
-			'metadataEdit.summary' => '줄거리',
-			'metadataEdit.poster' => '포스터',
-			'metadataEdit.background' => '배경',
-			'metadataEdit.logo' => '로고',
-			'metadataEdit.squareArt' => '정사각형 아트',
-			'metadataEdit.selectPoster' => '포스터 선택',
-			'metadataEdit.selectBackground' => '배경 선택',
-			'metadataEdit.selectLogo' => '로고 선택',
-			'metadataEdit.selectSquareArt' => '정사각형 아트 선택',
-			'metadataEdit.fromUrl' => 'URL에서',
-			'metadataEdit.uploadFile' => '파일 업로드',
-			'metadataEdit.enterImageUrl' => '이미지 URL 입력',
-			'metadataEdit.imageUrl' => '이미지 URL',
-			'metadataEdit.metadataUpdated' => '메타데이터가 업데이트되었습니다',
-			'metadataEdit.metadataUpdateFailed' => '메타데이터 업데이트 실패',
-			'metadataEdit.artworkUpdated' => '아트워크가 업데이트되었습니다',
-			'metadataEdit.artworkUpdateFailed' => '아트워크 업데이트 실패',
-			'metadataEdit.noArtworkAvailable' => '사용 가능한 아트워크 없음',
-			'metadataEdit.artworkOption' => ({required Object index}) => '아트워크 옵션 ${index}',
-			'metadataEdit.selectedArtworkOption' => ({required Object index}) => '아트워크 옵션 ${index}, 선택됨',
-			'metadataEdit.notSet' => '설정되지 않음',
-			'metadataEdit.libraryDefault' => '라이브러리 기본값',
-			'metadataEdit.accountDefault' => '계정 기본값',
-			'metadataEdit.seriesDefault' => '시리즈 기본값',
-			'metadataEdit.episodeSorting' => '에피소드 정렬',
-			'metadataEdit.oldestFirst' => '오래된 순',
-			'metadataEdit.newestFirst' => '최신 순',
-			'metadataEdit.keep' => '유지',
-			'metadataEdit.allEpisodes' => '모든 에피소드',
-			'metadataEdit.latestEpisodes' => ({required Object count}) => '최신 에피소드 ${count}개',
-			'metadataEdit.latestEpisode' => '최신 에피소드',
-			'metadataEdit.episodesAddedPastDays' => ({required Object count}) => '최근 ${count}일 내 추가된 에피소드',
-			'metadataEdit.deleteAfterPlaying' => '재생 후 에피소드 삭제',
-			'metadataEdit.never' => '안 함',
-			'metadataEdit.afterADay' => '하루 후',
-			'metadataEdit.afterAWeek' => '일주일 후',
-			'metadataEdit.afterAMonth' => '한 달 후',
-			'metadataEdit.onNextRefresh' => '다음 새로고침 시',
-			'metadataEdit.seasons' => '시즌',
-			'metadataEdit.show' => '표시',
-			'metadataEdit.hide' => '숨기기',
-			'metadataEdit.episodeOrdering' => '에피소드 순서',
-			'metadataEdit.tmdbAiring' => 'The Movie Database (방영순)',
-			'metadataEdit.tvdbAiring' => 'TheTVDB (방영순)',
-			'metadataEdit.tvdbAbsolute' => 'TheTVDB (절대순)',
-			'metadataEdit.metadataLanguage' => '메타데이터 언어',
-			'metadataEdit.useOriginalTitle' => '원제 사용',
-			'metadataEdit.preferredAudioLanguage' => '선호 오디오 언어',
-			'metadataEdit.preferredSubtitleLanguage' => '선호 자막 언어',
-			'metadataEdit.subtitleMode' => '자막 자동 선택 모드',
-			'metadataEdit.manuallySelected' => '수동 선택',
-			'metadataEdit.shownWithForeignAudio' => '외국어 오디오 시 표시',
-			'metadataEdit.alwaysEnabled' => '항상 활성화',
-			'metadataEdit.tags' => '태그',
-			'metadataEdit.addTag' => '태그 추가',
-			'metadataEdit.genre' => '장르',
-			'metadataEdit.director' => '감독',
-			'metadataEdit.writer' => '작가',
-			'metadataEdit.producer' => '프로듀서',
-			'metadataEdit.country' => '국가',
-			'metadataEdit.collection' => '컬렉션',
-			'metadataEdit.label' => '라벨',
-			'metadataEdit.quickTag' => '빠른 태그…',
-			'matchScreen.match' => '일치...',
-			'matchScreen.fixMatch' => '일치 수정...',
-			'matchScreen.unmatch' => '일치 해제',
-			'matchScreen.unmatchConfirm' => '이 매칭을 지울까요? 다시 매칭될 때까지 Plex에서는 미매칭으로 처리됩니다.',
-			'matchScreen.unmatchSuccess' => '일치 해제됨',
-			'matchScreen.unmatchFailed' => '일치 해제에 실패했습니다',
-			'matchScreen.matchApplied' => '일치 적용됨',
-			'matchScreen.matchFailed' => '일치 적용에 실패했습니다',
-			'matchScreen.titleHint' => '제목',
-			'matchScreen.yearHint' => '연도',
-			'matchScreen.search' => '검색',
-			'matchScreen.noMatchesFound' => '일치하는 항목이 없습니다',
-			'serverTasks.title' => '서버 작업',
-			'serverTasks.failedToLoad' => '작업을 불러올 수 없습니다',
-			'serverTasks.noTasks' => '실행 중인 작업 없음',
-			'trakt.title' => 'Trakt',
-			'trakt.connected' => '연결됨',
-			'trakt.connectedAs' => ({required Object username}) => '@${username}(으)로 연결됨',
-			'trakt.disconnectConfirm' => 'Trakt 계정 연결을 끊으시겠습니까?',
-			'trakt.disconnectConfirmBody' => 'Plezy가 Trakt로 이벤트 전송을 중지합니다. 언제든 다시 연결할 수 있습니다.',
-			'trakt.scrobble' => '실시간 스크로블',
-			'trakt.scrobbleDescription' => '재생 중 재생, 일시정지, 정지 이벤트를 Trakt로 전송합니다.',
-			'trakt.watchedSync' => '시청 상태 동기화',
-			'trakt.watchedSyncDescription' => 'Plezy에서 시청 완료로 표시한 항목이 Trakt에도 시청 완료로 표시됩니다.',
-			'seerr.title' => 'Seerr',
-			'seerr.connectTitle' => 'Seerr에 연결',
-			'seerr.serverUrl' => '서버 URL',
-			'seerr.serverUrlHelper' => 'Seerr 인스턴스의 주소',
-			'seerr.checkServer' => '계속',
-			'seerr.signInWithJellyfin' => 'Jellyfin으로 로그인',
-			'seerr.signInWithEmby' => 'Emby로 로그인',
-			'seerr.signInWithLocal' => '로컬 계정 사용',
-			'seerr.email' => '이메일',
-			'seerr.noSignInMethods' => '이 Seerr 인스턴스에는 Plezy가 지원하는 로그인 방법이 없습니다.',
-			'seerr.instance' => '인스턴스',
-			'seerr.disconnectConfirm' => 'Seerr 연결을 해제하시겠습니까?',
-			'seerr.disconnectConfirmBody' => 'Plezy가 이 Seerr 인스턴스를 삭제합니다. 언제든 다시 연결할 수 있습니다.',
-			'seerr.request' => '요청',
-			'seerr.request4k' => '4K로 요청',
-			'seerr.seasons' => '시즌',
-			'seerr.allSeasons' => '모든 시즌',
-			'seerr.advancedOptions' => '고급',
-			'seerr.destinationServer' => '대상 서버',
-			'seerr.qualityProfile' => '화질 프로파일',
-			'seerr.rootFolder' => '루트 폴더',
-			'seerr.languageProfile' => '언어 프로파일',
-			'seerr.tags' => '태그',
-			'seerr.noTags' => '태그 없음',
-			'seerr.defaultOption' => ({required Object name}) => '${name} (기본값)',
-			'seerr.animeNote' => '이 시리즈는 애니메이션입니다.',
-			'seerr.requestSubmitted' => '요청을 제출했습니다',
-			'seerr.requestFailed' => ({required Object error}) => '요청 실패: ${error}',
-			'seerr.requestsLoadFailed' => '요청 옵션을 불러올 수 없습니다',
-			'seerr.nothingToRequest' => '모두 이미 사용 가능하거나 요청되었습니다.',
-			'seerr.statusAvailable' => '사용 가능',
-			'seerr.statusPartiallyAvailable' => '일부 사용 가능',
-			'seerr.statusRequested' => '요청됨',
-			'seerr.statusProcessing' => '처리 중',
-			'seerr.statusBlocklisted' => '차단 목록에 있음',
-			'seerr.couldNotReach' => ({required Object url, required Object error}) => '${url}에 연결할 수 없습니다: ${error}',
-			'seerr.noInstanceAtUrl' => ({required Object url, required Object status}) => '${url}에 Seerr 인스턴스가 없습니다(HTTP ${status})',
-			'seerr.behindAuthProxy' => 'Seerr 대신 인증이 필요한 리버스 프록시(SSO 또는 HTTP 인증)가 응답했습니다. Plezy는 이를 통해 로그인할 수 없습니다. 이 앱에서 Seerr의 /api/v1 경로가 프록시를 우회하도록 하거나, Seerr에 직접 연결되는 주소를 사용하세요.',
-			'seerr.invalidUrl' => 'https://seerr.example.com과 같은 서버 주소를 입력하세요',
-			'seerr.quickConnectUnsupported' => '이 Seerr 인스턴스는 Quick Connect를 지원하지 않습니다. Seerr 3.4 이상이 필요합니다.',
-			'seerr.notInitialized' => '이 Seerr 인스턴스는 최초 실행 설정을 완료하지 않았습니다',
-			'seerr.noPlexTokenForReauth' => '다시 로그인하는 데 사용할 수 있는 Plex 토큰이 없습니다',
-			'seerr.noStoredCredentials' => '다시 로그인하는 데 사용할 수 있는 저장된 인증 정보가 없습니다',
-			'seerr.signInRejected' => '로그인이 거부되었습니다',
-			'seerr.noSessionCookie' => 'Seerr에서 세션 쿠키를 발급하지 않았습니다',
-			'seerr.freshCookieRejected' => 'Seerr에서 새 세션 쿠키를 거부했습니다',
-			'seerr.noUserInformation' => 'Seerr에서 사용자 정보를 반환하지 않았습니다',
-			'seerr.sessionRejectedAfterReauth' => '다시 로그인한 후 세션이 거부되었습니다',
-			'seerr.permissionDenied' => 'Seerr가 이 작업을 거부했습니다: 계정에 필요한 권한이 더 이상 없습니다',
-			'seerr.permissionRevoked' => '이 항목을 요청할 권한이 더 이상 없습니다',
-			'services.title' => '서비스',
-			'services.hubSubtitle' => '시청 진행률을 동기화하고 새 작품을 요청하세요.',
-			'services.integrations' => '연동',
-			'services.notConnected' => '연결되지 않음',
-			'services.connectedAs' => ({required Object username}) => '@${username}(으)로 연결됨',
-			'services.scrobble' => '진행률 자동 추적',
-			'services.scrobbleDescription' => '에피소드나 영화를 시청하면 목록을 업데이트합니다.',
-			'services.disconnectConfirm' => ({required Object service}) => '${service} 연결을 해제하시겠습니까?',
-			'services.disconnectConfirmBody' => ({required Object service}) => 'Plezy가 ${service} 업데이트를 중지합니다. 언제든 다시 연결할 수 있습니다.',
-			'services.connectFailed' => ({required Object service}) => '${service}에 연결할 수 없습니다. 다시 시도하세요.',
-			'services.names.mal' => 'MyAnimeList',
-			'services.names.anilist' => 'AniList',
-			'services.names.simkl' => 'Simkl',
-			'services.names.seerr' => 'Seerr',
-			'services.names.mdblist' => 'MDBList',
-			'services.simklReconnect.title' => 'Simkl 다시 연결',
-			'services.simklReconnect.subtitle' => 'Simkl이 이 연결에 사용되는 로그인 방식을 종료합니다. 다시 연결하면 simkl.com이 열리고 그곳에서 Plezy를 승인합니다 — Plezy는 비밀번호를 볼 수 없습니다. 시청 기록은 Simkl에 그대로 유지됩니다.',
-			'services.deviceCode.title' => ({required Object service}) => '${service}에서 Plezy 활성화',
-			'services.deviceCode.instructions' => 'QR 코드를 스캔하거나 아래 주소로 이동하여 이 코드를 입력하세요:',
-			'services.deviceCode.openToActivate' => ({required Object service}) => '활성화하려면 ${service} 열기',
-			'services.deviceCode.copyCode' => '활성화 코드 복사',
-			'services.deviceCode.waitingForAuthorization' => '인증을 기다리는 중…',
-			'services.deviceCode.codeCopied' => '코드가 복사되었습니다',
-			'services.oauthProxy.title' => ({required Object service}) => '${service}에 로그인',
-			'services.oauthProxy.body' => '이 QR 코드를 스캔하거나 아무 기기에서 URL을 여세요.',
-			'services.oauthProxy.openToSignIn' => ({required Object service}) => '로그인하려면 ${service} 열기',
-			'services.pendingAuth.copyUrl' => '로그인 URL 복사',
-			'services.pendingAuth.urlCopied' => 'URL이 복사되었습니다',
-			'services.libraryFilter.title' => '라이브러리 필터',
-			'services.libraryFilter.subtitleAllSyncing' => '모든 라이브러리 동기화 중',
-			'services.libraryFilter.subtitleNoneSyncing' => '동기화 안 함',
-			'services.libraryFilter.subtitleBlocked' => ({required Object count}) => '${count}개 차단됨',
-			'services.libraryFilter.subtitleAllowed' => ({required Object count}) => '${count}개 허용됨',
-			'services.libraryFilter.mode' => '필터 모드',
-			'services.libraryFilter.modeBlacklist' => '차단 목록',
-			'services.libraryFilter.modeWhitelist' => '허용 목록',
-			'services.libraryFilter.modeHintBlacklist' => '아래에 선택한 라이브러리를 제외한 모든 라이브러리를 동기화합니다.',
-			'services.libraryFilter.modeHintWhitelist' => '아래에 선택한 라이브러리만 동기화합니다.',
-			'services.libraryFilter.libraries' => '라이브러리',
-			'services.libraryFilter.noLibraries' => '사용 가능한 라이브러리가 없습니다',
-			'addServer.addMediaBrowserTitle' => ({required Object product}) => '${product} 서버 추가',
-			'addServer.serverUrls' => '서버 URL',
-			'addServer.serverUrlsHelper' => '쉼표로 구분하여 여러 URL을 입력할 수 있습니다.',
-			'addServer.findServer' => '서버 찾기',
-			'addServer.searchingLocalMediaBrowserServers' => ({required Object product}) => '로컬 ${product} 서버를 찾는 중...',
-			'addServer.localMediaBrowserServers' => ({required Object product}) => '로컬 ${product} 서버',
-			'addServer.username' => '사용자 이름',
-			'addServer.password' => '비밀번호',
-			'addServer.signIn' => '로그인',
-			'addServer.change' => '변경',
-			'addServer.required' => '필수',
-			'addServer.couldNotReachServer' => ({required Object error}) => '서버에 연결할 수 없습니다: ${error}',
-			'addServer.signInFailed' => ({required Object error}) => '로그인 실패: ${error}',
-			'addServer.quickConnectFailed' => ({required Object error}) => 'Quick Connect 실패: ${error}',
-			'addServer.addPlexTitle' => 'Plex로 로그인',
-			'addServer.pinExpired' => '로그인 전에 PIN이 만료되었습니다. 다시 시도하세요.',
-			'addServer.failedToRegisterAccount' => ({required Object error}) => '계정 등록 실패: ${error}',
-			'addServer.enterMediaBrowserUrlError' => ({required Object product}) => '${product} 서버 URL을 입력하세요',
-			'addServer.addConnectionTitle' => '연결 추가',
-			'addServer.addConnectionTitleScoped' => ({required Object name}) => '${name}에 추가',
-			'addServer.signInWithPlexCard' => 'Plex로 로그인',
-			'addServer.signInWithPlexCardSubtitle' => '이 기기를 승인합니다. 공유 서버가 추가됩니다.',
-			'addServer.signInWithPlexCardSubtitleScoped' => 'Plex 계정을 승인합니다. Home 사용자는 프로필이 됩니다.',
-			'addServer.connectToMediaBrowserCard' => ({required Object product}) => '${product}에 연결',
-			'addServer.connectToMediaBrowserCardSubtitle' => '서버 URL, 사용자 이름, 비밀번호를 입력하세요.',
-			'addServer.connectToMediaBrowserCardSubtitleScoped' => ({required Object product, required Object name}) => '${product} 서버에 로그인하세요. ${name}에 연결됩니다.',
-			'addServer.borrowFromAnotherProfile' => '다른 프로필에서 빌리기',
-			'addServer.borrowFromAnotherProfileSubtitle' => '다른 프로필의 연결을 재사용합니다. PIN으로 보호된 프로필에는 PIN이 필요합니다.',
-			'addServer.invalidCredentials' => '사용자 이름 또는 비밀번호가 올바르지 않습니다',
-			'addServer.authResponseNotJson' => '인증 응답이 유효한 JSON이 아닙니다',
-			'addServer.authResponseIncomplete' => '서버의 로그인 응답이 불완전합니다',
-			'addServer.quickConnectRejected' => '서버에서 Quick Connect를 거부했습니다',
-			'addServer.quickConnectNotJson' => 'Quick Connect 응답이 유효한 JSON이 아닙니다',
-			'addServer.quickConnectMissingFields' => 'Quick Connect 응답에 코드 또는 비밀 키가 없습니다',
-			'addServer.quickConnectPollRejected' => '서버에서 Quick Connect 폴링을 거부했습니다',
-			'addServer.serverTimedOut' => '서버가 제시간에 응답하지 않았습니다',
-			'addServer.responseNotJson' => '서버 응답이 유효한 JSON이 아닙니다',
-			'addServer.responseMissingIdentity' => ({required Object product}) => '응답에 ID 또는 서버 이름이 없습니다. 이 서버가 ${product} 서버인가요?',
-			'addServer.probeFailed' => ({required Object error}) => '서버에 연결할 수 없습니다: ${error}',
-			'addServer.enterAtLeastOneUrl' => ({required Object product}) => '${product} 서버 URL을 하나 이상 입력하세요',
-			'addServer.noReachableServer' => ({required Object product}) => '연결 가능한 ${product} 서버를 찾을 수 없습니다',
-			'addServer.urlsPointToDifferentServers' => ({required Object product}) => '이 URL들은 서로 다른 ${product} 서버를 가리킵니다',
-			'addServer.urlDoesNotMatchServer' => ({required Object product}) => '이 URL은 ${product} 서버와 일치하지 않습니다',
-			'addServer.redirectUnsupported' => '서버가 지원되지 않는 URL로 리디렉션했습니다',
-			'addServer.redirectDifferentHost' => ({required Object product}) => '서버가 다른 호스트로 리디렉션했습니다. 최종 ${product} URL을 직접 입력하세요.',
-			'addServer.redirectInsecure' => '서버가 HTTPS에서 안전하지 않은 URL로 리디렉션했습니다',
-			'addServer.redirectUnsupportedEnterFinal' => ({required Object product}) => '서버가 지원되지 않는 URL로 리디렉션했습니다. 최종 ${product} URL을 직접 입력하세요.',
-			_ => null,
-		};
+		switch (path) {
+			case 'app.title': return 'Plezy';
+			case 'appIcon.title': return '앱 아이콘';
+			case 'appIcon.defaultIcon': return '기본';
+			case 'appIcon.current': return '현재 아이콘';
+			case 'appIcon.locked': return '테마 & 아이콘 팩에 포함';
+			case 'appIcon.lockedHint': return '대체 아이콘은 테마 & 아이콘 팩에 포함되어 있습니다.';
+			case 'appIcon.changeFailed': return '앱 아이콘을 변경하지 못했습니다';
+			case 'appIcon.launcherHint': return 'Plezy를 나가면 홈 화면에 새 아이콘이 표시됩니다.';
+			case 'appIcon.tvLauncherHint': return 'Plezy를 나가면 새 배너가 표시됩니다. Android TV에서는 TV를 다시 시작할 때까지 이전 배너가 계속 표시될 수 있습니다.';
+			case 'appIcon.names.midnight': return '한밤';
+			case 'appIcon.names.ember': return '불씨';
+			case 'appIcon.names.paper': return '종이';
+			case 'appIcon.names.oled': return 'OLED';
+			case 'appIcon.names.line': return '라인';
+			case 'appIcon.names.ocean': return '바다';
+			case 'appIcon.names.ultraviolet': return '자외선';
+			case 'appIcon.names.matcha': return '말차';
+			case 'appIcon.names.sunset': return '노을';
+			case 'appIcon.names.gold': return '골드';
+			case 'appIcon.names.titanium': return '티타늄';
+			case 'appIcon.names.glass': return '유리';
+			case 'appIcon.names.crt': return 'CRT';
+			case 'appIcon.names.vhs': return 'VHS';
+			case 'appIcon.names.synthwave': return '신스웨이브';
+			case 'appIcon.names.pixel': return '픽셀';
+			case 'appIcon.names.neon': return '네온';
+			case 'appIcon.names.sticker': return '스티커';
+			case 'appIcon.names.ticket': return '티켓';
+			case 'appIcon.names.pop': return '팝';
+			case 'appIcon.names.strata': return '지층';
+			case 'appIcon.names.facet': return '패싯';
+			case 'appIcon.names.tilde': return '물결';
+			case 'auth.signInWithPlex': return 'Plex 계정으로 로그인';
+			case 'auth.showQRCode': return 'QR 코드 표시';
+			case 'auth.authenticate': return '인증';
+			case 'auth.authenticationTimeout': return '인증 시간이 초과되었습니다. 다시 시도해 주세요.';
+			case 'auth.scanQRToSignIn': return '로그인하려면 이 QR 코드를 스캔하세요';
+			case 'auth.waitingForAuth': return '인증 대기 중...\n브라우저에서 로그인하세요.';
+			case 'auth.useBrowser': return '브라우저 사용';
+			case 'auth.or': return '또는';
+			case 'auth.connectToMediaBrowser': return ({required Object product}) => '${product}에 연결';
+			case 'auth.quickConnect': return 'Quick Connect';
+			case 'auth.useQuickConnect': return 'Quick Connect 사용';
+			case 'auth.quickConnectInstructions': return 'Jellyfin에서 Quick Connect를 열고 이 코드를 입력하세요.';
+			case 'auth.quickConnectWaiting': return '승인 대기 중…';
+			case 'auth.quickConnectCancel': return '취소';
+			case 'auth.quickConnectExpired': return 'Quick Connect가 만료되었습니다. 다시 시도하세요.';
+			case 'auth.localDataRecoveryRequired': return 'Plezy에서 로컬 로그인 정보와 대기 중인 재생 데이터를 안전하게 복구하지 못했습니다. 다시 로그인해 주세요.';
+			case 'auth.pinCheckRejected': return 'Plex PIN 확인이 거부되었습니다';
+			case 'common.cancel': return '취소';
+			case 'common.save': return '저장';
+			case 'common.close': return '닫기';
+			case 'common.clear': return '지우기';
+			case 'common.reset': return '초기화';
+			case 'common.later': return '나중에';
+			case 'common.submit': return '제출';
+			case 'common.confirm': return '확인';
+			case 'common.retry': return '재시도';
+			case 'common.logout': return '로그아웃';
+			case 'common.unknown': return '알 수 없는';
+			case 'common.refresh': return '새로고침';
+			case 'common.yes': return '예';
+			case 'common.no': return '아니오';
+			case 'common.delete': return '삭제';
+			case 'common.edit': return '편집';
+			case 'common.shuffle': return '무작위 재생';
+			case 'common.addTo': return '추가하기...';
+			case 'common.createNew': return '새로 만들기';
+			case 'common.connect': return '연결';
+			case 'common.disconnect': return '연결 해제';
+			case 'common.play': return '재생';
+			case 'common.pause': return '일시정지';
+			case 'common.resume': return '재개';
+			case 'common.error': return '오류';
+			case 'common.search': return '검색';
+			case 'common.home': return '홈';
+			case 'common.back': return '뒤로';
+			case 'common.settings': return '설정';
+			case 'common.mute': return '음소거';
+			case 'common.ok': return '확인';
+			case 'common.off': return '꺼짐';
+			case 'common.options': return '옵션';
+			case 'common.seasonNumber': return ({required Object number}) => '시즌 ${number}';
+			case 'common.episodeNumberTitle': return ({required Object number, required Object title}) => '${number}화 - ${title}';
+			case 'common.chapterNumber': return ({required Object number}) => '챕터 ${number}';
+			case 'common.reconnect': return '다시 연결';
+			case 'common.viewAll': return '모두 보기';
+			case 'common.checkingNetwork': return '네트워크 확인 중...';
+			case 'common.loadingServers': return '서버 로딩 중...';
+			case 'common.connectingToServers': return '서버 연결 중...';
+			case 'common.startingOfflineMode': return '오프라인 모드 시작 중...';
+			case 'common.loading': return '로딩 중...';
+			case 'common.fullscreen': return '전체 화면';
+			case 'common.exitFullscreen': return '전체 화면 종료';
+			case 'common.pressBackAgainToExit': return '한 번 더 누르면 종료됩니다';
+			case 'common.ratingSource.critic': return '평론가';
+			case 'common.ratingSource.audience': return '관객';
+			case 'common.ratingSource.imdb': return 'IMDb';
+			case 'common.ratingSource.tmdb': return 'TMDB';
+			case 'common.ratingSource.rottenTomatoes': return 'Rotten Tomatoes';
+			case 'common.ratingSource.simkl': return 'Simkl';
+			case 'common.ratingSource.mal': return 'MyAnimeList';
+			case 'common.ratingSource.anilist': return 'AniList';
+			case 'common.ratingSource.trakt': return 'Trakt';
+			case 'common.ratingSource.rottenTomatoesCritic': return 'Rotten Tomatoes 평론가';
+			case 'common.ratingSource.rottenTomatoesAudience': return 'Rotten Tomatoes 관객';
+			case 'common.ratingSource.metacritic': return 'Metacritic';
+			case 'common.ratingSource.letterboxd': return 'Letterboxd';
+			case 'common.notAvailable': return 'N/A';
+			case 'common.url': return 'URL';
+			case 'common.letterKeys': return 'ABC';
+			case 'common.mediaKind.movie': return '영화';
+			case 'common.mediaKind.show': return '시리즈';
+			case 'common.mediaKind.season': return '시즌';
+			case 'common.mediaKind.episode': return '에피소드';
+			case 'common.mediaKind.artist': return '아티스트';
+			case 'common.mediaKind.album': return '앨범';
+			case 'common.mediaKind.track': return '트랙';
+			case 'common.mediaKind.collection': return '컬렉션';
+			case 'common.mediaKind.playlist': return '재생목록';
+			case 'common.mediaKind.clip': return '클립';
+			case 'common.mediaKind.photo': return '사진';
+			case 'common.mediaKind.folder': return '폴더';
+			case 'screens.licenses': return '라이선스';
+			case 'screens.switchProfile': return '프로필 전환';
+			case 'screens.subtitleStyling': return '자막 스타일 설정';
+			case 'screens.mpvConfig': return 'mpv.conf';
+			case 'screens.logs': return '로그';
+			case 'update.available': return '업데이트 있음';
+			case 'update.versionAvailable': return ({required Object version}) => '${version} 버전을 사용할 수 있습니다';
+			case 'update.currentVersion': return ({required Object version}) => '현재 버전: ${version}';
+			case 'update.skipVersion': return '이 버전 건너뛰기';
+			case 'update.viewRelease': return '릴리스 정보 보기';
+			case 'update.latestVersion': return '최신 버전을 사용 중입니다';
+			case 'update.checkFailed': return '업데이트 확인 실패';
+			case 'supporter.title': return '테마 & 아이콘 팩';
+			case 'supporter.intro': return '외형 꾸미기 기능을 추가하는 선택형 1회성 구매입니다:';
+			case 'supporter.presetThemes': return '프리셋 테마';
+			case 'supporter.presetThemesDescription': return '불씨, 빙하, 숲, 자두, 종이';
+			case 'supporter.customTheme': return '사용자 지정 테마';
+			case 'supporter.customThemeDescription': return '모든 색상을 직접 선택';
+			case 'supporter.appIcons': return '앱 아이콘';
+			case 'supporter.appIconsDescription': return '대체 Plezy 아이콘 선택';
+			case 'supporter.buy': return ({required Object price}) => '${price}에 구매';
+			case 'supporter.loadingPrice': return '가격 불러오는 중...';
+			case 'supporter.restore': return '구매 복원';
+			case 'supporter.pending': return '구매가 결제 또는 승인 대기 중입니다. 스토어에서 처리가 완료되는 즉시 추가 기능이 잠금 해제됩니다.';
+			case 'supporter.thankYouTitle': return '구매해 주셔서 감사합니다';
+			case 'supporter.thankYouBody': return '테마 & 아이콘 팩이 잠금 해제되었습니다.';
+			case 'supporter.tileSubtitle': return '1회성 구매로 테마와 앱 아이콘 잠금 해제';
+			case 'supporter.tileSubtitleThemesOnly': return '1회성 구매로 테마 잠금 해제';
+			case 'supporter.tileUnlocked': return '잠금 해제됨 — 구매해 주셔서 감사합니다';
+			case 'supporter.errors.storeUnavailable': return '구매를 이용할 수 없습니다. 스토어에 로그인되어 있고 이 기기에서 구매가 허용되어 있는지 확인하세요.';
+			case 'supporter.errors.productNotFound': return '현재 스토어에서 테마 & 아이콘 팩을 구매할 수 없습니다.';
+			case 'supporter.errors.productQueryFailed': return '가격을 불러오지 못했습니다. 연결을 확인하고 다시 시도하세요.';
+			case 'supporter.errors.purchaseFailed': return '구매가 완료되지 않았습니다. 다시 시도하세요.';
+			case 'supporter.errors.restoreFailed': return '구매를 복원하기 위해 스토어에 연결하지 못했습니다. 다시 시도하세요.';
+			case 'supporter.errors.nothingToRestore': return '이 스토어 계정에서 테마 & 아이콘 팩 구매 내역을 찾을 수 없습니다.';
+			case 'settings.title': return '설정';
+			case 'settings.supportDeveloper': return 'Plezy 후원하기';
+			case 'settings.supportDeveloperDescription': return 'Liberapay로 후원하여 개발 지원';
+			case 'settings.language': return '언어';
+			case 'settings.theme': return '테마';
+			case 'settings.appearance': return '디자인';
+			case 'settings.videoPlayback': return '비디오 재생';
+			case 'settings.videoPlaybackDescription': return '재생 동작 설정';
+			case 'settings.advanced': return '고급';
+			case 'settings.episodePosterMode': return '에피소드 포스터 스타일';
+			case 'settings.seriesPoster': return '시리즈 포스터';
+			case 'settings.seasonPoster': return '시즌 포스터';
+			case 'settings.episodeThumbnail': return '썸네일';
+			case 'settings.showHeroSectionDescription': return '홈 화면에 주요 콘텐츠 캐러셀(슬라이드) 표시';
+			case 'settings.secondsLabel': return '초';
+			case 'settings.minutesLabel': return '분';
+			case 'settings.secondsShort': return '초';
+			case 'settings.minutesShort': return '분';
+			case 'settings.durationHint': return ({required Object min, required Object max}) => '기간 입력 (${min}-${max})';
+			case 'settings.systemTheme': return '시스템';
+			case 'settings.lightTheme': return '라이트';
+			case 'settings.darkTheme': return '다크';
+			case 'settings.oledTheme': return 'OLED';
+			case 'settings.emberTheme': return '불씨';
+			case 'settings.glacierTheme': return '빙하';
+			case 'settings.forestTheme': return '숲';
+			case 'settings.plumTheme': return '자두';
+			case 'settings.paperTheme': return '종이';
+			case 'settings.libraryDensity': return '라이브러리 표시 밀도';
+			case 'settings.displayScale': return '표시 배율';
+			case 'settings.compact': return '조밀하게';
+			case 'settings.comfortable': return '여유롭게';
+			case 'settings.gridSpacing': return '그리드 간격';
+			case 'settings.gridSpacingTight': return '조밀하게';
+			case 'settings.gridSpacingNormal': return '보통';
+			case 'settings.gridSpacingSpacious': return '여유롭게';
+			case 'settings.tvCornerSpotlightBackdrop': return '모서리 스포트라이트 배경';
+			case 'settings.tvCornerSpotlightBackdropDescription': return '화면 전체를 채우는 대신 오른쪽 상단에 스포트라이트 아트워크를 표시합니다';
+			case 'settings.viewMode': return '보기 모드';
+			case 'settings.gridView': return '그리드 보기';
+			case 'settings.listView': return '목록 보기';
+			case 'settings.showHeroSection': return '주요 추천 영역 표시';
+			case 'settings.continueWatchingAction': return '계속 보기 동작';
+			case 'settings.continueWatchingPlay': return '재생';
+			case 'settings.continueWatchingDetails': return '상세 정보 열기';
+			case 'settings.episodeAction': return '에피소드 동작';
+			case 'settings.episodePlay': return '재생';
+			case 'settings.episodeDetails': return '상세 정보 열기';
+			case 'settings.useGlobalHubs': return '홈 레이아웃 사용';
+			case 'settings.useGlobalHubsDescription': return '통합 홈 허브를 표시합니다. 끄면 라이브러리 추천을 사용합니다.';
+			case 'settings.showServerNameOnHubs': return '허브에 서버 이름 표시';
+			case 'settings.showServerNameOnHubsDescription': return '허브 제목에 항상 서버 이름을 표시합니다.';
+			case 'settings.groupLibrariesByServer': return '서버별로 라이브러리 그룹화';
+			case 'settings.groupLibrariesByServerDescription': return '사이드바 라이브러리를 미디어 서버별로 그룹화합니다.';
+			case 'settings.alwaysKeepSidebarOpen': return '사이드바 항상 열어두기';
+			case 'settings.alwaysKeepSidebarOpenDescription': return '사이드바가 확장된 상태로 유지되고 콘텐츠 영역이 맞춰집니다';
+			case 'settings.showUnwatchedCount': return '미시청 수 표시';
+			case 'settings.showUnwatchedCountDescription': return '시리즈 및 시즌에 미시청 에피소드 수 표시';
+			case 'settings.showWatchedIndicators': return '시청 표시 보이기';
+			case 'settings.showWatchedIndicatorsDescription': return '시청한 영화, 프로그램, 에피소드에 체크 표시를 표시합니다';
+			case 'settings.showEpisodeNumberOnCards': return '카드에 에피소드 번호 표시';
+			case 'settings.showEpisodeNumberOnCardsDescription': return '에피소드 카드에 시즌 및 에피소드 번호 표시';
+			case 'settings.showSeasonPostersOnTabs': return '탭에 시즌 포스터 표시';
+			case 'settings.showSeasonPostersOnTabsDescription': return '각 시즌 포스터를 탭 위에 표시';
+			case 'settings.tvFullCardLayout': return '전체 TV 카드';
+			case 'settings.tvFullCardLayoutDescription': return 'TV 카드에 이미지만 표시하고 배우 이름을 오버레이로 표시';
+			case 'settings.focusGlow': return '포커스 글로우';
+			case 'settings.focusGlowDescription': return '포커스된 카드 주위에 은은한 빛 효과를 표시';
+			case 'settings.visualEffects': return '시각 효과';
+			case 'settings.visualEffectsAuto': return '자동';
+			case 'settings.visualEffectsAutoDescription': return '저전력 기기에서 효과를 자동으로 줄입니다';
+			case 'settings.visualEffectsFull': return '전체';
+			case 'settings.visualEffectsReduced': return '축소';
+			case 'settings.visualEffectsReducedDescription': return '애니메이션을 줄이고 아트워크 해상도를 낮춥니다';
+			case 'settings.hideSpoilers': return '미시청 에피소드 스포일러 숨기기';
+			case 'settings.hideSpoilersDescription': return '시청하지 않은 에피소드의 썸네일과 설명을 흐리게 처리';
+			case 'settings.playerBackend': return '플레이어 백엔드';
+			case 'settings.exoPlayer': return 'ExoPlayer';
+			case 'settings.mpv': return 'mpv';
+			case 'settings.hardwareDecoding': return '하드웨어 디코딩';
+			case 'settings.hardwareDecodingDescription': return '가능한 경우 하드웨어 가속을 사용합니다';
+			case 'settings.playbackBuffer': return '재생 버퍼';
+			case 'settings.playbackBufferAuto': return '자동 (권장)';
+			case 'settings.playbackBufferLarge': return '대형';
+			case 'settings.playbackBufferExtraLarge': return '초대형';
+			case 'settings.playbackBufferDescription': return '불안정한 연결에 대비해 더 많은 버퍼를 사용합니다. 버퍼 크기에 의해서도 제한됩니다.';
+			case 'settings.defaultQualityTitle': return '기본 화질';
+			case 'settings.cellularQualityTitle': return '셀룰러에서 기본 화질';
+			case 'settings.cellularQualitySameAsDefault': return '기본 화질과 동일';
+			case 'settings.directPlayCoveredQuality': return '작은 동영상을 원본 화질로 재생';
+			case 'settings.directPlayCoveredQualityDescription': return '화질 제한 내의 동영상은 트랜스코딩하지 않고 Direct Play합니다';
+			case 'settings.videoCodecs': return '비디오 코덱';
+			case 'settings.videoCodecsDescription': return '선택 해제한 코덱은 서버가 트랜스코딩합니다';
+			case 'settings.videoCodecsAlwaysAccepted': return '항상 허용';
+			case 'settings.musicQualityTitle': return '음악 음질';
+			case 'settings.subtitleStyling': return '자막 스타일';
+			case 'settings.subtitleStylingDescription': return '자막 모양을 사용자 지정합니다';
+			case 'settings.smallSkipDuration': return '짧은 건너뛰기 시간';
+			case 'settings.largeSkipDuration': return '긴 건너뛰기 시간';
+			case 'settings.rewindOnResume': return '재개 시 되감기';
+			case 'settings.secondsUnit': return ({required Object seconds}) => '${seconds}초';
+			case 'settings.defaultSleepTimer': return '기본 취침 타이머';
+			case 'settings.minutesUnit': return ({required Object minutes}) => '${minutes}분';
+			case 'settings.rememberTrackSelections': return '시리즈/영화별 트랙 선택 기억';
+			case 'settings.rememberTrackSelectionsDescription': return '작품별 오디오 및 자막 선택 기억';
+			case 'settings.rememberTrackSelectionsBackendRule': return 'Plex는 파일별로 각 선택을 서버에 저장합니다. Jellyfin은 계정의 선택 기억도 활성화합니다. Emby는 지원되지 않습니다';
+			case 'settings.followServerTrackSelections': return '서버의 에피소드별 트랙 선택 사용';
+			case 'settings.followServerTrackSelectionsDescription': return '에피소드 전환 시 현재 선택을 유지하는 대신 서버에서 선택된 오디오와 자막을 적용합니다';
+			case 'settings.resumeMusicOnLaunch': return '음악 세션 기억';
+			case 'settings.resumeMusicOnLaunchDescription': return '앱 시작 시 마지막 곡을 멈춘 위치에서 일시정지 상태로 엽니다';
+			case 'settings.showChapterMarkersOnTimeline': return '탐색 막대에 챕터 마커 표시';
+			case 'settings.showChapterMarkersOnTimelineDescription': return '챕터 경계에서 탐색 막대 구분';
+			case 'settings.specialsOrdering': return '에피소드 순서로 스페셜 표시';
+			case 'settings.specialsOrderingDescription': return '시리즈 시청 순서에서 스페셜이 재생되는 위치';
+			case 'settings.specialsOrderingServer': return '서버 순서 따르기';
+			case 'settings.specialsOrderingAirDate': return '방영일 순서로 삽입';
+			case 'settings.specialsOrderingLast': return '일반 시즌 뒤';
+			case 'settings.clickVideoTogglesPlayback': return '동영상 클릭으로 재생/일시정지 전환';
+			case 'settings.clickVideoTogglesPlaybackDescription': return '컨트롤을 표시하는 대신 동영상을 클릭하여 재생하거나 일시정지합니다.';
+			case 'settings.videoPlayerControls': return '비디오 플레이어 컨트롤';
+			case 'settings.keyboardShortcuts': return '키보드 단축키';
+			case 'settings.keyboardShortcutsDescription': return '키보드 단축키를 사용자 지정합니다';
+			case 'settings.videoPlayerNavigation': return '비디오 플레이어 탐색';
+			case 'settings.videoPlayerNavigationDescription': return '방향 키로 비디오 플레이어 컨트롤을 탐색합니다';
+			case 'settings.watchTogetherRelay': return '함께 보기 릴레이';
+			case 'settings.watchTogetherRelayDescription': return '직접 설정하지 않으면 공개 Open Watch Party 릴레이를 사용합니다';
+			case 'settings.watchTogetherRelayHint': return 'https://my-relay.example.com';
+			case 'settings.watchTogetherRelayInvalid': return '올바른 HTTP 또는 HTTPS 릴레이 기본 URL을 입력하세요.';
+			case 'settings.crashReporting': return '충돌 보고';
+			case 'settings.crashReportingDescription': return '앱 개선을 위해 충돌 보고서 전송';
+			case 'settings.debugLogging': return '디버그 로깅';
+			case 'settings.debugLoggingDescription': return '문제 해결을 위해 상세 로깅 활성화';
+			case 'settings.viewLogs': return '로그 보기';
+			case 'settings.viewLogsDescription': return '애플리케이션 로그 확인';
+			case 'settings.clearImageCache': return '이미지 캐시 지우기';
+			case 'settings.clearImageCacheDescription': return '캐시된 아트워크와 썸네일을 지웁니다. 다시 다운로드할 때까지 이미지가 느리게 로드될 수 있습니다.';
+			case 'settings.clearImageCacheSuccess': return '이미지 캐시를 성공적으로 지웠습니다';
+			case 'settings.resetSettings': return '설정 재설정';
+			case 'settings.resetSettingsDescription': return '기본 설정으로 복원합니다. 되돌릴 수 없습니다.';
+			case 'settings.resetSettingsSuccess': return '설정 재설정 성공';
+			case 'settings.backup': return '백업';
+			case 'settings.exportSettings': return '설정 내보내기';
+			case 'settings.exportSettingsDescription': return '기본 설정을 파일로 저장';
+			case 'settings.exportSettingsSuccess': return '설정 내보내기 완료';
+			case 'settings.importSettings': return '설정 가져오기';
+			case 'settings.importSettingsDescription': return '파일에서 기본 설정 복원';
+			case 'settings.importSettingsConfirm': return '현재 설정을 대체합니다. 계속하시겠습니까?';
+			case 'settings.importSettingsSuccess': return '설정 가져오기 완료';
+			case 'settings.importSettingsInvalidFile': return '유효한 Plezy 설정 내보내기 파일이 아닙니다';
+			case 'settings.importSettingsNoUser': return '설정을 가져오기 전에 로그인하세요';
+			case 'settings.shortcutsReset': return '단축키가 기본값으로 재설정되었습니다';
+			case 'settings.resetShortcutsConfirm': return '사용자 지정 단축키가 기본값으로 대체됩니다. 계속하시겠습니까?';
+			case 'settings.about': return '정보';
+			case 'settings.aboutDescription': return '앱 정보 및 라이선스';
+			case 'settings.updates': return '업데이트';
+			case 'settings.updateAvailable': return '사용 가능한 업데이트 있음';
+			case 'settings.checkForUpdates': return '업데이트 확인';
+			case 'settings.autoCheckUpdatesOnStartup': return '시작 시 자동으로 업데이트 확인';
+			case 'settings.autoCheckUpdatesOnStartupDescription': return '실행 시 업데이트가 있으면 알림';
+			case 'settings.validationErrorEnterNumber': return '유효한 숫자를 입력하세요';
+			case 'settings.validationErrorDuration': return ({required Object min, required Object max, required Object unit}) => '기간은 ${min}과 ${max} ${unit} 사이여야 합니다';
+			case 'settings.shortcutAlreadyAssigned': return ({required Object action}) => '단축키가 이미 ${action}에 할당되었습니다';
+			case 'settings.shortcutUpdated': return ({required Object action}) => '${action} 단축키가 업데이트되었습니다';
+			case 'settings.saveFailed': return '변경 사항을 저장하지 못했습니다. 다시 시도하세요.';
+			case 'settings.autoPlayAndSkip': return '자동 재생 및 건너뛰기';
+			case 'settings.autoPlayNextEpisode': return '다음 에피소드 자동 재생';
+			case 'settings.autoPlayNextEpisodeDescription': return '에피소드가 끝나면 다음 에피소드를 자동으로 재생';
+			case 'settings.shuffleStartsFromBeginning': return '무작위 재생 시 처음부터 시작';
+			case 'settings.shuffleStartsFromBeginningDescription': return '무작위 재생 시 이어보기 대신 각 에피소드를 처음부터 재생합니다';
+			case 'settings.playNextCountdown': return '다음 재생 카운트다운';
+			case 'settings.playNextCountdownImmediate': return '즉시 재생';
+			case 'settings.skipIntroMode': return '인트로 건너뛰기';
+			case 'settings.skipIntroModeOffDescription': return '건너뛰기 버튼 없이 인트로를 정상적으로 재생합니다';
+			case 'settings.skipIntroModeButtonDescription': return '인트로가 시작되면 건너뛰기 버튼을 표시합니다';
+			case 'settings.skipIntroModeAutoDescription': return '아래 지연 시간 후 인트로를 자동으로 건너뜁니다';
+			case 'settings.skipCreditsMode': return '크레딧 건너뛰기';
+			case 'settings.skipCreditsModeOffDescription': return '건너뛰기 버튼 없이 크레딧을 정상적으로 재생합니다';
+			case 'settings.skipCreditsModeButtonDescription': return '크레딧이 시작되면 건너뛰기 버튼을 표시합니다';
+			case 'settings.skipCreditsModeAutoDescription': return '크레딧을 자동으로 건너뛰고 다음 에피소드를 재생합니다';
+			case 'settings.skipMarkerModeOff': return '끄기';
+			case 'settings.skipMarkerModeButton': return '버튼 표시';
+			case 'settings.skipMarkerModeAuto': return '자동';
+			case 'settings.forceSkipMarkerFallback': return '대체 마커 강제 사용';
+			case 'settings.forceSkipMarkerFallbackDescription': return 'Plex에 마커가 있어도 챕터 제목 패턴 사용';
+			case 'settings.autoSkipDelay': return '자동 건너뛰기 지연';
+			case 'settings.autoSkipDelayDescription': return ({required Object seconds}) => '자동으로 건너뛰기 전 ${seconds}초 대기';
+			case 'settings.introPattern': return '인트로 마커 패턴';
+			case 'settings.introPatternDescription': return '챕터 제목에서 인트로 마커를 인식하는 정규식 패턴';
+			case 'settings.creditsPattern': return '크레딧 마커 패턴';
+			case 'settings.creditsPatternDescription': return '챕터 제목에서 크레딧 마커를 인식하는 정규식 패턴';
+			case 'settings.invalidRegex': return '잘못된 정규식';
+			case 'settings.regex': return '정규식';
+			case 'settings.downloads': return '다운로드';
+			case 'settings.downloadLocationDescription': return '다운로드 콘텐츠 저장 위치 선택';
+			case 'settings.downloadLocationDefault': return '기본값 (앱 저장소)';
+			case 'settings.downloadLocationCustom': return '사용자 지정 위치';
+			case 'settings.selectFolder': return '폴더 선택';
+			case 'settings.resetToDefault': return '기본값으로 재설정';
+			case 'settings.currentPath': return ({required Object path}) => '현재: ${path}';
+			case 'settings.downloadLocationChanged': return '다운로드 위치가 변경되었습니다';
+			case 'settings.downloadLocationReset': return '다운로드 위치가 기본값으로 재설정되었습니다';
+			case 'settings.downloadLocationInvalid': return '선택한 폴더에 쓰기 권한이 없습니다';
+			case 'settings.downloadLocationPickerUnavailable': return '이 기기에서는 폴더를 선택할 수 없습니다';
+			case 'settings.downloadOnWifiOnly': return 'Wi-Fi 연결 시에만 다운로드';
+			case 'settings.downloadOnWifiOnlyDescription': return '셀룰러 데이터 사용 중에는 다운로드하지 않습니다';
+			case 'settings.autoRemoveWatchedDownloads': return '시청한 다운로드 항목 자동 삭제';
+			case 'settings.autoRemoveWatchedDownloadsDescription': return '시청한 다운로드 항목을 자동으로 삭제합니다';
+			case 'settings.cellularDownloadBlocked': return '셀룰러에서는 다운로드가 차단됩니다. Wi-Fi를 사용하거나 설정을 변경하세요.';
+			case 'settings.maxVolume': return '최대 볼륨';
+			case 'settings.maxVolumeDescription': return '음량이 작은 콘텐츠를 위해 100% 이상의 볼륨을 허용합니다';
+			case 'settings.maxVolumePercent': return ({required Object percent}) => '${percent}%';
+			case 'settings.discordRichPresence': return 'Discord Rich Presence';
+			case 'settings.discordRichPresenceDescription': return 'Discord에서 시청 중인 콘텐츠 표시';
+			case 'settings.services': return '서비스';
+			case 'settings.servicesDescription': return 'Trakt, MyAnimeList, Seerr 등 연결';
+			case 'settings.manageLibrariesDescription': return '라이브러리 순서를 변경하거나 숨깁니다';
+			case 'settings.companionRemoteServer': return '컴패니언 리모트 서버';
+			case 'settings.companionRemoteServerDescription': return '네트워크의 모바일 기기가 이 앱을 제어할 수 있도록 허용';
+			case 'settings.companionRemoteServerStartFailed': return '컴패니언 리모트 서버를 시작할 수 없습니다';
+			case 'settings.companionRemoteServerStopFailed': return '컴패니언 리모트 서버를 중지할 수 없습니다';
+			case 'settings.autoPip': return '자동 PIP 모드';
+			case 'settings.autoPipDescription': return '재생 중 앱을 떠나면 자동으로 화면 속 화면 모드로 전환합니다';
+			case 'settings.matchContentFrameRate': return '콘텐츠 프레임 레이트 맞춤';
+			case 'settings.matchContentFrameRateDescription': return '디스플레이 새로 고침 빈도를 동영상 콘텐츠에 맞춤';
+			case 'settings.matchContentResolution': return '콘텐츠 해상도에 맞추기';
+			case 'settings.matchContentResolutionDescription': return 'TV가 업스케일링을 처리하도록 디스플레이를 영상 본래 해상도로 전환합니다. 재생 중에는 메뉴와 자막도 함께 업스케일됩니다';
+			case 'settings.matchRefreshRate': return '주사율 맞춤';
+			case 'settings.matchRefreshRateDescription': return '전체 화면에서 디스플레이 새로 고침 빈도 맞춤';
+			case 'settings.matchDynamicRange': return '다이나믹 레인지 맞춤';
+			case 'settings.matchDynamicRangeDescription': return 'HDR 콘텐츠에서는 HDR로 전환한 뒤 SDR로 되돌림';
+			case 'settings.displaySwitchDelay': return '디스플레이 전환 지연';
+			case 'settings.tunneledPlayback': return '터널 재생';
+			case 'settings.tunneledPlaybackDescription': return '비디오 터널링을 사용합니다. HDR 재생 시 검은 화면이 보이거나 움직임이 끊기면 비활성화하세요.';
+			case 'settings.audioPassthrough': return '오디오 패스스루';
+			case 'settings.audioPassthroughDescription': return 'Dolby/DTS 오디오를 재인코딩 없이 리시버나 TV로 전송하여 서라운드 사운드를 유지합니다. 소리가 나지 않으면 비활성화하세요.';
+			case 'settings.audioPassthroughDescriptionApple': return 'Dolby Digital Plus(Atmos 포함)에 Apple의 기본 Dolby 디코더를 사용합니다. DTS와 TrueHD는 계속 멀티채널 PCM으로 재생됩니다. 소리가 나지 않으면 비활성화하세요.';
+			case 'settings.audioPassthroughDescriptionAppleSpatial': return 'Dolby Digital Plus(Atmos 포함)에 Apple의 기본 Dolby 디코더를 사용합니다. iOS, iPadOS, tvOS 26 이상에서는 TrueHD Atmos와 DTS:X가 공간 오디오로 재생됩니다. 그 밖의 DTS 및 TrueHD 트랙은 멀티채널 PCM으로 재생됩니다. 소리가 나지 않으면 비활성화하세요.';
+			case 'settings.audioPassthroughOverriddenByNormalization': return '음량 정규화가 켜져 있는 동안 꺼짐';
+			case 'settings.audioChannelLimit': return '오디오 채널';
+			case 'settings.audioChannelLimitDescription': return '모든 채널을 재생할 수 없는 스피커, 헤드폰 또는 HDMI 환경에 맞게 디코딩된 오디오를 다운믹스합니다';
+			case 'settings.audioChannelLimitOriginal': return '원본';
+			case 'settings.audioChannelLimitOriginalDescription': return '트랙의 모든 채널을 재생합니다';
+			case 'settings.audioChannelLimitSurround51': return '최대 5.1';
+			case 'settings.audioChannelLimitSurround51Description': return '5.1 PCM만 지원하는 TV와 리시버를 위해 7.1을 5.1로 다운믹스합니다. 패스스루에는 영향을 주지 않습니다.';
+			case 'settings.audioChannelLimitStereo': return '스테레오';
+			case 'settings.audioChannelLimitStereoDescription': return '스테레오 스피커나 헤드폰에 맞게 2채널로 다운믹스합니다. 패스스루가 꺼집니다.';
+			case 'settings.downmixCenterBoost': return '센터 채널 부스트';
+			case 'settings.downmixCenterBoostValue': return ({required Object db}) => '${db} dB';
+			case 'settings.downmixCenterBoostLabel': return '부스트 (dB)';
+			case 'settings.downmixCenterBoostShort': return 'dB';
+			case 'settings.audioDownmixNormalize': return '다운믹스 시 음량 정규화';
+			case 'settings.audioDownmixNormalizeDescription': return '클리핑을 방지하기 위해 믹스 음량을 낮춥니다. 원래 음량을 유지하려면 끄세요(큰 소리 장면에서 왜곡될 수 있음).';
+			case 'settings.dvConversionMode': return 'Dolby Vision 변환';
+			case 'settings.dvConversionModeDescription': return 'Dolby Vision Profile 7 파일을 처리하는 방식을 선택합니다.';
+			case 'settings.dvConversionAuto': return '자동';
+			case 'settings.dvConversionNative': return '네이티브 / 비활성화';
+			case 'settings.dvConversionDv81': return 'P7 → P8.1';
+			case 'settings.dvConversionHevcStrip': return 'P7 → HEVC';
+			case 'settings.dvConversionAutoDescription': return '기기 기능 감지와 일반 폴백 동작을 사용합니다';
+			case 'settings.dvConversionNativeDescription': return '네이티브 DV7을 강제하고 DV 변환 재시도를 억제합니다';
+			case 'settings.dvConversionDv81Description': return 'Dolby Vision 프로필 8.1로 인라인 RPU 변환을 강제합니다';
+			case 'settings.dvConversionHevcStripDescription': return 'Dolby Vision RPU/EL 레이어를 제거하고 일반 HEVC로 제공합니다';
+			case 'settings.disableDolbyVision': return 'Dolby Vision 끄기';
+			case 'settings.disableDolbyVisionDescription': return '파일에 HDR10 또는 HLG 레이어가 있으면 Dolby Vision 대신 해당 레이어를 재생합니다';
+			case 'settings.hdrSdrConversion': return 'HDR을 SDR로 변환';
+			case 'settings.hdrSdrConversionDescription': return '디스플레이가 HDR을 표시할 수 없을 때 HDR 동영상을 무엇으로 변환할지 선택합니다.';
+			case 'settings.hdrSdrConversionAuto': return '자동';
+			case 'settings.hdrSdrConversionAutoDescription': return 'Android 9 이상에서는 기기, 이전 버전에서는 플레이어';
+			case 'settings.hdrSdrConversionDevice': return '기기';
+			case 'settings.hdrSdrConversionDeviceDescription': return '기기의 비디오 하드웨어가 변환합니다. 가장 빠르지만 색상은 기기에 따라 다릅니다';
+			case 'settings.hdrSdrConversionPlayer': return '플레이어';
+			case 'settings.hdrSdrConversionPlayerDescription': return '플레이어가 변환합니다. 색상은 일정하지만 저사양 TV 박스에서는 4K가 끊길 수 있습니다';
+			case 'settings.deinterlace': return '디인터레이싱';
+			case 'settings.deinterlaceDescription': return '인터레이스 비디오의 빗살 무늬 아티팩트를 제거합니다 (mpv 플레이어만 해당)';
+			case 'settings.deinterlaceOff': return '끄기';
+			case 'settings.deinterlaceOffDescription': return '인터레이스 비디오를 디코딩된 그대로 표시합니다';
+			case 'settings.deinterlaceVideo': return '비디오';
+			case 'settings.deinterlaceVideoDescription': return '각 필드를 완전한 프레임으로 변환합니다. 스포츠, 뉴스, 콘서트처럼 TV용으로 촬영된 영상에 적합합니다';
+			case 'settings.deinterlaceFilm': return '필름';
+			case 'settings.deinterlaceFilmDescription': return 'NTSC DVD에서 흔한, 29.97fps로 텔레시네된 영화와 애니메이션의 원본 프레임을 복원합니다. TV용으로 촬영된 영상은 끊겨 보입니다. 라이브 TV에는 비디오 모드가 사용됩니다';
+			case 'settings.requireProfileSelectionOnOpen': return '앱 실행 시 프로필 선택';
+			case 'settings.requireProfileSelectionOnOpenDescription': return '앱을 열 때마다 프로필 선택 화면을 표시합니다';
+			case 'settings.forceTvMode': return 'TV 모드 강제 사용';
+			case 'settings.forceTvModeDescription': return 'TV 레이아웃을 강제합니다. 자동 감지되지 않는 기기용입니다. 재시작이 필요합니다.';
+			case 'settings.startInFullscreen': return '전체 화면으로 시작';
+			case 'settings.startInFullscreenDescription': return '실행 시 Plezy를 전체 화면 모드로 엽니다';
+			case 'settings.exitFullscreenOnPlayerClose': return '플레이어를 닫을 때 전체 화면 종료';
+			case 'settings.exitFullscreenOnPlayerCloseDescription': return '비디오 플레이어를 닫을 때 자동으로 전체 화면을 종료합니다';
+			case 'settings.autoHidePerformanceOverlay': return '성능 오버레이 자동 숨기기';
+			case 'settings.autoHidePerformanceOverlayDescription': return '재생 컨트롤과 함께 성능 오버레이를 페이드 처리';
+			case 'settings.showNavBarLabels': return '내비게이션 바 라벨 표시';
+			case 'settings.showNavBarLabelsDescription': return '내비게이션 바 아이콘 아래에 텍스트 라벨을 표시합니다';
+			case 'settings.startupSection': return '시작 섹션';
+			case 'settings.showExploreTab': return '둘러보기 탭 표시';
+			case 'settings.showExploreTabDescription': return 'Plex Discover와 연결된 트래커의 콘텐츠가 포함된 둘러보기 탭을 표시합니다';
+			case 'settings.liveTvDefaultFavorites': return '즐겨찾기 채널 기본 설정';
+			case 'settings.liveTvDefaultFavoritesDescription': return '라이브 TV를 열 때 즐겨찾기 채널만 표시';
+			case 'settings.general': return '일반';
+			case 'settings.generalDescription': return '언어, 시작 및 창 동작';
+			case 'settings.languageAndRegion': return '언어 및 지역';
+			case 'settings.startup': return '시작';
+			case 'settings.display': return '디스플레이';
+			case 'settings.libraryAndCards': return '라이브러리 및 카드';
+			case 'settings.homeScreen': return '홈 화면';
+			case 'settings.navigation': return '탐색';
+			case 'settings.window': return '창';
+			case 'settings.liveTv': return '라이브 TV';
+			case 'settings.player': return '플레이어';
+			case 'settings.videoAndDisplay': return '비디오 및 디스플레이';
+			case 'settings.audio': return '오디오';
+			case 'settings.quality': return '화질';
+			case 'settings.subtitles': return '자막';
+			case 'settings.seekAndTiming': return '탐색 및 타이밍';
+			case 'settings.behavior': return '동작';
+			case 'settings.gestures': return '제스처';
+			case 'settings.gestureBrightnessSwipe': return '밝기 스와이프';
+			case 'settings.gestureBrightnessSwipeDescription': return '왼쪽 가장자리에서 위아래로 스와이프하여 밝기를 조절합니다';
+			case 'settings.gestureVolumeSwipe': return '볼륨 스와이프';
+			case 'settings.gestureVolumeSwipeDescription': return '오른쪽 가장자리에서 위아래로 스와이프하여 볼륨을 조절합니다';
+			case 'settings.gesturePinchToZoom': return '핀치 줌';
+			case 'settings.gesturePinchToZoomDescription': return '비디오에서 핀치하여 확대하거나 축소합니다';
+			case 'settings.rememberBrightnessLevel': return '밝기 수준 기억';
+			case 'settings.rememberBrightnessLevelDescription': return '마지막으로 스와이프하여 설정한 밝기로 재생을 시작합니다';
+			case 'settings.controls': return '컨트롤';
+			case 'settings.rememberPlayerChanges': return '플레이어 변경 사항 기억';
+			case 'settings.rememberPlayerChangesDescription': return '재생 중 변경한 사항을 저장하고 다시 적용할 위치';
+			case 'settings.scopePlaybackSpeed': return '재생 속도';
+			case 'settings.scopeShaderPreset': return '셰이더 프리셋';
+			case 'settings.scopeAspectRatio': return '화면 비율';
+			case 'settings.scopeZoom': return '확대/축소';
+			case 'settings.scopeSyncOffsets': return '오디오 및 자막 동기화';
+			case 'settings.playerScopeOff': return '저장하지 않음';
+			case 'settings.playerScopeGlobal': return '모든 곳';
+			case 'settings.playerScopeLibrary': return '라이브러리별';
+			case 'settings.playerScopeTitle': return '시리즈 또는 영화별';
+			case 'settings.exportDialogTitle': return 'Plezy 설정 내보내기';
+			case 'themeEditor.builtIn': return '기본 제공';
+			case 'themeEditor.presets': return '프리셋';
+			case 'themeEditor.custom': return '사용자 지정';
+			case 'themeEditor.customEmpty': return '아직 만들지 않음';
+			case 'themeEditor.editCustom': return '사용자 지정 테마 편집';
+			case 'themeEditor.editCustomDescription': return '모든 색상을 직접 선택';
+			case 'themeEditor.locked': return '테마 & 아이콘 팩으로 잠금 해제';
+			case 'themeEditor.savedLocked': return '저장됨 — 테마 & 아이콘 팩으로 잠금 해제';
+			case 'themeEditor.title': return '사용자 지정 테마';
+			case 'themeEditor.startFrom': return '기반 테마';
+			case 'themeEditor.startFromDescription': return '다른 테마의 모든 색상을 복사합니다';
+			case 'themeEditor.colors': return '색상';
+			case 'themeEditor.preview': return '미리보기';
+			case 'themeEditor.slots.bg': return '배경';
+			case 'themeEditor.slots.surface': return '표면';
+			case 'themeEditor.slots.outline': return '윤곽선';
+			case 'themeEditor.slots.text': return '텍스트';
+			case 'themeEditor.slots.textMuted': return '보조 텍스트';
+			case 'themeEditor.slots.accent': return '강조색';
+			case 'themeEditor.opacity': return '불투명도';
+			case 'themeEditor.hexHint': return '#RRGGBB 또는 #AARRGGBB';
+			case 'themeEditor.fromOtherThemes': return '다른 테마에서';
+			case 'themeEditor.swatchLabel': return ({required Object theme, required Object color}) => '${theme} ${color}';
+			case 'themeEditor.contrast.textOnBg': return '배경 위 텍스트';
+			case 'themeEditor.contrast.textOnSurface': return '표면 위 텍스트';
+			case 'themeEditor.contrast.textMutedOnBg': return '배경 위 보조 텍스트';
+			case 'themeEditor.contrast.textMutedOnSurface': return '표면 위 보조 텍스트';
+			case 'themeEditor.contrast.accentOnBg': return '배경 위 강조색';
+			case 'themeEditor.contrast.accentOnSurface': return '표면 위 강조색';
+			case 'themeEditor.contrast.labelOnAccent': return '강조색 위 버튼 라벨';
+			case 'themeEditor.lowContrast': return ({required Object pair, required Object ratio, required Object minimum}) => '${pair}: ${ratio}:1, 권장 기준 ${minimum}:1 미만';
+			case 'themeEditor.discardTitle': return '변경 사항을 버리시겠습니까?';
+			case 'themeEditor.discardMessage': return '저장하지 않은 색상 변경 사항이 사라집니다.';
+			case 'themeEditor.discard': return '버리기';
+			case 'themeEditor.previewCardTitle': return ({required Object number}) => '${number}화';
+			case 'themeEditor.previewCardSubtitle': return ({required Object minutes}) => '${minutes}분 남음';
+			case 'themeEditor.previewSwitch': return '자동 재생';
+			case 'themeEditor.previewMutedText': return '보조 텍스트는 이렇게 표시됩니다';
+			case 'search.hint': return '영화, 시리즈, 음악 등을 검색하세요...';
+			case 'search.tryDifferentTerm': return '다른 검색어를 시도해 보세요';
+			case 'search.searchYourMedia': return '미디어 검색';
+			case 'search.enterTitleActorOrKeyword': return '제목, 배우 또는 키워드를 입력하세요';
+			case 'search.people': return '인물';
+			case 'hotkeys.setShortcutFor': return ({required Object actionName}) => '${actionName}에 대한 단축키 설정';
+			case 'hotkeys.clearShortcut': return '단축키 삭제';
+			case 'hotkeys.noShortcutSet': return '설정된 단축키 없음';
+			case 'hotkeys.currentShortcut': return '현재 단축키:';
+			case 'hotkeys.pressToRecord': return '단축키를 기록하려면 선택';
+			case 'hotkeys.recordingShortcut': return '지금 단축키를 누르세요';
+			case 'hotkeys.actions.playPause': return '재생/일시정지';
+			case 'hotkeys.actions.volumeUp': return '볼륨 높이기';
+			case 'hotkeys.actions.volumeDown': return '볼륨 낮추기';
+			case 'hotkeys.actions.seekForward': return ({required Object seconds}) => '앞으로 이동 (${seconds}초)';
+			case 'hotkeys.actions.seekBackward': return ({required Object seconds}) => '뒤로 이동 (${seconds}초)';
+			case 'hotkeys.actions.fullscreenToggle': return '전체 화면 전환';
+			case 'hotkeys.actions.muteToggle': return '음소거 전환';
+			case 'hotkeys.actions.subtitleToggle': return '자막 전환';
+			case 'hotkeys.actions.audioTrackNext': return '다음 오디오 트랙';
+			case 'hotkeys.actions.subtitleTrackNext': return '다음 자막 트랙';
+			case 'hotkeys.actions.chapterNext': return '다음 챕터';
+			case 'hotkeys.actions.chapterPrevious': return '이전 챕터';
+			case 'hotkeys.actions.episodeNext': return '다음 에피소드';
+			case 'hotkeys.actions.episodePrevious': return '이전 에피소드';
+			case 'hotkeys.actions.speedIncrease': return '속도 높이기';
+			case 'hotkeys.actions.speedDecrease': return '속도 낮추기';
+			case 'hotkeys.actions.speedReset': return '속도 초기화';
+			case 'hotkeys.actions.zoomIn': return '확대';
+			case 'hotkeys.actions.zoomOut': return '축소';
+			case 'hotkeys.actions.zoomReset': return '확대/축소 초기화';
+			case 'hotkeys.actions.subSeekNext': return '다음 자막으로 이동';
+			case 'hotkeys.actions.subSeekPrev': return '이전 자막으로 이동';
+			case 'hotkeys.actions.shaderToggle': return '셰이더 전환';
+			case 'hotkeys.actions.skipMarker': return '인트로/크레딧 건너뛰기';
+			case 'hotkeys.actions.screenshot': return '스크린샷 찍기';
+			case 'fileInfo.title': return '파일 정보';
+			case 'fileInfo.overview': return '개요';
+			case 'fileInfo.video': return '비디오';
+			case 'fileInfo.audio': return '오디오';
+			case 'fileInfo.subtitles': return '자막';
+			case 'fileInfo.images': return '내장 이미지';
+			case 'fileInfo.dataStreams': return '데이터 스트림';
+			case 'fileInfo.lyrics': return '가사';
+			case 'fileInfo.file': return '파일';
+			case 'fileInfo.attachments': return '첨부 파일';
+			case 'fileInfo.delivery': return '재생 방식';
+			case 'fileInfo.versionCounter': return ({required Object index, required Object count}) => '버전 ${index} / ${count}';
+			case 'fileInfo.fileCounter': return ({required Object index, required Object count}) => '파일 ${index} / ${count}';
+			case 'fileInfo.noStreams': return '서버에서 이 파일에 대한 스트림 정보를 보고하지 않았습니다.';
+			case 'fileInfo.copyPath': return '경로 복사';
+			case 'fileInfo.pathCopied': return '파일 경로가 복사되었습니다';
+			case 'fileInfo.codec': return '코덱';
+			case 'fileInfo.codecTag': return '코덱 태그';
+			case 'fileInfo.resolution': return '해상도';
+			case 'fileInfo.codedResolution': return '코딩 해상도';
+			case 'fileInfo.bitrate': return '비트레이트';
+			case 'fileInfo.frameRate': return '프레임 속도';
+			case 'fileInfo.rotation': return '회전';
+			case 'fileInfo.comment': return '주석';
+			case 'fileInfo.audioDescription': return '오디오 설명';
+			case 'fileInfo.headerCompression': return '헤더 압축';
+			case 'fileInfo.sidecarFile': return '사이드카 파일';
+			case 'fileInfo.transportTimestamp': return '전송 타임스탬프';
+			case 'fileInfo.displayOffset': return '표시 오프셋';
+			case 'fileInfo.previewFailureCode': return '미리보기 오류 코드';
+			case 'fileInfo.previewRetries': return '미리보기 재시도 횟수';
+			case 'fileInfo.aspectRatio': return '종횡비';
+			case 'fileInfo.pixelAspectRatio': return '픽셀 종횡비';
+			case 'fileInfo.profile': return '프로파일';
+			case 'fileInfo.level': return '레벨';
+			case 'fileInfo.bitDepth': return '비트 심도';
+			case 'fileInfo.pixelFormat': return '픽셀 포맷';
+			case 'fileInfo.colorSpace': return '색 공간';
+			case 'fileInfo.colorRange': return '색 범위';
+			case 'fileInfo.colorPrimaries': return '색 원색';
+			case 'fileInfo.colorTransfer': return '색상 전송';
+			case 'fileInfo.chromaSubsampling': return '색차 서브샘플링';
+			case 'fileInfo.chromaLocation': return '크로마 위치';
+			case 'fileInfo.scanType': return '주사 방식';
+			case 'fileInfo.interlaced': return '비월 주사';
+			case 'fileInfo.anamorphic': return '아나모픽';
+			case 'fileInfo.referenceFrames': return '참조 프레임';
+			case 'fileInfo.dynamicRange': return '동적 범위';
+			case 'fileInfo.dolbyVision': return 'Dolby Vision';
+			case 'fileInfo.dolbyVisionLevel': return 'Dolby Vision 레벨';
+			case 'fileInfo.dolbyVisionVersion': return 'Dolby Vision 버전';
+			case 'fileInfo.dolbyVisionLayers': return 'Dolby Vision 레이어';
+			case 'fileInfo.baseLayerCompatibility': return '베이스 레이어 호환성';
+			case 'fileInfo.avcBitstream': return 'AVC 비트스트림';
+			case 'fileInfo.nalLengthSize': return 'NAL 길이 크기';
+			case 'fileInfo.scalingMatrix': return '사용자 지정 스케일링 매트릭스';
+			case 'fileInfo.streamIdentifier': return '스트림 식별자';
+			case 'fileInfo.streamIndex': return '스트림 인덱스';
+			case 'fileInfo.streamId': return '스트림 ID';
+			case 'fileInfo.language': return '언어';
+			case 'fileInfo.languageCode': return '언어 코드';
+			case 'fileInfo.streamTitle': return '트랙 제목';
+			case 'fileInfo.channels': return '채널';
+			case 'fileInfo.sampleRate': return '샘플 레이트';
+			case 'fileInfo.spatialAudio': return '공간 오디오';
+			case 'fileInfo.textBased': return '텍스트 기반';
+			case 'fileInfo.subtitleFormat': return '사이드카 포맷';
+			case 'fileInfo.provider': return '제공자';
+			case 'fileInfo.matchScore': return '일치 점수';
+			case 'fileInfo.externalDelivery': return '별도 제공 가능';
+			case 'fileInfo.sidecarPath': return '사이드카 경로';
+			case 'fileInfo.sourceStream': return '복사 출처';
+			case 'fileInfo.temporary': return '임시';
+			case 'fileInfo.timeBase': return '시간 기준';
+			case 'fileInfo.overallBitrate': return '전체 비트레이트';
+			case 'fileInfo.path': return '경로';
+			case 'fileInfo.fileName': return '파일 이름';
+			case 'fileInfo.size': return '크기';
+			case 'fileInfo.totalSize': return '총 크기';
+			case 'fileInfo.container': return '컨테이너';
+			case 'fileInfo.duration': return '재생 시간';
+			case 'fileInfo.previewThumbnails': return '미리보기 썸네일';
+			case 'fileInfo.previewIndex': return '미리보기 인덱스';
+			case 'fileInfo.packetLength': return '패킷 길이';
+			case 'fileInfo.filePresent': return '파일 있음';
+			case 'fileInfo.fileReadable': return '서버에서 읽기 가능';
+			case 'fileInfo.streamPath': return '스트림 경로';
+			case 'fileInfo.optimizedForStreaming': return '스트리밍 최적화';
+			case 'fileInfo.has64bitOffsets': return '64비트 오프셋';
+			case 'fileInfo.protocol': return '프로토콜';
+			case 'fileInfo.mediaType': return '미디어 유형';
+			case 'fileInfo.sourceKind': return '소스 종류';
+			case 'fileInfo.optimizedVersion': return '최적화 버전';
+			case 'fileInfo.optimizationTarget': return '최적화 대상';
+			case 'fileInfo.deletedAt': return '삭제됨';
+			case 'fileInfo.remoteSource': return '원격 소스';
+			case 'fileInfo.infiniteStream': return '무한 스트림';
+			case 'fileInfo.directPlay': return 'Direct Play';
+			case 'fileInfo.directStream': return 'Direct Stream';
+			case 'fileInfo.transcoding': return '트랜스코딩';
+			case 'fileInfo.etag': return 'ETag';
+			case 'fileInfo.versionId': return '버전 ID';
+			case 'fileInfo.fileId': return '파일 ID';
+			case 'fileInfo.defaultAudioTrack': return '기본 오디오 트랙';
+			case 'fileInfo.defaultSubtitleTrack': return '기본 자막 트랙';
+			case 'fileInfo.subtitlesOff': return '꺼짐';
+			case 'fileInfo.flagDefault': return '기본';
+			case 'fileInfo.flagForced': return '강제';
+			case 'fileInfo.flagSelected': return '선택됨';
+			case 'fileInfo.flagExternal': return '외부';
+			case 'fileInfo.flagHearingImpaired': return '청각 장애인용';
+			case 'fileInfo.flagDub': return '더빙';
+			case 'fileInfo.flagOriginal': return '원본';
+			case 'fileInfo.channelsMono': return '모노';
+			case 'fileInfo.dolbyVisionProfile': return ({required Object profile}) => '프로파일 ${profile}';
+			case 'mediaMenu.markAsWatched': return '시청 완료로 표시';
+			case 'mediaMenu.markAsUnwatched': return '미시청으로 표시';
+			case 'mediaMenu.removeFromContinueWatching': return '계속 보기에서 제거';
+			case 'mediaMenu.viewDetails': return '상세 정보 보기';
+			case 'mediaMenu.goToSeries': return '시리즈로 이동';
+			case 'mediaMenu.shufflePlay': return '무작위 재생';
+			case 'mediaMenu.shuffleNotAvailableOffline': return '오프라인에서는 무작위 재생을 사용할 수 없습니다';
+			case 'mediaMenu.fileInfo': return '파일 정보';
+			case 'mediaMenu.deleteEpisodeFromServer': return '서버에서 에피소드 삭제';
+			case 'mediaMenu.deleteSeasonFromServer': return '서버에서 시즌 삭제';
+			case 'mediaMenu.deleteShowFromServer': return '서버에서 프로그램 삭제';
+			case 'mediaMenu.deleteMovieFromServer': return '서버에서 영화 삭제';
+			case 'mediaMenu.deleteEpisodeTitle': return '이 에피소드를 삭제할까요?';
+			case 'mediaMenu.deleteSeasonTitle': return '이 시즌을 삭제할까요?';
+			case 'mediaMenu.deleteShowTitle': return '이 프로그램을 삭제할까요?';
+			case 'mediaMenu.deleteMovieTitle': return '이 영화를 삭제할까요?';
+			case 'mediaMenu.deleteEpisodeConfirm': return '에피소드 삭제';
+			case 'mediaMenu.deleteSeasonConfirm': return '시즌 삭제';
+			case 'mediaMenu.deleteShowConfirm': return '프로그램 삭제';
+			case 'mediaMenu.deleteMovieConfirm': return '영화 삭제';
+			case 'mediaMenu.deleteAnyway': return '그래도 삭제';
+			case 'mediaMenu.confirmDeleteTarget': return ({required Object title}) => '서버에서 ${title}을(를) 영구 삭제할까요?';
+			case 'mediaMenu.deleteMultipleWarning': return '모든 에피소드와 파일이 포함됩니다.';
+			case 'mediaMenu.deleteEpisodeCountWarning': return ({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('ko'))(n,
+				other: '포함된 에피소드 ${n}개와 해당 파일이 모두 삭제됩니다.',
+			);
+			case 'mediaMenu.deleteMultiPartWarning': return ({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('ko'))(n,
+				other: '이 항목은 파일 ${n}개에 걸쳐 저장되어 있으며, 모든 파일이 삭제됩니다.',
+			);
+			case 'mediaMenu.deleteSharedFileHeading': return ({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('ko'))(n,
+				other: '같은 파일에 저장된 다른 에피소드 ${n}개도 함께 삭제됩니다:',
+			);
+			case 'mediaMenu.deleteScopeUnverifiedProbeFailed': return 'Plezy가 어떤 파일이 삭제될지 확인하지 못해 위 항목보다 더 많은 파일이 삭제될 수 있습니다. 취소하고 다시 시도하거나 그래도 삭제하세요.';
+			case 'mediaMenu.deleteScopeUnverifiedNoFileInfo': return '서버가 이 항목의 파일 정보를 제공하지 않아 Plezy가 어떤 파일이 삭제될지 확인할 수 없습니다. 위 항목보다 더 많은 파일이 삭제될 수 있습니다.';
+			case 'mediaMenu.mediaDeletedSuccessfully': return '미디어 항목이 성공적으로 삭제되었습니다';
+			case 'mediaMenu.mediaFailedToDelete': return '미디어 항목 삭제 실패';
+			case 'mediaMenu.rate': return '평가';
+			case 'mediaMenu.playFromBeginning': return '처음부터 재생';
+			case 'mediaMenu.playVersion': return '버전 재생...';
+			case 'rateSheet.title': return '평가';
+			case 'rateSheet.server': return '서버';
+			case 'rateSheet.favorite': return '즐겨찾기';
+			case 'rateSheet.favorited': return '즐겨찾기됨';
+			case 'rateSheet.saved': return '저장됨';
+			case 'rateSheet.notAvailable': return '일치 항목 없음';
+			case 'rateSheet.noConnectedServices': return '평가하려면 설정에서 서비스를 연결하세요.';
+			case 'accessibility.mediaCardMovie': return ({required Object title}) => '${title}, 영화';
+			case 'accessibility.mediaCardShow': return ({required Object title}) => '${title}, TV 프로그램';
+			case 'accessibility.mediaCardEpisode': return ({required Object title, required Object episodeInfo}) => '${title}, ${episodeInfo}';
+			case 'accessibility.mediaCardSeason': return ({required Object title, required Object seasonInfo}) => '${title}, ${seasonInfo}';
+			case 'accessibility.mediaCardWatched': return '시청 완료';
+			case 'accessibility.mediaCardPartiallyWatched': return ({required Object percent}) => '${percent}% 시청 완료';
+			case 'accessibility.mediaCardUnwatched': return '미시청';
+			case 'accessibility.tapToPlay': return '탭하여 재생';
+			case 'accessibility.decrease': return '낮추기';
+			case 'accessibility.increase': return '높이기';
+			case 'accessibility.decreaseValue': return ({required Object label}) => '${label} 낮추기';
+			case 'accessibility.increaseValue': return ({required Object label}) => '${label} 높이기';
+			case 'accessibility.hue': return '색조';
+			case 'accessibility.saturation': return '채도';
+			case 'accessibility.brightness': return '밝기';
+			case 'accessibility.hexColor': return '16진수 색상';
+			case 'accessibility.expandText': return '텍스트 펼치기';
+			case 'accessibility.collapseText': return '텍스트 접기';
+			case 'accessibility.alphabetNavigation': return '알파벳 탐색';
+			case 'accessibility.alphabetScrollHint': return '위아래로 스와이프하여 글자별로 이동';
+			case 'accessibility.rowColumnPosition': return ({required Object rowCount, required Object row, required Object columnCount, required Object column}) => '${rowCount}행 중 ${row}행, ${columnCount}열 중 ${column}열';
+			case 'accessibility.rowPosition': return ({required Object rowCount, required Object row}) => '${rowCount}행 중 ${row}행';
+			case 'accessibility.autoScrollPlay': return '자동 스크롤 재생';
+			case 'accessibility.autoScrollPause': return '자동 스크롤 일시정지';
+			case 'accessibility.hueShort': return 'H';
+			case 'accessibility.saturationShort': return 'S';
+			case 'accessibility.valueShort': return 'V';
+			case 'tooltips.shufflePlay': return '무작위 재생';
+			case 'tooltips.playTrailer': return '예고편 재생';
+			case 'tooltips.markAsWatched': return '시청 완료로 표시';
+			case 'tooltips.markAsUnwatched': return '미시청으로 표시';
+			case 'audioTracks.track': return ({required Object n}) => '오디오 트랙 ${n}';
+			case 'videoControls.audioLabel': return '오디오';
+			case 'videoControls.subtitlesLabel': return '자막';
+			case 'videoControls.addTime': return ({required Object amount, required Object unit}) => '+${amount}${unit}';
+			case 'videoControls.letterbox': return '레터박스 모드';
+			case 'videoControls.fillScreen': return '화면 채우기';
+			case 'videoControls.stretch': return '확장';
+			case 'videoControls.lockRotation': return '회전 잠금';
+			case 'videoControls.unlockRotation': return '회전 잠금 해제';
+			case 'videoControls.timerActive': return '타이머 활성화됨';
+			case 'videoControls.playbackWillPauseIn': return ({required Object duration}) => '${duration} 후 재생이 일시정지됩니다';
+			case 'videoControls.sleepTimerEndOfVideo': return '현재 비디오의 끝';
+			case 'videoControls.sleepTimerStopAtHeader': return '정지 시점';
+			case 'videoControls.sleepTimerDurationHeader': return '타이머';
+			case 'videoControls.playbackWillPauseAtEnd': return '재생이 이 비디오의 끝에서 일시 중지됩니다';
+			case 'videoControls.stillWatching': return '아직 시청 중이신가요?';
+			case 'videoControls.pausingIn': return ({required Object seconds}) => '${seconds}초 후 일시 정지';
+			case 'videoControls.continueWatching': return '계속';
+			case 'videoControls.autoPlayNext': return '다음 자동 재생';
+			case 'videoControls.playNext': return '다음 재생';
+			case 'videoControls.playButton': return '재생';
+			case 'videoControls.pauseButton': return '일시정지';
+			case 'videoControls.playbackPaused': return '일시정지됨';
+			case 'videoControls.playbackResumed': return '재생 중';
+			case 'videoControls.loadingVideo': return '동영상 로딩 중...';
+			case 'videoControls.showPlaybackControls': return '재생 컨트롤 표시';
+			case 'videoControls.hidePlaybackControls': return '재생 컨트롤 숨기기';
+			case 'videoControls.seekBackwardButton': return ({required Object seconds}) => '${seconds}초 뒤로 이동';
+			case 'videoControls.seekForwardButton': return ({required Object seconds}) => '${seconds}초 앞으로 이동';
+			case 'videoControls.previousButton': return '이전 에피소드';
+			case 'videoControls.nextButton': return '다음 에피소드';
+			case 'videoControls.previousChapterButton': return '이전 챕터';
+			case 'videoControls.nextChapterButton': return '다음 챕터';
+			case 'videoControls.muteButton': return '음소거';
+			case 'videoControls.unmuteButton': return '음소거 해제';
+			case 'videoControls.settingsButton': return '재생 설정';
+			case 'videoControls.tracksButton': return '오디오 및 자막';
+			case 'videoControls.chaptersButton': return '챕터';
+			case 'videoControls.versionQualityButton': return '버전 및 화질';
+			case 'videoControls.versionColumnHeader': return '버전';
+			case 'videoControls.qualityColumnHeader': return '화질';
+			case 'videoControls.qualityOriginal': return '원본';
+			case 'videoControls.qualityPresetLabel': return ({required Object resolution, required Object bitrate}) => '${resolution}p ${bitrate} Mbps';
+			case 'videoControls.transcodeUnavailableFallback': return '트랜스코딩을 사용할 수 없음 — 원본 화질로 재생';
+			case 'videoControls.subtitleUnavailableFallback': return '선택한 자막을 불러올 수 없어 자막 없이 재생을 계속합니다';
+			case 'videoControls.pipButton': return '픽처 인 픽처 모드';
+			case 'videoControls.aspectRatioButton': return '화면비율';
+			case 'videoControls.ambientLighting': return '주변 조명';
+			case 'videoControls.fullscreenButton': return '전체 화면';
+			case 'videoControls.exitFullscreenButton': return '전체 화면 종료';
+			case 'videoControls.alwaysOnTopButton': return '창 최상위 고정';
+			case 'videoControls.rotationLockButton': return '회전 잠금';
+			case 'videoControls.lockScreen': return '화면 잠금';
+			case 'videoControls.screenLockButton': return '화면 잠금';
+			case 'videoControls.timelineSlider': return '타임라인';
+			case 'videoControls.volumeSlider': return '볼륨 조절';
+			case 'videoControls.endsAt': return ({required Object time}) => '${time}에 종료';
+			case 'videoControls.pipActive': return '화면 속 화면으로 재생 중';
+			case 'videoControls.pipFailed': return '화면 속 화면 모드를 시작할 수 없습니다';
+			case 'videoControls.screenshotSaved': return '스크린샷 저장됨';
+			case 'videoControls.screenshotFailed': return '스크린샷을 찍지 못했습니다';
+			case 'videoControls.zoomPercent': return ({required Object percent}) => '확대/축소 ${percent}%';
+			case 'videoControls.volumePercent': return ({required Object percent}) => '볼륨 ${percent}%';
+			case 'videoControls.pipErrors.androidVersion': return 'Android 8.0 이상이 필요합니다';
+			case 'videoControls.pipErrors.iosVersion': return 'iOS 15.0 이상이 필요합니다';
+			case 'videoControls.pipErrors.permissionDisabled': return '화면 속 화면이 비활성화되어 있습니다. 시스템 설정에서 활성화하세요.';
+			case 'videoControls.pipErrors.notSupported': return '이 기기는 화면 속 화면 모드를 지원하지 않습니다';
+			case 'videoControls.pipErrors.voSwitchFailed': return '화면 속 화면을 위한 비디오 출력 전환에 실패했습니다';
+			case 'videoControls.pipErrors.failed': return '화면 속 화면 모드를 시작할 수 없습니다';
+			case 'videoControls.pipErrors.prepareFailed': return '화면 속 화면을 준비할 수 없습니다';
+			case 'videoControls.pipErrors.unknown': return ({required Object error}) => '오류가 발생했습니다: ${error}';
+			case 'videoControls.chapters': return '챕터';
+			case 'videoControls.noChaptersAvailable': return '사용 가능한 챕터가 없습니다';
+			case 'videoControls.queue': return '재생 대기열';
+			case 'videoControls.noQueueItems': return '대기열에 항목이 없습니다';
+			case 'videoControls.noAudioDevicesAvailable': return '사용 가능한 오디오 기기가 없습니다';
+			case 'videoControls.searchSubtitles': return '자막 검색';
+			case 'videoControls.language': return '언어';
+			case 'videoControls.noSubtitlesFound': return '자막을 찾을 수 없습니다';
+			case 'videoControls.subtitleDownloaded': return '자막이 다운로드되었습니다';
+			case 'videoControls.subtitleDownloadedNotApplied': return '자막을 다운로드했지만 선택할 수 없습니다';
+			case 'videoControls.subtitleDownloadFailed': return '자막 다운로드에 실패했습니다';
+			case 'videoControls.subtitleDownloadTimedOut': return '자막이 제시간에 나타나지 않았습니다. 다운로드에 실패했을 수 있습니다';
+			case 'videoControls.searchLanguages': return '언어 검색...';
+			case 'videoControls.skipIntro': return '인트로 건너뛰기';
+			case 'videoControls.skipCredits': return '크레딧 건너뛰기';
+			case 'videoControls.nextEpisode': return '다음 에피소드';
+			case 'videoControls.subtitleTrack': return ({required Object n}) => '트랙 ${n}';
+			case 'videoControls.subtitleFile': return ({required Object name}) => '자막 ${name}';
+			case 'videoControls.forcedTrack': return ({required Object label}) => '${label} (강제)';
+			case 'videoControls.osdSubtitlesOff': return '자막: 꺼짐';
+			case 'videoControls.osdSubtitles': return ({required Object track}) => '자막: ${track}';
+			case 'videoControls.osdAudio': return ({required Object track}) => '오디오: ${track}';
+			case 'messages.markedAsWatched': return '시청 완료로 표시됨';
+			case 'messages.markedAsUnwatched': return '미시청으로 표시됨';
+			case 'messages.markedAsWatchedOffline': return '시청 완료로 표시됨 (연결 시 동기화됨)';
+			case 'messages.markedAsUnwatchedOffline': return '미시청으로 표시됨 (연결 시 동기화됨)';
+			case 'messages.autoRemovedWatchedDownload': return ({required Object title}) => '자동 삭제됨: ${title}';
+			case 'messages.autoRemovedWatchedDownloads': return ({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('ko'))(n,
+				other: '시청한 다운로드 ${n}개를 자동 삭제했습니다',
+			);
+			case 'messages.removedFromContinueWatching': return '계속 시청 목록에서 제거됨';
+			case 'messages.errorLoading': return ({required Object error}) => '오류: ${error}';
+			case 'messages.searchPartialResults': return '일부 미디어 서버를 검색하지 못했습니다. 사용 가능한 결과만 표시합니다.';
+			case 'messages.streamInterrupted': return '스트림이 중단되었습니다. 재생을 누르거나 탐색하여 다시 시도하세요.';
+			case 'messages.liveStreamInterrupted': return '라이브 스트림이 중단되었습니다. 재생을 눌러 다시 시도하세요.';
+			case 'messages.fileInfoNotAvailable': return '파일 정보가 없습니다';
+			case 'messages.playbackAuthenticationRequired': return '이 항목을 재생하려면 미디어 서버에 다시 로그인하세요.';
+			case 'messages.playbackServerUnavailable': return '미디어 서버를 사용할 수 없습니다. 나중에 다시 시도하세요.';
+			case 'messages.playbackDataInvalid': return '서버에서 잘못된 재생 정보를 반환했습니다.';
+			case 'messages.playbackCancelled': return '재생이 취소되었습니다.';
+			case 'messages.playbackFailed': return '재생을 시작할 수 없습니다.';
+			case 'messages.playbackFailedDetail': return ({required Object error}) => '재생을 시작할 수 없습니다: ${error}';
+			case 'messages.audioOutputFailed': return '오디오 출력이 응답하지 않습니다. TV 또는 리시버의 오디오 연결을 확인하세요. 다른 앱에서도 소리가 나지 않으면 기기를 재시작하세요.';
+			case 'messages.mediaUnavailable': return '이 콘텐츠는 더 이상 사용할 수 없습니다.';
+			case 'messages.errorLoadingFileInfo': return ({required Object error}) => '파일 정보 로딩 중 오류: ${error}';
+			case 'messages.errorLoadingSeries': return '시리즈 로딩 중 오류';
+			case 'messages.musicNotSupported': return '음악 재생 미지원';
+			case 'messages.noDescriptionAvailable': return '설명이 없습니다';
+			case 'messages.noProfilesAvailable': return '사용 가능한 프로필이 없습니다';
+			case 'messages.contactAdminForProfiles': return '프로필을 추가하려면 서버 관리자에게 문의하세요';
+			case 'messages.unableToDetermineLibrarySection': return '이 항목의 라이브러리 섹션을 확인할 수 없습니다';
+			case 'messages.logsCleared': return '로그가 삭제되었습니다';
+			case 'messages.logsCopied': return '로그가 클립보드에 복사되었습니다';
+			case 'messages.noLogsAvailable': return '사용 가능한 로그가 없습니다';
+			case 'messages.libraryScanning': return ({required Object title}) => '"${title}"을(를) 스캔 중입니다...';
+			case 'messages.libraryScanStarted': return ({required Object title}) => '"${title}" 미디어 라이브러리 스캔 시작';
+			case 'messages.libraryScanFailed': return ({required Object error}) => '미디어 라이브러리 스캔 실패: ${error}';
+			case 'messages.metadataRefreshing': return ({required Object title}) => '"${title}" 메타데이터 새로고침 중...';
+			case 'messages.metadataRefreshStarted': return ({required Object title}) => '"${title}" 메타데이터 새로고침 시작됨';
+			case 'messages.metadataRefreshFailed': return ({required Object error}) => '메타데이터 새로고침 실패: ${error}';
+			case 'messages.logoutConfirm': return '로그아웃하시겠습니까?';
+			case 'messages.noSeasonsFound': return '시즌을 찾을 수 없음';
+			case 'messages.seasonsLoadFailed': return '시즌을 불러오지 못했습니다';
+			case 'messages.noEpisodesFound': return '시즌 1에서 에피소드를 찾을 수 없습니다';
+			case 'messages.noEpisodesFoundGeneral': return '에피소드를 찾을 수 없습니다';
+			case 'messages.episodesLoadFailed': return '에피소드를 불러오지 못했습니다';
+			case 'messages.noResultsFound': return '결과를 찾을 수 없습니다';
+			case 'messages.sleepTimerSet': return ({required Object label}) => '취침 타이머가 ${label}(으)로 설정되었습니다';
+			case 'messages.noItemsAvailable': return '사용 가능한 항목이 없습니다';
+			case 'messages.failedToCreatePlayQueueNoItems': return '재생 대기열을 만들지 못했습니다 — 항목이 없습니다';
+			case 'messages.failedPlayback': return ({required Object action, required Object error}) => '${action}을(를) 수행할 수 없습니다: ${error}';
+			case 'messages.switchingToCompatiblePlayer': return '호환되는 플레이어로 전환 중...';
+			case 'messages.serverLimitTitle': return '재생 실패';
+			case 'messages.serverLimitBody': return '서버 오류(HTTP 500). 대역폭/트랜스코딩 제한으로 세션이 거부된 것 같습니다. 소유자에게 조정을 요청하세요.';
+			case 'messages.mediaUnreadableTitle': return '파일을 사용할 수 없음';
+			case 'messages.mediaUnreadableBody': return '서버에서 이 항목을 찾았지만 파일을 읽을 수 없습니다(HTTP 404). 파일이 이동되거나 삭제되었거나 저장소가 오프라인 상태일 수 있습니다. 서버 관리자에게 파일 확인과 라이브러리 재스캔을 요청하세요.';
+			case 'messages.serverBusyTitle': return '스트림을 사용할 수 없음';
+			case 'messages.serverBusyBody': return '서버에서 이 파일의 스트리밍을 계속 거부했습니다(HTTP 503). 서버가 다시 시작 중이거나 사용량이 많을 수 있으며, 파일이 저장된 저장소가 오프라인일 수도 있습니다. 잠시 후 다시 시도하세요. 문제가 계속되면 서버 소유자에게 서버와 파일 저장소를 확인해 달라고 요청하세요.';
+			case 'messages.playbackNotAllowedTitle': return '재생이 허용되지 않음';
+			case 'messages.playbackNotAllowedBody': return '서버에서 이 항목의 스트리밍을 거부했습니다(HTTP 403). 계정에 재생 권한이 없거나 서버가 로컬 네트워크에서만 재생을 허용할 수 있습니다.';
+			case 'messages.logsUploaded': return '로그 업로드 완료';
+			case 'messages.logsUploadFailed': return '로그 업로드 실패';
+			case 'messages.logId': return '로그 ID';
+			case 'messages.burnedSubtitlesUseMenu': return '자막이 이 스트림에 입혀져 있습니다. 자막 메뉴에서 변경하세요.';
+			case 'messages.noVideoUrl': return '사용 가능한 비디오 URL이 없습니다';
+			case 'messages.playbackNoMediaSources': return '서버에서 재생 가능한 미디어 소스를 반환하지 않았습니다';
+			case 'messages.playbackDataNotPrepared': return '재생 데이터가 준비되기 전에 재생이 시작되었습니다';
+			case 'messages.streamSelectionUnavailable': return '이 소스에서는 스트림을 선택할 수 없습니다';
+			case 'messages.streamSelectionFailed': return '선택한 스트림을 적용할 수 없습니다';
+			case 'messages.trackSelectionNotRemembered': return '이 트랙 선택은 현재 재생에만 적용됩니다.';
+			case 'messages.serverUnavailableForProfile': return '활성 프로필에 사용할 수 있는 서버가 없습니다';
+			case 'subtitlingStyling.text': return '텍스트';
+			case 'subtitlingStyling.border': return '테두리';
+			case 'subtitlingStyling.background': return '배경';
+			case 'subtitlingStyling.fontSize': return '글자 크기';
+			case 'subtitlingStyling.textColor': return '텍스트 색상';
+			case 'subtitlingStyling.borderSize': return '테두리 크기';
+			case 'subtitlingStyling.borderColor': return '테두리 색상';
+			case 'subtitlingStyling.backgroundOpacity': return '배경 불투명도';
+			case 'subtitlingStyling.backgroundColor': return '배경색';
+			case 'subtitlingStyling.position': return '위치';
+			case 'subtitlingStyling.assOverride': return 'ASS 오버라이드';
+			case 'subtitlingStyling.overrideScale': return '크기 조정';
+			case 'subtitlingStyling.overrideForce': return '강제 적용';
+			case 'subtitlingStyling.overrideStrip': return '스타일 제거';
+			case 'subtitlingStyling.positionTop': return '위';
+			case 'subtitlingStyling.positionBottom': return '아래';
+			case 'subtitlingStyling.useMargins': return '여백 사용';
+			case 'subtitlingStyling.useMarginsDescription': return '텍스트 자막을 비디오 바깥 영역에 표시할 수 있습니다. 스타일이 적용된 자막은 원래 위치를 유지할 수 있습니다.';
+			case 'subtitlingStyling.anchorToScreen': return '화면에 고정';
+			case 'subtitlingStyling.anchorToScreenDescription': return '와이드스크린 비디오 아래의 검은 여백에 텍스트 자막을 표시합니다';
+			case 'subtitlingStyling.bold': return '굵게';
+			case 'subtitlingStyling.italic': return '기울임꼴';
+			case 'subtitlingStyling.renderResolution': return '렌더링 해상도';
+			case 'subtitlingStyling.renderResolutionScreen': return '화면 해상도';
+			case 'subtitlingStyling.renderResolutionVideo': return '영상 해상도';
+			case 'mpvConfig.title': return 'mpv.conf';
+			case 'mpvConfig.description': return '고급 비디오 플레이어 설정';
+			case 'mpvConfig.presets': return '프리셋';
+			case 'mpvConfig.noPresets': return '저장된 프리셋이 없습니다';
+			case 'mpvConfig.saveAsPreset': return '프리셋으로 저장...';
+			case 'mpvConfig.presetName': return '프리셋 이름';
+			case 'mpvConfig.presetNameHint': return '이 프리셋의 이름을 입력하세요';
+			case 'mpvConfig.loadPreset': return '불러오기';
+			case 'mpvConfig.deletePreset': return '삭제';
+			case 'mpvConfig.presetSaved': return '프리셋이 저장되었습니다';
+			case 'mpvConfig.presetLoaded': return '프리셋을 불러왔습니다';
+			case 'mpvConfig.presetDeleted': return '프리셋이 삭제되었습니다';
+			case 'mpvConfig.confirmDeletePreset': return '이 프리셋을 삭제하시겠습니까?';
+			case 'mpvConfig.configPlaceholder': return 'gpu-api=vulkan\nhwdec=auto\n# comment';
+			case 'mpvConfig.lineHint': return 'option=value';
+			case 'mpvConfig.addLine': return '줄 추가';
+			case 'mpvConfig.removeLine': return '줄 제거';
+			case 'mpvConfig.embeddedVoHint': return 'Linux에서는 vo, gpu-context, gpu-api가 무시됩니다. 내장 동영상은 항상 비디오 평면에서 vo=libmpv로 렌더링되며, gpu-next(ArtCNN 같은 컴퓨트 셰이더에 필요)는 내장 방식으로 실행할 수 없습니다.';
+			case 'dialog.confirmAction': return '작업 확인';
+			case 'profiles.addPlezyProfile': return 'Plezy 프로필 추가';
+			case 'profiles.switchingProfile': return '프로필 전환 중…';
+			case 'profiles.deleteThisProfileTitle': return '이 프로필을 삭제하시겠습니까?';
+			case 'profiles.deleteThisProfileMessage': return ({required Object displayName}) => '${displayName}을(를) 제거합니다. 연결에는 영향이 없습니다.';
+			case 'profiles.active': return '활성';
+			case 'profiles.manage': return '관리';
+			case 'profiles.delete': return '삭제';
+			case 'profiles.signOut': return '로그아웃';
+			case 'profiles.signOutPlexTitle': return 'Plex에서 로그아웃하시겠습니까?';
+			case 'profiles.signOutPlexMessage': return ({required Object displayName}) => '${displayName} 및 모든 Plex Home 사용자를 제거할까요? 언제든 다시 로그인할 수 있습니다.';
+			case 'profiles.signOutPlexDeleteDownloads': return '다운로드도 삭제';
+			case 'profiles.signOutPlexDeleteDownloadsDescription': return '삭제하지 않으면 다운로드가 이 기기에 남아 있다가 이 계정에 다시 로그인하면 다시 표시됩니다.';
+			case 'profiles.signedOutPlex': return 'Plex에서 로그아웃되었습니다.';
+			case 'profiles.signOutFailed': return '로그아웃에 실패했습니다.';
+			case 'profiles.sectionTitle': return '프로필';
+			case 'profiles.summarySingle': return '관리되는 사용자와 로컬 ID를 혼합하려면 프로필을 추가하세요';
+			case 'profiles.summaryMultipleWithActive': return ({required Object count, required Object activeName}) => '${count}개 프로필 · 활성: ${activeName}';
+			case 'profiles.summaryMultiple': return ({required Object count}) => '${count}개 프로필';
+			case 'profiles.removeConnectionTitle': return '연결을 제거하시겠습니까?';
+			case 'profiles.removeConnectionMessage': return ({required Object displayName, required Object connectionLabel}) => '${displayName}의 ${connectionLabel} 접근 권한을 제거합니다. 다른 프로필에는 유지됩니다.';
+			case 'profiles.deleteProfileTitle': return '프로필을 삭제하시겠습니까?';
+			case 'profiles.deleteProfileMessage': return ({required Object displayName}) => '${displayName} 및 해당 연결을 제거합니다. 서버는 계속 사용할 수 있습니다.';
+			case 'profiles.profileNameLabel': return '프로필 이름';
+			case 'profiles.pinProtectionLabel': return 'PIN 보호';
+			case 'profiles.pinManagedByPlex': return 'PIN은 Plex에서 관리됩니다. plex.tv에서 편집하세요.';
+			case 'profiles.noPinSetEditOnPlex': return '설정된 PIN이 없습니다. 요구하려면 plex.tv에서 Home 사용자를 편집하세요.';
+			case 'profiles.setPin': return 'PIN 설정';
+			case 'profiles.setPinTitle': return 'PIN 설정';
+			case 'profiles.confirmPinTitle': return 'PIN 확인';
+			case 'profiles.pinSet': return 'PIN 설정됨';
+			case 'profiles.changePin': return '변경';
+			case 'profiles.removePin': return '제거';
+			case 'profiles.connectionsLabel': return '연결';
+			case 'profiles.add': return '추가';
+			case 'profiles.deleteProfileButton': return '프로필 삭제';
+			case 'profiles.noConnectionsHint': return '연결이 없습니다 — 이 프로필을 사용하려면 하나 추가하세요.';
+			case 'profiles.noConnections': return '연결 없음';
+			case 'profiles.plexHomeAccount': return 'Plex Home 계정';
+			case 'profiles.plexAccountChip': return ({required Object account}) => 'Plex 계정: ${account}';
+			case 'profiles.plexAccountUserChip': return ({required Object account, required Object user}) => '${account} 계정의 ${user}';
+			case 'profiles.connectionDefault': return '기본값';
+			case 'profiles.connectionAs': return ({required Object displayName}) => '${displayName}(으)로';
+			case 'profiles.makeDefault': return '기본값으로 설정';
+			case 'profiles.removeConnection': return '제거';
+			case 'profiles.profileRenamed': return '프로필 이름이 변경되었습니다.';
+			case 'profiles.borrowAddTo': return ({required Object displayName}) => '${displayName}에 추가';
+			case 'profiles.borrowExplain': return '다른 프로필의 연결을 빌립니다. PIN으로 보호된 프로필에는 PIN이 필요합니다.';
+			case 'profiles.borrowEmpty': return '아직 빌릴 것이 없습니다.';
+			case 'profiles.borrowEmptySubtitle': return '먼저 다른 프로필에 Plex, Jellyfin 또는 Emby를 연결하세요.';
+			case 'profiles.borrowLoadFailed': return '사용 가능한 연결을 불러오지 못했습니다. 다시 시도하세요.';
+			case 'profiles.borrowFromProfile': return ({required Object displayName}) => '${displayName}에서';
+			case 'profiles.borrowConnectionBorrowed': return '연결을 빌렸습니다.';
+			case 'profiles.borrowFailed': return '연결을 빌리지 못했습니다.';
+			case 'profiles.incorrectPin': return 'PIN이 올바르지 않습니다.';
+			case 'profiles.incorrectPinTryAgain': return 'PIN이 올바르지 않습니다. 다시 시도하세요.';
+			case 'profiles.sourceProfileMissingParentAccount': return '원본 프로필에 상위 계정이 없습니다.';
+			case 'profiles.failedToLoadHomeUsers': return 'Plex Home 사용자를 불러올 수 없습니다. 연결을 확인하고 다시 시도하세요.';
+			case 'profiles.failedToVerifyPin': return 'PIN을 확인하지 못했습니다.';
+			case 'profiles.newProfile': return '새 프로필';
+			case 'profiles.profileNameHint': return '예: 손님, 어린이, 가족실';
+			case 'profiles.pinProtectionOptional': return 'PIN 보호 (선택 사항)';
+			case 'profiles.pinExplain': return '프로필 전환에는 4자리 PIN이 필요합니다.';
+			case 'profiles.continueButton': return '계속';
+			case 'profiles.pinsDontMatch': return 'PIN이 일치하지 않습니다';
+			case 'profiles.tokenIdentityMismatch': return 'Plex 프로필 토큰이 예상과 다른 서버로 확인되었습니다';
+			case 'connections.sectionTitle': return '연결';
+			case 'connections.addConnection': return '연결 추가';
+			case 'connections.addConnectionSubtitleNoProfile': return 'Plex로 로그인하거나 Jellyfin 또는 Emby 서버에 연결';
+			case 'connections.addConnectionSubtitleScoped': return ({required Object displayName}) => '${displayName}에 추가: Plex, Jellyfin, Emby 또는 다른 프로필 연결';
+			case 'connections.sessionExpiredOne': return ({required Object name}) => '${name}의 세션이 만료되었습니다';
+			case 'connections.sessionExpiredMany': return ({required Object count}) => '${count}개 서버의 세션이 만료되었습니다';
+			case 'connections.accessDeniedOne': return ({required Object name}) => '${name}에서 이 계정의 접근을 거부했습니다';
+			case 'connections.accessDeniedMany': return ({required Object count}) => '${count}개 서버에서 이 계정의 접근을 거부했습니다';
+			case 'connections.signInAgain': return '다시 로그인';
+			case 'connections.editMediaBrowserTitle': return ({required Object product}) => '${product} 연결 편집';
+			case 'connections.editMediaBrowserIntro': return ({required Object serverName}) => '${serverName}의 URL을 추가하거나 제거하세요. Plezy는 연결 가능한 URL 중 지연 시간이 가장 낮은 URL을 사용합니다.';
+			case 'accountPreferences.sectionTitle': return '계정 기본 설정';
+			case 'accountPreferences.hubSubtitleSingle': return ({required Object account}) => '${account}에 저장된 오디오, 자막 및 라이브러리 옵션';
+			case 'accountPreferences.hubSubtitleMultiple': return ({required Object count}) => '${count}개 계정에 저장된 오디오, 자막 및 라이브러리 옵션';
+			case 'accountPreferences.pickAccount': return '각 계정은 고유한 기본 설정을 저장합니다. 편집할 계정을 선택하세요.';
+			case 'accountPreferences.storedOnAccount': return '이 옵션은 계정 자체에 저장되므로 해당 계정으로 로그인한 모든 앱에서 사용됩니다 — 다른 기기의 Plezy를 포함합니다.';
+			case 'accountPreferences.noAccounts': return '구성할 계정이 없습니다';
+			case 'accountPreferences.noAccountsHint': return 'Plex에 로그인하거나 Jellyfin 또는 Emby 서버에 연결하면 해당 계정에 저장된 기본 설정이 여기에 표시됩니다.';
+			case 'accountPreferences.unavailable': return '이 계정에 연결할 수 없습니다';
+			case 'accountPreferences.loadFailed': return '이 기본 설정을 불러올 수 없습니다';
+			case 'accountPreferences.noPreference': return '기본 설정 없음';
+			case 'accountPreferences.notSet': return '설정되지 않음';
+			case 'accountPreferences.groups.audioAndSubtitles': return '오디오 및 자막';
+			case 'accountPreferences.groups.libraryDisplay': return '라이브러리';
+			case 'accountPreferences.groups.personalMedia': return '개인 미디어';
+			case 'accountPreferences.preferredAudioLanguage': return '선호 오디오 언어';
+			case 'accountPreferences.autoSelectAudio': return '언어별로 오디오 선택';
+			case 'accountPreferences.autoSelectAudioDescription': return '끄면 파일이 기본으로 표시한 오디오 트랙을 유지합니다.';
+			case 'accountPreferences.preferredSubtitleLanguage': return '선호 자막 언어';
+			case 'accountPreferences.subtitleMode': return '자막 자동 켜기';
+			case 'accountPreferences.subtitleModes.none': return '수동 선택';
+			case 'accountPreferences.subtitleModes.noneDescription': return '자동으로 자막을 켜지 않습니다.';
+			case 'accountPreferences.subtitleModes.defaultMode': return '트랙 플래그 따르기';
+			case 'accountPreferences.subtitleModes.defaultModeDescription': return '각 자막 트랙에 저장된 기본 및 강제 플래그를 사용합니다.';
+			case 'accountPreferences.subtitleModes.always': return '항상 활성화';
+			case 'accountPreferences.subtitleModes.alwaysDescription': return '선호 언어의 자막 트랙이 있으면 항상 켭니다.';
+			case 'accountPreferences.subtitleModes.onlyForced': return '강제 자막만';
+			case 'accountPreferences.subtitleModes.onlyForcedDescription': return '강제로 표시된 트랙만 로드합니다.';
+			case 'accountPreferences.subtitleModes.smart': return '외국어 오디오 시 표시';
+			case 'accountPreferences.subtitleModes.smartDescription': return '오디오가 다른 언어일 때만 자막을 켭니다.';
+			case 'accountPreferences.subtitleAccessibility': return 'SDH 자막';
+			case 'accountPreferences.subtitleAccessibilityOptions.preferNonSdh': return 'SDH가 아닌 자막 선호';
+			case 'accountPreferences.subtitleAccessibilityOptions.preferSdh': return 'SDH 자막 선호';
+			case 'accountPreferences.subtitleAccessibilityOptions.onlySdh': return 'SDH 자막만';
+			case 'accountPreferences.subtitleAccessibilityOptions.onlyNonSdh': return 'SDH가 아닌 자막만';
+			case 'accountPreferences.forcedSubtitles': return '강제 자막';
+			case 'accountPreferences.forcedSubtitleOptions.preferNonForced': return '강제가 아닌 자막 선호';
+			case 'accountPreferences.forcedSubtitleOptions.preferForced': return '강제 자막 선호';
+			case 'accountPreferences.forcedSubtitleOptions.onlyForced': return '강제 자막만';
+			case 'accountPreferences.forcedSubtitleOptions.onlyNonForced': return '강제가 아닌 자막만';
+			case 'accountPreferences.displayMissingEpisodes': return '누락된 에피소드 표시';
+			case 'accountPreferences.displayMissingEpisodesDescription': return '서버가 알고 있지만 파일이 없는 에피소드를 나열합니다.';
+			case 'accountPreferences.hidePlayedInLatest': return '최신 항목에서 시청한 항목 숨기기';
+			case 'accountPreferences.hidePlayedInLatestDescription': return '이미 시청한 항목은 서버의 최신 행에서 제외합니다.';
+			case 'accountPreferences.displayCollectionsView': return '컬렉션 보기 표시';
+			case 'accountPreferences.displayCollectionsViewDescription': return '라이브러리와 함께 서버의 컬렉션 보기를 제공합니다.';
+			case 'accountPreferences.rewatchingInNextUp': return '재시청한 프로그램을 다음 에피소드에 유지';
+			case 'accountPreferences.rewatchingInNextUpDescription': return '프로그램을 끝까지 본 뒤 다시 시작하면, 목록에서 제거하는 대신 다음 에피소드가 재시청을 따라갑니다.';
+			case 'accountPreferences.watchedIndicator': return '시청 표시';
+			case 'accountPreferences.watchedIndicatorOptions.none': return '안 함';
+			case 'accountPreferences.watchedIndicatorOptions.moviesAndShows': return '영화 및 TV 프로그램';
+			case 'accountPreferences.watchedIndicatorOptions.movies': return '영화만';
+			case 'accountPreferences.watchedIndicatorOptions.shows': return 'TV 프로그램만';
+			case 'accountPreferences.mediaReviewsVisibility': return '평점 및 리뷰';
+			case 'accountPreferences.mediaReviewsOptions.usersAndCritics': return '사용자 및 평론가';
+			case 'accountPreferences.mediaReviewsOptions.usersOnly': return '사용자만';
+			case 'accountPreferences.mediaReviewsOptions.criticsOnly': return '평론가만';
+			case 'accountPreferences.mediaReviewsOptions.nobody': return '숨김';
+			case 'discover.title': return '둘러보기';
+			case 'discover.noContentAvailable': return '사용 가능한 콘텐츠가 없습니다';
+			case 'discover.addMediaToLibraries': return '미디어 라이브러리에 미디어를 추가해 주세요';
+			case 'discover.continueWatching': return '계속 시청';
+			case 'discover.continueWatchingIn': return ({required Object library}) => '${library}에서 계속 시청';
+			case 'discover.nextUp': return '다음 에피소드';
+			case 'discover.nextUpIn': return ({required Object library}) => '${library}의 다음 에피소드';
+			case 'discover.recentlyAdded': return '최근에 추가됨';
+			case 'discover.recentlyAddedIn': return ({required Object library}) => '${library}에 최근에 추가됨';
+			case 'discover.latestAlbumsIn': return ({required Object library}) => '${library}의 최신 앨범';
+			case 'discover.recentlyPlayedIn': return ({required Object library}) => '${library}에서 최근 재생';
+			case 'discover.mostPlayedIn': return ({required Object library}) => '${library}에서 가장 많이 재생';
+			case 'discover.playEpisode': return ({required Object season, required Object episode}) => 'S${season}E${episode}';
+			case 'discover.overview': return '개요';
+			case 'discover.cast': return '출연진';
+			case 'discover.extras': return '예고편 및 부가영상';
+			case 'discover.studio': return '제작사';
+			case 'discover.rating': return '연령 등급';
+			case 'discover.director': return '감독';
+			case 'discover.directors': return '감독';
+			case 'discover.movie': return '영화';
+			case 'discover.tvShow': return 'TV 시리즈';
+			case 'discover.minutesLeft': return ({required Object minutes}) => '${minutes}분 남음';
+			case 'discover.moreLikeThis': return '비슷한 콘텐츠';
+			case 'discover.titleCount': return ({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('ko'))(n,
+				other: '${n}개 타이틀',
+			);
+			case 'discover.person.born': return '출생';
+			case 'discover.person.died': return '사망';
+			case 'discover.person.birthplace': return '출생지';
+			case 'discover.person.dateWithAge': return ({required Object date, required Object age}) => '${date} (${age}세)';
+			case 'discover.person.dateWithAgeAtDeath': return ({required Object date, required Object age}) => '${date} (향년 ${age}세)';
+			case 'errors.searchFailed': return ({required Object error}) => '검색 실패: ${error}';
+			case 'errors.searchUnavailable': return '검색이 어떤 미디어 서버에도 연결할 수 없습니다.';
+			case 'errors.connectionTimeout': return ({required Object context}) => '${context} 로드 중 연결 시간 초과';
+			case 'errors.connectionFailed': return '미디어 서버에 연결할 수 없습니다';
+			case 'errors.unableToLoad': return ({required Object context}) => '${context}을(를) 불러올 수 없습니다. 다시 시도하세요.';
+			case 'errors.noClientAvailable': return '사용 가능한 클라이언트가 없습니다';
+			case 'errors.pleaseEnterToken': return '토큰을 입력해 주세요';
+			case 'errors.invalidToken': return '토큰이 유효하지 않습니다';
+			case 'errors.failedToVerifyToken': return ({required Object error}) => '토큰을 확인할 수 없습니다: ${error}';
+			case 'errors.failedToSwitchProfile': return ({required Object displayName}) => '${displayName}으로 전환할 수 없습니다';
+			case 'errors.failedToDeleteProfile': return ({required Object displayName}) => '${displayName}을(를) 삭제할 수 없습니다';
+			case 'errors.failedToRate': return '평점을 업데이트하지 못했습니다';
+			case 'errors.reasonTimedOut': return '연결 시간이 초과되었습니다';
+			case 'errors.reasonUnreachable': return '서버에 연결할 수 없습니다';
+			case 'errors.reasonRefused': return '서버가 요청을 거부했습니다';
+			case 'errors.reasonNotFound': return '항목이 더 이상 서버에 없습니다';
+			case 'errors.reasonServerError': return '서버에서 오류가 보고되었습니다';
+			case 'errors.reasonCancelled': return '요청이 취소되었습니다';
+			case 'errors.reasonUnexpected': return '예기치 않은 오류가 발생했습니다';
+			case 'libraries.title': return '미디어 라이브러리';
+			case 'libraries.fallbackTitle': return '라이브러리';
+			case 'libraries.scanLibraryFiles': return '미디어 라이브러리 파일 스캔';
+			case 'libraries.scanLibrary': return '미디어 라이브러리 스캔';
+			case 'libraries.analyze': return '분석';
+			case 'libraries.analyzeLibrary': return '미디어 라이브러리 분석';
+			case 'libraries.refreshMetadata': return '메타데이터 새로 고침';
+			case 'libraries.emptyTrash': return '휴지통 비우기';
+			case 'libraries.emptyingTrash': return ({required Object title}) => '「${title}」의 휴지통을 비우고 있습니다...';
+			case 'libraries.trashEmptied': return ({required Object title}) => '「${title}」의 휴지통을 비웠습니다';
+			case 'libraries.failedToEmptyTrash': return ({required Object error}) => '휴지통 비우기 실패: ${error}';
+			case 'libraries.analyzing': return ({required Object title}) => '"${title}" 분석 중...';
+			case 'libraries.analysisStarted': return ({required Object title}) => '"${title}" 분석 시작됨';
+			case 'libraries.failedToAnalyze': return ({required Object error}) => '미디어 라이브러리 분석 실패: ${error}';
+			case 'libraries.noLibrariesFound': return '미디어 라이브러리 없음';
+			case 'libraries.allLibrariesHidden': return '모든 라이브러리가 숨겨졌습니다';
+			case 'libraries.hiddenLibrariesCount': return ({required Object count}) => '숨겨진 라이브러리 (${count})';
+			case 'libraries.thisLibraryIsEmpty': return '이 미디어 라이브러리는 비어 있습니다';
+			case 'libraries.noItemsMatchFilters': return '활성화된 필터와 일치하는 항목이 없습니다';
+			case 'libraries.resetFilters': return '필터 초기화';
+			case 'libraries.all': return '전체';
+			case 'libraries.clearAll': return '모두 삭제';
+			case 'libraries.scanLibraryConfirm': return ({required Object title}) => '「${title}」을(를) 스캔하시겠습니까?';
+			case 'libraries.analyzeLibraryConfirm': return ({required Object title}) => '「${title}」을(를) 분석하시겠습니까?';
+			case 'libraries.refreshMetadataConfirm': return ({required Object title}) => '「${title}」의 메타데이터를 새로고침하시겠습니까?';
+			case 'libraries.emptyTrashConfirm': return ({required Object title}) => '${title}의 휴지통을 비우시겠습니까?';
+			case 'libraries.manageLibraries': return '미디어 라이브러리 관리';
+			case 'libraries.sort': return '정렬';
+			case 'libraries.sortBy': return '정렬 기준';
+			case 'libraries.filters': return '필터';
+			case 'libraries.confirmActionMessage': return '이 작업을 실행하시겠습니까?';
+			case 'libraries.showLibrary': return '미디어 라이브러리 표시';
+			case 'libraries.hideLibrary': return '미디어 라이브러리 숨기기';
+			case 'libraries.libraryOptions': return '미디어 라이브러리 옵션';
+			case 'libraries.content': return '미디어 라이브러리 콘텐츠';
+			case 'libraries.selectLibrary': return '미디어 라이브러리 선택';
+			case 'libraries.filtersWithCount': return ({required Object count}) => '필터 (${count})';
+			case 'libraries.noRecommendations': return '추천 없음';
+			case 'libraries.noCollections': return '이 미디어 라이브러리에는 컬렉션이 없습니다';
+			case 'libraries.noFoldersFound': return '폴더를 찾을 수 없습니다';
+			case 'libraries.folders': return '폴더';
+			case 'libraries.tabs.recommended': return '추천';
+			case 'libraries.tabs.browse': return '찾아보기';
+			case 'libraries.tabs.collections': return '컬렉션';
+			case 'libraries.tabs.playlists': return '재생 목록';
+			case 'libraries.groupings.title': return '그룹';
+			case 'libraries.groupings.all': return '전체';
+			case 'libraries.groupings.movies': return '영화';
+			case 'libraries.groupings.shows': return 'TV 프로그램';
+			case 'libraries.groupings.seasons': return '시즌';
+			case 'libraries.groupings.episodes': return '화';
+			case 'libraries.groupings.artists': return '아티스트';
+			case 'libraries.groupings.albums': return '앨범';
+			case 'libraries.groupings.tracks': return '트랙';
+			case 'libraries.groupings.folders': return '폴더';
+			case 'libraries.filterCategories.genre': return '장르';
+			case 'libraries.filterCategories.year': return '연도';
+			case 'libraries.filterCategories.contentRating': return '시청 등급';
+			case 'libraries.filterCategories.tag': return '태그';
+			case 'libraries.filterCategories.unwatched': return '미시청';
+			case 'libraries.filterCategories.unplayed': return '재생하지 않음';
+			case 'libraries.filterCategories.favorites': return '즐겨찾기';
+			case 'libraries.filterCategories.filePath': return '파일 경로';
+			case 'libraries.sortLabels.title': return '제목';
+			case 'libraries.sortLabels.dateAdded': return '추가된 날짜';
+			case 'libraries.sortLabels.releaseDate': return '출시일';
+			case 'libraries.sortLabels.rating': return '평점';
+			case 'libraries.sortLabels.communityRating': return '커뮤니티 평점';
+			case 'libraries.sortLabels.criticRating': return '평론가 평점';
+			case 'libraries.sortLabels.userRating': return '사용자 평점';
+			case 'libraries.sortLabels.datePlayed': return '재생일';
+			case 'libraries.sortLabels.playCount': return '재생 횟수';
+			case 'libraries.sortLabels.productionYear': return '제작 연도';
+			case 'libraries.sortLabels.runtime': return '재생 시간';
+			case 'libraries.sortLabels.officialRating': return '공식 등급';
+			case 'libraries.sortLabels.premiereDate': return '최초 공개일';
+			case 'libraries.sortLabels.startDate': return '시작일';
+			case 'libraries.sortLabels.airTime': return '방영 시간';
+			case 'libraries.sortLabels.studio': return '스튜디오';
+			case 'libraries.sortLabels.random': return '무작위';
+			case 'libraries.sortLabels.dateShared': return '공유된 날짜';
+			case 'libraries.sortLabels.latestEpisodeAirDate': return '최신 에피소드 방영일';
+			case 'libraries.sortLabels.lastEpisodeDateAdded': return '최신 에피소드 추가일';
+			case 'libraries.sortLabels.dateDownloaded': return '다운로드된 날짜';
+			case 'libraries.sortLabels.size': return '크기';
+			case 'libraries.sortLabels.library': return '라이브러리';
+			case 'libraries.advancedFilters.include': return '포함';
+			case 'libraries.advancedFilters.exclude': return '제외';
+			case 'libraries.advancedFilters.any': return '전체';
+			case 'libraries.advancedFilters.yes': return '예';
+			case 'libraries.advancedFilters.no': return '아니오';
+			case 'libraries.advancedFilters.not': return ({required Object value}) => '${value} 제외';
+			case 'libraries.advancedFilters.valueCount': return ({required Object count}) => '${count}개 선택됨';
+			case 'libraries.advancedFilters.valueCountExcluded': return ({required Object count}) => '${count}개 제외됨';
+			case 'libraries.advancedFilters.searchValues': return '값 검색';
+			case 'libraries.advancedFilters.noValues': return '값 없음';
+			case 'libraries.advancedFilters.matchContains': return '포함';
+			case 'libraries.advancedFilters.matchNotContains': return '포함하지 않음';
+			case 'libraries.advancedFilters.matchIs': return '같음';
+			case 'libraries.advancedFilters.matchIsNot': return '같지 않음';
+			case 'libraries.advancedFilters.matchBeginsWith': return '시작 문자';
+			case 'libraries.advancedFilters.matchEndsWith': return '끝 문자';
+			case 'libraries.advancedFilters.textHint': return '일치시킬 텍스트 입력';
+			case 'libraries.advancedFilters.from': return '시작';
+			case 'libraries.advancedFilters.to': return '끝';
+			case 'libraries.advancedFilters.range': return ({required Object from, required Object to}) => '${from}~${to}';
+			case 'libraries.advancedFilters.atLeast': return ({required Object value}) => '${value} 이상';
+			case 'libraries.advancedFilters.atMost': return ({required Object value}) => '${value} 이하';
+			case 'libraries.advancedFilters.dateLastDays': return ({required Object count}) => '최근 ${count}일';
+			case 'libraries.advancedFilters.dateLastYear': return '최근 1년';
+			case 'libraries.advancedFilters.dateOlderThanDays': return ({required Object count}) => '${count}일 이상 지남';
+			case 'libraries.advancedFilters.dateOlderThanYear': return '1년 이상 지남';
+			case 'about.title': return '소개';
+			case 'about.openSourceLicenses': return '오픈소스 라이선스';
+			case 'about.versionLabel': return ({required Object version}) => '버전 ${version}';
+			case 'about.appDescription': return 'Flutter로 만든 아름다운 Plex, Jellyfin 및 Emby 클라이언트';
+			case 'about.viewLicensesDescription': return '타사 라이브러리 라이선스 보기';
+			case 'serverSelection.noServersFoundForAccount': return ({required Object username, required Object email}) => '${username} (${email})의 서버를 찾을 수 없습니다.';
+			case 'serverSelection.failedToLoadServers': return ({required Object error}) => '서버를 로드할 수 없습니다: ${error}';
+			case 'serverSelection.noValidServers': return '이 계정에서 사용할 수 있는 서버를 찾지 못했습니다';
+			case 'hubDetail.title': return '제목';
+			case 'hubDetail.releaseYear': return '출시 연도';
+			case 'hubDetail.dateAdded': return '추가 날짜';
+			case 'hubDetail.rating': return '평점';
+			case 'hubDetail.noItemsFound': return '항목이 없습니다';
+			case 'logs.clearLogs': return '로그 지우기';
+			case 'logs.copyLogs': return '로그 복사';
+			case 'logs.uploadLogs': return '로그 업로드';
+			case 'startup.failedTitle': return 'Plezy를 시작하지 못했습니다';
+			case 'startup.failedBody': return '시작 중 문제가 발생했습니다. 아래 세부 정보에서 실패 원인을 확인할 수 있습니다.';
+			case 'startup.failedBodyRepairable': return 'Plezy의 저장된 설정 파일이 손상되어 Plezy를 시작하려면 먼저 파일을 다시 만들어야 합니다. 재시도해도 해결되지 않습니다 — 저장소 복구를 선택하세요.';
+			case 'startup.phaseLabel': return '단계';
+			case 'startup.showDetails': return '세부 정보 표시';
+			case 'startup.hideDetails': return '세부 정보 숨기기';
+			case 'startup.copyDetails': return '세부 정보 복사';
+			case 'startup.detailsCopied': return '세부 정보가 클립보드에 복사되었습니다';
+			case 'startup.uploadDetails': return '세부 정보 업로드';
+			case 'startup.repairStorage': return '저장소 복구';
+			case 'startup.repairTitle': return '저장된 데이터를 복구할까요?';
+			case 'startup.repairBodyCommon': return 'Plezy의 설정 파일이 손상되어 읽을 수 없습니다. 복구하면 모든 설정이 기본값으로 재설정됩니다.';
+			case 'startup.repairBodyOneCredential': return '저장된 로그인 정보 하나가 손상되어 읽을 수 없습니다. 복구하면 해당 로그인 정보만 제거되며 다른 설정은 그대로 유지됩니다.';
+			case 'startup.repairBodySignInsKept': return '서버와 프로필은 로그인 상태가 유지됩니다.';
+			case 'startup.repairBodySignInsLost': return '저장된 로그인 정보를 보호하는 키를 이 파일에서 복구할 수 없어 모든 서버와 프로필에 다시 로그인해야 합니다. 미디어 서버의 데이터에는 영향이 없습니다.';
+			case 'startup.repairBodySessionsUncertain': return '트래커(MAL, AniList, Simkl, Trakt)와 Seerr는 별도로 저장되며 유지 여부가 확실하지 않습니다. Plezy가 유지된 항목을 정확히 알려줄 것입니다.';
+			case 'startup.repairConfirm': return '복구';
+			case 'startup.repairSucceeded': return '저장소가 복구되었습니다';
+			case 'startup.repairNeedsRestart': return '저장소가 복구되었습니다 — 재시작 필요';
+			case 'startup.restartRequiredBody': return '데이터가 복구되었지만 Plezy는 이를 사용하려면 새로 시작해야 합니다. Plezy를 종료한 후 다시 열어주세요.';
+			case 'startup.quitPlezy': return 'Plezy 종료';
+			case 'startup.repairFailed': return '복구 실패';
+			case 'startup.repairKeptSignIns': return '서버와 프로필이 계속 로그인 상태입니다.';
+			case 'startup.repairLostSignIns': return '저장된 로그인 정보를 보호하는 키를 복구할 수 없었습니다. 모든 서버와 프로필에 다시 로그인해야 합니다.';
+			case 'startup.repairLostSessions': return '트래커 또는 Seerr 연결이 하나 이상 끊어져 다시 연결해야 합니다.';
+			case 'startup.backupTitle': return '손상된 파일의 복사본이 보관되었습니다';
+			case 'startup.backupWarning': return '로그인 자격 증명이 포함되어 있습니다. 업로드하거나 공유하지 마세요.';
+			case 'startup.deleteBackup': return '복사본 삭제';
+			case 'startup.backupDeleted': return '복사본이 삭제되었습니다.';
+			case 'startup.previousFailureTitle': return '지난번에 Plezy를 시작하지 못했습니다';
+			case 'licenses.relatedPackages': return '관련 소프트웨어 패키지';
+			case 'licenses.license': return '라이선스';
+			case 'licenses.licenseNumber': return ({required Object number}) => '라이선스 ${number}';
+			case 'licenses.licensesCount': return ({required Object count}) => '${count}개의 라이선스';
+			case 'navigation.libraries': return '미디어 라이브러리';
+			case 'navigation.downloads': return '다운로드';
+			case 'navigation.liveTv': return '실시간 TV';
+			case 'navigation.explore': return '탐색';
+			case 'explore.title': return '탐색';
+			case 'explore.selectSource': return '소스 선택';
+			case 'explore.rows.watchlist': return '관심 목록';
+			case 'explore.rows.recommendedMovies': return '추천 영화';
+			case 'explore.rows.recommendedShows': return '추천 TV 프로그램';
+			case 'explore.rows.trendingMovies': return '지금 뜨는 영화';
+			case 'explore.rows.trendingShows': return '지금 뜨는 TV 프로그램';
+			case 'explore.rows.popularMovies': return '인기 영화';
+			case 'explore.rows.popularShows': return '인기 TV 프로그램';
+			case 'explore.rows.trendingAnime': return '지금 뜨는 애니메이션';
+			case 'explore.rows.suggestedAnime': return '추천 애니메이션';
+			case 'explore.rows.airingAnime': return '방영 중인 인기 애니메이션';
+			case 'explore.rows.popularAnime': return '가장 인기 있는 애니메이션';
+			case 'explore.rows.trending': return '지금 뜨는 콘텐츠';
+			case 'explore.rows.upcomingMovies': return '개봉 예정 영화';
+			case 'explore.rows.upcomingShows': return '방영 예정 TV 프로그램';
+			case 'explore.status.airing': return '방영 중';
+			case 'explore.status.ended': return '종영';
+			case 'explore.status.canceled': return '취소됨';
+			case 'explore.status.upcoming': return '방영 예정';
+			case 'explore.episodeCount': return ({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('ko'))(n,
+				other: '${n}화',
+			);
+			case 'explore.cast': return '출연진';
+			case 'explore.characters': return '캐릭터';
+			case 'explore.addToWatchlist': return '관심 목록에 추가';
+			case 'explore.removeFromWatchlist': return '관심 목록에서 제거';
+			case 'explore.addedToWatchlist': return '관심 목록에 추가했습니다';
+			case 'explore.removedFromWatchlist': return '관심 목록에서 삭제했습니다';
+			case 'explore.watchlistUpdateFailed': return '관심 목록을 업데이트하지 못했습니다';
+			case 'explore.watchlistNoMatch': return '이 항목을 관심 목록과 연결할 수 없습니다';
+			case 'explore.notInLibrary': return '라이브러리에 없음';
+			case 'explore.inTheseLibraries': return '이 라이브러리에 있음';
+			case 'explore.checkingLibrary': return '라이브러리 확인 중...';
+			case 'explore.libraryCheckFailed': return ({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('ko'))(n,
+				other: '서버 ${n}개를 확인할 수 없습니다',
+			);
+			case 'explore.emptyTitle': return '아직 아무것도 없습니다';
+			case 'explore.emptyMessage': return ({required Object source}) => '${source}에 콘텐츠가 추가되면 여기에 표시됩니다.';
+			case 'explore.searchHint': return ({required Object source}) => '${source}에서 검색';
+			case 'explore.searchEmpty': return ({required Object query}) => '「${query}」에 대한 결과가 없습니다';
+			case 'explore.searchPrompt': return ({required Object source}) => '${source}에서 영화와 TV 프로그램을 검색하세요.';
+			case 'explore.searchFailed': return '검색에 실패했습니다. 연결을 확인하고 다시 시도하세요.';
+			case 'explore.badge.rankPopular': return ({required Object n}) => '#${n} 인기';
+			case 'explore.badge.rankAiring': return ({required Object n}) => '#${n} 방영 중';
+			case 'explore.badge.rankRated': return ({required Object n}) => '#${n} 평가';
+			case 'explore.badge.rankTrending': return ({required Object n}) => '#${n} 트렌드';
+			case 'explore.badge.rankSeasonal': return ({required Object n, required Object season}) => '#${n} ${season}';
+			case 'explore.badge.watchingNow': return ({required Object n}) => '${n}명 시청 중';
+			case 'explore.badge.available': return '이용 가능';
+			case 'explore.badge.partiallyAvailable': return '부분 이용 가능';
+			case 'explore.badge.availableIn4k': return '4K 이용 가능';
+			case 'explore.badge.requested': return '요청됨';
+			case 'explore.badge.pendingApproval': return '승인 대기 중';
+			case 'explore.badge.processing': return '처리 중';
+			case 'explore.badge.declined': return '거절됨';
+			case 'explore.badge.requestFailed': return '요청 실패';
+			case 'explore.badge.requested4k': return '4K 요청됨';
+			case 'explore.badge.seasonsAvailable': return ({required Object available, required Object total}) => '시즌 ${available}/${total}';
+			case 'explore.badge.nextEpisodeIn': return ({required Object episode, required Object duration}) => '${episode}화 · ${duration} 후';
+			case 'explore.badge.nextAiringIn': return ({required Object duration}) => '${duration} 후 다음 화';
+			case 'explore.badge.episodesShort': return ({required Object n}) => '${n}화';
+			case 'explore.badge.minutesPerEpisode': return ({required Object n}) => '${n}분/화';
+			case 'explore.badge.adult': return '18+';
+			case 'explore.stats.listed': return ({required Object n}) => '${n}명 등록';
+			case 'explore.stats.viewersDay': return ({required Object n}) => '오늘 ${n}명 시청';
+			case 'explore.stats.viewersWeek': return ({required Object n}) => '이번 주 ${n}명 시청';
+			case 'explore.stats.viewersMonth': return ({required Object n}) => '이번 달 ${n}명 시청';
+			case 'explore.stats.viewersYear': return ({required Object n}) => '올해 ${n}명 시청';
+			case 'explore.stats.viewersAllTime': return ({required Object n}) => '시청자 ${n}명';
+			case 'explore.stats.planning': return ({required Object n}) => '${n}명 볼 예정';
+			case 'explore.stats.favorited': return ({required Object n}) => '즐겨찾기 ${n}명';
+			case 'explore.stats.dropRate': return ({required Object percent}) => '${percent} 하차';
+			case 'explore.stats.comments': return ({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('ko'))(n,
+				other: '댓글 ${n}개',
+			);
+			case 'explore.stats.votes': return ({required Object n}) => '투표 ${n}개';
+			case 'explore.stats.watching': return ({required Object n}) => '시청 중 ${n}명';
+			case 'explore.stats.completed': return ({required Object n}) => '완료 ${n}명';
+			case 'explore.stats.onHold': return ({required Object n}) => '보류 ${n}명';
+			case 'explore.stats.dropped': return ({required Object n}) => '하차 ${n}명';
+			case 'explore.season.winter': return '겨울';
+			case 'explore.season.spring': return '봄';
+			case 'explore.season.summer': return '여름';
+			case 'explore.season.fall': return '가을';
+			case 'explore.season.withYear': return ({required Object season, required Object year}) => '${season} ${year}년';
+			case 'explore.format.tv': return 'TV';
+			case 'explore.format.tvShort': return 'TV 단편';
+			case 'explore.format.movie': return '영화';
+			case 'explore.format.special': return '스페셜';
+			case 'explore.format.ova': return 'OVA';
+			case 'explore.format.ona': return 'ONA';
+			case 'explore.format.music': return '음악';
+			case 'explore.format.other': return '기타';
+			case 'explore.sourceMaterial.original': return '오리지널';
+			case 'explore.sourceMaterial.manga': return '만화';
+			case 'explore.sourceMaterial.lightNovel': return '라이트 노벨';
+			case 'explore.sourceMaterial.novel': return '소설';
+			case 'explore.sourceMaterial.visualNovel': return '비주얼 노벨';
+			case 'explore.sourceMaterial.game': return '게임';
+			case 'explore.sourceMaterial.webComic': return '웹툰';
+			case 'explore.sourceMaterial.musicRelease': return '음악';
+			case 'explore.sourceMaterial.otherMedia': return '기타';
+			case 'explore.creditRole.actor': return '배우';
+			case 'explore.creditRole.director': return '감독';
+			case 'explore.creditRole.writer': return '각본';
+			case 'explore.creditRole.producer': return '프로듀서';
+			case 'explore.creditRole.creator': return '제작자';
+			case 'explore.creditRole.composer': return '작곡';
+			case 'explore.relation.prequel': return '프리퀄';
+			case 'explore.relation.sequel': return '시퀄';
+			case 'explore.relation.sideStory': return '사이드 스토리';
+			case 'explore.relation.spinOff': return '스핀오프';
+			case 'explore.relation.alternativeVersion': return '대체 버전';
+			case 'explore.relation.summary': return '요약';
+			case 'explore.relation.parentStory': return '원작';
+			case 'explore.relation.adaptation': return '각색';
+			case 'explore.relation.other': return '관련';
+			case 'explore.broadcast': return ({required Object day, required Object time}) => '${day} ${time} 방영';
+			case 'explore.broadcastWithZone': return ({required Object day, required Object time, required Object timezone}) => '${day} ${time} ${timezone} 방영';
+			case 'explore.detail.originalTitle': return '원제';
+			case 'explore.detail.alsoKnownAs': return '다른 이름';
+			case 'explore.detail.studios': return '스튜디오';
+			case 'explore.detail.country': return '국가';
+			case 'explore.detail.language': return '언어';
+			case 'explore.detail.released': return '출시일';
+			case 'explore.detail.physicalRelease': return '디스크 출시';
+			case 'explore.detail.ended': return '종영';
+			case 'explore.detail.addedOn': return ({required Object date}) => '${date}에 추가됨';
+			case 'explore.detail.yourRating': return '내 평점';
+			case 'explore.detail.budget': return '제작비';
+			case 'explore.detail.revenue': return '흥행 수익';
+			case 'explore.detail.contentAdvisory': return '연령 등급';
+			case 'explore.detail.tags': return '태그';
+			case 'explore.detail.revealSpoilerTags': return '스포일러 태그 표시';
+			case 'explore.detail.links': return '링크';
+			case 'explore.detail.watchOn': return '시청처';
+			case 'explore.detail.watchTrailer': return '예고편 보기';
+			case 'explore.detail.openOn': return ({required Object site}) => '${site}에서 열기';
+			case 'explore.detail.trailerUnavailable': return '이 기기에서 예고편을 열 수 없습니다';
+			case 'explore.detail.linkUnavailable': return '이 기기에서 링크를 열 수 없습니다';
+			case 'explore.detail.crew': return '제작진';
+			case 'explore.detail.ratings': return '평점';
+			case 'explore.detail.schedule': return '방영 일정';
+			case 'explore.detail.recommendedByUsers': return ({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('ko'))(n,
+				other: '사용자 ${n}명이 추천',
+			);
+			case 'explore.detail.recommendedBy': return ({required Object who}) => '${who} 추천';
+			case 'explore.detail.favoritedBy': return ({required Object who}) => '${who} 즐겨찾기';
+			case 'explore.detail.unairedEpisodes': return ({required Object n}) => '미방영 ${n}개';
+			case 'explore.detail.recommendedByPercent': return ({required Object percent}) => '시청자의 ${percent} 추천';
+			case 'explore.detail.relatedTitles': return '관련 작품';
+			case 'explore.detail.background': return '배경';
+			case 'explore.totalResults': return ({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('ko'))(n,
+				other: '결과 ${n}개',
+			);
+			case 'liveTv.title': return '실시간 TV';
+			case 'liveTv.guide': return '편성표';
+			case 'liveTv.noChannels': return '사용 가능한 채널이 없습니다';
+			case 'liveTv.noDvr': return '서버에 DVR이 구성되어 있지 않습니다';
+			case 'liveTv.serverUnavailable': return '라이브 TV 서버를 사용할 수 없습니다.';
+			case 'liveTv.serverNotConnected': return '라이브 TV 서버에 연결되어 있지 않습니다.';
+			case 'liveTv.noPrograms': return '프로그램 데이터가 없습니다';
+			case 'liveTv.liveStreamFailed': return '라이브 스트림 실패';
+			case 'liveTv.unknownProgram': return '알 수 없는 프로그램';
+			case 'liveTv.unknownHub': return '알 수 없음';
+			case 'liveTv.unknownError': return '알 수 없는 오류';
+			case 'liveTv.channelNumber': return ({required Object number}) => '채널 ${number}';
+			case 'liveTv.unknownChannel': return '알 수 없는 채널';
+			case 'liveTv.live': return '실시간';
+			case 'liveTv.reloadGuide': return '편성표 새로고침';
+			case 'liveTv.searchGuide': return '편성표 검색';
+			case 'liveTv.searchHint': return '채널 및 프로그램 검색';
+			case 'liveTv.searchNoResults': return ({required Object query}) => '「${query}」와(과) 일치하는 항목이 없습니다';
+			case 'liveTv.channelsSection': return '채널';
+			case 'liveTv.programsSection': return '프로그램';
+			case 'liveTv.now': return '지금';
+			case 'liveTv.today': return '오늘';
+			case 'liveTv.tomorrow': return '내일';
+			case 'liveTv.midnight': return '자정';
+			case 'liveTv.overnight': return '심야';
+			case 'liveTv.morning': return '아침';
+			case 'liveTv.daytime': return '낮';
+			case 'liveTv.evening': return '저녁';
+			case 'liveTv.lateNight': return '심야 방송';
+			case 'liveTv.whatsOn': return '지금 방송 중';
+			case 'liveTv.watchChannel': return '채널 시청';
+			case 'liveTv.favorites': return '즐겨찾기';
+			case 'liveTv.reorderFavorites': return '즐겨찾기 순서 변경';
+			case 'liveTv.noFavoriteChannels': return '즐겨찾기 채널 없음';
+			case 'liveTv.noFavoriteChannelsHint': return '모든 채널을 표시한 다음 채널을 길게 눌러 즐겨찾기에 추가하세요.';
+			case 'liveTv.showAllChannels': return '모든 채널 표시';
+			case 'liveTv.favoritesLoadFailed': return '즐겨찾기를 불러올 수 없습니다. 연결을 확인하고 다시 시도하세요.';
+			case 'liveTv.favoritesUpdateFailed': return '즐겨찾기를 업데이트할 수 없습니다. 연결을 확인하고 다시 시도하세요.';
+			case 'liveTv.joinSession': return '진행 중인 세션 참여';
+			case 'liveTv.watchFromStart': return ({required Object minutes}) => '처음부터 시청 (${minutes}분 전 시작)';
+			case 'liveTv.watchLive': return '실시간 시청';
+			case 'liveTv.goToLive': return '실시간으로 이동';
+			case 'liveTv.record': return '녹화';
+			case 'liveTv.recordEpisode': return '에피소드 녹화';
+			case 'liveTv.recordSeries': return '시리즈 녹화';
+			case 'liveTv.recordOptions': return '녹화 옵션';
+			case 'liveTv.saveTo': return '저장 위치';
+			case 'liveTv.recordings': return '녹화';
+			case 'liveTv.scheduledRecordings': return '예약됨';
+			case 'liveTv.recordingRules': return '녹화 규칙';
+			case 'liveTv.noScheduledRecordings': return '예약된 녹화 없음';
+			case 'liveTv.manageRecording': return '녹화 관리';
+			case 'liveTv.cancelRecording': return '녹화 취소';
+			case 'liveTv.cancelRecordingTitle': return '이 녹화를 취소할까요?';
+			case 'liveTv.cancelRecordingMessage': return ({required Object title}) => '${title}이(가) 더 이상 녹화되지 않습니다.';
+			case 'liveTv.deleteRule': return '규칙 삭제';
+			case 'liveTv.deleteRuleTitle': return '녹화 규칙을 삭제할까요?';
+			case 'liveTv.deleteRuleMessage': return ({required Object title}) => '${title}의 향후 에피소드는 녹화되지 않습니다.';
+			case 'liveTv.recordingScheduled': return '녹화 예약됨';
+			case 'liveTv.alreadyScheduled': return '이 프로그램은 이미 예약되어 있습니다';
+			case 'liveTv.dvrAdminRequired': return 'DVR 설정은 관리자 계정이 필요합니다';
+			case 'liveTv.recordingFailed': return '녹화를 예약할 수 없습니다';
+			case 'liveTv.recordingTargetMissing': return '녹화 라이브러리를 확인할 수 없습니다';
+			case 'liveTv.recordNotAvailable': return '이 프로그램은 녹화할 수 없습니다';
+			case 'liveTv.recordingCancelled': return '녹화 취소됨';
+			case 'liveTv.recordingRuleDeleted': return '녹화 규칙 삭제됨';
+			case 'liveTv.processRecordingRules': return '규칙 재평가';
+			case 'liveTv.recordingInProgress': return '녹화 중';
+			case 'liveTv.recordingsCount': return ({required Object count}) => '${count}개 예약됨';
+			case 'liveTv.editRule': return '규칙 편집';
+			case 'liveTv.editRuleAction': return '편집';
+			case 'liveTv.recordingRuleUpdated': return '녹화 규칙 업데이트됨';
+			case 'liveTv.guideReloadRequested': return '가이드 새로고침 요청됨';
+			case 'liveTv.guideReloadFailed': return '편성표를 새로고침할 수 없습니다';
+			case 'liveTv.rulesProcessRequested': return '규칙 재평가 요청됨';
+			case 'liveTv.rulesProcessFailed': return '녹화 규칙을 다시 적용할 수 없습니다';
+			case 'liveTv.recordShow': return '프로그램 녹화';
+			case 'liveTv.recordSettings.startEarly': return '일찍 시작 (초)';
+			case 'liveTv.recordSettings.endLate': return '늦게 종료 (초)';
+			case 'liveTv.recordSettings.newOnly': return '새 에피소드만';
+			case 'liveTv.recordSettings.anyChannel': return '모든 채널에서 녹화';
+			case 'liveTv.recordSettings.anyTime': return '모든 시간대에 녹화';
+			case 'liveTv.recordSettings.skipInLibrary': return '라이브러리에 이미 있는 에피소드 건너뛰기';
+			case 'liveTv.recordSettings.keepUpTo': return '보관할 에피소드 수';
+			case 'liveTv.recordSettings.keepUpToHint': return '0이면 모든 에피소드 보관';
+			case 'liveTv.startingInMinutes': return ({required Object minutes}) => '${minutes}분 후 시작';
+			case 'liveTv.dayAtTime': return ({required Object day, required Object time}) => '${day} ${time}';
+			case 'liveTv.invalidPlaybackData': return ({required Object product}) => '${product}에서 잘못된 실시간 TV 재생 데이터를 반환했습니다';
+			case 'liveTv.failedToStartChannel': return '실시간 채널을 시작할 수 없습니다';
+			case 'liveTv.failedToBuildStreamUrl': return '스트림 URL을 생성할 수 없습니다';
+			case 'liveTv.playbackStartFailed': return ({required Object reason}) => '채널을 시작하지 못했습니다: ${reason}';
+			case 'liveTv.channelSwitchFailed': return ({required Object reason}) => '채널을 전환하지 못했습니다: ${reason}';
+			case 'collections.title': return '컬렉션';
+			case 'collections.collection': return '컬렉션';
+			case 'collections.empty': return '컬렉션이 비어 있습니다';
+			case 'collections.deleteCollection': return '컬렉션 삭제';
+			case 'collections.deleteConfirm': return ({required Object title}) => '"${title}"을(를) 삭제할까요? 되돌릴 수 없습니다.';
+			case 'collections.deleted': return '컬렉션 삭제됨';
+			case 'collections.deleteFailed': return '컬렉션 삭제 실패';
+			case 'collections.deleteFailedWithError': return ({required Object error}) => '컬렉션 삭제 실패: ${error}';
+			case 'collections.selectCollection': return '컬렉션 선택';
+			case 'collections.collectionName': return '컬렉션 이름';
+			case 'collections.enterCollectionName': return '컬렉션 이름 입력';
+			case 'collections.addedToCollection': return '컬렉션에 추가됨';
+			case 'collections.errorAddingToCollection': return '컬렉션에 추가 실패';
+			case 'collections.created': return '컬렉션 생성됨';
+			case 'collections.removeFromCollection': return '컬렉션에서 제거';
+			case 'collections.removeFromCollectionConfirm': return ({required Object title}) => '${title}을(를) 이 컬렉션에서 제거하시겠습니까?';
+			case 'collections.removedFromCollection': return '컬렉션에서 제거됨';
+			case 'collections.removeFromCollectionFailed': return '컬렉션에서 제거 실패';
+			case 'collections.removeFromCollectionError': return ({required Object error}) => '컬렉션에서 제거 중 오류 발생: ${error}';
+			case 'collections.searchCollections': return '컬렉션 검색...';
+			case 'playlists.title': return '플레이리스트';
+			case 'playlists.playlist': return '재생 목록';
+			case 'playlists.noPlaylists': return '재생 목록을 찾을 수 없습니다';
+			case 'playlists.create': return '재생 목록 생성';
+			case 'playlists.playlistName': return '재생 목록 이름';
+			case 'playlists.enterPlaylistName': return '재생 목록 이름 입력';
+			case 'playlists.delete': return '재생 목록 삭제';
+			case 'playlists.removeItem': return '재생 목록에서 항목 제거';
+			case 'playlists.smartPlaylist': return '스마트 재생 목록';
+			case 'playlists.itemCount': return ({required Object count}) => '${count}개 항목';
+			case 'playlists.oneItem': return '1개 항목';
+			case 'playlists.emptyPlaylist': return '이 재생 목록은 비어 있습니다';
+			case 'playlists.deleteConfirm': return '재생 목록을 삭제하시겠습니까?';
+			case 'playlists.deleteMessage': return ({required Object name}) => '"${name}"을(를) 삭제하시겠습니까?';
+			case 'playlists.created': return '재생 목록이 생성되었습니다';
+			case 'playlists.deleted': return '재생 목록이 삭제되었습니다';
+			case 'playlists.itemAdded': return '재생 목록에 추가되었습니다';
+			case 'playlists.itemRemoved': return '재생 목록에서 제거됨';
+			case 'playlists.selectPlaylist': return '재생 목록 선택';
+			case 'playlists.searchPlaylists': return '재생 목록 검색...';
+			case 'playlists.errorCreating': return '재생 목록 생성 실패';
+			case 'playlists.errorDeleting': return '재생 목록 삭제 실패';
+			case 'playlists.errorLoading': return '재생 목록 로드 실패';
+			case 'playlists.errorAdding': return '재생 목록에 추가 실패';
+			case 'playlists.errorReordering': return '재생 목록 항목 재정렬 실패';
+			case 'playlists.errorRemoving': return '재생 목록에서 제거 실패';
+			case 'music.goToAlbum': return '앨범으로 이동';
+			case 'music.goToArtist': return '아티스트로 이동';
+			case 'music.instantMix': return '인스턴트 믹스';
+			case 'music.playNext': return '다음에 재생';
+			case 'music.addToQueue': return '대기열에 추가';
+			case 'music.discNumber': return ({required Object n}) => '디스크 ${n}';
+			case 'music.trackCount': return ({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('ko'))(n,
+				other: '${n}곡',
+			);
+			case 'music.nowPlaying': return '재생 중';
+			case 'music.playingFrom': return ({required Object title}) => '${title}에서 재생 중';
+			case 'music.queue': return '재생 대기열';
+			case 'music.clearQueue': return '대기열 비우기';
+			case 'music.lyrics': return '가사';
+			case 'music.noLyrics': return '가사 없음';
+			case 'music.sleepTimer': return '취침 타이머';
+			case 'music.sleepTimerEndOfTrack': return '곡 종료 시';
+			case 'music.sleepTimerMinutes': return ({required Object n}) => '${n}분';
+			case 'music.stopPlayback': return '재생 중지';
+			case 'music.previousTrack': return '이전 곡';
+			case 'music.nextTrack': return '다음 곡';
+			case 'music.repeat': return '반복';
+			case 'music.repeatAll': return '전체 반복';
+			case 'music.repeatOne': return '한 곡 반복';
+			case 'music.instantMixNoServer': return '즉석 믹스에 사용할 수 있는 서버가 없습니다';
+			case 'music.instantMixFailed': return '인스턴트 믹스를 불러오지 못했습니다';
+			case 'music.instantMixEmpty': return '인스턴트 믹스에 트랙이 없습니다';
+			case 'music.noAudioUrl': return ({required Object track}) => '${track}에 사용할 수 있는 오디오 URL이 없습니다';
+			case 'music.discography.singlesAndEps': return '싱글 및 EP';
+			case 'music.discography.live': return '라이브';
+			case 'music.discography.compilations': return '컴필레이션';
+			case 'watchTogether.title': return '함께 보기';
+			case 'watchTogether.description': return '친구 및 가족과 콘텐츠를 동시에 시청하세요';
+			case 'watchTogether.createRoom': return '방 만들기';
+			case 'watchTogether.creatingRoom': return '방 만드는 중...';
+			case 'watchTogether.joinRoom': return '방 참여';
+			case 'watchTogether.joiningRoom': return '방에 참여하는 중...';
+			case 'watchTogether.connecting': return '연결 중...';
+			case 'watchTogether.relayPublic': return '방은 공개 Open Watch Party 릴레이를 사용합니다.';
+			case 'watchTogether.relayCustom': return ({required Object url}) => '방은 ${url}에 있는 내 릴레이를 사용합니다.';
+			case 'watchTogether.recentRooms': return '최근 참여한 방';
+			case 'watchTogether.roomActions': return '방 작업';
+			case 'watchTogether.renameRoom': return '방 이름 변경';
+			case 'watchTogether.removeRoom': return '제거';
+			case 'watchTogether.enterRoomCode': return '호스트에게 받은 6자리 코드를 입력하세요.';
+			case 'watchTogether.roomCode': return '방 코드';
+			case 'watchTogether.paste': return '붙여넣기';
+			case 'watchTogether.noCodeInClipboard': return '클립보드에 방 코드가 없습니다';
+			case 'watchTogether.copyCode': return '코드 복사';
+			case 'watchTogether.codeCopied': return '방 코드가 복사되었습니다';
+			case 'watchTogether.shareInvite': return '초대 공유';
+			case 'watchTogether.inviteCopied': return '초대 메시지가 복사되었습니다. 메시지에 붙여넣으세요.';
+			case 'watchTogether.inviteMessage': return ({required Object code}) => 'Plezy 함께 보기 방에 초대합니다. \'함께 보기\'를 열고 \'방 참여\'를 선택한 다음 ${code} 코드를 입력하세요.';
+			case 'watchTogether.openSessionControls': return '함께 보기 세션 제어 열기';
+			case 'watchTogether.reconnecting': return '재연결 중...';
+			case 'watchTogether.reconnectingDescription': return '연결이 끊어졌습니다. 자동으로 방에 다시 참여합니다.';
+			case 'watchTogether.connected': return '연결됨';
+			case 'watchTogether.disconnected': return '연결 끊김';
+			case 'watchTogether.youAreHost': return '호스트입니다';
+			case 'watchTogether.hostedBy': return ({required Object name}) => '호스트: ${name}';
+			case 'watchTogether.hostControlsPlayback': return '호스트 재생 제어';
+			case 'watchTogether.anyoneCanControl': return '누구나 재생 제어 가능';
+			case 'watchTogether.roomLocked': return '방 잠김';
+			case 'watchTogether.nowPlaying': return '지금 재생 중';
+			case 'watchTogether.nothingPlaying': return '재생 중인 항목 없음';
+			case 'watchTogether.nothingPlayingHost': return '라이브러리에서 아무 콘텐츠나 재생하면 방에 공유됩니다.';
+			case 'watchTogether.nothingPlayingGuest': return '호스트가 콘텐츠를 재생하면 여기에서 열립니다.';
+			case 'watchTogether.notShareable': return '이 비디오는 카탈로그와 일치하는 항목이 없어 같은 서버에 접근할 수 있는 사람만 재생할 수 있습니다.';
+			case 'watchTogether.searching': return '라이브러리에서 이 비디오를 찾는 중...';
+			case 'watchTogether.yourCopy': return '내 사본';
+			case 'watchTogether.sharingYourCopy': return '내 사본을 공유하는 중';
+			case 'watchTogether.playingOtherLength': return ({required Object difference}) => '내 사본 재생 중(${difference})';
+			case 'watchTogether.mismatchTitle': return '내 사본의 길이가 다릅니다';
+			case 'watchTogether.mismatchDescription': return ({required Object difference}) => '가장 근접한 내 사본이 방의 비디오와 길이가 다릅니다(${difference}). 다른 편집본이나 버전일 수 있습니다.';
+			case 'watchTogether.playAnyway': return '그래도 재생';
+			case 'watchTogether.chooseAnotherCopy': return '다른 사본 선택';
+			case 'watchTogether.dontPlay': return '재생 안 함';
+			case 'watchTogether.unavailableTitle': return '이 비디오가 없습니다';
+			case 'watchTogether.unavailableDescription': return 'Plezy가 라이브러리에서 이 비디오를 찾지 못했습니다. 직접 사본을 선택하거나 다시 검색하세요.';
+			case 'watchTogether.chooseCopy': return '사본 선택';
+			case 'watchTogether.searchAgain': return '다시 검색';
+			case 'watchTogether.noCandidates': return '라이브러리에서 사본을 찾을 수 없습니다.';
+			case 'watchTogether.choiceFailed': return '방에서 이 사본을 재생할 수 없습니다';
+			case 'watchTogether.lengthLonger': return ({required Object duration}) => '${duration} 더 김';
+			case 'watchTogether.lengthShorter': return ({required Object duration}) => '${duration} 더 짧음';
+			case 'watchTogether.lengthSame': return '길이 같음';
+			case 'watchTogether.lengthUnknown': return '길이 알 수 없음';
+			case 'watchTogether.joinCurrentPlayback': return '현재 재생 참여';
+			case 'watchTogether.joinCurrentPlaybackDescription': return '호스트가 현재 시청 중인 콘텐츠로 이동합니다';
+			case 'watchTogether.stopMedia': return '모든 참가자의 비디오 중지';
+			case 'watchTogether.syncOffset': return '동기화 오프셋';
+			case 'watchTogether.syncOffsetDescription': return '비디오가 방보다 앞서거나 뒤처지면 시간을 조정하세요.';
+			case 'watchTogether.offsetHint': return ({required Object difference}) => '내 사본이 방의 비디오와 길이가 다릅니다(${difference}).';
+			case 'watchTogether.applyDifference': return ({required Object offset}) => '${offset} 적용';
+			case 'watchTogether.offsetMinusSecond': return '-1초';
+			case 'watchTogether.offsetMinusTenth': return '-100ms';
+			case 'watchTogether.offsetPlusTenth': return '+100ms';
+			case 'watchTogether.offsetPlusSecond': return '+1초';
+			case 'watchTogether.participants': return '참가자';
+			case 'watchTogether.participantCount': return ({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('ko'))(n,
+				other: '참가자 ${n}명',
+			);
+			case 'watchTogether.hostBadge': return '호스트';
+			case 'watchTogether.nameYou': return ({required Object name}) => '${name}(나)';
+			case 'watchTogether.playerIdle': return '대기 중';
+			case 'watchTogether.playerLoading': return '로딩 중';
+			case 'watchTogether.playerReady': return '준비됨';
+			case 'watchTogether.playerBuffering': return '버퍼링 중';
+			case 'watchTogether.matchSearching': return '찾는 중';
+			case 'watchTogether.matchMatched': return '비디오 있음';
+			case 'watchTogether.matchMismatched': return '길이 다름';
+			case 'watchTogether.matchUnavailable': return '비디오 없음';
+			case 'watchTogether.participantOffset': return ({required Object offset}) => '오프셋 ${offset}';
+			case 'watchTogether.makeHost': return '호스트로 지정';
+			case 'watchTogether.makeHostQuestion': return '호스트를 이전하시겠습니까?';
+			case 'watchTogether.makeHostConfirm': return ({required Object name}) => '${name}님이 재생을 제어하고 모든 참가자의 세션을 이끕니다.';
+			case 'watchTogether.transfer': return '이전';
+			case 'watchTogether.removeParticipant': return '방에서 내보내기';
+			case 'watchTogether.removeParticipantQuestion': return ({required Object name}) => '${name}님을 내보내시겠습니까?';
+			case 'watchTogether.removeParticipantConfirm': return ({required Object name}) => '${name}님이 방에서 나가게 됩니다. 방을 잠그지 않으면 코드로 다시 참여할 수 있습니다.';
+			case 'watchTogether.remove': return '내보내기';
+			case 'watchTogether.roomSettings': return '방 설정';
+			case 'watchTogether.letEveryoneControl': return '모든 참가자에게 재생 제어 허용';
+			case 'watchTogether.lockRoom': return '방 잠그기';
+			case 'watchTogether.lockRoomDescription': return '새 참가자가 참여할 수 없습니다';
+			case 'watchTogether.leaveRoom': return '방 나가기';
+			case 'watchTogether.leaveRoomQuestion': return '방에서 나가시겠습니까?';
+			case 'watchTogether.leaveRoomConfirm': return '방 코드로 다시 참여할 수 있습니다.';
+			case 'watchTogether.leave': return '나가기';
+			case 'watchTogether.endRoom': return '방 종료';
+			case 'watchTogether.endRoomQuestion': return '방을 종료하시겠습니까?';
+			case 'watchTogether.endRoomConfirm': return '모든 참가자에게 방이 종료됩니다.';
+			case 'watchTogether.end': return '종료';
+			case 'watchTogether.playBlockedTitle': return '재생이 시작되지 않았습니다';
+			case 'watchTogether.playBlockedDescription': return '재생을 눌러 방 참가자들과 함께 시청을 시작하세요.';
+			case 'watchTogether.notices.pressedPlay': return ({required Object name}) => '${name}님이 재생을 눌렀습니다';
+			case 'watchTogether.notices.playbackStarted': return '재생이 시작되었습니다';
+			case 'watchTogether.notices.paused': return ({required Object name}) => '${name}님이 일시정지했습니다';
+			case 'watchTogether.notices.playbackPaused': return '재생이 일시정지되었습니다';
+			case 'watchTogether.notices.jumpedTo': return ({required Object name, required Object position}) => '${name}님이 ${position}(으)로 이동했습니다';
+			case 'watchTogether.notices.roomJumpedTo': return ({required Object position}) => '${position}(으)로 이동했습니다';
+			case 'watchTogether.notices.changedSpeed': return ({required Object name, required Object speed}) => '${name}님이 속도를 ${speed}(으)로 설정했습니다';
+			case 'watchTogether.notices.speedChanged': return ({required Object speed}) => '속도가 ${speed}(으)로 설정되었습니다';
+			case 'watchTogether.notices.startedMedia': return ({required Object name, required Object title}) => '${name}님이 ${title} 재생을 시작했습니다';
+			case 'watchTogether.notices.mediaStarted': return ({required Object title}) => '지금 재생 중: ${title}';
+			case 'watchTogether.notices.stoppedMedia': return ({required Object name}) => '${name}님이 비디오를 중지했습니다';
+			case 'watchTogether.notices.mediaStopped': return '비디오가 중지되었습니다';
+			case 'watchTogether.notices.waitingFor': return ({required Object name}) => '${name}님을 기다리는 중...';
+			case 'watchTogether.notices.waitingForSomeone': return '다른 참가자를 기다리는 중...';
+			case 'watchTogether.notices.finished': return '재생 완료';
+			case 'watchTogether.notices.hostChangedTo': return ({required Object name}) => '${name}님이 호스트가 되었습니다';
+			case 'watchTogether.notices.youAreNowHost': return '이제 호스트입니다';
+			case 'watchTogether.notices.joined': return ({required Object name}) => '${name}님이 참여했습니다';
+			case 'watchTogether.notices.left': return ({required Object name}) => '${name}님이 나갔습니다';
+			case 'watchTogether.notices.controlRefused': return '호스트만 재생을 제어할 수 있습니다';
+			case 'watchTogether.notices.searchFailed': return '일부 서버에서 방의 비디오를 검색하지 못했습니다';
+			case 'watchTogether.notices.playBlocked': return '재생을 눌러 시작하세요';
+			case 'watchTogether.notices.shareFailed': return '이 비디오를 방에 공유하지 못했습니다';
+			case 'watchTogether.notices.downloadNotShared': return '서버가 오프라인인 동안에는 다운로드한 항목이 방에 공유되지 않습니다';
+			case 'watchTogether.notices.openFailed': return '방의 비디오를 열지 못했습니다';
+			case 'watchTogether.ended.ended': return '호스트가 방을 종료했습니다';
+			case 'watchTogether.ended.kicked': return '방에서 내보내졌습니다';
+			case 'watchTogether.ended.expired': return '방이 만료되었습니다';
+			case 'watchTogether.ended.replaced': return '다른 기기에서 이 방에 참여했습니다';
+			case 'watchTogether.ended.lost': return '방과의 연결이 끊어졌습니다';
+			case 'watchTogether.errors.invalidCode': return '방 코드가 아닙니다. 코드는 0, 1, I, L 또는 O를 제외한 영문자와 숫자 6자리입니다.';
+			case 'watchTogether.errors.roomNotFound': return '해당 코드의 방이 없습니다. 종료되었을 수 있습니다.';
+			case 'watchTogether.errors.roomFull': return '방이 가득 찼습니다.';
+			case 'watchTogether.errors.roomLocked': return '호스트가 방을 잠갔습니다.';
+			case 'watchTogether.errors.relayFull': return '지금은 함께 보기 이용자가 많습니다. 나중에 다시 시도하세요.';
+			case 'watchTogether.errors.unreachable': return '함께 보기 릴레이에 연결할 수 없습니다. 연결을 확인하세요.';
+			case 'watchTogether.errors.rateLimited': return '시도 횟수가 너무 많습니다. 잠시 후 다시 시도하세요.';
+			case 'watchTogether.errors.clientBlocked': return '이 버전의 Plezy는 릴레이를 사용할 수 없습니다. 앱을 업데이트하세요.';
+			case 'watchTogether.errors.forbidden': return '호스트만 이 작업을 할 수 있습니다.';
+			case 'watchTogether.errors.notInRoom': return '방에 참여하고 있지 않습니다.';
+			case 'watchTogether.errors.alreadyInRoom': return '이미 방에 참여하고 있습니다.';
+			case 'watchTogether.errors.resumeFailed': return '방에 다시 참여하지 못했습니다.';
+			case 'watchTogether.errors.unsupported': return '릴레이에서 지원하지 않는 기능입니다.';
+			case 'watchTogether.errors.generic': return '문제가 발생했습니다. 다시 시도하세요.';
+			case 'watchTogether.untitledEpisode': return ({required Object number}) => '${number}화';
+			case 'downloads.title': return '다운로드';
+			case 'downloads.manage': return '관리';
+			case 'downloads.tvShows': return 'TV 프로그램';
+			case 'downloads.movies': return '영화';
+			case 'downloads.music': return '음악';
+			case 'downloads.tracksQueued': return ({required Object count}) => '${count}곡 다운로드 대기 중';
+			case 'downloads.noDownloads': return '다운로드 없음';
+			case 'downloads.noDownloadsDescription': return '다운로드한 콘텐츠는 오프라인 시청을 위해 여기에 표시됩니다';
+			case 'downloads.downloadNow': return '다운로드';
+			case 'downloads.deleteDownload': return '다운로드 삭제';
+			case 'downloads.retryDownload': return '다운로드 재시도';
+			case 'downloads.downloadQueued': return '다운로드 대기 중';
+			case 'downloads.downloadResumed': return '다운로드를 재개했습니다';
+			case 'downloads.serverErrorBitrate': return '서버 오류: 파일이 원격 비트레이트 제한을 초과할 수 있습니다';
+			case 'downloads.storageFull': return '사용 가능한 저장 공간을 보호하기 위해 다운로드를 중지했습니다. 공간을 확보하거나 다른 다운로드 위치를 선택한 후 다시 시도하세요.';
+			case 'downloads.storageUnavailable': return '사용 가능한 저장 공간을 확인할 수 없어 다운로드를 중지했습니다. 다운로드 위치를 확인한 후 다시 시도하세요.';
+			case 'downloads.episodesQueued': return ({required Object count}) => '에피소드 ${count}개가 다운로드 대기열에 추가되었습니다';
+			case 'downloads.downloadDeleted': return '다운로드 삭제됨';
+			case 'downloads.deleteConfirm': return ({required Object title}) => '이 기기에서 "${title}"을(를) 삭제할까요?';
+			case 'downloads.deleteCollectionDownloads': return '다운로드 삭제';
+			case 'downloads.deleteCollectionDownloadsConfirm': return ({required Object title}) => '이 기기에서 "${title}"의 모든 다운로드를 삭제할까요?';
+			case 'downloads.collectionDownloadsDeleted': return '다운로드 삭제됨';
+			case 'downloads.cancelledDownloadTitle': return '취소된 다운로드';
+			case 'downloads.cancelledDownloadMessage': return '이 다운로드가 취소되었습니다. 어떻게 하시겠습니까?';
+			case 'downloads.allEpisodesAlreadyDownloaded': return '모든 에피소드가 이미 다운로드되었습니다';
+			case 'downloads.resumeDownload': return '다운로드 재개';
+			case 'downloads.cancelledDownload': return '취소된 다운로드';
+			case 'downloads.syncingFile': return ({required Object file, required Object status}) => '${file} (${status} 동기화 중)';
+			case 'downloads.downloadedFileClickToComplete': return ({required Object file}) => '${file} 다운로드됨 — 클릭하여 완료';
+			case 'downloads.partialDownloadClickToComplete': return '부분 다운로드됨 — 클릭하여 완료';
+			case 'downloads.deleting': return '삭제 중...';
+			case 'downloads.deletingWithProgress': return ({required Object title, required Object current, required Object total}) => '${title} 삭제 중... (${current}/${total})';
+			case 'downloads.queuedTooltip': return '대기 중';
+			case 'downloads.queuedFilesTooltip': return ({required Object files}) => '대기 중: ${files}';
+			case 'downloads.downloadingTooltip': return '다운로드 중...';
+			case 'downloads.downloadingFilesTooltip': return ({required Object files}) => '${files} 다운로드 중';
+			case 'downloads.noDownloadsTree': return '다운로드 없음';
+			case 'downloads.pauseAll': return '모두 일시정지';
+			case 'downloads.resumeAll': return '모두 재개';
+			case 'downloads.retryAll': return '모두 재시도';
+			case 'downloads.retryFailed': return '실패한 다운로드 재시도';
+			case 'downloads.deleteAll': return '모두 삭제';
+			case 'downloads.selectVersion': return '버전 선택';
+			case 'downloads.allEpisodes': return '모든 에피소드';
+			case 'downloads.unwatchedOnly': return '시청하지 않은 것만';
+			case 'downloads.nextNUnwatched': return ({required Object count}) => '다음 ${count}개 미시청';
+			case 'downloads.customAmount': return '직접 입력...';
+			case 'downloads.includeSpecials': return '스페셜 포함';
+			case 'downloads.howManyEpisodes': return '몇 개의 에피소드?';
+			case 'downloads.invalidEpisodeCount': return '올바른 에피소드 수를 입력하세요.';
+			case 'downloads.keepSynced': return '동기화 유지';
+			case 'downloads.downloadOnce': return '한 번만 다운로드';
+			case 'downloads.keepNUnwatched': return ({required Object count}) => '미시청 ${count}개 유지';
+			case 'downloads.editSyncRule': return '동기화 규칙 편집';
+			case 'downloads.removeSyncRule': return '동기화 규칙 제거';
+			case 'downloads.removeSyncRuleConfirm': return ({required Object title}) => '"${title}" 동기화를 중단하시겠습니까? 다운로드된 에피소드는 유지됩니다.';
+			case 'downloads.removeListSyncRuleConfirm': return ({required Object title}) => '"${title}" 동기화를 중지할까요?';
+			case 'downloads.deleteSyncRuleDownloads': return '연결된 다운로드도 삭제';
+			case 'downloads.deleteSyncRuleDownloadsDescription': return '다른 동기화 규칙이나 프로필에서 사용하는 다운로드는 유지됩니다.';
+			case 'downloads.syncRuleCreated': return ({required Object count}) => '동기화 규칙 생성됨 — 미시청 에피소드 ${count}개 유지';
+			case 'downloads.syncRuleUpdated': return '동기화 규칙 업데이트됨';
+			case 'downloads.syncRuleRemoved': return '동기화 규칙 제거됨';
+			case 'downloads.syncRuleAndDownloadsRemoved': return '동기화 규칙과 연결된 다운로드가 삭제되었습니다';
+			case 'downloads.syncRuleCleanupBusy': return '동기화 규칙이 현재 업데이트 중입니다. 잠시 후 다시 시도하세요.';
+			case 'downloads.syncRuleCleanupUnavailable': return '연결된 다운로드를 안전하게 확인할 수 없습니다. 서버에 다시 연결한 후 시도하거나, 다운로드를 삭제하지 않고 규칙만 제거하세요.';
+			case 'downloads.syncedNewEpisodes': return ({required Object title, required Object count}) => '${title}의 새 에피소드 ${count}개 동기화됨';
+			case 'downloads.activeSyncRules': return '동기화 규칙';
+			case 'downloads.noSyncRules': return '동기화 규칙 없음';
+			case 'downloads.manageSyncRule': return '동기화 관리';
+			case 'downloads.editEpisodeCount': return '에피소드 수';
+			case 'downloads.editSyncFilter': return '동기화 필터';
+			case 'downloads.syncAllItems': return '모든 항목 동기화 중';
+			case 'downloads.syncUnwatchedItems': return '시청하지 않은 항목 동기화 중';
+			case 'downloads.syncRuleServerContext': return ({required Object server, required Object status}) => '서버: ${server} • ${status}';
+			case 'downloads.syncRuleAvailable': return '사용 가능';
+			case 'downloads.syncRuleOffline': return '오프라인';
+			case 'downloads.syncRuleSignInRequired': return '로그인 필요';
+			case 'downloads.syncRuleAccessDenied': return '접근 거부됨';
+			case 'downloads.syncRuleNotAvailableForProfile': return '현재 프로필에서 사용할 수 없음';
+			case 'downloads.syncRuleUnknownServer': return '알 수 없는 서버';
+			case 'downloads.syncRuleListCreated': return '동기화 규칙이 생성되었습니다';
+			case 'downloads.backgroundWarning.bannerBlocked': return '앱에서 나가면 다운로드가 중지됩니다';
+			case 'downloads.backgroundWarning.bannerDegraded': return '백그라운드 다운로드가 제한될 수 있습니다';
+			case 'downloads.backgroundWarning.bannerAction': return '세부정보';
+			case 'downloads.backgroundWarning.sheetTitle': return '백그라운드 다운로드가 차단됨';
+			case 'downloads.backgroundWarning.sheetTitleDegraded': return '백그라운드 다운로드가 제한될 수 있음';
+			case 'downloads.backgroundWarning.sheetIntro': return 'Android가 Plezy의 안정적인 백그라운드 다운로드를 차단하고 있습니다.';
+			case 'downloads.backgroundWarning.sheetIntroDegraded': return '기기에서 Plezy가 백그라운드로 다운로드할 수 있는 시점을 제한하고 있습니다.';
+			case 'downloads.backgroundWarning.reasonBackgroundRestricted': return 'Plezy의 백그라운드 사용이 제한되어 있습니다. 배터리 또는 백그라운드 사용을 "제한 없음"으로 설정하세요.';
+			case 'downloads.backgroundWarning.reasonStandbyRestricted': return 'Android가 Plezy를 제한된 대기 상태로 전환했습니다. 배터리 사용량을 "제한 없음"으로 설정하세요.';
+			case 'downloads.backgroundWarning.reasonDownloadChannelBlocked': return '다운로드 알림이 꺼져 있어 진행 상황과 제어 기능을 사용하지 못할 수 있습니다.';
+			case 'downloads.backgroundWarning.reasonNotificationsDisabled': return '알림이 꺼져 있습니다. Android 13 이상에서는 장시간 백그라운드 다운로드에 알림이 필요합니다.';
+			case 'downloads.backgroundWarning.reasonDataSaver': return '데이터 절약 모드가 켜져 있어 모바일 데이터로 백그라운드 다운로드를 할 수 없습니다. Wi-Fi에서는 계속 다운로드할 수 있습니다.';
+			case 'downloads.backgroundWarning.reasonOemUnknown': return 'Plezy가 백그라운드에 있을 때 다운로드가 반복해서 중지되었습니다. Plezy의 배터리 또는 백그라운드 사용 설정을 확인하세요.';
+			case 'downloads.backgroundWarning.openSettings': return '설정 열기';
+			case 'downloads.backgroundWarning.stillNotWorking': return '기기별 도움말';
+			case 'downloads.backgroundWarning.stillNotWorkingDescription': return '기기에 맞는 단계를 확인하세요. 문제가 계속되면 설정 › 로그 보기에서 로그를 보내 주세요.';
+			case 'downloads.backgroundWarning.dialogTitle': return '다운로드가 완료되지 않을 수 있음';
+			case 'downloads.backgroundWarning.dialogDownloadAnyway': return '그래도 다운로드';
+			case 'downloads.backgroundWarning.dialogFixFirst': return '먼저 문제 해결';
+			case 'downloads.backgroundWarning.statusTile': return '백그라운드 다운로드';
+			case 'downloads.backgroundWarning.statusOk': return '백그라운드 실행 허용됨';
+			case 'downloads.backgroundWarning.statusBlocked': return '시스템 설정에 의해 차단됨';
+			case 'downloads.backgroundWarning.statusDegraded': return '시스템 설정에 의해 제한됨';
+			case 'downloads.backgroundWarning.statusUnknown': return '아직 확인하지 않음';
+			case 'downloads.backgroundWarning.settingsUnavailable': return '이 기기에서 시스템 설정을 열 수 없습니다';
+			case 'downloads.backgroundWarning.linkUnavailable': return '이 기기에서 dontkillmyapp.com을 열 수 없습니다';
+			case 'downloads.options': return '다운로드 옵션';
+			case 'downloads.groupings.library': return '라이브러리';
+			case 'downloads.groupings.collections': return '컬렉션';
+			case 'downloads.unknownLibrary': return '알 수 없는 라이브러리';
+			case 'downloads.unknownShow': return '알 수 없는 프로그램';
+			case 'downloads.unknownSeason': return '알 수 없는 시즌';
+			case 'downloads.unknownAlbum': return '알 수 없는 앨범';
+			case 'downloads.completedOfTotal': return ({required Object completed, required Object total}) => '${completed}/${total} 완료';
+			case 'downloads.errorFileNotFound': return '파일을 찾을 수 없음(404)';
+			case 'downloads.errorDownloadNotAllowed': return '서버에서 다운로드를 허용하지 않음(403)';
+			case 'downloads.errorDownloadFailed': return '다운로드 실패';
+			case 'downloads.errorDownloadFailedWithReason': return ({required Object reason}) => '다운로드 실패: ${reason}';
+			case 'downloads.errorHttpStatus': return ({required Object status}) => '다운로드 실패(HTTP ${status})';
+			case 'downloads.errorPostProcessing': return ({required Object reason}) => '후처리 실패: ${reason}';
+			case 'downloads.reasonFileNotSaved': return '이 기기에 파일을 저장할 수 없습니다';
+			case 'downloads.reasonCannotResume': return '일부만 받은 다운로드를 이어서 받을 수 없습니다';
+			case 'downloads.reasonDeviceStorageFull': return '이 기기의 저장 공간이 부족합니다';
+			case 'downloads.notificationDownloading': return '다운로드 중...';
+			case 'downloads.notificationComplete': return '다운로드 완료';
+			case 'downloads.notificationPaused': return '다운로드 일시 중지';
+			case 'shaders.title': return '셰이더';
+			case 'shaders.noShaderDescription': return '비디오 향상 없음';
+			case 'shaders.nvscalerDescription': return '더 선명한 비디오를 위한 NVIDIA 이미지 스케일링';
+			case 'shaders.artcnnVariantNeutral': return '중립';
+			case 'shaders.artcnnVariantDenoise': return '노이즈 제거';
+			case 'shaders.artcnnVariantDenoiseSharpen': return '노이즈 제거 + 선명화';
+			case 'shaders.qualityFast': return '빠름';
+			case 'shaders.qualityHQ': return '고품질';
+			case 'shaders.mode': return '모드';
+			case 'shaders.importShader': return '셰이더 가져오기';
+			case 'shaders.customShaderDescription': return '사용자 정의 GLSL 셰이더';
+			case 'shaders.shaderImported': return '셰이더를 가져왔습니다';
+			case 'shaders.shaderImportFailed': return '셰이더 가져오기 실패';
+			case 'shaders.deleteShader': return '셰이더 삭제';
+			case 'shaders.deleteShaderConfirm': return ({required Object name}) => '"${name}"을(를) 삭제하시겠습니까?';
+			case 'companionRemote.title': return '컴패니언 리모컨';
+			case 'companionRemote.connectedTo': return ({required Object name}) => '${name}에 연결됨';
+			case 'companionRemote.unknownDevice': return '알 수 없는 기기';
+			case 'companionRemote.session.startingServer': return '원격 서버 시작 중...';
+			case 'companionRemote.session.hostAddress': return '호스트 주소';
+			case 'companionRemote.session.connected': return '연결됨';
+			case 'companionRemote.session.serverRunning': return '원격 서버 활성';
+			case 'companionRemote.session.serverStopped': return '원격 서버 중지됨';
+			case 'companionRemote.session.serverRunningDescription': return '네트워크의 모바일 기기가 이 앱에 연결할 수 있습니다';
+			case 'companionRemote.session.serverStoppedDescription': return '모바일 기기의 연결을 허용하려면 서버를 시작하세요';
+			case 'companionRemote.session.usePhoneToControl': return '모바일 기기로 이 앱을 제어하세요';
+			case 'companionRemote.session.startServer': return '서버 시작';
+			case 'companionRemote.session.stopServer': return '서버 중지';
+			case 'companionRemote.session.minimize': return '최소화';
+			case 'companionRemote.session.manualAddressHint': return '수동 연결 주소:';
+			case 'companionRemote.pairing.discoveryDescription': return '같은 Plex 계정의 Plezy 기기가 여기에 표시됩니다';
+			case 'companionRemote.pairing.hostAddressHint': return '192.168.1.100:48632';
+			case 'companionRemote.pairing.connecting': return '연결 중...';
+			case 'companionRemote.pairing.searchingForDevices': return '기기 검색 중...';
+			case 'companionRemote.pairing.noDevicesFound': return '네트워크에서 기기를 찾을 수 없습니다';
+			case 'companionRemote.pairing.noDevicesHint': return '데스크톱에서 Plezy를 열고 같은 Wi-Fi를 사용하세요';
+			case 'companionRemote.pairing.availableDevices': return '사용 가능한 기기';
+			case 'companionRemote.pairing.manualConnection': return '수동 연결';
+			case 'companionRemote.pairing.cryptoInitFailed': return '보안 연결을 시작할 수 없습니다. 먼저 Plex에 로그인하세요.';
+			case 'companionRemote.pairing.validationHostRequired': return '호스트 주소를 입력하세요';
+			case 'companionRemote.pairing.validationHostFormat': return '형식은 IP:포트여야 합니다 (예: 192.168.1.100:48632)';
+			case 'companionRemote.pairing.connectionTimedOut': return '연결 시간이 초과되었습니다. 두 기기에서 같은 네트워크를 사용하세요.';
+			case 'companionRemote.pairing.sessionNotFound': return '기기를 찾을 수 없습니다. 호스트에서 Plezy가 실행 중인지 확인하세요.';
+			case 'companionRemote.pairing.authFailed': return '인증에 실패했습니다. 두 기기 모두 같은 Plex 계정이 필요합니다.';
+			case 'companionRemote.pairing.failedToConnect': return ({required Object error}) => '연결 실패: ${error}';
+			case 'companionRemote.remote.disconnectConfirm': return '원격 세션 연결을 해제하시겠습니까?';
+			case 'companionRemote.remote.reconnecting': return '재연결 중...';
+			case 'companionRemote.remote.attemptOf': return ({required Object current}) => '${current}/5 시도 중';
+			case 'companionRemote.remote.retryNow': return '지금 재시도';
+			case 'companionRemote.remote.tabRemote': return '리모컨';
+			case 'companionRemote.remote.tabPlay': return '재생';
+			case 'companionRemote.remote.tabMore': return '더 보기';
+			case 'companionRemote.remote.menu': return '메뉴';
+			case 'companionRemote.remote.tabNavigation': return '탭 탐색';
+			case 'companionRemote.remote.tabDiscover': return '둘러보기';
+			case 'companionRemote.remote.tabLibraries': return '미디어 라이브러리';
+			case 'companionRemote.remote.tabSearch': return '검색';
+			case 'companionRemote.remote.tabDownloads': return '다운로드';
+			case 'companionRemote.remote.tabSettings': return '설정';
+			case 'companionRemote.remote.previous': return '이전';
+			case 'companionRemote.remote.playPause': return '재생/일시정지';
+			case 'companionRemote.remote.next': return '다음';
+			case 'companionRemote.remote.seekBack': return '되감기';
+			case 'companionRemote.remote.stop': return '정지';
+			case 'companionRemote.remote.seekForward': return '빨리감기';
+			case 'companionRemote.remote.volume': return '볼륨';
+			case 'companionRemote.remote.volumeDown': return '줄이기';
+			case 'companionRemote.remote.volumeUp': return '높이기';
+			case 'companionRemote.remote.fullscreen': return '전체 화면';
+			case 'companionRemote.remote.subtitles': return '자막';
+			case 'companionRemote.remote.audio': return '오디오';
+			case 'companionRemote.remote.searchHint': return '데스크톱에서 검색...';
+			case 'companionRemote.errors.noNetworkInterface': return '네트워크 인터페이스를 찾을 수 없습니다';
+			case 'companionRemote.errors.authenticationFailed': return '인증 실패';
+			case 'companionRemote.errors.serverStartFailed': return ({required Object error}) => '원격 서버를 시작하지 못했습니다: ${error}';
+			case 'companionRemote.errors.commandFailed': return ({required Object error}) => '원격 명령을 보내지 못했습니다: ${error}';
+			case 'companionRemote.errors.joinTimedOut': return '세션 참가 시간이 초과되었습니다';
+			case 'companionRemote.errors.failedToConnectAnyAddress': return '어떤 주소에도 연결하지 못했습니다';
+			case 'companionRemote.errors.connectionLostAfterAttempts': return ({required Object attempts}) => '${attempts}회 시도 후 연결이 끊어졌습니다';
+			case 'companionRemote.errors.connectionLost': return '연결이 끊어졌습니다';
+			case 'companionRemote.closedBeforeAuth': return '인증 전에 연결이 종료되었습니다';
+			case 'videoSettings.playbackSpeed': return '재생 속도';
+			case 'videoSettings.normalSpeed': return '보통';
+			case 'videoSettings.sleepTimerActive': return ({required Object duration}) => '활성 (${duration})';
+			case 'videoSettings.zoom': return '확대/축소';
+			case 'videoSettings.sleepTimer': return '취침 타이머';
+			case 'videoSettings.audioSync': return '오디오 동기화';
+			case 'videoSettings.subtitleSync': return '자막 동기화';
+			case 'videoSettings.hdr': return 'HDR';
+			case 'videoSettings.hdrUnsupported': return '여기서는 HDR을 사용할 수 없습니다. 이 데스크톱 컴포지터 또는 비디오 출력에서 HDR을 전달할 수 없습니다.';
+			case 'videoSettings.hdrToneMapping': return 'HDR 톤 매핑';
+			case 'videoSettings.hdrToneMappingCompositor': return '컴포지터';
+			case 'videoSettings.hdrToneMappingCompositorDescription': return '소스의 HDR 메타데이터를 그대로 전달하고 데스크톱 컴포지터에서 매핑하도록 합니다.';
+			case 'videoSettings.hdrToneMappingPlayer': return '플레이어';
+			case 'videoSettings.hdrToneMappingPlayerDescription': return '플레이어에서 디스플레이의 최대 밝기에 맞게 매핑한 다음 그 결과를 컴포지터에 전달합니다.';
+			case 'videoSettings.hdrToneMappingFailed': return 'HDR 톤 매핑을 변경할 수 없습니다. 이전 모드가 계속 적용됩니다.';
+			case 'videoSettings.audioOutput': return '오디오 출력';
+			case 'videoSettings.performanceOverlay': return '성능 오버레이';
+			case 'videoSettings.audioOutputDolbyAtmos': return 'Dolby Atmos';
+			case 'videoSettings.audioOutputDolbyAudio': return 'Dolby Audio';
+			case 'videoSettings.audioOutputSurround': return '서라운드';
+			case 'videoSettings.audioOutputSpatial': return '공간 음향';
+			case 'videoSettings.audioOutputStereo': return '스테레오';
+			case 'videoSettings.audioNormalization': return '음량 정규화';
+			case 'videoSettings.audioNormalizationDisablesPassthrough': return '오디오를 PCM으로 디코딩합니다. 켜져 있는 동안 패스스루가 꺼집니다';
+			case 'performanceOverlay.color': return '색상';
+			case 'performanceOverlay.performance': return '성능';
+			case 'performanceOverlay.buffer': return '버퍼';
+			case 'performanceOverlay.app': return '앱';
+			case 'performanceOverlay.decoder': return '디코더';
+			case 'performanceOverlay.rawDecoder': return '원본 디코더';
+			case 'performanceOverlay.tunneling': return '터널링';
+			case 'performanceOverlay.passthrough': return '패스스루';
+			case 'performanceOverlay.aspect': return '화면비';
+			case 'performanceOverlay.rotation': return '회전';
+			case 'performanceOverlay.dvSource': return 'DV 소스';
+			case 'performanceOverlay.dvPath': return 'DV 경로';
+			case 'performanceOverlay.dvRouteDecoder': return 'Dolby Vision 디코더';
+			case 'performanceOverlay.dvRouteDecoderP81': return 'Dolby Vision 디코더 (P7→8.1)';
+			case 'performanceOverlay.dvRouteBaseLayer': return '베이스 레이어';
+			case 'performanceOverlay.dvRouteBaseLayerHdr10': return 'HDR10 베이스 레이어';
+			case 'performanceOverlay.dvRouteBaseLayerHlg': return 'HLG 베이스 레이어';
+			case 'performanceOverlay.dvRouteBaseLayerSdr': return 'SDR 베이스 레이어';
+			case 'performanceOverlay.dvRouteReshaped': return 'RPU 리셰이핑 (gpu-next)';
+			case 'performanceOverlay.p7Conversion': return 'P7 변환';
+			case 'performanceOverlay.sampleRate': return '샘플 레이트';
+			case 'performanceOverlay.pixelFormat': return '픽셀 형식';
+			case 'performanceOverlay.hwFormat': return 'HW 형식';
+			case 'performanceOverlay.matrix': return '매트릭스';
+			case 'performanceOverlay.primaries': return '원색';
+			case 'performanceOverlay.transfer': return '전송';
+			case 'performanceOverlay.renderFps': return '렌더 FPS';
+			case 'performanceOverlay.displayFps': return '디스플레이 FPS';
+			case 'performanceOverlay.avSync': return 'A/V 동기화';
+			case 'performanceOverlay.dropped': return '드롭됨';
+			case 'performanceOverlay.dvRpus': return 'DV RPU';
+			case 'performanceOverlay.dvRpuAverage': return 'DV RPU 평균';
+			case 'performanceOverlay.dvSampleAverage': return 'DV 샘플 평균';
+			case 'performanceOverlay.maxLuma': return '최대 휘도';
+			case 'performanceOverlay.minLuma': return '최소 휘도';
+			case 'performanceOverlay.maxCll': return 'MaxCLL';
+			case 'performanceOverlay.maxFall': return 'MaxFALL';
+			case 'performanceOverlay.cacheUsed': return '사용 캐시';
+			case 'performanceOverlay.cacheLimit': return '캐시 제한';
+			case 'performanceOverlay.speed': return '속도';
+			case 'performanceOverlay.player': return '플레이어';
+			case 'performanceOverlay.memory': return '메모리';
+			case 'performanceOverlay.uiFps': return 'UI FPS';
+			case 'performanceOverlay.fps': return 'FPS';
+			case 'performanceOverlay.decoderAndroidHw': return 'Android HW';
+			case 'performanceOverlay.decoderNvidiaHw': return 'NVIDIA HW';
+			case 'performanceOverlay.decoderQualcommHw': return 'Qualcomm HW';
+			case 'performanceOverlay.decoderMediatekHw': return 'MediaTek HW';
+			case 'performanceOverlay.decoderExynosHw': return 'Exynos HW';
+			case 'performanceOverlay.decoderSoftware': return '소프트웨어';
+			case 'performanceOverlay.decoderHardware': return '하드웨어';
+			case 'performanceOverlay.tunnelingActive': return '활성';
+			case 'performanceOverlay.dvRpuFailed': return ({required Object converted, required Object failures}) => '${converted} (${failures}개 실패)';
+			case 'externalPlayer.title': return '외부 플레이어';
+			case 'externalPlayer.useExternalPlayer': return '외부 플레이어 사용';
+			case 'externalPlayer.useExternalPlayerDescription': return '동영상을 다른 앱에서 열기';
+			case 'externalPlayer.selectPlayer': return '플레이어 선택';
+			case 'externalPlayer.customPlayers': return '사용자 정의 플레이어';
+			case 'externalPlayer.systemDefault': return '시스템 기본값';
+			case 'externalPlayer.addCustomPlayer': return '사용자 정의 플레이어 추가';
+			case 'externalPlayer.playerName': return '플레이어 이름';
+			case 'externalPlayer.playerNameHint': return '내 플레이어';
+			case 'externalPlayer.playerCommand': return '명령어';
+			case 'externalPlayer.playerPackage': return '패키지 이름';
+			case 'externalPlayer.playerUrlScheme': return 'URL 스킴';
+			case 'externalPlayer.off': return '꺼짐';
+			case 'externalPlayer.launchFailed': return '외부 플레이어를 열 수 없습니다';
+			case 'externalPlayer.appNotInstalled': return ({required Object name}) => '${name}이(가) 설치되어 있지 않습니다';
+			case 'externalPlayer.playInExternalPlayer': return '외부 플레이어에서 재생';
+			case 'metadataEdit.editMetadata': return '편집...';
+			case 'metadataEdit.screenTitle': return '메타데이터 편집';
+			case 'metadataEdit.basicInfo': return '기본 정보';
+			case 'metadataEdit.artwork': return '아트워크';
+			case 'metadataEdit.advancedSettings': return '고급 설정';
+			case 'metadataEdit.title': return '제목';
+			case 'metadataEdit.sortTitle': return '정렬 제목';
+			case 'metadataEdit.originalTitle': return '원제';
+			case 'metadataEdit.releaseDate': return '출시일';
+			case 'metadataEdit.contentRating': return '콘텐츠 등급';
+			case 'metadataEdit.studio': return '스튜디오';
+			case 'metadataEdit.tagline': return '태그라인';
+			case 'metadataEdit.summary': return '줄거리';
+			case 'metadataEdit.poster': return '포스터';
+			case 'metadataEdit.background': return '배경';
+			case 'metadataEdit.logo': return '로고';
+			case 'metadataEdit.squareArt': return '정사각형 아트';
+			case 'metadataEdit.selectPoster': return '포스터 선택';
+			case 'metadataEdit.selectBackground': return '배경 선택';
+			case 'metadataEdit.selectLogo': return '로고 선택';
+			case 'metadataEdit.selectSquareArt': return '정사각형 아트 선택';
+			case 'metadataEdit.fromUrl': return 'URL에서';
+			case 'metadataEdit.uploadFile': return '파일 업로드';
+			case 'metadataEdit.enterImageUrl': return '이미지 URL 입력';
+			case 'metadataEdit.imageUrl': return '이미지 URL';
+			case 'metadataEdit.metadataUpdated': return '메타데이터가 업데이트되었습니다';
+			case 'metadataEdit.metadataUpdateFailed': return '메타데이터 업데이트 실패';
+			case 'metadataEdit.artworkUpdated': return '아트워크가 업데이트되었습니다';
+			case 'metadataEdit.artworkUpdateFailed': return '아트워크 업데이트 실패';
+			case 'metadataEdit.noArtworkAvailable': return '사용 가능한 아트워크 없음';
+			case 'metadataEdit.artworkOption': return ({required Object index}) => '아트워크 옵션 ${index}';
+			case 'metadataEdit.selectedArtworkOption': return ({required Object index}) => '아트워크 옵션 ${index}, 선택됨';
+			case 'metadataEdit.notSet': return '설정되지 않음';
+			case 'metadataEdit.libraryDefault': return '라이브러리 기본값';
+			case 'metadataEdit.accountDefault': return '계정 기본값';
+			case 'metadataEdit.seriesDefault': return '시리즈 기본값';
+			case 'metadataEdit.episodeSorting': return '에피소드 정렬';
+			case 'metadataEdit.oldestFirst': return '오래된 순';
+			case 'metadataEdit.newestFirst': return '최신 순';
+			case 'metadataEdit.keep': return '유지';
+			case 'metadataEdit.allEpisodes': return '모든 에피소드';
+			case 'metadataEdit.latestEpisodes': return ({required Object count}) => '최신 에피소드 ${count}개';
+			case 'metadataEdit.latestEpisode': return '최신 에피소드';
+			case 'metadataEdit.episodesAddedPastDays': return ({required Object count}) => '최근 ${count}일 내 추가된 에피소드';
+			case 'metadataEdit.deleteAfterPlaying': return '재생 후 에피소드 삭제';
+			case 'metadataEdit.never': return '안 함';
+			case 'metadataEdit.afterADay': return '하루 후';
+			case 'metadataEdit.afterAWeek': return '일주일 후';
+			case 'metadataEdit.afterAMonth': return '한 달 후';
+			case 'metadataEdit.onNextRefresh': return '다음 새로고침 시';
+			case 'metadataEdit.seasons': return '시즌';
+			case 'metadataEdit.show': return '표시';
+			case 'metadataEdit.hide': return '숨기기';
+			case 'metadataEdit.episodeOrdering': return '에피소드 순서';
+			case 'metadataEdit.tmdbAiring': return 'The Movie Database (방영순)';
+			case 'metadataEdit.tvdbAiring': return 'TheTVDB (방영순)';
+			case 'metadataEdit.tvdbAbsolute': return 'TheTVDB (절대순)';
+			case 'metadataEdit.metadataLanguage': return '메타데이터 언어';
+			case 'metadataEdit.useOriginalTitle': return '원제 사용';
+			case 'metadataEdit.preferredAudioLanguage': return '선호 오디오 언어';
+			case 'metadataEdit.preferredSubtitleLanguage': return '선호 자막 언어';
+			case 'metadataEdit.subtitleMode': return '자막 자동 선택 모드';
+			case 'metadataEdit.manuallySelected': return '수동 선택';
+			case 'metadataEdit.shownWithForeignAudio': return '외국어 오디오 시 표시';
+			case 'metadataEdit.alwaysEnabled': return '항상 활성화';
+			case 'metadataEdit.tags': return '태그';
+			case 'metadataEdit.addTag': return '태그 추가';
+			case 'metadataEdit.genre': return '장르';
+			case 'metadataEdit.director': return '감독';
+			case 'metadataEdit.writer': return '작가';
+			case 'metadataEdit.producer': return '프로듀서';
+			case 'metadataEdit.country': return '국가';
+			case 'metadataEdit.collection': return '컬렉션';
+			case 'metadataEdit.label': return '라벨';
+			case 'metadataEdit.quickTag': return '빠른 태그…';
+			case 'matchScreen.match': return '일치...';
+			case 'matchScreen.fixMatch': return '일치 수정...';
+			case 'matchScreen.unmatch': return '일치 해제';
+			case 'matchScreen.unmatchConfirm': return '이 매칭을 지울까요? 다시 매칭될 때까지 Plex에서는 미매칭으로 처리됩니다.';
+			case 'matchScreen.unmatchSuccess': return '일치 해제됨';
+			case 'matchScreen.unmatchFailed': return '일치 해제에 실패했습니다';
+			case 'matchScreen.matchApplied': return '일치 적용됨';
+			case 'matchScreen.matchFailed': return '일치 적용에 실패했습니다';
+			case 'matchScreen.titleHint': return '제목';
+			case 'matchScreen.yearHint': return '연도';
+			case 'matchScreen.search': return '검색';
+			case 'matchScreen.noMatchesFound': return '일치하는 항목이 없습니다';
+			case 'serverTasks.title': return '서버 작업';
+			case 'serverTasks.failedToLoad': return '작업을 불러올 수 없습니다';
+			case 'serverTasks.noTasks': return '실행 중인 작업 없음';
+			case 'trakt.title': return 'Trakt';
+			case 'trakt.connected': return '연결됨';
+			case 'trakt.connectedAs': return ({required Object username}) => '@${username}(으)로 연결됨';
+			case 'trakt.disconnectConfirm': return 'Trakt 계정 연결을 끊으시겠습니까?';
+			case 'trakt.disconnectConfirmBody': return 'Plezy가 Trakt로 이벤트 전송을 중지합니다. 언제든 다시 연결할 수 있습니다.';
+			case 'trakt.scrobble': return '실시간 스크로블';
+			case 'trakt.scrobbleDescription': return '재생 중 재생, 일시정지, 정지 이벤트를 Trakt로 전송합니다.';
+			case 'trakt.watchedSync': return '시청 상태 동기화';
+			case 'trakt.watchedSyncDescription': return 'Plezy에서 시청 완료로 표시한 항목이 Trakt에도 시청 완료로 표시됩니다.';
+			case 'seerr.title': return 'Seerr';
+			case 'seerr.connectTitle': return 'Seerr에 연결';
+			case 'seerr.serverUrl': return '서버 URL';
+			case 'seerr.serverUrlHelper': return 'Seerr 인스턴스의 주소';
+			case 'seerr.checkServer': return '계속';
+			case 'seerr.signInWithJellyfin': return 'Jellyfin으로 로그인';
+			case 'seerr.signInWithEmby': return 'Emby로 로그인';
+			case 'seerr.signInWithLocal': return '로컬 계정 사용';
+			case 'seerr.email': return '이메일';
+			case 'seerr.noSignInMethods': return '이 Seerr 인스턴스에는 Plezy가 지원하는 로그인 방법이 없습니다.';
+			case 'seerr.instance': return '인스턴스';
+			case 'seerr.disconnectConfirm': return 'Seerr 연결을 해제하시겠습니까?';
+			case 'seerr.disconnectConfirmBody': return 'Plezy가 이 Seerr 인스턴스를 삭제합니다. 언제든 다시 연결할 수 있습니다.';
+			case 'seerr.request': return '요청';
+			case 'seerr.request4k': return '4K로 요청';
+			case 'seerr.seasons': return '시즌';
+			case 'seerr.allSeasons': return '모든 시즌';
+			case 'seerr.advancedOptions': return '고급';
+			case 'seerr.destinationServer': return '대상 서버';
+			case 'seerr.qualityProfile': return '화질 프로파일';
+			case 'seerr.rootFolder': return '루트 폴더';
+			case 'seerr.languageProfile': return '언어 프로파일';
+			case 'seerr.tags': return '태그';
+			case 'seerr.noTags': return '태그 없음';
+			case 'seerr.defaultOption': return ({required Object name}) => '${name} (기본값)';
+			case 'seerr.animeNote': return '이 시리즈는 애니메이션입니다.';
+			case 'seerr.requestSubmitted': return '요청을 제출했습니다';
+			case 'seerr.requestFailed': return ({required Object error}) => '요청 실패: ${error}';
+			case 'seerr.requestsLoadFailed': return '요청 옵션을 불러올 수 없습니다';
+			case 'seerr.nothingToRequest': return '모두 이미 사용 가능하거나 요청되었습니다.';
+			case 'seerr.statusAvailable': return '사용 가능';
+			case 'seerr.statusPartiallyAvailable': return '일부 사용 가능';
+			case 'seerr.statusRequested': return '요청됨';
+			case 'seerr.statusProcessing': return '처리 중';
+			case 'seerr.statusBlocklisted': return '차단 목록에 있음';
+			case 'seerr.couldNotReach': return ({required Object url, required Object error}) => '${url}에 연결할 수 없습니다: ${error}';
+			case 'seerr.noInstanceAtUrl': return ({required Object url, required Object status}) => '${url}에 Seerr 인스턴스가 없습니다(HTTP ${status})';
+			case 'seerr.behindAuthProxy': return 'Seerr 대신 인증이 필요한 리버스 프록시(SSO 또는 HTTP 인증)가 응답했습니다. Plezy는 이를 통해 로그인할 수 없습니다. 이 앱에서 Seerr의 /api/v1 경로가 프록시를 우회하도록 하거나, Seerr에 직접 연결되는 주소를 사용하세요.';
+			case 'seerr.invalidUrl': return 'https://seerr.example.com과 같은 서버 주소를 입력하세요';
+			case 'seerr.quickConnectUnsupported': return '이 Seerr 인스턴스는 Quick Connect를 지원하지 않습니다. Seerr 3.4 이상이 필요합니다.';
+			case 'seerr.notInitialized': return '이 Seerr 인스턴스는 최초 실행 설정을 완료하지 않았습니다';
+			case 'seerr.noPlexTokenForReauth': return '다시 로그인하는 데 사용할 수 있는 Plex 토큰이 없습니다';
+			case 'seerr.noStoredCredentials': return '다시 로그인하는 데 사용할 수 있는 저장된 인증 정보가 없습니다';
+			case 'seerr.signInRejected': return '로그인이 거부되었습니다';
+			case 'seerr.noSessionCookie': return 'Seerr에서 세션 쿠키를 발급하지 않았습니다';
+			case 'seerr.freshCookieRejected': return 'Seerr에서 새 세션 쿠키를 거부했습니다';
+			case 'seerr.noUserInformation': return 'Seerr에서 사용자 정보를 반환하지 않았습니다';
+			case 'seerr.sessionRejectedAfterReauth': return '다시 로그인한 후 세션이 거부되었습니다';
+			case 'seerr.permissionDenied': return 'Seerr가 이 작업을 거부했습니다: 계정에 필요한 권한이 더 이상 없습니다';
+			case 'seerr.permissionRevoked': return '이 항목을 요청할 권한이 더 이상 없습니다';
+			case 'services.title': return '서비스';
+			case 'services.hubSubtitle': return '시청 진행률을 동기화하고 새 작품을 요청하세요.';
+			case 'services.integrations': return '연동';
+			case 'services.notConnected': return '연결되지 않음';
+			case 'services.connectedAs': return ({required Object username}) => '@${username}(으)로 연결됨';
+			case 'services.scrobble': return '진행률 자동 추적';
+			case 'services.scrobbleDescription': return '에피소드나 영화를 시청하면 목록을 업데이트합니다.';
+			case 'services.disconnectConfirm': return ({required Object service}) => '${service} 연결을 해제하시겠습니까?';
+			case 'services.disconnectConfirmBody': return ({required Object service}) => 'Plezy가 ${service} 업데이트를 중지합니다. 언제든 다시 연결할 수 있습니다.';
+			case 'services.connectFailed': return ({required Object service}) => '${service}에 연결할 수 없습니다. 다시 시도하세요.';
+			case 'services.names.mal': return 'MyAnimeList';
+			case 'services.names.anilist': return 'AniList';
+			case 'services.names.simkl': return 'Simkl';
+			case 'services.names.seerr': return 'Seerr';
+			case 'services.names.mdblist': return 'MDBList';
+			case 'services.simklReconnect.title': return 'Simkl 다시 연결';
+			case 'services.simklReconnect.subtitle': return 'Simkl이 이 연결에 사용되는 로그인 방식을 종료합니다. 다시 연결하면 simkl.com이 열리고 그곳에서 Plezy를 승인합니다 — Plezy는 비밀번호를 볼 수 없습니다. 시청 기록은 Simkl에 그대로 유지됩니다.';
+			case 'services.deviceCode.title': return ({required Object service}) => '${service}에서 Plezy 활성화';
+			case 'services.deviceCode.instructions': return 'QR 코드를 스캔하거나 아래 주소로 이동하여 이 코드를 입력하세요:';
+			case 'services.deviceCode.openToActivate': return ({required Object service}) => '활성화하려면 ${service} 열기';
+			case 'services.deviceCode.copyCode': return '활성화 코드 복사';
+			case 'services.deviceCode.waitingForAuthorization': return '인증을 기다리는 중…';
+			case 'services.deviceCode.codeCopied': return '코드가 복사되었습니다';
+			case 'services.oauthProxy.title': return ({required Object service}) => '${service}에 로그인';
+			case 'services.oauthProxy.body': return '이 QR 코드를 스캔하거나 아무 기기에서 URL을 여세요.';
+			case 'services.oauthProxy.openToSignIn': return ({required Object service}) => '로그인하려면 ${service} 열기';
+			case 'services.pendingAuth.copyUrl': return '로그인 URL 복사';
+			case 'services.pendingAuth.urlCopied': return 'URL이 복사되었습니다';
+			case 'services.libraryFilter.title': return '라이브러리 필터';
+			case 'services.libraryFilter.subtitleAllSyncing': return '모든 라이브러리 동기화 중';
+			case 'services.libraryFilter.subtitleNoneSyncing': return '동기화 안 함';
+			case 'services.libraryFilter.subtitleBlocked': return ({required Object count}) => '${count}개 차단됨';
+			case 'services.libraryFilter.subtitleAllowed': return ({required Object count}) => '${count}개 허용됨';
+			case 'services.libraryFilter.mode': return '필터 모드';
+			case 'services.libraryFilter.modeBlacklist': return '차단 목록';
+			case 'services.libraryFilter.modeWhitelist': return '허용 목록';
+			case 'services.libraryFilter.modeHintBlacklist': return '아래에 선택한 라이브러리를 제외한 모든 라이브러리를 동기화합니다.';
+			case 'services.libraryFilter.modeHintWhitelist': return '아래에 선택한 라이브러리만 동기화합니다.';
+			case 'services.libraryFilter.libraries': return '라이브러리';
+			case 'services.libraryFilter.noLibraries': return '사용 가능한 라이브러리가 없습니다';
+			case 'addServer.addMediaBrowserTitle': return ({required Object product}) => '${product} 서버 추가';
+			case 'addServer.serverUrls': return '서버 URL';
+			case 'addServer.serverUrlsHelper': return '쉼표로 구분하여 여러 URL을 입력할 수 있습니다.';
+			case 'addServer.findServer': return '서버 찾기';
+			case 'addServer.searchingLocalMediaBrowserServers': return ({required Object product}) => '로컬 ${product} 서버를 찾는 중...';
+			case 'addServer.localMediaBrowserServers': return ({required Object product}) => '로컬 ${product} 서버';
+			case 'addServer.username': return '사용자 이름';
+			case 'addServer.password': return '비밀번호';
+			case 'addServer.signIn': return '로그인';
+			case 'addServer.change': return '변경';
+			case 'addServer.required': return '필수';
+			case 'addServer.couldNotReachServer': return ({required Object error}) => '서버에 연결할 수 없습니다: ${error}';
+			case 'addServer.signInFailed': return ({required Object error}) => '로그인 실패: ${error}';
+			case 'addServer.quickConnectFailed': return ({required Object error}) => 'Quick Connect 실패: ${error}';
+			case 'addServer.addPlexTitle': return 'Plex로 로그인';
+			case 'addServer.pinExpired': return '로그인 전에 PIN이 만료되었습니다. 다시 시도하세요.';
+			case 'addServer.failedToRegisterAccount': return ({required Object error}) => '계정 등록 실패: ${error}';
+			case 'addServer.enterMediaBrowserUrlError': return ({required Object product}) => '${product} 서버 URL을 입력하세요';
+			case 'addServer.addConnectionTitle': return '연결 추가';
+			case 'addServer.addConnectionTitleScoped': return ({required Object name}) => '${name}에 추가';
+			case 'addServer.signInWithPlexCard': return 'Plex로 로그인';
+			case 'addServer.signInWithPlexCardSubtitle': return '이 기기를 승인합니다. 공유 서버가 추가됩니다.';
+			case 'addServer.signInWithPlexCardSubtitleScoped': return 'Plex 계정을 승인합니다. Home 사용자는 프로필이 됩니다.';
+			case 'addServer.connectToMediaBrowserCard': return ({required Object product}) => '${product}에 연결';
+			case 'addServer.connectToMediaBrowserCardSubtitle': return '서버 URL, 사용자 이름, 비밀번호를 입력하세요.';
+			case 'addServer.connectToMediaBrowserCardSubtitleScoped': return ({required Object product, required Object name}) => '${product} 서버에 로그인하세요. ${name}에 연결됩니다.';
+			case 'addServer.borrowFromAnotherProfile': return '다른 프로필에서 빌리기';
+			case 'addServer.borrowFromAnotherProfileSubtitle': return '다른 프로필의 연결을 재사용합니다. PIN으로 보호된 프로필에는 PIN이 필요합니다.';
+			case 'addServer.invalidCredentials': return '사용자 이름 또는 비밀번호가 올바르지 않습니다';
+			case 'addServer.authResponseNotJson': return '인증 응답이 유효한 JSON이 아닙니다';
+			case 'addServer.authResponseIncomplete': return '서버의 로그인 응답이 불완전합니다';
+			case 'addServer.quickConnectRejected': return '서버에서 Quick Connect를 거부했습니다';
+			case 'addServer.quickConnectNotJson': return 'Quick Connect 응답이 유효한 JSON이 아닙니다';
+			case 'addServer.quickConnectMissingFields': return 'Quick Connect 응답에 코드 또는 비밀 키가 없습니다';
+			case 'addServer.quickConnectPollRejected': return '서버에서 Quick Connect 폴링을 거부했습니다';
+			case 'addServer.serverTimedOut': return '서버가 제시간에 응답하지 않았습니다';
+			case 'addServer.responseNotJson': return '서버 응답이 유효한 JSON이 아닙니다';
+			case 'addServer.responseMissingIdentity': return ({required Object product}) => '응답에 ID 또는 서버 이름이 없습니다. 이 서버가 ${product} 서버인가요?';
+			case 'addServer.probeFailed': return ({required Object error}) => '서버에 연결할 수 없습니다: ${error}';
+			case 'addServer.enterAtLeastOneUrl': return ({required Object product}) => '${product} 서버 URL을 하나 이상 입력하세요';
+			case 'addServer.noReachableServer': return ({required Object product}) => '연결 가능한 ${product} 서버를 찾을 수 없습니다';
+			case 'addServer.urlsPointToDifferentServers': return ({required Object product}) => '이 URL들은 서로 다른 ${product} 서버를 가리킵니다';
+			case 'addServer.urlDoesNotMatchServer': return ({required Object product}) => '이 URL은 ${product} 서버와 일치하지 않습니다';
+			case 'addServer.redirectUnsupported': return '서버가 지원되지 않는 URL로 리디렉션했습니다';
+			case 'addServer.redirectDifferentHost': return ({required Object product}) => '서버가 다른 호스트로 리디렉션했습니다. 최종 ${product} URL을 직접 입력하세요.';
+			case 'addServer.redirectInsecure': return '서버가 HTTPS에서 안전하지 않은 URL로 리디렉션했습니다';
+			case 'addServer.redirectUnsupportedEnterFinal': return ({required Object product}) => '서버가 지원되지 않는 URL로 리디렉션했습니다. 최종 ${product} URL을 직접 입력하세요.';
+			default: return null;
+		}
 	}
 }
+

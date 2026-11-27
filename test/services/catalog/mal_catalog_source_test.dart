@@ -18,8 +18,10 @@ import 'package:plezy/services/catalog/catalog_source.dart';
 import 'package:plezy/services/catalog/mal_catalog_source.dart';
 import 'package:plezy/services/data_aggregation_service.dart';
 import 'package:plezy/services/jellyfin_api_cache.dart';
+import 'package:plezy/models/mal/mal_anime.dart';
 import 'package:plezy/services/multi_server_manager.dart';
 import 'package:plezy/services/plex_api_cache.dart';
+import 'package:plezy/services/settings_service.dart';
 import 'package:plezy/services/trackers/fribb_index.dart';
 import 'package:plezy/services/trackers/mal/mal_client.dart';
 import 'package:plezy/services/trackers/tracker_exceptions.dart';
@@ -27,6 +29,7 @@ import 'package:plezy/services/trackers/tracker_session.dart';
 import 'package:plezy/utils/external_ids.dart';
 
 import '../../test_helpers/backend_client_fixtures.dart';
+import '../../test_helpers/prefs.dart';
 
 http.Response _json(Object body) =>
     http.Response(jsonEncode(body), 200, headers: {'content-type': 'application/json; charset=utf-8'});
@@ -213,6 +216,7 @@ const _expectedCatalogFields =
     'genres,media_type,rating,num_episodes,average_episode_duration,start_season,'
     'status,studios,num_scoring_users,broadcast,popularity,num_list_users,rank,'
     'nsfw,source,end_date';
+const _expectedUserListFields = '$_expectedCatalogFields,list_status';
 const _expectedDetailFields =
     '$_expectedCatalogFields,recommendations{$_expectedCatalogFields},'
     'related_anime{$_expectedCatalogFields},statistics,background';
@@ -288,13 +292,15 @@ void main() {
       client.dispose();
     });
 
-    test('fetchRow(watchlist) requests Plan to Watch and enriches ids via Fribb', () async {
+    test('fetchRow(watchlist) requests default Watching + Plan to Watch with list_status and enriches ids via Fribb', () async {
       final page = await source.fetchRow(CatalogRowId.watchlist);
 
-      final request = requests.single;
-      expect(request.url.path, '/v2/users/@me/animelist');
-      expect(request.url.queryParameters['status'], 'plan_to_watch');
-      expect(request.url.queryParameters['fields'], _expectedCatalogFields);
+      expect(requests, hasLength(2));
+      expect(requests.map((r) => r.url.path).toSet(), {'/v2/users/@me/animelist'});
+      expect(requests.map((r) => r.url.queryParameters['status']).toList(), ['watching', 'plan_to_watch']);
+      for (final req in requests) {
+        expect(req.url.queryParameters['fields'], _expectedUserListFields);
+      }
 
       expect(page.items, hasLength(2));
       final show = page.items[0];
@@ -352,11 +358,13 @@ void main() {
     });
 
     test('a blank typed native title falls back to the production title', () async {
-      handlers.add(
-        (_) => _json(
-          _pageBody([_node(id: 32281, title: 'Kimi no Na wa.', en: 'Your Name.', ja: '   ', mediaType: 'movie')]),
-        ),
-      );
+      handlers
+        ..add(
+          (_) => _json(
+            _pageBody([_node(id: 32281, title: 'Kimi no Na wa.', en: 'Your Name.', ja: '   ', mediaType: 'movie')]),
+          ),
+        )
+        ..add((_) => _json(_pageBody(const [])));
 
       final item = (await source.fetchRow(CatalogRowId.watchlist)).items.single;
       expect(item.originalTitle, 'Kimi no Na wa.');
@@ -364,23 +372,25 @@ void main() {
     });
 
     test('sequel entries retain romaji aliases and both Fribb season numbers', () async {
-      handlers.add(
-        (request) => http.Response(
-          json.encode(
-            _pageBody([
-              _node(
-                id: 35760,
-                title: 'Shingeki no Kyojin Season 3',
-                en: 'Attack on Titan Season 3',
-                ja: '進撃の巨人 Season 3',
-                synonyms: ['', 'Attack on Titan Season 3', 'AoT 3'],
-              ),
-            ]),
+      handlers
+        ..add(
+          (request) => http.Response(
+            json.encode(
+              _pageBody([
+                _node(
+                  id: 35760,
+                  title: 'Shingeki no Kyojin Season 3',
+                  en: 'Attack on Titan Season 3',
+                  ja: '進撃の巨人 Season 3',
+                  synonyms: ['', 'Attack on Titan Season 3', 'AoT 3'],
+                ),
+              ]),
+            ),
+            200,
+            headers: {'content-type': 'application/json; charset=utf-8'},
           ),
-          200,
-          headers: {'content-type': 'application/json; charset=utf-8'},
-        ),
-      );
+        )
+        ..add((_) => _json(_pageBody(const [])));
 
       final item = (await source.fetchRow(CatalogRowId.watchlist)).items.single;
 
@@ -404,9 +414,11 @@ void main() {
 
       for (final backend in MediaBackend.values) {
         test('Kimi no Na wa. finds only the ID-verified native-title copy on ${backend.name}', () async {
-          handlers.add(
-            (_) => _json(_pageBody([_node(id: 32281, title: 'Kimi no Na wa.', ja: '君の名は。', mediaType: 'movie')])),
-          );
+          handlers
+            ..add(
+              (_) => _json(_pageBody([_node(id: 32281, title: 'Kimi no Na wa.', ja: '君の名は。', mediaType: 'movie')])),
+            )
+            ..add((_) => _json(_pageBody(const [])));
           final item = (await source.fetchRow(CatalogRowId.watchlist)).items.single;
           expect(item.originalTitle, '君の名は。');
           expect(item.altTitles, contains('Kimi no Na wa.'));
@@ -426,20 +438,22 @@ void main() {
             client,
             fribb: _FakeFribb(const [FribbMappingRow(malId: 35760, tmdbTvId: 1429, tvdbSeason: 3, tmdbSeason: 3)]),
           );
-          handlers.add(
-            (_) => _json(
-              _pageBody([
-                _node(
-                  id: 35760,
-                  title: 'Shingeki no Kyojin Season 3',
-                  en: 'Attack on Titan Season 3',
-                  ja: '進撃の巨人 Season 3',
-                  synonyms: ['AoT 3', 'Attack on Titan 3rd Season', 'Shingeki no Kyojin 3'],
-                  extra: {'start_date': '2018-07-23'},
-                ),
-              ]),
-            ),
-          );
+          handlers
+            ..add(
+              (_) => _json(
+                _pageBody([
+                  _node(
+                    id: 35760,
+                    title: 'Shingeki no Kyojin Season 3',
+                    en: 'Attack on Titan Season 3',
+                    ja: '進撃の巨人 Season 3',
+                    synonyms: ['AoT 3', 'Attack on Titan 3rd Season', 'Shingeki no Kyojin 3'],
+                    extra: {'start_date': '2018-07-23'},
+                  ),
+                ]),
+              ),
+            )
+            ..add((_) => _json(_pageBody(const [])));
           final item = (await source.fetchRow(CatalogRowId.watchlist)).items.single;
           expect(item.altTitles, contains('Shingeki no Kyojin Season 3'));
 
@@ -853,6 +867,203 @@ void main() {
       expect(index.byMal[16498]?.tvdbId, 267440);
       expect(index.byMal[32281]?.imdbIds, ['tt5311514']);
       expect(index.byMal, hasLength(2));
+    });
+  });
+
+  group('MAL Discovery filtering & unreleased sorting', () {
+    late List<http.Request> requests;
+    late MalClient client;
+    final fixedNow = DateTime(2026, 11, 27);
+
+    Map<String, dynamic> listEntry({
+      required int id,
+      required String title,
+      required String listStatus,
+      String airStatus = 'currently_airing',
+      String? startDate,
+      String? updatedAt,
+    }) => {
+      'node': _node(
+        id: id,
+        title: title,
+        status: airStatus,
+        extra: {if (startDate != null) 'start_date': startDate},
+      ),
+      'list_status': {
+        'status': listStatus,
+        if (updatedAt != null) 'updated_at': updatedAt,
+      },
+    };
+
+    setUp(() {
+      resetSharedPreferencesForTest();
+      SettingsService.resetForTesting();
+      requests = [];
+      client = MalClient(
+        _session(),
+        onSessionInvalidated: () => fail('should not invalidate'),
+        httpClient: MockClient((request) async {
+          requests.add(request);
+          final status = request.url.queryParameters['status'];
+          final entries = switch (status) {
+            'watching' => [
+              listEntry(
+                id: 101,
+                title: 'Unreleased Watching TBA',
+                listStatus: 'watching',
+                airStatus: 'not_yet_aired',
+                updatedAt: '2026-11-26T10:00:00Z',
+              ),
+              listEntry(
+                id: 102,
+                title: 'Currently Airing Show',
+                listStatus: 'watching',
+                airStatus: 'currently_airing',
+                startDate: '2026-10-03',
+                updatedAt: '2026-11-25T10:00:00Z',
+              ),
+            ],
+            'plan_to_watch' => [
+              listEntry(
+                id: 201,
+                title: 'Future Start Date Show',
+                listStatus: 'plan_to_watch',
+                airStatus: 'currently_airing',
+                startDate: '2027-04-05',
+                updatedAt: '2026-11-27T08:00:00Z',
+              ),
+              listEntry(
+                id: 202,
+                title: 'Finished Classic',
+                listStatus: 'plan_to_watch',
+                airStatus: 'finished_airing',
+                startDate: '2020-01-10',
+                updatedAt: '2026-11-20T08:00:00Z',
+              ),
+            ],
+            'on_hold' => [
+              listEntry(id: 301, title: 'Paused Show', listStatus: 'on_hold', airStatus: 'finished_airing'),
+            ],
+            'completed' => [
+              listEntry(id: 401, title: 'Completed Show', listStatus: 'completed', airStatus: 'finished_airing'),
+            ],
+            'dropped' => [
+              listEntry(id: 501, title: 'Dropped Show', listStatus: 'dropped', airStatus: 'finished_airing'),
+            ],
+            null => [
+              listEntry(id: 102, title: 'Currently Airing Show', listStatus: 'watching', airStatus: 'currently_airing'),
+              listEntry(id: 202, title: 'Finished Classic', listStatus: 'plan_to_watch', airStatus: 'finished_airing'),
+              listEntry(id: 301, title: 'Paused Show', listStatus: 'on_hold', airStatus: 'finished_airing'),
+              listEntry(id: 401, title: 'Completed Show', listStatus: 'completed', airStatus: 'finished_airing'),
+              listEntry(id: 501, title: 'Dropped Show', listStatus: 'dropped', airStatus: 'finished_airing'),
+            ],
+            _ => <Map<String, dynamic>>[],
+          };
+          return _json({'data': entries, 'paging': <String, dynamic>{}});
+        }),
+      );
+    });
+
+    tearDown(() {
+      client.dispose();
+      SettingsService.resetForTesting();
+    });
+
+    test('all-toggles-off returns empty page and issues zero API calls', () async {
+      final settings = await SettingsService.getInstance();
+      await settings.write(SettingsService.malIncludeWatching, false);
+      await settings.write(SettingsService.malIncludePlanToWatch, false);
+
+      final source = MalCatalogSource(client, fribb: _FakeFribb(const []), now: () => fixedNow);
+      addTearDown(source.dispose);
+
+      final page = await source.fetchRow(CatalogRowId.watchlist);
+      expect(page.items, isEmpty);
+      expect(page.hasMore, isFalse);
+      expect(requests, isEmpty);
+    });
+
+    test('queries only enabled statuses and reads SettingsService toggles', () async {
+      final settings = await SettingsService.getInstance();
+      await settings.write(SettingsService.malIncludeWatching, false);
+      await settings.write(SettingsService.malIncludePlanToWatch, false);
+      await settings.write(SettingsService.malIncludeOnHold, true);
+      await settings.write(SettingsService.malIncludeCompleted, true);
+
+      final source = MalCatalogSource(client, fribb: _FakeFribb(const []), now: () => fixedNow);
+      addTearDown(source.dispose);
+
+      final page = await source.fetchRow(CatalogRowId.watchlist);
+      expect(requests.map((r) => r.url.queryParameters['status']).toList(), ['on_hold', 'completed']);
+      for (final req in requests) {
+        expect(req.url.queryParameters['fields'], contains('status'));
+        expect(req.url.queryParameters['fields'], contains('start_date'));
+        expect(req.url.queryParameters['fields'], contains('list_status'));
+      }
+      expect(page.items.map((i) => i.ids.mal).toList(), [301, 401]);
+    });
+
+    test('all 5 statuses enabled issues one unfiltered animelist request', () async {
+      final settings = await SettingsService.getInstance();
+      await settings.write(SettingsService.malIncludeOnHold, true);
+      await settings.write(SettingsService.malIncludeCompleted, true);
+      await settings.write(SettingsService.malIncludeDropped, true);
+
+      final source = MalCatalogSource(client, fribb: _FakeFribb(const []), now: () => fixedNow);
+      addTearDown(source.dispose);
+
+      final page = await source.fetchRow(CatalogRowId.watchlist);
+      expect(requests, hasLength(1));
+      expect(requests.single.url.queryParameters.containsKey('status'), isFalse);
+      expect(page.items.map((i) => i.ids.mal).toList(), [102, 202, 301, 401, 501]);
+    });
+
+    test('pushToEnd places released anime strictly before not_yet_aired and future start_date titles', () async {
+      await SettingsService.getInstance();
+      final source = MalCatalogSource(client, fribb: _FakeFribb(const []), now: () => fixedNow);
+      addTearDown(source.dispose);
+
+      final page = await source.fetchRow(CatalogRowId.watchlist);
+      // Released (102 watching, 202 plan_to_watch) must come before unreleased (101 not_yet_aired, 201 future start_date).
+      expect(page.items.map((i) => i.ids.mal).toList(), [102, 202, 101, 201]);
+    });
+
+    test('hide excludes both not_yet_aired and future start_date anime completely', () async {
+      final settings = await SettingsService.getInstance();
+      await settings.write(SettingsService.malUnreleasedMode, MalUnreleasedMode.hide);
+
+      final source = MalCatalogSource(client, fribb: _FakeFribb(const []), now: () => fixedNow);
+      addTearDown(source.dispose);
+
+      final page = await source.fetchRow(CatalogRowId.watchlist);
+      expect(page.items.map((i) => i.ids.mal).toList(), [102, 202]);
+    });
+
+    test('showNormally preserves list order without demoting or hiding unreleased titles', () async {
+      final settings = await SettingsService.getInstance();
+      await settings.write(SettingsService.malUnreleasedMode, MalUnreleasedMode.showNormally);
+
+      final source = MalCatalogSource(client, fribb: _FakeFribb(const []), now: () => fixedNow);
+      addTearDown(source.dispose);
+
+      final page = await source.fetchRow(CatalogRowId.watchlist);
+      expect(page.items.map((i) => i.ids.mal).toList(), [101, 102, 201, 202]);
+    });
+
+    test('isUnreleasedAnime handles YYYY, YYYY-MM, and YYYY-MM-DD start_date formats', () {
+      const airingToday = MalAnime(id: 1, status: 'currently_airing', startDate: '2026-11-27');
+      const airingTomorrow = MalAnime(id: 2, status: 'currently_airing', startDate: '2026-11-28');
+      const nextMonth = MalAnime(id: 3, status: 'currently_airing', startDate: '2026-12');
+      const currentMonth = MalAnime(id: 4, status: 'currently_airing', startDate: '2026-11');
+      const nextYear = MalAnime(id: 5, status: 'currently_airing', startDate: '2027');
+      const notYetAiredNoDate = MalAnime(id: 6, status: 'not_yet_aired');
+
+      expect(MalCatalogSource.isUnreleasedAnime(airingToday, now: fixedNow), isFalse);
+      expect(MalCatalogSource.isUnreleasedAnime(airingTomorrow, now: fixedNow), isTrue);
+      expect(MalCatalogSource.isUnreleasedAnime(nextMonth, now: fixedNow), isTrue);
+      expect(MalCatalogSource.isUnreleasedAnime(currentMonth, now: fixedNow), isFalse);
+      expect(MalCatalogSource.isUnreleasedAnime(nextYear, now: fixedNow), isTrue);
+      expect(MalCatalogSource.isUnreleasedAnime(notYetAiredNoDate, now: fixedNow), isTrue);
     });
   });
 }

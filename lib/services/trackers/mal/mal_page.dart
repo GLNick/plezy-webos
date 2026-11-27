@@ -1,3 +1,22 @@
+/// Entry-level `list_status` sidecar returned by `/users/@me/animelist` when
+/// `list_status` is included in `fields`.
+class MalListStatusEntry {
+  final String? status;
+  final DateTime? updatedAt;
+
+  const MalListStatusEntry({this.status, this.updatedAt});
+
+  static MalListStatusEntry? fromRaw(Object? raw) {
+    if (raw is! Map) return null;
+    final status = raw['status'];
+    final updatedAtRaw = raw['updated_at'];
+    return MalListStatusEntry(
+      status: status is String && status.isNotEmpty ? status : null,
+      updatedAt: updatedAtRaw is String ? DateTime.tryParse(updatedAtRaw) : null,
+    );
+  }
+}
+
 /// One page of a MAL API v2 list response (`{"data": [{"node": ...}], "paging": {...}}`).
 ///
 /// MAL pages by offset; `paging.next` is present exactly when more items
@@ -9,7 +28,15 @@ class MalPage<T> {
   /// Entry-level `/anime/ranking` positions, aligned with [items].
   final List<int?> rankingRanks;
 
-  const MalPage({required this.items, this.hasMore = false, this.rankingRanks = const []});
+  /// Entry-level `/users/@me/animelist` list statuses, aligned with [items].
+  final List<MalListStatusEntry?> listStatuses;
+
+  const MalPage({
+    required this.items,
+    this.hasMore = false,
+    this.rankingRanks = const [],
+    this.listStatuses = const [],
+  });
 
   static MalPage<T> fromJson<T>(Object? json, T Function(Map<String, dynamic> node) fromNode) {
     if (json is! Map) return MalPage(items: List<T>.empty());
@@ -27,7 +54,16 @@ class MalPage<T> {
           _ => null,
         },
     ];
-    return MalPage(items: items, hasMore: _hasNext(json), rankingRanks: rankingRanks);
+    final listStatuses = [
+      for (final entry in entries)
+        MalListStatusEntry.fromRaw(entry['list_status'] ?? (entry['node'] as Map)['list_status']),
+    ];
+    return MalPage(
+      items: items,
+      hasMore: _hasNext(json),
+      rankingRanks: rankingRanks,
+      listStatuses: listStatuses,
+    );
   }
 
   /// Like [fromJson] but hands the parser the whole `data[]` entry, for

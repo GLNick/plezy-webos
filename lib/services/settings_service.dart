@@ -108,6 +108,9 @@ enum ContinueWatchingAction { play, details }
 
 enum EpisodeAction { play, details }
 
+/// How MyAnimeList Discovery handles unreleased (`not_yet_aired` / future `start_date`) anime.
+enum MalUnreleasedMode { pushToEnd, hide, showNormally }
+
 /// How Specials (season 0) are placed in the episode watch order — the
 /// sequence auto-advance, offline next/prev, and "download next N" walk.
 enum SpecialsOrdering {
@@ -741,6 +744,27 @@ class SettingsService extends BaseSharedPreferencesService {
   static const autoHidePerformanceOverlay = BoolPref('auto_hide_performance_overlay', defaultValue: true);
   static const enableDiscordRPC = BoolPref('enable_discord_rpc');
   static const enableTraktWatchedSync = BoolPref('enable_trakt_watched_sync', defaultValue: true);
+
+  /// MyAnimeList Discovery list-status filters and unreleased-anime sorting.
+  static const malIncludeWatching = BoolPref('mal_discovery_watching', defaultValue: true);
+  static const malIncludePlanToWatch = BoolPref('mal_discovery_plan_to_watch', defaultValue: true);
+  static const malIncludeOnHold = BoolPref('mal_discovery_on_hold');
+  static const malIncludeCompleted = BoolPref('mal_discovery_completed');
+  static const malIncludeDropped = BoolPref('mal_discovery_dropped');
+  static const malUnreleasedMode = EnumPref<MalUnreleasedMode>(
+    'mal_discovery_unreleased_mode',
+    values: MalUnreleasedMode.values,
+    defaultValue: MalUnreleasedMode.pushToEnd,
+  );
+
+  static const List<Pref<Object?>> malDiscoveryPrefs = [
+    malIncludeWatching,
+    malIncludePlanToWatch,
+    malIncludeOnHold,
+    malIncludeCompleted,
+    malIncludeDropped,
+    malUnreleasedMode,
+  ];
   static const matchContentFrameRate = BoolPref('match_content_frame_rate');
   static const matchContentResolution = BoolPref('match_content_resolution');
   static const tunneledPlayback = BoolPref('tunneled_playback', defaultValue: false);
@@ -1520,6 +1544,7 @@ class SettingsService extends BaseSharedPreferencesService {
     autoHidePerformanceOverlay,
     enableDiscordRPC,
     enableTraktWatchedSync,
+    ...malDiscoveryPrefs,
     // Scrobble toggle, one per tracker service.
     for (final s in TrackerService.values) scrobblePref(s),
     matchContentFrameRate,

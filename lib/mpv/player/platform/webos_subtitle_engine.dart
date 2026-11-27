@@ -2250,7 +2250,11 @@ class WebosSubtitleParser {
         i++;
       }
     }
-    cues.sort((a, b) => a.startMs.compareTo(b.startMs));
+    cues.sort((a, b) {
+      final cmp = a.startMs.compareTo(b.startMs);
+      if (cmp != 0) return cmp;
+      return a.readOrder.compareTo(b.readOrder);
+    });
     return cues;
   }
 
@@ -2426,6 +2430,7 @@ class WebosSubtitleParser {
     required String codecId,
     required String blockText,
     required WebosAssDocument? assHeader,
+    int fallbackReadOrder = 0,
   }) {
     final endMs = startMs + (durationMs > 0 ? durationMs : 3500);
     if (codecId.contains('ASS') || codecId.contains('SSA')) {
@@ -2438,6 +2443,7 @@ class WebosSubtitleParser {
           isAss: true,
           playResX: assHeader?.playResX ?? 1920,
           playResY: assHeader?.playResY ?? 1080,
+          readOrder: fallbackReadOrder,
         );
       }
       final readOrder = int.tryParse(parts[0].trim()) ?? 0;
@@ -2472,6 +2478,7 @@ class WebosSubtitleParser {
         endMs: endMs,
         rawText: blockText,
         isAss: false,
+        readOrder: fallbackReadOrder,
       );
     }
   }
@@ -3667,6 +3674,7 @@ class WebosMkvSubtitleExtractor {
   final Map<int, _MkvTrackInfo> _subTrackByNumber = {};
   final Map<int, List<WebosSubtitleCue>> cuesByTrackNumber = {};
   final Map<int, Map<String, int>> _dedupExpiryByTrackNumber = {};
+  final Map<int, int> _nextCueOrderByTrackNumber = {};
   final Map<int, _WebosPgsTrackDecoder> _pgsDecoders = {};
   final List<({int timeMs, int clusterFileOffset})> _cuePoints = [];
   static final Set<String> _loadedFontFamilies = {};
@@ -4094,6 +4102,7 @@ class WebosMkvSubtitleExtractor {
       } else {
         cuesByTrackNumber[prevTrack]?.clear();
         _dedupExpiryByTrackNumber[prevTrack]?.clear();
+        _nextCueOrderByTrackNumber.remove(prevTrack);
         _textEvictedBeforeMs = -1;
         if (isAssTrackNumber(prevTrack) && onFlushAssTrack != null) {
           onFlushAssTrack!(prevTrack);
@@ -4378,6 +4387,7 @@ class WebosMkvSubtitleExtractor {
     }
     cuesByTrackNumber.clear();
     _dedupExpiryByTrackNumber.clear();
+    _nextCueOrderByTrackNumber.clear();
   }
 
   Future<void> start() async {
@@ -6370,6 +6380,8 @@ class WebosMkvSubtitleExtractor {
     final dedupKey = 'txt:$cueStartMs:$durationMs:${rawView.length}:$payloadHash';
     if (dedupMap.containsKey(dedupKey)) return false;
 
+    final nextCueOrder = _nextCueOrderByTrackNumber[trackInfo.trackNumber] ?? 0;
+    _nextCueOrderByTrackNumber[trackInfo.trackNumber] = nextCueOrder + 1;
     final payloadStr = utf8.decode(rawView, allowMalformed: true);
     final cue = WebosSubtitleParser.parseMkvBlock(
       startMs: cueStartMs,
@@ -6377,6 +6389,7 @@ class WebosMkvSubtitleExtractor {
       codecId: trackInfo.codecId,
       blockText: payloadStr,
       assHeader: trackInfo.assHeader,
+      fallbackReadOrder: nextCueOrder,
     );
     if (cue == null) {
       dedupMap[dedupKey] = cueStartMs + (durationMs > 0 ? durationMs : 3500);
@@ -6532,6 +6545,26 @@ List<int> computeWebosEffectiveEndMs(List<WebosSubtitleCue> rawCues) {
     result[i] = nearestSuccessorStartMs ?? c.endMs;
   }
   return result;
+}
+
+/// Deterministically orders subtitle cues by `(layer, startMs, readOrder)` while
+/// preserving original sequence order on ties (avoiding Dart's unstable quicksort on >32 cues).
+List<WebosSubtitleCue> sortWebosSubtitleCues(List<WebosSubtitleCue> cues) {
+  final n = cues.length;
+  if (n <= 1) return List<WebosSubtitleCue>.of(cues, growable: false);
+  final indices = List<int>.generate(n, (i) => i, growable: false);
+  indices.sort((ia, ib) {
+    final a = cues[ia];
+    final b = cues[ib];
+    final lCmp = a.layer.compareTo(b.layer);
+    if (lCmp != 0) return lCmp;
+    final sCmp = a.startMs.compareTo(b.startMs);
+    if (sCmp != 0) return sCmp;
+    final rCmp = a.readOrder.compareTo(b.readOrder);
+    if (rCmp != 0) return rCmp;
+    return ia.compareTo(ib);
+  });
+  return List<WebosSubtitleCue>.generate(n, (k) => cues[indices[k]], growable: false);
 }
 
 /// Cues visible at [nowMs], given the output of [computeWebosEffectiveEndMs].
@@ -7226,13 +7259,21 @@ WebosAlignedGroupEntry computeWebosAlignedCueEntry({
 }
 
 /// Stacks the cues of one alignment (\an1..\an9) without overlap while honouring each cue's
-/// own margins. Child 0 is the first cue: bottom-most for \an1-3, top-most for \an4-9.
+/// own margins. For ASS ([topToBottom] == false), child 0 is bottom-most for \an1-3 and top-most
+/// for \an4-9 (VSFilter/libass collision order). For non-ASS SRT/VTT ([topToBottom] == true),
+/// \an1-3 also renders child 0 visually above child 1..n-1 while anchoring the group to the
+/// bottom subtitle margin.
 /// Children must be [LayoutId]s with ids 0..entries.length-1.
 class WebosAlignedGroupLayoutDelegate extends MultiChildLayoutDelegate {
   final int an;
   final List<WebosAlignedGroupEntry> entries;
+  final bool topToBottom;
 
-  WebosAlignedGroupLayoutDelegate({required this.an, required this.entries});
+  WebosAlignedGroupLayoutDelegate({
+    required this.an,
+    required this.entries,
+    this.topToBottom = false,
+  });
 
   @override
   void performLayout(Size size) {
@@ -7255,11 +7296,20 @@ class WebosAlignedGroupLayoutDelegate extends MultiChildLayoutDelegate {
 
     if (an <= 3) {
       double cursorTop = size.height;
-      for (int i = 0; i < n; i++) {
-        final bottomEdge = math.min(size.height - entries[i].v, cursorTop);
-        final y = bottomEdge - sizes[i].height;
-        positionChild(i, Offset(xFor(i), y));
-        cursorTop = y;
+      if (topToBottom) {
+        for (int i = n - 1; i >= 0; i--) {
+          final bottomEdge = math.min(size.height - entries[i].v, cursorTop);
+          final y = bottomEdge - sizes[i].height;
+          positionChild(i, Offset(xFor(i), y));
+          cursorTop = y;
+        }
+      } else {
+        for (int i = 0; i < n; i++) {
+          final bottomEdge = math.min(size.height - entries[i].v, cursorTop);
+          final y = bottomEdge - sizes[i].height;
+          positionChild(i, Offset(xFor(i), y));
+          cursorTop = y;
+        }
       }
     } else if (an >= 7) {
       double cursorBottom = 0.0;
@@ -7283,7 +7333,9 @@ class WebosAlignedGroupLayoutDelegate extends MultiChildLayoutDelegate {
 
   @override
   bool shouldRelayout(covariant WebosAlignedGroupLayoutDelegate oldDelegate) {
-    return oldDelegate.an != an || !listEquals(oldDelegate.entries, entries);
+    return oldDelegate.an != an ||
+        oldDelegate.topToBottom != topToBottom ||
+        !listEquals(oldDelegate.entries, entries);
   }
 }
 
@@ -7758,14 +7810,7 @@ class _WebosSubtitleOverlayState extends State<WebosSubtitleOverlay>
     if (changed) {
       _lastVisibleSnapshot = vis;
       _visiblePgsReady = ready;
-      _visibleSorted = List<WebosSubtitleCue>.of(vis)
-        ..sort((a, b) {
-          final lCmp = a.layer.compareTo(b.layer);
-          if (lCmp != 0) return lCmp;
-          final sCmp = a.startMs.compareTo(b.startMs);
-          if (sCmp != 0) return sCmp;
-          return a.readOrder.compareTo(b.readOrder);
-        });
+      _visibleSorted = sortWebosSubtitleCues(vis);
       _lastTickElapsedByCue.removeWhere((k, _) => !_visibleSorted.contains(k));
     }
     return changed;
@@ -8259,7 +8304,11 @@ class _WebosSubtitleOverlayState extends State<WebosSubtitleOverlay>
               ];
 
               Widget groupStack = CustomMultiChildLayout(
-                delegate: WebosAlignedGroupLayoutDelegate(an: an, entries: entries),
+                delegate: WebosAlignedGroupLayoutDelegate(
+                  an: an,
+                  entries: entries,
+                  topToBottom: groupCues.every((c) => !c.isAss),
+                ),
                 children: [
                   for (int i = 0; i < groupCues.length; i++)
                     LayoutId(

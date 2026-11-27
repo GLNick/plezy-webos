@@ -3,7 +3,6 @@
 ///
 // coverage:ignore-file
 // ignore_for_file: type=lint, unused_import
-// dart format off
 
 import 'package:flutter/widgets.dart';
 import 'package:intl/intl.dart';
@@ -11,7 +10,7 @@ import 'package:slang/generated.dart';
 import 'strings.g.dart';
 
 // Path: <root>
-class TranslationsNl extends Translations with BaseTranslations<AppLocale, Translations> {
+class TranslationsNl extends Translations {
 	/// You can call this constructor and build your own translation instance of this locale.
 	/// Constructing via the enum [AppLocale.build] is preferred.
 	TranslationsNl({Map<String, Node>? overrides, PluralResolver? cardinalResolver, PluralResolver? ordinalResolver, TranslationMetadata<AppLocale, Translations>? meta})
@@ -39,65 +38,67 @@ class TranslationsNl extends Translations with BaseTranslations<AppLocale, Trans
 	TranslationsNl $copyWith({TranslationMetadata<AppLocale, Translations>? meta}) => TranslationsNl(meta: meta ?? this.$meta);
 
 	// Translations
-	@override late final _Translations$app$nl app = _Translations$app$nl._(_root);
-	@override late final _Translations$appIcon$nl appIcon = _Translations$appIcon$nl._(_root);
-	@override late final _Translations$auth$nl auth = _Translations$auth$nl._(_root);
-	@override late final _Translations$common$nl common = _Translations$common$nl._(_root);
-	@override late final _Translations$screens$nl screens = _Translations$screens$nl._(_root);
-	@override late final _Translations$update$nl update = _Translations$update$nl._(_root);
-	@override late final _Translations$supporter$nl supporter = _Translations$supporter$nl._(_root);
-	@override late final _Translations$settings$nl settings = _Translations$settings$nl._(_root);
-	@override late final _Translations$themeEditor$nl themeEditor = _Translations$themeEditor$nl._(_root);
-	@override late final _Translations$search$nl search = _Translations$search$nl._(_root);
-	@override late final _Translations$hotkeys$nl hotkeys = _Translations$hotkeys$nl._(_root);
-	@override late final _Translations$fileInfo$nl fileInfo = _Translations$fileInfo$nl._(_root);
-	@override late final _Translations$mediaMenu$nl mediaMenu = _Translations$mediaMenu$nl._(_root);
-	@override late final _Translations$rateSheet$nl rateSheet = _Translations$rateSheet$nl._(_root);
-	@override late final _Translations$accessibility$nl accessibility = _Translations$accessibility$nl._(_root);
-	@override late final _Translations$tooltips$nl tooltips = _Translations$tooltips$nl._(_root);
-	@override late final _Translations$audioTracks$nl audioTracks = _Translations$audioTracks$nl._(_root);
-	@override late final _Translations$videoControls$nl videoControls = _Translations$videoControls$nl._(_root);
-	@override late final _Translations$messages$nl messages = _Translations$messages$nl._(_root);
-	@override late final _Translations$subtitlingStyling$nl subtitlingStyling = _Translations$subtitlingStyling$nl._(_root);
-	@override late final _Translations$mpvConfig$nl mpvConfig = _Translations$mpvConfig$nl._(_root);
-	@override late final _Translations$dialog$nl dialog = _Translations$dialog$nl._(_root);
-	@override late final _Translations$profiles$nl profiles = _Translations$profiles$nl._(_root);
-	@override late final _Translations$connections$nl connections = _Translations$connections$nl._(_root);
-	@override late final _Translations$accountPreferences$nl accountPreferences = _Translations$accountPreferences$nl._(_root);
-	@override late final _Translations$discover$nl discover = _Translations$discover$nl._(_root);
-	@override late final _Translations$errors$nl errors = _Translations$errors$nl._(_root);
-	@override late final _Translations$libraries$nl libraries = _Translations$libraries$nl._(_root);
-	@override late final _Translations$about$nl about = _Translations$about$nl._(_root);
-	@override late final _Translations$serverSelection$nl serverSelection = _Translations$serverSelection$nl._(_root);
-	@override late final _Translations$hubDetail$nl hubDetail = _Translations$hubDetail$nl._(_root);
-	@override late final _Translations$logs$nl logs = _Translations$logs$nl._(_root);
-	@override late final _Translations$startup$nl startup = _Translations$startup$nl._(_root);
-	@override late final _Translations$licenses$nl licenses = _Translations$licenses$nl._(_root);
-	@override late final _Translations$navigation$nl navigation = _Translations$navigation$nl._(_root);
-	@override late final _Translations$explore$nl explore = _Translations$explore$nl._(_root);
-	@override late final _Translations$liveTv$nl liveTv = _Translations$liveTv$nl._(_root);
-	@override late final _Translations$collections$nl collections = _Translations$collections$nl._(_root);
-	@override late final _Translations$playlists$nl playlists = _Translations$playlists$nl._(_root);
-	@override late final _Translations$music$nl music = _Translations$music$nl._(_root);
-	@override late final _Translations$watchTogether$nl watchTogether = _Translations$watchTogether$nl._(_root);
-	@override late final _Translations$downloads$nl downloads = _Translations$downloads$nl._(_root);
-	@override late final _Translations$shaders$nl shaders = _Translations$shaders$nl._(_root);
-	@override late final _Translations$companionRemote$nl companionRemote = _Translations$companionRemote$nl._(_root);
-	@override late final _Translations$videoSettings$nl videoSettings = _Translations$videoSettings$nl._(_root);
-	@override late final _Translations$performanceOverlay$nl performanceOverlay = _Translations$performanceOverlay$nl._(_root);
-	@override late final _Translations$externalPlayer$nl externalPlayer = _Translations$externalPlayer$nl._(_root);
-	@override late final _Translations$metadataEdit$nl metadataEdit = _Translations$metadataEdit$nl._(_root);
-	@override late final _Translations$matchScreen$nl matchScreen = _Translations$matchScreen$nl._(_root);
-	@override late final _Translations$serverTasks$nl serverTasks = _Translations$serverTasks$nl._(_root);
-	@override late final _Translations$trakt$nl trakt = _Translations$trakt$nl._(_root);
-	@override late final _Translations$seerr$nl seerr = _Translations$seerr$nl._(_root);
-	@override late final _Translations$services$nl services = _Translations$services$nl._(_root);
-	@override late final _Translations$addServer$nl addServer = _Translations$addServer$nl._(_root);
+	@override late final _TranslationsAppNl app = _TranslationsAppNl._(_root);
+	@override late final _TranslationsAppIconNl appIcon = _TranslationsAppIconNl._(_root);
+	@override late final _TranslationsAuthNl auth = _TranslationsAuthNl._(_root);
+	@override late final _TranslationsCommonNl common = _TranslationsCommonNl._(_root);
+	@override late final _TranslationsScreensNl screens = _TranslationsScreensNl._(_root);
+	@override late final _TranslationsUpdateNl update = _TranslationsUpdateNl._(_root);
+	@override late final _TranslationsSupporterNl supporter = _TranslationsSupporterNl._(_root);
+	@override late final _TranslationsSettingsNl settings = _TranslationsSettingsNl._(_root);
+	@override late final _TranslationsThemeEditorNl themeEditor = _TranslationsThemeEditorNl._(_root);
+	@override late final _TranslationsSearchNl search = _TranslationsSearchNl._(_root);
+	@override late final _TranslationsHotkeysNl hotkeys = _TranslationsHotkeysNl._(_root);
+	@override late final _TranslationsFileInfoNl fileInfo = _TranslationsFileInfoNl._(_root);
+	@override late final _TranslationsMediaMenuNl mediaMenu = _TranslationsMediaMenuNl._(_root);
+	@override late final _TranslationsRateSheetNl rateSheet = _TranslationsRateSheetNl._(_root);
+	@override late final _TranslationsAccessibilityNl accessibility = _TranslationsAccessibilityNl._(_root);
+	@override late final _TranslationsTooltipsNl tooltips = _TranslationsTooltipsNl._(_root);
+	@override late final _TranslationsAudioTracksNl audioTracks = _TranslationsAudioTracksNl._(_root);
+	@override late final _TranslationsVideoControlsNl videoControls = _TranslationsVideoControlsNl._(_root);
+	@override late final _TranslationsUserStatusNl userStatus = _TranslationsUserStatusNl._(_root);
+	@override late final _TranslationsMessagesNl messages = _TranslationsMessagesNl._(_root);
+	@override late final _TranslationsSubtitlingStylingNl subtitlingStyling = _TranslationsSubtitlingStylingNl._(_root);
+	@override late final _TranslationsMpvConfigNl mpvConfig = _TranslationsMpvConfigNl._(_root);
+	@override late final _TranslationsDialogNl dialog = _TranslationsDialogNl._(_root);
+	@override late final _TranslationsProfilesNl profiles = _TranslationsProfilesNl._(_root);
+	@override late final _TranslationsConnectionsNl connections = _TranslationsConnectionsNl._(_root);
+	@override late final _TranslationsAccountPreferencesNl accountPreferences = _TranslationsAccountPreferencesNl._(_root);
+	@override late final _TranslationsDiscoverNl discover = _TranslationsDiscoverNl._(_root);
+	@override late final _TranslationsErrorsNl errors = _TranslationsErrorsNl._(_root);
+	@override late final _TranslationsLibrariesNl libraries = _TranslationsLibrariesNl._(_root);
+	@override late final _TranslationsAboutNl about = _TranslationsAboutNl._(_root);
+	@override late final _TranslationsServerSelectionNl serverSelection = _TranslationsServerSelectionNl._(_root);
+	@override late final _TranslationsHubDetailNl hubDetail = _TranslationsHubDetailNl._(_root);
+	@override late final _TranslationsLogsNl logs = _TranslationsLogsNl._(_root);
+	@override late final _TranslationsStartupNl startup = _TranslationsStartupNl._(_root);
+	@override late final _TranslationsLicensesNl licenses = _TranslationsLicensesNl._(_root);
+	@override late final _TranslationsNavigationNl navigation = _TranslationsNavigationNl._(_root);
+	@override late final _TranslationsExploreNl explore = _TranslationsExploreNl._(_root);
+	@override late final _TranslationsLiveTvNl liveTv = _TranslationsLiveTvNl._(_root);
+	@override late final _TranslationsCollectionsNl collections = _TranslationsCollectionsNl._(_root);
+	@override late final _TranslationsPlaylistsNl playlists = _TranslationsPlaylistsNl._(_root);
+	@override late final _TranslationsMusicNl music = _TranslationsMusicNl._(_root);
+	@override late final _TranslationsWatchTogetherNl watchTogether = _TranslationsWatchTogetherNl._(_root);
+	@override late final _TranslationsDownloadsNl downloads = _TranslationsDownloadsNl._(_root);
+	@override late final _TranslationsShadersNl shaders = _TranslationsShadersNl._(_root);
+	@override late final _TranslationsCompanionRemoteNl companionRemote = _TranslationsCompanionRemoteNl._(_root);
+	@override late final _TranslationsVideoSettingsNl videoSettings = _TranslationsVideoSettingsNl._(_root);
+	@override late final _TranslationsPerformanceOverlayNl performanceOverlay = _TranslationsPerformanceOverlayNl._(_root);
+	@override late final _TranslationsExternalPlayerNl externalPlayer = _TranslationsExternalPlayerNl._(_root);
+	@override late final _TranslationsMetadataEditNl metadataEdit = _TranslationsMetadataEditNl._(_root);
+	@override late final _TranslationsMatchScreenNl matchScreen = _TranslationsMatchScreenNl._(_root);
+	@override late final _TranslationsServerTasksNl serverTasks = _TranslationsServerTasksNl._(_root);
+	@override late final _TranslationsTraktNl trakt = _TranslationsTraktNl._(_root);
+	@override late final _TranslationsSeerrNl seerr = _TranslationsSeerrNl._(_root);
+	@override late final _TranslationsServicesNl services = _TranslationsServicesNl._(_root);
+	@override late final _TranslationsAddServerNl addServer = _TranslationsAddServerNl._(_root);
+	@override late final _TranslationsDeepLinksNl deepLinks = _TranslationsDeepLinksNl._(_root);
 }
 
 // Path: app
-class _Translations$app$nl extends Translations$app$en {
-	_Translations$app$nl._(TranslationsNl root) : this._root = root, super.internal(root);
+class _TranslationsAppNl extends TranslationsAppEn {
+	_TranslationsAppNl._(TranslationsNl root) : this._root = root, super.internal(root);
 
 	final TranslationsNl _root; // ignore: unused_field
 
@@ -106,8 +107,8 @@ class _Translations$app$nl extends Translations$app$en {
 }
 
 // Path: appIcon
-class _Translations$appIcon$nl extends Translations$appIcon$en {
-	_Translations$appIcon$nl._(TranslationsNl root) : this._root = root, super.internal(root);
+class _TranslationsAppIconNl extends TranslationsAppIconEn {
+	_TranslationsAppIconNl._(TranslationsNl root) : this._root = root, super.internal(root);
 
 	final TranslationsNl _root; // ignore: unused_field
 
@@ -120,12 +121,12 @@ class _Translations$appIcon$nl extends Translations$appIcon$en {
 	@override String get changeFailed => 'Het app-icoon kon niet worden gewijzigd';
 	@override String get launcherHint => 'Het nieuwe icoon verschijnt op je beginscherm zodra je Plezy verlaat.';
 	@override String get tvLauncherHint => 'De nieuwe banner verschijnt zodra je Plezy verlaat. Android TV kan de oude blijven tonen totdat de tv opnieuw is opgestart.';
-	@override late final _Translations$appIcon$names$nl names = _Translations$appIcon$names$nl._(_root);
+	@override late final _TranslationsAppIconNamesNl names = _TranslationsAppIconNamesNl._(_root);
 }
 
 // Path: auth
-class _Translations$auth$nl extends Translations$auth$en {
-	_Translations$auth$nl._(TranslationsNl root) : this._root = root, super.internal(root);
+class _TranslationsAuthNl extends TranslationsAuthEn {
+	_TranslationsAuthNl._(TranslationsNl root) : this._root = root, super.internal(root);
 
 	final TranslationsNl _root; // ignore: unused_field
 
@@ -150,8 +151,8 @@ class _Translations$auth$nl extends Translations$auth$en {
 }
 
 // Path: common
-class _Translations$common$nl extends Translations$common$en {
-	_Translations$common$nl._(TranslationsNl root) : this._root = root, super.internal(root);
+class _TranslationsCommonNl extends TranslationsCommonEn {
+	_TranslationsCommonNl._(TranslationsNl root) : this._root = root, super.internal(root);
 
 	final TranslationsNl _root; // ignore: unused_field
 
@@ -202,16 +203,16 @@ class _Translations$common$nl extends Translations$common$en {
 	@override String get fullscreen => 'Volledig scherm';
 	@override String get exitFullscreen => 'Volledig scherm verlaten';
 	@override String get pressBackAgainToExit => 'Druk nogmaals op terug om af te sluiten';
-	@override late final _Translations$common$ratingSource$nl ratingSource = _Translations$common$ratingSource$nl._(_root);
+	@override late final _TranslationsCommonRatingSourceNl ratingSource = _TranslationsCommonRatingSourceNl._(_root);
 	@override String get notAvailable => 'N/A';
 	@override String get url => 'URL';
 	@override String get letterKeys => 'ABC';
-	@override late final _Translations$common$mediaKind$nl mediaKind = _Translations$common$mediaKind$nl._(_root);
+	@override late final _TranslationsCommonMediaKindNl mediaKind = _TranslationsCommonMediaKindNl._(_root);
 }
 
 // Path: screens
-class _Translations$screens$nl extends Translations$screens$en {
-	_Translations$screens$nl._(TranslationsNl root) : this._root = root, super.internal(root);
+class _TranslationsScreensNl extends TranslationsScreensEn {
+	_TranslationsScreensNl._(TranslationsNl root) : this._root = root, super.internal(root);
 
 	final TranslationsNl _root; // ignore: unused_field
 
@@ -224,8 +225,8 @@ class _Translations$screens$nl extends Translations$screens$en {
 }
 
 // Path: update
-class _Translations$update$nl extends Translations$update$en {
-	_Translations$update$nl._(TranslationsNl root) : this._root = root, super.internal(root);
+class _TranslationsUpdateNl extends TranslationsUpdateEn {
+	_TranslationsUpdateNl._(TranslationsNl root) : this._root = root, super.internal(root);
 
 	final TranslationsNl _root; // ignore: unused_field
 
@@ -240,8 +241,8 @@ class _Translations$update$nl extends Translations$update$en {
 }
 
 // Path: supporter
-class _Translations$supporter$nl extends Translations$supporter$en {
-	_Translations$supporter$nl._(TranslationsNl root) : this._root = root, super.internal(root);
+class _TranslationsSupporterNl extends TranslationsSupporterEn {
+	_TranslationsSupporterNl._(TranslationsNl root) : this._root = root, super.internal(root);
 
 	final TranslationsNl _root; // ignore: unused_field
 
@@ -263,12 +264,12 @@ class _Translations$supporter$nl extends Translations$supporter$en {
 	@override String get tileSubtitle => 'Ontgrendel thema\'s en app-iconen met een eenmalige aankoop';
 	@override String get tileSubtitleThemesOnly => 'Ontgrendel thema\'s met een eenmalige aankoop';
 	@override String get tileUnlocked => 'Ontgrendeld — bedankt voor je aankoop';
-	@override late final _Translations$supporter$errors$nl errors = _Translations$supporter$errors$nl._(_root);
+	@override late final _TranslationsSupporterErrorsNl errors = _TranslationsSupporterErrorsNl._(_root);
 }
 
 // Path: settings
-class _Translations$settings$nl extends Translations$settings$en {
-	_Translations$settings$nl._(TranslationsNl root) : this._root = root, super.internal(root);
+class _TranslationsSettingsNl extends TranslationsSettingsEn {
+	_TranslationsSettingsNl._(TranslationsNl root) : this._root = root, super.internal(root);
 
 	final TranslationsNl _root; // ignore: unused_field
 
@@ -612,8 +613,8 @@ class _Translations$settings$nl extends Translations$settings$en {
 }
 
 // Path: themeEditor
-class _Translations$themeEditor$nl extends Translations$themeEditor$en {
-	_Translations$themeEditor$nl._(TranslationsNl root) : this._root = root, super.internal(root);
+class _TranslationsThemeEditorNl extends TranslationsThemeEditorEn {
+	_TranslationsThemeEditorNl._(TranslationsNl root) : this._root = root, super.internal(root);
 
 	final TranslationsNl _root; // ignore: unused_field
 
@@ -631,12 +632,12 @@ class _Translations$themeEditor$nl extends Translations$themeEditor$en {
 	@override String get startFromDescription => 'Kopieer alle kleuren van een ander thema';
 	@override String get colors => 'Kleuren';
 	@override String get preview => 'Voorbeeld';
-	@override late final _Translations$themeEditor$slots$nl slots = _Translations$themeEditor$slots$nl._(_root);
+	@override late final _TranslationsThemeEditorSlotsNl slots = _TranslationsThemeEditorSlotsNl._(_root);
 	@override String get opacity => 'Dekking';
 	@override String get hexHint => '#RRGGBB of #AARRGGBB';
 	@override String get fromOtherThemes => 'Uit andere thema\'s';
 	@override String swatchLabel({required Object color, required Object theme}) => '${color} van ${theme}';
-	@override late final _Translations$themeEditor$contrast$nl contrast = _Translations$themeEditor$contrast$nl._(_root);
+	@override late final _TranslationsThemeEditorContrastNl contrast = _TranslationsThemeEditorContrastNl._(_root);
 	@override String lowContrast({required Object pair, required Object ratio, required Object minimum}) => '${pair}: ${ratio}:1, onder de aanbevolen ${minimum}:1';
 	@override String get discardTitle => 'Wijzigingen negeren?';
 	@override String get discardMessage => 'Je niet-opgeslagen kleurwijzigingen gaan verloren.';
@@ -648,8 +649,8 @@ class _Translations$themeEditor$nl extends Translations$themeEditor$en {
 }
 
 // Path: search
-class _Translations$search$nl extends Translations$search$en {
-	_Translations$search$nl._(TranslationsNl root) : this._root = root, super.internal(root);
+class _TranslationsSearchNl extends TranslationsSearchEn {
+	_TranslationsSearchNl._(TranslationsNl root) : this._root = root, super.internal(root);
 
 	final TranslationsNl _root; // ignore: unused_field
 
@@ -662,8 +663,8 @@ class _Translations$search$nl extends Translations$search$en {
 }
 
 // Path: hotkeys
-class _Translations$hotkeys$nl extends Translations$hotkeys$en {
-	_Translations$hotkeys$nl._(TranslationsNl root) : this._root = root, super.internal(root);
+class _TranslationsHotkeysNl extends TranslationsHotkeysEn {
+	_TranslationsHotkeysNl._(TranslationsNl root) : this._root = root, super.internal(root);
 
 	final TranslationsNl _root; // ignore: unused_field
 
@@ -674,12 +675,12 @@ class _Translations$hotkeys$nl extends Translations$hotkeys$en {
 	@override String get currentShortcut => 'Huidige sneltoets:';
 	@override String get pressToRecord => 'Selecteer om een sneltoets op te nemen';
 	@override String get recordingShortcut => 'Druk nu op de sneltoets';
-	@override late final _Translations$hotkeys$actions$nl actions = _Translations$hotkeys$actions$nl._(_root);
+	@override late final _TranslationsHotkeysActionsNl actions = _TranslationsHotkeysActionsNl._(_root);
 }
 
 // Path: fileInfo
-class _Translations$fileInfo$nl extends Translations$fileInfo$en {
-	_Translations$fileInfo$nl._(TranslationsNl root) : this._root = root, super.internal(root);
+class _TranslationsFileInfoNl extends TranslationsFileInfoEn {
+	_TranslationsFileInfoNl._(TranslationsNl root) : this._root = root, super.internal(root);
 
 	final TranslationsNl _root; // ignore: unused_field
 
@@ -802,8 +803,8 @@ class _Translations$fileInfo$nl extends Translations$fileInfo$en {
 }
 
 // Path: mediaMenu
-class _Translations$mediaMenu$nl extends Translations$mediaMenu$en {
-	_Translations$mediaMenu$nl._(TranslationsNl root) : this._root = root, super.internal(root);
+class _TranslationsMediaMenuNl extends TranslationsMediaMenuEn {
+	_TranslationsMediaMenuNl._(TranslationsNl root) : this._root = root, super.internal(root);
 
 	final TranslationsNl _root; // ignore: unused_field
 
@@ -853,8 +854,8 @@ class _Translations$mediaMenu$nl extends Translations$mediaMenu$en {
 }
 
 // Path: rateSheet
-class _Translations$rateSheet$nl extends Translations$rateSheet$en {
-	_Translations$rateSheet$nl._(TranslationsNl root) : this._root = root, super.internal(root);
+class _TranslationsRateSheetNl extends TranslationsRateSheetEn {
+	_TranslationsRateSheetNl._(TranslationsNl root) : this._root = root, super.internal(root);
 
 	final TranslationsNl _root; // ignore: unused_field
 
@@ -869,8 +870,8 @@ class _Translations$rateSheet$nl extends Translations$rateSheet$en {
 }
 
 // Path: accessibility
-class _Translations$accessibility$nl extends Translations$accessibility$en {
-	_Translations$accessibility$nl._(TranslationsNl root) : this._root = root, super.internal(root);
+class _TranslationsAccessibilityNl extends TranslationsAccessibilityEn {
+	_TranslationsAccessibilityNl._(TranslationsNl root) : this._root = root, super.internal(root);
 
 	final TranslationsNl _root; // ignore: unused_field
 
@@ -905,8 +906,8 @@ class _Translations$accessibility$nl extends Translations$accessibility$en {
 }
 
 // Path: tooltips
-class _Translations$tooltips$nl extends Translations$tooltips$en {
-	_Translations$tooltips$nl._(TranslationsNl root) : this._root = root, super.internal(root);
+class _TranslationsTooltipsNl extends TranslationsTooltipsEn {
+	_TranslationsTooltipsNl._(TranslationsNl root) : this._root = root, super.internal(root);
 
 	final TranslationsNl _root; // ignore: unused_field
 
@@ -918,8 +919,8 @@ class _Translations$tooltips$nl extends Translations$tooltips$en {
 }
 
 // Path: audioTracks
-class _Translations$audioTracks$nl extends Translations$audioTracks$en {
-	_Translations$audioTracks$nl._(TranslationsNl root) : this._root = root, super.internal(root);
+class _TranslationsAudioTracksNl extends TranslationsAudioTracksEn {
+	_TranslationsAudioTracksNl._(TranslationsNl root) : this._root = root, super.internal(root);
 
 	final TranslationsNl _root; // ignore: unused_field
 
@@ -928,8 +929,8 @@ class _Translations$audioTracks$nl extends Translations$audioTracks$en {
 }
 
 // Path: videoControls
-class _Translations$videoControls$nl extends Translations$videoControls$en {
-	_Translations$videoControls$nl._(TranslationsNl root) : this._root = root, super.internal(root);
+class _TranslationsVideoControlsNl extends TranslationsVideoControlsEn {
+	_TranslationsVideoControlsNl._(TranslationsNl root) : this._root = root, super.internal(root);
 
 	final TranslationsNl _root; // ignore: unused_field
 
@@ -996,7 +997,7 @@ class _Translations$videoControls$nl extends Translations$videoControls$en {
 	@override String get screenshotFailed => 'Schermafbeelding maken mislukt';
 	@override String zoomPercent({required Object percent}) => 'Zoom ${percent}%';
 	@override String volumePercent({required Object percent}) => 'Volume ${percent}%';
-	@override late final _Translations$videoControls$pipErrors$nl pipErrors = _Translations$videoControls$pipErrors$nl._(_root);
+	@override late final _TranslationsVideoControlsPipErrorsNl pipErrors = _TranslationsVideoControlsPipErrorsNl._(_root);
 	@override String get chapters => 'Hoofdstukken';
 	@override String get noChaptersAvailable => 'Geen hoofdstukken beschikbaar';
 	@override String get queue => 'Wachtrij';
@@ -1021,9 +1022,18 @@ class _Translations$videoControls$nl extends Translations$videoControls$en {
 	@override String osdAudio({required Object track}) => 'Audio: ${track}';
 }
 
+// Path: userStatus
+class _TranslationsUserStatusNl extends TranslationsUserStatusEn {
+	_TranslationsUserStatusNl._(TranslationsNl root) : this._root = root, super.internal(root);
+
+	final TranslationsNl _root; // ignore: unused_field
+
+	// Translations
+}
+
 // Path: messages
-class _Translations$messages$nl extends Translations$messages$en {
-	_Translations$messages$nl._(TranslationsNl root) : this._root = root, super.internal(root);
+class _TranslationsMessagesNl extends TranslationsMessagesEn {
+	_TranslationsMessagesNl._(TranslationsNl root) : this._root = root, super.internal(root);
 
 	final TranslationsNl _root; // ignore: unused_field
 
@@ -1101,8 +1111,8 @@ class _Translations$messages$nl extends Translations$messages$en {
 }
 
 // Path: subtitlingStyling
-class _Translations$subtitlingStyling$nl extends Translations$subtitlingStyling$en {
-	_Translations$subtitlingStyling$nl._(TranslationsNl root) : this._root = root, super.internal(root);
+class _TranslationsSubtitlingStylingNl extends TranslationsSubtitlingStylingEn {
+	_TranslationsSubtitlingStylingNl._(TranslationsNl root) : this._root = root, super.internal(root);
 
 	final TranslationsNl _root; // ignore: unused_field
 
@@ -1135,8 +1145,8 @@ class _Translations$subtitlingStyling$nl extends Translations$subtitlingStyling$
 }
 
 // Path: mpvConfig
-class _Translations$mpvConfig$nl extends Translations$mpvConfig$en {
-	_Translations$mpvConfig$nl._(TranslationsNl root) : this._root = root, super.internal(root);
+class _TranslationsMpvConfigNl extends TranslationsMpvConfigEn {
+	_TranslationsMpvConfigNl._(TranslationsNl root) : this._root = root, super.internal(root);
 
 	final TranslationsNl _root; // ignore: unused_field
 
@@ -1162,8 +1172,8 @@ class _Translations$mpvConfig$nl extends Translations$mpvConfig$en {
 }
 
 // Path: dialog
-class _Translations$dialog$nl extends Translations$dialog$en {
-	_Translations$dialog$nl._(TranslationsNl root) : this._root = root, super.internal(root);
+class _TranslationsDialogNl extends TranslationsDialogEn {
+	_TranslationsDialogNl._(TranslationsNl root) : this._root = root, super.internal(root);
 
 	final TranslationsNl _root; // ignore: unused_field
 
@@ -1172,8 +1182,8 @@ class _Translations$dialog$nl extends Translations$dialog$en {
 }
 
 // Path: profiles
-class _Translations$profiles$nl extends Translations$profiles$en {
-	_Translations$profiles$nl._(TranslationsNl root) : this._root = root, super.internal(root);
+class _TranslationsProfilesNl extends TranslationsProfilesEn {
+	_TranslationsProfilesNl._(TranslationsNl root) : this._root = root, super.internal(root);
 
 	final TranslationsNl _root; // ignore: unused_field
 
@@ -1246,8 +1256,8 @@ class _Translations$profiles$nl extends Translations$profiles$en {
 }
 
 // Path: connections
-class _Translations$connections$nl extends Translations$connections$en {
-	_Translations$connections$nl._(TranslationsNl root) : this._root = root, super.internal(root);
+class _TranslationsConnectionsNl extends TranslationsConnectionsEn {
+	_TranslationsConnectionsNl._(TranslationsNl root) : this._root = root, super.internal(root);
 
 	final TranslationsNl _root; // ignore: unused_field
 
@@ -1266,8 +1276,8 @@ class _Translations$connections$nl extends Translations$connections$en {
 }
 
 // Path: accountPreferences
-class _Translations$accountPreferences$nl extends Translations$accountPreferences$en {
-	_Translations$accountPreferences$nl._(TranslationsNl root) : this._root = root, super.internal(root);
+class _TranslationsAccountPreferencesNl extends TranslationsAccountPreferencesEn {
+	_TranslationsAccountPreferencesNl._(TranslationsNl root) : this._root = root, super.internal(root);
 
 	final TranslationsNl _root; // ignore: unused_field
 
@@ -1283,17 +1293,17 @@ class _Translations$accountPreferences$nl extends Translations$accountPreference
 	@override String get loadFailed => 'Deze voorkeuren konden niet worden geladen';
 	@override String get noPreference => 'Geen voorkeur';
 	@override String get notSet => 'Niet ingesteld';
-	@override late final _Translations$accountPreferences$groups$nl groups = _Translations$accountPreferences$groups$nl._(_root);
+	@override late final _TranslationsAccountPreferencesGroupsNl groups = _TranslationsAccountPreferencesGroupsNl._(_root);
 	@override String get preferredAudioLanguage => 'Voorkeurstaal voor audio';
 	@override String get autoSelectAudio => 'Kies audio op taal';
 	@override String get autoSelectAudioDescription => 'Bij \'Uit\' wordt de audiotrack gebruikt die het bestand als standaard markeert.';
 	@override String get preferredSubtitleLanguage => 'Voorkeurstaal voor ondertitels';
 	@override String get subtitleMode => 'Ondertitels inschakelen';
-	@override late final _Translations$accountPreferences$subtitleModes$nl subtitleModes = _Translations$accountPreferences$subtitleModes$nl._(_root);
+	@override late final _TranslationsAccountPreferencesSubtitleModesNl subtitleModes = _TranslationsAccountPreferencesSubtitleModesNl._(_root);
 	@override String get subtitleAccessibility => 'SDH-ondertitels';
-	@override late final _Translations$accountPreferences$subtitleAccessibilityOptions$nl subtitleAccessibilityOptions = _Translations$accountPreferences$subtitleAccessibilityOptions$nl._(_root);
+	@override late final _TranslationsAccountPreferencesSubtitleAccessibilityOptionsNl subtitleAccessibilityOptions = _TranslationsAccountPreferencesSubtitleAccessibilityOptionsNl._(_root);
 	@override String get forcedSubtitles => 'Geforceerde ondertitels';
-	@override late final _Translations$accountPreferences$forcedSubtitleOptions$nl forcedSubtitleOptions = _Translations$accountPreferences$forcedSubtitleOptions$nl._(_root);
+	@override late final _TranslationsAccountPreferencesForcedSubtitleOptionsNl forcedSubtitleOptions = _TranslationsAccountPreferencesForcedSubtitleOptionsNl._(_root);
 	@override String get displayMissingEpisodes => 'Ontbrekende afleveringen tonen';
 	@override String get displayMissingEpisodesDescription => 'Toon afleveringen die de server kent maar waarvoor geen bestand aanwezig is.';
 	@override String get hidePlayedInLatest => 'Bekeken items verbergen in \'Nieuwste\'';
@@ -1303,14 +1313,14 @@ class _Translations$accountPreferences$nl extends Translations$accountPreference
 	@override String get rewatchingInNextUp => 'Opnieuw bekeken series in \'Volgende\' houden';
 	@override String get rewatchingInNextUpDescription => 'Als je een serie afrondt en opnieuw start, blijft \'Volgende\' de herkijk volgen in plaats van de serie te laten vallen.';
 	@override String get watchedIndicator => 'Bekeken-indicatoren';
-	@override late final _Translations$accountPreferences$watchedIndicatorOptions$nl watchedIndicatorOptions = _Translations$accountPreferences$watchedIndicatorOptions$nl._(_root);
+	@override late final _TranslationsAccountPreferencesWatchedIndicatorOptionsNl watchedIndicatorOptions = _TranslationsAccountPreferencesWatchedIndicatorOptionsNl._(_root);
 	@override String get mediaReviewsVisibility => 'Beoordelingen en recensies';
-	@override late final _Translations$accountPreferences$mediaReviewsOptions$nl mediaReviewsOptions = _Translations$accountPreferences$mediaReviewsOptions$nl._(_root);
+	@override late final _TranslationsAccountPreferencesMediaReviewsOptionsNl mediaReviewsOptions = _TranslationsAccountPreferencesMediaReviewsOptionsNl._(_root);
 }
 
 // Path: discover
-class _Translations$discover$nl extends Translations$discover$en {
-	_Translations$discover$nl._(TranslationsNl root) : this._root = root, super.internal(root);
+class _TranslationsDiscoverNl extends TranslationsDiscoverEn {
+	_TranslationsDiscoverNl._(TranslationsNl root) : this._root = root, super.internal(root);
 
 	final TranslationsNl _root; // ignore: unused_field
 
@@ -1343,12 +1353,12 @@ class _Translations$discover$nl extends Translations$discover$en {
 		one: '${n} titel',
 		other: '${n} titels',
 	);
-	@override late final _Translations$discover$person$nl person = _Translations$discover$person$nl._(_root);
+	@override late final _TranslationsDiscoverPersonNl person = _TranslationsDiscoverPersonNl._(_root);
 }
 
 // Path: errors
-class _Translations$errors$nl extends Translations$errors$en {
-	_Translations$errors$nl._(TranslationsNl root) : this._root = root, super.internal(root);
+class _TranslationsErrorsNl extends TranslationsErrorsEn {
+	_TranslationsErrorsNl._(TranslationsNl root) : this._root = root, super.internal(root);
 
 	final TranslationsNl _root; // ignore: unused_field
 
@@ -1375,8 +1385,8 @@ class _Translations$errors$nl extends Translations$errors$en {
 }
 
 // Path: libraries
-class _Translations$libraries$nl extends Translations$libraries$en {
-	_Translations$libraries$nl._(TranslationsNl root) : this._root = root, super.internal(root);
+class _TranslationsLibrariesNl extends TranslationsLibrariesEn {
+	_TranslationsLibrariesNl._(TranslationsNl root) : this._root = root, super.internal(root);
 
 	final TranslationsNl _root; // ignore: unused_field
 
@@ -1422,16 +1432,16 @@ class _Translations$libraries$nl extends Translations$libraries$en {
 	@override String get noCollections => 'Geen collecties in deze bibliotheek';
 	@override String get noFoldersFound => 'Geen mappen gevonden';
 	@override String get folders => 'mappen';
-	@override late final _Translations$libraries$tabs$nl tabs = _Translations$libraries$tabs$nl._(_root);
-	@override late final _Translations$libraries$groupings$nl groupings = _Translations$libraries$groupings$nl._(_root);
-	@override late final _Translations$libraries$filterCategories$nl filterCategories = _Translations$libraries$filterCategories$nl._(_root);
-	@override late final _Translations$libraries$sortLabels$nl sortLabels = _Translations$libraries$sortLabels$nl._(_root);
-	@override late final _Translations$libraries$advancedFilters$nl advancedFilters = _Translations$libraries$advancedFilters$nl._(_root);
+	@override late final _TranslationsLibrariesTabsNl tabs = _TranslationsLibrariesTabsNl._(_root);
+	@override late final _TranslationsLibrariesGroupingsNl groupings = _TranslationsLibrariesGroupingsNl._(_root);
+	@override late final _TranslationsLibrariesFilterCategoriesNl filterCategories = _TranslationsLibrariesFilterCategoriesNl._(_root);
+	@override late final _TranslationsLibrariesSortLabelsNl sortLabels = _TranslationsLibrariesSortLabelsNl._(_root);
+	@override late final _TranslationsLibrariesAdvancedFiltersNl advancedFilters = _TranslationsLibrariesAdvancedFiltersNl._(_root);
 }
 
 // Path: about
-class _Translations$about$nl extends Translations$about$en {
-	_Translations$about$nl._(TranslationsNl root) : this._root = root, super.internal(root);
+class _TranslationsAboutNl extends TranslationsAboutEn {
+	_TranslationsAboutNl._(TranslationsNl root) : this._root = root, super.internal(root);
 
 	final TranslationsNl _root; // ignore: unused_field
 
@@ -1444,8 +1454,8 @@ class _Translations$about$nl extends Translations$about$en {
 }
 
 // Path: serverSelection
-class _Translations$serverSelection$nl extends Translations$serverSelection$en {
-	_Translations$serverSelection$nl._(TranslationsNl root) : this._root = root, super.internal(root);
+class _TranslationsServerSelectionNl extends TranslationsServerSelectionEn {
+	_TranslationsServerSelectionNl._(TranslationsNl root) : this._root = root, super.internal(root);
 
 	final TranslationsNl _root; // ignore: unused_field
 
@@ -1456,8 +1466,8 @@ class _Translations$serverSelection$nl extends Translations$serverSelection$en {
 }
 
 // Path: hubDetail
-class _Translations$hubDetail$nl extends Translations$hubDetail$en {
-	_Translations$hubDetail$nl._(TranslationsNl root) : this._root = root, super.internal(root);
+class _TranslationsHubDetailNl extends TranslationsHubDetailEn {
+	_TranslationsHubDetailNl._(TranslationsNl root) : this._root = root, super.internal(root);
 
 	final TranslationsNl _root; // ignore: unused_field
 
@@ -1470,8 +1480,8 @@ class _Translations$hubDetail$nl extends Translations$hubDetail$en {
 }
 
 // Path: logs
-class _Translations$logs$nl extends Translations$logs$en {
-	_Translations$logs$nl._(TranslationsNl root) : this._root = root, super.internal(root);
+class _TranslationsLogsNl extends TranslationsLogsEn {
+	_TranslationsLogsNl._(TranslationsNl root) : this._root = root, super.internal(root);
 
 	final TranslationsNl _root; // ignore: unused_field
 
@@ -1482,8 +1492,8 @@ class _Translations$logs$nl extends Translations$logs$en {
 }
 
 // Path: startup
-class _Translations$startup$nl extends Translations$startup$en {
-	_Translations$startup$nl._(TranslationsNl root) : this._root = root, super.internal(root);
+class _TranslationsStartupNl extends TranslationsStartupEn {
+	_TranslationsStartupNl._(TranslationsNl root) : this._root = root, super.internal(root);
 
 	final TranslationsNl _root; // ignore: unused_field
 
@@ -1521,8 +1531,8 @@ class _Translations$startup$nl extends Translations$startup$en {
 }
 
 // Path: licenses
-class _Translations$licenses$nl extends Translations$licenses$en {
-	_Translations$licenses$nl._(TranslationsNl root) : this._root = root, super.internal(root);
+class _TranslationsLicensesNl extends TranslationsLicensesEn {
+	_TranslationsLicensesNl._(TranslationsNl root) : this._root = root, super.internal(root);
 
 	final TranslationsNl _root; // ignore: unused_field
 
@@ -1534,8 +1544,8 @@ class _Translations$licenses$nl extends Translations$licenses$en {
 }
 
 // Path: navigation
-class _Translations$navigation$nl extends Translations$navigation$en {
-	_Translations$navigation$nl._(TranslationsNl root) : this._root = root, super.internal(root);
+class _TranslationsNavigationNl extends TranslationsNavigationEn {
+	_TranslationsNavigationNl._(TranslationsNl root) : this._root = root, super.internal(root);
 
 	final TranslationsNl _root; // ignore: unused_field
 
@@ -1547,16 +1557,16 @@ class _Translations$navigation$nl extends Translations$navigation$en {
 }
 
 // Path: explore
-class _Translations$explore$nl extends Translations$explore$en {
-	_Translations$explore$nl._(TranslationsNl root) : this._root = root, super.internal(root);
+class _TranslationsExploreNl extends TranslationsExploreEn {
+	_TranslationsExploreNl._(TranslationsNl root) : this._root = root, super.internal(root);
 
 	final TranslationsNl _root; // ignore: unused_field
 
 	// Translations
 	@override String get title => 'Verkennen';
 	@override String get selectSource => 'Bron kiezen';
-	@override late final _Translations$explore$rows$nl rows = _Translations$explore$rows$nl._(_root);
-	@override late final _Translations$explore$status$nl status = _Translations$explore$status$nl._(_root);
+	@override late final _TranslationsExploreRowsNl rows = _TranslationsExploreRowsNl._(_root);
+	@override late final _TranslationsExploreStatusNl status = _TranslationsExploreStatusNl._(_root);
 	@override String episodeCount({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('nl'))(n,
 		one: '${n} aflevering',
 		other: '${n} afleveringen',
@@ -1582,16 +1592,16 @@ class _Translations$explore$nl extends Translations$explore$en {
 	@override String searchEmpty({required Object query}) => 'Geen resultaten voor "${query}"';
 	@override String searchPrompt({required Object source}) => 'Zoek naar films en series op ${source}.';
 	@override String get searchFailed => 'Zoeken mislukt. Controleer je verbinding en probeer opnieuw.';
-	@override late final _Translations$explore$badge$nl badge = _Translations$explore$badge$nl._(_root);
-	@override late final _Translations$explore$stats$nl stats = _Translations$explore$stats$nl._(_root);
-	@override late final _Translations$explore$season$nl season = _Translations$explore$season$nl._(_root);
-	@override late final _Translations$explore$format$nl format = _Translations$explore$format$nl._(_root);
-	@override late final _Translations$explore$sourceMaterial$nl sourceMaterial = _Translations$explore$sourceMaterial$nl._(_root);
-	@override late final _Translations$explore$creditRole$nl creditRole = _Translations$explore$creditRole$nl._(_root);
-	@override late final _Translations$explore$relation$nl relation = _Translations$explore$relation$nl._(_root);
+	@override late final _TranslationsExploreBadgeNl badge = _TranslationsExploreBadgeNl._(_root);
+	@override late final _TranslationsExploreStatsNl stats = _TranslationsExploreStatsNl._(_root);
+	@override late final _TranslationsExploreSeasonNl season = _TranslationsExploreSeasonNl._(_root);
+	@override late final _TranslationsExploreFormatNl format = _TranslationsExploreFormatNl._(_root);
+	@override late final _TranslationsExploreSourceMaterialNl sourceMaterial = _TranslationsExploreSourceMaterialNl._(_root);
+	@override late final _TranslationsExploreCreditRoleNl creditRole = _TranslationsExploreCreditRoleNl._(_root);
+	@override late final _TranslationsExploreRelationNl relation = _TranslationsExploreRelationNl._(_root);
 	@override String broadcast({required Object day, required Object time}) => 'Wordt uitgezonden op ${day} om ${time}';
 	@override String broadcastWithZone({required Object day, required Object time, required Object timezone}) => 'Wordt uitgezonden op ${day} om ${time} ${timezone}';
-	@override late final _Translations$explore$detail$nl detail = _Translations$explore$detail$nl._(_root);
+	@override late final _TranslationsExploreDetailNl detail = _TranslationsExploreDetailNl._(_root);
 	@override String totalResults({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('nl'))(n,
 		one: '${n} resultaat',
 		other: '${n} resultaten',
@@ -1599,8 +1609,8 @@ class _Translations$explore$nl extends Translations$explore$en {
 }
 
 // Path: liveTv
-class _Translations$liveTv$nl extends Translations$liveTv$en {
-	_Translations$liveTv$nl._(TranslationsNl root) : this._root = root, super.internal(root);
+class _TranslationsLiveTvNl extends TranslationsLiveTvEn {
+	_TranslationsLiveTvNl._(TranslationsNl root) : this._root = root, super.internal(root);
 
 	final TranslationsNl _root; // ignore: unused_field
 
@@ -1682,7 +1692,7 @@ class _Translations$liveTv$nl extends Translations$liveTv$en {
 	@override String get rulesProcessRequested => 'Nieuwe evaluatie van regels aangevraagd';
 	@override String get rulesProcessFailed => 'Opnameregels opnieuw uitvoeren mislukt';
 	@override String get recordShow => 'Programma opnemen';
-	@override late final _Translations$liveTv$recordSettings$nl recordSettings = _Translations$liveTv$recordSettings$nl._(_root);
+	@override late final _TranslationsLiveTvRecordSettingsNl recordSettings = _TranslationsLiveTvRecordSettingsNl._(_root);
 	@override String startingInMinutes({required Object minutes}) => 'Begint over ${minutes} min';
 	@override String dayAtTime({required Object day, required Object time}) => '${day} om ${time}';
 	@override String invalidPlaybackData({required Object product}) => '${product} heeft ongeldige afspeelgegevens voor Live-tv geretourneerd';
@@ -1693,8 +1703,8 @@ class _Translations$liveTv$nl extends Translations$liveTv$en {
 }
 
 // Path: collections
-class _Translations$collections$nl extends Translations$collections$en {
-	_Translations$collections$nl._(TranslationsNl root) : this._root = root, super.internal(root);
+class _TranslationsCollectionsNl extends TranslationsCollectionsEn {
+	_TranslationsCollectionsNl._(TranslationsNl root) : this._root = root, super.internal(root);
 
 	final TranslationsNl _root; // ignore: unused_field
 
@@ -1722,8 +1732,8 @@ class _Translations$collections$nl extends Translations$collections$en {
 }
 
 // Path: playlists
-class _Translations$playlists$nl extends Translations$playlists$en {
-	_Translations$playlists$nl._(TranslationsNl root) : this._root = root, super.internal(root);
+class _TranslationsPlaylistsNl extends TranslationsPlaylistsEn {
+	_TranslationsPlaylistsNl._(TranslationsNl root) : this._root = root, super.internal(root);
 
 	final TranslationsNl _root; // ignore: unused_field
 
@@ -1757,8 +1767,8 @@ class _Translations$playlists$nl extends Translations$playlists$en {
 }
 
 // Path: music
-class _Translations$music$nl extends Translations$music$en {
-	_Translations$music$nl._(TranslationsNl root) : this._root = root, super.internal(root);
+class _TranslationsMusicNl extends TranslationsMusicEn {
+	_TranslationsMusicNl._(TranslationsNl root) : this._root = root, super.internal(root);
 
 	final TranslationsNl _root; // ignore: unused_field
 
@@ -1792,12 +1802,12 @@ class _Translations$music$nl extends Translations$music$en {
 	@override String get instantMixFailed => 'De instantmix kon niet worden geladen';
 	@override String get instantMixEmpty => 'De instantmix leverde geen nummers op';
 	@override String noAudioUrl({required Object track}) => 'Er is geen audio-URL beschikbaar voor ${track}';
-	@override late final _Translations$music$discography$nl discography = _Translations$music$discography$nl._(_root);
+	@override late final _TranslationsMusicDiscographyNl discography = _TranslationsMusicDiscographyNl._(_root);
 }
 
 // Path: watchTogether
-class _Translations$watchTogether$nl extends Translations$watchTogether$en {
-	_Translations$watchTogether$nl._(TranslationsNl root) : this._root = root, super.internal(root);
+class _TranslationsWatchTogetherNl extends TranslationsWatchTogetherEn {
+	_TranslationsWatchTogetherNl._(TranslationsNl root) : this._root = root, super.internal(root);
 
 	final TranslationsNl _root; // ignore: unused_field
 
@@ -1907,15 +1917,15 @@ class _Translations$watchTogether$nl extends Translations$watchTogether$en {
 	@override String get end => 'Beëindigen';
 	@override String get playBlockedTitle => 'Afspelen is niet gestart';
 	@override String get playBlockedDescription => 'Druk op afspelen om samen met de kamer te kijken.';
-	@override late final _Translations$watchTogether$notices$nl notices = _Translations$watchTogether$notices$nl._(_root);
-	@override late final _Translations$watchTogether$ended$nl ended = _Translations$watchTogether$ended$nl._(_root);
-	@override late final _Translations$watchTogether$errors$nl errors = _Translations$watchTogether$errors$nl._(_root);
+	@override late final _TranslationsWatchTogetherNoticesNl notices = _TranslationsWatchTogetherNoticesNl._(_root);
+	@override late final _TranslationsWatchTogetherEndedNl ended = _TranslationsWatchTogetherEndedNl._(_root);
+	@override late final _TranslationsWatchTogetherErrorsNl errors = _TranslationsWatchTogetherErrorsNl._(_root);
 	@override String untitledEpisode({required Object number}) => 'Aflevering ${number}';
 }
 
 // Path: downloads
-class _Translations$downloads$nl extends Translations$downloads$en {
-	_Translations$downloads$nl._(TranslationsNl root) : this._root = root, super.internal(root);
+class _TranslationsDownloadsNl extends TranslationsDownloadsEn {
+	_TranslationsDownloadsNl._(TranslationsNl root) : this._root = root, super.internal(root);
 
 	final TranslationsNl _root; // ignore: unused_field
 
@@ -2001,9 +2011,9 @@ class _Translations$downloads$nl extends Translations$downloads$en {
 	@override String get syncRuleNotAvailableForProfile => 'Niet beschikbaar voor huidig profiel';
 	@override String get syncRuleUnknownServer => 'Onbekende server';
 	@override String get syncRuleListCreated => 'Synchronisatieregel aangemaakt';
-	@override late final _Translations$downloads$backgroundWarning$nl backgroundWarning = _Translations$downloads$backgroundWarning$nl._(_root);
+	@override late final _TranslationsDownloadsBackgroundWarningNl backgroundWarning = _TranslationsDownloadsBackgroundWarningNl._(_root);
 	@override String get options => 'Downloadopties';
-	@override late final _Translations$downloads$groupings$nl groupings = _Translations$downloads$groupings$nl._(_root);
+	@override late final _TranslationsDownloadsGroupingsNl groupings = _TranslationsDownloadsGroupingsNl._(_root);
 	@override String get unknownLibrary => 'Onbekende bibliotheek';
 	@override String get unknownShow => 'Onbekende serie';
 	@override String get unknownSeason => 'Onbekend seizoen';
@@ -2024,8 +2034,8 @@ class _Translations$downloads$nl extends Translations$downloads$en {
 }
 
 // Path: shaders
-class _Translations$shaders$nl extends Translations$shaders$en {
-	_Translations$shaders$nl._(TranslationsNl root) : this._root = root, super.internal(root);
+class _TranslationsShadersNl extends TranslationsShadersEn {
+	_TranslationsShadersNl._(TranslationsNl root) : this._root = root, super.internal(root);
 
 	final TranslationsNl _root; // ignore: unused_field
 
@@ -2048,8 +2058,8 @@ class _Translations$shaders$nl extends Translations$shaders$en {
 }
 
 // Path: companionRemote
-class _Translations$companionRemote$nl extends Translations$companionRemote$en {
-	_Translations$companionRemote$nl._(TranslationsNl root) : this._root = root, super.internal(root);
+class _TranslationsCompanionRemoteNl extends TranslationsCompanionRemoteEn {
+	_TranslationsCompanionRemoteNl._(TranslationsNl root) : this._root = root, super.internal(root);
 
 	final TranslationsNl _root; // ignore: unused_field
 
@@ -2057,16 +2067,16 @@ class _Translations$companionRemote$nl extends Translations$companionRemote$en {
 	@override String get title => 'Afstandsbediening';
 	@override String connectedTo({required Object name}) => 'Verbonden met ${name}';
 	@override String get unknownDevice => 'Onbekend apparaat';
-	@override late final _Translations$companionRemote$session$nl session = _Translations$companionRemote$session$nl._(_root);
-	@override late final _Translations$companionRemote$pairing$nl pairing = _Translations$companionRemote$pairing$nl._(_root);
-	@override late final _Translations$companionRemote$remote$nl remote = _Translations$companionRemote$remote$nl._(_root);
-	@override late final _Translations$companionRemote$errors$nl errors = _Translations$companionRemote$errors$nl._(_root);
+	@override late final _TranslationsCompanionRemoteSessionNl session = _TranslationsCompanionRemoteSessionNl._(_root);
+	@override late final _TranslationsCompanionRemotePairingNl pairing = _TranslationsCompanionRemotePairingNl._(_root);
+	@override late final _TranslationsCompanionRemoteRemoteNl remote = _TranslationsCompanionRemoteRemoteNl._(_root);
+	@override late final _TranslationsCompanionRemoteErrorsNl errors = _TranslationsCompanionRemoteErrorsNl._(_root);
 	@override String get closedBeforeAuth => 'De verbinding is vóór de authenticatie gesloten';
 }
 
 // Path: videoSettings
-class _Translations$videoSettings$nl extends Translations$videoSettings$en {
-	_Translations$videoSettings$nl._(TranslationsNl root) : this._root = root, super.internal(root);
+class _TranslationsVideoSettingsNl extends TranslationsVideoSettingsEn {
+	_TranslationsVideoSettingsNl._(TranslationsNl root) : this._root = root, super.internal(root);
 
 	final TranslationsNl _root; // ignore: unused_field
 
@@ -2098,8 +2108,8 @@ class _Translations$videoSettings$nl extends Translations$videoSettings$en {
 }
 
 // Path: performanceOverlay
-class _Translations$performanceOverlay$nl extends Translations$performanceOverlay$en {
-	_Translations$performanceOverlay$nl._(TranslationsNl root) : this._root = root, super.internal(root);
+class _TranslationsPerformanceOverlayNl extends TranslationsPerformanceOverlayEn {
+	_TranslationsPerformanceOverlayNl._(TranslationsNl root) : this._root = root, super.internal(root);
 
 	final TranslationsNl _root; // ignore: unused_field
 
@@ -2160,8 +2170,8 @@ class _Translations$performanceOverlay$nl extends Translations$performanceOverla
 }
 
 // Path: externalPlayer
-class _Translations$externalPlayer$nl extends Translations$externalPlayer$en {
-	_Translations$externalPlayer$nl._(TranslationsNl root) : this._root = root, super.internal(root);
+class _TranslationsExternalPlayerNl extends TranslationsExternalPlayerEn {
+	_TranslationsExternalPlayerNl._(TranslationsNl root) : this._root = root, super.internal(root);
 
 	final TranslationsNl _root; // ignore: unused_field
 
@@ -2185,8 +2195,8 @@ class _Translations$externalPlayer$nl extends Translations$externalPlayer$en {
 }
 
 // Path: metadataEdit
-class _Translations$metadataEdit$nl extends Translations$metadataEdit$en {
-	_Translations$metadataEdit$nl._(TranslationsNl root) : this._root = root, super.internal(root);
+class _TranslationsMetadataEditNl extends TranslationsMetadataEditEn {
+	_TranslationsMetadataEditNl._(TranslationsNl root) : this._root = root, super.internal(root);
 
 	final TranslationsNl _root; // ignore: unused_field
 
@@ -2269,8 +2279,8 @@ class _Translations$metadataEdit$nl extends Translations$metadataEdit$en {
 }
 
 // Path: matchScreen
-class _Translations$matchScreen$nl extends Translations$matchScreen$en {
-	_Translations$matchScreen$nl._(TranslationsNl root) : this._root = root, super.internal(root);
+class _TranslationsMatchScreenNl extends TranslationsMatchScreenEn {
+	_TranslationsMatchScreenNl._(TranslationsNl root) : this._root = root, super.internal(root);
 
 	final TranslationsNl _root; // ignore: unused_field
 
@@ -2290,8 +2300,8 @@ class _Translations$matchScreen$nl extends Translations$matchScreen$en {
 }
 
 // Path: serverTasks
-class _Translations$serverTasks$nl extends Translations$serverTasks$en {
-	_Translations$serverTasks$nl._(TranslationsNl root) : this._root = root, super.internal(root);
+class _TranslationsServerTasksNl extends TranslationsServerTasksEn {
+	_TranslationsServerTasksNl._(TranslationsNl root) : this._root = root, super.internal(root);
 
 	final TranslationsNl _root; // ignore: unused_field
 
@@ -2302,8 +2312,8 @@ class _Translations$serverTasks$nl extends Translations$serverTasks$en {
 }
 
 // Path: trakt
-class _Translations$trakt$nl extends Translations$trakt$en {
-	_Translations$trakt$nl._(TranslationsNl root) : this._root = root, super.internal(root);
+class _TranslationsTraktNl extends TranslationsTraktEn {
+	_TranslationsTraktNl._(TranslationsNl root) : this._root = root, super.internal(root);
 
 	final TranslationsNl _root; // ignore: unused_field
 
@@ -2320,8 +2330,8 @@ class _Translations$trakt$nl extends Translations$trakt$en {
 }
 
 // Path: seerr
-class _Translations$seerr$nl extends Translations$seerr$en {
-	_Translations$seerr$nl._(TranslationsNl root) : this._root = root, super.internal(root);
+class _TranslationsSeerrNl extends TranslationsSeerrEn {
+	_TranslationsSeerrNl._(TranslationsNl root) : this._root = root, super.internal(root);
 
 	final TranslationsNl _root; // ignore: unused_field
 
@@ -2379,8 +2389,8 @@ class _Translations$seerr$nl extends Translations$seerr$en {
 }
 
 // Path: services
-class _Translations$services$nl extends Translations$services$en {
-	_Translations$services$nl._(TranslationsNl root) : this._root = root, super.internal(root);
+class _TranslationsServicesNl extends TranslationsServicesEn {
+	_TranslationsServicesNl._(TranslationsNl root) : this._root = root, super.internal(root);
 
 	final TranslationsNl _root; // ignore: unused_field
 
@@ -2395,17 +2405,17 @@ class _Translations$services$nl extends Translations$services$en {
 	@override String disconnectConfirm({required Object service}) => '${service} loskoppelen?';
 	@override String disconnectConfirmBody({required Object service}) => 'Plezy werkt ${service} niet meer bij. Je kunt op elk moment opnieuw verbinding maken.';
 	@override String connectFailed({required Object service}) => 'Verbinding maken met ${service} is mislukt. Probeer het opnieuw.';
-	@override late final _Translations$services$names$nl names = _Translations$services$names$nl._(_root);
-	@override late final _Translations$services$simklReconnect$nl simklReconnect = _Translations$services$simklReconnect$nl._(_root);
-	@override late final _Translations$services$deviceCode$nl deviceCode = _Translations$services$deviceCode$nl._(_root);
-	@override late final _Translations$services$oauthProxy$nl oauthProxy = _Translations$services$oauthProxy$nl._(_root);
-	@override late final _Translations$services$pendingAuth$nl pendingAuth = _Translations$services$pendingAuth$nl._(_root);
-	@override late final _Translations$services$libraryFilter$nl libraryFilter = _Translations$services$libraryFilter$nl._(_root);
+	@override late final _TranslationsServicesNamesNl names = _TranslationsServicesNamesNl._(_root);
+	@override late final _TranslationsServicesSimklReconnectNl simklReconnect = _TranslationsServicesSimklReconnectNl._(_root);
+	@override late final _TranslationsServicesDeviceCodeNl deviceCode = _TranslationsServicesDeviceCodeNl._(_root);
+	@override late final _TranslationsServicesOauthProxyNl oauthProxy = _TranslationsServicesOauthProxyNl._(_root);
+	@override late final _TranslationsServicesPendingAuthNl pendingAuth = _TranslationsServicesPendingAuthNl._(_root);
+	@override late final _TranslationsServicesLibraryFilterNl libraryFilter = _TranslationsServicesLibraryFilterNl._(_root);
 }
 
 // Path: addServer
-class _Translations$addServer$nl extends Translations$addServer$en {
-	_Translations$addServer$nl._(TranslationsNl root) : this._root = root, super.internal(root);
+class _TranslationsAddServerNl extends TranslationsAddServerEn {
+	_TranslationsAddServerNl._(TranslationsNl root) : this._root = root, super.internal(root);
 
 	final TranslationsNl _root; // ignore: unused_field
 
@@ -2459,9 +2469,18 @@ class _Translations$addServer$nl extends Translations$addServer$en {
 	@override String redirectUnsupportedEnterFinal({required Object product}) => 'De server heeft doorgestuurd naar een niet-ondersteunde URL. Voer de uiteindelijke ${product}-URL rechtstreeks in.';
 }
 
+// Path: deepLinks
+class _TranslationsDeepLinksNl extends TranslationsDeepLinksEn {
+	_TranslationsDeepLinksNl._(TranslationsNl root) : this._root = root, super.internal(root);
+
+	final TranslationsNl _root; // ignore: unused_field
+
+	// Translations
+}
+
 // Path: appIcon.names
-class _Translations$appIcon$names$nl extends Translations$appIcon$names$en {
-	_Translations$appIcon$names$nl._(TranslationsNl root) : this._root = root, super.internal(root);
+class _TranslationsAppIconNamesNl extends TranslationsAppIconNamesEn {
+	_TranslationsAppIconNamesNl._(TranslationsNl root) : this._root = root, super.internal(root);
 
 	final TranslationsNl _root; // ignore: unused_field
 
@@ -2492,8 +2511,8 @@ class _Translations$appIcon$names$nl extends Translations$appIcon$names$en {
 }
 
 // Path: common.ratingSource
-class _Translations$common$ratingSource$nl extends Translations$common$ratingSource$en {
-	_Translations$common$ratingSource$nl._(TranslationsNl root) : this._root = root, super.internal(root);
+class _TranslationsCommonRatingSourceNl extends TranslationsCommonRatingSourceEn {
+	_TranslationsCommonRatingSourceNl._(TranslationsNl root) : this._root = root, super.internal(root);
 
 	final TranslationsNl _root; // ignore: unused_field
 
@@ -2514,8 +2533,8 @@ class _Translations$common$ratingSource$nl extends Translations$common$ratingSou
 }
 
 // Path: common.mediaKind
-class _Translations$common$mediaKind$nl extends Translations$common$mediaKind$en {
-	_Translations$common$mediaKind$nl._(TranslationsNl root) : this._root = root, super.internal(root);
+class _TranslationsCommonMediaKindNl extends TranslationsCommonMediaKindEn {
+	_TranslationsCommonMediaKindNl._(TranslationsNl root) : this._root = root, super.internal(root);
 
 	final TranslationsNl _root; // ignore: unused_field
 
@@ -2535,8 +2554,8 @@ class _Translations$common$mediaKind$nl extends Translations$common$mediaKind$en
 }
 
 // Path: supporter.errors
-class _Translations$supporter$errors$nl extends Translations$supporter$errors$en {
-	_Translations$supporter$errors$nl._(TranslationsNl root) : this._root = root, super.internal(root);
+class _TranslationsSupporterErrorsNl extends TranslationsSupporterErrorsEn {
+	_TranslationsSupporterErrorsNl._(TranslationsNl root) : this._root = root, super.internal(root);
 
 	final TranslationsNl _root; // ignore: unused_field
 
@@ -2550,8 +2569,8 @@ class _Translations$supporter$errors$nl extends Translations$supporter$errors$en
 }
 
 // Path: themeEditor.slots
-class _Translations$themeEditor$slots$nl extends Translations$themeEditor$slots$en {
-	_Translations$themeEditor$slots$nl._(TranslationsNl root) : this._root = root, super.internal(root);
+class _TranslationsThemeEditorSlotsNl extends TranslationsThemeEditorSlotsEn {
+	_TranslationsThemeEditorSlotsNl._(TranslationsNl root) : this._root = root, super.internal(root);
 
 	final TranslationsNl _root; // ignore: unused_field
 
@@ -2565,8 +2584,8 @@ class _Translations$themeEditor$slots$nl extends Translations$themeEditor$slots$
 }
 
 // Path: themeEditor.contrast
-class _Translations$themeEditor$contrast$nl extends Translations$themeEditor$contrast$en {
-	_Translations$themeEditor$contrast$nl._(TranslationsNl root) : this._root = root, super.internal(root);
+class _TranslationsThemeEditorContrastNl extends TranslationsThemeEditorContrastEn {
+	_TranslationsThemeEditorContrastNl._(TranslationsNl root) : this._root = root, super.internal(root);
 
 	final TranslationsNl _root; // ignore: unused_field
 
@@ -2581,8 +2600,8 @@ class _Translations$themeEditor$contrast$nl extends Translations$themeEditor$con
 }
 
 // Path: hotkeys.actions
-class _Translations$hotkeys$actions$nl extends Translations$hotkeys$actions$en {
-	_Translations$hotkeys$actions$nl._(TranslationsNl root) : this._root = root, super.internal(root);
+class _TranslationsHotkeysActionsNl extends TranslationsHotkeysActionsEn {
+	_TranslationsHotkeysActionsNl._(TranslationsNl root) : this._root = root, super.internal(root);
 
 	final TranslationsNl _root; // ignore: unused_field
 
@@ -2615,8 +2634,8 @@ class _Translations$hotkeys$actions$nl extends Translations$hotkeys$actions$en {
 }
 
 // Path: videoControls.pipErrors
-class _Translations$videoControls$pipErrors$nl extends Translations$videoControls$pipErrors$en {
-	_Translations$videoControls$pipErrors$nl._(TranslationsNl root) : this._root = root, super.internal(root);
+class _TranslationsVideoControlsPipErrorsNl extends TranslationsVideoControlsPipErrorsEn {
+	_TranslationsVideoControlsPipErrorsNl._(TranslationsNl root) : this._root = root, super.internal(root);
 
 	final TranslationsNl _root; // ignore: unused_field
 
@@ -2632,8 +2651,8 @@ class _Translations$videoControls$pipErrors$nl extends Translations$videoControl
 }
 
 // Path: accountPreferences.groups
-class _Translations$accountPreferences$groups$nl extends Translations$accountPreferences$groups$en {
-	_Translations$accountPreferences$groups$nl._(TranslationsNl root) : this._root = root, super.internal(root);
+class _TranslationsAccountPreferencesGroupsNl extends TranslationsAccountPreferencesGroupsEn {
+	_TranslationsAccountPreferencesGroupsNl._(TranslationsNl root) : this._root = root, super.internal(root);
 
 	final TranslationsNl _root; // ignore: unused_field
 
@@ -2644,8 +2663,8 @@ class _Translations$accountPreferences$groups$nl extends Translations$accountPre
 }
 
 // Path: accountPreferences.subtitleModes
-class _Translations$accountPreferences$subtitleModes$nl extends Translations$accountPreferences$subtitleModes$en {
-	_Translations$accountPreferences$subtitleModes$nl._(TranslationsNl root) : this._root = root, super.internal(root);
+class _TranslationsAccountPreferencesSubtitleModesNl extends TranslationsAccountPreferencesSubtitleModesEn {
+	_TranslationsAccountPreferencesSubtitleModesNl._(TranslationsNl root) : this._root = root, super.internal(root);
 
 	final TranslationsNl _root; // ignore: unused_field
 
@@ -2663,8 +2682,8 @@ class _Translations$accountPreferences$subtitleModes$nl extends Translations$acc
 }
 
 // Path: accountPreferences.subtitleAccessibilityOptions
-class _Translations$accountPreferences$subtitleAccessibilityOptions$nl extends Translations$accountPreferences$subtitleAccessibilityOptions$en {
-	_Translations$accountPreferences$subtitleAccessibilityOptions$nl._(TranslationsNl root) : this._root = root, super.internal(root);
+class _TranslationsAccountPreferencesSubtitleAccessibilityOptionsNl extends TranslationsAccountPreferencesSubtitleAccessibilityOptionsEn {
+	_TranslationsAccountPreferencesSubtitleAccessibilityOptionsNl._(TranslationsNl root) : this._root = root, super.internal(root);
 
 	final TranslationsNl _root; // ignore: unused_field
 
@@ -2676,8 +2695,8 @@ class _Translations$accountPreferences$subtitleAccessibilityOptions$nl extends T
 }
 
 // Path: accountPreferences.forcedSubtitleOptions
-class _Translations$accountPreferences$forcedSubtitleOptions$nl extends Translations$accountPreferences$forcedSubtitleOptions$en {
-	_Translations$accountPreferences$forcedSubtitleOptions$nl._(TranslationsNl root) : this._root = root, super.internal(root);
+class _TranslationsAccountPreferencesForcedSubtitleOptionsNl extends TranslationsAccountPreferencesForcedSubtitleOptionsEn {
+	_TranslationsAccountPreferencesForcedSubtitleOptionsNl._(TranslationsNl root) : this._root = root, super.internal(root);
 
 	final TranslationsNl _root; // ignore: unused_field
 
@@ -2689,8 +2708,8 @@ class _Translations$accountPreferences$forcedSubtitleOptions$nl extends Translat
 }
 
 // Path: accountPreferences.watchedIndicatorOptions
-class _Translations$accountPreferences$watchedIndicatorOptions$nl extends Translations$accountPreferences$watchedIndicatorOptions$en {
-	_Translations$accountPreferences$watchedIndicatorOptions$nl._(TranslationsNl root) : this._root = root, super.internal(root);
+class _TranslationsAccountPreferencesWatchedIndicatorOptionsNl extends TranslationsAccountPreferencesWatchedIndicatorOptionsEn {
+	_TranslationsAccountPreferencesWatchedIndicatorOptionsNl._(TranslationsNl root) : this._root = root, super.internal(root);
 
 	final TranslationsNl _root; // ignore: unused_field
 
@@ -2702,8 +2721,8 @@ class _Translations$accountPreferences$watchedIndicatorOptions$nl extends Transl
 }
 
 // Path: accountPreferences.mediaReviewsOptions
-class _Translations$accountPreferences$mediaReviewsOptions$nl extends Translations$accountPreferences$mediaReviewsOptions$en {
-	_Translations$accountPreferences$mediaReviewsOptions$nl._(TranslationsNl root) : this._root = root, super.internal(root);
+class _TranslationsAccountPreferencesMediaReviewsOptionsNl extends TranslationsAccountPreferencesMediaReviewsOptionsEn {
+	_TranslationsAccountPreferencesMediaReviewsOptionsNl._(TranslationsNl root) : this._root = root, super.internal(root);
 
 	final TranslationsNl _root; // ignore: unused_field
 
@@ -2715,8 +2734,8 @@ class _Translations$accountPreferences$mediaReviewsOptions$nl extends Translatio
 }
 
 // Path: discover.person
-class _Translations$discover$person$nl extends Translations$discover$person$en {
-	_Translations$discover$person$nl._(TranslationsNl root) : this._root = root, super.internal(root);
+class _TranslationsDiscoverPersonNl extends TranslationsDiscoverPersonEn {
+	_TranslationsDiscoverPersonNl._(TranslationsNl root) : this._root = root, super.internal(root);
 
 	final TranslationsNl _root; // ignore: unused_field
 
@@ -2729,8 +2748,8 @@ class _Translations$discover$person$nl extends Translations$discover$person$en {
 }
 
 // Path: libraries.tabs
-class _Translations$libraries$tabs$nl extends Translations$libraries$tabs$en {
-	_Translations$libraries$tabs$nl._(TranslationsNl root) : this._root = root, super.internal(root);
+class _TranslationsLibrariesTabsNl extends TranslationsLibrariesTabsEn {
+	_TranslationsLibrariesTabsNl._(TranslationsNl root) : this._root = root, super.internal(root);
 
 	final TranslationsNl _root; // ignore: unused_field
 
@@ -2742,8 +2761,8 @@ class _Translations$libraries$tabs$nl extends Translations$libraries$tabs$en {
 }
 
 // Path: libraries.groupings
-class _Translations$libraries$groupings$nl extends Translations$libraries$groupings$en {
-	_Translations$libraries$groupings$nl._(TranslationsNl root) : this._root = root, super.internal(root);
+class _TranslationsLibrariesGroupingsNl extends TranslationsLibrariesGroupingsEn {
+	_TranslationsLibrariesGroupingsNl._(TranslationsNl root) : this._root = root, super.internal(root);
 
 	final TranslationsNl _root; // ignore: unused_field
 
@@ -2761,8 +2780,8 @@ class _Translations$libraries$groupings$nl extends Translations$libraries$groupi
 }
 
 // Path: libraries.filterCategories
-class _Translations$libraries$filterCategories$nl extends Translations$libraries$filterCategories$en {
-	_Translations$libraries$filterCategories$nl._(TranslationsNl root) : this._root = root, super.internal(root);
+class _TranslationsLibrariesFilterCategoriesNl extends TranslationsLibrariesFilterCategoriesEn {
+	_TranslationsLibrariesFilterCategoriesNl._(TranslationsNl root) : this._root = root, super.internal(root);
 
 	final TranslationsNl _root; // ignore: unused_field
 
@@ -2778,8 +2797,8 @@ class _Translations$libraries$filterCategories$nl extends Translations$libraries
 }
 
 // Path: libraries.sortLabels
-class _Translations$libraries$sortLabels$nl extends Translations$libraries$sortLabels$en {
-	_Translations$libraries$sortLabels$nl._(TranslationsNl root) : this._root = root, super.internal(root);
+class _TranslationsLibrariesSortLabelsNl extends TranslationsLibrariesSortLabelsEn {
+	_TranslationsLibrariesSortLabelsNl._(TranslationsNl root) : this._root = root, super.internal(root);
 
 	final TranslationsNl _root; // ignore: unused_field
 
@@ -2810,8 +2829,8 @@ class _Translations$libraries$sortLabels$nl extends Translations$libraries$sortL
 }
 
 // Path: libraries.advancedFilters
-class _Translations$libraries$advancedFilters$nl extends Translations$libraries$advancedFilters$en {
-	_Translations$libraries$advancedFilters$nl._(TranslationsNl root) : this._root = root, super.internal(root);
+class _TranslationsLibrariesAdvancedFiltersNl extends TranslationsLibrariesAdvancedFiltersEn {
+	_TranslationsLibrariesAdvancedFiltersNl._(TranslationsNl root) : this._root = root, super.internal(root);
 
 	final TranslationsNl _root; // ignore: unused_field
 
@@ -2845,8 +2864,8 @@ class _Translations$libraries$advancedFilters$nl extends Translations$libraries$
 }
 
 // Path: explore.rows
-class _Translations$explore$rows$nl extends Translations$explore$rows$en {
-	_Translations$explore$rows$nl._(TranslationsNl root) : this._root = root, super.internal(root);
+class _TranslationsExploreRowsNl extends TranslationsExploreRowsEn {
+	_TranslationsExploreRowsNl._(TranslationsNl root) : this._root = root, super.internal(root);
 
 	final TranslationsNl _root; // ignore: unused_field
 
@@ -2868,8 +2887,8 @@ class _Translations$explore$rows$nl extends Translations$explore$rows$en {
 }
 
 // Path: explore.status
-class _Translations$explore$status$nl extends Translations$explore$status$en {
-	_Translations$explore$status$nl._(TranslationsNl root) : this._root = root, super.internal(root);
+class _TranslationsExploreStatusNl extends TranslationsExploreStatusEn {
+	_TranslationsExploreStatusNl._(TranslationsNl root) : this._root = root, super.internal(root);
 
 	final TranslationsNl _root; // ignore: unused_field
 
@@ -2881,8 +2900,8 @@ class _Translations$explore$status$nl extends Translations$explore$status$en {
 }
 
 // Path: explore.badge
-class _Translations$explore$badge$nl extends Translations$explore$badge$en {
-	_Translations$explore$badge$nl._(TranslationsNl root) : this._root = root, super.internal(root);
+class _TranslationsExploreBadgeNl extends TranslationsExploreBadgeEn {
+	_TranslationsExploreBadgeNl._(TranslationsNl root) : this._root = root, super.internal(root);
 
 	final TranslationsNl _root; // ignore: unused_field
 
@@ -2911,8 +2930,8 @@ class _Translations$explore$badge$nl extends Translations$explore$badge$en {
 }
 
 // Path: explore.stats
-class _Translations$explore$stats$nl extends Translations$explore$stats$en {
-	_Translations$explore$stats$nl._(TranslationsNl root) : this._root = root, super.internal(root);
+class _TranslationsExploreStatsNl extends TranslationsExploreStatsEn {
+	_TranslationsExploreStatsNl._(TranslationsNl root) : this._root = root, super.internal(root);
 
 	final TranslationsNl _root; // ignore: unused_field
 
@@ -2938,8 +2957,8 @@ class _Translations$explore$stats$nl extends Translations$explore$stats$en {
 }
 
 // Path: explore.season
-class _Translations$explore$season$nl extends Translations$explore$season$en {
-	_Translations$explore$season$nl._(TranslationsNl root) : this._root = root, super.internal(root);
+class _TranslationsExploreSeasonNl extends TranslationsExploreSeasonEn {
+	_TranslationsExploreSeasonNl._(TranslationsNl root) : this._root = root, super.internal(root);
 
 	final TranslationsNl _root; // ignore: unused_field
 
@@ -2952,8 +2971,8 @@ class _Translations$explore$season$nl extends Translations$explore$season$en {
 }
 
 // Path: explore.format
-class _Translations$explore$format$nl extends Translations$explore$format$en {
-	_Translations$explore$format$nl._(TranslationsNl root) : this._root = root, super.internal(root);
+class _TranslationsExploreFormatNl extends TranslationsExploreFormatEn {
+	_TranslationsExploreFormatNl._(TranslationsNl root) : this._root = root, super.internal(root);
 
 	final TranslationsNl _root; // ignore: unused_field
 
@@ -2969,8 +2988,8 @@ class _Translations$explore$format$nl extends Translations$explore$format$en {
 }
 
 // Path: explore.sourceMaterial
-class _Translations$explore$sourceMaterial$nl extends Translations$explore$sourceMaterial$en {
-	_Translations$explore$sourceMaterial$nl._(TranslationsNl root) : this._root = root, super.internal(root);
+class _TranslationsExploreSourceMaterialNl extends TranslationsExploreSourceMaterialEn {
+	_TranslationsExploreSourceMaterialNl._(TranslationsNl root) : this._root = root, super.internal(root);
 
 	final TranslationsNl _root; // ignore: unused_field
 
@@ -2987,8 +3006,8 @@ class _Translations$explore$sourceMaterial$nl extends Translations$explore$sourc
 }
 
 // Path: explore.creditRole
-class _Translations$explore$creditRole$nl extends Translations$explore$creditRole$en {
-	_Translations$explore$creditRole$nl._(TranslationsNl root) : this._root = root, super.internal(root);
+class _TranslationsExploreCreditRoleNl extends TranslationsExploreCreditRoleEn {
+	_TranslationsExploreCreditRoleNl._(TranslationsNl root) : this._root = root, super.internal(root);
 
 	final TranslationsNl _root; // ignore: unused_field
 
@@ -3002,8 +3021,8 @@ class _Translations$explore$creditRole$nl extends Translations$explore$creditRol
 }
 
 // Path: explore.relation
-class _Translations$explore$relation$nl extends Translations$explore$relation$en {
-	_Translations$explore$relation$nl._(TranslationsNl root) : this._root = root, super.internal(root);
+class _TranslationsExploreRelationNl extends TranslationsExploreRelationEn {
+	_TranslationsExploreRelationNl._(TranslationsNl root) : this._root = root, super.internal(root);
 
 	final TranslationsNl _root; // ignore: unused_field
 
@@ -3020,8 +3039,8 @@ class _Translations$explore$relation$nl extends Translations$explore$relation$en
 }
 
 // Path: explore.detail
-class _Translations$explore$detail$nl extends Translations$explore$detail$en {
-	_Translations$explore$detail$nl._(TranslationsNl root) : this._root = root, super.internal(root);
+class _TranslationsExploreDetailNl extends TranslationsExploreDetailEn {
+	_TranslationsExploreDetailNl._(TranslationsNl root) : this._root = root, super.internal(root);
 
 	final TranslationsNl _root; // ignore: unused_field
 
@@ -3063,8 +3082,8 @@ class _Translations$explore$detail$nl extends Translations$explore$detail$en {
 }
 
 // Path: liveTv.recordSettings
-class _Translations$liveTv$recordSettings$nl extends Translations$liveTv$recordSettings$en {
-	_Translations$liveTv$recordSettings$nl._(TranslationsNl root) : this._root = root, super.internal(root);
+class _TranslationsLiveTvRecordSettingsNl extends TranslationsLiveTvRecordSettingsEn {
+	_TranslationsLiveTvRecordSettingsNl._(TranslationsNl root) : this._root = root, super.internal(root);
 
 	final TranslationsNl _root; // ignore: unused_field
 
@@ -3080,8 +3099,8 @@ class _Translations$liveTv$recordSettings$nl extends Translations$liveTv$recordS
 }
 
 // Path: music.discography
-class _Translations$music$discography$nl extends Translations$music$discography$en {
-	_Translations$music$discography$nl._(TranslationsNl root) : this._root = root, super.internal(root);
+class _TranslationsMusicDiscographyNl extends TranslationsMusicDiscographyEn {
+	_TranslationsMusicDiscographyNl._(TranslationsNl root) : this._root = root, super.internal(root);
 
 	final TranslationsNl _root; // ignore: unused_field
 
@@ -3092,8 +3111,8 @@ class _Translations$music$discography$nl extends Translations$music$discography$
 }
 
 // Path: watchTogether.notices
-class _Translations$watchTogether$notices$nl extends Translations$watchTogether$notices$en {
-	_Translations$watchTogether$notices$nl._(TranslationsNl root) : this._root = root, super.internal(root);
+class _TranslationsWatchTogetherNoticesNl extends TranslationsWatchTogetherNoticesEn {
+	_TranslationsWatchTogetherNoticesNl._(TranslationsNl root) : this._root = root, super.internal(root);
 
 	final TranslationsNl _root; // ignore: unused_field
 
@@ -3126,8 +3145,8 @@ class _Translations$watchTogether$notices$nl extends Translations$watchTogether$
 }
 
 // Path: watchTogether.ended
-class _Translations$watchTogether$ended$nl extends Translations$watchTogether$ended$en {
-	_Translations$watchTogether$ended$nl._(TranslationsNl root) : this._root = root, super.internal(root);
+class _TranslationsWatchTogetherEndedNl extends TranslationsWatchTogetherEndedEn {
+	_TranslationsWatchTogetherEndedNl._(TranslationsNl root) : this._root = root, super.internal(root);
 
 	final TranslationsNl _root; // ignore: unused_field
 
@@ -3140,8 +3159,8 @@ class _Translations$watchTogether$ended$nl extends Translations$watchTogether$en
 }
 
 // Path: watchTogether.errors
-class _Translations$watchTogether$errors$nl extends Translations$watchTogether$errors$en {
-	_Translations$watchTogether$errors$nl._(TranslationsNl root) : this._root = root, super.internal(root);
+class _TranslationsWatchTogetherErrorsNl extends TranslationsWatchTogetherErrorsEn {
+	_TranslationsWatchTogetherErrorsNl._(TranslationsNl root) : this._root = root, super.internal(root);
 
 	final TranslationsNl _root; // ignore: unused_field
 
@@ -3163,8 +3182,8 @@ class _Translations$watchTogether$errors$nl extends Translations$watchTogether$e
 }
 
 // Path: downloads.backgroundWarning
-class _Translations$downloads$backgroundWarning$nl extends Translations$downloads$backgroundWarning$en {
-	_Translations$downloads$backgroundWarning$nl._(TranslationsNl root) : this._root = root, super.internal(root);
+class _TranslationsDownloadsBackgroundWarningNl extends TranslationsDownloadsBackgroundWarningEn {
+	_TranslationsDownloadsBackgroundWarningNl._(TranslationsNl root) : this._root = root, super.internal(root);
 
 	final TranslationsNl _root; // ignore: unused_field
 
@@ -3198,8 +3217,8 @@ class _Translations$downloads$backgroundWarning$nl extends Translations$download
 }
 
 // Path: downloads.groupings
-class _Translations$downloads$groupings$nl extends Translations$downloads$groupings$en {
-	_Translations$downloads$groupings$nl._(TranslationsNl root) : this._root = root, super.internal(root);
+class _TranslationsDownloadsGroupingsNl extends TranslationsDownloadsGroupingsEn {
+	_TranslationsDownloadsGroupingsNl._(TranslationsNl root) : this._root = root, super.internal(root);
 
 	final TranslationsNl _root; // ignore: unused_field
 
@@ -3209,8 +3228,8 @@ class _Translations$downloads$groupings$nl extends Translations$downloads$groupi
 }
 
 // Path: companionRemote.session
-class _Translations$companionRemote$session$nl extends Translations$companionRemote$session$en {
-	_Translations$companionRemote$session$nl._(TranslationsNl root) : this._root = root, super.internal(root);
+class _TranslationsCompanionRemoteSessionNl extends TranslationsCompanionRemoteSessionEn {
+	_TranslationsCompanionRemoteSessionNl._(TranslationsNl root) : this._root = root, super.internal(root);
 
 	final TranslationsNl _root; // ignore: unused_field
 
@@ -3230,8 +3249,8 @@ class _Translations$companionRemote$session$nl extends Translations$companionRem
 }
 
 // Path: companionRemote.pairing
-class _Translations$companionRemote$pairing$nl extends Translations$companionRemote$pairing$en {
-	_Translations$companionRemote$pairing$nl._(TranslationsNl root) : this._root = root, super.internal(root);
+class _TranslationsCompanionRemotePairingNl extends TranslationsCompanionRemotePairingEn {
+	_TranslationsCompanionRemotePairingNl._(TranslationsNl root) : this._root = root, super.internal(root);
 
 	final TranslationsNl _root; // ignore: unused_field
 
@@ -3254,8 +3273,8 @@ class _Translations$companionRemote$pairing$nl extends Translations$companionRem
 }
 
 // Path: companionRemote.remote
-class _Translations$companionRemote$remote$nl extends Translations$companionRemote$remote$en {
-	_Translations$companionRemote$remote$nl._(TranslationsNl root) : this._root = root, super.internal(root);
+class _TranslationsCompanionRemoteRemoteNl extends TranslationsCompanionRemoteRemoteEn {
+	_TranslationsCompanionRemoteRemoteNl._(TranslationsNl root) : this._root = root, super.internal(root);
 
 	final TranslationsNl _root; // ignore: unused_field
 
@@ -3290,8 +3309,8 @@ class _Translations$companionRemote$remote$nl extends Translations$companionRemo
 }
 
 // Path: companionRemote.errors
-class _Translations$companionRemote$errors$nl extends Translations$companionRemote$errors$en {
-	_Translations$companionRemote$errors$nl._(TranslationsNl root) : this._root = root, super.internal(root);
+class _TranslationsCompanionRemoteErrorsNl extends TranslationsCompanionRemoteErrorsEn {
+	_TranslationsCompanionRemoteErrorsNl._(TranslationsNl root) : this._root = root, super.internal(root);
 
 	final TranslationsNl _root; // ignore: unused_field
 
@@ -3307,8 +3326,8 @@ class _Translations$companionRemote$errors$nl extends Translations$companionRemo
 }
 
 // Path: services.names
-class _Translations$services$names$nl extends Translations$services$names$en {
-	_Translations$services$names$nl._(TranslationsNl root) : this._root = root, super.internal(root);
+class _TranslationsServicesNamesNl extends TranslationsServicesNamesEn {
+	_TranslationsServicesNamesNl._(TranslationsNl root) : this._root = root, super.internal(root);
 
 	final TranslationsNl _root; // ignore: unused_field
 
@@ -3321,8 +3340,8 @@ class _Translations$services$names$nl extends Translations$services$names$en {
 }
 
 // Path: services.simklReconnect
-class _Translations$services$simklReconnect$nl extends Translations$services$simklReconnect$en {
-	_Translations$services$simklReconnect$nl._(TranslationsNl root) : this._root = root, super.internal(root);
+class _TranslationsServicesSimklReconnectNl extends TranslationsServicesSimklReconnectEn {
+	_TranslationsServicesSimklReconnectNl._(TranslationsNl root) : this._root = root, super.internal(root);
 
 	final TranslationsNl _root; // ignore: unused_field
 
@@ -3332,8 +3351,8 @@ class _Translations$services$simklReconnect$nl extends Translations$services$sim
 }
 
 // Path: services.deviceCode
-class _Translations$services$deviceCode$nl extends Translations$services$deviceCode$en {
-	_Translations$services$deviceCode$nl._(TranslationsNl root) : this._root = root, super.internal(root);
+class _TranslationsServicesDeviceCodeNl extends TranslationsServicesDeviceCodeEn {
+	_TranslationsServicesDeviceCodeNl._(TranslationsNl root) : this._root = root, super.internal(root);
 
 	final TranslationsNl _root; // ignore: unused_field
 
@@ -3347,8 +3366,8 @@ class _Translations$services$deviceCode$nl extends Translations$services$deviceC
 }
 
 // Path: services.oauthProxy
-class _Translations$services$oauthProxy$nl extends Translations$services$oauthProxy$en {
-	_Translations$services$oauthProxy$nl._(TranslationsNl root) : this._root = root, super.internal(root);
+class _TranslationsServicesOauthProxyNl extends TranslationsServicesOauthProxyEn {
+	_TranslationsServicesOauthProxyNl._(TranslationsNl root) : this._root = root, super.internal(root);
 
 	final TranslationsNl _root; // ignore: unused_field
 
@@ -3359,8 +3378,8 @@ class _Translations$services$oauthProxy$nl extends Translations$services$oauthPr
 }
 
 // Path: services.pendingAuth
-class _Translations$services$pendingAuth$nl extends Translations$services$pendingAuth$en {
-	_Translations$services$pendingAuth$nl._(TranslationsNl root) : this._root = root, super.internal(root);
+class _TranslationsServicesPendingAuthNl extends TranslationsServicesPendingAuthEn {
+	_TranslationsServicesPendingAuthNl._(TranslationsNl root) : this._root = root, super.internal(root);
 
 	final TranslationsNl _root; // ignore: unused_field
 
@@ -3370,8 +3389,8 @@ class _Translations$services$pendingAuth$nl extends Translations$services$pendin
 }
 
 // Path: services.libraryFilter
-class _Translations$services$libraryFilter$nl extends Translations$services$libraryFilter$en {
-	_Translations$services$libraryFilter$nl._(TranslationsNl root) : this._root = root, super.internal(root);
+class _TranslationsServicesLibraryFilterNl extends TranslationsServicesLibraryFilterEn {
+	_TranslationsServicesLibraryFilterNl._(TranslationsNl root) : this._root = root, super.internal(root);
 
 	final TranslationsNl _root; // ignore: unused_field
 
@@ -3390,2326 +3409,2352 @@ class _Translations$services$libraryFilter$nl extends Translations$services$libr
 	@override String get noLibraries => 'Geen bibliotheken beschikbaar';
 }
 
-/// The flat map containing all translations for locale <nl>.
+/// Flat map(s) containing all translations.
 /// Only for edge cases! For simple maps, use the map function of this library.
-///
-/// The Dart AOT compiler has issues with very large switch statements,
-/// so the map is split into smaller functions (512 entries each).
 extension on TranslationsNl {
 	dynamic _flatMapFunction(String path) {
-		return switch (path) {
-			'app.title' => 'Plezy',
-			'appIcon.title' => 'App-icoon',
-			'appIcon.defaultIcon' => 'Standaard',
-			'appIcon.current' => 'Huidig icoon',
-			'appIcon.locked' => 'Onderdeel van het Thema- en iconenpakket',
-			'appIcon.lockedHint' => 'Alternatieve iconen zijn onderdeel van het Thema- en iconenpakket.',
-			'appIcon.changeFailed' => 'Het app-icoon kon niet worden gewijzigd',
-			'appIcon.launcherHint' => 'Het nieuwe icoon verschijnt op je beginscherm zodra je Plezy verlaat.',
-			'appIcon.tvLauncherHint' => 'De nieuwe banner verschijnt zodra je Plezy verlaat. Android TV kan de oude blijven tonen totdat de tv opnieuw is opgestart.',
-			'appIcon.names.midnight' => 'Middernacht',
-			'appIcon.names.ember' => 'Sintel',
-			'appIcon.names.paper' => 'Papier',
-			'appIcon.names.oled' => 'OLED',
-			'appIcon.names.line' => 'Lijn',
-			'appIcon.names.ocean' => 'Oceaan',
-			'appIcon.names.ultraviolet' => 'Ultraviolet',
-			'appIcon.names.matcha' => 'Matcha',
-			'appIcon.names.sunset' => 'Zonsondergang',
-			'appIcon.names.gold' => 'Goud',
-			'appIcon.names.titanium' => 'Titanium',
-			'appIcon.names.glass' => 'Glas',
-			'appIcon.names.crt' => 'CRT',
-			'appIcon.names.vhs' => 'VHS',
-			'appIcon.names.synthwave' => 'Synthwave',
-			'appIcon.names.pixel' => 'Pixel',
-			'appIcon.names.neon' => 'Neon',
-			'appIcon.names.sticker' => 'Sticker',
-			'appIcon.names.ticket' => 'Kaartje',
-			'appIcon.names.pop' => 'Pop',
-			'appIcon.names.strata' => 'Lagen',
-			'appIcon.names.facet' => 'Facet',
-			'appIcon.names.tilde' => 'Tilde',
-			'auth.signInWithPlex' => 'Inloggen met Plex',
-			'auth.showQRCode' => 'Toon QR-code',
-			'auth.authenticate' => 'Authenticeren',
-			'auth.authenticationTimeout' => 'Authenticatie verlopen. Probeer opnieuw.',
-			'auth.scanQRToSignIn' => 'Scan deze QR-code om in te loggen',
-			'auth.waitingForAuth' => 'Wachten op authenticatie...\nMeld je aan via je browser.',
-			'auth.useBrowser' => 'Gebruik browser',
-			'auth.or' => 'of',
-			'auth.connectToMediaBrowser' => ({required Object product}) => 'Verbinding maken met ${product}',
-			'auth.quickConnect' => 'Quick Connect',
-			'auth.useQuickConnect' => 'Quick Connect gebruiken',
-			'auth.quickConnectInstructions' => 'Open Quick Connect in Jellyfin en voer deze code in.',
-			'auth.quickConnectWaiting' => 'Wachten op goedkeuring…',
-			'auth.quickConnectCancel' => 'Annuleren',
-			'auth.quickConnectExpired' => 'Quick Connect is verlopen. Probeer opnieuw.',
-			'auth.localDataRecoveryRequired' => 'Plezy kon lokale aanmeldings- en openstaande afspeelgegevens niet veilig herstellen. Meld je opnieuw aan.',
-			'auth.pinCheckRejected' => 'De controle van de Plex-pincode is geweigerd',
-			'common.cancel' => 'Annuleren',
-			'common.save' => 'Opslaan',
-			'common.close' => 'Sluiten',
-			'common.clear' => 'Wissen',
-			'common.reset' => 'Resetten',
-			'common.later' => 'Later',
-			'common.submit' => 'Verzenden',
-			'common.confirm' => 'Bevestigen',
-			'common.retry' => 'Opnieuw proberen',
-			'common.logout' => 'Uitloggen',
-			'common.unknown' => 'Onbekend',
-			'common.refresh' => 'Vernieuwen',
-			'common.yes' => 'Ja',
-			'common.no' => 'Nee',
-			'common.delete' => 'Verwijderen',
-			'common.edit' => 'Bewerken',
-			'common.shuffle' => 'Willekeurig',
-			'common.addTo' => 'Toevoegen aan...',
-			'common.createNew' => 'Nieuw aanmaken',
-			'common.connect' => 'Verbinden',
-			'common.disconnect' => 'Verbinding verbreken',
-			'common.play' => 'Afspelen',
-			'common.pause' => 'Pauzeren',
-			'common.resume' => 'Hervatten',
-			'common.error' => 'Fout',
-			'common.search' => 'Zoeken',
-			'common.home' => 'Home',
-			'common.back' => 'Terug',
-			'common.settings' => 'Instellingen',
-			'common.mute' => 'Dempen',
-			'common.ok' => 'OK',
-			'common.off' => 'Uit',
-			'common.options' => 'Opties',
-			'common.seasonNumber' => ({required Object number}) => 'Seizoen ${number}',
-			'common.episodeNumberTitle' => ({required Object number, required Object title}) => 'Aflevering ${number} - ${title}',
-			'common.chapterNumber' => ({required Object number}) => 'Hoofdstuk ${number}',
-			'common.reconnect' => 'Opnieuw verbinden',
-			'common.viewAll' => 'Alles weergeven',
-			'common.checkingNetwork' => 'Netwerk controleren...',
-			'common.loadingServers' => 'Servers laden...',
-			'common.connectingToServers' => 'Verbinden met servers...',
-			'common.startingOfflineMode' => 'Offlinemodus starten...',
-			'common.loading' => 'Laden...',
-			'common.fullscreen' => 'Volledig scherm',
-			'common.exitFullscreen' => 'Volledig scherm verlaten',
-			'common.pressBackAgainToExit' => 'Druk nogmaals op terug om af te sluiten',
-			'common.ratingSource.critic' => 'Critici',
-			'common.ratingSource.audience' => 'Publiek',
-			'common.ratingSource.imdb' => 'IMDb',
-			'common.ratingSource.tmdb' => 'TMDB',
-			'common.ratingSource.rottenTomatoes' => 'Rotten Tomatoes',
-			'common.ratingSource.simkl' => 'Simkl',
-			'common.ratingSource.mal' => 'MyAnimeList',
-			'common.ratingSource.anilist' => 'AniList',
-			'common.ratingSource.trakt' => 'Trakt',
-			'common.ratingSource.rottenTomatoesCritic' => 'Rotten Tomatoes-critici',
-			'common.ratingSource.rottenTomatoesAudience' => 'Rotten Tomatoes-publiek',
-			'common.ratingSource.metacritic' => 'Metacritic',
-			'common.ratingSource.letterboxd' => 'Letterboxd',
-			'common.notAvailable' => 'N/A',
-			'common.url' => 'URL',
-			'common.letterKeys' => 'ABC',
-			'common.mediaKind.movie' => 'Film',
-			'common.mediaKind.show' => 'Serie',
-			'common.mediaKind.season' => 'Seizoen',
-			'common.mediaKind.episode' => 'Aflevering',
-			'common.mediaKind.artist' => 'Artiest',
-			'common.mediaKind.album' => 'Album',
-			'common.mediaKind.track' => 'Nummer',
-			'common.mediaKind.collection' => 'Collectie',
-			'common.mediaKind.playlist' => 'Afspeellijst',
-			'common.mediaKind.clip' => 'Clip',
-			'common.mediaKind.photo' => 'Foto',
-			'common.mediaKind.folder' => 'Map',
-			'screens.licenses' => 'Licenties',
-			'screens.switchProfile' => 'Wissel van profiel',
-			'screens.subtitleStyling' => 'Ondertitelopmaak',
-			'screens.mpvConfig' => 'mpv.conf',
-			'screens.logs' => 'Logbestanden',
-			'update.available' => 'Update beschikbaar',
-			'update.versionAvailable' => ({required Object version}) => 'Versie ${version} is beschikbaar',
-			'update.currentVersion' => ({required Object version}) => 'Huidig: ${version}',
-			'update.skipVersion' => 'Deze versie overslaan',
-			'update.viewRelease' => 'Bekijk release',
-			'update.latestVersion' => 'Je hebt de nieuwste versie',
-			'update.checkFailed' => 'Kon niet controleren op updates',
-			'supporter.title' => 'Thema- en iconenpakket',
-			'supporter.intro' => 'Een optionele eenmalige aankoop met cosmetische extra\'s:',
-			'supporter.presetThemes' => 'Kant-en-klare thema\'s',
-			'supporter.presetThemesDescription' => 'Sintel, Gletsjer, Woud, Pruim en Papier',
-			'supporter.customTheme' => 'Aangepast thema',
-			'supporter.customThemeDescription' => 'Kies elke kleur zelf',
-			'supporter.appIcons' => 'App-iconen',
-			'supporter.appIconsDescription' => 'Kies een alternatief Plezy-icoon',
-			'supporter.buy' => ({required Object price}) => 'Kopen voor ${price}',
-			'supporter.loadingPrice' => 'Prijs laden...',
-			'supporter.restore' => 'Aankopen herstellen',
-			'supporter.pending' => 'Je aankoop wacht op betaling of goedkeuring. De extra\'s worden ontgrendeld zodra de store de aankoop afrondt.',
-			'supporter.thankYouTitle' => 'Bedankt voor je aankoop',
-			'supporter.thankYouBody' => 'Het Thema- en iconenpakket is ontgrendeld.',
-			'supporter.tileSubtitle' => 'Ontgrendel thema\'s en app-iconen met een eenmalige aankoop',
-			'supporter.tileSubtitleThemesOnly' => 'Ontgrendel thema\'s met een eenmalige aankoop',
-			'supporter.tileUnlocked' => 'Ontgrendeld — bedankt voor je aankoop',
-			'supporter.errors.storeUnavailable' => 'Aankopen zijn niet beschikbaar. Controleer of je bent aangemeld bij de store en of aankopen op dit apparaat zijn toegestaan.',
-			'supporter.errors.productNotFound' => 'Het Thema- en iconenpakket is momenteel niet beschikbaar in jouw store.',
-			'supporter.errors.productQueryFailed' => 'De prijs kon niet worden geladen. Controleer je verbinding en probeer het opnieuw.',
-			'supporter.errors.purchaseFailed' => 'De aankoop is niet gelukt. Probeer het opnieuw.',
-			'supporter.errors.restoreFailed' => 'De store kon niet worden bereikt om je aankoop te herstellen. Probeer het opnieuw.',
-			'supporter.errors.nothingToRestore' => 'Er is geen aankoop van het Thema- en iconenpakket gevonden voor dit store-account.',
-			'settings.title' => 'Instellingen',
-			'settings.supportDeveloper' => 'Steun Plezy',
-			'settings.supportDeveloperDescription' => 'Doneer via Liberapay om de ontwikkeling te steunen',
-			'settings.language' => 'Taal',
-			'settings.theme' => 'Thema',
-			'settings.appearance' => 'Uiterlijk',
-			'settings.videoPlayback' => 'Video afspelen',
-			'settings.videoPlaybackDescription' => 'Afspeelgedrag configureren',
-			'settings.advanced' => 'Geavanceerd',
-			'settings.episodePosterMode' => 'Stijl van afleveringsposter',
-			'settings.seriesPoster' => 'Serieposter',
-			'settings.seasonPoster' => 'Seizoensposter',
-			'settings.episodeThumbnail' => 'Miniatuur',
-			'settings.showHeroSectionDescription' => 'Toon de carrousel met uitgelichte inhoud op het startscherm',
-			'settings.secondsLabel' => 'Seconden',
-			'settings.minutesLabel' => 'Minuten',
-			'settings.secondsShort' => 's',
-			'settings.minutesShort' => 'm',
-			'settings.durationHint' => ({required Object min, required Object max}) => 'Voer duur in (${min}-${max})',
-			'settings.systemTheme' => 'Systeem',
-			'settings.lightTheme' => 'Licht',
-			'settings.darkTheme' => 'Donker',
-			'settings.oledTheme' => 'OLED',
-			'settings.emberTheme' => 'Sintel',
-			'settings.glacierTheme' => 'Gletsjer',
-			'settings.forestTheme' => 'Woud',
-			'settings.plumTheme' => 'Pruim',
-			'settings.paperTheme' => 'Papier',
-			'settings.libraryDensity' => 'Bibliotheekdichtheid',
-			'settings.displayScale' => 'Weergaveschaal',
-			'settings.compact' => 'Compact',
-			'settings.comfortable' => 'Comfortabel',
-			'settings.gridSpacing' => 'Rasterafstand',
-			'settings.gridSpacingTight' => 'Compact',
-			'settings.gridSpacingNormal' => 'Normaal',
-			'settings.gridSpacingSpacious' => 'Ruim',
-			'settings.tvCornerSpotlightBackdrop' => 'Uitgelichte achtergrond in de hoek',
-			'settings.tvCornerSpotlightBackdropDescription' => 'Toon de uitgelichte afbeelding rechtsboven in plaats van schermvullend',
-			'settings.viewMode' => 'Weergavemodus',
-			'settings.gridView' => 'Raster',
-			'settings.listView' => 'Lijst',
-			'settings.showHeroSection' => 'Toon hoofdsectie',
-			'settings.continueWatchingAction' => 'Actie voor \'Doorgaan met kijken\'',
-			'settings.continueWatchingPlay' => 'Afspelen',
-			'settings.continueWatchingDetails' => 'Details openen',
-			'settings.episodeAction' => 'Afleveringsactie',
-			'settings.episodePlay' => 'Afspelen',
-			'settings.episodeDetails' => 'Details openen',
-			'settings.useGlobalHubs' => 'Startlayout gebruiken',
-			'settings.useGlobalHubsDescription' => 'Toon gecombineerde hubs op het startscherm. Gebruik anders bibliotheekaanbevelingen.',
-			'settings.showServerNameOnHubs' => 'Servernaam tonen bij hubs',
-			'settings.showServerNameOnHubsDescription' => 'Toon servernamen altijd in hubtitels.',
-			'settings.groupLibrariesByServer' => 'Bibliotheken groeperen per server',
-			'settings.groupLibrariesByServerDescription' => 'Groepeer zijbalkbibliotheken onder elke mediaserver.',
-			'settings.alwaysKeepSidebarOpen' => 'Zijbalk altijd open houden',
-			'settings.alwaysKeepSidebarOpenDescription' => 'Zijbalk blijft uitgevouwen en inhoudsgebied past zich aan',
-			'settings.showUnwatchedCount' => 'Aantal ongekeken tonen',
-			'settings.showUnwatchedCountDescription' => 'Toon aantal ongekeken afleveringen bij series en seizoenen',
-			'settings.showWatchedIndicators' => 'Bekeken-markeringen tonen',
-			'settings.showWatchedIndicatorsDescription' => 'Toon een vinkje op bekeken films, series en afleveringen',
-			'settings.showEpisodeNumberOnCards' => 'Afleveringsnummer op kaarten tonen',
-			'settings.showEpisodeNumberOnCardsDescription' => 'Toon seizoen- en afleveringsnummer op afleveringskaarten',
-			'settings.showSeasonPostersOnTabs' => 'Toon seizoensposters op tabbladen',
-			'settings.showSeasonPostersOnTabsDescription' => 'Toon de poster van elk seizoen boven het tabblad',
-			'settings.tvFullCardLayout' => 'Volledige tv-kaarten',
-			'settings.tvFullCardLayoutDescription' => 'Gebruik tv-kaarten met alleen afbeeldingen en namen van acteurs als overlay',
-			'settings.focusGlow' => 'Focusgloed',
-			'settings.focusGlowDescription' => 'Toon een zachte gloed rond de kaart met focus',
-			'settings.visualEffects' => 'Visuele effecten',
-			'settings.visualEffectsAuto' => 'Automatisch',
-			'settings.visualEffectsAutoDescription' => 'Effecten automatisch verminderen op apparaten met laag vermogen',
-			'settings.visualEffectsFull' => 'Volledig',
-			'settings.visualEffectsReduced' => 'Verminderd',
-			'settings.visualEffectsReducedDescription' => 'Minder animaties en illustraties met lagere resolutie',
-			'settings.hideSpoilers' => 'Spoilers voor ongekeken afleveringen verbergen',
-			'settings.hideSpoilersDescription' => 'Vervaag miniaturen en beschrijvingen van ongekeken afleveringen',
-			'settings.playerBackend' => 'Afspeelbackend',
-			'settings.exoPlayer' => 'ExoPlayer',
-			'settings.mpv' => 'mpv',
-			'settings.hardwareDecoding' => 'Hardwaredecodering',
-			'settings.hardwareDecodingDescription' => 'Gebruik hardwareversnelling indien beschikbaar',
-			'settings.playbackBuffer' => 'Afspeelbuffer',
-			'settings.playbackBufferAuto' => 'Auto (aanbevolen)',
-			'settings.playbackBufferLarge' => 'Groot',
-			'settings.playbackBufferExtraLarge' => 'Extra groot',
-			'settings.playbackBufferDescription' => 'Buffert meer tegen onstabiele verbindingen. Ook beperkt door de buffergrootte.',
-			'settings.defaultQualityTitle' => 'Standaardkwaliteit',
-			'settings.cellularQualityTitle' => 'Standaardkwaliteit bij mobiele data',
-			'settings.cellularQualitySameAsDefault' => 'Zelfde als standaardkwaliteit',
-			'settings.directPlayCoveredQuality' => 'Kleinere video\'s op originele kwaliteit afspelen',
-			'settings.directPlayCoveredQualityDescription' => 'Speel video\'s die al binnen de kwaliteitslimiet vallen direct af in plaats van ze te transcoderen',
-			'settings.videoCodecs' => 'Videocodecs',
-			'settings.videoCodecsDescription' => 'Niet-aangevinkte codecs worden door de server getranscodeerd',
-			'settings.videoCodecsAlwaysAccepted' => 'Altijd geaccepteerd',
-			'settings.musicQualityTitle' => 'Muziekkwaliteit',
-			'settings.subtitleStyling' => 'Ondertitelopmaak',
-			'settings.subtitleStylingDescription' => 'Pas de weergave van ondertitels aan',
-			'settings.smallSkipDuration' => 'Korte sprong',
-			'settings.largeSkipDuration' => 'Lange sprong',
-			'settings.rewindOnResume' => 'Terugspoelen bij hervatten',
-			'settings.secondsUnit' => ({required Object seconds}) => '${seconds} seconden',
-			'settings.defaultSleepTimer' => 'Standaardslaaptimer',
-			'settings.minutesUnit' => ({required Object minutes}) => '${minutes} minuten',
-			'settings.rememberTrackSelections' => 'Trackselecties per serie of film onthouden',
-			'settings.rememberTrackSelectionsDescription' => 'Onthoud audio- en ondertitelkeuzes per titel',
-			'settings.rememberTrackSelectionsBackendRule' => 'Plex slaat elke keuze per bestand op de server op; Jellyfin schakelt ook de accountoptie \'Selecties onthouden\' in; Emby wordt niet ondersteund',
-			'settings.followServerTrackSelections' => 'Trackselecties van de server per aflevering gebruiken',
-			'settings.followServerTrackSelectionsDescription' => 'Pas bij het wisselen van aflevering de op de server geselecteerde audio en ondertitels toe in plaats van de huidige keuze over te nemen',
-			'settings.resumeMusicOnLaunch' => 'Muzieksessie onthouden',
-			'settings.resumeMusicOnLaunchDescription' => 'Open bij het starten van de app het laatste nummer gepauzeerd waar het gebleven was',
-			'settings.showChapterMarkersOnTimeline' => 'Hoofdstukmarkeringen op tijdlijn tonen',
-			'settings.showChapterMarkersOnTimelineDescription' => 'Verdeel de tijdlijn bij hoofdstukgrenzen',
-			'settings.specialsOrdering' => 'Specials in afleveringsvolgorde',
-			'settings.specialsOrderingDescription' => 'Waar specials worden afgespeeld in de kijkvolgorde van een serie',
-			'settings.specialsOrderingServer' => 'Servervolgorde volgen',
-			'settings.specialsOrderingAirDate' => 'Op uitzenddatum invoegen',
-			'settings.specialsOrderingLast' => 'Na reguliere seizoenen',
-			'settings.clickVideoTogglesPlayback' => 'Klik op de video om afspelen of pauzeren te wisselen',
-			'settings.clickVideoTogglesPlaybackDescription' => 'Klik op de video om af te spelen of te pauzeren in plaats van de bediening te tonen.',
-			'settings.videoPlayerControls' => 'Videospelerbediening',
-			'settings.keyboardShortcuts' => 'Toetsenbordsneltoetsen',
-			'settings.keyboardShortcutsDescription' => 'Pas de toetsenbordsneltoetsen aan',
-			'settings.videoPlayerNavigation' => 'Videospelernavigatie',
-			'settings.videoPlayerNavigationDescription' => 'Gebruik de pijltjestoetsen om door de videospelerbediening te navigeren',
-			'settings.watchTogetherRelay' => 'Relay voor Samen kijken',
-			'settings.watchTogetherRelayDescription' => 'Openbare Open Watch Party-relays, tenzij je een eigen relay instelt',
-			'settings.watchTogetherRelayHint' => 'https://mijn-relay.voorbeeld.nl',
-			'settings.watchTogetherRelayInvalid' => 'Voer een geldige HTTP- of HTTPS-basis-URL voor de relay in.',
-			'settings.crashReporting' => 'Crashrapportage',
-			'settings.crashReportingDescription' => 'Crashrapporten verzenden om de app te verbeteren',
-			'settings.debugLogging' => 'Debuglogboek',
-			'settings.debugLoggingDescription' => 'Schakel gedetailleerde logboekregistratie in om problemen op te lossen',
-			'settings.viewLogs' => 'Logbestanden bekijken',
-			'settings.viewLogsDescription' => 'Logbestanden van de app bekijken',
-			'settings.clearImageCache' => 'Afbeeldingscache wissen',
-			'settings.clearImageCacheDescription' => 'Gecachte artwork en miniaturen wissen. Afbeeldingen kunnen langzamer laden tot ze opnieuw zijn gedownload.',
-			'settings.clearImageCacheSuccess' => 'Afbeeldingscache succesvol gewist',
-			'settings.resetSettings' => 'Instellingen resetten',
-			'settings.resetSettingsDescription' => 'Standaardinstellingen herstellen. Dit kan niet ongedaan worden gemaakt.',
-			'settings.resetSettingsSuccess' => 'Instellingen succesvol gereset',
-			'settings.backup' => 'Back-up',
-			'settings.exportSettings' => 'Instellingen exporteren',
-			'settings.exportSettingsDescription' => 'Sla je voorkeuren op in een bestand',
-			'settings.exportSettingsSuccess' => 'Instellingen geëxporteerd',
-			'settings.importSettings' => 'Instellingen importeren',
-			'settings.importSettingsDescription' => 'Voorkeuren herstellen vanuit een bestand',
-			'settings.importSettingsConfirm' => 'Hiermee worden je huidige instellingen vervangen. Doorgaan?',
-			'settings.importSettingsSuccess' => 'Instellingen geïmporteerd',
-			'settings.importSettingsInvalidFile' => 'Dit bestand is geen geldige Plezy-export',
-			'settings.importSettingsNoUser' => 'Meld je aan voordat je instellingen importeert',
-			'settings.shortcutsReset' => 'Sneltoetsen gereset naar standaard',
-			'settings.resetShortcutsConfirm' => 'Hiermee worden je aangepaste sneltoetsen vervangen door de standaardinstellingen. Doorgaan?',
-			'settings.about' => 'Over',
-			'settings.aboutDescription' => 'App-informatie en licenties',
-			'settings.updates' => 'Updates',
-			'settings.updateAvailable' => 'Update beschikbaar',
-			'settings.checkForUpdates' => 'Controleer op updates',
-			'settings.autoCheckUpdatesOnStartup' => 'Automatisch controleren op updates bij opstarten',
-			'settings.autoCheckUpdatesOnStartupDescription' => 'Melden wanneer er bij start een update beschikbaar is',
-			'settings.validationErrorEnterNumber' => 'Voer een geldig nummer in',
-			'settings.validationErrorDuration' => ({required Object min, required Object max, required Object unit}) => 'Duur moet tussen ${min} en ${max} ${unit} zijn',
-			'settings.shortcutAlreadyAssigned' => ({required Object action}) => 'Sneltoets al toegewezen aan ${action}',
-			'settings.shortcutUpdated' => ({required Object action}) => 'Sneltoets bijgewerkt voor ${action}',
-			'settings.saveFailed' => 'Wijzigingen konden niet worden opgeslagen. Probeer het opnieuw.',
-			'settings.autoPlayAndSkip' => 'Automatisch afspelen en overslaan',
-			'settings.autoPlayNextEpisode' => 'Volgende aflevering automatisch afspelen',
-			'settings.autoPlayNextEpisodeDescription' => 'Start de volgende aflevering automatisch wanneer een aflevering eindigt',
-			'settings.shuffleStartsFromBeginning' => 'Willekeurig afspelen begint vooraan',
-			'settings.shuffleStartsFromBeginningDescription' => 'Start elke aflevering bij willekeurig afspelen vanaf het begin in plaats van te hervatten',
-			'settings.playNextCountdown' => 'Aftellen voor volgende aflevering',
-			'settings.playNextCountdownImmediate' => 'Direct afspelen',
-			'settings.skipIntroMode' => 'Intro overslaan',
-			'settings.skipIntroModeOffDescription' => 'Speel intro\'s normaal af zonder overslaan-knop',
-			'settings.skipIntroModeButtonDescription' => 'Toon een overslaan-knop wanneer een intro begint',
-			'settings.skipIntroModeAutoDescription' => 'Sla intro\'s automatisch over na de onderstaande vertraging',
-			'settings.skipCreditsMode' => 'Aftiteling overslaan',
-			'settings.skipCreditsModeOffDescription' => 'Speel de aftiteling normaal af zonder overslaan-knop',
-			'settings.skipCreditsModeButtonDescription' => 'Toon een overslaan-knop wanneer de aftiteling begint',
-			'settings.skipCreditsModeAutoDescription' => 'Sla de aftiteling automatisch over en speel de volgende aflevering af',
-			'settings.skipMarkerModeOff' => 'Uit',
-			'settings.skipMarkerModeButton' => 'Knop tonen',
-			'settings.skipMarkerModeAuto' => 'Automatisch',
-			'settings.forceSkipMarkerFallback' => 'Reservemarkeringen afdwingen',
-			'settings.forceSkipMarkerFallbackDescription' => 'Gebruik patronen in hoofdstuktitels, zelfs wanneer Plex markeringen heeft',
-			'settings.autoSkipDelay' => 'Vertraging voor automatisch overslaan',
-			'settings.autoSkipDelayDescription' => ({required Object seconds}) => '${seconds} seconden wachten voor automatisch overslaan',
-			'settings.introPattern' => 'Intromarkeringspatroon',
-			'settings.introPatternDescription' => 'Reguliere expressie om intromarkeringen in hoofdstuktitels te herkennen',
-			'settings.creditsPattern' => 'Aftitelingmarkeringspatroon',
-			'settings.creditsPatternDescription' => 'Reguliere expressie om aftitelingmarkeringen in hoofdstuktitels te herkennen',
-			'settings.invalidRegex' => 'Ongeldige reguliere expressie',
-			'settings.regex' => 'Reguliere expressie',
-			'settings.downloads' => 'Downloads',
-			'settings.downloadLocationDescription' => 'Kies waar gedownloade inhoud wordt opgeslagen',
-			'settings.downloadLocationDefault' => 'Standaard (app-opslag)',
-			'settings.downloadLocationCustom' => 'Aangepaste locatie',
-			'settings.selectFolder' => 'Map selecteren',
-			'settings.resetToDefault' => 'Standaardinstelling herstellen',
-			'settings.currentPath' => ({required Object path}) => 'Huidig: ${path}',
-			'settings.downloadLocationChanged' => 'Downloadlocatie gewijzigd',
-			'settings.downloadLocationReset' => 'Downloadlocatie hersteld naar standaard',
-			'settings.downloadLocationInvalid' => 'Geselecteerde map is niet beschrijfbaar',
-			'settings.downloadLocationPickerUnavailable' => 'Mapselectie is niet beschikbaar op dit apparaat',
-			'settings.downloadOnWifiOnly' => 'Alleen via wifi downloaden',
-			'settings.downloadOnWifiOnlyDescription' => 'Voorkom downloads bij gebruik van mobiele data',
-			'settings.autoRemoveWatchedDownloads' => 'Bekeken downloads automatisch verwijderen',
-			'settings.autoRemoveWatchedDownloadsDescription' => 'Bekeken downloads automatisch verwijderen',
-			'settings.cellularDownloadBlocked' => 'Downloads via een mobiel netwerk zijn geblokkeerd. Gebruik wifi of wijzig de instelling.',
-			'settings.maxVolume' => 'Maximaal volume',
-			'settings.maxVolumeDescription' => 'Volume boven 100% toestaan voor stille media',
-			'settings.maxVolumePercent' => ({required Object percent}) => '${percent}%',
-			'settings.discordRichPresence' => 'Discord Rich Presence',
-			'settings.discordRichPresenceDescription' => 'Toon op Discord wat je aan het kijken bent',
-			'settings.services' => 'Diensten',
-			'settings.servicesDescription' => 'Koppel Trakt, MyAnimeList, Seerr en meer',
-			'settings.manageLibrariesDescription' => 'Bibliotheken herordenen en verbergen',
-			'settings.companionRemoteServer' => 'Companion Remote-server',
-			'settings.companionRemoteServerDescription' => 'Sta mobiele apparaten op je netwerk toe om deze app te bedienen',
-			'settings.companionRemoteServerStartFailed' => 'Kan de Companion Remote-server niet starten',
-			'settings.companionRemoteServerStopFailed' => 'Kan de Companion Remote-server niet stoppen',
-			'settings.autoPip' => 'Automatische beeld-in-beeld',
-			'settings.autoPipDescription' => 'Schakel over naar beeld-in-beeld als je tijdens het afspelen de app verlaat',
-			'settings.matchContentFrameRate' => 'Inhoudsframesnelheid afstemmen',
-			'settings.matchContentFrameRateDescription' => 'Stem schermverversing af op videocontent',
-			'settings.matchContentResolution' => 'Aanpassen aan resolutie van content',
-			'settings.matchContentResolutionDescription' => 'Schakelt het beeldscherm naar de eigen resolutie van de video, zodat je tv het opschalen doet. Menu\'s en ondertitels worden tijdens het afspelen ook opgeschaald',
-			'settings.matchRefreshRate' => 'Verversingssnelheid afstemmen',
-			'settings.matchRefreshRateDescription' => 'Stem schermverversing af in volledig scherm',
-			'settings.matchDynamicRange' => 'Dynamisch bereik afstemmen',
-			'settings.matchDynamicRangeDescription' => 'Schakel HDR in voor HDR-content en daarna terug naar SDR',
-			'settings.displaySwitchDelay' => 'Vertraging bij schermwisseling',
-			'settings.tunneledPlayback' => 'Getunnelde weergave',
-			'settings.tunneledPlaybackDescription' => 'Gebruik videotunneling. Schakel uit als HDR-afspelen zwart beeld geeft of beweging hapert.',
-			'settings.audioPassthrough' => 'Audio-doorvoer',
-			'settings.audioPassthroughDescription' => 'Stuur Dolby/DTS-audio zonder hercodering naar je receiver of tv en behoud surroundgeluid. Schakel uit als je geen geluid hebt.',
-			'settings.audioPassthroughDescriptionApple' => 'Gebruik de ingebouwde Dolby-decoder van Apple voor Dolby Digital Plus, inclusief Atmos. DTS en TrueHD worden nog steeds als meerkanaals-PCM afgespeeld. Schakel dit uit als je geen geluid hoort.',
-			'settings.audioPassthroughDescriptionAppleSpatial' => 'Gebruik de ingebouwde Dolby-decoder van Apple voor Dolby Digital Plus, inclusief Atmos. Op iOS, iPadOS en tvOS 26 of nieuwer worden TrueHD Atmos en DTS:X als ruimtelijke audio afgespeeld. Andere DTS- en TrueHD-sporen worden als meerkanaals-PCM afgespeeld. Schakel dit uit als je geen geluid hoort.',
-			'settings.audioPassthroughOverriddenByNormalization' => 'Uit zolang volumenormalisatie aan staat',
-			'settings.audioChannelLimit' => 'Audiokanalen',
-			'settings.audioChannelLimitDescription' => 'Downmix gedecodeerde audio voor luidsprekers, koptelefoons of HDMI-opstellingen die niet elk kanaal kunnen afspelen',
-			'settings.audioChannelLimitOriginal' => 'Origineel',
-			'settings.audioChannelLimitOriginalDescription' => 'Speel elk kanaal van het spoor af',
-			'settings.audioChannelLimitSurround51' => 'Tot 5.1',
-			'settings.audioChannelLimitSurround51Description' => 'Downmix 7.1 naar 5.1 voor tv\'s en receivers die alleen 5.1-PCM accepteren. Doorvoer wordt niet beïnvloed.',
-			'settings.audioChannelLimitStereo' => 'Stereo',
-			'settings.audioChannelLimitStereoDescription' => 'Downmix naar twee kanalen voor stereoluidsprekers of koptelefoons. Schakelt doorvoer uit.',
-			'settings.downmixCenterBoost' => 'Versterking middenkanaal',
-			'settings.downmixCenterBoostValue' => ({required Object db}) => '${db} dB',
-			'settings.downmixCenterBoostLabel' => 'Versterking (dB)',
-			'settings.downmixCenterBoostShort' => 'dB',
-			'settings.audioDownmixNormalize' => 'Volume normaliseren bij downmix',
-			'settings.audioDownmixNormalizeDescription' => 'Verlaagt de mix om clipping te voorkomen. Zet uit om het originele volume te behouden (kan vervormen bij luide scènes).',
-			'settings.dvConversionMode' => 'Dolby Vision-conversie',
-			'settings.dvConversionModeDescription' => 'Kies hoe Dolby Vision Profile 7-bestanden worden verwerkt.',
-			'settings.dvConversionAuto' => 'Automatisch',
-			'settings.dvConversionNative' => 'Native / uitgeschakeld',
-			'settings.dvConversionDv81' => 'P7 → P8.1',
-			'settings.dvConversionHevcStrip' => 'P7 → HEVC',
-			'settings.dvConversionAutoDescription' => 'Gebruik detectie van apparaatmogelijkheden en het normale terugvalgedrag',
-			'settings.dvConversionNativeDescription' => 'Dwing native DV7 af en voorkom een nieuwe poging met DV-conversie',
-			'settings.dvConversionDv81Description' => 'Dwing directe RPU-conversie naar Dolby Vision-profiel 8.1 af',
-			'settings.dvConversionHevcStripDescription' => 'Verwijder Dolby Vision RPU/EL-lagen en bied gewone HEVC aan',
-			'settings.disableDolbyVision' => 'Dolby Vision uitschakelen',
-			'settings.disableDolbyVisionDescription' => 'Speel de HDR10- of HLG-laag van het bestand af in plaats van Dolby Vision, indien aanwezig',
-			'settings.hdrSdrConversion' => 'HDR-naar-SDR-conversie',
-			'settings.hdrSdrConversionDescription' => 'Kies wat HDR-video omzet als het scherm geen HDR kan weergeven.',
-			'settings.hdrSdrConversionAuto' => 'Automatisch',
-			'settings.hdrSdrConversionAutoDescription' => 'Apparaat vanaf Android 9, speler op oudere versies',
-			'settings.hdrSdrConversionDevice' => 'Apparaat',
-			'settings.hdrSdrConversionDeviceDescription' => 'De videohardware van het apparaat zet het om. Het snelst, maar de kleuren hangen af van het apparaat',
-			'settings.hdrSdrConversionPlayer' => 'Speler',
-			'settings.hdrSdrConversionPlayerDescription' => 'De speler zet het om. Consistente kleuren, maar 4K kan haperen op eenvoudige tv-boxen',
-			'settings.deinterlace' => 'Deinterlacing',
-			'settings.deinterlaceDescription' => 'Verwijder kamartefacten uit interlaced video (alleen mpv-speler)',
-			'settings.deinterlaceOff' => 'Uit',
-			'settings.deinterlaceOffDescription' => 'Toon interlaced video zoals deze wordt gedecodeerd',
-			'settings.deinterlaceVideo' => 'Video',
-			'settings.deinterlaceVideoDescription' => 'Maak van elk veld een volledig beeld. Voor video die voor tv is opgenomen, zoals sport, nieuws en concerten',
-			'settings.deinterlaceFilm' => 'Film',
-			'settings.deinterlaceFilmDescription' => 'Herstel de originele beelden van film en animatie die met telecine naar 29,97 fps zijn omgezet, gebruikelijk op NTSC-DVD\'s. Video die voor tv is opgenomen, gaat haperen. Live-tv gebruikt Video',
-			'settings.requireProfileSelectionOnOpen' => 'Vraag om profiel bij openen',
-			'settings.requireProfileSelectionOnOpenDescription' => 'Toon profielselectie telkens wanneer de app wordt geopend',
-			'settings.forceTvMode' => 'Tv-modus afdwingen',
-			'settings.forceTvModeDescription' => 'Dwing de tv-indeling af op apparaten zonder automatische detectie. Herstart vereist.',
-			'settings.startInFullscreen' => 'Starten in volledig scherm',
-			'settings.startInFullscreenDescription' => 'Open Plezy bij het starten in volledig scherm',
-			'settings.exitFullscreenOnPlayerClose' => 'Volledig scherm verlaten bij sluiten van speler',
-			'settings.exitFullscreenOnPlayerCloseDescription' => 'Verlaat automatisch de volledigschermmodus wanneer de videospeler wordt gesloten',
-			'settings.autoHidePerformanceOverlay' => 'Prestatie-overlay automatisch verbergen',
-			'settings.autoHidePerformanceOverlayDescription' => 'Laat de prestatie-overlay samen met de afspeelknoppen vervagen',
-			'settings.showNavBarLabels' => 'Labels op navigatiebalk tonen',
-			'settings.showNavBarLabelsDescription' => 'Tekstlabels onder de pictogrammen op de navigatiebalk weergeven',
-			'settings.startupSection' => 'Opstartsectie',
-			'settings.showExploreTab' => 'Tabblad Ontdekken tonen',
-			'settings.showExploreTabDescription' => 'Toon het tabblad Ontdekken met content uit Plex Discover en gekoppelde trackers',
-			'settings.liveTvDefaultFavorites' => 'Standaard favoriete zenders',
-			'settings.liveTvDefaultFavoritesDescription' => 'Toon alleen favoriete zenders bij het openen van Live TV',
-			'settings.general' => 'Algemeen',
-			'settings.generalDescription' => 'Taal, opstart- en venstergedrag',
-			'settings.languageAndRegion' => 'Taal en regio',
-			'settings.startup' => 'Opstarten',
-			'settings.display' => 'Weergave',
-			'settings.libraryAndCards' => 'Bibliotheek en kaarten',
-			'settings.homeScreen' => 'Startscherm',
-			'settings.navigation' => 'Navigatie',
-			'settings.window' => 'Venster',
-			'settings.liveTv' => 'Live-tv',
-			'settings.player' => 'Speler',
-			'settings.videoAndDisplay' => 'Video en weergave',
-			'settings.audio' => 'Audio',
-			'settings.quality' => 'Kwaliteit',
-			'settings.subtitles' => 'Ondertitels',
-			'settings.seekAndTiming' => 'Spoelen en timing',
-			'settings.behavior' => 'Gedrag',
-			'settings.gestures' => 'Gebaren',
-			'settings.gestureBrightnessSwipe' => 'Vegen voor helderheid',
-			'settings.gestureBrightnessSwipeDescription' => 'Veeg op de linkerrand omhoog of omlaag om de helderheid aan te passen',
-			'settings.gestureVolumeSwipe' => 'Vegen voor volume',
-			'settings.gestureVolumeSwipeDescription' => 'Veeg op de rechterrand omhoog of omlaag om het volume aan te passen',
-			'settings.gesturePinchToZoom' => 'Knijpen om te zoomen',
-			'settings.gesturePinchToZoomDescription' => 'Knijp op de video om in of uit te zoomen',
-			'settings.rememberBrightnessLevel' => 'Helderheidsniveau onthouden',
-			'settings.rememberBrightnessLevelDescription' => 'Start het afspelen met de helderheid die met de laatste veeg is ingesteld',
-			'settings.controls' => 'Bediening',
-			'settings.rememberPlayerChanges' => 'Spelerwijzigingen onthouden',
-			'settings.rememberPlayerChangesDescription' => 'Waar een wijziging tijdens het afspelen wordt opgeslagen en opnieuw toegepast',
-			'settings.scopePlaybackSpeed' => 'Afspeelsnelheid',
-			'settings.scopeShaderPreset' => 'Shadervoorinstelling',
-			'settings.scopeAspectRatio' => 'Beeldverhouding',
-			'settings.scopeZoom' => 'Zoom',
-			'settings.scopeSyncOffsets' => 'Audio- en ondertitelsynchronisatie',
-			'settings.playerScopeOff' => 'Niet opslaan',
-			'settings.playerScopeGlobal' => 'Overal',
-			'settings.playerScopeLibrary' => 'Per bibliotheek',
-			'settings.playerScopeTitle' => 'Per serie of film',
-			'settings.exportDialogTitle' => 'Plezy-instellingen exporteren',
-			'themeEditor.builtIn' => 'Ingebouwd',
-			'themeEditor.presets' => 'Voorinstellingen',
-			'themeEditor.custom' => 'Aangepast',
-			'themeEditor.customEmpty' => 'Nog niet gemaakt',
-			'themeEditor.editCustom' => 'Aangepast thema bewerken',
-			'themeEditor.editCustomDescription' => 'Kies elke kleur zelf',
-			'themeEditor.locked' => 'Ontgrendelen met het Thema- en iconenpakket',
-			'themeEditor.savedLocked' => 'Opgeslagen — wordt ontgrendeld met het Thema- en iconenpakket',
-			'themeEditor.title' => 'Aangepast thema',
-			'themeEditor.startFrom' => 'Beginnen vanaf',
-			'themeEditor.startFromDescription' => 'Kopieer alle kleuren van een ander thema',
-			'themeEditor.colors' => 'Kleuren',
-			'themeEditor.preview' => 'Voorbeeld',
-			'themeEditor.slots.bg' => 'Achtergrond',
-			'themeEditor.slots.surface' => 'Oppervlak',
-			'themeEditor.slots.outline' => 'Rand',
-			'themeEditor.slots.text' => 'Tekst',
-			'themeEditor.slots.textMuted' => 'Secundaire tekst',
-			_ => null,
-		} ?? switch (path) {
-			'themeEditor.slots.accent' => 'Accent',
-			'themeEditor.opacity' => 'Dekking',
-			'themeEditor.hexHint' => '#RRGGBB of #AARRGGBB',
-			'themeEditor.fromOtherThemes' => 'Uit andere thema\'s',
-			'themeEditor.swatchLabel' => ({required Object color, required Object theme}) => '${color} van ${theme}',
-			'themeEditor.contrast.textOnBg' => 'Tekst op achtergrond',
-			'themeEditor.contrast.textOnSurface' => 'Tekst op oppervlak',
-			'themeEditor.contrast.textMutedOnBg' => 'Secundaire tekst op achtergrond',
-			'themeEditor.contrast.textMutedOnSurface' => 'Secundaire tekst op oppervlak',
-			'themeEditor.contrast.accentOnBg' => 'Accent op achtergrond',
-			'themeEditor.contrast.accentOnSurface' => 'Accent op oppervlak',
-			'themeEditor.contrast.labelOnAccent' => 'Knoptekst op accent',
-			'themeEditor.lowContrast' => ({required Object pair, required Object ratio, required Object minimum}) => '${pair}: ${ratio}:1, onder de aanbevolen ${minimum}:1',
-			'themeEditor.discardTitle' => 'Wijzigingen negeren?',
-			'themeEditor.discardMessage' => 'Je niet-opgeslagen kleurwijzigingen gaan verloren.',
-			'themeEditor.discard' => 'Negeren',
-			'themeEditor.previewCardTitle' => ({required Object number}) => 'Aflevering ${number}',
-			'themeEditor.previewCardSubtitle' => ({required Object minutes}) => 'Nog ${minutes} min',
-			'themeEditor.previewSwitch' => 'Automatisch afspelen',
-			'themeEditor.previewMutedText' => 'Secundaire tekst ziet er zo uit',
-			'search.hint' => 'Zoek films, series, muziek...',
-			'search.tryDifferentTerm' => 'Probeer een andere zoekterm',
-			'search.searchYourMedia' => 'Zoek in je media',
-			'search.enterTitleActorOrKeyword' => 'Voer een titel, acteur of trefwoord in',
-			'search.people' => 'Personen',
-			'hotkeys.setShortcutFor' => ({required Object actionName}) => 'Stel sneltoets in voor ${actionName}',
-			'hotkeys.clearShortcut' => 'Wis sneltoets',
-			'hotkeys.noShortcutSet' => 'Geen sneltoets ingesteld',
-			'hotkeys.currentShortcut' => 'Huidige sneltoets:',
-			'hotkeys.pressToRecord' => 'Selecteer om een sneltoets op te nemen',
-			'hotkeys.recordingShortcut' => 'Druk nu op de sneltoets',
-			'hotkeys.actions.playPause' => 'Afspelen/Pauzeren',
-			'hotkeys.actions.volumeUp' => 'Volume omhoog',
-			'hotkeys.actions.volumeDown' => 'Volume omlaag',
-			'hotkeys.actions.seekForward' => ({required Object seconds}) => 'Vooruitspoelen (${seconds}s)',
-			'hotkeys.actions.seekBackward' => ({required Object seconds}) => 'Terugspoelen (${seconds}s)',
-			'hotkeys.actions.fullscreenToggle' => 'Volledig scherm',
-			'hotkeys.actions.muteToggle' => 'Dempen',
-			'hotkeys.actions.subtitleToggle' => 'Ondertiteling',
-			'hotkeys.actions.audioTrackNext' => 'Volgende audiotrack',
-			'hotkeys.actions.subtitleTrackNext' => 'Volgende ondertiteltrack',
-			'hotkeys.actions.chapterNext' => 'Volgend hoofdstuk',
-			'hotkeys.actions.chapterPrevious' => 'Vorig hoofdstuk',
-			'hotkeys.actions.episodeNext' => 'Volgende aflevering',
-			'hotkeys.actions.episodePrevious' => 'Vorige aflevering',
-			'hotkeys.actions.speedIncrease' => 'Snelheid verhogen',
-			'hotkeys.actions.speedDecrease' => 'Snelheid verlagen',
-			'hotkeys.actions.speedReset' => 'Snelheid resetten',
-			'hotkeys.actions.zoomIn' => 'Inzoomen',
-			'hotkeys.actions.zoomOut' => 'Uitzoomen',
-			'hotkeys.actions.zoomReset' => 'Zoom resetten',
-			'hotkeys.actions.subSeekNext' => 'Naar volgende ondertitel',
-			'hotkeys.actions.subSeekPrev' => 'Naar vorige ondertitel',
-			'hotkeys.actions.shaderToggle' => 'Shaders aan/uit',
-			'hotkeys.actions.skipMarker' => 'Intro/aftiteling overslaan',
-			'hotkeys.actions.screenshot' => 'Schermafbeelding maken',
-			'fileInfo.title' => 'Bestandsinformatie',
-			'fileInfo.overview' => 'Overzicht',
-			'fileInfo.video' => 'Video',
-			'fileInfo.audio' => 'Audio',
-			'fileInfo.subtitles' => 'Ondertitels',
-			'fileInfo.images' => 'Ingebedde afbeeldingen',
-			'fileInfo.dataStreams' => 'Datastreams',
-			'fileInfo.lyrics' => 'Songteksten',
-			'fileInfo.file' => 'Bestand',
-			'fileInfo.attachments' => 'Bijlagen',
-			'fileInfo.delivery' => 'Levering',
-			'fileInfo.versionCounter' => ({required Object index, required Object count}) => 'Versie ${index} van ${count}',
-			'fileInfo.fileCounter' => ({required Object index, required Object count}) => 'Bestand ${index} van ${count}',
-			'fileInfo.noStreams' => 'De server rapporteerde geen streams voor dit bestand.',
-			'fileInfo.copyPath' => 'Pad kopiëren',
-			'fileInfo.pathCopied' => 'Bestandspad gekopieerd',
-			'fileInfo.codec' => 'Codec',
-			'fileInfo.codecTag' => 'Codec-tag',
-			'fileInfo.resolution' => 'Resolutie',
-			'fileInfo.codedResolution' => 'Gecodeerde resolutie',
-			'fileInfo.bitrate' => 'Bitrate',
-			'fileInfo.frameRate' => 'Framesnelheid',
-			'fileInfo.rotation' => 'Rotatie',
-			'fileInfo.comment' => 'Opmerking',
-			'fileInfo.audioDescription' => 'Audiodescriptie',
-			'fileInfo.headerCompression' => 'Headercompressie',
-			'fileInfo.sidecarFile' => 'Sidecar-bestand',
-			'fileInfo.transportTimestamp' => 'Transporttijdstempel',
-			'fileInfo.displayOffset' => 'Display-offset',
-			'fileInfo.previewFailureCode' => 'Foutcode preview',
-			'fileInfo.previewRetries' => 'Previewpogingen',
-			'fileInfo.aspectRatio' => 'Beeldverhouding',
-			'fileInfo.pixelAspectRatio' => 'Pixel-aspectratio',
-			'fileInfo.profile' => 'Profiel',
-			'fileInfo.level' => 'Niveau',
-			'fileInfo.bitDepth' => 'Bitdiepte',
-			'fileInfo.pixelFormat' => 'Pixelformaat',
-			'fileInfo.colorSpace' => 'Kleurruimte',
-			'fileInfo.colorRange' => 'Kleurbereik',
-			'fileInfo.colorPrimaries' => 'Kleurprimaires',
-			'fileInfo.colorTransfer' => 'Kleurtransfer',
-			'fileInfo.chromaSubsampling' => 'Chroma-subsampling',
-			'fileInfo.chromaLocation' => 'Chroma-positie',
-			'fileInfo.scanType' => 'Scantype',
-			'fileInfo.interlaced' => 'Interlaced',
-			'fileInfo.anamorphic' => 'Anamorf',
-			'fileInfo.referenceFrames' => 'Referentieframes',
-			'fileInfo.dynamicRange' => 'Dynamisch bereik',
-			'fileInfo.dolbyVision' => 'Dolby Vision',
-			'fileInfo.dolbyVisionLevel' => 'Dolby Vision-niveau',
-			'fileInfo.dolbyVisionVersion' => 'Dolby Vision-versie',
-			'fileInfo.dolbyVisionLayers' => 'Dolby Vision-lagen',
-			'fileInfo.baseLayerCompatibility' => 'Compatibiliteit basislaag',
-			'fileInfo.avcBitstream' => 'AVC-bitstroom',
-			'fileInfo.nalLengthSize' => 'NAL-lengte',
-			'fileInfo.scalingMatrix' => 'Aangepaste schalingsmatrix',
-			'fileInfo.streamIdentifier' => 'Stream-id',
-			'fileInfo.streamIndex' => 'Streamindex',
-			'fileInfo.streamId' => 'Stream-ID',
-			'fileInfo.language' => 'Taal',
-			'fileInfo.languageCode' => 'Taalcode',
-			'fileInfo.streamTitle' => 'Tracktitel',
-			'fileInfo.channels' => 'Kanalen',
-			'fileInfo.sampleRate' => 'Samplingsnelheid',
-			'fileInfo.spatialAudio' => 'Ruimtelijke audio',
-			'fileInfo.textBased' => 'Op tekst gebaseerd',
-			'fileInfo.subtitleFormat' => 'Sidecar-formaat',
-			'fileInfo.provider' => 'Provider',
-			'fileInfo.matchScore' => 'Matchscore',
-			'fileInfo.externalDelivery' => 'Kan afzonderlijk worden geleverd',
-			'fileInfo.sidecarPath' => 'Sidecar-pad',
-			'fileInfo.sourceStream' => 'Gekopieerd van',
-			'fileInfo.temporary' => 'Tijdelijk',
-			'fileInfo.timeBase' => 'Tijdbasis',
-			'fileInfo.overallBitrate' => 'Totale bitrate',
-			'fileInfo.path' => 'Pad',
-			'fileInfo.fileName' => 'Bestandsnaam',
-			'fileInfo.size' => 'Grootte',
-			'fileInfo.totalSize' => 'Totale grootte',
-			'fileInfo.container' => 'Container',
-			'fileInfo.duration' => 'Duur',
-			'fileInfo.previewThumbnails' => 'Preview-miniaturen',
-			'fileInfo.previewIndex' => 'Preview-index',
-			'fileInfo.packetLength' => 'Pakketlengte',
-			'fileInfo.filePresent' => 'Bestand aanwezig',
-			'fileInfo.fileReadable' => 'Leesbaar door server',
-			'fileInfo.streamPath' => 'Streampad',
-			'fileInfo.optimizedForStreaming' => 'Geoptimaliseerd voor streaming',
-			'fileInfo.has64bitOffsets' => '64-bits offsets',
-			'fileInfo.protocol' => 'Protocol',
-			'fileInfo.mediaType' => 'Mediatype',
-			'fileInfo.sourceKind' => 'Soort bron',
-			'fileInfo.optimizedVersion' => 'Geoptimaliseerde versie',
-			'fileInfo.optimizationTarget' => 'Optimalisatiedoel',
-			'fileInfo.deletedAt' => 'Verwijderd',
-			'fileInfo.remoteSource' => 'Externe bron',
-			'fileInfo.infiniteStream' => 'Oneindige stream',
-			'fileInfo.directPlay' => 'Direct Play',
-			'fileInfo.directStream' => 'Direct Stream',
-			'fileInfo.transcoding' => 'Transcoderen',
-			'fileInfo.etag' => 'ETag',
-			'fileInfo.versionId' => 'Versie-ID',
-			'fileInfo.fileId' => 'Bestands-ID',
-			'fileInfo.defaultAudioTrack' => 'Standaard audiotrack',
-			'fileInfo.defaultSubtitleTrack' => 'Standaard ondertitelingstrack',
-			'fileInfo.subtitlesOff' => 'Uit',
-			'fileInfo.flagDefault' => 'Standaard',
-			'fileInfo.flagForced' => 'Geforceerd',
-			'fileInfo.flagSelected' => 'Geselecteerd',
-			'fileInfo.flagExternal' => 'Extern',
-			'fileInfo.flagHearingImpaired' => 'Slechthorend',
-			'fileInfo.flagDub' => 'Nasynchronisatie',
-			'fileInfo.flagOriginal' => 'Origineel',
-			'fileInfo.channelsMono' => 'Mono',
-			'fileInfo.dolbyVisionProfile' => ({required Object profile}) => 'Profiel ${profile}',
-			'mediaMenu.markAsWatched' => 'Als bekeken markeren',
-			'mediaMenu.markAsUnwatched' => 'Als ongekeken markeren',
-			'mediaMenu.removeFromContinueWatching' => 'Uit \'Doorgaan met kijken\' verwijderen',
-			'mediaMenu.viewDetails' => 'Details bekijken',
-			'mediaMenu.goToSeries' => 'Ga naar serie',
-			'mediaMenu.shufflePlay' => 'Willekeurig afspelen',
-			'mediaMenu.shuffleNotAvailableOffline' => 'Willekeurig afspelen is offline niet beschikbaar',
-			'mediaMenu.fileInfo' => 'Bestandsinformatie',
-			'mediaMenu.deleteEpisodeFromServer' => 'Aflevering verwijderen van server',
-			'mediaMenu.deleteSeasonFromServer' => 'Seizoen verwijderen van server',
-			'mediaMenu.deleteShowFromServer' => 'Serie verwijderen van server',
-			'mediaMenu.deleteMovieFromServer' => 'Film verwijderen van server',
-			'mediaMenu.deleteEpisodeTitle' => 'Deze aflevering verwijderen?',
-			'mediaMenu.deleteSeasonTitle' => 'Dit seizoen verwijderen?',
-			'mediaMenu.deleteShowTitle' => 'Deze serie verwijderen?',
-			'mediaMenu.deleteMovieTitle' => 'Deze film verwijderen?',
-			'mediaMenu.deleteEpisodeConfirm' => 'Aflevering verwijderen',
-			'mediaMenu.deleteSeasonConfirm' => 'Seizoen verwijderen',
-			'mediaMenu.deleteShowConfirm' => 'Serie verwijderen',
-			'mediaMenu.deleteMovieConfirm' => 'Film verwijderen',
-			'mediaMenu.deleteAnyway' => 'Toch verwijderen',
-			'mediaMenu.confirmDeleteTarget' => ({required Object title}) => '${title} definitief van je server verwijderen?',
-			'mediaMenu.deleteMultipleWarning' => 'Dit omvat alle afleveringen en hun bestanden.',
-			'mediaMenu.deleteEpisodeCountWarning' => ({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('nl'))(n, one: 'Hiermee wordt de ${n} aflevering erin verwijderd, inclusief het bestand.', other: 'Hiermee worden alle ${n} afleveringen erin verwijderd, inclusief hun bestanden.', ), 
-			'mediaMenu.deleteMultiPartWarning' => ({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('nl'))(n, one: 'Dit item wordt opgeslagen als ${n} bestand, dat wordt verwijderd.', other: 'Dit item wordt opgeslagen over ${n} bestanden, en ze worden allemaal verwijderd.', ), 
-			'mediaMenu.deleteSharedFileHeading' => ({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('nl'))(n, one: '${n} andere aflevering staat in hetzelfde bestand en wordt ook verwijderd:', other: '${n} andere afleveringen staan in hetzelfde bestand en worden ook verwijderd:', ), 
-			'mediaMenu.deleteScopeUnverifiedProbeFailed' => 'Plezy kon niet controleren welke bestanden hiermee worden verwijderd, dus het kan meer verwijderen dan het hierboven genoemde item. Annuleer en probeer het opnieuw, of verwijder toch.',
-			'mediaMenu.deleteScopeUnverifiedNoFileInfo' => 'Je server heeft geen bestandsgegevens voor dit item verstrekt, dus Plezy kan niet controleren welke bestanden hiermee worden verwijderd. Het kan meer verwijderen dan het hierboven genoemde item.',
-			'mediaMenu.mediaDeletedSuccessfully' => 'Media-item succesvol verwijderd',
-			'mediaMenu.mediaFailedToDelete' => 'Verwijderen van media-item mislukt',
-			'mediaMenu.rate' => 'Beoordelen',
-			'mediaMenu.playFromBeginning' => 'Afspelen vanaf het begin',
-			'mediaMenu.playVersion' => 'Versie afspelen...',
-			'rateSheet.title' => 'Beoordelen',
-			'rateSheet.server' => 'Server',
-			'rateSheet.favorite' => 'Favoriet',
-			'rateSheet.favorited' => 'Toegevoegd aan favorieten',
-			'rateSheet.saved' => 'Opgeslagen',
-			'rateSheet.notAvailable' => 'Geen overeenkomst gevonden',
-			'rateSheet.noConnectedServices' => 'Koppel een dienst in Instellingen om daar een beoordeling te geven.',
-			'accessibility.mediaCardMovie' => ({required Object title}) => '${title}, film',
-			'accessibility.mediaCardShow' => ({required Object title}) => '${title}, tv-serie',
-			'accessibility.mediaCardEpisode' => ({required Object title, required Object episodeInfo}) => '${title}, ${episodeInfo}',
-			'accessibility.mediaCardSeason' => ({required Object title, required Object seasonInfo}) => '${title}, ${seasonInfo}',
-			'accessibility.mediaCardWatched' => 'bekeken',
-			'accessibility.mediaCardPartiallyWatched' => ({required Object percent}) => '${percent} procent bekeken',
-			'accessibility.mediaCardUnwatched' => 'niet bekeken',
-			'accessibility.tapToPlay' => 'Tik om af te spelen',
-			'accessibility.decrease' => 'Verlagen',
-			'accessibility.increase' => 'Verhogen',
-			'accessibility.decreaseValue' => ({required Object label}) => '${label} verlagen',
-			'accessibility.increaseValue' => ({required Object label}) => '${label} verhogen',
-			'accessibility.hue' => 'Tint',
-			'accessibility.saturation' => 'Verzadiging',
-			'accessibility.brightness' => 'Helderheid',
-			'accessibility.hexColor' => 'Hexkleur',
-			'accessibility.expandText' => 'Tekst uitvouwen',
-			'accessibility.collapseText' => 'Tekst samenvouwen',
-			'accessibility.alphabetNavigation' => 'Alfabetische navigatie',
-			'accessibility.alphabetScrollHint' => 'Veeg omhoog of omlaag om per letter te bewegen',
-			'accessibility.rowColumnPosition' => ({required Object row, required Object rowCount, required Object column, required Object columnCount}) => 'Rij ${row} van ${rowCount}, kolom ${column} van ${columnCount}',
-			'accessibility.rowPosition' => ({required Object row, required Object rowCount}) => 'Rij ${row} van ${rowCount}',
-			'accessibility.autoScrollPlay' => 'Automatisch scrollen starten',
-			'accessibility.autoScrollPause' => 'Automatisch scrollen pauzeren',
-			'accessibility.hueShort' => 'H',
-			'accessibility.saturationShort' => 'S',
-			'accessibility.valueShort' => 'V',
-			'tooltips.shufflePlay' => 'Willekeurig afspelen',
-			'tooltips.playTrailer' => 'Trailer afspelen',
-			'tooltips.markAsWatched' => 'Als bekeken markeren',
-			'tooltips.markAsUnwatched' => 'Als ongekeken markeren',
-			'audioTracks.track' => ({required Object n}) => 'Audiospoor ${n}',
-			'videoControls.audioLabel' => 'Audio',
-			'videoControls.subtitlesLabel' => 'Ondertitels',
-			'videoControls.addTime' => ({required Object amount, required Object unit}) => '+${amount}${unit}',
-			'videoControls.letterbox' => 'Letterbox',
-			'videoControls.fillScreen' => 'Scherm vullen',
-			'videoControls.stretch' => 'Uitrekken',
-			'videoControls.lockRotation' => 'Rotatie vergrendelen',
-			'videoControls.unlockRotation' => 'Rotatie ontgrendelen',
-			'videoControls.timerActive' => 'Timer actief',
-			'videoControls.playbackWillPauseIn' => ({required Object duration}) => 'Afspelen wordt gepauzeerd over ${duration}',
-			'videoControls.sleepTimerEndOfVideo' => 'Einde van huidige video',
-			'videoControls.sleepTimerStopAtHeader' => 'Stoppen bij',
-			'videoControls.sleepTimerDurationHeader' => 'Timer',
-			'videoControls.playbackWillPauseAtEnd' => 'Afspelen wordt gepauzeerd aan het einde van deze video',
-			'videoControls.stillWatching' => 'Kijk je nog?',
-			'videoControls.pausingIn' => ({required Object seconds}) => 'Pauze over ${seconds}s',
-			'videoControls.continueWatching' => 'Doorgaan',
-			'videoControls.autoPlayNext' => 'Volgende automatisch afspelen',
-			'videoControls.playNext' => 'Volgende afspelen',
-			'videoControls.playButton' => 'Afspelen',
-			'videoControls.pauseButton' => 'Pauzeren',
-			'videoControls.playbackPaused' => 'Gepauzeerd',
-			'videoControls.playbackResumed' => 'Afspelen',
-			'videoControls.loadingVideo' => 'Video laden',
-			'videoControls.showPlaybackControls' => 'Afspeelbediening tonen',
-			'videoControls.hidePlaybackControls' => 'Afspeelbediening verbergen',
-			'videoControls.seekBackwardButton' => ({required Object seconds}) => '${seconds} seconden terugspoelen',
-			'videoControls.seekForwardButton' => ({required Object seconds}) => '${seconds} seconden vooruitspoelen',
-			'videoControls.previousButton' => 'Vorige aflevering',
-			'videoControls.nextButton' => 'Volgende aflevering',
-			'videoControls.previousChapterButton' => 'Vorig hoofdstuk',
-			'videoControls.nextChapterButton' => 'Volgend hoofdstuk',
-			'videoControls.muteButton' => 'Dempen',
-			'videoControls.unmuteButton' => 'Dempen opheffen',
-			'videoControls.settingsButton' => 'Afspeelinstellingen',
-			'videoControls.tracksButton' => 'Audio en ondertitels',
-			'videoControls.chaptersButton' => 'Hoofdstukken',
-			'videoControls.versionQualityButton' => 'Versie en kwaliteit',
-			'videoControls.versionColumnHeader' => 'Versie',
-			'videoControls.qualityColumnHeader' => 'Kwaliteit',
-			'videoControls.qualityOriginal' => 'Origineel',
-			'videoControls.qualityPresetLabel' => ({required Object resolution, required Object bitrate}) => '${resolution}p ${bitrate} Mbps',
-			'videoControls.transcodeUnavailableFallback' => 'Transcoderen niet beschikbaar — originele kwaliteit wordt afgespeeld',
-			'videoControls.subtitleUnavailableFallback' => 'De geselecteerde ondertitels konden niet worden geladen — afspelen gaat door zonder ondertitels',
-			'videoControls.pipButton' => 'Beeld-in-beeldmodus',
-			'videoControls.aspectRatioButton' => 'Beeldverhouding',
-			'videoControls.ambientLighting' => 'Omgevingsverlichting',
-			'videoControls.fullscreenButton' => 'Volledig scherm activeren',
-			'videoControls.exitFullscreenButton' => 'Volledig scherm verlaten',
-			'videoControls.alwaysOnTopButton' => 'Altijd bovenop',
-			'videoControls.rotationLockButton' => 'Rotatievergrendeling',
-			'videoControls.lockScreen' => 'Scherm vergrendelen',
-			'videoControls.screenLockButton' => 'Schermvergrendeling',
-			'videoControls.timelineSlider' => 'Videotijdlijn',
-			'videoControls.volumeSlider' => 'Volumeniveau',
-			'videoControls.endsAt' => ({required Object time}) => 'Eindigt om ${time}',
-			'videoControls.pipActive' => 'Afspelen in beeld-in-beeld',
-			'videoControls.pipFailed' => 'Beeld-in-beeld kon niet worden gestart',
-			'videoControls.screenshotSaved' => 'Schermafbeelding opgeslagen',
-			'videoControls.screenshotFailed' => 'Schermafbeelding maken mislukt',
-			'videoControls.zoomPercent' => ({required Object percent}) => 'Zoom ${percent}%',
-			'videoControls.volumePercent' => ({required Object percent}) => 'Volume ${percent}%',
-			'videoControls.pipErrors.androidVersion' => 'Vereist Android 8.0 of nieuwer',
-			'videoControls.pipErrors.iosVersion' => 'Vereist iOS 15.0 of nieuwer',
-			'videoControls.pipErrors.permissionDisabled' => 'Beeld-in-beeld is uitgeschakeld. Schakel het in via de systeeminstellingen.',
-			'videoControls.pipErrors.notSupported' => 'Dit apparaat ondersteunt de beeld-in-beeldmodus niet',
-			'videoControls.pipErrors.voSwitchFailed' => 'Omschakelen van de video-uitvoer voor beeld-in-beeld is mislukt',
-			'videoControls.pipErrors.failed' => 'Beeld-in-beeld kon niet worden gestart',
-			'videoControls.pipErrors.prepareFailed' => 'Beeld-in-beeld kon niet worden voorbereid',
-			'videoControls.pipErrors.unknown' => ({required Object error}) => 'Er is een fout opgetreden: ${error}',
-			'videoControls.chapters' => 'Hoofdstukken',
-			'videoControls.noChaptersAvailable' => 'Geen hoofdstukken beschikbaar',
-			'videoControls.queue' => 'Wachtrij',
-			'videoControls.noQueueItems' => 'Geen items in de wachtrij',
-			'videoControls.noAudioDevicesAvailable' => 'Geen audioapparaten beschikbaar',
-			'videoControls.searchSubtitles' => 'Ondertitels zoeken',
-			'videoControls.language' => 'Taal',
-			'videoControls.noSubtitlesFound' => 'Geen ondertitels gevonden',
-			'videoControls.subtitleDownloaded' => 'Ondertitel gedownload',
-			'videoControls.subtitleDownloadedNotApplied' => 'De ondertiteling is gedownload, maar kon niet worden geselecteerd',
-			'videoControls.subtitleDownloadFailed' => 'Ondertitel downloaden mislukt',
-			'videoControls.subtitleDownloadTimedOut' => 'De ondertiteling verscheen niet op tijd. Het downloaden is mogelijk mislukt',
-			'videoControls.searchLanguages' => 'Talen zoeken...',
-			'videoControls.skipIntro' => 'Intro overslaan',
-			'videoControls.skipCredits' => 'Aftiteling overslaan',
-			'videoControls.nextEpisode' => 'Volgende aflevering',
-			'videoControls.subtitleTrack' => ({required Object n}) => 'Spoor ${n}',
-			'videoControls.subtitleFile' => ({required Object name}) => 'Ondertitel ${name}',
-			'videoControls.forcedTrack' => ({required Object label}) => '${label} (Geforceerd)',
-			'videoControls.osdSubtitlesOff' => 'Ondertitels: uit',
-			'videoControls.osdSubtitles' => ({required Object track}) => 'Ondertitels: ${track}',
-			'videoControls.osdAudio' => ({required Object track}) => 'Audio: ${track}',
-			'messages.markedAsWatched' => 'Gemarkeerd als gekeken',
-			'messages.markedAsUnwatched' => 'Gemarkeerd als ongekeken',
-			'messages.markedAsWatchedOffline' => 'Gemarkeerd als bekeken (wordt gesynchroniseerd zodra je online bent)',
-			'messages.markedAsUnwatchedOffline' => 'Gemarkeerd als ongekeken (wordt gesynchroniseerd zodra je online bent)',
-			'messages.autoRemovedWatchedDownload' => ({required Object title}) => 'Automatisch verwijderd: ${title}',
-			'messages.autoRemovedWatchedDownloads' => ({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('nl'))(n, one: 'Automatisch ${n} bekeken download verwijderd', other: 'Automatisch ${n} bekeken downloads verwijderd', ), 
-			'messages.removedFromContinueWatching' => 'Verwijderd uit \'Doorgaan met kijken\'',
-			'messages.errorLoading' => ({required Object error}) => 'Fout: ${error}',
-			'messages.searchPartialResults' => 'Sommige mediaservers konden niet worden doorzocht. Beschikbare resultaten worden getoond.',
-			'messages.streamInterrupted' => 'De stream is onderbroken. Druk op afspelen of spoel om het opnieuw te proberen.',
-			'messages.liveStreamInterrupted' => 'De livestream is onderbroken. Druk op afspelen om het opnieuw te proberen.',
-			'messages.fileInfoNotAvailable' => 'Bestandsinformatie niet beschikbaar',
-			'messages.playbackAuthenticationRequired' => 'Meld je opnieuw aan bij de mediaserver om dit item af te spelen.',
-			'messages.playbackServerUnavailable' => 'De mediaserver is niet beschikbaar. Probeer het later opnieuw.',
-			'messages.playbackDataInvalid' => 'De server heeft ongeldige afspeelinformatie geretourneerd.',
-			'messages.playbackCancelled' => 'Het afspelen is geannuleerd.',
-			'messages.playbackFailed' => 'Het afspelen kon niet worden gestart.',
-			'messages.playbackFailedDetail' => ({required Object error}) => 'Het afspelen kon niet worden gestart: ${error}',
-			'messages.audioOutputFailed' => 'De audio-uitvoer reageert niet meer. Controleer de audioverbinding van de tv of receiver; als andere apps ook geen geluid hebben, start het apparaat dan opnieuw op.',
-			'messages.mediaUnavailable' => 'Deze inhoud is niet langer beschikbaar.',
-			'messages.errorLoadingFileInfo' => ({required Object error}) => 'Fout bij laden van bestandsinformatie: ${error}',
-			'messages.errorLoadingSeries' => 'Fout bij laden van serie',
-			'messages.musicNotSupported' => 'Muziek afspelen wordt nog niet ondersteund',
-			'messages.noDescriptionAvailable' => 'Geen beschrijving beschikbaar',
-			'messages.noProfilesAvailable' => 'Geen profielen beschikbaar',
-			'messages.contactAdminForProfiles' => 'Neem contact op met je serverbeheerder om profielen toe te voegen',
-			'messages.unableToDetermineLibrarySection' => 'Kan bibliotheeksectie voor dit item niet bepalen',
-			'messages.logsCleared' => 'Logbestanden gewist',
-			'messages.logsCopied' => 'Logbestanden naar het klembord gekopieerd',
-			'messages.noLogsAvailable' => 'Geen logbestanden beschikbaar',
-			'messages.libraryScanning' => ({required Object title}) => '"${title}" scannen...',
-			'messages.libraryScanStarted' => ({required Object title}) => 'Bibliotheekscan gestart voor "${title}"',
-			'messages.libraryScanFailed' => ({required Object error}) => 'Bibliotheek scannen mislukt: ${error}',
-			'messages.metadataRefreshing' => ({required Object title}) => 'Metadata voor "${title}" vernieuwen...',
-			'messages.metadataRefreshStarted' => ({required Object title}) => 'Vernieuwen van metadata gestart voor "${title}"',
-			'messages.metadataRefreshFailed' => ({required Object error}) => 'Metadata vernieuwen mislukt: ${error}',
-			'messages.logoutConfirm' => 'Weet je zeker dat je wilt uitloggen?',
-			'messages.noSeasonsFound' => 'Geen seizoenen gevonden',
-			'messages.seasonsLoadFailed' => 'Kan seizoenen niet laden',
-			'messages.noEpisodesFound' => 'Geen afleveringen gevonden in eerste seizoen',
-			'messages.noEpisodesFoundGeneral' => 'Geen afleveringen gevonden',
-			'messages.episodesLoadFailed' => 'Kan afleveringen niet laden',
-			'messages.noResultsFound' => 'Geen resultaten gevonden',
-			'messages.sleepTimerSet' => ({required Object label}) => 'Slaaptimer ingesteld op ${label}',
-			'messages.noItemsAvailable' => 'Geen items beschikbaar',
-			'messages.failedToCreatePlayQueueNoItems' => 'Afspeelwachtrij maken mislukt — geen items',
-			'messages.failedPlayback' => ({required Object action, required Object error}) => 'Afspelen van ${action} mislukt: ${error}',
-			'messages.switchingToCompatiblePlayer' => 'Overschakelen naar compatibele speler...',
-			'messages.serverLimitTitle' => 'Afspelen mislukt',
-			'messages.serverLimitBody' => 'Serverfout (HTTP 500). Waarschijnlijk weigerde een bandbreedte-/transcodeerlimiet deze sessie. Vraag de eigenaar dit aan te passen.',
-			'messages.mediaUnreadableTitle' => 'Bestand niet beschikbaar',
-			'messages.mediaUnreadableBody' => 'De server heeft dit item gevonden maar kon het bestand niet lezen (HTTP 404). Het bestand is waarschijnlijk verplaatst of verwijderd, of de opslag is offline. Vraag de serverbeheerder om het bestand te controleren en de bibliotheek opnieuw te scannen.',
-			'messages.serverBusyTitle' => 'Stream niet beschikbaar',
-			'messages.serverBusyBody' => 'De server bleef weigeren dit bestand te streamen (HTTP 503). Mogelijk wordt de server opnieuw opgestart, is deze bezet of is de opslag van het bestand offline. Probeer het over een moment opnieuw — als dit blijft gebeuren, vraag dan de servereigenaar om de server en de opslag van het bestand te controleren.',
-			'messages.playbackNotAllowedTitle' => 'Afspelen niet toegestaan',
-			'messages.playbackNotAllowedBody' => 'De server weigerde dit item te streamen (HTTP 403). Je account heeft mogelijk geen toestemming om het af te spelen, of de server staat afspelen alleen toe op het eigen lokale netwerk.',
-			'messages.logsUploaded' => 'Logbestanden geüpload',
-			'messages.logsUploadFailed' => 'Uploaden van logbestanden mislukt',
-			'messages.logId' => 'Logboek-ID',
-			'messages.burnedSubtitlesUseMenu' => 'De ondertitels zijn in deze stream ingebrand. Wijzig ze via het ondertitelmenu.',
-			'messages.noVideoUrl' => 'Geen video-URL beschikbaar',
-			'messages.playbackNoMediaSources' => 'De server heeft geen afspeelbare mediabronnen geretourneerd',
-			'messages.playbackDataNotPrepared' => 'Het afspelen is gestart voordat de gegevens gereed waren',
-			'messages.streamSelectionUnavailable' => 'Streamselectie is niet beschikbaar voor deze bron',
-			'messages.streamSelectionFailed' => 'Kon de geselecteerde streams niet toepassen',
-			'messages.trackSelectionNotRemembered' => 'Deze trackkeuze geldt alleen voor het huidige afspelen.',
-			'messages.serverUnavailableForProfile' => 'Er is geen server beschikbaar voor het actieve profiel',
-			'subtitlingStyling.text' => 'Tekst',
-			'subtitlingStyling.border' => 'Rand',
-			'subtitlingStyling.background' => 'Achtergrond',
-			'subtitlingStyling.fontSize' => 'Lettergrootte',
-			'subtitlingStyling.textColor' => 'Tekstkleur',
-			'subtitlingStyling.borderSize' => 'Randdikte',
-			'subtitlingStyling.borderColor' => 'Randkleur',
-			'subtitlingStyling.backgroundOpacity' => 'Achtergronddekking',
-			'subtitlingStyling.backgroundColor' => 'Achtergrondkleur',
-			'subtitlingStyling.position' => 'Positie',
-			'subtitlingStyling.assOverride' => 'ASS-overschrijving',
-			'subtitlingStyling.overrideScale' => 'Schalen',
-			'subtitlingStyling.overrideForce' => 'Forceren',
-			'subtitlingStyling.overrideStrip' => 'Opmaak verwijderen',
-			'subtitlingStyling.positionTop' => 'Bovenaan',
-			'subtitlingStyling.positionBottom' => 'Onderaan',
-			'subtitlingStyling.useMargins' => 'Marges gebruiken',
-			'subtitlingStyling.useMarginsDescription' => 'Sta tekstondertitels toe in de ruimte buiten de video. Ondertitels met opmaak kunnen hun oorspronkelijke plaatsing behouden.',
-			'subtitlingStyling.anchorToScreen' => 'Aan scherm verankeren',
-			'subtitlingStyling.anchorToScreenDescription' => 'Toon tekstondertitels in de zwarte balken onder breedbeeldvideo',
-			'subtitlingStyling.bold' => 'Vet',
-			'subtitlingStyling.italic' => 'Cursief',
-			'subtitlingStyling.renderResolution' => 'Renderresolutie',
-			'subtitlingStyling.renderResolutionScreen' => 'Schermresolutie',
-			'subtitlingStyling.renderResolutionVideo' => 'Videoresolutie',
-			'mpvConfig.title' => 'mpv.conf',
-			'mpvConfig.description' => 'Geavanceerde videospelerinstellingen',
-			'mpvConfig.presets' => 'Voorinstellingen',
-			'mpvConfig.noPresets' => 'Geen opgeslagen voorinstellingen',
-			'mpvConfig.saveAsPreset' => 'Opslaan als voorinstelling...',
-			'mpvConfig.presetName' => 'Naam voorinstelling',
-			'mpvConfig.presetNameHint' => 'Voer een naam in voor deze voorinstelling',
-			'mpvConfig.loadPreset' => 'Laden',
-			'mpvConfig.deletePreset' => 'Verwijderen',
-			'mpvConfig.presetSaved' => 'Voorinstelling opgeslagen',
-			'mpvConfig.presetLoaded' => 'Voorinstelling geladen',
-			'mpvConfig.presetDeleted' => 'Voorinstelling verwijderd',
-			'mpvConfig.confirmDeletePreset' => 'Weet je zeker dat je deze voorinstelling wilt verwijderen?',
-			'mpvConfig.configPlaceholder' => 'gpu-api=vulkan\nhwdec=auto\n# comment',
-			'mpvConfig.lineHint' => 'option=value',
-			'mpvConfig.addLine' => 'Regel toevoegen',
-			'mpvConfig.removeLine' => 'Regel verwijderen',
-			'mpvConfig.embeddedVoHint' => 'vo, gpu-context en gpu-api worden genegeerd op Linux: ingebedde video wordt altijd weergegeven via vo=libmpv op het videovlak, en gpu-next (nodig voor compute-shaders zoals ArtCNN) kan niet ingebed draaien.',
-			'dialog.confirmAction' => 'Bevestig actie',
-			'profiles.addPlezyProfile' => 'Plezy-profiel toevoegen',
-			'profiles.switchingProfile' => 'Profiel wisselen…',
-			'profiles.deleteThisProfileTitle' => 'Dit profiel verwijderen?',
-			'profiles.deleteThisProfileMessage' => ({required Object displayName}) => 'Verwijder ${displayName}. Verbindingen blijven ongewijzigd.',
-			'profiles.active' => 'Actief',
-			'profiles.manage' => 'Beheren',
-			'profiles.delete' => 'Verwijderen',
-			'profiles.signOut' => 'Afmelden',
-			'profiles.signOutPlexTitle' => 'Afmelden bij Plex?',
-			'profiles.signOutPlexMessage' => ({required Object displayName}) => '${displayName} en alle Plex Home-gebruikers verwijderen? Je kunt altijd opnieuw inloggen.',
-			'profiles.signOutPlexDeleteDownloads' => 'Ook downloads verwijderen',
-			'profiles.signOutPlexDeleteDownloadsDescription' => 'Anders blijven ze op dit apparaat staan en komen ze terug wanneer je opnieuw inlogt bij dit account.',
-			'profiles.signedOutPlex' => 'Afgemeld bij Plex.',
-			'profiles.signOutFailed' => 'Afmelden mislukt.',
-			'profiles.sectionTitle' => 'Profielen',
-			'profiles.summarySingle' => 'Voeg profielen toe om beheerde gebruikers en lokale identiteiten te combineren',
-			'profiles.summaryMultipleWithActive' => ({required Object count, required Object activeName}) => '${count} profielen · actief: ${activeName}',
-			'profiles.summaryMultiple' => ({required Object count}) => '${count} profielen',
-			'profiles.removeConnectionTitle' => 'Verbinding verwijderen?',
-			'profiles.removeConnectionMessage' => ({required Object displayName, required Object connectionLabel}) => 'Verwijder de toegang van ${displayName} tot ${connectionLabel}. Andere profielen behouden deze toegang.',
-			'profiles.deleteProfileTitle' => 'Profiel verwijderen?',
-			'profiles.deleteProfileMessage' => ({required Object displayName}) => 'Verwijder ${displayName} en de verbindingen. Servers blijven beschikbaar.',
-			'profiles.profileNameLabel' => 'Profielnaam',
-			'profiles.pinProtectionLabel' => 'Pincodebeveiliging',
-			'profiles.pinManagedByPlex' => 'De pincode wordt beheerd door Plex. Pas deze aan op plex.tv.',
-			'profiles.noPinSetEditOnPlex' => 'Geen pincode ingesteld. Bewerk de Plex Home-gebruiker op plex.tv om er een te vereisen.',
-			'profiles.setPin' => 'Pincode instellen',
-			'profiles.setPinTitle' => 'Pincode instellen',
-			'profiles.confirmPinTitle' => 'Pincode bevestigen',
-			'profiles.pinSet' => 'Pincode ingesteld',
-			'profiles.changePin' => 'Wijzigen',
-			'profiles.removePin' => 'Verwijderen',
-			'profiles.connectionsLabel' => 'Verbindingen',
-			'profiles.add' => 'Toevoegen',
-			'profiles.deleteProfileButton' => 'Profiel verwijderen',
-			'profiles.noConnectionsHint' => 'Geen verbindingen — voeg er één toe om dit profiel te gebruiken.',
-			'profiles.noConnections' => 'Geen verbindingen',
-			'profiles.plexHomeAccount' => 'Plex Home-account',
-			'profiles.plexAccountChip' => ({required Object account}) => 'Plex-account: ${account}',
-			'profiles.plexAccountUserChip' => ({required Object user, required Object account}) => '${user} via ${account}',
-			'profiles.connectionDefault' => 'Standaard',
-			'profiles.connectionAs' => ({required Object displayName}) => 'als ${displayName}',
-			'profiles.makeDefault' => 'Als standaard instellen',
-			'profiles.removeConnection' => 'Verwijderen',
-			'profiles.profileRenamed' => 'Profiel hernoemd.',
-			'profiles.borrowAddTo' => ({required Object displayName}) => 'Toevoegen aan ${displayName}',
-			'profiles.borrowExplain' => 'Leen de verbinding van een ander profiel. Voor profielen met pincodebeveiliging is een pincode vereist.',
-			'profiles.borrowEmpty' => 'Nog niets te lenen.',
-			'profiles.borrowEmptySubtitle' => 'Verbind Plex, Jellyfin of Emby eerst met een ander profiel.',
-			'profiles.borrowLoadFailed' => 'Beschikbare verbindingen konden niet worden geladen. Probeer het opnieuw.',
-			'profiles.borrowFromProfile' => ({required Object displayName}) => 'Van ${displayName}',
-			'profiles.borrowConnectionBorrowed' => 'Verbinding geleend.',
-			'profiles.borrowFailed' => 'Kan verbinding niet lenen.',
-			'profiles.incorrectPin' => 'Onjuiste pincode.',
-			'profiles.incorrectPinTryAgain' => 'Onjuiste pincode. Probeer het opnieuw.',
-			'profiles.sourceProfileMissingParentAccount' => 'Het bovenliggende account van het bronprofiel ontbreekt.',
-			'profiles.failedToLoadHomeUsers' => 'Je Plex Home-gebruikers konden niet worden geladen. Controleer je verbinding en probeer het opnieuw.',
-			'profiles.failedToVerifyPin' => 'De pincode kon niet worden geverifieerd.',
-			'profiles.newProfile' => 'Nieuw profiel',
-			'profiles.profileNameHint' => 'bijv. Gasten, Kinderen, Woonkamer',
-			'profiles.pinProtectionOptional' => 'Pincodebeveiliging (optioneel)',
-			'profiles.pinExplain' => 'Een viercijferige pincode is vereist om van profiel te wisselen.',
-			'profiles.continueButton' => 'Doorgaan',
-			'profiles.pinsDontMatch' => 'De pincodes komen niet overeen',
-			'profiles.tokenIdentityMismatch' => 'Het token van het Plex-profiel bleek bij een onverwachte server te horen',
-			'connections.sectionTitle' => 'Verbindingen',
-			_ => null,
-		} ?? switch (path) {
-			'connections.addConnection' => 'Verbinding toevoegen',
-			'connections.addConnectionSubtitleNoProfile' => 'Meld je aan met Plex of verbind een Jellyfin- of Emby-server',
-			'connections.addConnectionSubtitleScoped' => ({required Object displayName}) => 'Toevoegen aan ${displayName}: Plex, Jellyfin, Emby of een andere profielverbinding',
-			'connections.sessionExpiredOne' => ({required Object name}) => 'Sessie verlopen voor ${name}',
-			'connections.sessionExpiredMany' => ({required Object count}) => 'Sessie verlopen voor ${count} servers',
-			'connections.accessDeniedOne' => ({required Object name}) => '${name} weigerde toegang voor dit account',
-			'connections.accessDeniedMany' => ({required Object count}) => '${count} servers weigerden toegang voor dit account',
-			'connections.signInAgain' => 'Opnieuw aanmelden',
-			'connections.editMediaBrowserTitle' => ({required Object product}) => '${product}-verbinding bewerken',
-			'connections.editMediaBrowserIntro' => ({required Object serverName}) => 'Voeg URL\'s toe aan ${serverName} of verwijder ze. Plezy gebruikt de bereikbare URL met de laagste latentie.',
-			'accountPreferences.sectionTitle' => 'Accountvoorkeuren',
-			'accountPreferences.hubSubtitleSingle' => ({required Object account}) => 'Audio-, ondertitel- en bibliotheekopties opgeslagen op ${account}',
-			'accountPreferences.hubSubtitleMultiple' => ({required Object count}) => 'Audio-, ondertitel- en bibliotheekopties opgeslagen op ${count} accounts',
-			'accountPreferences.pickAccount' => 'Elk account slaat zijn eigen voorkeuren op. Kies het account dat je wilt bewerken.',
-			'accountPreferences.storedOnAccount' => 'Deze opties worden op het account zelf opgeslagen, zodat elke app die ermee is aangemeld ze gebruikt — ook Plezy op je andere apparaten.',
-			'accountPreferences.noAccounts' => 'Geen accounts om te configureren',
-			'accountPreferences.noAccountsHint' => 'Log in bij Plex of verbind een Jellyfin- of Emby-server en de voorkeuren die op dat account zijn opgeslagen, verschijnen hier.',
-			'accountPreferences.unavailable' => 'Dit account is niet bereikbaar',
-			'accountPreferences.loadFailed' => 'Deze voorkeuren konden niet worden geladen',
-			'accountPreferences.noPreference' => 'Geen voorkeur',
-			'accountPreferences.notSet' => 'Niet ingesteld',
-			'accountPreferences.groups.audioAndSubtitles' => 'Audio en ondertitels',
-			'accountPreferences.groups.libraryDisplay' => 'Bibliotheek',
-			'accountPreferences.groups.personalMedia' => 'Persoonlijke media',
-			'accountPreferences.preferredAudioLanguage' => 'Voorkeurstaal voor audio',
-			'accountPreferences.autoSelectAudio' => 'Kies audio op taal',
-			'accountPreferences.autoSelectAudioDescription' => 'Bij \'Uit\' wordt de audiotrack gebruikt die het bestand als standaard markeert.',
-			'accountPreferences.preferredSubtitleLanguage' => 'Voorkeurstaal voor ondertitels',
-			'accountPreferences.subtitleMode' => 'Ondertitels inschakelen',
-			'accountPreferences.subtitleModes.none' => 'Handmatig geselecteerd',
-			'accountPreferences.subtitleModes.noneDescription' => 'Schakel ondertitels nooit automatisch in.',
-			'accountPreferences.subtitleModes.defaultMode' => 'Trackvlaggen volgen',
-			'accountPreferences.subtitleModes.defaultModeDescription' => 'Gebruik de standaard- en geforceerde vlaggen die op elke ondertiteltrack zijn opgeslagen.',
-			'accountPreferences.subtitleModes.always' => 'Altijd ingeschakeld',
-			'accountPreferences.subtitleModes.alwaysDescription' => 'Schakel een ondertiteltrack in de voorkeurstaal in zodra er een beschikbaar is.',
-			'accountPreferences.subtitleModes.onlyForced' => 'Alleen geforceerde ondertitels',
-			'accountPreferences.subtitleModes.onlyForcedDescription' => 'Laad alleen de tracks die als geforceerd zijn gemarkeerd.',
-			'accountPreferences.subtitleModes.smart' => 'Weergeven bij anderstalig geluid',
-			'accountPreferences.subtitleModes.smartDescription' => 'Schakel ondertitels alleen in wanneer de audio in een andere taal is.',
-			'accountPreferences.subtitleAccessibility' => 'SDH-ondertitels',
-			'accountPreferences.subtitleAccessibilityOptions.preferNonSdh' => 'Voorkeur voor niet-SDH-ondertitels',
-			'accountPreferences.subtitleAccessibilityOptions.preferSdh' => 'Voorkeur voor SDH-ondertitels',
-			'accountPreferences.subtitleAccessibilityOptions.onlySdh' => 'Alleen SDH-ondertitels',
-			'accountPreferences.subtitleAccessibilityOptions.onlyNonSdh' => 'Alleen niet-SDH-ondertitels',
-			'accountPreferences.forcedSubtitles' => 'Geforceerde ondertitels',
-			'accountPreferences.forcedSubtitleOptions.preferNonForced' => 'Voorkeur voor niet-geforceerde ondertitels',
-			'accountPreferences.forcedSubtitleOptions.preferForced' => 'Voorkeur voor geforceerde ondertitels',
-			'accountPreferences.forcedSubtitleOptions.onlyForced' => 'Alleen geforceerde ondertitels',
-			'accountPreferences.forcedSubtitleOptions.onlyNonForced' => 'Alleen niet-geforceerde ondertitels',
-			'accountPreferences.displayMissingEpisodes' => 'Ontbrekende afleveringen tonen',
-			'accountPreferences.displayMissingEpisodesDescription' => 'Toon afleveringen die de server kent maar waarvoor geen bestand aanwezig is.',
-			'accountPreferences.hidePlayedInLatest' => 'Bekeken items verbergen in \'Nieuwste\'',
-			'accountPreferences.hidePlayedInLatestDescription' => 'Laat items die je al hebt bekeken buiten de \'Nieuwste\'-rijen van de server.',
-			'accountPreferences.displayCollectionsView' => 'Collecties-weergave tonen',
-			'accountPreferences.displayCollectionsViewDescription' => 'Bied de collecties-weergave van de server naast je bibliotheken aan.',
-			'accountPreferences.rewatchingInNextUp' => 'Opnieuw bekeken series in \'Volgende\' houden',
-			'accountPreferences.rewatchingInNextUpDescription' => 'Als je een serie afrondt en opnieuw start, blijft \'Volgende\' de herkijk volgen in plaats van de serie te laten vallen.',
-			'accountPreferences.watchedIndicator' => 'Bekeken-indicatoren',
-			'accountPreferences.watchedIndicatorOptions.none' => 'Nooit',
-			'accountPreferences.watchedIndicatorOptions.moviesAndShows' => 'Films en tv-series',
-			'accountPreferences.watchedIndicatorOptions.movies' => 'Alleen films',
-			'accountPreferences.watchedIndicatorOptions.shows' => 'Alleen tv-series',
-			'accountPreferences.mediaReviewsVisibility' => 'Beoordelingen en recensies',
-			'accountPreferences.mediaReviewsOptions.usersAndCritics' => 'Gebruikers en critici',
-			'accountPreferences.mediaReviewsOptions.usersOnly' => 'Alleen gebruikers',
-			'accountPreferences.mediaReviewsOptions.criticsOnly' => 'Alleen critici',
-			'accountPreferences.mediaReviewsOptions.nobody' => 'Verborgen',
-			'discover.title' => 'Ontdekken',
-			'discover.noContentAvailable' => 'Geen inhoud beschikbaar',
-			'discover.addMediaToLibraries' => 'Voeg wat media toe aan je bibliotheken',
-			'discover.continueWatching' => 'Verder kijken',
-			'discover.continueWatchingIn' => ({required Object library}) => 'Verder kijken in ${library}',
-			'discover.nextUp' => 'Volgende',
-			'discover.nextUpIn' => ({required Object library}) => 'Volgende in ${library}',
-			'discover.recentlyAdded' => 'Recent toegevoegd',
-			'discover.recentlyAddedIn' => ({required Object library}) => 'Recent toegevoegd in ${library}',
-			'discover.latestAlbumsIn' => ({required Object library}) => 'Nieuwste albums in ${library}',
-			'discover.recentlyPlayedIn' => ({required Object library}) => 'Onlangs afgespeeld in ${library}',
-			'discover.mostPlayedIn' => ({required Object library}) => 'Meest afgespeeld in ${library}',
-			'discover.playEpisode' => ({required Object season, required Object episode}) => 'S${season}E${episode}',
-			'discover.overview' => 'Overzicht',
-			'discover.cast' => 'Acteurs',
-			'discover.extras' => 'Trailers en extra\'s',
-			'discover.studio' => 'Studio',
-			'discover.rating' => 'Beoordeling',
-			'discover.director' => 'Regisseur',
-			'discover.directors' => 'Regisseurs',
-			'discover.movie' => 'Film',
-			'discover.tvShow' => 'Tv-serie',
-			'discover.minutesLeft' => ({required Object minutes}) => 'nog ${minutes} min',
-			'discover.moreLikeThis' => 'Meer zoals dit',
-			'discover.titleCount' => ({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('nl'))(n, one: '${n} titel', other: '${n} titels', ), 
-			'discover.person.born' => 'Geboren',
-			'discover.person.died' => 'Overleden',
-			'discover.person.birthplace' => 'Geboorteplaats',
-			'discover.person.dateWithAge' => ({required Object date, required Object age}) => '${date} (${age} jaar)',
-			'discover.person.dateWithAgeAtDeath' => ({required Object date, required Object age}) => '${date} (op ${age}-jarige leeftijd)',
-			'errors.searchFailed' => ({required Object error}) => 'Zoeken mislukt: ${error}',
-			'errors.searchUnavailable' => 'Zoeken kon geen enkele mediaserver bereiken.',
-			'errors.connectionTimeout' => ({required Object context}) => 'Time-out van verbinding tijdens het laden van ${context}',
-			'errors.connectionFailed' => 'Kan geen verbinding maken met mediaserver',
-			'errors.unableToLoad' => ({required Object context}) => 'Kan ${context} niet laden. Probeer het opnieuw.',
-			'errors.noClientAvailable' => 'Geen client beschikbaar',
-			'errors.pleaseEnterToken' => 'Voer een token in',
-			'errors.invalidToken' => 'Ongeldig token',
-			'errors.failedToVerifyToken' => ({required Object error}) => 'Kon token niet verifiëren: ${error}',
-			'errors.failedToSwitchProfile' => ({required Object displayName}) => 'Kon niet wisselen naar ${displayName}',
-			'errors.failedToDeleteProfile' => ({required Object displayName}) => 'Kon ${displayName} niet verwijderen',
-			'errors.failedToRate' => 'Beoordeling kon niet worden bijgewerkt',
-			'errors.reasonTimedOut' => 'de verbinding is verlopen',
-			'errors.reasonUnreachable' => 'de server kon niet worden bereikt',
-			'errors.reasonRefused' => 'de server heeft het verzoek geweigerd',
-			'errors.reasonNotFound' => 'het item staat niet meer op de server',
-			'errors.reasonServerError' => 'de server heeft een fout gemeld',
-			'errors.reasonCancelled' => 'het verzoek is geannuleerd',
-			'errors.reasonUnexpected' => 'er is een onverwachte fout opgetreden',
-			'libraries.title' => 'Bibliotheken',
-			'libraries.fallbackTitle' => 'Bibliotheek',
-			'libraries.scanLibraryFiles' => 'Bibliotheekbestanden scannen',
-			'libraries.scanLibrary' => 'Bibliotheek scannen',
-			'libraries.analyze' => 'Analyseren',
-			'libraries.analyzeLibrary' => 'Bibliotheek analyseren',
-			'libraries.refreshMetadata' => 'Metadata vernieuwen',
-			'libraries.emptyTrash' => 'Prullenbak legen',
-			'libraries.emptyingTrash' => ({required Object title}) => 'Prullenbak legen voor "${title}"...',
-			'libraries.trashEmptied' => ({required Object title}) => 'Prullenbak geleegd voor "${title}"',
-			'libraries.failedToEmptyTrash' => ({required Object error}) => 'Kon prullenbak niet legen: ${error}',
-			'libraries.analyzing' => ({required Object title}) => 'Analyseren "${title}"...',
-			'libraries.analysisStarted' => ({required Object title}) => 'Analyse gestart voor "${title}"',
-			'libraries.failedToAnalyze' => ({required Object error}) => 'Kon bibliotheek niet analyseren: ${error}',
-			'libraries.noLibrariesFound' => 'Geen bibliotheken gevonden',
-			'libraries.allLibrariesHidden' => 'Alle bibliotheken zijn verborgen',
-			'libraries.hiddenLibrariesCount' => ({required Object count}) => 'Verborgen bibliotheken (${count})',
-			'libraries.thisLibraryIsEmpty' => 'Deze bibliotheek is leeg',
-			'libraries.noItemsMatchFilters' => 'Geen items komen overeen met de actieve filters',
-			'libraries.resetFilters' => 'Filters opnieuw instellen',
-			'libraries.all' => 'Alles',
-			'libraries.clearAll' => 'Alles wissen',
-			'libraries.scanLibraryConfirm' => ({required Object title}) => 'Weet je zeker dat je "${title}" wilt scannen?',
-			'libraries.analyzeLibraryConfirm' => ({required Object title}) => 'Weet je zeker dat je "${title}" wilt analyseren?',
-			'libraries.refreshMetadataConfirm' => ({required Object title}) => 'Weet je zeker dat je metadata wilt vernieuwen voor "${title}"?',
-			'libraries.emptyTrashConfirm' => ({required Object title}) => 'Weet je zeker dat je de prullenbak wilt legen voor "${title}"?',
-			'libraries.manageLibraries' => 'Bibliotheken beheren',
-			'libraries.sort' => 'Sorteren',
-			'libraries.sortBy' => 'Sorteer op',
-			'libraries.filters' => 'Filters',
-			'libraries.confirmActionMessage' => 'Weet je zeker dat je deze actie wilt uitvoeren?',
-			'libraries.showLibrary' => 'Bibliotheek tonen',
-			'libraries.hideLibrary' => 'Bibliotheek verbergen',
-			'libraries.libraryOptions' => 'Bibliotheekopties',
-			'libraries.content' => 'bibliotheekinhoud',
-			'libraries.selectLibrary' => 'Bibliotheek kiezen',
-			'libraries.filtersWithCount' => ({required Object count}) => 'Filters (${count})',
-			'libraries.noRecommendations' => 'Geen aanbevelingen beschikbaar',
-			'libraries.noCollections' => 'Geen collecties in deze bibliotheek',
-			'libraries.noFoldersFound' => 'Geen mappen gevonden',
-			'libraries.folders' => 'mappen',
-			'libraries.tabs.recommended' => 'Aanbevolen',
-			'libraries.tabs.browse' => 'Bladeren',
-			'libraries.tabs.collections' => 'Collecties',
-			'libraries.tabs.playlists' => 'Afspeellijsten',
-			'libraries.groupings.title' => 'Groepering',
-			'libraries.groupings.all' => 'Alles',
-			'libraries.groupings.movies' => 'Films',
-			'libraries.groupings.shows' => 'Series',
-			'libraries.groupings.seasons' => 'Seizoenen',
-			'libraries.groupings.episodes' => 'Afleveringen',
-			'libraries.groupings.artists' => 'Artiesten',
-			'libraries.groupings.albums' => 'Albums',
-			'libraries.groupings.tracks' => 'Nummers',
-			'libraries.groupings.folders' => 'Mappen',
-			'libraries.filterCategories.genre' => 'Genre',
-			'libraries.filterCategories.year' => 'Jaar',
-			'libraries.filterCategories.contentRating' => 'Leeftijdsclassificatie',
-			'libraries.filterCategories.tag' => 'Tag',
-			'libraries.filterCategories.unwatched' => 'Onbekeken',
-			'libraries.filterCategories.unplayed' => 'Niet afgespeeld',
-			'libraries.filterCategories.favorites' => 'Favorieten',
-			'libraries.filterCategories.filePath' => 'Bestandspad',
-			'libraries.sortLabels.title' => 'Titel',
-			'libraries.sortLabels.dateAdded' => 'Toegevoegd op',
-			'libraries.sortLabels.releaseDate' => 'Uitgavedatum',
-			'libraries.sortLabels.rating' => 'Beoordeling',
-			'libraries.sortLabels.communityRating' => 'Beoordeling door community',
-			'libraries.sortLabels.criticRating' => 'Beoordeling door critici',
-			'libraries.sortLabels.userRating' => 'Gebruikersbeoordeling',
-			'libraries.sortLabels.datePlayed' => 'Afspeeldatum',
-			'libraries.sortLabels.playCount' => 'Aantal afspelingen',
-			'libraries.sortLabels.productionYear' => 'Productiejaar',
-			'libraries.sortLabels.runtime' => 'Speelduur',
-			'libraries.sortLabels.officialRating' => 'Officiële beoordeling',
-			'libraries.sortLabels.premiereDate' => 'Premièredatum',
-			'libraries.sortLabels.startDate' => 'Begindatum',
-			'libraries.sortLabels.airTime' => 'Uitzendtijd',
-			'libraries.sortLabels.studio' => 'Studio',
-			'libraries.sortLabels.random' => 'Willekeurig',
-			'libraries.sortLabels.dateShared' => 'Gedeeld op',
-			'libraries.sortLabels.latestEpisodeAirDate' => 'Laatste afleveringsuitzending',
-			'libraries.sortLabels.lastEpisodeDateAdded' => 'Datum laatst toegevoegde aflevering',
-			'libraries.sortLabels.dateDownloaded' => 'Gedownload op',
-			'libraries.sortLabels.size' => 'Grootte',
-			'libraries.sortLabels.library' => 'Bibliotheek',
-			'libraries.advancedFilters.include' => 'Opnemen',
-			'libraries.advancedFilters.exclude' => 'Uitsluiten',
-			'libraries.advancedFilters.any' => 'Maakt niet uit',
-			'libraries.advancedFilters.yes' => 'Ja',
-			'libraries.advancedFilters.no' => 'Nee',
-			'libraries.advancedFilters.not' => ({required Object value}) => 'Niet ${value}',
-			'libraries.advancedFilters.valueCount' => ({required Object count}) => '${count} geselecteerd',
-			'libraries.advancedFilters.valueCountExcluded' => ({required Object count}) => '${count} uitgesloten',
-			'libraries.advancedFilters.searchValues' => 'Waarden zoeken',
-			'libraries.advancedFilters.noValues' => 'Geen waarden',
-			'libraries.advancedFilters.matchContains' => 'Bevat',
-			'libraries.advancedFilters.matchNotContains' => 'Bevat niet',
-			'libraries.advancedFilters.matchIs' => 'Is',
-			'libraries.advancedFilters.matchIsNot' => 'Is niet',
-			'libraries.advancedFilters.matchBeginsWith' => 'Begint met',
-			'libraries.advancedFilters.matchEndsWith' => 'Eindigt op',
-			'libraries.advancedFilters.textHint' => 'Typ om te filteren',
-			'libraries.advancedFilters.from' => 'Van',
-			'libraries.advancedFilters.to' => 'Tot',
-			'libraries.advancedFilters.range' => ({required Object from, required Object to}) => '${from} tot ${to}',
-			'libraries.advancedFilters.atLeast' => ({required Object value}) => '${value} en hoger',
-			'libraries.advancedFilters.atMost' => ({required Object value}) => 'Tot ${value}',
-			'libraries.advancedFilters.dateLastDays' => ({required Object count}) => 'Afgelopen ${count} dagen',
-			'libraries.advancedFilters.dateLastYear' => 'Afgelopen jaar',
-			'libraries.advancedFilters.dateOlderThanDays' => ({required Object count}) => 'Ouder dan ${count} dagen',
-			'libraries.advancedFilters.dateOlderThanYear' => 'Ouder dan een jaar',
-			'about.title' => 'Over',
-			'about.openSourceLicenses' => 'Opensourcelicenties',
-			'about.versionLabel' => ({required Object version}) => 'Versie ${version}',
-			'about.appDescription' => 'Een mooie Plex-, Jellyfin- en Emby-client voor Flutter',
-			'about.viewLicensesDescription' => 'Licenties van bibliotheken van derden bekijken',
-			'serverSelection.noServersFoundForAccount' => ({required Object username, required Object email}) => 'Geen servers gevonden voor ${username} (${email})',
-			'serverSelection.failedToLoadServers' => ({required Object error}) => 'Kon servers niet laden: ${error}',
-			'serverSelection.noValidServers' => 'Er zijn geen bruikbare servers gevonden voor dit account',
-			'hubDetail.title' => 'Titel',
-			'hubDetail.releaseYear' => 'Uitgavejaar',
-			'hubDetail.dateAdded' => 'Datum toegevoegd',
-			'hubDetail.rating' => 'Beoordeling',
-			'hubDetail.noItemsFound' => 'Geen items gevonden',
-			'logs.clearLogs' => 'Logbestanden wissen',
-			'logs.copyLogs' => 'Logbestanden kopiëren',
-			'logs.uploadLogs' => 'Logbestanden uploaden',
-			'startup.failedTitle' => 'Plezy kon niet starten',
-			'startup.failedBody' => 'Er is iets misgegaan tijdens het opstarten. De onderstaande details laten zien wat er misging.',
-			'startup.failedBodyRepairable' => 'Het opgeslagen instellingenbestand van Plezy is beschadigd en moet opnieuw worden opgebouwd voordat Plezy kan starten. Opnieuw proberen helpt niet — kies \'Opslag repareren\'.',
-			'startup.phaseLabel' => 'Stap',
-			'startup.showDetails' => 'Details tonen',
-			'startup.hideDetails' => 'Details verbergen',
-			'startup.copyDetails' => 'Details kopiëren',
-			'startup.detailsCopied' => 'Details naar het klembord gekopieerd',
-			'startup.uploadDetails' => 'Details uploaden',
-			'startup.repairStorage' => 'Opslag repareren',
-			'startup.repairTitle' => 'Opgeslagen gegevens repareren?',
-			'startup.repairBodyCommon' => 'Het instellingenbestand van Plezy is beschadigd en kan niet worden gelezen. Door te repareren worden alle instellingen teruggezet naar hun standaardwaarde.',
-			'startup.repairBodyOneCredential' => 'Eén opgeslagen aanmelding is beschadigd en kan niet worden gelezen. Door te repareren wordt alleen die ene verwijderd; je andere instellingen blijven onaangetast.',
-			'startup.repairBodySignInsKept' => 'Je servers en profielen blijven naar verwachting aangemeld.',
-			'startup.repairBodySignInsLost' => 'De sleutel die je opgeslagen aanmeldingen beschermt, kan niet uit dit bestand worden hersteld. Je moet je daarom opnieuw aanmelden bij elke server en elk profiel. Er wordt niets op je mediaserver gewijzigd.',
-			'startup.repairBodySessionsUncertain' => 'Trackers (MAL, AniList, Simkl, Trakt) en Seerr worden apart opgeslagen en blijven mogelijk wel of niet bewaard. Plezy vertelt je precies wat het heeft bewaard.',
-			'startup.repairConfirm' => 'Repareren',
-			'startup.repairSucceeded' => 'Opslag gerepareerd',
-			'startup.repairNeedsRestart' => 'Opslag gerepareerd — herstart vereist',
-			'startup.restartRequiredBody' => 'Je gegevens zijn gerepareerd, maar Plezy moet opnieuw starten voordat het ze kan gebruiken. Sluit Plezy en open het opnieuw.',
-			'startup.quitPlezy' => 'Plezy afsluiten',
-			'startup.repairFailed' => 'Repareren mislukt',
-			'startup.repairKeptSignIns' => 'Je servers en profielen zijn nog steeds aangemeld.',
-			'startup.repairLostSignIns' => 'De sleutel die je opgeslagen aanmeldingen beschermt, kon niet worden hersteld. Je moet je opnieuw aanmelden bij elke server en elk profiel.',
-			'startup.repairLostSessions' => 'Er is minstens één tracker- of Seerr-verbinding verloren gegaan en die moet opnieuw worden verbonden.',
-			'startup.backupTitle' => 'Er is een kopie van het beschadigde bestand bewaard',
-			'startup.backupWarning' => 'Het bevat je aanmeldgegevens. Upload of deel het niet.',
-			'startup.deleteBackup' => 'Kopie verwijderen',
-			'startup.backupDeleted' => 'Kopie verwijderd.',
-			'startup.previousFailureTitle' => 'Plezy kon de vorige keer niet starten',
-			'licenses.relatedPackages' => 'Gerelateerde pakketten',
-			'licenses.license' => 'Licentie',
-			'licenses.licenseNumber' => ({required Object number}) => 'Licentie ${number}',
-			'licenses.licensesCount' => ({required Object count}) => '${count} licenties',
-			'navigation.libraries' => 'Media',
-			'navigation.downloads' => 'Downloads',
-			'navigation.liveTv' => 'Live-tv',
-			'navigation.explore' => 'Verkennen',
-			'explore.title' => 'Verkennen',
-			'explore.selectSource' => 'Bron kiezen',
-			'explore.rows.watchlist' => 'Kijklijst',
-			'explore.rows.recommendedMovies' => 'Aanbevolen films',
-			'explore.rows.recommendedShows' => 'Aanbevolen series',
-			'explore.rows.trendingMovies' => 'Trending films',
-			'explore.rows.trendingShows' => 'Trending series',
-			'explore.rows.popularMovies' => 'Populaire films',
-			'explore.rows.popularShows' => 'Populaire series',
-			'explore.rows.trendingAnime' => 'Trending anime',
-			'explore.rows.suggestedAnime' => 'Aanbevolen anime',
-			'explore.rows.airingAnime' => 'Beste lopende anime',
-			'explore.rows.popularAnime' => 'Populairste anime',
-			'explore.rows.trending' => 'Trending',
-			'explore.rows.upcomingMovies' => 'Aankomende films',
-			'explore.rows.upcomingShows' => 'Aankomende series',
-			'explore.status.airing' => 'Lopend',
-			'explore.status.ended' => 'Afgelopen',
-			'explore.status.canceled' => 'Geannuleerd',
-			'explore.status.upcoming' => 'Binnenkort',
-			'explore.episodeCount' => ({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('nl'))(n, one: '${n} aflevering', other: '${n} afleveringen', ), 
-			'explore.cast' => 'Acteurs',
-			'explore.characters' => 'Personages',
-			'explore.addToWatchlist' => 'Toevoegen aan kijklijst',
-			'explore.removeFromWatchlist' => 'Verwijderen uit kijklijst',
-			'explore.addedToWatchlist' => 'Aan kijklijst toegevoegd',
-			'explore.removedFromWatchlist' => 'Uit kijklijst verwijderd',
-			'explore.watchlistUpdateFailed' => 'Kon kijklijst niet bijwerken',
-			'explore.watchlistNoMatch' => 'Kon dit item niet aan een kijklijst koppelen',
-			'explore.notInLibrary' => 'Niet in je bibliotheek',
-			'explore.inTheseLibraries' => 'In deze bibliotheken',
-			'explore.checkingLibrary' => 'Je bibliotheek controleren...',
-			'explore.libraryCheckFailed' => ({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('nl'))(n, one: 'Kon ${n} server niet controleren', other: 'Kon ${n} servers niet controleren', ), 
-			'explore.emptyTitle' => 'Hier is nog niets',
-			'explore.emptyMessage' => ({required Object source}) => 'Rijen van ${source} verschijnen hier zodra ze inhoud hebben.',
-			'explore.searchHint' => ({required Object source}) => 'Zoeken in ${source}',
-			'explore.searchEmpty' => ({required Object query}) => 'Geen resultaten voor "${query}"',
-			'explore.searchPrompt' => ({required Object source}) => 'Zoek naar films en series op ${source}.',
-			'explore.searchFailed' => 'Zoeken mislukt. Controleer je verbinding en probeer opnieuw.',
-			'explore.badge.rankPopular' => ({required Object n}) => '#${n} populair',
-			'explore.badge.rankAiring' => ({required Object n}) => '#${n} nu op tv',
-			'explore.badge.rankRated' => ({required Object n}) => '#${n} beoordeeld',
-			'explore.badge.rankTrending' => ({required Object n}) => '#${n} trending',
-			'explore.badge.rankSeasonal' => ({required Object n, required Object season}) => '#${n} in ${season}',
-			'explore.badge.watchingNow' => ({required Object n}) => '${n} kijken',
-			'explore.badge.available' => 'Beschikbaar',
-			'explore.badge.partiallyAvailable' => 'Gedeeltelijk beschikbaar',
-			'explore.badge.availableIn4k' => '4K beschikbaar',
-			'explore.badge.requested' => 'Aangevraagd',
-			'explore.badge.pendingApproval' => 'In afwachting van goedkeuring',
-			'explore.badge.processing' => 'Wordt verwerkt',
-			'explore.badge.declined' => 'Afgewezen',
-			'explore.badge.requestFailed' => 'Aanvraag mislukt',
-			'explore.badge.requested4k' => '4K aangevraagd',
-			'explore.badge.seasonsAvailable' => ({required Object available, required Object total}) => '${available}/${total} seizoenen',
-			'explore.badge.nextEpisodeIn' => ({required Object episode, required Object duration}) => 'Afl. ${episode} over ${duration}',
-			'explore.badge.nextAiringIn' => ({required Object duration}) => 'Volgende over ${duration}',
-			'explore.badge.episodesShort' => ({required Object n}) => '${n} afl.',
-			'explore.badge.minutesPerEpisode' => ({required Object n}) => '${n} min/afl.',
-			'explore.badge.adult' => '18+',
-			'explore.stats.listed' => ({required Object n}) => '${n} op de lijst',
-			'explore.stats.viewersDay' => ({required Object n}) => '${n} vandaag bekeken',
-			'explore.stats.viewersWeek' => ({required Object n}) => '${n} deze week bekeken',
-			'explore.stats.viewersMonth' => ({required Object n}) => '${n} deze maand bekeken',
-			'explore.stats.viewersYear' => ({required Object n}) => '${n} dit jaar bekeken',
-			'explore.stats.viewersAllTime' => ({required Object n}) => '${n} kijkers',
-			'explore.stats.planning' => ({required Object n}) => '${n} van plan om te kijken',
-			'explore.stats.favorited' => ({required Object n}) => '${n} favorieten',
-			'explore.stats.dropRate' => ({required Object percent}) => '${percent} is ermee gestopt',
-			'explore.stats.comments' => ({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('nl'))(n, one: '${n} reactie', other: '${n} reacties', ), 
-			'explore.stats.votes' => ({required Object n}) => '${n} stemmen',
-			'explore.stats.watching' => ({required Object n}) => '${n} kijken ernaar',
-			'explore.stats.completed' => ({required Object n}) => '${n} afgerond',
-			'explore.stats.onHold' => ({required Object n}) => '${n} op pauze',
-			'explore.stats.dropped' => ({required Object n}) => '${n} gestopt',
-			'explore.season.winter' => 'Winter',
-			'explore.season.spring' => 'Lente',
-			'explore.season.summer' => 'Zomer',
-			'explore.season.fall' => 'Herfst',
-			'explore.season.withYear' => ({required Object season, required Object year}) => '${season} ${year}',
-			'explore.format.tv' => 'TV',
-			'explore.format.tvShort' => 'Korte tv-serie',
-			'explore.format.movie' => 'Film',
-			'explore.format.special' => 'Special',
-			'explore.format.ova' => 'OVA',
-			'explore.format.ona' => 'ONA',
-			'explore.format.music' => 'Muziek',
-			'explore.format.other' => 'Anders',
-			'explore.sourceMaterial.original' => 'Origineel',
-			'explore.sourceMaterial.manga' => 'Manga',
-			'explore.sourceMaterial.lightNovel' => 'Light novel',
-			'explore.sourceMaterial.novel' => 'Roman',
-			'explore.sourceMaterial.visualNovel' => 'Visual novel',
-			'explore.sourceMaterial.game' => 'Game',
-			'explore.sourceMaterial.webComic' => 'Webcomic',
-			'explore.sourceMaterial.musicRelease' => 'Muziek',
-			'explore.sourceMaterial.otherMedia' => 'Anders',
-			'explore.creditRole.actor' => 'Acteur',
-			'explore.creditRole.director' => 'Regisseur',
-			'explore.creditRole.writer' => 'Schrijver',
-			'explore.creditRole.producer' => 'Producent',
-			'explore.creditRole.creator' => 'Maker',
-			'explore.creditRole.composer' => 'Componist',
-			'explore.relation.prequel' => 'Prequel',
-			'explore.relation.sequel' => 'Sequel',
-			'explore.relation.sideStory' => 'Zijverhaal',
-			'explore.relation.spinOff' => 'Spin-off',
-			'explore.relation.alternativeVersion' => 'Alternatieve versie',
-			'explore.relation.summary' => 'Samenvatting',
-			'explore.relation.parentStory' => 'Hoofdverhaal',
-			'explore.relation.adaptation' => 'Adaptatie',
-			'explore.relation.other' => 'Gerelateerd',
-			'explore.broadcast' => ({required Object day, required Object time}) => 'Wordt uitgezonden op ${day} om ${time}',
-			'explore.broadcastWithZone' => ({required Object day, required Object time, required Object timezone}) => 'Wordt uitgezonden op ${day} om ${time} ${timezone}',
-			'explore.detail.originalTitle' => 'Originele titel',
-			'explore.detail.alsoKnownAs' => 'Ook bekend als',
-			'explore.detail.studios' => 'Studio\'s',
-			'explore.detail.country' => 'Land',
-			'explore.detail.language' => 'Taal',
-			'explore.detail.released' => 'Uitgebracht',
-			'explore.detail.physicalRelease' => 'Op schijf',
-			'explore.detail.ended' => 'Beëindigd',
-			'explore.detail.addedOn' => ({required Object date}) => 'Toegevoegd op ${date}',
-			'explore.detail.yourRating' => 'Jouw beoordeling',
-			'explore.detail.budget' => 'Budget',
-			'explore.detail.revenue' => 'Opbrengst',
-			'explore.detail.contentAdvisory' => 'Leeftijdsadvies',
-			'explore.detail.tags' => 'Tags',
-			'explore.detail.revealSpoilerTags' => 'Spoilertags tonen',
-			'explore.detail.links' => 'Links',
-			'explore.detail.watchOn' => 'Bekijk op',
-			'explore.detail.watchTrailer' => 'Trailer bekijken',
-			'explore.detail.openOn' => ({required Object site}) => 'Openen op ${site}',
-			'explore.detail.trailerUnavailable' => 'Kan de trailer niet openen op dit apparaat',
-			'explore.detail.linkUnavailable' => 'Kan de link niet openen op dit apparaat',
-			'explore.detail.crew' => 'Crew',
-			'explore.detail.ratings' => 'Beoordelingen',
-			'explore.detail.schedule' => 'Uitzendschema',
-			'explore.detail.recommendedByUsers' => ({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('nl'))(n, one: 'Aanbevolen door ${n} gebruiker', other: 'Aanbevolen door ${n} gebruikers', ), 
-			'explore.detail.recommendedBy' => ({required Object who}) => 'Aanbevolen door ${who}',
-			'explore.detail.favoritedBy' => ({required Object who}) => 'Favoriet bij ${who}',
-			'explore.detail.unairedEpisodes' => ({required Object n}) => '${n} nog niet uitgezonden',
-			'explore.detail.recommendedByPercent' => ({required Object percent}) => 'Aanbevolen door ${percent} van de kijkers',
-			'explore.detail.relatedTitles' => 'Gerelateerde titels',
-			'explore.detail.background' => 'Achtergrond',
-			'explore.totalResults' => ({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('nl'))(n, one: '${n} resultaat', other: '${n} resultaten', ), 
-			'liveTv.title' => 'Live-tv',
-			'liveTv.guide' => 'Gids',
-			'liveTv.noChannels' => 'Geen zenders beschikbaar',
-			'liveTv.noDvr' => 'Geen DVR geconfigureerd op een server',
-			'liveTv.serverUnavailable' => 'De live-tv-server is niet beschikbaar.',
-			'liveTv.serverNotConnected' => 'De live-tv-server is niet verbonden.',
-			'liveTv.noPrograms' => 'Geen programmagegevens beschikbaar',
-			'liveTv.liveStreamFailed' => 'Livestream mislukt',
-			'liveTv.unknownProgram' => 'Onbekend programma',
-			'liveTv.unknownHub' => 'Onbekend',
-			'liveTv.unknownError' => 'Onbekende fout',
-			'liveTv.channelNumber' => ({required Object number}) => 'Kanaal ${number}',
-			'liveTv.unknownChannel' => 'Onbekend kanaal',
-			'liveTv.live' => 'LIVE',
-			'liveTv.reloadGuide' => 'Gids herladen',
-			'liveTv.searchGuide' => 'Zoeken in gids',
-			'liveTv.searchHint' => 'Zoek zenders en programma\'s',
-			'liveTv.searchNoResults' => ({required Object query}) => 'Geen overeenkomsten voor "${query}"',
-			'liveTv.channelsSection' => 'Zenders',
-			'liveTv.programsSection' => 'Programma\'s',
-			'liveTv.now' => 'Nu',
-			'liveTv.today' => 'Vandaag',
-			'liveTv.tomorrow' => 'Morgen',
-			'liveTv.midnight' => 'Middernacht',
-			'liveTv.overnight' => 'Nacht',
-			'liveTv.morning' => 'Ochtend',
-			'liveTv.daytime' => 'Overdag',
-			'liveTv.evening' => 'Avond',
-			'liveTv.lateNight' => 'Late avond',
-			'liveTv.whatsOn' => 'Nu op tv',
-			'liveTv.watchChannel' => 'Kanaal bekijken',
-			'liveTv.favorites' => 'Favorieten',
-			'liveTv.reorderFavorites' => 'Favorieten herordenen',
-			'liveTv.noFavoriteChannels' => 'Geen favoriete zenders',
-			'liveTv.noFavoriteChannelsHint' => 'Toon alle zenders en houd daarna een zender ingedrukt om deze aan je favorieten toe te voegen.',
-			'liveTv.showAllChannels' => 'Alle zenders tonen',
-			'liveTv.favoritesLoadFailed' => 'Favorieten konden niet worden geladen. Controleer je verbinding en probeer het opnieuw.',
-			'liveTv.favoritesUpdateFailed' => 'Favorieten konden niet worden bijgewerkt. Controleer je verbinding en probeer het opnieuw.',
-			'liveTv.joinSession' => 'Deelnemen aan lopende sessie',
-			'liveTv.watchFromStart' => ({required Object minutes}) => 'Vanaf het begin kijken (${minutes} min geleden)',
-			'liveTv.watchLive' => 'Live kijken',
-			'liveTv.goToLive' => 'Naar live-uitzending',
-			'liveTv.record' => 'Opnemen',
-			'liveTv.recordEpisode' => 'Aflevering opnemen',
-			'liveTv.recordSeries' => 'Serie opnemen',
-			'liveTv.recordOptions' => 'Opnameopties',
-			'liveTv.saveTo' => 'Opslaan in',
-			'liveTv.recordings' => 'Opnames',
-			'liveTv.scheduledRecordings' => 'Gepland',
-			'liveTv.recordingRules' => 'Opnameregels',
-			'liveTv.noScheduledRecordings' => 'Geen geplande opnames',
-			'liveTv.manageRecording' => 'Opname beheren',
-			'liveTv.cancelRecording' => 'Opname annuleren',
-			'liveTv.cancelRecordingTitle' => 'Deze opname annuleren?',
-			'liveTv.cancelRecordingMessage' => ({required Object title}) => '${title} wordt niet meer opgenomen.',
-			'liveTv.deleteRule' => 'Regel verwijderen',
-			'liveTv.deleteRuleTitle' => 'Opnameregel verwijderen?',
-			'liveTv.deleteRuleMessage' => ({required Object title}) => 'Toekomstige afleveringen van ${title} worden niet opgenomen.',
-			'liveTv.recordingScheduled' => 'Opname gepland',
-			'liveTv.alreadyScheduled' => 'Dit programma is al gepland',
-			'liveTv.dvrAdminRequired' => 'DVR-instellingen vereisen een beheerdersaccount',
-			'liveTv.recordingFailed' => 'Kon opname niet plannen',
-			'liveTv.recordingTargetMissing' => 'Kon opnamebibliotheek niet bepalen',
-			'liveTv.recordNotAvailable' => 'Opname niet beschikbaar voor dit programma',
-			'liveTv.recordingCancelled' => 'Opname geannuleerd',
-			'liveTv.recordingRuleDeleted' => 'Opnameregel verwijderd',
-			'liveTv.processRecordingRules' => 'Regels opnieuw evalueren',
-			'liveTv.recordingInProgress' => 'Nu aan het opnemen',
-			'liveTv.recordingsCount' => ({required Object count}) => '${count} gepland',
-			'liveTv.editRule' => 'Regel bewerken',
-			'liveTv.editRuleAction' => 'Bewerken',
-			'liveTv.recordingRuleUpdated' => 'Opnameregel bijgewerkt',
-			'liveTv.guideReloadRequested' => 'Vernieuwing van de gids aangevraagd',
-			'liveTv.guideReloadFailed' => 'Gids herladen mislukt',
-			'liveTv.rulesProcessRequested' => 'Nieuwe evaluatie van regels aangevraagd',
-			'liveTv.rulesProcessFailed' => 'Opnameregels opnieuw uitvoeren mislukt',
-			'liveTv.recordShow' => 'Programma opnemen',
-			'liveTv.recordSettings.startEarly' => 'Eerder beginnen (seconden)',
-			'liveTv.recordSettings.endLate' => 'Later stoppen (seconden)',
-			'liveTv.recordSettings.newOnly' => 'Alleen nieuwe afleveringen',
-			'liveTv.recordSettings.anyChannel' => 'Op elke zender opnemen',
-			'liveTv.recordSettings.anyTime' => 'Op elk tijdstip opnemen',
-			'liveTv.recordSettings.skipInLibrary' => 'Afleveringen overslaan die al in de bibliotheek staan',
-			'liveTv.recordSettings.keepUpTo' => 'Te bewaren afleveringen',
-			_ => null,
-		} ?? switch (path) {
-			'liveTv.recordSettings.keepUpToHint' => '0 bewaart alle afleveringen',
-			'liveTv.startingInMinutes' => ({required Object minutes}) => 'Begint over ${minutes} min',
-			'liveTv.dayAtTime' => ({required Object day, required Object time}) => '${day} om ${time}',
-			'liveTv.invalidPlaybackData' => ({required Object product}) => '${product} heeft ongeldige afspeelgegevens voor Live-tv geretourneerd',
-			'liveTv.failedToStartChannel' => 'Kon de livezender niet starten',
-			'liveTv.failedToBuildStreamUrl' => 'Kon de stream-URL niet samenstellen',
-			'liveTv.playbackStartFailed' => ({required Object reason}) => 'Kon het kanaal niet starten: ${reason}',
-			'liveTv.channelSwitchFailed' => ({required Object reason}) => 'Kon niet van kanaal wisselen: ${reason}',
-			'collections.title' => 'Collecties',
-			'collections.collection' => 'Collectie',
-			'collections.empty' => 'Collectie is leeg',
-			'collections.deleteCollection' => 'Collectie verwijderen',
-			'collections.deleteConfirm' => ({required Object title}) => '"${title}" verwijderen? Dit kan niet ongedaan worden gemaakt.',
-			'collections.deleted' => 'Collectie verwijderd',
-			'collections.deleteFailed' => 'Collectie verwijderen mislukt',
-			'collections.deleteFailedWithError' => ({required Object error}) => 'Collectie verwijderen mislukt: ${error}',
-			'collections.selectCollection' => 'Collectie selecteren',
-			'collections.collectionName' => 'Collectienaam',
-			'collections.enterCollectionName' => 'Voer een collectienaam in',
-			'collections.addedToCollection' => 'Toegevoegd aan collectie',
-			'collections.errorAddingToCollection' => 'Fout bij toevoegen aan collectie',
-			'collections.created' => 'Collectie gemaakt',
-			'collections.removeFromCollection' => 'Verwijderen uit collectie',
-			'collections.removeFromCollectionConfirm' => ({required Object title}) => '"${title}" uit deze collectie verwijderen?',
-			'collections.removedFromCollection' => 'Uit collectie verwijderd',
-			'collections.removeFromCollectionFailed' => 'Verwijderen uit collectie mislukt',
-			'collections.removeFromCollectionError' => ({required Object error}) => 'Fout bij verwijderen uit collectie: ${error}',
-			'collections.searchCollections' => 'Collecties zoeken...',
-			'playlists.title' => 'Afspeellijsten',
-			'playlists.playlist' => 'Afspeellijst',
-			'playlists.noPlaylists' => 'Geen afspeellijsten gevonden',
-			'playlists.create' => 'Afspeellijst maken',
-			'playlists.playlistName' => 'Naam van de afspeellijst',
-			'playlists.enterPlaylistName' => 'Voer een naam voor de afspeellijst in',
-			'playlists.delete' => 'Afspeellijst verwijderen',
-			'playlists.removeItem' => 'Verwijderen uit afspeellijst',
-			'playlists.smartPlaylist' => 'Slimme afspeellijst',
-			'playlists.itemCount' => ({required Object count}) => '${count} items',
-			'playlists.oneItem' => '1 item',
-			'playlists.emptyPlaylist' => 'Deze afspeellijst is leeg',
-			'playlists.deleteConfirm' => 'Afspeellijst verwijderen?',
-			'playlists.deleteMessage' => ({required Object name}) => 'Weet je zeker dat je "${name}" wilt verwijderen?',
-			'playlists.created' => 'Afspeellijst gemaakt',
-			'playlists.deleted' => 'Afspeellijst verwijderd',
-			'playlists.itemAdded' => 'Toegevoegd aan afspeellijst',
-			'playlists.itemRemoved' => 'Verwijderd uit afspeellijst',
-			'playlists.selectPlaylist' => 'Afspeellijst selecteren',
-			'playlists.searchPlaylists' => 'Afspeellijsten zoeken...',
-			'playlists.errorCreating' => 'Afspeellijst maken mislukt',
-			'playlists.errorDeleting' => 'Afspeellijst verwijderen mislukt',
-			'playlists.errorLoading' => 'Afspeellijsten laden mislukt',
-			'playlists.errorAdding' => 'Toevoegen aan afspeellijst mislukt',
-			'playlists.errorReordering' => 'Afspeellijstitem herschikken mislukt',
-			'playlists.errorRemoving' => 'Verwijderen uit afspeellijst mislukt',
-			'music.goToAlbum' => 'Ga naar album',
-			'music.goToArtist' => 'Ga naar artiest',
-			'music.instantMix' => 'Instantmix',
-			'music.playNext' => 'Hierna afspelen',
-			'music.addToQueue' => 'Toevoegen aan wachtrij',
-			'music.discNumber' => ({required Object n}) => 'Schijf ${n}',
-			'music.trackCount' => ({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('nl'))(n, one: '${n} nummer', other: '${n} nummers', ), 
-			'music.nowPlaying' => 'Nu afspelen',
-			'music.playingFrom' => ({required Object title}) => 'Afspelen vanaf ${title}',
-			'music.queue' => 'Wachtrij',
-			'music.clearQueue' => 'Wachtrij wissen',
-			'music.lyrics' => 'Songtekst',
-			'music.noLyrics' => 'Geen songtekst beschikbaar',
-			'music.sleepTimer' => 'Slaaptimer',
-			'music.sleepTimerEndOfTrack' => 'Einde van nummer',
-			'music.sleepTimerMinutes' => ({required Object n}) => '${n} minuten',
-			'music.stopPlayback' => 'Afspelen stoppen',
-			'music.previousTrack' => 'Vorig nummer',
-			'music.nextTrack' => 'Volgend nummer',
-			'music.repeat' => 'Herhalen',
-			'music.repeatAll' => 'Alles herhalen',
-			'music.repeatOne' => 'Eén herhalen',
-			'music.instantMixNoServer' => 'Er is geen server beschikbaar voor een instantmix',
-			'music.instantMixFailed' => 'De instantmix kon niet worden geladen',
-			'music.instantMixEmpty' => 'De instantmix leverde geen nummers op',
-			'music.noAudioUrl' => ({required Object track}) => 'Er is geen audio-URL beschikbaar voor ${track}',
-			'music.discography.singlesAndEps' => 'Singles en EP\'s',
-			'music.discography.live' => 'Live',
-			'music.discography.compilations' => 'Compilaties',
-			'watchTogether.title' => 'Samen kijken',
-			'watchTogether.description' => 'Kijk synchroon met vrienden en familie',
-			'watchTogether.createRoom' => 'Kamer maken',
-			'watchTogether.creatingRoom' => 'Kamer maken...',
-			'watchTogether.joinRoom' => 'Deelnemen aan kamer',
-			'watchTogether.joiningRoom' => 'Deelnemen aan kamer...',
-			'watchTogether.connecting' => 'Verbinden...',
-			'watchTogether.relayPublic' => 'Kamers gebruiken de openbare Open Watch Party-relays.',
-			'watchTogether.relayCustom' => ({required Object url}) => 'Kamers gebruiken je relay op ${url}.',
-			'watchTogether.recentRooms' => 'Recente kamers',
-			'watchTogether.roomActions' => 'Acties voor kamer',
-			'watchTogether.renameRoom' => 'Kamer hernoemen',
-			'watchTogether.removeRoom' => 'Verwijderen',
-			'watchTogether.enterRoomCode' => 'Voer de code van 6 tekens van de host in.',
-			'watchTogether.roomCode' => 'Kamercode',
-			'watchTogether.paste' => 'Plakken',
-			'watchTogether.noCodeInClipboard' => 'Het klembord bevat geen kamercode',
-			'watchTogether.copyCode' => 'Code kopiëren',
-			'watchTogether.codeCopied' => 'Kamercode gekopieerd',
-			'watchTogether.shareInvite' => 'Uitnodiging delen',
-			'watchTogether.inviteCopied' => 'Uitnodiging gekopieerd. Plak deze in een bericht.',
-			'watchTogether.inviteMessage' => ({required Object code}) => 'Neem deel aan mijn Samen kijken-kamer in Plezy: open Samen kijken, kies "Deelnemen aan kamer" en voer ${code} in.',
-			'watchTogether.openSessionControls' => 'Bediening voor Samen kijken openen',
-			'watchTogether.reconnecting' => 'Opnieuw verbinden...',
-			'watchTogether.reconnectingDescription' => 'De verbinding is verbroken. Je neemt automatisch weer deel aan de kamer.',
-			'watchTogether.connected' => 'Verbonden',
-			'watchTogether.disconnected' => 'Verbinding verbroken',
-			'watchTogether.youAreHost' => 'Jij bent de host',
-			'watchTogether.hostedBy' => ({required Object name}) => 'Gehost door ${name}',
-			'watchTogether.hostControlsPlayback' => 'Host bedient het afspelen',
-			'watchTogether.anyoneCanControl' => 'Iedereen kan het afspelen bedienen',
-			'watchTogether.roomLocked' => 'Kamer vergrendeld',
-			'watchTogether.nowPlaying' => 'Speelt nu',
-			'watchTogether.nothingPlaying' => 'Er wordt niets afgespeeld',
-			'watchTogether.nothingPlayingHost' => 'Speel iets af uit een bibliotheek om het met de kamer te delen.',
-			'watchTogether.nothingPlayingGuest' => 'Als de host iets afspeelt, wordt het hier geopend.',
-			'watchTogether.notShareable' => 'Er is geen catalogusovereenkomst voor deze video, dus alleen wie toegang heeft tot dezelfde server kan hem afspelen.',
-			'watchTogether.searching' => 'Deze video zoeken in je bibliotheken...',
-			'watchTogether.yourCopy' => 'Jouw kopie',
-			'watchTogether.sharingYourCopy' => 'Je deelt je eigen kopie',
-			'watchTogether.playingOtherLength' => ({required Object difference}) => 'Jouw kopie wordt afgespeeld, ${difference}',
-			'watchTogether.mismatchTitle' => 'Jouw kopie heeft een andere lengte',
-			'watchTogether.mismatchDescription' => ({required Object difference}) => 'Je best passende kopie is ${difference} dan de video van de kamer. Mogelijk is het een andere montage of versie.',
-			'watchTogether.playAnyway' => 'Toch afspelen',
-			'watchTogether.chooseAnotherCopy' => 'Andere kopie kiezen',
-			'watchTogether.dontPlay' => 'Niet afspelen',
-			'watchTogether.unavailableTitle' => 'Je hebt deze video niet',
-			'watchTogether.unavailableDescription' => 'Plezy kon hem niet vinden in je bibliotheken. Kies zelf een kopie of zoek opnieuw.',
-			'watchTogether.chooseCopy' => 'Kopie kiezen',
-			'watchTogether.searchAgain' => 'Opnieuw zoeken',
-			'watchTogether.noCandidates' => 'Geen kopieën gevonden in je bibliotheken.',
-			'watchTogether.choiceFailed' => 'Kan deze kopie niet afspelen voor de kamer',
-			'watchTogether.lengthLonger' => ({required Object duration}) => '${duration} langer',
-			'watchTogether.lengthShorter' => ({required Object duration}) => '${duration} korter',
-			'watchTogether.lengthSame' => 'Even lang',
-			'watchTogether.lengthUnknown' => 'Lengte onbekend',
-			'watchTogether.joinCurrentPlayback' => 'Deelnemen aan huidige weergave',
-			'watchTogether.joinCurrentPlaybackDescription' => 'Ga terug naar wat de host nu kijkt',
-			'watchTogether.stopMedia' => 'Video stoppen voor iedereen',
-			'watchTogether.syncOffset' => 'Synchronisatieverschuiving',
-			'watchTogether.syncOffsetDescription' => 'Verschuif je video als die voor- of achterloopt op de kamer.',
-			'watchTogether.offsetHint' => ({required Object difference}) => 'Jouw kopie is ${difference} dan de video van de kamer.',
-			'watchTogether.applyDifference' => ({required Object offset}) => '${offset} toepassen',
-			'watchTogether.offsetMinusSecond' => '-1 s',
-			'watchTogether.offsetMinusTenth' => '-100 ms',
-			'watchTogether.offsetPlusTenth' => '+100 ms',
-			'watchTogether.offsetPlusSecond' => '+1 s',
-			'watchTogether.participants' => 'Deelnemers',
-			'watchTogether.participantCount' => ({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('nl'))(n, one: '${n} deelnemer', other: '${n} deelnemers', ), 
-			'watchTogether.hostBadge' => 'HOST',
-			'watchTogether.nameYou' => ({required Object name}) => '${name} (jij)',
-			'watchTogether.playerIdle' => 'Inactief',
-			'watchTogether.playerLoading' => 'Laden',
-			'watchTogether.playerReady' => 'Klaar',
-			'watchTogether.playerBuffering' => 'Bufferen',
-			'watchTogether.matchSearching' => 'Zoeken',
-			'watchTogether.matchMatched' => 'Heeft de video',
-			'watchTogether.matchMismatched' => 'Andere lengte',
-			'watchTogether.matchUnavailable' => 'Heeft de video niet',
-			'watchTogether.participantOffset' => ({required Object offset}) => 'Verschuiving ${offset}',
-			'watchTogether.makeHost' => 'Tot host maken',
-			'watchTogether.makeHostQuestion' => 'Host overdragen?',
-			'watchTogether.makeHostConfirm' => ({required Object name}) => '${name} bedient dan het afspelen en de sessie voor iedereen.',
-			'watchTogether.transfer' => 'Overdragen',
-			'watchTogether.removeParticipant' => 'Uit kamer verwijderen',
-			'watchTogether.removeParticipantQuestion' => ({required Object name}) => '${name} verwijderen?',
-			'watchTogether.removeParticipantConfirm' => ({required Object name}) => '${name} wordt uit de kamer verwijderd en kan met de code opnieuw deelnemen, tenzij je de kamer vergrendelt.',
-			'watchTogether.remove' => 'Verwijderen',
-			'watchTogether.roomSettings' => 'Kamerinstellingen',
-			'watchTogether.letEveryoneControl' => 'Iedereen het afspelen laten bedienen',
-			'watchTogether.lockRoom' => 'Kamer vergrendelen',
-			'watchTogether.lockRoomDescription' => 'Nieuwe deelnemers kunnen niet meer toetreden',
-			'watchTogether.leaveRoom' => 'Kamer verlaten',
-			'watchTogether.leaveRoomQuestion' => 'Kamer verlaten?',
-			'watchTogether.leaveRoomConfirm' => 'Je kunt opnieuw deelnemen met de kamercode.',
-			'watchTogether.leave' => 'Verlaten',
-			'watchTogether.endRoom' => 'Kamer sluiten',
-			'watchTogether.endRoomQuestion' => 'Kamer sluiten?',
-			'watchTogether.endRoomConfirm' => 'Hiermee wordt de kamer voor iedereen gesloten.',
-			'watchTogether.end' => 'Beëindigen',
-			'watchTogether.playBlockedTitle' => 'Afspelen is niet gestart',
-			'watchTogether.playBlockedDescription' => 'Druk op afspelen om samen met de kamer te kijken.',
-			'watchTogether.notices.pressedPlay' => ({required Object name}) => '${name} heeft op afspelen gedrukt',
-			'watchTogether.notices.playbackStarted' => 'Afspelen gestart',
-			'watchTogether.notices.paused' => ({required Object name}) => '${name} heeft gepauzeerd',
-			'watchTogether.notices.playbackPaused' => 'Afspelen gepauzeerd',
-			'watchTogether.notices.jumpedTo' => ({required Object name, required Object position}) => '${name} is naar ${position} gesprongen',
-			'watchTogether.notices.roomJumpedTo' => ({required Object position}) => 'Naar ${position} gesprongen',
-			'watchTogether.notices.changedSpeed' => ({required Object name, required Object speed}) => '${name} heeft de snelheid op ${speed} gezet',
-			'watchTogether.notices.speedChanged' => ({required Object speed}) => 'Snelheid ingesteld op ${speed}',
-			'watchTogether.notices.startedMedia' => ({required Object name, required Object title}) => '${name} heeft ${title} gestart',
-			'watchTogether.notices.mediaStarted' => ({required Object title}) => 'Speelt nu: ${title}',
-			'watchTogether.notices.stoppedMedia' => ({required Object name}) => '${name} heeft de video gestopt',
-			'watchTogether.notices.mediaStopped' => 'De video is gestopt',
-			'watchTogether.notices.waitingFor' => ({required Object name}) => 'Wachten op ${name}...',
-			'watchTogether.notices.waitingForSomeone' => 'Wachten tot iedereen bij is...',
-			'watchTogether.notices.finished' => 'Afgelopen',
-			'watchTogether.notices.hostChangedTo' => ({required Object name}) => '${name} is nu de host',
-			'watchTogether.notices.youAreNowHost' => 'Jij bent nu de host',
-			'watchTogether.notices.joined' => ({required Object name}) => '${name} is toegetreden',
-			'watchTogether.notices.left' => ({required Object name}) => '${name} heeft de sessie verlaten',
-			'watchTogether.notices.controlRefused' => 'Alleen de host kan het afspelen bedienen',
-			'watchTogether.notices.searchFailed' => 'Op sommige servers kon niet naar de video van de kamer worden gezocht',
-			'watchTogether.notices.playBlocked' => 'Druk op afspelen om te beginnen',
-			'watchTogether.notices.shareFailed' => 'Kan deze video niet met de kamer delen',
-			'watchTogether.notices.downloadNotShared' => 'Downloads worden niet met de kamer gedeeld zolang hun server offline is',
-			'watchTogether.notices.openFailed' => 'Kan de video van de kamer niet openen',
-			'watchTogether.ended.ended' => 'De host heeft de kamer gesloten',
-			'watchTogether.ended.kicked' => 'Je bent uit de kamer verwijderd',
-			'watchTogether.ended.expired' => 'De kamer is verlopen',
-			'watchTogether.ended.replaced' => 'Je neemt op een ander apparaat deel aan deze kamer',
-			'watchTogether.ended.lost' => 'Verbinding met de kamer verbroken',
-			'watchTogether.errors.invalidCode' => 'Dat is geen kamercode. Codes bestaan uit 6 letters en cijfers, zonder 0, 1, I, L of O.',
-			'watchTogether.errors.roomNotFound' => 'Er is geen kamer met die code. Mogelijk is de kamer gesloten.',
-			'watchTogether.errors.roomFull' => 'Die kamer is vol.',
-			'watchTogether.errors.roomLocked' => 'De host heeft die kamer vergrendeld.',
-			'watchTogether.errors.relayFull' => 'Samen kijken is momenteel druk. Probeer het later opnieuw.',
-			'watchTogether.errors.unreachable' => 'Kan de relay voor Samen kijken niet bereiken. Controleer je verbinding.',
-			'watchTogether.errors.rateLimited' => 'Te veel pogingen. Wacht even en probeer het opnieuw.',
-			'watchTogether.errors.clientBlocked' => 'Deze versie van Plezy kan de relay niet gebruiken. Werk de app bij.',
-			'watchTogether.errors.forbidden' => 'Alleen de host kan dat doen.',
-			'watchTogether.errors.notInRoom' => 'Je zit niet in een kamer.',
-			'watchTogether.errors.alreadyInRoom' => 'Je zit al in een kamer.',
-			'watchTogether.errors.resumeFailed' => 'Kan niet opnieuw deelnemen aan de kamer.',
-			'watchTogether.errors.unsupported' => 'De relay ondersteunt dit niet.',
-			'watchTogether.errors.generic' => 'Er is iets misgegaan. Probeer het opnieuw.',
-			'watchTogether.untitledEpisode' => ({required Object number}) => 'Aflevering ${number}',
-			'downloads.title' => 'Downloads',
-			'downloads.manage' => 'Beheren',
-			'downloads.tvShows' => 'Series',
-			'downloads.movies' => 'Films',
-			'downloads.music' => 'Muziek',
-			'downloads.tracksQueued' => ({required Object count}) => '${count} nummers in wachtrij voor download',
-			'downloads.noDownloads' => 'Nog geen downloads',
-			'downloads.noDownloadsDescription' => 'Gedownloade inhoud verschijnt hier om offline te bekijken',
-			'downloads.downloadNow' => 'Downloaden',
-			'downloads.deleteDownload' => 'Download verwijderen',
-			'downloads.retryDownload' => 'Download opnieuw proberen',
-			'downloads.downloadQueued' => 'Download in wachtrij',
-			'downloads.downloadResumed' => 'Download hervat',
-			'downloads.serverErrorBitrate' => 'Serverfout: bestand overschrijdt mogelijk de externe bitrate-limiet',
-			'downloads.storageFull' => 'Downloads zijn gestopt om de beschikbare opslagruimte te beschermen. Maak ruimte vrij of kies een andere downloadlocatie en probeer het opnieuw.',
-			'downloads.storageUnavailable' => 'Downloads zijn gestopt omdat de beschikbare opslag niet kon worden gecontroleerd. Controleer de downloadlocatie en probeer het opnieuw.',
-			'downloads.episodesQueued' => ({required Object count}) => '${count} afleveringen in wachtrij voor download',
-			'downloads.downloadDeleted' => 'Download verwijderd',
-			'downloads.deleteConfirm' => ({required Object title}) => '"${title}" van dit apparaat verwijderen?',
-			'downloads.deleteCollectionDownloads' => 'Downloads verwijderen',
-			'downloads.deleteCollectionDownloadsConfirm' => ({required Object title}) => 'Alle downloads in "${title}" van dit apparaat verwijderen?',
-			'downloads.collectionDownloadsDeleted' => 'Downloads verwijderd',
-			'downloads.cancelledDownloadTitle' => 'Geannuleerde download',
-			'downloads.cancelledDownloadMessage' => 'Deze download is geannuleerd. Wat wil je doen?',
-			'downloads.allEpisodesAlreadyDownloaded' => 'Alle afleveringen zijn al gedownload',
-			'downloads.resumeDownload' => 'Download hervatten',
-			'downloads.cancelledDownload' => 'Geannuleerde download',
-			'downloads.syncingFile' => ({required Object file, required Object status}) => '${file} (${status} synchroniseren)',
-			'downloads.downloadedFileClickToComplete' => ({required Object file}) => '${file} gedownload — klik om te voltooien',
-			'downloads.partialDownloadClickToComplete' => 'Gedeeltelijk gedownload — klik om te voltooien',
-			'downloads.deleting' => 'Verwijderen...',
-			'downloads.deletingWithProgress' => ({required Object title, required Object current, required Object total}) => 'Verwijderen van ${title}... (${current} van ${total})',
-			'downloads.queuedTooltip' => 'In wachtrij',
-			'downloads.queuedFilesTooltip' => ({required Object files}) => 'In wachtrij: ${files}',
-			'downloads.downloadingTooltip' => 'Downloaden...',
-			'downloads.downloadingFilesTooltip' => ({required Object files}) => 'Downloaden ${files}',
-			'downloads.noDownloadsTree' => 'Geen downloads',
-			'downloads.pauseAll' => 'Alles pauzeren',
-			'downloads.resumeAll' => 'Alles hervatten',
-			'downloads.retryAll' => 'Alles opnieuw proberen',
-			'downloads.retryFailed' => 'Mislukte downloads opnieuw proberen',
-			'downloads.deleteAll' => 'Alles verwijderen',
-			'downloads.selectVersion' => 'Versie selecteren',
-			'downloads.allEpisodes' => 'Alle afleveringen',
-			'downloads.unwatchedOnly' => 'Alleen ongekeken afleveringen',
-			'downloads.nextNUnwatched' => ({required Object count}) => 'Volgende ${count} ongekeken afleveringen',
-			'downloads.customAmount' => 'Aangepast aantal...',
-			'downloads.includeSpecials' => 'Specials meenemen',
-			'downloads.howManyEpisodes' => 'Hoeveel afleveringen?',
-			'downloads.invalidEpisodeCount' => 'Voer een geldig aantal afleveringen in.',
-			'downloads.keepSynced' => 'Gesynchroniseerd houden',
-			'downloads.downloadOnce' => 'Eenmalig downloaden',
-			'downloads.keepNUnwatched' => ({required Object count}) => '${count} ongekeken afleveringen behouden',
-			'downloads.editSyncRule' => 'Synchronisatieregel bewerken',
-			'downloads.removeSyncRule' => 'Synchronisatieregel verwijderen',
-			'downloads.removeSyncRuleConfirm' => ({required Object title}) => 'Synchronisatie van "${title}" stoppen? Gedownloade afleveringen worden behouden.',
-			'downloads.removeListSyncRuleConfirm' => ({required Object title}) => 'Stoppen met synchroniseren van "${title}"?',
-			'downloads.deleteSyncRuleDownloads' => 'Gekoppelde downloads ook verwijderen',
-			'downloads.deleteSyncRuleDownloadsDescription' => 'Downloads die door een andere synchronisatieregel of een ander profiel worden gebruikt, blijven behouden.',
-			'downloads.syncRuleCreated' => ({required Object count}) => 'Synchronisatieregel aangemaakt — ${count} onbekeken afleveringen behouden',
-			'downloads.syncRuleUpdated' => 'Synchronisatieregel bijgewerkt',
-			'downloads.syncRuleRemoved' => 'Synchronisatieregel verwijderd',
-			'downloads.syncRuleAndDownloadsRemoved' => 'Synchronisatieregel en gekoppelde downloads verwijderd',
-			'downloads.syncRuleCleanupBusy' => 'Synchronisatieregels worden momenteel bijgewerkt. Probeer het over een moment opnieuw.',
-			'downloads.syncRuleCleanupUnavailable' => 'Gekoppelde downloads konden niet veilig worden geïdentificeerd. Maak opnieuw verbinding met de server en probeer het opnieuw, of verwijder de regel zonder de downloads te verwijderen.',
-			'downloads.syncedNewEpisodes' => ({required Object count, required Object title}) => '${count} nieuwe afleveringen gesynchroniseerd voor ${title}',
-			'downloads.activeSyncRules' => 'Synchronisatieregels',
-			'downloads.noSyncRules' => 'Geen synchronisatieregels',
-			'downloads.manageSyncRule' => 'Synchronisatie beheren',
-			'downloads.editEpisodeCount' => 'Aantal afleveringen',
-			'downloads.editSyncFilter' => 'Synchronisatiefilter',
-			'downloads.syncAllItems' => 'Alle items synchroniseren',
-			'downloads.syncUnwatchedItems' => 'Ongekeken items synchroniseren',
-			'downloads.syncRuleServerContext' => ({required Object server, required Object status}) => 'Server: ${server} • ${status}',
-			'downloads.syncRuleAvailable' => 'Beschikbaar',
-			'downloads.syncRuleOffline' => 'Offline',
-			'downloads.syncRuleSignInRequired' => 'Inloggen vereist',
-			'downloads.syncRuleAccessDenied' => 'Toegang geweigerd',
-			'downloads.syncRuleNotAvailableForProfile' => 'Niet beschikbaar voor huidig profiel',
-			'downloads.syncRuleUnknownServer' => 'Onbekende server',
-			'downloads.syncRuleListCreated' => 'Synchronisatieregel aangemaakt',
-			'downloads.backgroundWarning.bannerBlocked' => 'Downloads stoppen zodra je de app verlaat',
-			'downloads.backgroundWarning.bannerDegraded' => 'Downloads op de achtergrond kunnen beperkt zijn',
-			'downloads.backgroundWarning.bannerAction' => 'Details',
-			'downloads.backgroundWarning.sheetTitle' => 'Downloads op de achtergrond zijn geblokkeerd',
-			'downloads.backgroundWarning.sheetTitleDegraded' => 'Downloads op de achtergrond kunnen beperkt zijn',
-			'downloads.backgroundWarning.sheetIntro' => 'Android verhindert dat Plezy betrouwbaar op de achtergrond downloadt.',
-			'downloads.backgroundWarning.sheetIntroDegraded' => 'Je apparaat beperkt wanneer Plezy op de achtergrond kan downloaden.',
-			'downloads.backgroundWarning.reasonBackgroundRestricted' => 'Het achtergrondgebruik van Plezy is beperkt. Stel het batterij- of achtergrondgebruik in op "Onbeperkt".',
-			'downloads.backgroundWarning.reasonStandbyRestricted' => 'Android heeft Plezy in een beperkte stand-bymodus geplaatst. Stel het batterijgebruik in op "Onbeperkt".',
-			'downloads.backgroundWarning.reasonDownloadChannelBlocked' => 'Downloadmeldingen zijn uitgeschakeld, waardoor voortgang en bediening mogelijk niet beschikbaar zijn.',
-			'downloads.backgroundWarning.reasonNotificationsDisabled' => 'Meldingen zijn uitgeschakeld. Op Android 13 of nieuwer zijn ze vereist voor langdurige downloads op de achtergrond.',
-			'downloads.backgroundWarning.reasonDataSaver' => 'Databesparing is ingeschakeld en blokkeert downloads op de achtergrond via mobiele data. Via Wi-Fi zouden downloads nog wel moeten werken.',
-			'downloads.backgroundWarning.reasonOemUnknown' => 'Downloads zijn herhaaldelijk gestopt terwijl Plezy op de achtergrond draaide. Controleer de instellingen voor het batterij- of achtergrondgebruik van Plezy.',
-			'downloads.backgroundWarning.openSettings' => 'Instellingen openen',
-			'downloads.backgroundWarning.stillNotWorking' => 'Apparaatspecifieke hulp',
-			'downloads.backgroundWarning.stillNotWorkingDescription' => 'Bekijk de stappen voor je apparaat of stuur een logbestand vanuit Instellingen › Logbestanden bekijken als het probleem aanhoudt.',
-			'downloads.backgroundWarning.dialogTitle' => 'Downloads worden mogelijk niet voltooid',
-			'downloads.backgroundWarning.dialogDownloadAnyway' => 'Toch downloaden',
-			'downloads.backgroundWarning.dialogFixFirst' => 'Dit eerst oplossen',
-			'downloads.backgroundWarning.statusTile' => 'Downloads op de achtergrond',
-			'downloads.backgroundWarning.statusOk' => 'Mag op de achtergrond worden uitgevoerd',
-			'downloads.backgroundWarning.statusBlocked' => 'Geblokkeerd door systeeminstellingen',
-			'downloads.backgroundWarning.statusDegraded' => 'Beperkt door systeeminstellingen',
-			'downloads.backgroundWarning.statusUnknown' => 'Nog niet gecontroleerd',
-			'downloads.backgroundWarning.settingsUnavailable' => 'Kan de systeeminstellingen niet openen op dit apparaat',
-			'downloads.backgroundWarning.linkUnavailable' => 'Kan dontkillmyapp.com niet openen op dit apparaat',
-			'downloads.options' => 'Downloadopties',
-			'downloads.groupings.library' => 'Bibliotheek',
-			'downloads.groupings.collections' => 'Collecties',
-			'downloads.unknownLibrary' => 'Onbekende bibliotheek',
-			'downloads.unknownShow' => 'Onbekende serie',
-			'downloads.unknownSeason' => 'Onbekend seizoen',
-			'downloads.unknownAlbum' => 'Onbekend album',
-			'downloads.completedOfTotal' => ({required Object completed, required Object total}) => '${completed}/${total} voltooid',
-			'downloads.errorFileNotFound' => 'Bestand niet gevonden (404)',
-			'downloads.errorDownloadNotAllowed' => 'Downloaden niet toegestaan door de server (403)',
-			'downloads.errorDownloadFailed' => 'Download mislukt',
-			'downloads.errorDownloadFailedWithReason' => ({required Object reason}) => 'Download mislukt: ${reason}',
-			'downloads.errorHttpStatus' => ({required Object status}) => 'Download mislukt (HTTP ${status})',
-			'downloads.errorPostProcessing' => ({required Object reason}) => 'Nabewerking mislukt: ${reason}',
-			'downloads.reasonFileNotSaved' => 'het bestand kon niet op dit apparaat worden opgeslagen',
-			'downloads.reasonCannotResume' => 'de gedeeltelijke download kon niet worden hervat',
-			'downloads.reasonDeviceStorageFull' => 'dit apparaat heeft geen opslagruimte meer',
-			'downloads.notificationDownloading' => 'Downloaden...',
-			'downloads.notificationComplete' => 'Download voltooid',
-			'downloads.notificationPaused' => 'Download gepauzeerd',
-			'shaders.title' => 'Shaders',
-			'shaders.noShaderDescription' => 'Geen videoverbetering',
-			'shaders.nvscalerDescription' => 'NVIDIA-beeldschaling voor scherpere video',
-			'shaders.artcnnVariantNeutral' => 'Neutraal',
-			'shaders.artcnnVariantDenoise' => 'Ruisonderdrukking',
-			'shaders.artcnnVariantDenoiseSharpen' => 'Ruisonderdrukking + verscherpen',
-			'shaders.qualityFast' => 'Snel',
-			'shaders.qualityHQ' => 'Hoge kwaliteit',
-			'shaders.mode' => 'Modus',
-			'shaders.importShader' => 'Shader importeren',
-			'shaders.customShaderDescription' => 'Aangepaste GLSL-shader',
-			'shaders.shaderImported' => 'Shader geïmporteerd',
-			'shaders.shaderImportFailed' => 'Shader importeren mislukt',
-			'shaders.deleteShader' => 'Shader verwijderen',
-			'shaders.deleteShaderConfirm' => ({required Object name}) => '"${name}" verwijderen?',
-			'companionRemote.title' => 'Afstandsbediening',
-			'companionRemote.connectedTo' => ({required Object name}) => 'Verbonden met ${name}',
-			'companionRemote.unknownDevice' => 'Onbekend apparaat',
-			'companionRemote.session.startingServer' => 'Externe server starten...',
-			'companionRemote.session.hostAddress' => 'Hostadres',
-			'companionRemote.session.connected' => 'Verbonden',
-			'companionRemote.session.serverRunning' => 'Externe server actief',
-			'companionRemote.session.serverStopped' => 'Externe server gestopt',
-			'companionRemote.session.serverRunningDescription' => 'Mobiele apparaten op je netwerk kunnen met deze app verbinden',
-			'companionRemote.session.serverStoppedDescription' => 'Start de server om mobiele apparaten te laten verbinden',
-			'companionRemote.session.usePhoneToControl' => 'Gebruik je mobiele apparaat om deze app te bedienen',
-			'companionRemote.session.startServer' => 'Server starten',
-			'companionRemote.session.stopServer' => 'Server stoppen',
-			'companionRemote.session.minimize' => 'Minimaliseren',
-			'companionRemote.session.manualAddressHint' => 'Handmatig verbindingsadres:',
-			'companionRemote.pairing.discoveryDescription' => 'Plezy-apparaten met hetzelfde Plex-account verschijnen hier',
-			'companionRemote.pairing.hostAddressHint' => '192.168.1.100:48632',
-			'companionRemote.pairing.connecting' => 'Verbinden...',
-			'companionRemote.pairing.searchingForDevices' => 'Apparaten zoeken...',
-			'companionRemote.pairing.noDevicesFound' => 'Geen apparaten gevonden op je netwerk',
-			'companionRemote.pairing.noDevicesHint' => 'Open Plezy op je desktop en gebruik op beide apparaten dezelfde wifi',
-			'companionRemote.pairing.availableDevices' => 'Beschikbare apparaten',
-			'companionRemote.pairing.manualConnection' => 'Handmatige verbinding',
-			'companionRemote.pairing.cryptoInitFailed' => 'Kon beveiligde verbinding niet starten. Log eerst in bij Plex.',
-			'companionRemote.pairing.validationHostRequired' => 'Voer het hostadres in',
-			'companionRemote.pairing.validationHostFormat' => 'Formaat moet IP:poort zijn (bijv. 192.168.1.100:48632)',
-			'companionRemote.pairing.connectionTimedOut' => 'Er is een time-out opgetreden. Gebruik op beide apparaten hetzelfde netwerk.',
-			'companionRemote.pairing.sessionNotFound' => 'Apparaat niet gevonden. Zorg dat Plezy op de host draait.',
-			'companionRemote.pairing.authFailed' => 'Authenticatie mislukt. Beide apparaten hebben hetzelfde Plex-account nodig.',
-			'companionRemote.pairing.failedToConnect' => ({required Object error}) => 'Kan niet verbinden: ${error}',
-			'companionRemote.remote.disconnectConfirm' => 'Wil je de verbinding met de externe sessie verbreken?',
-			'companionRemote.remote.reconnecting' => 'Opnieuw verbinden...',
-			'companionRemote.remote.attemptOf' => ({required Object current}) => 'Poging ${current} van 5',
-			'companionRemote.remote.retryNow' => 'Nu opnieuw proberen',
-			'companionRemote.remote.tabRemote' => 'Afstandsbediening',
-			'companionRemote.remote.tabPlay' => 'Afspelen',
-			'companionRemote.remote.tabMore' => 'Meer',
-			'companionRemote.remote.menu' => 'Menu',
-			'companionRemote.remote.tabNavigation' => 'Tabnavigatie',
-			'companionRemote.remote.tabDiscover' => 'Ontdekken',
-			'companionRemote.remote.tabLibraries' => 'Bibliotheken',
-			'companionRemote.remote.tabSearch' => 'Zoeken',
-			'companionRemote.remote.tabDownloads' => 'Downloads',
-			'companionRemote.remote.tabSettings' => 'Instellingen',
-			'companionRemote.remote.previous' => 'Vorige',
-			'companionRemote.remote.playPause' => 'Afspelen/Pauzeren',
-			'companionRemote.remote.next' => 'Volgende',
-			'companionRemote.remote.seekBack' => 'Terugspoelen',
-			'companionRemote.remote.stop' => 'Stoppen',
-			'companionRemote.remote.seekForward' => 'Vooruitspoelen',
-			'companionRemote.remote.volume' => 'Volume',
-			'companionRemote.remote.volumeDown' => 'Omlaag',
-			'companionRemote.remote.volumeUp' => 'Omhoog',
-			'companionRemote.remote.fullscreen' => 'Volledig scherm',
-			'companionRemote.remote.subtitles' => 'Ondertitels',
-			'companionRemote.remote.audio' => 'Audio',
-			'companionRemote.remote.searchHint' => 'Zoeken op desktop...',
-			'companionRemote.errors.noNetworkInterface' => 'Geen netwerkinterface gevonden',
-			'companionRemote.errors.authenticationFailed' => 'Authenticatie mislukt',
-			'companionRemote.errors.serverStartFailed' => ({required Object error}) => 'Externe server starten mislukt: ${error}',
-			'companionRemote.errors.commandFailed' => ({required Object error}) => 'Externe opdracht verzenden mislukt: ${error}',
-			'companionRemote.errors.joinTimedOut' => 'Time-out bij deelnemen aan sessie',
-			'companionRemote.errors.failedToConnectAnyAddress' => 'Er kon met geen enkel adres verbinding worden gemaakt',
-			'companionRemote.errors.connectionLostAfterAttempts' => ({required Object attempts}) => 'Verbinding verbroken na ${attempts} pogingen',
-			'companionRemote.errors.connectionLost' => 'Verbinding verloren',
-			'companionRemote.closedBeforeAuth' => 'De verbinding is vóór de authenticatie gesloten',
-			'videoSettings.playbackSpeed' => 'Afspeelsnelheid',
-			'videoSettings.normalSpeed' => 'Normaal',
-			'videoSettings.sleepTimerActive' => ({required Object duration}) => 'Actief (${duration})',
-			'videoSettings.zoom' => 'Zoom',
-			'videoSettings.sleepTimer' => 'Slaaptimer',
-			'videoSettings.audioSync' => 'Audiosynchronisatie',
-			'videoSettings.subtitleSync' => 'Ondertitelsynchronisatie',
-			'videoSettings.hdr' => 'HDR',
-			'videoSettings.hdrUnsupported' => 'HDR is hier niet beschikbaar — deze desktopcompositor of video-uitvoer kan HDR niet doorgeven.',
-			'videoSettings.hdrToneMapping' => 'HDR-tonemapping',
-			'videoSettings.hdrToneMappingCompositor' => 'Compositor',
-			'videoSettings.hdrToneMappingCompositorDescription' => 'Geef de HDR-metadata van de bron ongewijzigd door en laat de desktopcompositor de mapping uitvoeren.',
-			'videoSettings.hdrToneMappingPlayer' => 'Speler',
-			'videoSettings.hdrToneMappingPlayerDescription' => 'Laat de speler de mapping naar de piekhelderheid van het scherm uitvoeren en geef het resultaat vervolgens door aan de compositor.',
-			'videoSettings.hdrToneMappingFailed' => 'Kon HDR-tonemapping niet wijzigen — de vorige modus is nog actief.',
-			'videoSettings.audioOutput' => 'Audio-uitvoer',
-			'videoSettings.performanceOverlay' => 'Prestatie-overlay',
-			'videoSettings.audioOutputDolbyAtmos' => 'Dolby Atmos',
-			'videoSettings.audioOutputDolbyAudio' => 'Dolby Audio',
-			'videoSettings.audioOutputSurround' => 'Surround',
-			'videoSettings.audioOutputSpatial' => 'Ruimtelijke audio',
-			'videoSettings.audioOutputStereo' => 'Stereo',
-			'videoSettings.audioNormalization' => 'Volume normaliseren',
-			'videoSettings.audioNormalizationDisablesPassthrough' => 'Decodeert audio naar PCM; doorvoer is uit zolang dit aan staat',
-			'performanceOverlay.color' => 'Kleur',
-			'performanceOverlay.performance' => 'Prestaties',
-			'performanceOverlay.buffer' => 'Buffer',
-			'performanceOverlay.app' => 'App',
-			'performanceOverlay.decoder' => 'Decoder',
-			'performanceOverlay.rawDecoder' => 'Raw-decoder',
-			'performanceOverlay.tunneling' => 'Tunneling',
-			'performanceOverlay.passthrough' => 'Doorvoer',
-			'performanceOverlay.aspect' => 'Verhouding',
-			'performanceOverlay.rotation' => 'Rotatie',
-			'performanceOverlay.dvSource' => 'DV-bron',
-			'performanceOverlay.dvPath' => 'DV-pad',
-			'performanceOverlay.dvRouteDecoder' => 'Dolby Vision-decoder',
-			'performanceOverlay.dvRouteDecoderP81' => 'Dolby Vision-decoder (P7→8.1)',
-			'performanceOverlay.dvRouteBaseLayer' => 'Basislaag',
-			'performanceOverlay.dvRouteBaseLayerHdr10' => 'HDR10-basislaag',
-			'performanceOverlay.dvRouteBaseLayerHlg' => 'HLG-basislaag',
-			'performanceOverlay.dvRouteBaseLayerSdr' => 'SDR-basislaag',
-			'performanceOverlay.dvRouteReshaped' => 'RPU-reshaping (gpu-next)',
-			'performanceOverlay.p7Conversion' => 'P7-conv.',
-			'performanceOverlay.sampleRate' => 'Samplefrequentie',
-			'performanceOverlay.pixelFormat' => 'Pixelformaat',
-			'performanceOverlay.hwFormat' => 'HW-formaat',
-			'performanceOverlay.matrix' => 'Matrix',
-			'performanceOverlay.primaries' => 'Primaire kleuren',
-			'performanceOverlay.transfer' => 'Overdracht',
-			'performanceOverlay.renderFps' => 'Render-FPS',
-			'performanceOverlay.displayFps' => 'Scherm-FPS',
-			'performanceOverlay.avSync' => 'A/V-sync',
-			'performanceOverlay.dropped' => 'Gedropt',
-			'performanceOverlay.dvRpus' => 'DV RPU’s',
-			'performanceOverlay.dvRpuAverage' => 'DV RPU gem.',
-			'performanceOverlay.dvSampleAverage' => 'DV-sample gem.',
-			'performanceOverlay.maxLuma' => 'Max luma',
-			'performanceOverlay.minLuma' => 'Min luma',
-			'performanceOverlay.maxCll' => 'MaxCLL',
-			'performanceOverlay.maxFall' => 'MaxFALL',
-			'performanceOverlay.cacheUsed' => 'Cache gebruikt',
-			'performanceOverlay.cacheLimit' => 'Cachelimiet',
-			'performanceOverlay.speed' => 'Snelheid',
-			'performanceOverlay.player' => 'Speler',
-			'performanceOverlay.memory' => 'Geheugen',
-			'performanceOverlay.uiFps' => 'UI FPS',
-			'performanceOverlay.fps' => 'FPS',
-			'performanceOverlay.decoderAndroidHw' => 'Android HW',
-			'performanceOverlay.decoderNvidiaHw' => 'NVIDIA HW',
-			'performanceOverlay.decoderQualcommHw' => 'Qualcomm HW',
-			'performanceOverlay.decoderMediatekHw' => 'MediaTek HW',
-			'performanceOverlay.decoderExynosHw' => 'Exynos HW',
-			'performanceOverlay.decoderSoftware' => 'Software',
-			_ => null,
-		} ?? switch (path) {
-			'performanceOverlay.decoderHardware' => 'Hardware',
-			'performanceOverlay.tunnelingActive' => 'Actief',
-			'performanceOverlay.dvRpuFailed' => ({required Object converted, required Object failures}) => '${converted} (${failures} mislukt)',
-			'externalPlayer.title' => 'Externe speler',
-			'externalPlayer.useExternalPlayer' => 'Externe speler gebruiken',
-			'externalPlayer.useExternalPlayerDescription' => 'Open video\'s in een andere app',
-			'externalPlayer.selectPlayer' => 'Speler selecteren',
-			'externalPlayer.customPlayers' => 'Aangepaste spelers',
-			'externalPlayer.systemDefault' => 'Systeemstandaard',
-			'externalPlayer.addCustomPlayer' => 'Aangepaste speler toevoegen',
-			'externalPlayer.playerName' => 'Spelernaam',
-			'externalPlayer.playerNameHint' => 'Mijn speler',
-			'externalPlayer.playerCommand' => 'Commando',
-			'externalPlayer.playerPackage' => 'Pakketnaam',
-			'externalPlayer.playerUrlScheme' => 'URL-schema',
-			'externalPlayer.off' => 'Uit',
-			'externalPlayer.launchFailed' => 'Kan externe speler niet openen',
-			'externalPlayer.appNotInstalled' => ({required Object name}) => '${name} is niet geïnstalleerd',
-			'externalPlayer.playInExternalPlayer' => 'Afspelen in externe speler',
-			'metadataEdit.editMetadata' => 'Bewerken...',
-			'metadataEdit.screenTitle' => 'Metadata bewerken',
-			'metadataEdit.basicInfo' => 'Basisinformatie',
-			'metadataEdit.artwork' => 'Illustraties',
-			'metadataEdit.advancedSettings' => 'Geavanceerde instellingen',
-			'metadataEdit.title' => 'Titel',
-			'metadataEdit.sortTitle' => 'Sorteertitel',
-			'metadataEdit.originalTitle' => 'Oorspronkelijke titel',
-			'metadataEdit.releaseDate' => 'Releasedatum',
-			'metadataEdit.contentRating' => 'Leeftijdsclassificatie',
-			'metadataEdit.studio' => 'Studio',
-			'metadataEdit.tagline' => 'Slogan',
-			'metadataEdit.summary' => 'Samenvatting',
-			'metadataEdit.poster' => 'Poster',
-			'metadataEdit.background' => 'Achtergrond',
-			'metadataEdit.logo' => 'Logo',
-			'metadataEdit.squareArt' => 'Vierkante afbeelding',
-			'metadataEdit.selectPoster' => 'Poster selecteren',
-			'metadataEdit.selectBackground' => 'Achtergrond selecteren',
-			'metadataEdit.selectLogo' => 'Logo selecteren',
-			'metadataEdit.selectSquareArt' => 'Vierkante afbeelding selecteren',
-			'metadataEdit.fromUrl' => 'Vanaf URL',
-			'metadataEdit.uploadFile' => 'Bestand uploaden',
-			'metadataEdit.enterImageUrl' => 'Voer de afbeeldings-URL in',
-			'metadataEdit.imageUrl' => 'Afbeeldings-URL',
-			'metadataEdit.metadataUpdated' => 'Metadata bijgewerkt',
-			'metadataEdit.metadataUpdateFailed' => 'Metadata bijwerken mislukt',
-			'metadataEdit.artworkUpdated' => 'Illustraties bijgewerkt',
-			'metadataEdit.artworkUpdateFailed' => 'Illustraties bijwerken mislukt',
-			'metadataEdit.noArtworkAvailable' => 'Geen illustraties beschikbaar',
-			'metadataEdit.artworkOption' => ({required Object index}) => 'Illustratie ${index}',
-			'metadataEdit.selectedArtworkOption' => ({required Object index}) => 'Illustratie ${index}, geselecteerd',
-			'metadataEdit.notSet' => 'Niet ingesteld',
-			'metadataEdit.libraryDefault' => 'Standaard van de bibliotheek',
-			'metadataEdit.accountDefault' => 'Standaard van het account',
-			'metadataEdit.seriesDefault' => 'Standaard van de serie',
-			'metadataEdit.episodeSorting' => 'Afleveringen sorteren',
-			'metadataEdit.oldestFirst' => 'Oudste eerst',
-			'metadataEdit.newestFirst' => 'Nieuwste eerst',
-			'metadataEdit.keep' => 'Bewaren',
-			'metadataEdit.allEpisodes' => 'Alle afleveringen',
-			'metadataEdit.latestEpisodes' => ({required Object count}) => '${count} nieuwste afleveringen',
-			'metadataEdit.latestEpisode' => 'Nieuwste aflevering',
-			'metadataEdit.episodesAddedPastDays' => ({required Object count}) => 'Afleveringen toegevoegd in de afgelopen ${count} dagen',
-			'metadataEdit.deleteAfterPlaying' => 'Afleveringen verwijderen na afspelen',
-			'metadataEdit.never' => 'Nooit',
-			'metadataEdit.afterADay' => 'Na een dag',
-			'metadataEdit.afterAWeek' => 'Na een week',
-			'metadataEdit.afterAMonth' => 'Na een maand',
-			'metadataEdit.onNextRefresh' => 'Bij volgende verversing',
-			'metadataEdit.seasons' => 'Seizoenen',
-			'metadataEdit.show' => 'Tonen',
-			'metadataEdit.hide' => 'Verbergen',
-			'metadataEdit.episodeOrdering' => 'Afleveringsvolgorde',
-			'metadataEdit.tmdbAiring' => 'The Movie Database (Uitgezonden)',
-			'metadataEdit.tvdbAiring' => 'TheTVDB (Uitgezonden)',
-			'metadataEdit.tvdbAbsolute' => 'TheTVDB (Absoluut)',
-			'metadataEdit.metadataLanguage' => 'Metadatataal',
-			'metadataEdit.useOriginalTitle' => 'Oorspronkelijke titel gebruiken',
-			'metadataEdit.preferredAudioLanguage' => 'Voorkeurstaal voor audio',
-			'metadataEdit.preferredSubtitleLanguage' => 'Voorkeurstaal voor ondertitels',
-			'metadataEdit.subtitleMode' => 'Automatische ondertitelselectie',
-			'metadataEdit.manuallySelected' => 'Handmatig geselecteerd',
-			'metadataEdit.shownWithForeignAudio' => 'Weergeven bij anderstalig geluid',
-			'metadataEdit.alwaysEnabled' => 'Altijd ingeschakeld',
-			'metadataEdit.tags' => 'Tags',
-			'metadataEdit.addTag' => 'Tag toevoegen',
-			'metadataEdit.genre' => 'Genre',
-			'metadataEdit.director' => 'Regisseur',
-			'metadataEdit.writer' => 'Schrijver',
-			'metadataEdit.producer' => 'Producent',
-			'metadataEdit.country' => 'Land',
-			'metadataEdit.collection' => 'Collectie',
-			'metadataEdit.label' => 'Label',
-			'metadataEdit.quickTag' => 'Snel taggen...',
-			'matchScreen.match' => 'Koppelen...',
-			'matchScreen.fixMatch' => 'Koppeling herstellen...',
-			'matchScreen.unmatch' => 'Ontkoppelen',
-			'matchScreen.unmatchConfirm' => 'Deze koppeling wissen? Plex behandelt het item als niet-gekoppeld totdat het opnieuw wordt gekoppeld.',
-			'matchScreen.unmatchSuccess' => 'Item ontkoppeld',
-			'matchScreen.unmatchFailed' => 'Kon item niet ontkoppelen',
-			'matchScreen.matchApplied' => 'Koppeling toegepast',
-			'matchScreen.matchFailed' => 'Koppeling kon niet worden toegepast',
-			'matchScreen.titleHint' => 'Titel',
-			'matchScreen.yearHint' => 'Jaar',
-			'matchScreen.search' => 'Zoeken',
-			'matchScreen.noMatchesFound' => 'Geen overeenkomsten gevonden',
-			'serverTasks.title' => 'Servertaken',
-			'serverTasks.failedToLoad' => 'Taken konden niet worden geladen',
-			'serverTasks.noTasks' => 'Geen actieve taken',
-			'trakt.title' => 'Trakt',
-			'trakt.connected' => 'Verbonden',
-			'trakt.connectedAs' => ({required Object username}) => 'Verbonden als @${username}',
-			'trakt.disconnectConfirm' => 'Trakt-account loskoppelen?',
-			'trakt.disconnectConfirmBody' => 'Plezy stuurt geen gebeurtenissen meer naar Trakt. Je kunt op elk moment opnieuw verbinding maken.',
-			'trakt.scrobble' => 'Realtime scrobblen',
-			'trakt.scrobbleDescription' => 'Stuur tijdens het afspelen gebeurtenissen voor afspelen, pauzeren en stoppen naar Trakt.',
-			'trakt.watchedSync' => 'Kijkstatus synchroniseren',
-			'trakt.watchedSyncDescription' => 'Wanneer je items in Plezy als bekeken markeert, worden ze op Trakt ook als bekeken gemarkeerd.',
-			'seerr.title' => 'Seerr',
-			'seerr.connectTitle' => 'Verbinden met Seerr',
-			'seerr.serverUrl' => 'Server-URL',
-			'seerr.serverUrlHelper' => 'Het adres van je Seerr-instantie',
-			'seerr.checkServer' => 'Doorgaan',
-			'seerr.signInWithJellyfin' => 'Inloggen met Jellyfin',
-			'seerr.signInWithEmby' => 'Inloggen met Emby',
-			'seerr.signInWithLocal' => 'Een lokaal account gebruiken',
-			'seerr.email' => 'E-mail',
-			'seerr.noSignInMethods' => 'Deze Seerr-instantie biedt geen inlogmethode die Plezy ondersteunt.',
-			'seerr.instance' => 'Instantie',
-			'seerr.disconnectConfirm' => 'Seerr loskoppelen?',
-			'seerr.disconnectConfirmBody' => 'Plezy vergeet deze Seerr-instantie. Je kunt altijd opnieuw verbinden.',
-			'seerr.request' => 'Aanvragen',
-			'seerr.request4k' => 'Aanvragen in 4K',
-			'seerr.seasons' => 'Seizoenen',
-			'seerr.allSeasons' => 'Alle seizoenen',
-			'seerr.advancedOptions' => 'Geavanceerd',
-			'seerr.destinationServer' => 'Doelserver',
-			'seerr.qualityProfile' => 'Kwaliteitsprofiel',
-			'seerr.rootFolder' => 'Hoofdmap',
-			'seerr.languageProfile' => 'Taalprofiel',
-			'seerr.tags' => 'Tags',
-			'seerr.noTags' => 'Geen tags',
-			'seerr.defaultOption' => ({required Object name}) => '${name} (standaard)',
-			'seerr.animeNote' => 'Deze serie is een anime.',
-			'seerr.requestSubmitted' => 'Aanvraag verzonden',
-			'seerr.requestFailed' => ({required Object error}) => 'Aanvraag mislukt: ${error}',
-			'seerr.requestsLoadFailed' => 'Aanvraagopties konden niet worden geladen',
-			'seerr.nothingToRequest' => 'Alles is al beschikbaar of aangevraagd.',
-			'seerr.statusAvailable' => 'Beschikbaar',
-			'seerr.statusPartiallyAvailable' => 'Gedeeltelijk beschikbaar',
-			'seerr.statusRequested' => 'Aangevraagd',
-			'seerr.statusProcessing' => 'Verwerken',
-			'seerr.statusBlocklisted' => 'Op de blokkeerlijst',
-			'seerr.couldNotReach' => ({required Object url, required Object error}) => 'Kon ${url} niet bereiken: ${error}',
-			'seerr.noInstanceAtUrl' => ({required Object url, required Object status}) => 'Geen Seerr-instantie op ${url} (HTTP ${status})',
-			'seerr.behindAuthProxy' => 'Een authenticerende reverse proxy (SSO of HTTP-auth) heeft geantwoord in plaats van Seerr. Plezy kan hierdoor niet inloggen: laat het /api/v1-pad van Seerr de proxy omzeilen voor deze app, of gebruik een adres dat Seerr direct bereikt.',
-			'seerr.invalidUrl' => 'Voer een serveradres in, zoals https://seerr.example.com',
-			'seerr.quickConnectUnsupported' => 'Deze Seerr-instantie ondersteunt Quick Connect niet. Hiervoor is Seerr 3.4 of nieuwer nodig.',
-			'seerr.notInitialized' => 'De eerste configuratie van deze Seerr-instantie is niet voltooid',
-			'seerr.noPlexTokenForReauth' => 'Er is geen Plex-token beschikbaar om opnieuw in te loggen',
-			'seerr.noStoredCredentials' => 'Er zijn geen opgeslagen inloggegevens beschikbaar om opnieuw in te loggen',
-			'seerr.signInRejected' => 'Inloggen is geweigerd',
-			'seerr.noSessionCookie' => 'Seerr heeft geen sessiecookie verstrekt',
-			'seerr.freshCookieRejected' => 'Seerr heeft de nieuwe sessiecookie geweigerd',
-			'seerr.noUserInformation' => 'Seerr heeft geen gebruikersgegevens geretourneerd',
-			'seerr.sessionRejectedAfterReauth' => 'De sessie is na het opnieuw inloggen geweigerd',
-			'seerr.permissionDenied' => 'Seerr heeft deze actie geweigerd: je account heeft niet langer de vereiste machtiging',
-			'seerr.permissionRevoked' => 'Je hebt geen toestemming meer om dit aan te vragen',
-			'services.title' => 'Diensten',
-			'services.hubSubtitle' => 'Synchroniseer kijkvoortgang en vraag nieuwe titels aan.',
-			'services.integrations' => 'Integraties',
-			'services.notConnected' => 'Niet verbonden',
-			'services.connectedAs' => ({required Object username}) => 'Verbonden als @${username}',
-			'services.scrobble' => 'Voortgang automatisch volgen',
-			'services.scrobbleDescription' => 'Werk je lijst bij wanneer je een aflevering of film afrondt.',
-			'services.disconnectConfirm' => ({required Object service}) => '${service} loskoppelen?',
-			'services.disconnectConfirmBody' => ({required Object service}) => 'Plezy werkt ${service} niet meer bij. Je kunt op elk moment opnieuw verbinding maken.',
-			'services.connectFailed' => ({required Object service}) => 'Verbinding maken met ${service} is mislukt. Probeer het opnieuw.',
-			'services.names.mal' => 'MyAnimeList',
-			'services.names.anilist' => 'AniList',
-			'services.names.simkl' => 'Simkl',
-			'services.names.seerr' => 'Seerr',
-			'services.names.mdblist' => 'MDBList',
-			'services.simklReconnect.title' => 'Simkl opnieuw verbinden',
-			'services.simklReconnect.subtitle' => 'Simkl stopt met de aanmeldmethode die deze verbinding gebruikt. Bij opnieuw verbinden wordt simkl.com geopend om Plezy goed te keuren — Plezy ziet je wachtwoord nooit. Je kijkgeschiedenis blijft op Simkl.',
-			'services.deviceCode.title' => ({required Object service}) => 'Plezy activeren op ${service}',
-			'services.deviceCode.instructions' => 'Scan de QR-code of ga naar het onderstaande adres en voer deze code in:',
-			'services.deviceCode.openToActivate' => ({required Object service}) => 'Open ${service} om te activeren',
-			'services.deviceCode.copyCode' => 'Activeringscode kopiëren',
-			'services.deviceCode.waitingForAuthorization' => 'Wachten op autorisatie…',
-			'services.deviceCode.codeCopied' => 'Code gekopieerd',
-			'services.oauthProxy.title' => ({required Object service}) => 'Aanmelden bij ${service}',
-			'services.oauthProxy.body' => 'Scan deze QR-code of open de URL op een apparaat.',
-			'services.oauthProxy.openToSignIn' => ({required Object service}) => '${service} openen om aan te melden',
-			'services.pendingAuth.copyUrl' => 'Aanmeldings-URL kopiëren',
-			'services.pendingAuth.urlCopied' => 'URL gekopieerd',
-			'services.libraryFilter.title' => 'Bibliotheekfilter',
-			'services.libraryFilter.subtitleAllSyncing' => 'Alle bibliotheken synchroniseren',
-			'services.libraryFilter.subtitleNoneSyncing' => 'Niets wordt gesynchroniseerd',
-			'services.libraryFilter.subtitleBlocked' => ({required Object count}) => '${count} geblokkeerd',
-			'services.libraryFilter.subtitleAllowed' => ({required Object count}) => '${count} toegestaan',
-			'services.libraryFilter.mode' => 'Filtermodus',
-			'services.libraryFilter.modeBlacklist' => 'Blokkeerlijst',
-			'services.libraryFilter.modeWhitelist' => 'Toelatingslijst',
-			'services.libraryFilter.modeHintBlacklist' => 'Synchroniseer alle bibliotheken behalve de hieronder aangevinkte.',
-			'services.libraryFilter.modeHintWhitelist' => 'Synchroniseer alleen de hieronder aangevinkte bibliotheken.',
-			'services.libraryFilter.libraries' => 'Bibliotheken',
-			'services.libraryFilter.noLibraries' => 'Geen bibliotheken beschikbaar',
-			'addServer.addMediaBrowserTitle' => ({required Object product}) => '${product}-server toevoegen',
-			'addServer.serverUrls' => 'Server-URL\'s',
-			'addServer.serverUrlsHelper' => 'Meerdere URL\'s toegestaan, gescheiden door komma\'s.',
-			'addServer.findServer' => 'Server zoeken',
-			'addServer.searchingLocalMediaBrowserServers' => ({required Object product}) => 'Zoeken naar lokale ${product}-servers...',
-			'addServer.localMediaBrowserServers' => ({required Object product}) => 'Lokale ${product}-servers',
-			'addServer.username' => 'Gebruikersnaam',
-			'addServer.password' => 'Wachtwoord',
-			'addServer.signIn' => 'Inloggen',
-			'addServer.change' => 'Wijzigen',
-			'addServer.required' => 'Vereist',
-			'addServer.couldNotReachServer' => ({required Object error}) => 'Kon de server niet bereiken: ${error}',
-			'addServer.signInFailed' => ({required Object error}) => 'Inloggen mislukt: ${error}',
-			'addServer.quickConnectFailed' => ({required Object error}) => 'Quick Connect mislukt: ${error}',
-			'addServer.addPlexTitle' => 'Inloggen met Plex',
-			'addServer.pinExpired' => 'De pincode verliep voordat je kon inloggen. Probeer het opnieuw.',
-			'addServer.failedToRegisterAccount' => ({required Object error}) => 'Account registreren mislukt: ${error}',
-			'addServer.enterMediaBrowserUrlError' => ({required Object product}) => 'Voer de URL van je ${product}-server in',
-			'addServer.addConnectionTitle' => 'Verbinding toevoegen',
-			'addServer.addConnectionTitleScoped' => ({required Object name}) => 'Toevoegen aan ${name}',
-			'addServer.signInWithPlexCard' => 'Inloggen met Plex',
-			'addServer.signInWithPlexCardSubtitle' => 'Autoriseer dit apparaat. Gedeelde servers worden toegevoegd.',
-			'addServer.signInWithPlexCardSubtitleScoped' => 'Autoriseer een Plex-account. Home-gebruikers worden profielen.',
-			'addServer.connectToMediaBrowserCard' => ({required Object product}) => 'Verbinding maken met ${product}',
-			'addServer.connectToMediaBrowserCardSubtitle' => 'Voer je server-URL, gebruikersnaam en wachtwoord in.',
-			'addServer.connectToMediaBrowserCardSubtitleScoped' => ({required Object product, required Object name}) => 'Meld je aan bij je ${product}-server. Wordt gekoppeld aan ${name}.',
-			'addServer.borrowFromAnotherProfile' => 'Van een ander profiel lenen',
-			'addServer.borrowFromAnotherProfileSubtitle' => 'Hergebruik de verbinding van een ander profiel. Voor profielen met pincodebeveiliging is een pincode vereist.',
-			'addServer.invalidCredentials' => 'Ongeldige gebruikersnaam of ongeldig wachtwoord',
-			'addServer.authResponseNotJson' => 'Het authenticatieantwoord was geen geldige JSON',
-			'addServer.authResponseIncomplete' => 'Het aanmeldingsantwoord van de server was onvolledig',
-			'addServer.quickConnectRejected' => 'Quick Connect is door de server geweigerd',
-			'addServer.quickConnectNotJson' => 'Het Quick Connect-antwoord was geen geldige JSON',
-			'addServer.quickConnectMissingFields' => 'In het Quick Connect-antwoord ontbreekt een code of geheim',
-			'addServer.quickConnectPollRejected' => 'Quick Connect-polling is door de server geweigerd',
-			'addServer.serverTimedOut' => 'De server heeft niet op tijd gereageerd',
-			'addServer.responseNotJson' => 'Het serverantwoord was geen geldige JSON',
-			'addServer.responseMissingIdentity' => ({required Object product}) => 'In het antwoord ontbreekt een ID of servernaam — is dit een ${product}-server?',
-			'addServer.probeFailed' => ({required Object error}) => 'Kon de server niet bereiken: ${error}',
-			'addServer.enterAtLeastOneUrl' => ({required Object product}) => 'Voer ten minste één URL van een ${product}-server in',
-			'addServer.noReachableServer' => ({required Object product}) => 'Er is geen bereikbare ${product}-server gevonden',
-			'addServer.urlsPointToDifferentServers' => ({required Object product}) => 'Deze URL\'s verwijzen naar verschillende ${product}-servers',
-			'addServer.urlDoesNotMatchServer' => ({required Object product}) => 'Deze URL komt niet overeen met de ${product}-server',
-			'addServer.redirectUnsupported' => 'De server heeft doorgestuurd naar een niet-ondersteunde URL',
-			'addServer.redirectDifferentHost' => ({required Object product}) => 'De server heeft doorgestuurd naar een andere host. Voer de uiteindelijke ${product}-URL rechtstreeks in.',
-			'addServer.redirectInsecure' => 'De server heeft van HTTPS doorgestuurd naar een onbeveiligde URL',
-			'addServer.redirectUnsupportedEnterFinal' => ({required Object product}) => 'De server heeft doorgestuurd naar een niet-ondersteunde URL. Voer de uiteindelijke ${product}-URL rechtstreeks in.',
-			_ => null,
-		};
+		switch (path) {
+			case 'app.title': return 'Plezy';
+			case 'appIcon.title': return 'App-icoon';
+			case 'appIcon.defaultIcon': return 'Standaard';
+			case 'appIcon.current': return 'Huidig icoon';
+			case 'appIcon.locked': return 'Onderdeel van het Thema- en iconenpakket';
+			case 'appIcon.lockedHint': return 'Alternatieve iconen zijn onderdeel van het Thema- en iconenpakket.';
+			case 'appIcon.changeFailed': return 'Het app-icoon kon niet worden gewijzigd';
+			case 'appIcon.launcherHint': return 'Het nieuwe icoon verschijnt op je beginscherm zodra je Plezy verlaat.';
+			case 'appIcon.tvLauncherHint': return 'De nieuwe banner verschijnt zodra je Plezy verlaat. Android TV kan de oude blijven tonen totdat de tv opnieuw is opgestart.';
+			case 'appIcon.names.midnight': return 'Middernacht';
+			case 'appIcon.names.ember': return 'Sintel';
+			case 'appIcon.names.paper': return 'Papier';
+			case 'appIcon.names.oled': return 'OLED';
+			case 'appIcon.names.line': return 'Lijn';
+			case 'appIcon.names.ocean': return 'Oceaan';
+			case 'appIcon.names.ultraviolet': return 'Ultraviolet';
+			case 'appIcon.names.matcha': return 'Matcha';
+			case 'appIcon.names.sunset': return 'Zonsondergang';
+			case 'appIcon.names.gold': return 'Goud';
+			case 'appIcon.names.titanium': return 'Titanium';
+			case 'appIcon.names.glass': return 'Glas';
+			case 'appIcon.names.crt': return 'CRT';
+			case 'appIcon.names.vhs': return 'VHS';
+			case 'appIcon.names.synthwave': return 'Synthwave';
+			case 'appIcon.names.pixel': return 'Pixel';
+			case 'appIcon.names.neon': return 'Neon';
+			case 'appIcon.names.sticker': return 'Sticker';
+			case 'appIcon.names.ticket': return 'Kaartje';
+			case 'appIcon.names.pop': return 'Pop';
+			case 'appIcon.names.strata': return 'Lagen';
+			case 'appIcon.names.facet': return 'Facet';
+			case 'appIcon.names.tilde': return 'Tilde';
+			case 'auth.signInWithPlex': return 'Inloggen met Plex';
+			case 'auth.showQRCode': return 'Toon QR-code';
+			case 'auth.authenticate': return 'Authenticeren';
+			case 'auth.authenticationTimeout': return 'Authenticatie verlopen. Probeer opnieuw.';
+			case 'auth.scanQRToSignIn': return 'Scan deze QR-code om in te loggen';
+			case 'auth.waitingForAuth': return 'Wachten op authenticatie...\nMeld je aan via je browser.';
+			case 'auth.useBrowser': return 'Gebruik browser';
+			case 'auth.or': return 'of';
+			case 'auth.connectToMediaBrowser': return ({required Object product}) => 'Verbinding maken met ${product}';
+			case 'auth.quickConnect': return 'Quick Connect';
+			case 'auth.useQuickConnect': return 'Quick Connect gebruiken';
+			case 'auth.quickConnectInstructions': return 'Open Quick Connect in Jellyfin en voer deze code in.';
+			case 'auth.quickConnectWaiting': return 'Wachten op goedkeuring…';
+			case 'auth.quickConnectCancel': return 'Annuleren';
+			case 'auth.quickConnectExpired': return 'Quick Connect is verlopen. Probeer opnieuw.';
+			case 'auth.localDataRecoveryRequired': return 'Plezy kon lokale aanmeldings- en openstaande afspeelgegevens niet veilig herstellen. Meld je opnieuw aan.';
+			case 'auth.pinCheckRejected': return 'De controle van de Plex-pincode is geweigerd';
+			case 'common.cancel': return 'Annuleren';
+			case 'common.save': return 'Opslaan';
+			case 'common.close': return 'Sluiten';
+			case 'common.clear': return 'Wissen';
+			case 'common.reset': return 'Resetten';
+			case 'common.later': return 'Later';
+			case 'common.submit': return 'Verzenden';
+			case 'common.confirm': return 'Bevestigen';
+			case 'common.retry': return 'Opnieuw proberen';
+			case 'common.logout': return 'Uitloggen';
+			case 'common.unknown': return 'Onbekend';
+			case 'common.refresh': return 'Vernieuwen';
+			case 'common.yes': return 'Ja';
+			case 'common.no': return 'Nee';
+			case 'common.delete': return 'Verwijderen';
+			case 'common.edit': return 'Bewerken';
+			case 'common.shuffle': return 'Willekeurig';
+			case 'common.addTo': return 'Toevoegen aan...';
+			case 'common.createNew': return 'Nieuw aanmaken';
+			case 'common.connect': return 'Verbinden';
+			case 'common.disconnect': return 'Verbinding verbreken';
+			case 'common.play': return 'Afspelen';
+			case 'common.pause': return 'Pauzeren';
+			case 'common.resume': return 'Hervatten';
+			case 'common.error': return 'Fout';
+			case 'common.search': return 'Zoeken';
+			case 'common.home': return 'Home';
+			case 'common.back': return 'Terug';
+			case 'common.settings': return 'Instellingen';
+			case 'common.mute': return 'Dempen';
+			case 'common.ok': return 'OK';
+			case 'common.off': return 'Uit';
+			case 'common.options': return 'Opties';
+			case 'common.seasonNumber': return ({required Object number}) => 'Seizoen ${number}';
+			case 'common.episodeNumberTitle': return ({required Object number, required Object title}) => 'Aflevering ${number} - ${title}';
+			case 'common.chapterNumber': return ({required Object number}) => 'Hoofdstuk ${number}';
+			case 'common.reconnect': return 'Opnieuw verbinden';
+			case 'common.viewAll': return 'Alles weergeven';
+			case 'common.checkingNetwork': return 'Netwerk controleren...';
+			case 'common.loadingServers': return 'Servers laden...';
+			case 'common.connectingToServers': return 'Verbinden met servers...';
+			case 'common.startingOfflineMode': return 'Offlinemodus starten...';
+			case 'common.loading': return 'Laden...';
+			case 'common.fullscreen': return 'Volledig scherm';
+			case 'common.exitFullscreen': return 'Volledig scherm verlaten';
+			case 'common.pressBackAgainToExit': return 'Druk nogmaals op terug om af te sluiten';
+			case 'common.ratingSource.critic': return 'Critici';
+			case 'common.ratingSource.audience': return 'Publiek';
+			case 'common.ratingSource.imdb': return 'IMDb';
+			case 'common.ratingSource.tmdb': return 'TMDB';
+			case 'common.ratingSource.rottenTomatoes': return 'Rotten Tomatoes';
+			case 'common.ratingSource.simkl': return 'Simkl';
+			case 'common.ratingSource.mal': return 'MyAnimeList';
+			case 'common.ratingSource.anilist': return 'AniList';
+			case 'common.ratingSource.trakt': return 'Trakt';
+			case 'common.ratingSource.rottenTomatoesCritic': return 'Rotten Tomatoes-critici';
+			case 'common.ratingSource.rottenTomatoesAudience': return 'Rotten Tomatoes-publiek';
+			case 'common.ratingSource.metacritic': return 'Metacritic';
+			case 'common.ratingSource.letterboxd': return 'Letterboxd';
+			case 'common.notAvailable': return 'N/A';
+			case 'common.url': return 'URL';
+			case 'common.letterKeys': return 'ABC';
+			case 'common.mediaKind.movie': return 'Film';
+			case 'common.mediaKind.show': return 'Serie';
+			case 'common.mediaKind.season': return 'Seizoen';
+			case 'common.mediaKind.episode': return 'Aflevering';
+			case 'common.mediaKind.artist': return 'Artiest';
+			case 'common.mediaKind.album': return 'Album';
+			case 'common.mediaKind.track': return 'Nummer';
+			case 'common.mediaKind.collection': return 'Collectie';
+			case 'common.mediaKind.playlist': return 'Afspeellijst';
+			case 'common.mediaKind.clip': return 'Clip';
+			case 'common.mediaKind.photo': return 'Foto';
+			case 'common.mediaKind.folder': return 'Map';
+			case 'screens.licenses': return 'Licenties';
+			case 'screens.switchProfile': return 'Wissel van profiel';
+			case 'screens.subtitleStyling': return 'Ondertitelopmaak';
+			case 'screens.mpvConfig': return 'mpv.conf';
+			case 'screens.logs': return 'Logbestanden';
+			case 'update.available': return 'Update beschikbaar';
+			case 'update.versionAvailable': return ({required Object version}) => 'Versie ${version} is beschikbaar';
+			case 'update.currentVersion': return ({required Object version}) => 'Huidig: ${version}';
+			case 'update.skipVersion': return 'Deze versie overslaan';
+			case 'update.viewRelease': return 'Bekijk release';
+			case 'update.latestVersion': return 'Je hebt de nieuwste versie';
+			case 'update.checkFailed': return 'Kon niet controleren op updates';
+			case 'supporter.title': return 'Thema- en iconenpakket';
+			case 'supporter.intro': return 'Een optionele eenmalige aankoop met cosmetische extra\'s:';
+			case 'supporter.presetThemes': return 'Kant-en-klare thema\'s';
+			case 'supporter.presetThemesDescription': return 'Sintel, Gletsjer, Woud, Pruim en Papier';
+			case 'supporter.customTheme': return 'Aangepast thema';
+			case 'supporter.customThemeDescription': return 'Kies elke kleur zelf';
+			case 'supporter.appIcons': return 'App-iconen';
+			case 'supporter.appIconsDescription': return 'Kies een alternatief Plezy-icoon';
+			case 'supporter.buy': return ({required Object price}) => 'Kopen voor ${price}';
+			case 'supporter.loadingPrice': return 'Prijs laden...';
+			case 'supporter.restore': return 'Aankopen herstellen';
+			case 'supporter.pending': return 'Je aankoop wacht op betaling of goedkeuring. De extra\'s worden ontgrendeld zodra de store de aankoop afrondt.';
+			case 'supporter.thankYouTitle': return 'Bedankt voor je aankoop';
+			case 'supporter.thankYouBody': return 'Het Thema- en iconenpakket is ontgrendeld.';
+			case 'supporter.tileSubtitle': return 'Ontgrendel thema\'s en app-iconen met een eenmalige aankoop';
+			case 'supporter.tileSubtitleThemesOnly': return 'Ontgrendel thema\'s met een eenmalige aankoop';
+			case 'supporter.tileUnlocked': return 'Ontgrendeld — bedankt voor je aankoop';
+			case 'supporter.errors.storeUnavailable': return 'Aankopen zijn niet beschikbaar. Controleer of je bent aangemeld bij de store en of aankopen op dit apparaat zijn toegestaan.';
+			case 'supporter.errors.productNotFound': return 'Het Thema- en iconenpakket is momenteel niet beschikbaar in jouw store.';
+			case 'supporter.errors.productQueryFailed': return 'De prijs kon niet worden geladen. Controleer je verbinding en probeer het opnieuw.';
+			case 'supporter.errors.purchaseFailed': return 'De aankoop is niet gelukt. Probeer het opnieuw.';
+			case 'supporter.errors.restoreFailed': return 'De store kon niet worden bereikt om je aankoop te herstellen. Probeer het opnieuw.';
+			case 'supporter.errors.nothingToRestore': return 'Er is geen aankoop van het Thema- en iconenpakket gevonden voor dit store-account.';
+			case 'settings.title': return 'Instellingen';
+			case 'settings.supportDeveloper': return 'Steun Plezy';
+			case 'settings.supportDeveloperDescription': return 'Doneer via Liberapay om de ontwikkeling te steunen';
+			case 'settings.language': return 'Taal';
+			case 'settings.theme': return 'Thema';
+			case 'settings.appearance': return 'Uiterlijk';
+			case 'settings.videoPlayback': return 'Video afspelen';
+			case 'settings.videoPlaybackDescription': return 'Afspeelgedrag configureren';
+			case 'settings.advanced': return 'Geavanceerd';
+			case 'settings.episodePosterMode': return 'Stijl van afleveringsposter';
+			case 'settings.seriesPoster': return 'Serieposter';
+			case 'settings.seasonPoster': return 'Seizoensposter';
+			case 'settings.episodeThumbnail': return 'Miniatuur';
+			case 'settings.showHeroSectionDescription': return 'Toon de carrousel met uitgelichte inhoud op het startscherm';
+			case 'settings.secondsLabel': return 'Seconden';
+			case 'settings.minutesLabel': return 'Minuten';
+			case 'settings.secondsShort': return 's';
+			case 'settings.minutesShort': return 'm';
+			case 'settings.durationHint': return ({required Object min, required Object max}) => 'Voer duur in (${min}-${max})';
+			case 'settings.systemTheme': return 'Systeem';
+			case 'settings.lightTheme': return 'Licht';
+			case 'settings.darkTheme': return 'Donker';
+			case 'settings.oledTheme': return 'OLED';
+			case 'settings.emberTheme': return 'Sintel';
+			case 'settings.glacierTheme': return 'Gletsjer';
+			case 'settings.forestTheme': return 'Woud';
+			case 'settings.plumTheme': return 'Pruim';
+			case 'settings.paperTheme': return 'Papier';
+			case 'settings.libraryDensity': return 'Bibliotheekdichtheid';
+			case 'settings.displayScale': return 'Weergaveschaal';
+			case 'settings.compact': return 'Compact';
+			case 'settings.comfortable': return 'Comfortabel';
+			case 'settings.gridSpacing': return 'Rasterafstand';
+			case 'settings.gridSpacingTight': return 'Compact';
+			case 'settings.gridSpacingNormal': return 'Normaal';
+			case 'settings.gridSpacingSpacious': return 'Ruim';
+			case 'settings.tvCornerSpotlightBackdrop': return 'Uitgelichte achtergrond in de hoek';
+			case 'settings.tvCornerSpotlightBackdropDescription': return 'Toon de uitgelichte afbeelding rechtsboven in plaats van schermvullend';
+			case 'settings.viewMode': return 'Weergavemodus';
+			case 'settings.gridView': return 'Raster';
+			case 'settings.listView': return 'Lijst';
+			case 'settings.showHeroSection': return 'Toon hoofdsectie';
+			case 'settings.continueWatchingAction': return 'Actie voor \'Doorgaan met kijken\'';
+			case 'settings.continueWatchingPlay': return 'Afspelen';
+			case 'settings.continueWatchingDetails': return 'Details openen';
+			case 'settings.episodeAction': return 'Afleveringsactie';
+			case 'settings.episodePlay': return 'Afspelen';
+			case 'settings.episodeDetails': return 'Details openen';
+			case 'settings.useGlobalHubs': return 'Startlayout gebruiken';
+			case 'settings.useGlobalHubsDescription': return 'Toon gecombineerde hubs op het startscherm. Gebruik anders bibliotheekaanbevelingen.';
+			case 'settings.showServerNameOnHubs': return 'Servernaam tonen bij hubs';
+			case 'settings.showServerNameOnHubsDescription': return 'Toon servernamen altijd in hubtitels.';
+			case 'settings.groupLibrariesByServer': return 'Bibliotheken groeperen per server';
+			case 'settings.groupLibrariesByServerDescription': return 'Groepeer zijbalkbibliotheken onder elke mediaserver.';
+			case 'settings.alwaysKeepSidebarOpen': return 'Zijbalk altijd open houden';
+			case 'settings.alwaysKeepSidebarOpenDescription': return 'Zijbalk blijft uitgevouwen en inhoudsgebied past zich aan';
+			case 'settings.showUnwatchedCount': return 'Aantal ongekeken tonen';
+			case 'settings.showUnwatchedCountDescription': return 'Toon aantal ongekeken afleveringen bij series en seizoenen';
+			case 'settings.showWatchedIndicators': return 'Bekeken-markeringen tonen';
+			case 'settings.showWatchedIndicatorsDescription': return 'Toon een vinkje op bekeken films, series en afleveringen';
+			case 'settings.showEpisodeNumberOnCards': return 'Afleveringsnummer op kaarten tonen';
+			case 'settings.showEpisodeNumberOnCardsDescription': return 'Toon seizoen- en afleveringsnummer op afleveringskaarten';
+			case 'settings.showSeasonPostersOnTabs': return 'Toon seizoensposters op tabbladen';
+			case 'settings.showSeasonPostersOnTabsDescription': return 'Toon de poster van elk seizoen boven het tabblad';
+			case 'settings.tvFullCardLayout': return 'Volledige tv-kaarten';
+			case 'settings.tvFullCardLayoutDescription': return 'Gebruik tv-kaarten met alleen afbeeldingen en namen van acteurs als overlay';
+			case 'settings.focusGlow': return 'Focusgloed';
+			case 'settings.focusGlowDescription': return 'Toon een zachte gloed rond de kaart met focus';
+			case 'settings.visualEffects': return 'Visuele effecten';
+			case 'settings.visualEffectsAuto': return 'Automatisch';
+			case 'settings.visualEffectsAutoDescription': return 'Effecten automatisch verminderen op apparaten met laag vermogen';
+			case 'settings.visualEffectsFull': return 'Volledig';
+			case 'settings.visualEffectsReduced': return 'Verminderd';
+			case 'settings.visualEffectsReducedDescription': return 'Minder animaties en illustraties met lagere resolutie';
+			case 'settings.hideSpoilers': return 'Spoilers voor ongekeken afleveringen verbergen';
+			case 'settings.hideSpoilersDescription': return 'Vervaag miniaturen en beschrijvingen van ongekeken afleveringen';
+			case 'settings.playerBackend': return 'Afspeelbackend';
+			case 'settings.exoPlayer': return 'ExoPlayer';
+			case 'settings.mpv': return 'mpv';
+			case 'settings.hardwareDecoding': return 'Hardwaredecodering';
+			case 'settings.hardwareDecodingDescription': return 'Gebruik hardwareversnelling indien beschikbaar';
+			case 'settings.playbackBuffer': return 'Afspeelbuffer';
+			case 'settings.playbackBufferAuto': return 'Auto (aanbevolen)';
+			case 'settings.playbackBufferLarge': return 'Groot';
+			case 'settings.playbackBufferExtraLarge': return 'Extra groot';
+			case 'settings.playbackBufferDescription': return 'Buffert meer tegen onstabiele verbindingen. Ook beperkt door de buffergrootte.';
+			case 'settings.defaultQualityTitle': return 'Standaardkwaliteit';
+			case 'settings.cellularQualityTitle': return 'Standaardkwaliteit bij mobiele data';
+			case 'settings.cellularQualitySameAsDefault': return 'Zelfde als standaardkwaliteit';
+			case 'settings.directPlayCoveredQuality': return 'Kleinere video\'s op originele kwaliteit afspelen';
+			case 'settings.directPlayCoveredQualityDescription': return 'Speel video\'s die al binnen de kwaliteitslimiet vallen direct af in plaats van ze te transcoderen';
+			case 'settings.videoCodecs': return 'Videocodecs';
+			case 'settings.videoCodecsDescription': return 'Niet-aangevinkte codecs worden door de server getranscodeerd';
+			case 'settings.videoCodecsAlwaysAccepted': return 'Altijd geaccepteerd';
+			case 'settings.musicQualityTitle': return 'Muziekkwaliteit';
+			case 'settings.subtitleStyling': return 'Ondertitelopmaak';
+			case 'settings.subtitleStylingDescription': return 'Pas de weergave van ondertitels aan';
+			case 'settings.smallSkipDuration': return 'Korte sprong';
+			case 'settings.largeSkipDuration': return 'Lange sprong';
+			case 'settings.rewindOnResume': return 'Terugspoelen bij hervatten';
+			case 'settings.secondsUnit': return ({required Object seconds}) => '${seconds} seconden';
+			case 'settings.defaultSleepTimer': return 'Standaardslaaptimer';
+			case 'settings.minutesUnit': return ({required Object minutes}) => '${minutes} minuten';
+			case 'settings.rememberTrackSelections': return 'Trackselecties per serie of film onthouden';
+			case 'settings.rememberTrackSelectionsDescription': return 'Onthoud audio- en ondertitelkeuzes per titel';
+			case 'settings.rememberTrackSelectionsBackendRule': return 'Plex slaat elke keuze per bestand op de server op; Jellyfin schakelt ook de accountoptie \'Selecties onthouden\' in; Emby wordt niet ondersteund';
+			case 'settings.followServerTrackSelections': return 'Trackselecties van de server per aflevering gebruiken';
+			case 'settings.followServerTrackSelectionsDescription': return 'Pas bij het wisselen van aflevering de op de server geselecteerde audio en ondertitels toe in plaats van de huidige keuze over te nemen';
+			case 'settings.resumeMusicOnLaunch': return 'Muzieksessie onthouden';
+			case 'settings.resumeMusicOnLaunchDescription': return 'Open bij het starten van de app het laatste nummer gepauzeerd waar het gebleven was';
+			case 'settings.showChapterMarkersOnTimeline': return 'Hoofdstukmarkeringen op tijdlijn tonen';
+			case 'settings.showChapterMarkersOnTimelineDescription': return 'Verdeel de tijdlijn bij hoofdstukgrenzen';
+			case 'settings.specialsOrdering': return 'Specials in afleveringsvolgorde';
+			case 'settings.specialsOrderingDescription': return 'Waar specials worden afgespeeld in de kijkvolgorde van een serie';
+			case 'settings.specialsOrderingServer': return 'Servervolgorde volgen';
+			case 'settings.specialsOrderingAirDate': return 'Op uitzenddatum invoegen';
+			case 'settings.specialsOrderingLast': return 'Na reguliere seizoenen';
+			case 'settings.clickVideoTogglesPlayback': return 'Klik op de video om afspelen of pauzeren te wisselen';
+			case 'settings.clickVideoTogglesPlaybackDescription': return 'Klik op de video om af te spelen of te pauzeren in plaats van de bediening te tonen.';
+			case 'settings.videoPlayerControls': return 'Videospelerbediening';
+			case 'settings.keyboardShortcuts': return 'Toetsenbordsneltoetsen';
+			case 'settings.keyboardShortcutsDescription': return 'Pas de toetsenbordsneltoetsen aan';
+			case 'settings.videoPlayerNavigation': return 'Videospelernavigatie';
+			case 'settings.videoPlayerNavigationDescription': return 'Gebruik de pijltjestoetsen om door de videospelerbediening te navigeren';
+			case 'settings.watchTogetherRelay': return 'Relay voor Samen kijken';
+			case 'settings.watchTogetherRelayDescription': return 'Openbare Open Watch Party-relays, tenzij je een eigen relay instelt';
+			case 'settings.watchTogetherRelayHint': return 'https://mijn-relay.voorbeeld.nl';
+			case 'settings.watchTogetherRelayInvalid': return 'Voer een geldige HTTP- of HTTPS-basis-URL voor de relay in.';
+			case 'settings.crashReporting': return 'Crashrapportage';
+			case 'settings.crashReportingDescription': return 'Crashrapporten verzenden om de app te verbeteren';
+			case 'settings.debugLogging': return 'Debuglogboek';
+			case 'settings.debugLoggingDescription': return 'Schakel gedetailleerde logboekregistratie in om problemen op te lossen';
+			case 'settings.viewLogs': return 'Logbestanden bekijken';
+			case 'settings.viewLogsDescription': return 'Logbestanden van de app bekijken';
+			case 'settings.clearImageCache': return 'Afbeeldingscache wissen';
+			case 'settings.clearImageCacheDescription': return 'Gecachte artwork en miniaturen wissen. Afbeeldingen kunnen langzamer laden tot ze opnieuw zijn gedownload.';
+			case 'settings.clearImageCacheSuccess': return 'Afbeeldingscache succesvol gewist';
+			case 'settings.resetSettings': return 'Instellingen resetten';
+			case 'settings.resetSettingsDescription': return 'Standaardinstellingen herstellen. Dit kan niet ongedaan worden gemaakt.';
+			case 'settings.resetSettingsSuccess': return 'Instellingen succesvol gereset';
+			case 'settings.backup': return 'Back-up';
+			case 'settings.exportSettings': return 'Instellingen exporteren';
+			case 'settings.exportSettingsDescription': return 'Sla je voorkeuren op in een bestand';
+			case 'settings.exportSettingsSuccess': return 'Instellingen geëxporteerd';
+			case 'settings.importSettings': return 'Instellingen importeren';
+			case 'settings.importSettingsDescription': return 'Voorkeuren herstellen vanuit een bestand';
+			case 'settings.importSettingsConfirm': return 'Hiermee worden je huidige instellingen vervangen. Doorgaan?';
+			case 'settings.importSettingsSuccess': return 'Instellingen geïmporteerd';
+			case 'settings.importSettingsInvalidFile': return 'Dit bestand is geen geldige Plezy-export';
+			case 'settings.importSettingsNoUser': return 'Meld je aan voordat je instellingen importeert';
+			case 'settings.shortcutsReset': return 'Sneltoetsen gereset naar standaard';
+			case 'settings.resetShortcutsConfirm': return 'Hiermee worden je aangepaste sneltoetsen vervangen door de standaardinstellingen. Doorgaan?';
+			case 'settings.about': return 'Over';
+			case 'settings.aboutDescription': return 'App-informatie en licenties';
+			case 'settings.updates': return 'Updates';
+			case 'settings.updateAvailable': return 'Update beschikbaar';
+			case 'settings.checkForUpdates': return 'Controleer op updates';
+			case 'settings.autoCheckUpdatesOnStartup': return 'Automatisch controleren op updates bij opstarten';
+			case 'settings.autoCheckUpdatesOnStartupDescription': return 'Melden wanneer er bij start een update beschikbaar is';
+			case 'settings.validationErrorEnterNumber': return 'Voer een geldig nummer in';
+			case 'settings.validationErrorDuration': return ({required Object min, required Object max, required Object unit}) => 'Duur moet tussen ${min} en ${max} ${unit} zijn';
+			case 'settings.shortcutAlreadyAssigned': return ({required Object action}) => 'Sneltoets al toegewezen aan ${action}';
+			case 'settings.shortcutUpdated': return ({required Object action}) => 'Sneltoets bijgewerkt voor ${action}';
+			case 'settings.saveFailed': return 'Wijzigingen konden niet worden opgeslagen. Probeer het opnieuw.';
+			case 'settings.autoPlayAndSkip': return 'Automatisch afspelen en overslaan';
+			case 'settings.autoPlayNextEpisode': return 'Volgende aflevering automatisch afspelen';
+			case 'settings.autoPlayNextEpisodeDescription': return 'Start de volgende aflevering automatisch wanneer een aflevering eindigt';
+			case 'settings.shuffleStartsFromBeginning': return 'Willekeurig afspelen begint vooraan';
+			case 'settings.shuffleStartsFromBeginningDescription': return 'Start elke aflevering bij willekeurig afspelen vanaf het begin in plaats van te hervatten';
+			case 'settings.playNextCountdown': return 'Aftellen voor volgende aflevering';
+			case 'settings.playNextCountdownImmediate': return 'Direct afspelen';
+			case 'settings.skipIntroMode': return 'Intro overslaan';
+			case 'settings.skipIntroModeOffDescription': return 'Speel intro\'s normaal af zonder overslaan-knop';
+			case 'settings.skipIntroModeButtonDescription': return 'Toon een overslaan-knop wanneer een intro begint';
+			case 'settings.skipIntroModeAutoDescription': return 'Sla intro\'s automatisch over na de onderstaande vertraging';
+			case 'settings.skipCreditsMode': return 'Aftiteling overslaan';
+			case 'settings.skipCreditsModeOffDescription': return 'Speel de aftiteling normaal af zonder overslaan-knop';
+			case 'settings.skipCreditsModeButtonDescription': return 'Toon een overslaan-knop wanneer de aftiteling begint';
+			case 'settings.skipCreditsModeAutoDescription': return 'Sla de aftiteling automatisch over en speel de volgende aflevering af';
+			case 'settings.skipMarkerModeOff': return 'Uit';
+			case 'settings.skipMarkerModeButton': return 'Knop tonen';
+			case 'settings.skipMarkerModeAuto': return 'Automatisch';
+			case 'settings.forceSkipMarkerFallback': return 'Reservemarkeringen afdwingen';
+			case 'settings.forceSkipMarkerFallbackDescription': return 'Gebruik patronen in hoofdstuktitels, zelfs wanneer Plex markeringen heeft';
+			case 'settings.autoSkipDelay': return 'Vertraging voor automatisch overslaan';
+			case 'settings.autoSkipDelayDescription': return ({required Object seconds}) => '${seconds} seconden wachten voor automatisch overslaan';
+			case 'settings.introPattern': return 'Intromarkeringspatroon';
+			case 'settings.introPatternDescription': return 'Reguliere expressie om intromarkeringen in hoofdstuktitels te herkennen';
+			case 'settings.creditsPattern': return 'Aftitelingmarkeringspatroon';
+			case 'settings.creditsPatternDescription': return 'Reguliere expressie om aftitelingmarkeringen in hoofdstuktitels te herkennen';
+			case 'settings.invalidRegex': return 'Ongeldige reguliere expressie';
+			case 'settings.regex': return 'Reguliere expressie';
+			case 'settings.downloads': return 'Downloads';
+			case 'settings.downloadLocationDescription': return 'Kies waar gedownloade inhoud wordt opgeslagen';
+			case 'settings.downloadLocationDefault': return 'Standaard (app-opslag)';
+			case 'settings.downloadLocationCustom': return 'Aangepaste locatie';
+			case 'settings.selectFolder': return 'Map selecteren';
+			case 'settings.resetToDefault': return 'Standaardinstelling herstellen';
+			case 'settings.currentPath': return ({required Object path}) => 'Huidig: ${path}';
+			case 'settings.downloadLocationChanged': return 'Downloadlocatie gewijzigd';
+			case 'settings.downloadLocationReset': return 'Downloadlocatie hersteld naar standaard';
+			case 'settings.downloadLocationInvalid': return 'Geselecteerde map is niet beschrijfbaar';
+			case 'settings.downloadLocationPickerUnavailable': return 'Mapselectie is niet beschikbaar op dit apparaat';
+			case 'settings.downloadOnWifiOnly': return 'Alleen via wifi downloaden';
+			case 'settings.downloadOnWifiOnlyDescription': return 'Voorkom downloads bij gebruik van mobiele data';
+			case 'settings.autoRemoveWatchedDownloads': return 'Bekeken downloads automatisch verwijderen';
+			case 'settings.autoRemoveWatchedDownloadsDescription': return 'Bekeken downloads automatisch verwijderen';
+			case 'settings.cellularDownloadBlocked': return 'Downloads via een mobiel netwerk zijn geblokkeerd. Gebruik wifi of wijzig de instelling.';
+			case 'settings.maxVolume': return 'Maximaal volume';
+			case 'settings.maxVolumeDescription': return 'Volume boven 100% toestaan voor stille media';
+			case 'settings.maxVolumePercent': return ({required Object percent}) => '${percent}%';
+			case 'settings.discordRichPresence': return 'Discord Rich Presence';
+			case 'settings.discordRichPresenceDescription': return 'Toon op Discord wat je aan het kijken bent';
+			case 'settings.services': return 'Diensten';
+			case 'settings.servicesDescription': return 'Koppel Trakt, MyAnimeList, Seerr en meer';
+			case 'settings.manageLibrariesDescription': return 'Bibliotheken herordenen en verbergen';
+			case 'settings.companionRemoteServer': return 'Companion Remote-server';
+			case 'settings.companionRemoteServerDescription': return 'Sta mobiele apparaten op je netwerk toe om deze app te bedienen';
+			case 'settings.companionRemoteServerStartFailed': return 'Kan de Companion Remote-server niet starten';
+			case 'settings.companionRemoteServerStopFailed': return 'Kan de Companion Remote-server niet stoppen';
+			case 'settings.autoPip': return 'Automatische beeld-in-beeld';
+			case 'settings.autoPipDescription': return 'Schakel over naar beeld-in-beeld als je tijdens het afspelen de app verlaat';
+			case 'settings.matchContentFrameRate': return 'Inhoudsframesnelheid afstemmen';
+			case 'settings.matchContentFrameRateDescription': return 'Stem schermverversing af op videocontent';
+			case 'settings.matchContentResolution': return 'Aanpassen aan resolutie van content';
+			case 'settings.matchContentResolutionDescription': return 'Schakelt het beeldscherm naar de eigen resolutie van de video, zodat je tv het opschalen doet. Menu\'s en ondertitels worden tijdens het afspelen ook opgeschaald';
+			case 'settings.matchRefreshRate': return 'Verversingssnelheid afstemmen';
+			case 'settings.matchRefreshRateDescription': return 'Stem schermverversing af in volledig scherm';
+			case 'settings.matchDynamicRange': return 'Dynamisch bereik afstemmen';
+			case 'settings.matchDynamicRangeDescription': return 'Schakel HDR in voor HDR-content en daarna terug naar SDR';
+			case 'settings.displaySwitchDelay': return 'Vertraging bij schermwisseling';
+			case 'settings.tunneledPlayback': return 'Getunnelde weergave';
+			case 'settings.tunneledPlaybackDescription': return 'Gebruik videotunneling. Schakel uit als HDR-afspelen zwart beeld geeft of beweging hapert.';
+			case 'settings.audioPassthrough': return 'Audio-doorvoer';
+			case 'settings.audioPassthroughDescription': return 'Stuur Dolby/DTS-audio zonder hercodering naar je receiver of tv en behoud surroundgeluid. Schakel uit als je geen geluid hebt.';
+			case 'settings.audioPassthroughDescriptionApple': return 'Gebruik de ingebouwde Dolby-decoder van Apple voor Dolby Digital Plus, inclusief Atmos. DTS en TrueHD worden nog steeds als meerkanaals-PCM afgespeeld. Schakel dit uit als je geen geluid hoort.';
+			case 'settings.audioPassthroughDescriptionAppleSpatial': return 'Gebruik de ingebouwde Dolby-decoder van Apple voor Dolby Digital Plus, inclusief Atmos. Op iOS, iPadOS en tvOS 26 of nieuwer worden TrueHD Atmos en DTS:X als ruimtelijke audio afgespeeld. Andere DTS- en TrueHD-sporen worden als meerkanaals-PCM afgespeeld. Schakel dit uit als je geen geluid hoort.';
+			case 'settings.audioPassthroughOverriddenByNormalization': return 'Uit zolang volumenormalisatie aan staat';
+			case 'settings.audioChannelLimit': return 'Audiokanalen';
+			case 'settings.audioChannelLimitDescription': return 'Downmix gedecodeerde audio voor luidsprekers, koptelefoons of HDMI-opstellingen die niet elk kanaal kunnen afspelen';
+			case 'settings.audioChannelLimitOriginal': return 'Origineel';
+			case 'settings.audioChannelLimitOriginalDescription': return 'Speel elk kanaal van het spoor af';
+			case 'settings.audioChannelLimitSurround51': return 'Tot 5.1';
+			case 'settings.audioChannelLimitSurround51Description': return 'Downmix 7.1 naar 5.1 voor tv\'s en receivers die alleen 5.1-PCM accepteren. Doorvoer wordt niet beïnvloed.';
+			case 'settings.audioChannelLimitStereo': return 'Stereo';
+			case 'settings.audioChannelLimitStereoDescription': return 'Downmix naar twee kanalen voor stereoluidsprekers of koptelefoons. Schakelt doorvoer uit.';
+			case 'settings.downmixCenterBoost': return 'Versterking middenkanaal';
+			case 'settings.downmixCenterBoostValue': return ({required Object db}) => '${db} dB';
+			case 'settings.downmixCenterBoostLabel': return 'Versterking (dB)';
+			case 'settings.downmixCenterBoostShort': return 'dB';
+			case 'settings.audioDownmixNormalize': return 'Volume normaliseren bij downmix';
+			case 'settings.audioDownmixNormalizeDescription': return 'Verlaagt de mix om clipping te voorkomen. Zet uit om het originele volume te behouden (kan vervormen bij luide scènes).';
+			case 'settings.dvConversionMode': return 'Dolby Vision-conversie';
+			case 'settings.dvConversionModeDescription': return 'Kies hoe Dolby Vision Profile 7-bestanden worden verwerkt.';
+			case 'settings.dvConversionAuto': return 'Automatisch';
+			case 'settings.dvConversionNative': return 'Native / uitgeschakeld';
+			case 'settings.dvConversionDv81': return 'P7 → P8.1';
+			case 'settings.dvConversionHevcStrip': return 'P7 → HEVC';
+			case 'settings.dvConversionAutoDescription': return 'Gebruik detectie van apparaatmogelijkheden en het normale terugvalgedrag';
+			case 'settings.dvConversionNativeDescription': return 'Dwing native DV7 af en voorkom een nieuwe poging met DV-conversie';
+			case 'settings.dvConversionDv81Description': return 'Dwing directe RPU-conversie naar Dolby Vision-profiel 8.1 af';
+			case 'settings.dvConversionHevcStripDescription': return 'Verwijder Dolby Vision RPU/EL-lagen en bied gewone HEVC aan';
+			case 'settings.disableDolbyVision': return 'Dolby Vision uitschakelen';
+			case 'settings.disableDolbyVisionDescription': return 'Speel de HDR10- of HLG-laag van het bestand af in plaats van Dolby Vision, indien aanwezig';
+			case 'settings.hdrSdrConversion': return 'HDR-naar-SDR-conversie';
+			case 'settings.hdrSdrConversionDescription': return 'Kies wat HDR-video omzet als het scherm geen HDR kan weergeven.';
+			case 'settings.hdrSdrConversionAuto': return 'Automatisch';
+			case 'settings.hdrSdrConversionAutoDescription': return 'Apparaat vanaf Android 9, speler op oudere versies';
+			case 'settings.hdrSdrConversionDevice': return 'Apparaat';
+			case 'settings.hdrSdrConversionDeviceDescription': return 'De videohardware van het apparaat zet het om. Het snelst, maar de kleuren hangen af van het apparaat';
+			case 'settings.hdrSdrConversionPlayer': return 'Speler';
+			case 'settings.hdrSdrConversionPlayerDescription': return 'De speler zet het om. Consistente kleuren, maar 4K kan haperen op eenvoudige tv-boxen';
+			case 'settings.deinterlace': return 'Deinterlacing';
+			case 'settings.deinterlaceDescription': return 'Verwijder kamartefacten uit interlaced video (alleen mpv-speler)';
+			case 'settings.deinterlaceOff': return 'Uit';
+			case 'settings.deinterlaceOffDescription': return 'Toon interlaced video zoals deze wordt gedecodeerd';
+			case 'settings.deinterlaceVideo': return 'Video';
+			case 'settings.deinterlaceVideoDescription': return 'Maak van elk veld een volledig beeld. Voor video die voor tv is opgenomen, zoals sport, nieuws en concerten';
+			case 'settings.deinterlaceFilm': return 'Film';
+			case 'settings.deinterlaceFilmDescription': return 'Herstel de originele beelden van film en animatie die met telecine naar 29,97 fps zijn omgezet, gebruikelijk op NTSC-DVD\'s. Video die voor tv is opgenomen, gaat haperen. Live-tv gebruikt Video';
+			case 'settings.requireProfileSelectionOnOpen': return 'Vraag om profiel bij openen';
+			case 'settings.requireProfileSelectionOnOpenDescription': return 'Toon profielselectie telkens wanneer de app wordt geopend';
+			case 'settings.forceTvMode': return 'Tv-modus afdwingen';
+			case 'settings.forceTvModeDescription': return 'Dwing de tv-indeling af op apparaten zonder automatische detectie. Herstart vereist.';
+			case 'settings.startInFullscreen': return 'Starten in volledig scherm';
+			case 'settings.startInFullscreenDescription': return 'Open Plezy bij het starten in volledig scherm';
+			case 'settings.exitFullscreenOnPlayerClose': return 'Volledig scherm verlaten bij sluiten van speler';
+			case 'settings.exitFullscreenOnPlayerCloseDescription': return 'Verlaat automatisch de volledigschermmodus wanneer de videospeler wordt gesloten';
+			case 'settings.autoHidePerformanceOverlay': return 'Prestatie-overlay automatisch verbergen';
+			case 'settings.autoHidePerformanceOverlayDescription': return 'Laat de prestatie-overlay samen met de afspeelknoppen vervagen';
+			case 'settings.showNavBarLabels': return 'Labels op navigatiebalk tonen';
+			case 'settings.showNavBarLabelsDescription': return 'Tekstlabels onder de pictogrammen op de navigatiebalk weergeven';
+			case 'settings.startupSection': return 'Opstartsectie';
+			case 'settings.showExploreTab': return 'Tabblad Ontdekken tonen';
+			case 'settings.showExploreTabDescription': return 'Toon het tabblad Ontdekken met content uit Plex Discover en gekoppelde trackers';
+			case 'settings.liveTvDefaultFavorites': return 'Standaard favoriete zenders';
+			case 'settings.liveTvDefaultFavoritesDescription': return 'Toon alleen favoriete zenders bij het openen van Live TV';
+			case 'settings.general': return 'Algemeen';
+			case 'settings.generalDescription': return 'Taal, opstart- en venstergedrag';
+			case 'settings.languageAndRegion': return 'Taal en regio';
+			case 'settings.startup': return 'Opstarten';
+			case 'settings.display': return 'Weergave';
+			case 'settings.libraryAndCards': return 'Bibliotheek en kaarten';
+			case 'settings.homeScreen': return 'Startscherm';
+			case 'settings.navigation': return 'Navigatie';
+			case 'settings.window': return 'Venster';
+			case 'settings.liveTv': return 'Live-tv';
+			case 'settings.player': return 'Speler';
+			case 'settings.videoAndDisplay': return 'Video en weergave';
+			case 'settings.audio': return 'Audio';
+			case 'settings.quality': return 'Kwaliteit';
+			case 'settings.subtitles': return 'Ondertitels';
+			case 'settings.seekAndTiming': return 'Spoelen en timing';
+			case 'settings.behavior': return 'Gedrag';
+			case 'settings.gestures': return 'Gebaren';
+			case 'settings.gestureBrightnessSwipe': return 'Vegen voor helderheid';
+			case 'settings.gestureBrightnessSwipeDescription': return 'Veeg op de linkerrand omhoog of omlaag om de helderheid aan te passen';
+			case 'settings.gestureVolumeSwipe': return 'Vegen voor volume';
+			case 'settings.gestureVolumeSwipeDescription': return 'Veeg op de rechterrand omhoog of omlaag om het volume aan te passen';
+			case 'settings.gesturePinchToZoom': return 'Knijpen om te zoomen';
+			case 'settings.gesturePinchToZoomDescription': return 'Knijp op de video om in of uit te zoomen';
+			case 'settings.rememberBrightnessLevel': return 'Helderheidsniveau onthouden';
+			case 'settings.rememberBrightnessLevelDescription': return 'Start het afspelen met de helderheid die met de laatste veeg is ingesteld';
+			case 'settings.controls': return 'Bediening';
+			case 'settings.rememberPlayerChanges': return 'Spelerwijzigingen onthouden';
+			case 'settings.rememberPlayerChangesDescription': return 'Waar een wijziging tijdens het afspelen wordt opgeslagen en opnieuw toegepast';
+			case 'settings.scopePlaybackSpeed': return 'Afspeelsnelheid';
+			case 'settings.scopeShaderPreset': return 'Shadervoorinstelling';
+			case 'settings.scopeAspectRatio': return 'Beeldverhouding';
+			case 'settings.scopeZoom': return 'Zoom';
+			case 'settings.scopeSyncOffsets': return 'Audio- en ondertitelsynchronisatie';
+			case 'settings.playerScopeOff': return 'Niet opslaan';
+			case 'settings.playerScopeGlobal': return 'Overal';
+			case 'settings.playerScopeLibrary': return 'Per bibliotheek';
+			case 'settings.playerScopeTitle': return 'Per serie of film';
+			case 'settings.exportDialogTitle': return 'Plezy-instellingen exporteren';
+			case 'themeEditor.builtIn': return 'Ingebouwd';
+			case 'themeEditor.presets': return 'Voorinstellingen';
+			case 'themeEditor.custom': return 'Aangepast';
+			case 'themeEditor.customEmpty': return 'Nog niet gemaakt';
+			case 'themeEditor.editCustom': return 'Aangepast thema bewerken';
+			case 'themeEditor.editCustomDescription': return 'Kies elke kleur zelf';
+			case 'themeEditor.locked': return 'Ontgrendelen met het Thema- en iconenpakket';
+			case 'themeEditor.savedLocked': return 'Opgeslagen — wordt ontgrendeld met het Thema- en iconenpakket';
+			case 'themeEditor.title': return 'Aangepast thema';
+			case 'themeEditor.startFrom': return 'Beginnen vanaf';
+			case 'themeEditor.startFromDescription': return 'Kopieer alle kleuren van een ander thema';
+			case 'themeEditor.colors': return 'Kleuren';
+			case 'themeEditor.preview': return 'Voorbeeld';
+			case 'themeEditor.slots.bg': return 'Achtergrond';
+			case 'themeEditor.slots.surface': return 'Oppervlak';
+			case 'themeEditor.slots.outline': return 'Rand';
+			case 'themeEditor.slots.text': return 'Tekst';
+			case 'themeEditor.slots.textMuted': return 'Secundaire tekst';
+			case 'themeEditor.slots.accent': return 'Accent';
+			case 'themeEditor.opacity': return 'Dekking';
+			case 'themeEditor.hexHint': return '#RRGGBB of #AARRGGBB';
+			case 'themeEditor.fromOtherThemes': return 'Uit andere thema\'s';
+			case 'themeEditor.swatchLabel': return ({required Object color, required Object theme}) => '${color} van ${theme}';
+			case 'themeEditor.contrast.textOnBg': return 'Tekst op achtergrond';
+			case 'themeEditor.contrast.textOnSurface': return 'Tekst op oppervlak';
+			case 'themeEditor.contrast.textMutedOnBg': return 'Secundaire tekst op achtergrond';
+			case 'themeEditor.contrast.textMutedOnSurface': return 'Secundaire tekst op oppervlak';
+			case 'themeEditor.contrast.accentOnBg': return 'Accent op achtergrond';
+			case 'themeEditor.contrast.accentOnSurface': return 'Accent op oppervlak';
+			case 'themeEditor.contrast.labelOnAccent': return 'Knoptekst op accent';
+			case 'themeEditor.lowContrast': return ({required Object pair, required Object ratio, required Object minimum}) => '${pair}: ${ratio}:1, onder de aanbevolen ${minimum}:1';
+			case 'themeEditor.discardTitle': return 'Wijzigingen negeren?';
+			case 'themeEditor.discardMessage': return 'Je niet-opgeslagen kleurwijzigingen gaan verloren.';
+			case 'themeEditor.discard': return 'Negeren';
+			case 'themeEditor.previewCardTitle': return ({required Object number}) => 'Aflevering ${number}';
+			case 'themeEditor.previewCardSubtitle': return ({required Object minutes}) => 'Nog ${minutes} min';
+			case 'themeEditor.previewSwitch': return 'Automatisch afspelen';
+			case 'themeEditor.previewMutedText': return 'Secundaire tekst ziet er zo uit';
+			case 'search.hint': return 'Zoek films, series, muziek...';
+			case 'search.tryDifferentTerm': return 'Probeer een andere zoekterm';
+			case 'search.searchYourMedia': return 'Zoek in je media';
+			case 'search.enterTitleActorOrKeyword': return 'Voer een titel, acteur of trefwoord in';
+			case 'search.people': return 'Personen';
+			case 'hotkeys.setShortcutFor': return ({required Object actionName}) => 'Stel sneltoets in voor ${actionName}';
+			case 'hotkeys.clearShortcut': return 'Wis sneltoets';
+			case 'hotkeys.noShortcutSet': return 'Geen sneltoets ingesteld';
+			case 'hotkeys.currentShortcut': return 'Huidige sneltoets:';
+			case 'hotkeys.pressToRecord': return 'Selecteer om een sneltoets op te nemen';
+			case 'hotkeys.recordingShortcut': return 'Druk nu op de sneltoets';
+			case 'hotkeys.actions.playPause': return 'Afspelen/Pauzeren';
+			case 'hotkeys.actions.volumeUp': return 'Volume omhoog';
+			case 'hotkeys.actions.volumeDown': return 'Volume omlaag';
+			case 'hotkeys.actions.seekForward': return ({required Object seconds}) => 'Vooruitspoelen (${seconds}s)';
+			case 'hotkeys.actions.seekBackward': return ({required Object seconds}) => 'Terugspoelen (${seconds}s)';
+			case 'hotkeys.actions.fullscreenToggle': return 'Volledig scherm';
+			case 'hotkeys.actions.muteToggle': return 'Dempen';
+			case 'hotkeys.actions.subtitleToggle': return 'Ondertiteling';
+			case 'hotkeys.actions.audioTrackNext': return 'Volgende audiotrack';
+			case 'hotkeys.actions.subtitleTrackNext': return 'Volgende ondertiteltrack';
+			case 'hotkeys.actions.chapterNext': return 'Volgend hoofdstuk';
+			case 'hotkeys.actions.chapterPrevious': return 'Vorig hoofdstuk';
+			case 'hotkeys.actions.episodeNext': return 'Volgende aflevering';
+			case 'hotkeys.actions.episodePrevious': return 'Vorige aflevering';
+			case 'hotkeys.actions.speedIncrease': return 'Snelheid verhogen';
+			case 'hotkeys.actions.speedDecrease': return 'Snelheid verlagen';
+			case 'hotkeys.actions.speedReset': return 'Snelheid resetten';
+			case 'hotkeys.actions.zoomIn': return 'Inzoomen';
+			case 'hotkeys.actions.zoomOut': return 'Uitzoomen';
+			case 'hotkeys.actions.zoomReset': return 'Zoom resetten';
+			case 'hotkeys.actions.subSeekNext': return 'Naar volgende ondertitel';
+			case 'hotkeys.actions.subSeekPrev': return 'Naar vorige ondertitel';
+			case 'hotkeys.actions.shaderToggle': return 'Shaders aan/uit';
+			case 'hotkeys.actions.skipMarker': return 'Intro/aftiteling overslaan';
+			case 'hotkeys.actions.screenshot': return 'Schermafbeelding maken';
+			case 'fileInfo.title': return 'Bestandsinformatie';
+			case 'fileInfo.overview': return 'Overzicht';
+			case 'fileInfo.video': return 'Video';
+			case 'fileInfo.audio': return 'Audio';
+			case 'fileInfo.subtitles': return 'Ondertitels';
+			case 'fileInfo.images': return 'Ingebedde afbeeldingen';
+			case 'fileInfo.dataStreams': return 'Datastreams';
+			case 'fileInfo.lyrics': return 'Songteksten';
+			case 'fileInfo.file': return 'Bestand';
+			case 'fileInfo.attachments': return 'Bijlagen';
+			case 'fileInfo.delivery': return 'Levering';
+			case 'fileInfo.versionCounter': return ({required Object index, required Object count}) => 'Versie ${index} van ${count}';
+			case 'fileInfo.fileCounter': return ({required Object index, required Object count}) => 'Bestand ${index} van ${count}';
+			case 'fileInfo.noStreams': return 'De server rapporteerde geen streams voor dit bestand.';
+			case 'fileInfo.copyPath': return 'Pad kopiëren';
+			case 'fileInfo.pathCopied': return 'Bestandspad gekopieerd';
+			case 'fileInfo.codec': return 'Codec';
+			case 'fileInfo.codecTag': return 'Codec-tag';
+			case 'fileInfo.resolution': return 'Resolutie';
+			case 'fileInfo.codedResolution': return 'Gecodeerde resolutie';
+			case 'fileInfo.bitrate': return 'Bitrate';
+			case 'fileInfo.frameRate': return 'Framesnelheid';
+			case 'fileInfo.rotation': return 'Rotatie';
+			case 'fileInfo.comment': return 'Opmerking';
+			case 'fileInfo.audioDescription': return 'Audiodescriptie';
+			case 'fileInfo.headerCompression': return 'Headercompressie';
+			case 'fileInfo.sidecarFile': return 'Sidecar-bestand';
+			case 'fileInfo.transportTimestamp': return 'Transporttijdstempel';
+			case 'fileInfo.displayOffset': return 'Display-offset';
+			case 'fileInfo.previewFailureCode': return 'Foutcode preview';
+			case 'fileInfo.previewRetries': return 'Previewpogingen';
+			case 'fileInfo.aspectRatio': return 'Beeldverhouding';
+			case 'fileInfo.pixelAspectRatio': return 'Pixel-aspectratio';
+			case 'fileInfo.profile': return 'Profiel';
+			case 'fileInfo.level': return 'Niveau';
+			case 'fileInfo.bitDepth': return 'Bitdiepte';
+			case 'fileInfo.pixelFormat': return 'Pixelformaat';
+			case 'fileInfo.colorSpace': return 'Kleurruimte';
+			case 'fileInfo.colorRange': return 'Kleurbereik';
+			case 'fileInfo.colorPrimaries': return 'Kleurprimaires';
+			case 'fileInfo.colorTransfer': return 'Kleurtransfer';
+			case 'fileInfo.chromaSubsampling': return 'Chroma-subsampling';
+			case 'fileInfo.chromaLocation': return 'Chroma-positie';
+			case 'fileInfo.scanType': return 'Scantype';
+			case 'fileInfo.interlaced': return 'Interlaced';
+			case 'fileInfo.anamorphic': return 'Anamorf';
+			case 'fileInfo.referenceFrames': return 'Referentieframes';
+			case 'fileInfo.dynamicRange': return 'Dynamisch bereik';
+			case 'fileInfo.dolbyVision': return 'Dolby Vision';
+			case 'fileInfo.dolbyVisionLevel': return 'Dolby Vision-niveau';
+			case 'fileInfo.dolbyVisionVersion': return 'Dolby Vision-versie';
+			case 'fileInfo.dolbyVisionLayers': return 'Dolby Vision-lagen';
+			case 'fileInfo.baseLayerCompatibility': return 'Compatibiliteit basislaag';
+			case 'fileInfo.avcBitstream': return 'AVC-bitstroom';
+			case 'fileInfo.nalLengthSize': return 'NAL-lengte';
+			case 'fileInfo.scalingMatrix': return 'Aangepaste schalingsmatrix';
+			case 'fileInfo.streamIdentifier': return 'Stream-id';
+			case 'fileInfo.streamIndex': return 'Streamindex';
+			case 'fileInfo.streamId': return 'Stream-ID';
+			case 'fileInfo.language': return 'Taal';
+			case 'fileInfo.languageCode': return 'Taalcode';
+			case 'fileInfo.streamTitle': return 'Tracktitel';
+			case 'fileInfo.channels': return 'Kanalen';
+			case 'fileInfo.sampleRate': return 'Samplingsnelheid';
+			case 'fileInfo.spatialAudio': return 'Ruimtelijke audio';
+			case 'fileInfo.textBased': return 'Op tekst gebaseerd';
+			case 'fileInfo.subtitleFormat': return 'Sidecar-formaat';
+			case 'fileInfo.provider': return 'Provider';
+			case 'fileInfo.matchScore': return 'Matchscore';
+			case 'fileInfo.externalDelivery': return 'Kan afzonderlijk worden geleverd';
+			case 'fileInfo.sidecarPath': return 'Sidecar-pad';
+			case 'fileInfo.sourceStream': return 'Gekopieerd van';
+			case 'fileInfo.temporary': return 'Tijdelijk';
+			case 'fileInfo.timeBase': return 'Tijdbasis';
+			case 'fileInfo.overallBitrate': return 'Totale bitrate';
+			case 'fileInfo.path': return 'Pad';
+			case 'fileInfo.fileName': return 'Bestandsnaam';
+			case 'fileInfo.size': return 'Grootte';
+			case 'fileInfo.totalSize': return 'Totale grootte';
+			case 'fileInfo.container': return 'Container';
+			case 'fileInfo.duration': return 'Duur';
+			case 'fileInfo.previewThumbnails': return 'Preview-miniaturen';
+			case 'fileInfo.previewIndex': return 'Preview-index';
+			case 'fileInfo.packetLength': return 'Pakketlengte';
+			case 'fileInfo.filePresent': return 'Bestand aanwezig';
+			case 'fileInfo.fileReadable': return 'Leesbaar door server';
+			case 'fileInfo.streamPath': return 'Streampad';
+			case 'fileInfo.optimizedForStreaming': return 'Geoptimaliseerd voor streaming';
+			case 'fileInfo.has64bitOffsets': return '64-bits offsets';
+			case 'fileInfo.protocol': return 'Protocol';
+			case 'fileInfo.mediaType': return 'Mediatype';
+			case 'fileInfo.sourceKind': return 'Soort bron';
+			case 'fileInfo.optimizedVersion': return 'Geoptimaliseerde versie';
+			case 'fileInfo.optimizationTarget': return 'Optimalisatiedoel';
+			case 'fileInfo.deletedAt': return 'Verwijderd';
+			case 'fileInfo.remoteSource': return 'Externe bron';
+			case 'fileInfo.infiniteStream': return 'Oneindige stream';
+			case 'fileInfo.directPlay': return 'Direct Play';
+			case 'fileInfo.directStream': return 'Direct Stream';
+			case 'fileInfo.transcoding': return 'Transcoderen';
+			case 'fileInfo.etag': return 'ETag';
+			case 'fileInfo.versionId': return 'Versie-ID';
+			case 'fileInfo.fileId': return 'Bestands-ID';
+			case 'fileInfo.defaultAudioTrack': return 'Standaard audiotrack';
+			case 'fileInfo.defaultSubtitleTrack': return 'Standaard ondertitelingstrack';
+			case 'fileInfo.subtitlesOff': return 'Uit';
+			case 'fileInfo.flagDefault': return 'Standaard';
+			case 'fileInfo.flagForced': return 'Geforceerd';
+			case 'fileInfo.flagSelected': return 'Geselecteerd';
+			case 'fileInfo.flagExternal': return 'Extern';
+			case 'fileInfo.flagHearingImpaired': return 'Slechthorend';
+			case 'fileInfo.flagDub': return 'Nasynchronisatie';
+			case 'fileInfo.flagOriginal': return 'Origineel';
+			case 'fileInfo.channelsMono': return 'Mono';
+			case 'fileInfo.dolbyVisionProfile': return ({required Object profile}) => 'Profiel ${profile}';
+			case 'mediaMenu.markAsWatched': return 'Als bekeken markeren';
+			case 'mediaMenu.markAsUnwatched': return 'Als ongekeken markeren';
+			case 'mediaMenu.removeFromContinueWatching': return 'Uit \'Doorgaan met kijken\' verwijderen';
+			case 'mediaMenu.viewDetails': return 'Details bekijken';
+			case 'mediaMenu.goToSeries': return 'Ga naar serie';
+			case 'mediaMenu.shufflePlay': return 'Willekeurig afspelen';
+			case 'mediaMenu.shuffleNotAvailableOffline': return 'Willekeurig afspelen is offline niet beschikbaar';
+			case 'mediaMenu.fileInfo': return 'Bestandsinformatie';
+			case 'mediaMenu.deleteEpisodeFromServer': return 'Aflevering verwijderen van server';
+			case 'mediaMenu.deleteSeasonFromServer': return 'Seizoen verwijderen van server';
+			case 'mediaMenu.deleteShowFromServer': return 'Serie verwijderen van server';
+			case 'mediaMenu.deleteMovieFromServer': return 'Film verwijderen van server';
+			case 'mediaMenu.deleteEpisodeTitle': return 'Deze aflevering verwijderen?';
+			case 'mediaMenu.deleteSeasonTitle': return 'Dit seizoen verwijderen?';
+			case 'mediaMenu.deleteShowTitle': return 'Deze serie verwijderen?';
+			case 'mediaMenu.deleteMovieTitle': return 'Deze film verwijderen?';
+			case 'mediaMenu.deleteEpisodeConfirm': return 'Aflevering verwijderen';
+			case 'mediaMenu.deleteSeasonConfirm': return 'Seizoen verwijderen';
+			case 'mediaMenu.deleteShowConfirm': return 'Serie verwijderen';
+			case 'mediaMenu.deleteMovieConfirm': return 'Film verwijderen';
+			case 'mediaMenu.deleteAnyway': return 'Toch verwijderen';
+			case 'mediaMenu.confirmDeleteTarget': return ({required Object title}) => '${title} definitief van je server verwijderen?';
+			case 'mediaMenu.deleteMultipleWarning': return 'Dit omvat alle afleveringen en hun bestanden.';
+			case 'mediaMenu.deleteEpisodeCountWarning': return ({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('nl'))(n,
+				one: 'Hiermee wordt de ${n} aflevering erin verwijderd, inclusief het bestand.',
+				other: 'Hiermee worden alle ${n} afleveringen erin verwijderd, inclusief hun bestanden.',
+			);
+			case 'mediaMenu.deleteMultiPartWarning': return ({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('nl'))(n,
+				one: 'Dit item wordt opgeslagen als ${n} bestand, dat wordt verwijderd.',
+				other: 'Dit item wordt opgeslagen over ${n} bestanden, en ze worden allemaal verwijderd.',
+			);
+			case 'mediaMenu.deleteSharedFileHeading': return ({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('nl'))(n,
+				one: '${n} andere aflevering staat in hetzelfde bestand en wordt ook verwijderd:',
+				other: '${n} andere afleveringen staan in hetzelfde bestand en worden ook verwijderd:',
+			);
+			case 'mediaMenu.deleteScopeUnverifiedProbeFailed': return 'Plezy kon niet controleren welke bestanden hiermee worden verwijderd, dus het kan meer verwijderen dan het hierboven genoemde item. Annuleer en probeer het opnieuw, of verwijder toch.';
+			case 'mediaMenu.deleteScopeUnverifiedNoFileInfo': return 'Je server heeft geen bestandsgegevens voor dit item verstrekt, dus Plezy kan niet controleren welke bestanden hiermee worden verwijderd. Het kan meer verwijderen dan het hierboven genoemde item.';
+			case 'mediaMenu.mediaDeletedSuccessfully': return 'Media-item succesvol verwijderd';
+			case 'mediaMenu.mediaFailedToDelete': return 'Verwijderen van media-item mislukt';
+			case 'mediaMenu.rate': return 'Beoordelen';
+			case 'mediaMenu.playFromBeginning': return 'Afspelen vanaf het begin';
+			case 'mediaMenu.playVersion': return 'Versie afspelen...';
+			case 'rateSheet.title': return 'Beoordelen';
+			case 'rateSheet.server': return 'Server';
+			case 'rateSheet.favorite': return 'Favoriet';
+			case 'rateSheet.favorited': return 'Toegevoegd aan favorieten';
+			case 'rateSheet.saved': return 'Opgeslagen';
+			case 'rateSheet.notAvailable': return 'Geen overeenkomst gevonden';
+			case 'rateSheet.noConnectedServices': return 'Koppel een dienst in Instellingen om daar een beoordeling te geven.';
+			case 'accessibility.mediaCardMovie': return ({required Object title}) => '${title}, film';
+			case 'accessibility.mediaCardShow': return ({required Object title}) => '${title}, tv-serie';
+			case 'accessibility.mediaCardEpisode': return ({required Object title, required Object episodeInfo}) => '${title}, ${episodeInfo}';
+			case 'accessibility.mediaCardSeason': return ({required Object title, required Object seasonInfo}) => '${title}, ${seasonInfo}';
+			case 'accessibility.mediaCardWatched': return 'bekeken';
+			case 'accessibility.mediaCardPartiallyWatched': return ({required Object percent}) => '${percent} procent bekeken';
+			case 'accessibility.mediaCardUnwatched': return 'niet bekeken';
+			case 'accessibility.tapToPlay': return 'Tik om af te spelen';
+			case 'accessibility.decrease': return 'Verlagen';
+			case 'accessibility.increase': return 'Verhogen';
+			case 'accessibility.decreaseValue': return ({required Object label}) => '${label} verlagen';
+			case 'accessibility.increaseValue': return ({required Object label}) => '${label} verhogen';
+			case 'accessibility.hue': return 'Tint';
+			case 'accessibility.saturation': return 'Verzadiging';
+			case 'accessibility.brightness': return 'Helderheid';
+			case 'accessibility.hexColor': return 'Hexkleur';
+			case 'accessibility.expandText': return 'Tekst uitvouwen';
+			case 'accessibility.collapseText': return 'Tekst samenvouwen';
+			case 'accessibility.alphabetNavigation': return 'Alfabetische navigatie';
+			case 'accessibility.alphabetScrollHint': return 'Veeg omhoog of omlaag om per letter te bewegen';
+			case 'accessibility.rowColumnPosition': return ({required Object row, required Object rowCount, required Object column, required Object columnCount}) => 'Rij ${row} van ${rowCount}, kolom ${column} van ${columnCount}';
+			case 'accessibility.rowPosition': return ({required Object row, required Object rowCount}) => 'Rij ${row} van ${rowCount}';
+			case 'accessibility.autoScrollPlay': return 'Automatisch scrollen starten';
+			case 'accessibility.autoScrollPause': return 'Automatisch scrollen pauzeren';
+			case 'accessibility.hueShort': return 'H';
+			case 'accessibility.saturationShort': return 'S';
+			case 'accessibility.valueShort': return 'V';
+			case 'tooltips.shufflePlay': return 'Willekeurig afspelen';
+			case 'tooltips.playTrailer': return 'Trailer afspelen';
+			case 'tooltips.markAsWatched': return 'Als bekeken markeren';
+			case 'tooltips.markAsUnwatched': return 'Als ongekeken markeren';
+			case 'audioTracks.track': return ({required Object n}) => 'Audiospoor ${n}';
+			case 'videoControls.audioLabel': return 'Audio';
+			case 'videoControls.subtitlesLabel': return 'Ondertitels';
+			case 'videoControls.addTime': return ({required Object amount, required Object unit}) => '+${amount}${unit}';
+			case 'videoControls.letterbox': return 'Letterbox';
+			case 'videoControls.fillScreen': return 'Scherm vullen';
+			case 'videoControls.stretch': return 'Uitrekken';
+			case 'videoControls.lockRotation': return 'Rotatie vergrendelen';
+			case 'videoControls.unlockRotation': return 'Rotatie ontgrendelen';
+			case 'videoControls.timerActive': return 'Timer actief';
+			case 'videoControls.playbackWillPauseIn': return ({required Object duration}) => 'Afspelen wordt gepauzeerd over ${duration}';
+			case 'videoControls.sleepTimerEndOfVideo': return 'Einde van huidige video';
+			case 'videoControls.sleepTimerStopAtHeader': return 'Stoppen bij';
+			case 'videoControls.sleepTimerDurationHeader': return 'Timer';
+			case 'videoControls.playbackWillPauseAtEnd': return 'Afspelen wordt gepauzeerd aan het einde van deze video';
+			case 'videoControls.stillWatching': return 'Kijk je nog?';
+			case 'videoControls.pausingIn': return ({required Object seconds}) => 'Pauze over ${seconds}s';
+			case 'videoControls.continueWatching': return 'Doorgaan';
+			case 'videoControls.autoPlayNext': return 'Volgende automatisch afspelen';
+			case 'videoControls.playNext': return 'Volgende afspelen';
+			case 'videoControls.playButton': return 'Afspelen';
+			case 'videoControls.pauseButton': return 'Pauzeren';
+			case 'videoControls.playbackPaused': return 'Gepauzeerd';
+			case 'videoControls.playbackResumed': return 'Afspelen';
+			case 'videoControls.loadingVideo': return 'Video laden';
+			case 'videoControls.showPlaybackControls': return 'Afspeelbediening tonen';
+			case 'videoControls.hidePlaybackControls': return 'Afspeelbediening verbergen';
+			case 'videoControls.seekBackwardButton': return ({required Object seconds}) => '${seconds} seconden terugspoelen';
+			case 'videoControls.seekForwardButton': return ({required Object seconds}) => '${seconds} seconden vooruitspoelen';
+			case 'videoControls.previousButton': return 'Vorige aflevering';
+			case 'videoControls.nextButton': return 'Volgende aflevering';
+			case 'videoControls.previousChapterButton': return 'Vorig hoofdstuk';
+			case 'videoControls.nextChapterButton': return 'Volgend hoofdstuk';
+			case 'videoControls.muteButton': return 'Dempen';
+			case 'videoControls.unmuteButton': return 'Dempen opheffen';
+			case 'videoControls.settingsButton': return 'Afspeelinstellingen';
+			case 'videoControls.tracksButton': return 'Audio en ondertitels';
+			case 'videoControls.chaptersButton': return 'Hoofdstukken';
+			case 'videoControls.versionQualityButton': return 'Versie en kwaliteit';
+			case 'videoControls.versionColumnHeader': return 'Versie';
+			case 'videoControls.qualityColumnHeader': return 'Kwaliteit';
+			case 'videoControls.qualityOriginal': return 'Origineel';
+			case 'videoControls.qualityPresetLabel': return ({required Object resolution, required Object bitrate}) => '${resolution}p ${bitrate} Mbps';
+			case 'videoControls.transcodeUnavailableFallback': return 'Transcoderen niet beschikbaar — originele kwaliteit wordt afgespeeld';
+			case 'videoControls.subtitleUnavailableFallback': return 'De geselecteerde ondertitels konden niet worden geladen — afspelen gaat door zonder ondertitels';
+			case 'videoControls.pipButton': return 'Beeld-in-beeldmodus';
+			case 'videoControls.aspectRatioButton': return 'Beeldverhouding';
+			case 'videoControls.ambientLighting': return 'Omgevingsverlichting';
+			case 'videoControls.fullscreenButton': return 'Volledig scherm activeren';
+			case 'videoControls.exitFullscreenButton': return 'Volledig scherm verlaten';
+			case 'videoControls.alwaysOnTopButton': return 'Altijd bovenop';
+			case 'videoControls.rotationLockButton': return 'Rotatievergrendeling';
+			case 'videoControls.lockScreen': return 'Scherm vergrendelen';
+			case 'videoControls.screenLockButton': return 'Schermvergrendeling';
+			case 'videoControls.timelineSlider': return 'Videotijdlijn';
+			case 'videoControls.volumeSlider': return 'Volumeniveau';
+			case 'videoControls.endsAt': return ({required Object time}) => 'Eindigt om ${time}';
+			case 'videoControls.pipActive': return 'Afspelen in beeld-in-beeld';
+			case 'videoControls.pipFailed': return 'Beeld-in-beeld kon niet worden gestart';
+			case 'videoControls.screenshotSaved': return 'Schermafbeelding opgeslagen';
+			case 'videoControls.screenshotFailed': return 'Schermafbeelding maken mislukt';
+			case 'videoControls.zoomPercent': return ({required Object percent}) => 'Zoom ${percent}%';
+			case 'videoControls.volumePercent': return ({required Object percent}) => 'Volume ${percent}%';
+			case 'videoControls.pipErrors.androidVersion': return 'Vereist Android 8.0 of nieuwer';
+			case 'videoControls.pipErrors.iosVersion': return 'Vereist iOS 15.0 of nieuwer';
+			case 'videoControls.pipErrors.permissionDisabled': return 'Beeld-in-beeld is uitgeschakeld. Schakel het in via de systeeminstellingen.';
+			case 'videoControls.pipErrors.notSupported': return 'Dit apparaat ondersteunt de beeld-in-beeldmodus niet';
+			case 'videoControls.pipErrors.voSwitchFailed': return 'Omschakelen van de video-uitvoer voor beeld-in-beeld is mislukt';
+			case 'videoControls.pipErrors.failed': return 'Beeld-in-beeld kon niet worden gestart';
+			case 'videoControls.pipErrors.prepareFailed': return 'Beeld-in-beeld kon niet worden voorbereid';
+			case 'videoControls.pipErrors.unknown': return ({required Object error}) => 'Er is een fout opgetreden: ${error}';
+			case 'videoControls.chapters': return 'Hoofdstukken';
+			case 'videoControls.noChaptersAvailable': return 'Geen hoofdstukken beschikbaar';
+			case 'videoControls.queue': return 'Wachtrij';
+			case 'videoControls.noQueueItems': return 'Geen items in de wachtrij';
+			case 'videoControls.noAudioDevicesAvailable': return 'Geen audioapparaten beschikbaar';
+			case 'videoControls.searchSubtitles': return 'Ondertitels zoeken';
+			case 'videoControls.language': return 'Taal';
+			case 'videoControls.noSubtitlesFound': return 'Geen ondertitels gevonden';
+			case 'videoControls.subtitleDownloaded': return 'Ondertitel gedownload';
+			case 'videoControls.subtitleDownloadedNotApplied': return 'De ondertiteling is gedownload, maar kon niet worden geselecteerd';
+			case 'videoControls.subtitleDownloadFailed': return 'Ondertitel downloaden mislukt';
+			case 'videoControls.subtitleDownloadTimedOut': return 'De ondertiteling verscheen niet op tijd. Het downloaden is mogelijk mislukt';
+			case 'videoControls.searchLanguages': return 'Talen zoeken...';
+			case 'videoControls.skipIntro': return 'Intro overslaan';
+			case 'videoControls.skipCredits': return 'Aftiteling overslaan';
+			case 'videoControls.nextEpisode': return 'Volgende aflevering';
+			case 'videoControls.subtitleTrack': return ({required Object n}) => 'Spoor ${n}';
+			case 'videoControls.subtitleFile': return ({required Object name}) => 'Ondertitel ${name}';
+			case 'videoControls.forcedTrack': return ({required Object label}) => '${label} (Geforceerd)';
+			case 'videoControls.osdSubtitlesOff': return 'Ondertitels: uit';
+			case 'videoControls.osdSubtitles': return ({required Object track}) => 'Ondertitels: ${track}';
+			case 'videoControls.osdAudio': return ({required Object track}) => 'Audio: ${track}';
+			case 'messages.markedAsWatched': return 'Gemarkeerd als gekeken';
+			case 'messages.markedAsUnwatched': return 'Gemarkeerd als ongekeken';
+			case 'messages.markedAsWatchedOffline': return 'Gemarkeerd als bekeken (wordt gesynchroniseerd zodra je online bent)';
+			case 'messages.markedAsUnwatchedOffline': return 'Gemarkeerd als ongekeken (wordt gesynchroniseerd zodra je online bent)';
+			case 'messages.autoRemovedWatchedDownload': return ({required Object title}) => 'Automatisch verwijderd: ${title}';
+			case 'messages.autoRemovedWatchedDownloads': return ({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('nl'))(n,
+				one: 'Automatisch ${n} bekeken download verwijderd',
+				other: 'Automatisch ${n} bekeken downloads verwijderd',
+			);
+			case 'messages.removedFromContinueWatching': return 'Verwijderd uit \'Doorgaan met kijken\'';
+			case 'messages.errorLoading': return ({required Object error}) => 'Fout: ${error}';
+			case 'messages.searchPartialResults': return 'Sommige mediaservers konden niet worden doorzocht. Beschikbare resultaten worden getoond.';
+			case 'messages.streamInterrupted': return 'De stream is onderbroken. Druk op afspelen of spoel om het opnieuw te proberen.';
+			case 'messages.liveStreamInterrupted': return 'De livestream is onderbroken. Druk op afspelen om het opnieuw te proberen.';
+			case 'messages.fileInfoNotAvailable': return 'Bestandsinformatie niet beschikbaar';
+			case 'messages.playbackAuthenticationRequired': return 'Meld je opnieuw aan bij de mediaserver om dit item af te spelen.';
+			case 'messages.playbackServerUnavailable': return 'De mediaserver is niet beschikbaar. Probeer het later opnieuw.';
+			case 'messages.playbackDataInvalid': return 'De server heeft ongeldige afspeelinformatie geretourneerd.';
+			case 'messages.playbackCancelled': return 'Het afspelen is geannuleerd.';
+			case 'messages.playbackFailed': return 'Het afspelen kon niet worden gestart.';
+			case 'messages.playbackFailedDetail': return ({required Object error}) => 'Het afspelen kon niet worden gestart: ${error}';
+			case 'messages.audioOutputFailed': return 'De audio-uitvoer reageert niet meer. Controleer de audioverbinding van de tv of receiver; als andere apps ook geen geluid hebben, start het apparaat dan opnieuw op.';
+			case 'messages.mediaUnavailable': return 'Deze inhoud is niet langer beschikbaar.';
+			case 'messages.errorLoadingFileInfo': return ({required Object error}) => 'Fout bij laden van bestandsinformatie: ${error}';
+			case 'messages.errorLoadingSeries': return 'Fout bij laden van serie';
+			case 'messages.musicNotSupported': return 'Muziek afspelen wordt nog niet ondersteund';
+			case 'messages.noDescriptionAvailable': return 'Geen beschrijving beschikbaar';
+			case 'messages.noProfilesAvailable': return 'Geen profielen beschikbaar';
+			case 'messages.contactAdminForProfiles': return 'Neem contact op met je serverbeheerder om profielen toe te voegen';
+			case 'messages.unableToDetermineLibrarySection': return 'Kan bibliotheeksectie voor dit item niet bepalen';
+			case 'messages.logsCleared': return 'Logbestanden gewist';
+			case 'messages.logsCopied': return 'Logbestanden naar het klembord gekopieerd';
+			case 'messages.noLogsAvailable': return 'Geen logbestanden beschikbaar';
+			case 'messages.libraryScanning': return ({required Object title}) => '"${title}" scannen...';
+			case 'messages.libraryScanStarted': return ({required Object title}) => 'Bibliotheekscan gestart voor "${title}"';
+			case 'messages.libraryScanFailed': return ({required Object error}) => 'Bibliotheek scannen mislukt: ${error}';
+			case 'messages.metadataRefreshing': return ({required Object title}) => 'Metadata voor "${title}" vernieuwen...';
+			case 'messages.metadataRefreshStarted': return ({required Object title}) => 'Vernieuwen van metadata gestart voor "${title}"';
+			case 'messages.metadataRefreshFailed': return ({required Object error}) => 'Metadata vernieuwen mislukt: ${error}';
+			case 'messages.logoutConfirm': return 'Weet je zeker dat je wilt uitloggen?';
+			case 'messages.noSeasonsFound': return 'Geen seizoenen gevonden';
+			case 'messages.seasonsLoadFailed': return 'Kan seizoenen niet laden';
+			case 'messages.noEpisodesFound': return 'Geen afleveringen gevonden in eerste seizoen';
+			case 'messages.noEpisodesFoundGeneral': return 'Geen afleveringen gevonden';
+			case 'messages.episodesLoadFailed': return 'Kan afleveringen niet laden';
+			case 'messages.noResultsFound': return 'Geen resultaten gevonden';
+			case 'messages.sleepTimerSet': return ({required Object label}) => 'Slaaptimer ingesteld op ${label}';
+			case 'messages.noItemsAvailable': return 'Geen items beschikbaar';
+			case 'messages.failedToCreatePlayQueueNoItems': return 'Afspeelwachtrij maken mislukt — geen items';
+			case 'messages.failedPlayback': return ({required Object action, required Object error}) => 'Afspelen van ${action} mislukt: ${error}';
+			case 'messages.switchingToCompatiblePlayer': return 'Overschakelen naar compatibele speler...';
+			case 'messages.serverLimitTitle': return 'Afspelen mislukt';
+			case 'messages.serverLimitBody': return 'Serverfout (HTTP 500). Waarschijnlijk weigerde een bandbreedte-/transcodeerlimiet deze sessie. Vraag de eigenaar dit aan te passen.';
+			case 'messages.mediaUnreadableTitle': return 'Bestand niet beschikbaar';
+			case 'messages.mediaUnreadableBody': return 'De server heeft dit item gevonden maar kon het bestand niet lezen (HTTP 404). Het bestand is waarschijnlijk verplaatst of verwijderd, of de opslag is offline. Vraag de serverbeheerder om het bestand te controleren en de bibliotheek opnieuw te scannen.';
+			case 'messages.serverBusyTitle': return 'Stream niet beschikbaar';
+			case 'messages.serverBusyBody': return 'De server bleef weigeren dit bestand te streamen (HTTP 503). Mogelijk wordt de server opnieuw opgestart, is deze bezet of is de opslag van het bestand offline. Probeer het over een moment opnieuw — als dit blijft gebeuren, vraag dan de servereigenaar om de server en de opslag van het bestand te controleren.';
+			case 'messages.playbackNotAllowedTitle': return 'Afspelen niet toegestaan';
+			case 'messages.playbackNotAllowedBody': return 'De server weigerde dit item te streamen (HTTP 403). Je account heeft mogelijk geen toestemming om het af te spelen, of de server staat afspelen alleen toe op het eigen lokale netwerk.';
+			case 'messages.logsUploaded': return 'Logbestanden geüpload';
+			case 'messages.logsUploadFailed': return 'Uploaden van logbestanden mislukt';
+			case 'messages.logId': return 'Logboek-ID';
+			case 'messages.burnedSubtitlesUseMenu': return 'De ondertitels zijn in deze stream ingebrand. Wijzig ze via het ondertitelmenu.';
+			case 'messages.noVideoUrl': return 'Geen video-URL beschikbaar';
+			case 'messages.playbackNoMediaSources': return 'De server heeft geen afspeelbare mediabronnen geretourneerd';
+			case 'messages.playbackDataNotPrepared': return 'Het afspelen is gestart voordat de gegevens gereed waren';
+			case 'messages.streamSelectionUnavailable': return 'Streamselectie is niet beschikbaar voor deze bron';
+			case 'messages.streamSelectionFailed': return 'Kon de geselecteerde streams niet toepassen';
+			case 'messages.trackSelectionNotRemembered': return 'Deze trackkeuze geldt alleen voor het huidige afspelen.';
+			case 'messages.serverUnavailableForProfile': return 'Er is geen server beschikbaar voor het actieve profiel';
+			case 'subtitlingStyling.text': return 'Tekst';
+			case 'subtitlingStyling.border': return 'Rand';
+			case 'subtitlingStyling.background': return 'Achtergrond';
+			case 'subtitlingStyling.fontSize': return 'Lettergrootte';
+			case 'subtitlingStyling.textColor': return 'Tekstkleur';
+			case 'subtitlingStyling.borderSize': return 'Randdikte';
+			case 'subtitlingStyling.borderColor': return 'Randkleur';
+			case 'subtitlingStyling.backgroundOpacity': return 'Achtergronddekking';
+			case 'subtitlingStyling.backgroundColor': return 'Achtergrondkleur';
+			case 'subtitlingStyling.position': return 'Positie';
+			case 'subtitlingStyling.assOverride': return 'ASS-overschrijving';
+			case 'subtitlingStyling.overrideScale': return 'Schalen';
+			case 'subtitlingStyling.overrideForce': return 'Forceren';
+			case 'subtitlingStyling.overrideStrip': return 'Opmaak verwijderen';
+			case 'subtitlingStyling.positionTop': return 'Bovenaan';
+			case 'subtitlingStyling.positionBottom': return 'Onderaan';
+			case 'subtitlingStyling.useMargins': return 'Marges gebruiken';
+			case 'subtitlingStyling.useMarginsDescription': return 'Sta tekstondertitels toe in de ruimte buiten de video. Ondertitels met opmaak kunnen hun oorspronkelijke plaatsing behouden.';
+			case 'subtitlingStyling.anchorToScreen': return 'Aan scherm verankeren';
+			case 'subtitlingStyling.anchorToScreenDescription': return 'Toon tekstondertitels in de zwarte balken onder breedbeeldvideo';
+			case 'subtitlingStyling.bold': return 'Vet';
+			case 'subtitlingStyling.italic': return 'Cursief';
+			case 'subtitlingStyling.renderResolution': return 'Renderresolutie';
+			case 'subtitlingStyling.renderResolutionScreen': return 'Schermresolutie';
+			case 'subtitlingStyling.renderResolutionVideo': return 'Videoresolutie';
+			case 'mpvConfig.title': return 'mpv.conf';
+			case 'mpvConfig.description': return 'Geavanceerde videospelerinstellingen';
+			case 'mpvConfig.presets': return 'Voorinstellingen';
+			case 'mpvConfig.noPresets': return 'Geen opgeslagen voorinstellingen';
+			case 'mpvConfig.saveAsPreset': return 'Opslaan als voorinstelling...';
+			case 'mpvConfig.presetName': return 'Naam voorinstelling';
+			case 'mpvConfig.presetNameHint': return 'Voer een naam in voor deze voorinstelling';
+			case 'mpvConfig.loadPreset': return 'Laden';
+			case 'mpvConfig.deletePreset': return 'Verwijderen';
+			case 'mpvConfig.presetSaved': return 'Voorinstelling opgeslagen';
+			case 'mpvConfig.presetLoaded': return 'Voorinstelling geladen';
+			case 'mpvConfig.presetDeleted': return 'Voorinstelling verwijderd';
+			case 'mpvConfig.confirmDeletePreset': return 'Weet je zeker dat je deze voorinstelling wilt verwijderen?';
+			case 'mpvConfig.configPlaceholder': return 'gpu-api=vulkan\nhwdec=auto\n# comment';
+			case 'mpvConfig.lineHint': return 'option=value';
+			case 'mpvConfig.addLine': return 'Regel toevoegen';
+			case 'mpvConfig.removeLine': return 'Regel verwijderen';
+			case 'mpvConfig.embeddedVoHint': return 'vo, gpu-context en gpu-api worden genegeerd op Linux: ingebedde video wordt altijd weergegeven via vo=libmpv op het videovlak, en gpu-next (nodig voor compute-shaders zoals ArtCNN) kan niet ingebed draaien.';
+			case 'dialog.confirmAction': return 'Bevestig actie';
+			case 'profiles.addPlezyProfile': return 'Plezy-profiel toevoegen';
+			case 'profiles.switchingProfile': return 'Profiel wisselen…';
+			case 'profiles.deleteThisProfileTitle': return 'Dit profiel verwijderen?';
+			case 'profiles.deleteThisProfileMessage': return ({required Object displayName}) => 'Verwijder ${displayName}. Verbindingen blijven ongewijzigd.';
+			case 'profiles.active': return 'Actief';
+			case 'profiles.manage': return 'Beheren';
+			case 'profiles.delete': return 'Verwijderen';
+			case 'profiles.signOut': return 'Afmelden';
+			case 'profiles.signOutPlexTitle': return 'Afmelden bij Plex?';
+			case 'profiles.signOutPlexMessage': return ({required Object displayName}) => '${displayName} en alle Plex Home-gebruikers verwijderen? Je kunt altijd opnieuw inloggen.';
+			case 'profiles.signOutPlexDeleteDownloads': return 'Ook downloads verwijderen';
+			case 'profiles.signOutPlexDeleteDownloadsDescription': return 'Anders blijven ze op dit apparaat staan en komen ze terug wanneer je opnieuw inlogt bij dit account.';
+			case 'profiles.signedOutPlex': return 'Afgemeld bij Plex.';
+			case 'profiles.signOutFailed': return 'Afmelden mislukt.';
+			case 'profiles.sectionTitle': return 'Profielen';
+			case 'profiles.summarySingle': return 'Voeg profielen toe om beheerde gebruikers en lokale identiteiten te combineren';
+			case 'profiles.summaryMultipleWithActive': return ({required Object count, required Object activeName}) => '${count} profielen · actief: ${activeName}';
+			case 'profiles.summaryMultiple': return ({required Object count}) => '${count} profielen';
+			case 'profiles.removeConnectionTitle': return 'Verbinding verwijderen?';
+			case 'profiles.removeConnectionMessage': return ({required Object displayName, required Object connectionLabel}) => 'Verwijder de toegang van ${displayName} tot ${connectionLabel}. Andere profielen behouden deze toegang.';
+			case 'profiles.deleteProfileTitle': return 'Profiel verwijderen?';
+			case 'profiles.deleteProfileMessage': return ({required Object displayName}) => 'Verwijder ${displayName} en de verbindingen. Servers blijven beschikbaar.';
+			case 'profiles.profileNameLabel': return 'Profielnaam';
+			case 'profiles.pinProtectionLabel': return 'Pincodebeveiliging';
+			case 'profiles.pinManagedByPlex': return 'De pincode wordt beheerd door Plex. Pas deze aan op plex.tv.';
+			case 'profiles.noPinSetEditOnPlex': return 'Geen pincode ingesteld. Bewerk de Plex Home-gebruiker op plex.tv om er een te vereisen.';
+			case 'profiles.setPin': return 'Pincode instellen';
+			case 'profiles.setPinTitle': return 'Pincode instellen';
+			case 'profiles.confirmPinTitle': return 'Pincode bevestigen';
+			case 'profiles.pinSet': return 'Pincode ingesteld';
+			case 'profiles.changePin': return 'Wijzigen';
+			case 'profiles.removePin': return 'Verwijderen';
+			case 'profiles.connectionsLabel': return 'Verbindingen';
+			case 'profiles.add': return 'Toevoegen';
+			case 'profiles.deleteProfileButton': return 'Profiel verwijderen';
+			case 'profiles.noConnectionsHint': return 'Geen verbindingen — voeg er één toe om dit profiel te gebruiken.';
+			case 'profiles.noConnections': return 'Geen verbindingen';
+			case 'profiles.plexHomeAccount': return 'Plex Home-account';
+			case 'profiles.plexAccountChip': return ({required Object account}) => 'Plex-account: ${account}';
+			case 'profiles.plexAccountUserChip': return ({required Object user, required Object account}) => '${user} via ${account}';
+			case 'profiles.connectionDefault': return 'Standaard';
+			case 'profiles.connectionAs': return ({required Object displayName}) => 'als ${displayName}';
+			case 'profiles.makeDefault': return 'Als standaard instellen';
+			case 'profiles.removeConnection': return 'Verwijderen';
+			case 'profiles.profileRenamed': return 'Profiel hernoemd.';
+			case 'profiles.borrowAddTo': return ({required Object displayName}) => 'Toevoegen aan ${displayName}';
+			case 'profiles.borrowExplain': return 'Leen de verbinding van een ander profiel. Voor profielen met pincodebeveiliging is een pincode vereist.';
+			case 'profiles.borrowEmpty': return 'Nog niets te lenen.';
+			case 'profiles.borrowEmptySubtitle': return 'Verbind Plex, Jellyfin of Emby eerst met een ander profiel.';
+			case 'profiles.borrowLoadFailed': return 'Beschikbare verbindingen konden niet worden geladen. Probeer het opnieuw.';
+			case 'profiles.borrowFromProfile': return ({required Object displayName}) => 'Van ${displayName}';
+			case 'profiles.borrowConnectionBorrowed': return 'Verbinding geleend.';
+			case 'profiles.borrowFailed': return 'Kan verbinding niet lenen.';
+			case 'profiles.incorrectPin': return 'Onjuiste pincode.';
+			case 'profiles.incorrectPinTryAgain': return 'Onjuiste pincode. Probeer het opnieuw.';
+			case 'profiles.sourceProfileMissingParentAccount': return 'Het bovenliggende account van het bronprofiel ontbreekt.';
+			case 'profiles.failedToLoadHomeUsers': return 'Je Plex Home-gebruikers konden niet worden geladen. Controleer je verbinding en probeer het opnieuw.';
+			case 'profiles.failedToVerifyPin': return 'De pincode kon niet worden geverifieerd.';
+			case 'profiles.newProfile': return 'Nieuw profiel';
+			case 'profiles.profileNameHint': return 'bijv. Gasten, Kinderen, Woonkamer';
+			case 'profiles.pinProtectionOptional': return 'Pincodebeveiliging (optioneel)';
+			case 'profiles.pinExplain': return 'Een viercijferige pincode is vereist om van profiel te wisselen.';
+			case 'profiles.continueButton': return 'Doorgaan';
+			case 'profiles.pinsDontMatch': return 'De pincodes komen niet overeen';
+			case 'profiles.tokenIdentityMismatch': return 'Het token van het Plex-profiel bleek bij een onverwachte server te horen';
+			case 'connections.sectionTitle': return 'Verbindingen';
+			case 'connections.addConnection': return 'Verbinding toevoegen';
+			case 'connections.addConnectionSubtitleNoProfile': return 'Meld je aan met Plex of verbind een Jellyfin- of Emby-server';
+			case 'connections.addConnectionSubtitleScoped': return ({required Object displayName}) => 'Toevoegen aan ${displayName}: Plex, Jellyfin, Emby of een andere profielverbinding';
+			case 'connections.sessionExpiredOne': return ({required Object name}) => 'Sessie verlopen voor ${name}';
+			case 'connections.sessionExpiredMany': return ({required Object count}) => 'Sessie verlopen voor ${count} servers';
+			case 'connections.accessDeniedOne': return ({required Object name}) => '${name} weigerde toegang voor dit account';
+			case 'connections.accessDeniedMany': return ({required Object count}) => '${count} servers weigerden toegang voor dit account';
+			case 'connections.signInAgain': return 'Opnieuw aanmelden';
+			case 'connections.editMediaBrowserTitle': return ({required Object product}) => '${product}-verbinding bewerken';
+			case 'connections.editMediaBrowserIntro': return ({required Object serverName}) => 'Voeg URL\'s toe aan ${serverName} of verwijder ze. Plezy gebruikt de bereikbare URL met de laagste latentie.';
+			case 'accountPreferences.sectionTitle': return 'Accountvoorkeuren';
+			case 'accountPreferences.hubSubtitleSingle': return ({required Object account}) => 'Audio-, ondertitel- en bibliotheekopties opgeslagen op ${account}';
+			case 'accountPreferences.hubSubtitleMultiple': return ({required Object count}) => 'Audio-, ondertitel- en bibliotheekopties opgeslagen op ${count} accounts';
+			case 'accountPreferences.pickAccount': return 'Elk account slaat zijn eigen voorkeuren op. Kies het account dat je wilt bewerken.';
+			case 'accountPreferences.storedOnAccount': return 'Deze opties worden op het account zelf opgeslagen, zodat elke app die ermee is aangemeld ze gebruikt — ook Plezy op je andere apparaten.';
+			case 'accountPreferences.noAccounts': return 'Geen accounts om te configureren';
+			case 'accountPreferences.noAccountsHint': return 'Log in bij Plex of verbind een Jellyfin- of Emby-server en de voorkeuren die op dat account zijn opgeslagen, verschijnen hier.';
+			case 'accountPreferences.unavailable': return 'Dit account is niet bereikbaar';
+			case 'accountPreferences.loadFailed': return 'Deze voorkeuren konden niet worden geladen';
+			case 'accountPreferences.noPreference': return 'Geen voorkeur';
+			case 'accountPreferences.notSet': return 'Niet ingesteld';
+			case 'accountPreferences.groups.audioAndSubtitles': return 'Audio en ondertitels';
+			case 'accountPreferences.groups.libraryDisplay': return 'Bibliotheek';
+			case 'accountPreferences.groups.personalMedia': return 'Persoonlijke media';
+			case 'accountPreferences.preferredAudioLanguage': return 'Voorkeurstaal voor audio';
+			case 'accountPreferences.autoSelectAudio': return 'Kies audio op taal';
+			case 'accountPreferences.autoSelectAudioDescription': return 'Bij \'Uit\' wordt de audiotrack gebruikt die het bestand als standaard markeert.';
+			case 'accountPreferences.preferredSubtitleLanguage': return 'Voorkeurstaal voor ondertitels';
+			case 'accountPreferences.subtitleMode': return 'Ondertitels inschakelen';
+			case 'accountPreferences.subtitleModes.none': return 'Handmatig geselecteerd';
+			case 'accountPreferences.subtitleModes.noneDescription': return 'Schakel ondertitels nooit automatisch in.';
+			case 'accountPreferences.subtitleModes.defaultMode': return 'Trackvlaggen volgen';
+			case 'accountPreferences.subtitleModes.defaultModeDescription': return 'Gebruik de standaard- en geforceerde vlaggen die op elke ondertiteltrack zijn opgeslagen.';
+			case 'accountPreferences.subtitleModes.always': return 'Altijd ingeschakeld';
+			case 'accountPreferences.subtitleModes.alwaysDescription': return 'Schakel een ondertiteltrack in de voorkeurstaal in zodra er een beschikbaar is.';
+			case 'accountPreferences.subtitleModes.onlyForced': return 'Alleen geforceerde ondertitels';
+			case 'accountPreferences.subtitleModes.onlyForcedDescription': return 'Laad alleen de tracks die als geforceerd zijn gemarkeerd.';
+			case 'accountPreferences.subtitleModes.smart': return 'Weergeven bij anderstalig geluid';
+			case 'accountPreferences.subtitleModes.smartDescription': return 'Schakel ondertitels alleen in wanneer de audio in een andere taal is.';
+			case 'accountPreferences.subtitleAccessibility': return 'SDH-ondertitels';
+			case 'accountPreferences.subtitleAccessibilityOptions.preferNonSdh': return 'Voorkeur voor niet-SDH-ondertitels';
+			case 'accountPreferences.subtitleAccessibilityOptions.preferSdh': return 'Voorkeur voor SDH-ondertitels';
+			case 'accountPreferences.subtitleAccessibilityOptions.onlySdh': return 'Alleen SDH-ondertitels';
+			case 'accountPreferences.subtitleAccessibilityOptions.onlyNonSdh': return 'Alleen niet-SDH-ondertitels';
+			case 'accountPreferences.forcedSubtitles': return 'Geforceerde ondertitels';
+			case 'accountPreferences.forcedSubtitleOptions.preferNonForced': return 'Voorkeur voor niet-geforceerde ondertitels';
+			case 'accountPreferences.forcedSubtitleOptions.preferForced': return 'Voorkeur voor geforceerde ondertitels';
+			case 'accountPreferences.forcedSubtitleOptions.onlyForced': return 'Alleen geforceerde ondertitels';
+			case 'accountPreferences.forcedSubtitleOptions.onlyNonForced': return 'Alleen niet-geforceerde ondertitels';
+			case 'accountPreferences.displayMissingEpisodes': return 'Ontbrekende afleveringen tonen';
+			case 'accountPreferences.displayMissingEpisodesDescription': return 'Toon afleveringen die de server kent maar waarvoor geen bestand aanwezig is.';
+			case 'accountPreferences.hidePlayedInLatest': return 'Bekeken items verbergen in \'Nieuwste\'';
+			case 'accountPreferences.hidePlayedInLatestDescription': return 'Laat items die je al hebt bekeken buiten de \'Nieuwste\'-rijen van de server.';
+			case 'accountPreferences.displayCollectionsView': return 'Collecties-weergave tonen';
+			case 'accountPreferences.displayCollectionsViewDescription': return 'Bied de collecties-weergave van de server naast je bibliotheken aan.';
+			case 'accountPreferences.rewatchingInNextUp': return 'Opnieuw bekeken series in \'Volgende\' houden';
+			case 'accountPreferences.rewatchingInNextUpDescription': return 'Als je een serie afrondt en opnieuw start, blijft \'Volgende\' de herkijk volgen in plaats van de serie te laten vallen.';
+			case 'accountPreferences.watchedIndicator': return 'Bekeken-indicatoren';
+			case 'accountPreferences.watchedIndicatorOptions.none': return 'Nooit';
+			case 'accountPreferences.watchedIndicatorOptions.moviesAndShows': return 'Films en tv-series';
+			case 'accountPreferences.watchedIndicatorOptions.movies': return 'Alleen films';
+			case 'accountPreferences.watchedIndicatorOptions.shows': return 'Alleen tv-series';
+			case 'accountPreferences.mediaReviewsVisibility': return 'Beoordelingen en recensies';
+			case 'accountPreferences.mediaReviewsOptions.usersAndCritics': return 'Gebruikers en critici';
+			case 'accountPreferences.mediaReviewsOptions.usersOnly': return 'Alleen gebruikers';
+			case 'accountPreferences.mediaReviewsOptions.criticsOnly': return 'Alleen critici';
+			case 'accountPreferences.mediaReviewsOptions.nobody': return 'Verborgen';
+			case 'discover.title': return 'Ontdekken';
+			case 'discover.noContentAvailable': return 'Geen inhoud beschikbaar';
+			case 'discover.addMediaToLibraries': return 'Voeg wat media toe aan je bibliotheken';
+			case 'discover.continueWatching': return 'Verder kijken';
+			case 'discover.continueWatchingIn': return ({required Object library}) => 'Verder kijken in ${library}';
+			case 'discover.nextUp': return 'Volgende';
+			case 'discover.nextUpIn': return ({required Object library}) => 'Volgende in ${library}';
+			case 'discover.recentlyAdded': return 'Recent toegevoegd';
+			case 'discover.recentlyAddedIn': return ({required Object library}) => 'Recent toegevoegd in ${library}';
+			case 'discover.latestAlbumsIn': return ({required Object library}) => 'Nieuwste albums in ${library}';
+			case 'discover.recentlyPlayedIn': return ({required Object library}) => 'Onlangs afgespeeld in ${library}';
+			case 'discover.mostPlayedIn': return ({required Object library}) => 'Meest afgespeeld in ${library}';
+			case 'discover.playEpisode': return ({required Object season, required Object episode}) => 'S${season}E${episode}';
+			case 'discover.overview': return 'Overzicht';
+			case 'discover.cast': return 'Acteurs';
+			case 'discover.extras': return 'Trailers en extra\'s';
+			case 'discover.studio': return 'Studio';
+			case 'discover.rating': return 'Beoordeling';
+			case 'discover.director': return 'Regisseur';
+			case 'discover.directors': return 'Regisseurs';
+			case 'discover.movie': return 'Film';
+			case 'discover.tvShow': return 'Tv-serie';
+			case 'discover.minutesLeft': return ({required Object minutes}) => 'nog ${minutes} min';
+			case 'discover.moreLikeThis': return 'Meer zoals dit';
+			case 'discover.titleCount': return ({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('nl'))(n,
+				one: '${n} titel',
+				other: '${n} titels',
+			);
+			case 'discover.person.born': return 'Geboren';
+			case 'discover.person.died': return 'Overleden';
+			case 'discover.person.birthplace': return 'Geboorteplaats';
+			case 'discover.person.dateWithAge': return ({required Object date, required Object age}) => '${date} (${age} jaar)';
+			case 'discover.person.dateWithAgeAtDeath': return ({required Object date, required Object age}) => '${date} (op ${age}-jarige leeftijd)';
+			case 'errors.searchFailed': return ({required Object error}) => 'Zoeken mislukt: ${error}';
+			case 'errors.searchUnavailable': return 'Zoeken kon geen enkele mediaserver bereiken.';
+			case 'errors.connectionTimeout': return ({required Object context}) => 'Time-out van verbinding tijdens het laden van ${context}';
+			case 'errors.connectionFailed': return 'Kan geen verbinding maken met mediaserver';
+			case 'errors.unableToLoad': return ({required Object context}) => 'Kan ${context} niet laden. Probeer het opnieuw.';
+			case 'errors.noClientAvailable': return 'Geen client beschikbaar';
+			case 'errors.pleaseEnterToken': return 'Voer een token in';
+			case 'errors.invalidToken': return 'Ongeldig token';
+			case 'errors.failedToVerifyToken': return ({required Object error}) => 'Kon token niet verifiëren: ${error}';
+			case 'errors.failedToSwitchProfile': return ({required Object displayName}) => 'Kon niet wisselen naar ${displayName}';
+			case 'errors.failedToDeleteProfile': return ({required Object displayName}) => 'Kon ${displayName} niet verwijderen';
+			case 'errors.failedToRate': return 'Beoordeling kon niet worden bijgewerkt';
+			case 'errors.reasonTimedOut': return 'de verbinding is verlopen';
+			case 'errors.reasonUnreachable': return 'de server kon niet worden bereikt';
+			case 'errors.reasonRefused': return 'de server heeft het verzoek geweigerd';
+			case 'errors.reasonNotFound': return 'het item staat niet meer op de server';
+			case 'errors.reasonServerError': return 'de server heeft een fout gemeld';
+			case 'errors.reasonCancelled': return 'het verzoek is geannuleerd';
+			case 'errors.reasonUnexpected': return 'er is een onverwachte fout opgetreden';
+			case 'libraries.title': return 'Bibliotheken';
+			case 'libraries.fallbackTitle': return 'Bibliotheek';
+			case 'libraries.scanLibraryFiles': return 'Bibliotheekbestanden scannen';
+			case 'libraries.scanLibrary': return 'Bibliotheek scannen';
+			case 'libraries.analyze': return 'Analyseren';
+			case 'libraries.analyzeLibrary': return 'Bibliotheek analyseren';
+			case 'libraries.refreshMetadata': return 'Metadata vernieuwen';
+			case 'libraries.emptyTrash': return 'Prullenbak legen';
+			case 'libraries.emptyingTrash': return ({required Object title}) => 'Prullenbak legen voor "${title}"...';
+			case 'libraries.trashEmptied': return ({required Object title}) => 'Prullenbak geleegd voor "${title}"';
+			case 'libraries.failedToEmptyTrash': return ({required Object error}) => 'Kon prullenbak niet legen: ${error}';
+			case 'libraries.analyzing': return ({required Object title}) => 'Analyseren "${title}"...';
+			case 'libraries.analysisStarted': return ({required Object title}) => 'Analyse gestart voor "${title}"';
+			case 'libraries.failedToAnalyze': return ({required Object error}) => 'Kon bibliotheek niet analyseren: ${error}';
+			case 'libraries.noLibrariesFound': return 'Geen bibliotheken gevonden';
+			case 'libraries.allLibrariesHidden': return 'Alle bibliotheken zijn verborgen';
+			case 'libraries.hiddenLibrariesCount': return ({required Object count}) => 'Verborgen bibliotheken (${count})';
+			case 'libraries.thisLibraryIsEmpty': return 'Deze bibliotheek is leeg';
+			case 'libraries.noItemsMatchFilters': return 'Geen items komen overeen met de actieve filters';
+			case 'libraries.resetFilters': return 'Filters opnieuw instellen';
+			case 'libraries.all': return 'Alles';
+			case 'libraries.clearAll': return 'Alles wissen';
+			case 'libraries.scanLibraryConfirm': return ({required Object title}) => 'Weet je zeker dat je "${title}" wilt scannen?';
+			case 'libraries.analyzeLibraryConfirm': return ({required Object title}) => 'Weet je zeker dat je "${title}" wilt analyseren?';
+			case 'libraries.refreshMetadataConfirm': return ({required Object title}) => 'Weet je zeker dat je metadata wilt vernieuwen voor "${title}"?';
+			case 'libraries.emptyTrashConfirm': return ({required Object title}) => 'Weet je zeker dat je de prullenbak wilt legen voor "${title}"?';
+			case 'libraries.manageLibraries': return 'Bibliotheken beheren';
+			case 'libraries.sort': return 'Sorteren';
+			case 'libraries.sortBy': return 'Sorteer op';
+			case 'libraries.filters': return 'Filters';
+			case 'libraries.confirmActionMessage': return 'Weet je zeker dat je deze actie wilt uitvoeren?';
+			case 'libraries.showLibrary': return 'Bibliotheek tonen';
+			case 'libraries.hideLibrary': return 'Bibliotheek verbergen';
+			case 'libraries.libraryOptions': return 'Bibliotheekopties';
+			case 'libraries.content': return 'bibliotheekinhoud';
+			case 'libraries.selectLibrary': return 'Bibliotheek kiezen';
+			case 'libraries.filtersWithCount': return ({required Object count}) => 'Filters (${count})';
+			case 'libraries.noRecommendations': return 'Geen aanbevelingen beschikbaar';
+			case 'libraries.noCollections': return 'Geen collecties in deze bibliotheek';
+			case 'libraries.noFoldersFound': return 'Geen mappen gevonden';
+			case 'libraries.folders': return 'mappen';
+			case 'libraries.tabs.recommended': return 'Aanbevolen';
+			case 'libraries.tabs.browse': return 'Bladeren';
+			case 'libraries.tabs.collections': return 'Collecties';
+			case 'libraries.tabs.playlists': return 'Afspeellijsten';
+			case 'libraries.groupings.title': return 'Groepering';
+			case 'libraries.groupings.all': return 'Alles';
+			case 'libraries.groupings.movies': return 'Films';
+			case 'libraries.groupings.shows': return 'Series';
+			case 'libraries.groupings.seasons': return 'Seizoenen';
+			case 'libraries.groupings.episodes': return 'Afleveringen';
+			case 'libraries.groupings.artists': return 'Artiesten';
+			case 'libraries.groupings.albums': return 'Albums';
+			case 'libraries.groupings.tracks': return 'Nummers';
+			case 'libraries.groupings.folders': return 'Mappen';
+			case 'libraries.filterCategories.genre': return 'Genre';
+			case 'libraries.filterCategories.year': return 'Jaar';
+			case 'libraries.filterCategories.contentRating': return 'Leeftijdsclassificatie';
+			case 'libraries.filterCategories.tag': return 'Tag';
+			case 'libraries.filterCategories.unwatched': return 'Onbekeken';
+			case 'libraries.filterCategories.unplayed': return 'Niet afgespeeld';
+			case 'libraries.filterCategories.favorites': return 'Favorieten';
+			case 'libraries.filterCategories.filePath': return 'Bestandspad';
+			case 'libraries.sortLabels.title': return 'Titel';
+			case 'libraries.sortLabels.dateAdded': return 'Toegevoegd op';
+			case 'libraries.sortLabels.releaseDate': return 'Uitgavedatum';
+			case 'libraries.sortLabels.rating': return 'Beoordeling';
+			case 'libraries.sortLabels.communityRating': return 'Beoordeling door community';
+			case 'libraries.sortLabels.criticRating': return 'Beoordeling door critici';
+			case 'libraries.sortLabels.userRating': return 'Gebruikersbeoordeling';
+			case 'libraries.sortLabels.datePlayed': return 'Afspeeldatum';
+			case 'libraries.sortLabels.playCount': return 'Aantal afspelingen';
+			case 'libraries.sortLabels.productionYear': return 'Productiejaar';
+			case 'libraries.sortLabels.runtime': return 'Speelduur';
+			case 'libraries.sortLabels.officialRating': return 'Officiële beoordeling';
+			case 'libraries.sortLabels.premiereDate': return 'Premièredatum';
+			case 'libraries.sortLabels.startDate': return 'Begindatum';
+			case 'libraries.sortLabels.airTime': return 'Uitzendtijd';
+			case 'libraries.sortLabels.studio': return 'Studio';
+			case 'libraries.sortLabels.random': return 'Willekeurig';
+			case 'libraries.sortLabels.dateShared': return 'Gedeeld op';
+			case 'libraries.sortLabels.latestEpisodeAirDate': return 'Laatste afleveringsuitzending';
+			case 'libraries.sortLabels.lastEpisodeDateAdded': return 'Datum laatst toegevoegde aflevering';
+			case 'libraries.sortLabels.dateDownloaded': return 'Gedownload op';
+			case 'libraries.sortLabels.size': return 'Grootte';
+			case 'libraries.sortLabels.library': return 'Bibliotheek';
+			case 'libraries.advancedFilters.include': return 'Opnemen';
+			case 'libraries.advancedFilters.exclude': return 'Uitsluiten';
+			case 'libraries.advancedFilters.any': return 'Maakt niet uit';
+			case 'libraries.advancedFilters.yes': return 'Ja';
+			case 'libraries.advancedFilters.no': return 'Nee';
+			case 'libraries.advancedFilters.not': return ({required Object value}) => 'Niet ${value}';
+			case 'libraries.advancedFilters.valueCount': return ({required Object count}) => '${count} geselecteerd';
+			case 'libraries.advancedFilters.valueCountExcluded': return ({required Object count}) => '${count} uitgesloten';
+			case 'libraries.advancedFilters.searchValues': return 'Waarden zoeken';
+			case 'libraries.advancedFilters.noValues': return 'Geen waarden';
+			case 'libraries.advancedFilters.matchContains': return 'Bevat';
+			case 'libraries.advancedFilters.matchNotContains': return 'Bevat niet';
+			case 'libraries.advancedFilters.matchIs': return 'Is';
+			case 'libraries.advancedFilters.matchIsNot': return 'Is niet';
+			case 'libraries.advancedFilters.matchBeginsWith': return 'Begint met';
+			case 'libraries.advancedFilters.matchEndsWith': return 'Eindigt op';
+			case 'libraries.advancedFilters.textHint': return 'Typ om te filteren';
+			case 'libraries.advancedFilters.from': return 'Van';
+			case 'libraries.advancedFilters.to': return 'Tot';
+			case 'libraries.advancedFilters.range': return ({required Object from, required Object to}) => '${from} tot ${to}';
+			case 'libraries.advancedFilters.atLeast': return ({required Object value}) => '${value} en hoger';
+			case 'libraries.advancedFilters.atMost': return ({required Object value}) => 'Tot ${value}';
+			case 'libraries.advancedFilters.dateLastDays': return ({required Object count}) => 'Afgelopen ${count} dagen';
+			case 'libraries.advancedFilters.dateLastYear': return 'Afgelopen jaar';
+			case 'libraries.advancedFilters.dateOlderThanDays': return ({required Object count}) => 'Ouder dan ${count} dagen';
+			case 'libraries.advancedFilters.dateOlderThanYear': return 'Ouder dan een jaar';
+			case 'about.title': return 'Over';
+			case 'about.openSourceLicenses': return 'Opensourcelicenties';
+			case 'about.versionLabel': return ({required Object version}) => 'Versie ${version}';
+			case 'about.appDescription': return 'Een mooie Plex-, Jellyfin- en Emby-client voor Flutter';
+			case 'about.viewLicensesDescription': return 'Licenties van bibliotheken van derden bekijken';
+			case 'serverSelection.noServersFoundForAccount': return ({required Object username, required Object email}) => 'Geen servers gevonden voor ${username} (${email})';
+			case 'serverSelection.failedToLoadServers': return ({required Object error}) => 'Kon servers niet laden: ${error}';
+			case 'serverSelection.noValidServers': return 'Er zijn geen bruikbare servers gevonden voor dit account';
+			case 'hubDetail.title': return 'Titel';
+			case 'hubDetail.releaseYear': return 'Uitgavejaar';
+			case 'hubDetail.dateAdded': return 'Datum toegevoegd';
+			case 'hubDetail.rating': return 'Beoordeling';
+			case 'hubDetail.noItemsFound': return 'Geen items gevonden';
+			case 'logs.clearLogs': return 'Logbestanden wissen';
+			case 'logs.copyLogs': return 'Logbestanden kopiëren';
+			case 'logs.uploadLogs': return 'Logbestanden uploaden';
+			case 'startup.failedTitle': return 'Plezy kon niet starten';
+			case 'startup.failedBody': return 'Er is iets misgegaan tijdens het opstarten. De onderstaande details laten zien wat er misging.';
+			case 'startup.failedBodyRepairable': return 'Het opgeslagen instellingenbestand van Plezy is beschadigd en moet opnieuw worden opgebouwd voordat Plezy kan starten. Opnieuw proberen helpt niet — kies \'Opslag repareren\'.';
+			case 'startup.phaseLabel': return 'Stap';
+			case 'startup.showDetails': return 'Details tonen';
+			case 'startup.hideDetails': return 'Details verbergen';
+			case 'startup.copyDetails': return 'Details kopiëren';
+			case 'startup.detailsCopied': return 'Details naar het klembord gekopieerd';
+			case 'startup.uploadDetails': return 'Details uploaden';
+			case 'startup.repairStorage': return 'Opslag repareren';
+			case 'startup.repairTitle': return 'Opgeslagen gegevens repareren?';
+			case 'startup.repairBodyCommon': return 'Het instellingenbestand van Plezy is beschadigd en kan niet worden gelezen. Door te repareren worden alle instellingen teruggezet naar hun standaardwaarde.';
+			case 'startup.repairBodyOneCredential': return 'Eén opgeslagen aanmelding is beschadigd en kan niet worden gelezen. Door te repareren wordt alleen die ene verwijderd; je andere instellingen blijven onaangetast.';
+			case 'startup.repairBodySignInsKept': return 'Je servers en profielen blijven naar verwachting aangemeld.';
+			case 'startup.repairBodySignInsLost': return 'De sleutel die je opgeslagen aanmeldingen beschermt, kan niet uit dit bestand worden hersteld. Je moet je daarom opnieuw aanmelden bij elke server en elk profiel. Er wordt niets op je mediaserver gewijzigd.';
+			case 'startup.repairBodySessionsUncertain': return 'Trackers (MAL, AniList, Simkl, Trakt) en Seerr worden apart opgeslagen en blijven mogelijk wel of niet bewaard. Plezy vertelt je precies wat het heeft bewaard.';
+			case 'startup.repairConfirm': return 'Repareren';
+			case 'startup.repairSucceeded': return 'Opslag gerepareerd';
+			case 'startup.repairNeedsRestart': return 'Opslag gerepareerd — herstart vereist';
+			case 'startup.restartRequiredBody': return 'Je gegevens zijn gerepareerd, maar Plezy moet opnieuw starten voordat het ze kan gebruiken. Sluit Plezy en open het opnieuw.';
+			case 'startup.quitPlezy': return 'Plezy afsluiten';
+			case 'startup.repairFailed': return 'Repareren mislukt';
+			case 'startup.repairKeptSignIns': return 'Je servers en profielen zijn nog steeds aangemeld.';
+			case 'startup.repairLostSignIns': return 'De sleutel die je opgeslagen aanmeldingen beschermt, kon niet worden hersteld. Je moet je opnieuw aanmelden bij elke server en elk profiel.';
+			case 'startup.repairLostSessions': return 'Er is minstens één tracker- of Seerr-verbinding verloren gegaan en die moet opnieuw worden verbonden.';
+			case 'startup.backupTitle': return 'Er is een kopie van het beschadigde bestand bewaard';
+			case 'startup.backupWarning': return 'Het bevat je aanmeldgegevens. Upload of deel het niet.';
+			case 'startup.deleteBackup': return 'Kopie verwijderen';
+			case 'startup.backupDeleted': return 'Kopie verwijderd.';
+			case 'startup.previousFailureTitle': return 'Plezy kon de vorige keer niet starten';
+			case 'licenses.relatedPackages': return 'Gerelateerde pakketten';
+			case 'licenses.license': return 'Licentie';
+			case 'licenses.licenseNumber': return ({required Object number}) => 'Licentie ${number}';
+			case 'licenses.licensesCount': return ({required Object count}) => '${count} licenties';
+			case 'navigation.libraries': return 'Media';
+			case 'navigation.downloads': return 'Downloads';
+			case 'navigation.liveTv': return 'Live-tv';
+			case 'navigation.explore': return 'Verkennen';
+			case 'explore.title': return 'Verkennen';
+			case 'explore.selectSource': return 'Bron kiezen';
+			case 'explore.rows.watchlist': return 'Kijklijst';
+			case 'explore.rows.recommendedMovies': return 'Aanbevolen films';
+			case 'explore.rows.recommendedShows': return 'Aanbevolen series';
+			case 'explore.rows.trendingMovies': return 'Trending films';
+			case 'explore.rows.trendingShows': return 'Trending series';
+			case 'explore.rows.popularMovies': return 'Populaire films';
+			case 'explore.rows.popularShows': return 'Populaire series';
+			case 'explore.rows.trendingAnime': return 'Trending anime';
+			case 'explore.rows.suggestedAnime': return 'Aanbevolen anime';
+			case 'explore.rows.airingAnime': return 'Beste lopende anime';
+			case 'explore.rows.popularAnime': return 'Populairste anime';
+			case 'explore.rows.trending': return 'Trending';
+			case 'explore.rows.upcomingMovies': return 'Aankomende films';
+			case 'explore.rows.upcomingShows': return 'Aankomende series';
+			case 'explore.status.airing': return 'Lopend';
+			case 'explore.status.ended': return 'Afgelopen';
+			case 'explore.status.canceled': return 'Geannuleerd';
+			case 'explore.status.upcoming': return 'Binnenkort';
+			case 'explore.episodeCount': return ({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('nl'))(n,
+				one: '${n} aflevering',
+				other: '${n} afleveringen',
+			);
+			case 'explore.cast': return 'Acteurs';
+			case 'explore.characters': return 'Personages';
+			case 'explore.addToWatchlist': return 'Toevoegen aan kijklijst';
+			case 'explore.removeFromWatchlist': return 'Verwijderen uit kijklijst';
+			case 'explore.addedToWatchlist': return 'Aan kijklijst toegevoegd';
+			case 'explore.removedFromWatchlist': return 'Uit kijklijst verwijderd';
+			case 'explore.watchlistUpdateFailed': return 'Kon kijklijst niet bijwerken';
+			case 'explore.watchlistNoMatch': return 'Kon dit item niet aan een kijklijst koppelen';
+			case 'explore.notInLibrary': return 'Niet in je bibliotheek';
+			case 'explore.inTheseLibraries': return 'In deze bibliotheken';
+			case 'explore.checkingLibrary': return 'Je bibliotheek controleren...';
+			case 'explore.libraryCheckFailed': return ({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('nl'))(n,
+				one: 'Kon ${n} server niet controleren',
+				other: 'Kon ${n} servers niet controleren',
+			);
+			case 'explore.emptyTitle': return 'Hier is nog niets';
+			case 'explore.emptyMessage': return ({required Object source}) => 'Rijen van ${source} verschijnen hier zodra ze inhoud hebben.';
+			case 'explore.searchHint': return ({required Object source}) => 'Zoeken in ${source}';
+			case 'explore.searchEmpty': return ({required Object query}) => 'Geen resultaten voor "${query}"';
+			case 'explore.searchPrompt': return ({required Object source}) => 'Zoek naar films en series op ${source}.';
+			case 'explore.searchFailed': return 'Zoeken mislukt. Controleer je verbinding en probeer opnieuw.';
+			case 'explore.badge.rankPopular': return ({required Object n}) => '#${n} populair';
+			case 'explore.badge.rankAiring': return ({required Object n}) => '#${n} nu op tv';
+			case 'explore.badge.rankRated': return ({required Object n}) => '#${n} beoordeeld';
+			case 'explore.badge.rankTrending': return ({required Object n}) => '#${n} trending';
+			case 'explore.badge.rankSeasonal': return ({required Object n, required Object season}) => '#${n} in ${season}';
+			case 'explore.badge.watchingNow': return ({required Object n}) => '${n} kijken';
+			case 'explore.badge.available': return 'Beschikbaar';
+			case 'explore.badge.partiallyAvailable': return 'Gedeeltelijk beschikbaar';
+			case 'explore.badge.availableIn4k': return '4K beschikbaar';
+			case 'explore.badge.requested': return 'Aangevraagd';
+			case 'explore.badge.pendingApproval': return 'In afwachting van goedkeuring';
+			case 'explore.badge.processing': return 'Wordt verwerkt';
+			case 'explore.badge.declined': return 'Afgewezen';
+			case 'explore.badge.requestFailed': return 'Aanvraag mislukt';
+			case 'explore.badge.requested4k': return '4K aangevraagd';
+			case 'explore.badge.seasonsAvailable': return ({required Object available, required Object total}) => '${available}/${total} seizoenen';
+			case 'explore.badge.nextEpisodeIn': return ({required Object episode, required Object duration}) => 'Afl. ${episode} over ${duration}';
+			case 'explore.badge.nextAiringIn': return ({required Object duration}) => 'Volgende over ${duration}';
+			case 'explore.badge.episodesShort': return ({required Object n}) => '${n} afl.';
+			case 'explore.badge.minutesPerEpisode': return ({required Object n}) => '${n} min/afl.';
+			case 'explore.badge.adult': return '18+';
+			case 'explore.stats.listed': return ({required Object n}) => '${n} op de lijst';
+			case 'explore.stats.viewersDay': return ({required Object n}) => '${n} vandaag bekeken';
+			case 'explore.stats.viewersWeek': return ({required Object n}) => '${n} deze week bekeken';
+			case 'explore.stats.viewersMonth': return ({required Object n}) => '${n} deze maand bekeken';
+			case 'explore.stats.viewersYear': return ({required Object n}) => '${n} dit jaar bekeken';
+			case 'explore.stats.viewersAllTime': return ({required Object n}) => '${n} kijkers';
+			case 'explore.stats.planning': return ({required Object n}) => '${n} van plan om te kijken';
+			case 'explore.stats.favorited': return ({required Object n}) => '${n} favorieten';
+			case 'explore.stats.dropRate': return ({required Object percent}) => '${percent} is ermee gestopt';
+			case 'explore.stats.comments': return ({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('nl'))(n,
+				one: '${n} reactie',
+				other: '${n} reacties',
+			);
+			case 'explore.stats.votes': return ({required Object n}) => '${n} stemmen';
+			case 'explore.stats.watching': return ({required Object n}) => '${n} kijken ernaar';
+			case 'explore.stats.completed': return ({required Object n}) => '${n} afgerond';
+			case 'explore.stats.onHold': return ({required Object n}) => '${n} op pauze';
+			case 'explore.stats.dropped': return ({required Object n}) => '${n} gestopt';
+			case 'explore.season.winter': return 'Winter';
+			case 'explore.season.spring': return 'Lente';
+			case 'explore.season.summer': return 'Zomer';
+			case 'explore.season.fall': return 'Herfst';
+			case 'explore.season.withYear': return ({required Object season, required Object year}) => '${season} ${year}';
+			case 'explore.format.tv': return 'TV';
+			case 'explore.format.tvShort': return 'Korte tv-serie';
+			case 'explore.format.movie': return 'Film';
+			case 'explore.format.special': return 'Special';
+			case 'explore.format.ova': return 'OVA';
+			case 'explore.format.ona': return 'ONA';
+			case 'explore.format.music': return 'Muziek';
+			case 'explore.format.other': return 'Anders';
+			case 'explore.sourceMaterial.original': return 'Origineel';
+			case 'explore.sourceMaterial.manga': return 'Manga';
+			case 'explore.sourceMaterial.lightNovel': return 'Light novel';
+			case 'explore.sourceMaterial.novel': return 'Roman';
+			case 'explore.sourceMaterial.visualNovel': return 'Visual novel';
+			case 'explore.sourceMaterial.game': return 'Game';
+			case 'explore.sourceMaterial.webComic': return 'Webcomic';
+			case 'explore.sourceMaterial.musicRelease': return 'Muziek';
+			case 'explore.sourceMaterial.otherMedia': return 'Anders';
+			case 'explore.creditRole.actor': return 'Acteur';
+			case 'explore.creditRole.director': return 'Regisseur';
+			case 'explore.creditRole.writer': return 'Schrijver';
+			case 'explore.creditRole.producer': return 'Producent';
+			case 'explore.creditRole.creator': return 'Maker';
+			case 'explore.creditRole.composer': return 'Componist';
+			case 'explore.relation.prequel': return 'Prequel';
+			case 'explore.relation.sequel': return 'Sequel';
+			case 'explore.relation.sideStory': return 'Zijverhaal';
+			case 'explore.relation.spinOff': return 'Spin-off';
+			case 'explore.relation.alternativeVersion': return 'Alternatieve versie';
+			case 'explore.relation.summary': return 'Samenvatting';
+			case 'explore.relation.parentStory': return 'Hoofdverhaal';
+			case 'explore.relation.adaptation': return 'Adaptatie';
+			case 'explore.relation.other': return 'Gerelateerd';
+			case 'explore.broadcast': return ({required Object day, required Object time}) => 'Wordt uitgezonden op ${day} om ${time}';
+			case 'explore.broadcastWithZone': return ({required Object day, required Object time, required Object timezone}) => 'Wordt uitgezonden op ${day} om ${time} ${timezone}';
+			case 'explore.detail.originalTitle': return 'Originele titel';
+			case 'explore.detail.alsoKnownAs': return 'Ook bekend als';
+			case 'explore.detail.studios': return 'Studio\'s';
+			case 'explore.detail.country': return 'Land';
+			case 'explore.detail.language': return 'Taal';
+			case 'explore.detail.released': return 'Uitgebracht';
+			case 'explore.detail.physicalRelease': return 'Op schijf';
+			case 'explore.detail.ended': return 'Beëindigd';
+			case 'explore.detail.addedOn': return ({required Object date}) => 'Toegevoegd op ${date}';
+			case 'explore.detail.yourRating': return 'Jouw beoordeling';
+			case 'explore.detail.budget': return 'Budget';
+			case 'explore.detail.revenue': return 'Opbrengst';
+			case 'explore.detail.contentAdvisory': return 'Leeftijdsadvies';
+			case 'explore.detail.tags': return 'Tags';
+			case 'explore.detail.revealSpoilerTags': return 'Spoilertags tonen';
+			case 'explore.detail.links': return 'Links';
+			case 'explore.detail.watchOn': return 'Bekijk op';
+			case 'explore.detail.watchTrailer': return 'Trailer bekijken';
+			case 'explore.detail.openOn': return ({required Object site}) => 'Openen op ${site}';
+			case 'explore.detail.trailerUnavailable': return 'Kan de trailer niet openen op dit apparaat';
+			case 'explore.detail.linkUnavailable': return 'Kan de link niet openen op dit apparaat';
+			case 'explore.detail.crew': return 'Crew';
+			case 'explore.detail.ratings': return 'Beoordelingen';
+			case 'explore.detail.schedule': return 'Uitzendschema';
+			case 'explore.detail.recommendedByUsers': return ({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('nl'))(n,
+				one: 'Aanbevolen door ${n} gebruiker',
+				other: 'Aanbevolen door ${n} gebruikers',
+			);
+			case 'explore.detail.recommendedBy': return ({required Object who}) => 'Aanbevolen door ${who}';
+			case 'explore.detail.favoritedBy': return ({required Object who}) => 'Favoriet bij ${who}';
+			case 'explore.detail.unairedEpisodes': return ({required Object n}) => '${n} nog niet uitgezonden';
+			case 'explore.detail.recommendedByPercent': return ({required Object percent}) => 'Aanbevolen door ${percent} van de kijkers';
+			case 'explore.detail.relatedTitles': return 'Gerelateerde titels';
+			case 'explore.detail.background': return 'Achtergrond';
+			case 'explore.totalResults': return ({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('nl'))(n,
+				one: '${n} resultaat',
+				other: '${n} resultaten',
+			);
+			case 'liveTv.title': return 'Live-tv';
+			case 'liveTv.guide': return 'Gids';
+			case 'liveTv.noChannels': return 'Geen zenders beschikbaar';
+			case 'liveTv.noDvr': return 'Geen DVR geconfigureerd op een server';
+			case 'liveTv.serverUnavailable': return 'De live-tv-server is niet beschikbaar.';
+			case 'liveTv.serverNotConnected': return 'De live-tv-server is niet verbonden.';
+			case 'liveTv.noPrograms': return 'Geen programmagegevens beschikbaar';
+			case 'liveTv.liveStreamFailed': return 'Livestream mislukt';
+			case 'liveTv.unknownProgram': return 'Onbekend programma';
+			case 'liveTv.unknownHub': return 'Onbekend';
+			case 'liveTv.unknownError': return 'Onbekende fout';
+			case 'liveTv.channelNumber': return ({required Object number}) => 'Kanaal ${number}';
+			case 'liveTv.unknownChannel': return 'Onbekend kanaal';
+			case 'liveTv.live': return 'LIVE';
+			case 'liveTv.reloadGuide': return 'Gids herladen';
+			case 'liveTv.searchGuide': return 'Zoeken in gids';
+			case 'liveTv.searchHint': return 'Zoek zenders en programma\'s';
+			case 'liveTv.searchNoResults': return ({required Object query}) => 'Geen overeenkomsten voor "${query}"';
+			case 'liveTv.channelsSection': return 'Zenders';
+			case 'liveTv.programsSection': return 'Programma\'s';
+			case 'liveTv.now': return 'Nu';
+			case 'liveTv.today': return 'Vandaag';
+			case 'liveTv.tomorrow': return 'Morgen';
+			case 'liveTv.midnight': return 'Middernacht';
+			case 'liveTv.overnight': return 'Nacht';
+			case 'liveTv.morning': return 'Ochtend';
+			case 'liveTv.daytime': return 'Overdag';
+			case 'liveTv.evening': return 'Avond';
+			case 'liveTv.lateNight': return 'Late avond';
+			case 'liveTv.whatsOn': return 'Nu op tv';
+			case 'liveTv.watchChannel': return 'Kanaal bekijken';
+			case 'liveTv.favorites': return 'Favorieten';
+			case 'liveTv.reorderFavorites': return 'Favorieten herordenen';
+			case 'liveTv.noFavoriteChannels': return 'Geen favoriete zenders';
+			case 'liveTv.noFavoriteChannelsHint': return 'Toon alle zenders en houd daarna een zender ingedrukt om deze aan je favorieten toe te voegen.';
+			case 'liveTv.showAllChannels': return 'Alle zenders tonen';
+			case 'liveTv.favoritesLoadFailed': return 'Favorieten konden niet worden geladen. Controleer je verbinding en probeer het opnieuw.';
+			case 'liveTv.favoritesUpdateFailed': return 'Favorieten konden niet worden bijgewerkt. Controleer je verbinding en probeer het opnieuw.';
+			case 'liveTv.joinSession': return 'Deelnemen aan lopende sessie';
+			case 'liveTv.watchFromStart': return ({required Object minutes}) => 'Vanaf het begin kijken (${minutes} min geleden)';
+			case 'liveTv.watchLive': return 'Live kijken';
+			case 'liveTv.goToLive': return 'Naar live-uitzending';
+			case 'liveTv.record': return 'Opnemen';
+			case 'liveTv.recordEpisode': return 'Aflevering opnemen';
+			case 'liveTv.recordSeries': return 'Serie opnemen';
+			case 'liveTv.recordOptions': return 'Opnameopties';
+			case 'liveTv.saveTo': return 'Opslaan in';
+			case 'liveTv.recordings': return 'Opnames';
+			case 'liveTv.scheduledRecordings': return 'Gepland';
+			case 'liveTv.recordingRules': return 'Opnameregels';
+			case 'liveTv.noScheduledRecordings': return 'Geen geplande opnames';
+			case 'liveTv.manageRecording': return 'Opname beheren';
+			case 'liveTv.cancelRecording': return 'Opname annuleren';
+			case 'liveTv.cancelRecordingTitle': return 'Deze opname annuleren?';
+			case 'liveTv.cancelRecordingMessage': return ({required Object title}) => '${title} wordt niet meer opgenomen.';
+			case 'liveTv.deleteRule': return 'Regel verwijderen';
+			case 'liveTv.deleteRuleTitle': return 'Opnameregel verwijderen?';
+			case 'liveTv.deleteRuleMessage': return ({required Object title}) => 'Toekomstige afleveringen van ${title} worden niet opgenomen.';
+			case 'liveTv.recordingScheduled': return 'Opname gepland';
+			case 'liveTv.alreadyScheduled': return 'Dit programma is al gepland';
+			case 'liveTv.dvrAdminRequired': return 'DVR-instellingen vereisen een beheerdersaccount';
+			case 'liveTv.recordingFailed': return 'Kon opname niet plannen';
+			case 'liveTv.recordingTargetMissing': return 'Kon opnamebibliotheek niet bepalen';
+			case 'liveTv.recordNotAvailable': return 'Opname niet beschikbaar voor dit programma';
+			case 'liveTv.recordingCancelled': return 'Opname geannuleerd';
+			case 'liveTv.recordingRuleDeleted': return 'Opnameregel verwijderd';
+			case 'liveTv.processRecordingRules': return 'Regels opnieuw evalueren';
+			case 'liveTv.recordingInProgress': return 'Nu aan het opnemen';
+			case 'liveTv.recordingsCount': return ({required Object count}) => '${count} gepland';
+			case 'liveTv.editRule': return 'Regel bewerken';
+			case 'liveTv.editRuleAction': return 'Bewerken';
+			case 'liveTv.recordingRuleUpdated': return 'Opnameregel bijgewerkt';
+			case 'liveTv.guideReloadRequested': return 'Vernieuwing van de gids aangevraagd';
+			case 'liveTv.guideReloadFailed': return 'Gids herladen mislukt';
+			case 'liveTv.rulesProcessRequested': return 'Nieuwe evaluatie van regels aangevraagd';
+			case 'liveTv.rulesProcessFailed': return 'Opnameregels opnieuw uitvoeren mislukt';
+			case 'liveTv.recordShow': return 'Programma opnemen';
+			case 'liveTv.recordSettings.startEarly': return 'Eerder beginnen (seconden)';
+			case 'liveTv.recordSettings.endLate': return 'Later stoppen (seconden)';
+			case 'liveTv.recordSettings.newOnly': return 'Alleen nieuwe afleveringen';
+			case 'liveTv.recordSettings.anyChannel': return 'Op elke zender opnemen';
+			case 'liveTv.recordSettings.anyTime': return 'Op elk tijdstip opnemen';
+			case 'liveTv.recordSettings.skipInLibrary': return 'Afleveringen overslaan die al in de bibliotheek staan';
+			case 'liveTv.recordSettings.keepUpTo': return 'Te bewaren afleveringen';
+			case 'liveTv.recordSettings.keepUpToHint': return '0 bewaart alle afleveringen';
+			case 'liveTv.startingInMinutes': return ({required Object minutes}) => 'Begint over ${minutes} min';
+			case 'liveTv.dayAtTime': return ({required Object day, required Object time}) => '${day} om ${time}';
+			case 'liveTv.invalidPlaybackData': return ({required Object product}) => '${product} heeft ongeldige afspeelgegevens voor Live-tv geretourneerd';
+			case 'liveTv.failedToStartChannel': return 'Kon de livezender niet starten';
+			case 'liveTv.failedToBuildStreamUrl': return 'Kon de stream-URL niet samenstellen';
+			case 'liveTv.playbackStartFailed': return ({required Object reason}) => 'Kon het kanaal niet starten: ${reason}';
+			case 'liveTv.channelSwitchFailed': return ({required Object reason}) => 'Kon niet van kanaal wisselen: ${reason}';
+			case 'collections.title': return 'Collecties';
+			case 'collections.collection': return 'Collectie';
+			case 'collections.empty': return 'Collectie is leeg';
+			case 'collections.deleteCollection': return 'Collectie verwijderen';
+			case 'collections.deleteConfirm': return ({required Object title}) => '"${title}" verwijderen? Dit kan niet ongedaan worden gemaakt.';
+			case 'collections.deleted': return 'Collectie verwijderd';
+			case 'collections.deleteFailed': return 'Collectie verwijderen mislukt';
+			case 'collections.deleteFailedWithError': return ({required Object error}) => 'Collectie verwijderen mislukt: ${error}';
+			case 'collections.selectCollection': return 'Collectie selecteren';
+			case 'collections.collectionName': return 'Collectienaam';
+			case 'collections.enterCollectionName': return 'Voer een collectienaam in';
+			case 'collections.addedToCollection': return 'Toegevoegd aan collectie';
+			case 'collections.errorAddingToCollection': return 'Fout bij toevoegen aan collectie';
+			case 'collections.created': return 'Collectie gemaakt';
+			case 'collections.removeFromCollection': return 'Verwijderen uit collectie';
+			case 'collections.removeFromCollectionConfirm': return ({required Object title}) => '"${title}" uit deze collectie verwijderen?';
+			case 'collections.removedFromCollection': return 'Uit collectie verwijderd';
+			case 'collections.removeFromCollectionFailed': return 'Verwijderen uit collectie mislukt';
+			case 'collections.removeFromCollectionError': return ({required Object error}) => 'Fout bij verwijderen uit collectie: ${error}';
+			case 'collections.searchCollections': return 'Collecties zoeken...';
+			case 'playlists.title': return 'Afspeellijsten';
+			case 'playlists.playlist': return 'Afspeellijst';
+			case 'playlists.noPlaylists': return 'Geen afspeellijsten gevonden';
+			case 'playlists.create': return 'Afspeellijst maken';
+			case 'playlists.playlistName': return 'Naam van de afspeellijst';
+			case 'playlists.enterPlaylistName': return 'Voer een naam voor de afspeellijst in';
+			case 'playlists.delete': return 'Afspeellijst verwijderen';
+			case 'playlists.removeItem': return 'Verwijderen uit afspeellijst';
+			case 'playlists.smartPlaylist': return 'Slimme afspeellijst';
+			case 'playlists.itemCount': return ({required Object count}) => '${count} items';
+			case 'playlists.oneItem': return '1 item';
+			case 'playlists.emptyPlaylist': return 'Deze afspeellijst is leeg';
+			case 'playlists.deleteConfirm': return 'Afspeellijst verwijderen?';
+			case 'playlists.deleteMessage': return ({required Object name}) => 'Weet je zeker dat je "${name}" wilt verwijderen?';
+			case 'playlists.created': return 'Afspeellijst gemaakt';
+			case 'playlists.deleted': return 'Afspeellijst verwijderd';
+			case 'playlists.itemAdded': return 'Toegevoegd aan afspeellijst';
+			case 'playlists.itemRemoved': return 'Verwijderd uit afspeellijst';
+			case 'playlists.selectPlaylist': return 'Afspeellijst selecteren';
+			case 'playlists.searchPlaylists': return 'Afspeellijsten zoeken...';
+			case 'playlists.errorCreating': return 'Afspeellijst maken mislukt';
+			case 'playlists.errorDeleting': return 'Afspeellijst verwijderen mislukt';
+			case 'playlists.errorLoading': return 'Afspeellijsten laden mislukt';
+			case 'playlists.errorAdding': return 'Toevoegen aan afspeellijst mislukt';
+			case 'playlists.errorReordering': return 'Afspeellijstitem herschikken mislukt';
+			case 'playlists.errorRemoving': return 'Verwijderen uit afspeellijst mislukt';
+			case 'music.goToAlbum': return 'Ga naar album';
+			case 'music.goToArtist': return 'Ga naar artiest';
+			case 'music.instantMix': return 'Instantmix';
+			case 'music.playNext': return 'Hierna afspelen';
+			case 'music.addToQueue': return 'Toevoegen aan wachtrij';
+			case 'music.discNumber': return ({required Object n}) => 'Schijf ${n}';
+			case 'music.trackCount': return ({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('nl'))(n,
+				one: '${n} nummer',
+				other: '${n} nummers',
+			);
+			case 'music.nowPlaying': return 'Nu afspelen';
+			case 'music.playingFrom': return ({required Object title}) => 'Afspelen vanaf ${title}';
+			case 'music.queue': return 'Wachtrij';
+			case 'music.clearQueue': return 'Wachtrij wissen';
+			case 'music.lyrics': return 'Songtekst';
+			case 'music.noLyrics': return 'Geen songtekst beschikbaar';
+			case 'music.sleepTimer': return 'Slaaptimer';
+			case 'music.sleepTimerEndOfTrack': return 'Einde van nummer';
+			case 'music.sleepTimerMinutes': return ({required Object n}) => '${n} minuten';
+			case 'music.stopPlayback': return 'Afspelen stoppen';
+			case 'music.previousTrack': return 'Vorig nummer';
+			case 'music.nextTrack': return 'Volgend nummer';
+			case 'music.repeat': return 'Herhalen';
+			case 'music.repeatAll': return 'Alles herhalen';
+			case 'music.repeatOne': return 'Eén herhalen';
+			case 'music.instantMixNoServer': return 'Er is geen server beschikbaar voor een instantmix';
+			case 'music.instantMixFailed': return 'De instantmix kon niet worden geladen';
+			case 'music.instantMixEmpty': return 'De instantmix leverde geen nummers op';
+			case 'music.noAudioUrl': return ({required Object track}) => 'Er is geen audio-URL beschikbaar voor ${track}';
+			case 'music.discography.singlesAndEps': return 'Singles en EP\'s';
+			case 'music.discography.live': return 'Live';
+			case 'music.discography.compilations': return 'Compilaties';
+			case 'watchTogether.title': return 'Samen kijken';
+			case 'watchTogether.description': return 'Kijk synchroon met vrienden en familie';
+			case 'watchTogether.createRoom': return 'Kamer maken';
+			case 'watchTogether.creatingRoom': return 'Kamer maken...';
+			case 'watchTogether.joinRoom': return 'Deelnemen aan kamer';
+			case 'watchTogether.joiningRoom': return 'Deelnemen aan kamer...';
+			case 'watchTogether.connecting': return 'Verbinden...';
+			case 'watchTogether.relayPublic': return 'Kamers gebruiken de openbare Open Watch Party-relays.';
+			case 'watchTogether.relayCustom': return ({required Object url}) => 'Kamers gebruiken je relay op ${url}.';
+			case 'watchTogether.recentRooms': return 'Recente kamers';
+			case 'watchTogether.roomActions': return 'Acties voor kamer';
+			case 'watchTogether.renameRoom': return 'Kamer hernoemen';
+			case 'watchTogether.removeRoom': return 'Verwijderen';
+			case 'watchTogether.enterRoomCode': return 'Voer de code van 6 tekens van de host in.';
+			case 'watchTogether.roomCode': return 'Kamercode';
+			case 'watchTogether.paste': return 'Plakken';
+			case 'watchTogether.noCodeInClipboard': return 'Het klembord bevat geen kamercode';
+			case 'watchTogether.copyCode': return 'Code kopiëren';
+			case 'watchTogether.codeCopied': return 'Kamercode gekopieerd';
+			case 'watchTogether.shareInvite': return 'Uitnodiging delen';
+			case 'watchTogether.inviteCopied': return 'Uitnodiging gekopieerd. Plak deze in een bericht.';
+			case 'watchTogether.inviteMessage': return ({required Object code}) => 'Neem deel aan mijn Samen kijken-kamer in Plezy: open Samen kijken, kies "Deelnemen aan kamer" en voer ${code} in.';
+			case 'watchTogether.openSessionControls': return 'Bediening voor Samen kijken openen';
+			case 'watchTogether.reconnecting': return 'Opnieuw verbinden...';
+			case 'watchTogether.reconnectingDescription': return 'De verbinding is verbroken. Je neemt automatisch weer deel aan de kamer.';
+			case 'watchTogether.connected': return 'Verbonden';
+			case 'watchTogether.disconnected': return 'Verbinding verbroken';
+			case 'watchTogether.youAreHost': return 'Jij bent de host';
+			case 'watchTogether.hostedBy': return ({required Object name}) => 'Gehost door ${name}';
+			case 'watchTogether.hostControlsPlayback': return 'Host bedient het afspelen';
+			case 'watchTogether.anyoneCanControl': return 'Iedereen kan het afspelen bedienen';
+			case 'watchTogether.roomLocked': return 'Kamer vergrendeld';
+			case 'watchTogether.nowPlaying': return 'Speelt nu';
+			case 'watchTogether.nothingPlaying': return 'Er wordt niets afgespeeld';
+			case 'watchTogether.nothingPlayingHost': return 'Speel iets af uit een bibliotheek om het met de kamer te delen.';
+			case 'watchTogether.nothingPlayingGuest': return 'Als de host iets afspeelt, wordt het hier geopend.';
+			case 'watchTogether.notShareable': return 'Er is geen catalogusovereenkomst voor deze video, dus alleen wie toegang heeft tot dezelfde server kan hem afspelen.';
+			case 'watchTogether.searching': return 'Deze video zoeken in je bibliotheken...';
+			case 'watchTogether.yourCopy': return 'Jouw kopie';
+			case 'watchTogether.sharingYourCopy': return 'Je deelt je eigen kopie';
+			case 'watchTogether.playingOtherLength': return ({required Object difference}) => 'Jouw kopie wordt afgespeeld, ${difference}';
+			case 'watchTogether.mismatchTitle': return 'Jouw kopie heeft een andere lengte';
+			case 'watchTogether.mismatchDescription': return ({required Object difference}) => 'Je best passende kopie is ${difference} dan de video van de kamer. Mogelijk is het een andere montage of versie.';
+			case 'watchTogether.playAnyway': return 'Toch afspelen';
+			case 'watchTogether.chooseAnotherCopy': return 'Andere kopie kiezen';
+			case 'watchTogether.dontPlay': return 'Niet afspelen';
+			case 'watchTogether.unavailableTitle': return 'Je hebt deze video niet';
+			case 'watchTogether.unavailableDescription': return 'Plezy kon hem niet vinden in je bibliotheken. Kies zelf een kopie of zoek opnieuw.';
+			case 'watchTogether.chooseCopy': return 'Kopie kiezen';
+			case 'watchTogether.searchAgain': return 'Opnieuw zoeken';
+			case 'watchTogether.noCandidates': return 'Geen kopieën gevonden in je bibliotheken.';
+			case 'watchTogether.choiceFailed': return 'Kan deze kopie niet afspelen voor de kamer';
+			case 'watchTogether.lengthLonger': return ({required Object duration}) => '${duration} langer';
+			case 'watchTogether.lengthShorter': return ({required Object duration}) => '${duration} korter';
+			case 'watchTogether.lengthSame': return 'Even lang';
+			case 'watchTogether.lengthUnknown': return 'Lengte onbekend';
+			case 'watchTogether.joinCurrentPlayback': return 'Deelnemen aan huidige weergave';
+			case 'watchTogether.joinCurrentPlaybackDescription': return 'Ga terug naar wat de host nu kijkt';
+			case 'watchTogether.stopMedia': return 'Video stoppen voor iedereen';
+			case 'watchTogether.syncOffset': return 'Synchronisatieverschuiving';
+			case 'watchTogether.syncOffsetDescription': return 'Verschuif je video als die voor- of achterloopt op de kamer.';
+			case 'watchTogether.offsetHint': return ({required Object difference}) => 'Jouw kopie is ${difference} dan de video van de kamer.';
+			case 'watchTogether.applyDifference': return ({required Object offset}) => '${offset} toepassen';
+			case 'watchTogether.offsetMinusSecond': return '-1 s';
+			case 'watchTogether.offsetMinusTenth': return '-100 ms';
+			case 'watchTogether.offsetPlusTenth': return '+100 ms';
+			case 'watchTogether.offsetPlusSecond': return '+1 s';
+			case 'watchTogether.participants': return 'Deelnemers';
+			case 'watchTogether.participantCount': return ({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('nl'))(n,
+				one: '${n} deelnemer',
+				other: '${n} deelnemers',
+			);
+			case 'watchTogether.hostBadge': return 'HOST';
+			case 'watchTogether.nameYou': return ({required Object name}) => '${name} (jij)';
+			case 'watchTogether.playerIdle': return 'Inactief';
+			case 'watchTogether.playerLoading': return 'Laden';
+			case 'watchTogether.playerReady': return 'Klaar';
+			case 'watchTogether.playerBuffering': return 'Bufferen';
+			case 'watchTogether.matchSearching': return 'Zoeken';
+			case 'watchTogether.matchMatched': return 'Heeft de video';
+			case 'watchTogether.matchMismatched': return 'Andere lengte';
+			case 'watchTogether.matchUnavailable': return 'Heeft de video niet';
+			case 'watchTogether.participantOffset': return ({required Object offset}) => 'Verschuiving ${offset}';
+			case 'watchTogether.makeHost': return 'Tot host maken';
+			case 'watchTogether.makeHostQuestion': return 'Host overdragen?';
+			case 'watchTogether.makeHostConfirm': return ({required Object name}) => '${name} bedient dan het afspelen en de sessie voor iedereen.';
+			case 'watchTogether.transfer': return 'Overdragen';
+			case 'watchTogether.removeParticipant': return 'Uit kamer verwijderen';
+			case 'watchTogether.removeParticipantQuestion': return ({required Object name}) => '${name} verwijderen?';
+			case 'watchTogether.removeParticipantConfirm': return ({required Object name}) => '${name} wordt uit de kamer verwijderd en kan met de code opnieuw deelnemen, tenzij je de kamer vergrendelt.';
+			case 'watchTogether.remove': return 'Verwijderen';
+			case 'watchTogether.roomSettings': return 'Kamerinstellingen';
+			case 'watchTogether.letEveryoneControl': return 'Iedereen het afspelen laten bedienen';
+			case 'watchTogether.lockRoom': return 'Kamer vergrendelen';
+			case 'watchTogether.lockRoomDescription': return 'Nieuwe deelnemers kunnen niet meer toetreden';
+			case 'watchTogether.leaveRoom': return 'Kamer verlaten';
+			case 'watchTogether.leaveRoomQuestion': return 'Kamer verlaten?';
+			case 'watchTogether.leaveRoomConfirm': return 'Je kunt opnieuw deelnemen met de kamercode.';
+			case 'watchTogether.leave': return 'Verlaten';
+			case 'watchTogether.endRoom': return 'Kamer sluiten';
+			case 'watchTogether.endRoomQuestion': return 'Kamer sluiten?';
+			case 'watchTogether.endRoomConfirm': return 'Hiermee wordt de kamer voor iedereen gesloten.';
+			case 'watchTogether.end': return 'Beëindigen';
+			case 'watchTogether.playBlockedTitle': return 'Afspelen is niet gestart';
+			case 'watchTogether.playBlockedDescription': return 'Druk op afspelen om samen met de kamer te kijken.';
+			case 'watchTogether.notices.pressedPlay': return ({required Object name}) => '${name} heeft op afspelen gedrukt';
+			case 'watchTogether.notices.playbackStarted': return 'Afspelen gestart';
+			case 'watchTogether.notices.paused': return ({required Object name}) => '${name} heeft gepauzeerd';
+			case 'watchTogether.notices.playbackPaused': return 'Afspelen gepauzeerd';
+			case 'watchTogether.notices.jumpedTo': return ({required Object name, required Object position}) => '${name} is naar ${position} gesprongen';
+			case 'watchTogether.notices.roomJumpedTo': return ({required Object position}) => 'Naar ${position} gesprongen';
+			case 'watchTogether.notices.changedSpeed': return ({required Object name, required Object speed}) => '${name} heeft de snelheid op ${speed} gezet';
+			case 'watchTogether.notices.speedChanged': return ({required Object speed}) => 'Snelheid ingesteld op ${speed}';
+			case 'watchTogether.notices.startedMedia': return ({required Object name, required Object title}) => '${name} heeft ${title} gestart';
+			case 'watchTogether.notices.mediaStarted': return ({required Object title}) => 'Speelt nu: ${title}';
+			case 'watchTogether.notices.stoppedMedia': return ({required Object name}) => '${name} heeft de video gestopt';
+			case 'watchTogether.notices.mediaStopped': return 'De video is gestopt';
+			case 'watchTogether.notices.waitingFor': return ({required Object name}) => 'Wachten op ${name}...';
+			case 'watchTogether.notices.waitingForSomeone': return 'Wachten tot iedereen bij is...';
+			case 'watchTogether.notices.finished': return 'Afgelopen';
+			case 'watchTogether.notices.hostChangedTo': return ({required Object name}) => '${name} is nu de host';
+			case 'watchTogether.notices.youAreNowHost': return 'Jij bent nu de host';
+			case 'watchTogether.notices.joined': return ({required Object name}) => '${name} is toegetreden';
+			case 'watchTogether.notices.left': return ({required Object name}) => '${name} heeft de sessie verlaten';
+			case 'watchTogether.notices.controlRefused': return 'Alleen de host kan het afspelen bedienen';
+			case 'watchTogether.notices.searchFailed': return 'Op sommige servers kon niet naar de video van de kamer worden gezocht';
+			case 'watchTogether.notices.playBlocked': return 'Druk op afspelen om te beginnen';
+			case 'watchTogether.notices.shareFailed': return 'Kan deze video niet met de kamer delen';
+			case 'watchTogether.notices.downloadNotShared': return 'Downloads worden niet met de kamer gedeeld zolang hun server offline is';
+			case 'watchTogether.notices.openFailed': return 'Kan de video van de kamer niet openen';
+			case 'watchTogether.ended.ended': return 'De host heeft de kamer gesloten';
+			case 'watchTogether.ended.kicked': return 'Je bent uit de kamer verwijderd';
+			case 'watchTogether.ended.expired': return 'De kamer is verlopen';
+			case 'watchTogether.ended.replaced': return 'Je neemt op een ander apparaat deel aan deze kamer';
+			case 'watchTogether.ended.lost': return 'Verbinding met de kamer verbroken';
+			case 'watchTogether.errors.invalidCode': return 'Dat is geen kamercode. Codes bestaan uit 6 letters en cijfers, zonder 0, 1, I, L of O.';
+			case 'watchTogether.errors.roomNotFound': return 'Er is geen kamer met die code. Mogelijk is de kamer gesloten.';
+			case 'watchTogether.errors.roomFull': return 'Die kamer is vol.';
+			case 'watchTogether.errors.roomLocked': return 'De host heeft die kamer vergrendeld.';
+			case 'watchTogether.errors.relayFull': return 'Samen kijken is momenteel druk. Probeer het later opnieuw.';
+			case 'watchTogether.errors.unreachable': return 'Kan de relay voor Samen kijken niet bereiken. Controleer je verbinding.';
+			case 'watchTogether.errors.rateLimited': return 'Te veel pogingen. Wacht even en probeer het opnieuw.';
+			case 'watchTogether.errors.clientBlocked': return 'Deze versie van Plezy kan de relay niet gebruiken. Werk de app bij.';
+			case 'watchTogether.errors.forbidden': return 'Alleen de host kan dat doen.';
+			case 'watchTogether.errors.notInRoom': return 'Je zit niet in een kamer.';
+			case 'watchTogether.errors.alreadyInRoom': return 'Je zit al in een kamer.';
+			case 'watchTogether.errors.resumeFailed': return 'Kan niet opnieuw deelnemen aan de kamer.';
+			case 'watchTogether.errors.unsupported': return 'De relay ondersteunt dit niet.';
+			case 'watchTogether.errors.generic': return 'Er is iets misgegaan. Probeer het opnieuw.';
+			case 'watchTogether.untitledEpisode': return ({required Object number}) => 'Aflevering ${number}';
+			case 'downloads.title': return 'Downloads';
+			case 'downloads.manage': return 'Beheren';
+			case 'downloads.tvShows': return 'Series';
+			case 'downloads.movies': return 'Films';
+			case 'downloads.music': return 'Muziek';
+			case 'downloads.tracksQueued': return ({required Object count}) => '${count} nummers in wachtrij voor download';
+			case 'downloads.noDownloads': return 'Nog geen downloads';
+			case 'downloads.noDownloadsDescription': return 'Gedownloade inhoud verschijnt hier om offline te bekijken';
+			case 'downloads.downloadNow': return 'Downloaden';
+			case 'downloads.deleteDownload': return 'Download verwijderen';
+			case 'downloads.retryDownload': return 'Download opnieuw proberen';
+			case 'downloads.downloadQueued': return 'Download in wachtrij';
+			case 'downloads.downloadResumed': return 'Download hervat';
+			case 'downloads.serverErrorBitrate': return 'Serverfout: bestand overschrijdt mogelijk de externe bitrate-limiet';
+			case 'downloads.storageFull': return 'Downloads zijn gestopt om de beschikbare opslagruimte te beschermen. Maak ruimte vrij of kies een andere downloadlocatie en probeer het opnieuw.';
+			case 'downloads.storageUnavailable': return 'Downloads zijn gestopt omdat de beschikbare opslag niet kon worden gecontroleerd. Controleer de downloadlocatie en probeer het opnieuw.';
+			case 'downloads.episodesQueued': return ({required Object count}) => '${count} afleveringen in wachtrij voor download';
+			case 'downloads.downloadDeleted': return 'Download verwijderd';
+			case 'downloads.deleteConfirm': return ({required Object title}) => '"${title}" van dit apparaat verwijderen?';
+			case 'downloads.deleteCollectionDownloads': return 'Downloads verwijderen';
+			case 'downloads.deleteCollectionDownloadsConfirm': return ({required Object title}) => 'Alle downloads in "${title}" van dit apparaat verwijderen?';
+			case 'downloads.collectionDownloadsDeleted': return 'Downloads verwijderd';
+			case 'downloads.cancelledDownloadTitle': return 'Geannuleerde download';
+			case 'downloads.cancelledDownloadMessage': return 'Deze download is geannuleerd. Wat wil je doen?';
+			case 'downloads.allEpisodesAlreadyDownloaded': return 'Alle afleveringen zijn al gedownload';
+			case 'downloads.resumeDownload': return 'Download hervatten';
+			case 'downloads.cancelledDownload': return 'Geannuleerde download';
+			case 'downloads.syncingFile': return ({required Object file, required Object status}) => '${file} (${status} synchroniseren)';
+			case 'downloads.downloadedFileClickToComplete': return ({required Object file}) => '${file} gedownload — klik om te voltooien';
+			case 'downloads.partialDownloadClickToComplete': return 'Gedeeltelijk gedownload — klik om te voltooien';
+			case 'downloads.deleting': return 'Verwijderen...';
+			case 'downloads.deletingWithProgress': return ({required Object title, required Object current, required Object total}) => 'Verwijderen van ${title}... (${current} van ${total})';
+			case 'downloads.queuedTooltip': return 'In wachtrij';
+			case 'downloads.queuedFilesTooltip': return ({required Object files}) => 'In wachtrij: ${files}';
+			case 'downloads.downloadingTooltip': return 'Downloaden...';
+			case 'downloads.downloadingFilesTooltip': return ({required Object files}) => 'Downloaden ${files}';
+			case 'downloads.noDownloadsTree': return 'Geen downloads';
+			case 'downloads.pauseAll': return 'Alles pauzeren';
+			case 'downloads.resumeAll': return 'Alles hervatten';
+			case 'downloads.retryAll': return 'Alles opnieuw proberen';
+			case 'downloads.retryFailed': return 'Mislukte downloads opnieuw proberen';
+			case 'downloads.deleteAll': return 'Alles verwijderen';
+			case 'downloads.selectVersion': return 'Versie selecteren';
+			case 'downloads.allEpisodes': return 'Alle afleveringen';
+			case 'downloads.unwatchedOnly': return 'Alleen ongekeken afleveringen';
+			case 'downloads.nextNUnwatched': return ({required Object count}) => 'Volgende ${count} ongekeken afleveringen';
+			case 'downloads.customAmount': return 'Aangepast aantal...';
+			case 'downloads.includeSpecials': return 'Specials meenemen';
+			case 'downloads.howManyEpisodes': return 'Hoeveel afleveringen?';
+			case 'downloads.invalidEpisodeCount': return 'Voer een geldig aantal afleveringen in.';
+			case 'downloads.keepSynced': return 'Gesynchroniseerd houden';
+			case 'downloads.downloadOnce': return 'Eenmalig downloaden';
+			case 'downloads.keepNUnwatched': return ({required Object count}) => '${count} ongekeken afleveringen behouden';
+			case 'downloads.editSyncRule': return 'Synchronisatieregel bewerken';
+			case 'downloads.removeSyncRule': return 'Synchronisatieregel verwijderen';
+			case 'downloads.removeSyncRuleConfirm': return ({required Object title}) => 'Synchronisatie van "${title}" stoppen? Gedownloade afleveringen worden behouden.';
+			case 'downloads.removeListSyncRuleConfirm': return ({required Object title}) => 'Stoppen met synchroniseren van "${title}"?';
+			case 'downloads.deleteSyncRuleDownloads': return 'Gekoppelde downloads ook verwijderen';
+			case 'downloads.deleteSyncRuleDownloadsDescription': return 'Downloads die door een andere synchronisatieregel of een ander profiel worden gebruikt, blijven behouden.';
+			case 'downloads.syncRuleCreated': return ({required Object count}) => 'Synchronisatieregel aangemaakt — ${count} onbekeken afleveringen behouden';
+			case 'downloads.syncRuleUpdated': return 'Synchronisatieregel bijgewerkt';
+			case 'downloads.syncRuleRemoved': return 'Synchronisatieregel verwijderd';
+			case 'downloads.syncRuleAndDownloadsRemoved': return 'Synchronisatieregel en gekoppelde downloads verwijderd';
+			case 'downloads.syncRuleCleanupBusy': return 'Synchronisatieregels worden momenteel bijgewerkt. Probeer het over een moment opnieuw.';
+			case 'downloads.syncRuleCleanupUnavailable': return 'Gekoppelde downloads konden niet veilig worden geïdentificeerd. Maak opnieuw verbinding met de server en probeer het opnieuw, of verwijder de regel zonder de downloads te verwijderen.';
+			case 'downloads.syncedNewEpisodes': return ({required Object count, required Object title}) => '${count} nieuwe afleveringen gesynchroniseerd voor ${title}';
+			case 'downloads.activeSyncRules': return 'Synchronisatieregels';
+			case 'downloads.noSyncRules': return 'Geen synchronisatieregels';
+			case 'downloads.manageSyncRule': return 'Synchronisatie beheren';
+			case 'downloads.editEpisodeCount': return 'Aantal afleveringen';
+			case 'downloads.editSyncFilter': return 'Synchronisatiefilter';
+			case 'downloads.syncAllItems': return 'Alle items synchroniseren';
+			case 'downloads.syncUnwatchedItems': return 'Ongekeken items synchroniseren';
+			case 'downloads.syncRuleServerContext': return ({required Object server, required Object status}) => 'Server: ${server} • ${status}';
+			case 'downloads.syncRuleAvailable': return 'Beschikbaar';
+			case 'downloads.syncRuleOffline': return 'Offline';
+			case 'downloads.syncRuleSignInRequired': return 'Inloggen vereist';
+			case 'downloads.syncRuleAccessDenied': return 'Toegang geweigerd';
+			case 'downloads.syncRuleNotAvailableForProfile': return 'Niet beschikbaar voor huidig profiel';
+			case 'downloads.syncRuleUnknownServer': return 'Onbekende server';
+			case 'downloads.syncRuleListCreated': return 'Synchronisatieregel aangemaakt';
+			case 'downloads.backgroundWarning.bannerBlocked': return 'Downloads stoppen zodra je de app verlaat';
+			case 'downloads.backgroundWarning.bannerDegraded': return 'Downloads op de achtergrond kunnen beperkt zijn';
+			case 'downloads.backgroundWarning.bannerAction': return 'Details';
+			case 'downloads.backgroundWarning.sheetTitle': return 'Downloads op de achtergrond zijn geblokkeerd';
+			case 'downloads.backgroundWarning.sheetTitleDegraded': return 'Downloads op de achtergrond kunnen beperkt zijn';
+			case 'downloads.backgroundWarning.sheetIntro': return 'Android verhindert dat Plezy betrouwbaar op de achtergrond downloadt.';
+			case 'downloads.backgroundWarning.sheetIntroDegraded': return 'Je apparaat beperkt wanneer Plezy op de achtergrond kan downloaden.';
+			case 'downloads.backgroundWarning.reasonBackgroundRestricted': return 'Het achtergrondgebruik van Plezy is beperkt. Stel het batterij- of achtergrondgebruik in op "Onbeperkt".';
+			case 'downloads.backgroundWarning.reasonStandbyRestricted': return 'Android heeft Plezy in een beperkte stand-bymodus geplaatst. Stel het batterijgebruik in op "Onbeperkt".';
+			case 'downloads.backgroundWarning.reasonDownloadChannelBlocked': return 'Downloadmeldingen zijn uitgeschakeld, waardoor voortgang en bediening mogelijk niet beschikbaar zijn.';
+			case 'downloads.backgroundWarning.reasonNotificationsDisabled': return 'Meldingen zijn uitgeschakeld. Op Android 13 of nieuwer zijn ze vereist voor langdurige downloads op de achtergrond.';
+			case 'downloads.backgroundWarning.reasonDataSaver': return 'Databesparing is ingeschakeld en blokkeert downloads op de achtergrond via mobiele data. Via Wi-Fi zouden downloads nog wel moeten werken.';
+			case 'downloads.backgroundWarning.reasonOemUnknown': return 'Downloads zijn herhaaldelijk gestopt terwijl Plezy op de achtergrond draaide. Controleer de instellingen voor het batterij- of achtergrondgebruik van Plezy.';
+			case 'downloads.backgroundWarning.openSettings': return 'Instellingen openen';
+			case 'downloads.backgroundWarning.stillNotWorking': return 'Apparaatspecifieke hulp';
+			case 'downloads.backgroundWarning.stillNotWorkingDescription': return 'Bekijk de stappen voor je apparaat of stuur een logbestand vanuit Instellingen › Logbestanden bekijken als het probleem aanhoudt.';
+			case 'downloads.backgroundWarning.dialogTitle': return 'Downloads worden mogelijk niet voltooid';
+			case 'downloads.backgroundWarning.dialogDownloadAnyway': return 'Toch downloaden';
+			case 'downloads.backgroundWarning.dialogFixFirst': return 'Dit eerst oplossen';
+			case 'downloads.backgroundWarning.statusTile': return 'Downloads op de achtergrond';
+			case 'downloads.backgroundWarning.statusOk': return 'Mag op de achtergrond worden uitgevoerd';
+			case 'downloads.backgroundWarning.statusBlocked': return 'Geblokkeerd door systeeminstellingen';
+			case 'downloads.backgroundWarning.statusDegraded': return 'Beperkt door systeeminstellingen';
+			case 'downloads.backgroundWarning.statusUnknown': return 'Nog niet gecontroleerd';
+			case 'downloads.backgroundWarning.settingsUnavailable': return 'Kan de systeeminstellingen niet openen op dit apparaat';
+			case 'downloads.backgroundWarning.linkUnavailable': return 'Kan dontkillmyapp.com niet openen op dit apparaat';
+			case 'downloads.options': return 'Downloadopties';
+			case 'downloads.groupings.library': return 'Bibliotheek';
+			case 'downloads.groupings.collections': return 'Collecties';
+			case 'downloads.unknownLibrary': return 'Onbekende bibliotheek';
+			case 'downloads.unknownShow': return 'Onbekende serie';
+			case 'downloads.unknownSeason': return 'Onbekend seizoen';
+			case 'downloads.unknownAlbum': return 'Onbekend album';
+			case 'downloads.completedOfTotal': return ({required Object completed, required Object total}) => '${completed}/${total} voltooid';
+			case 'downloads.errorFileNotFound': return 'Bestand niet gevonden (404)';
+			case 'downloads.errorDownloadNotAllowed': return 'Downloaden niet toegestaan door de server (403)';
+			case 'downloads.errorDownloadFailed': return 'Download mislukt';
+			case 'downloads.errorDownloadFailedWithReason': return ({required Object reason}) => 'Download mislukt: ${reason}';
+			case 'downloads.errorHttpStatus': return ({required Object status}) => 'Download mislukt (HTTP ${status})';
+			case 'downloads.errorPostProcessing': return ({required Object reason}) => 'Nabewerking mislukt: ${reason}';
+			case 'downloads.reasonFileNotSaved': return 'het bestand kon niet op dit apparaat worden opgeslagen';
+			case 'downloads.reasonCannotResume': return 'de gedeeltelijke download kon niet worden hervat';
+			case 'downloads.reasonDeviceStorageFull': return 'dit apparaat heeft geen opslagruimte meer';
+			case 'downloads.notificationDownloading': return 'Downloaden...';
+			case 'downloads.notificationComplete': return 'Download voltooid';
+			case 'downloads.notificationPaused': return 'Download gepauzeerd';
+			case 'shaders.title': return 'Shaders';
+			case 'shaders.noShaderDescription': return 'Geen videoverbetering';
+			case 'shaders.nvscalerDescription': return 'NVIDIA-beeldschaling voor scherpere video';
+			case 'shaders.artcnnVariantNeutral': return 'Neutraal';
+			case 'shaders.artcnnVariantDenoise': return 'Ruisonderdrukking';
+			case 'shaders.artcnnVariantDenoiseSharpen': return 'Ruisonderdrukking + verscherpen';
+			case 'shaders.qualityFast': return 'Snel';
+			case 'shaders.qualityHQ': return 'Hoge kwaliteit';
+			case 'shaders.mode': return 'Modus';
+			case 'shaders.importShader': return 'Shader importeren';
+			case 'shaders.customShaderDescription': return 'Aangepaste GLSL-shader';
+			case 'shaders.shaderImported': return 'Shader geïmporteerd';
+			case 'shaders.shaderImportFailed': return 'Shader importeren mislukt';
+			case 'shaders.deleteShader': return 'Shader verwijderen';
+			case 'shaders.deleteShaderConfirm': return ({required Object name}) => '"${name}" verwijderen?';
+			case 'companionRemote.title': return 'Afstandsbediening';
+			case 'companionRemote.connectedTo': return ({required Object name}) => 'Verbonden met ${name}';
+			case 'companionRemote.unknownDevice': return 'Onbekend apparaat';
+			case 'companionRemote.session.startingServer': return 'Externe server starten...';
+			case 'companionRemote.session.hostAddress': return 'Hostadres';
+			case 'companionRemote.session.connected': return 'Verbonden';
+			case 'companionRemote.session.serverRunning': return 'Externe server actief';
+			case 'companionRemote.session.serverStopped': return 'Externe server gestopt';
+			case 'companionRemote.session.serverRunningDescription': return 'Mobiele apparaten op je netwerk kunnen met deze app verbinden';
+			case 'companionRemote.session.serverStoppedDescription': return 'Start de server om mobiele apparaten te laten verbinden';
+			case 'companionRemote.session.usePhoneToControl': return 'Gebruik je mobiele apparaat om deze app te bedienen';
+			case 'companionRemote.session.startServer': return 'Server starten';
+			case 'companionRemote.session.stopServer': return 'Server stoppen';
+			case 'companionRemote.session.minimize': return 'Minimaliseren';
+			case 'companionRemote.session.manualAddressHint': return 'Handmatig verbindingsadres:';
+			case 'companionRemote.pairing.discoveryDescription': return 'Plezy-apparaten met hetzelfde Plex-account verschijnen hier';
+			case 'companionRemote.pairing.hostAddressHint': return '192.168.1.100:48632';
+			case 'companionRemote.pairing.connecting': return 'Verbinden...';
+			case 'companionRemote.pairing.searchingForDevices': return 'Apparaten zoeken...';
+			case 'companionRemote.pairing.noDevicesFound': return 'Geen apparaten gevonden op je netwerk';
+			case 'companionRemote.pairing.noDevicesHint': return 'Open Plezy op je desktop en gebruik op beide apparaten dezelfde wifi';
+			case 'companionRemote.pairing.availableDevices': return 'Beschikbare apparaten';
+			case 'companionRemote.pairing.manualConnection': return 'Handmatige verbinding';
+			case 'companionRemote.pairing.cryptoInitFailed': return 'Kon beveiligde verbinding niet starten. Log eerst in bij Plex.';
+			case 'companionRemote.pairing.validationHostRequired': return 'Voer het hostadres in';
+			case 'companionRemote.pairing.validationHostFormat': return 'Formaat moet IP:poort zijn (bijv. 192.168.1.100:48632)';
+			case 'companionRemote.pairing.connectionTimedOut': return 'Er is een time-out opgetreden. Gebruik op beide apparaten hetzelfde netwerk.';
+			case 'companionRemote.pairing.sessionNotFound': return 'Apparaat niet gevonden. Zorg dat Plezy op de host draait.';
+			case 'companionRemote.pairing.authFailed': return 'Authenticatie mislukt. Beide apparaten hebben hetzelfde Plex-account nodig.';
+			case 'companionRemote.pairing.failedToConnect': return ({required Object error}) => 'Kan niet verbinden: ${error}';
+			case 'companionRemote.remote.disconnectConfirm': return 'Wil je de verbinding met de externe sessie verbreken?';
+			case 'companionRemote.remote.reconnecting': return 'Opnieuw verbinden...';
+			case 'companionRemote.remote.attemptOf': return ({required Object current}) => 'Poging ${current} van 5';
+			case 'companionRemote.remote.retryNow': return 'Nu opnieuw proberen';
+			case 'companionRemote.remote.tabRemote': return 'Afstandsbediening';
+			case 'companionRemote.remote.tabPlay': return 'Afspelen';
+			case 'companionRemote.remote.tabMore': return 'Meer';
+			case 'companionRemote.remote.menu': return 'Menu';
+			case 'companionRemote.remote.tabNavigation': return 'Tabnavigatie';
+			case 'companionRemote.remote.tabDiscover': return 'Ontdekken';
+			case 'companionRemote.remote.tabLibraries': return 'Bibliotheken';
+			case 'companionRemote.remote.tabSearch': return 'Zoeken';
+			case 'companionRemote.remote.tabDownloads': return 'Downloads';
+			case 'companionRemote.remote.tabSettings': return 'Instellingen';
+			case 'companionRemote.remote.previous': return 'Vorige';
+			case 'companionRemote.remote.playPause': return 'Afspelen/Pauzeren';
+			case 'companionRemote.remote.next': return 'Volgende';
+			case 'companionRemote.remote.seekBack': return 'Terugspoelen';
+			case 'companionRemote.remote.stop': return 'Stoppen';
+			case 'companionRemote.remote.seekForward': return 'Vooruitspoelen';
+			case 'companionRemote.remote.volume': return 'Volume';
+			case 'companionRemote.remote.volumeDown': return 'Omlaag';
+			case 'companionRemote.remote.volumeUp': return 'Omhoog';
+			case 'companionRemote.remote.fullscreen': return 'Volledig scherm';
+			case 'companionRemote.remote.subtitles': return 'Ondertitels';
+			case 'companionRemote.remote.audio': return 'Audio';
+			case 'companionRemote.remote.searchHint': return 'Zoeken op desktop...';
+			case 'companionRemote.errors.noNetworkInterface': return 'Geen netwerkinterface gevonden';
+			case 'companionRemote.errors.authenticationFailed': return 'Authenticatie mislukt';
+			case 'companionRemote.errors.serverStartFailed': return ({required Object error}) => 'Externe server starten mislukt: ${error}';
+			case 'companionRemote.errors.commandFailed': return ({required Object error}) => 'Externe opdracht verzenden mislukt: ${error}';
+			case 'companionRemote.errors.joinTimedOut': return 'Time-out bij deelnemen aan sessie';
+			case 'companionRemote.errors.failedToConnectAnyAddress': return 'Er kon met geen enkel adres verbinding worden gemaakt';
+			case 'companionRemote.errors.connectionLostAfterAttempts': return ({required Object attempts}) => 'Verbinding verbroken na ${attempts} pogingen';
+			case 'companionRemote.errors.connectionLost': return 'Verbinding verloren';
+			case 'companionRemote.closedBeforeAuth': return 'De verbinding is vóór de authenticatie gesloten';
+			case 'videoSettings.playbackSpeed': return 'Afspeelsnelheid';
+			case 'videoSettings.normalSpeed': return 'Normaal';
+			case 'videoSettings.sleepTimerActive': return ({required Object duration}) => 'Actief (${duration})';
+			case 'videoSettings.zoom': return 'Zoom';
+			case 'videoSettings.sleepTimer': return 'Slaaptimer';
+			case 'videoSettings.audioSync': return 'Audiosynchronisatie';
+			case 'videoSettings.subtitleSync': return 'Ondertitelsynchronisatie';
+			case 'videoSettings.hdr': return 'HDR';
+			case 'videoSettings.hdrUnsupported': return 'HDR is hier niet beschikbaar — deze desktopcompositor of video-uitvoer kan HDR niet doorgeven.';
+			case 'videoSettings.hdrToneMapping': return 'HDR-tonemapping';
+			case 'videoSettings.hdrToneMappingCompositor': return 'Compositor';
+			case 'videoSettings.hdrToneMappingCompositorDescription': return 'Geef de HDR-metadata van de bron ongewijzigd door en laat de desktopcompositor de mapping uitvoeren.';
+			case 'videoSettings.hdrToneMappingPlayer': return 'Speler';
+			case 'videoSettings.hdrToneMappingPlayerDescription': return 'Laat de speler de mapping naar de piekhelderheid van het scherm uitvoeren en geef het resultaat vervolgens door aan de compositor.';
+			case 'videoSettings.hdrToneMappingFailed': return 'Kon HDR-tonemapping niet wijzigen — de vorige modus is nog actief.';
+			case 'videoSettings.audioOutput': return 'Audio-uitvoer';
+			case 'videoSettings.performanceOverlay': return 'Prestatie-overlay';
+			case 'videoSettings.audioOutputDolbyAtmos': return 'Dolby Atmos';
+			case 'videoSettings.audioOutputDolbyAudio': return 'Dolby Audio';
+			case 'videoSettings.audioOutputSurround': return 'Surround';
+			case 'videoSettings.audioOutputSpatial': return 'Ruimtelijke audio';
+			case 'videoSettings.audioOutputStereo': return 'Stereo';
+			case 'videoSettings.audioNormalization': return 'Volume normaliseren';
+			case 'videoSettings.audioNormalizationDisablesPassthrough': return 'Decodeert audio naar PCM; doorvoer is uit zolang dit aan staat';
+			case 'performanceOverlay.color': return 'Kleur';
+			case 'performanceOverlay.performance': return 'Prestaties';
+			case 'performanceOverlay.buffer': return 'Buffer';
+			case 'performanceOverlay.app': return 'App';
+			case 'performanceOverlay.decoder': return 'Decoder';
+			case 'performanceOverlay.rawDecoder': return 'Raw-decoder';
+			case 'performanceOverlay.tunneling': return 'Tunneling';
+			case 'performanceOverlay.passthrough': return 'Doorvoer';
+			case 'performanceOverlay.aspect': return 'Verhouding';
+			case 'performanceOverlay.rotation': return 'Rotatie';
+			case 'performanceOverlay.dvSource': return 'DV-bron';
+			case 'performanceOverlay.dvPath': return 'DV-pad';
+			case 'performanceOverlay.dvRouteDecoder': return 'Dolby Vision-decoder';
+			case 'performanceOverlay.dvRouteDecoderP81': return 'Dolby Vision-decoder (P7→8.1)';
+			case 'performanceOverlay.dvRouteBaseLayer': return 'Basislaag';
+			case 'performanceOverlay.dvRouteBaseLayerHdr10': return 'HDR10-basislaag';
+			case 'performanceOverlay.dvRouteBaseLayerHlg': return 'HLG-basislaag';
+			case 'performanceOverlay.dvRouteBaseLayerSdr': return 'SDR-basislaag';
+			case 'performanceOverlay.dvRouteReshaped': return 'RPU-reshaping (gpu-next)';
+			case 'performanceOverlay.p7Conversion': return 'P7-conv.';
+			case 'performanceOverlay.sampleRate': return 'Samplefrequentie';
+			case 'performanceOverlay.pixelFormat': return 'Pixelformaat';
+			case 'performanceOverlay.hwFormat': return 'HW-formaat';
+			case 'performanceOverlay.matrix': return 'Matrix';
+			case 'performanceOverlay.primaries': return 'Primaire kleuren';
+			case 'performanceOverlay.transfer': return 'Overdracht';
+			case 'performanceOverlay.renderFps': return 'Render-FPS';
+			case 'performanceOverlay.displayFps': return 'Scherm-FPS';
+			case 'performanceOverlay.avSync': return 'A/V-sync';
+			case 'performanceOverlay.dropped': return 'Gedropt';
+			case 'performanceOverlay.dvRpus': return 'DV RPU’s';
+			case 'performanceOverlay.dvRpuAverage': return 'DV RPU gem.';
+			case 'performanceOverlay.dvSampleAverage': return 'DV-sample gem.';
+			case 'performanceOverlay.maxLuma': return 'Max luma';
+			case 'performanceOverlay.minLuma': return 'Min luma';
+			case 'performanceOverlay.maxCll': return 'MaxCLL';
+			case 'performanceOverlay.maxFall': return 'MaxFALL';
+			case 'performanceOverlay.cacheUsed': return 'Cache gebruikt';
+			case 'performanceOverlay.cacheLimit': return 'Cachelimiet';
+			case 'performanceOverlay.speed': return 'Snelheid';
+			case 'performanceOverlay.player': return 'Speler';
+			case 'performanceOverlay.memory': return 'Geheugen';
+			case 'performanceOverlay.uiFps': return 'UI FPS';
+			case 'performanceOverlay.fps': return 'FPS';
+			case 'performanceOverlay.decoderAndroidHw': return 'Android HW';
+			case 'performanceOverlay.decoderNvidiaHw': return 'NVIDIA HW';
+			case 'performanceOverlay.decoderQualcommHw': return 'Qualcomm HW';
+			case 'performanceOverlay.decoderMediatekHw': return 'MediaTek HW';
+			case 'performanceOverlay.decoderExynosHw': return 'Exynos HW';
+			case 'performanceOverlay.decoderSoftware': return 'Software';
+			case 'performanceOverlay.decoderHardware': return 'Hardware';
+			case 'performanceOverlay.tunnelingActive': return 'Actief';
+			case 'performanceOverlay.dvRpuFailed': return ({required Object converted, required Object failures}) => '${converted} (${failures} mislukt)';
+			case 'externalPlayer.title': return 'Externe speler';
+			case 'externalPlayer.useExternalPlayer': return 'Externe speler gebruiken';
+			case 'externalPlayer.useExternalPlayerDescription': return 'Open video\'s in een andere app';
+			case 'externalPlayer.selectPlayer': return 'Speler selecteren';
+			case 'externalPlayer.customPlayers': return 'Aangepaste spelers';
+			case 'externalPlayer.systemDefault': return 'Systeemstandaard';
+			case 'externalPlayer.addCustomPlayer': return 'Aangepaste speler toevoegen';
+			case 'externalPlayer.playerName': return 'Spelernaam';
+			case 'externalPlayer.playerNameHint': return 'Mijn speler';
+			case 'externalPlayer.playerCommand': return 'Commando';
+			case 'externalPlayer.playerPackage': return 'Pakketnaam';
+			case 'externalPlayer.playerUrlScheme': return 'URL-schema';
+			case 'externalPlayer.off': return 'Uit';
+			case 'externalPlayer.launchFailed': return 'Kan externe speler niet openen';
+			case 'externalPlayer.appNotInstalled': return ({required Object name}) => '${name} is niet geïnstalleerd';
+			case 'externalPlayer.playInExternalPlayer': return 'Afspelen in externe speler';
+			case 'metadataEdit.editMetadata': return 'Bewerken...';
+			case 'metadataEdit.screenTitle': return 'Metadata bewerken';
+			case 'metadataEdit.basicInfo': return 'Basisinformatie';
+			case 'metadataEdit.artwork': return 'Illustraties';
+			case 'metadataEdit.advancedSettings': return 'Geavanceerde instellingen';
+			case 'metadataEdit.title': return 'Titel';
+			case 'metadataEdit.sortTitle': return 'Sorteertitel';
+			case 'metadataEdit.originalTitle': return 'Oorspronkelijke titel';
+			case 'metadataEdit.releaseDate': return 'Releasedatum';
+			case 'metadataEdit.contentRating': return 'Leeftijdsclassificatie';
+			case 'metadataEdit.studio': return 'Studio';
+			case 'metadataEdit.tagline': return 'Slogan';
+			case 'metadataEdit.summary': return 'Samenvatting';
+			case 'metadataEdit.poster': return 'Poster';
+			case 'metadataEdit.background': return 'Achtergrond';
+			case 'metadataEdit.logo': return 'Logo';
+			case 'metadataEdit.squareArt': return 'Vierkante afbeelding';
+			case 'metadataEdit.selectPoster': return 'Poster selecteren';
+			case 'metadataEdit.selectBackground': return 'Achtergrond selecteren';
+			case 'metadataEdit.selectLogo': return 'Logo selecteren';
+			case 'metadataEdit.selectSquareArt': return 'Vierkante afbeelding selecteren';
+			case 'metadataEdit.fromUrl': return 'Vanaf URL';
+			case 'metadataEdit.uploadFile': return 'Bestand uploaden';
+			case 'metadataEdit.enterImageUrl': return 'Voer de afbeeldings-URL in';
+			case 'metadataEdit.imageUrl': return 'Afbeeldings-URL';
+			case 'metadataEdit.metadataUpdated': return 'Metadata bijgewerkt';
+			case 'metadataEdit.metadataUpdateFailed': return 'Metadata bijwerken mislukt';
+			case 'metadataEdit.artworkUpdated': return 'Illustraties bijgewerkt';
+			case 'metadataEdit.artworkUpdateFailed': return 'Illustraties bijwerken mislukt';
+			case 'metadataEdit.noArtworkAvailable': return 'Geen illustraties beschikbaar';
+			case 'metadataEdit.artworkOption': return ({required Object index}) => 'Illustratie ${index}';
+			case 'metadataEdit.selectedArtworkOption': return ({required Object index}) => 'Illustratie ${index}, geselecteerd';
+			case 'metadataEdit.notSet': return 'Niet ingesteld';
+			case 'metadataEdit.libraryDefault': return 'Standaard van de bibliotheek';
+			case 'metadataEdit.accountDefault': return 'Standaard van het account';
+			case 'metadataEdit.seriesDefault': return 'Standaard van de serie';
+			case 'metadataEdit.episodeSorting': return 'Afleveringen sorteren';
+			case 'metadataEdit.oldestFirst': return 'Oudste eerst';
+			case 'metadataEdit.newestFirst': return 'Nieuwste eerst';
+			case 'metadataEdit.keep': return 'Bewaren';
+			case 'metadataEdit.allEpisodes': return 'Alle afleveringen';
+			case 'metadataEdit.latestEpisodes': return ({required Object count}) => '${count} nieuwste afleveringen';
+			case 'metadataEdit.latestEpisode': return 'Nieuwste aflevering';
+			case 'metadataEdit.episodesAddedPastDays': return ({required Object count}) => 'Afleveringen toegevoegd in de afgelopen ${count} dagen';
+			case 'metadataEdit.deleteAfterPlaying': return 'Afleveringen verwijderen na afspelen';
+			case 'metadataEdit.never': return 'Nooit';
+			case 'metadataEdit.afterADay': return 'Na een dag';
+			case 'metadataEdit.afterAWeek': return 'Na een week';
+			case 'metadataEdit.afterAMonth': return 'Na een maand';
+			case 'metadataEdit.onNextRefresh': return 'Bij volgende verversing';
+			case 'metadataEdit.seasons': return 'Seizoenen';
+			case 'metadataEdit.show': return 'Tonen';
+			case 'metadataEdit.hide': return 'Verbergen';
+			case 'metadataEdit.episodeOrdering': return 'Afleveringsvolgorde';
+			case 'metadataEdit.tmdbAiring': return 'The Movie Database (Uitgezonden)';
+			case 'metadataEdit.tvdbAiring': return 'TheTVDB (Uitgezonden)';
+			case 'metadataEdit.tvdbAbsolute': return 'TheTVDB (Absoluut)';
+			case 'metadataEdit.metadataLanguage': return 'Metadatataal';
+			case 'metadataEdit.useOriginalTitle': return 'Oorspronkelijke titel gebruiken';
+			case 'metadataEdit.preferredAudioLanguage': return 'Voorkeurstaal voor audio';
+			case 'metadataEdit.preferredSubtitleLanguage': return 'Voorkeurstaal voor ondertitels';
+			case 'metadataEdit.subtitleMode': return 'Automatische ondertitelselectie';
+			case 'metadataEdit.manuallySelected': return 'Handmatig geselecteerd';
+			case 'metadataEdit.shownWithForeignAudio': return 'Weergeven bij anderstalig geluid';
+			case 'metadataEdit.alwaysEnabled': return 'Altijd ingeschakeld';
+			case 'metadataEdit.tags': return 'Tags';
+			case 'metadataEdit.addTag': return 'Tag toevoegen';
+			case 'metadataEdit.genre': return 'Genre';
+			case 'metadataEdit.director': return 'Regisseur';
+			case 'metadataEdit.writer': return 'Schrijver';
+			case 'metadataEdit.producer': return 'Producent';
+			case 'metadataEdit.country': return 'Land';
+			case 'metadataEdit.collection': return 'Collectie';
+			case 'metadataEdit.label': return 'Label';
+			case 'metadataEdit.quickTag': return 'Snel taggen...';
+			case 'matchScreen.match': return 'Koppelen...';
+			case 'matchScreen.fixMatch': return 'Koppeling herstellen...';
+			case 'matchScreen.unmatch': return 'Ontkoppelen';
+			case 'matchScreen.unmatchConfirm': return 'Deze koppeling wissen? Plex behandelt het item als niet-gekoppeld totdat het opnieuw wordt gekoppeld.';
+			case 'matchScreen.unmatchSuccess': return 'Item ontkoppeld';
+			case 'matchScreen.unmatchFailed': return 'Kon item niet ontkoppelen';
+			case 'matchScreen.matchApplied': return 'Koppeling toegepast';
+			case 'matchScreen.matchFailed': return 'Koppeling kon niet worden toegepast';
+			case 'matchScreen.titleHint': return 'Titel';
+			case 'matchScreen.yearHint': return 'Jaar';
+			case 'matchScreen.search': return 'Zoeken';
+			case 'matchScreen.noMatchesFound': return 'Geen overeenkomsten gevonden';
+			case 'serverTasks.title': return 'Servertaken';
+			case 'serverTasks.failedToLoad': return 'Taken konden niet worden geladen';
+			case 'serverTasks.noTasks': return 'Geen actieve taken';
+			case 'trakt.title': return 'Trakt';
+			case 'trakt.connected': return 'Verbonden';
+			case 'trakt.connectedAs': return ({required Object username}) => 'Verbonden als @${username}';
+			case 'trakt.disconnectConfirm': return 'Trakt-account loskoppelen?';
+			case 'trakt.disconnectConfirmBody': return 'Plezy stuurt geen gebeurtenissen meer naar Trakt. Je kunt op elk moment opnieuw verbinding maken.';
+			case 'trakt.scrobble': return 'Realtime scrobblen';
+			case 'trakt.scrobbleDescription': return 'Stuur tijdens het afspelen gebeurtenissen voor afspelen, pauzeren en stoppen naar Trakt.';
+			case 'trakt.watchedSync': return 'Kijkstatus synchroniseren';
+			case 'trakt.watchedSyncDescription': return 'Wanneer je items in Plezy als bekeken markeert, worden ze op Trakt ook als bekeken gemarkeerd.';
+			case 'seerr.title': return 'Seerr';
+			case 'seerr.connectTitle': return 'Verbinden met Seerr';
+			case 'seerr.serverUrl': return 'Server-URL';
+			case 'seerr.serverUrlHelper': return 'Het adres van je Seerr-instantie';
+			case 'seerr.checkServer': return 'Doorgaan';
+			case 'seerr.signInWithJellyfin': return 'Inloggen met Jellyfin';
+			case 'seerr.signInWithEmby': return 'Inloggen met Emby';
+			case 'seerr.signInWithLocal': return 'Een lokaal account gebruiken';
+			case 'seerr.email': return 'E-mail';
+			case 'seerr.noSignInMethods': return 'Deze Seerr-instantie biedt geen inlogmethode die Plezy ondersteunt.';
+			case 'seerr.instance': return 'Instantie';
+			case 'seerr.disconnectConfirm': return 'Seerr loskoppelen?';
+			case 'seerr.disconnectConfirmBody': return 'Plezy vergeet deze Seerr-instantie. Je kunt altijd opnieuw verbinden.';
+			case 'seerr.request': return 'Aanvragen';
+			case 'seerr.request4k': return 'Aanvragen in 4K';
+			case 'seerr.seasons': return 'Seizoenen';
+			case 'seerr.allSeasons': return 'Alle seizoenen';
+			case 'seerr.advancedOptions': return 'Geavanceerd';
+			case 'seerr.destinationServer': return 'Doelserver';
+			case 'seerr.qualityProfile': return 'Kwaliteitsprofiel';
+			case 'seerr.rootFolder': return 'Hoofdmap';
+			case 'seerr.languageProfile': return 'Taalprofiel';
+			case 'seerr.tags': return 'Tags';
+			case 'seerr.noTags': return 'Geen tags';
+			case 'seerr.defaultOption': return ({required Object name}) => '${name} (standaard)';
+			case 'seerr.animeNote': return 'Deze serie is een anime.';
+			case 'seerr.requestSubmitted': return 'Aanvraag verzonden';
+			case 'seerr.requestFailed': return ({required Object error}) => 'Aanvraag mislukt: ${error}';
+			case 'seerr.requestsLoadFailed': return 'Aanvraagopties konden niet worden geladen';
+			case 'seerr.nothingToRequest': return 'Alles is al beschikbaar of aangevraagd.';
+			case 'seerr.statusAvailable': return 'Beschikbaar';
+			case 'seerr.statusPartiallyAvailable': return 'Gedeeltelijk beschikbaar';
+			case 'seerr.statusRequested': return 'Aangevraagd';
+			case 'seerr.statusProcessing': return 'Verwerken';
+			case 'seerr.statusBlocklisted': return 'Op de blokkeerlijst';
+			case 'seerr.couldNotReach': return ({required Object url, required Object error}) => 'Kon ${url} niet bereiken: ${error}';
+			case 'seerr.noInstanceAtUrl': return ({required Object url, required Object status}) => 'Geen Seerr-instantie op ${url} (HTTP ${status})';
+			case 'seerr.behindAuthProxy': return 'Een authenticerende reverse proxy (SSO of HTTP-auth) heeft geantwoord in plaats van Seerr. Plezy kan hierdoor niet inloggen: laat het /api/v1-pad van Seerr de proxy omzeilen voor deze app, of gebruik een adres dat Seerr direct bereikt.';
+			case 'seerr.invalidUrl': return 'Voer een serveradres in, zoals https://seerr.example.com';
+			case 'seerr.quickConnectUnsupported': return 'Deze Seerr-instantie ondersteunt Quick Connect niet. Hiervoor is Seerr 3.4 of nieuwer nodig.';
+			case 'seerr.notInitialized': return 'De eerste configuratie van deze Seerr-instantie is niet voltooid';
+			case 'seerr.noPlexTokenForReauth': return 'Er is geen Plex-token beschikbaar om opnieuw in te loggen';
+			case 'seerr.noStoredCredentials': return 'Er zijn geen opgeslagen inloggegevens beschikbaar om opnieuw in te loggen';
+			case 'seerr.signInRejected': return 'Inloggen is geweigerd';
+			case 'seerr.noSessionCookie': return 'Seerr heeft geen sessiecookie verstrekt';
+			case 'seerr.freshCookieRejected': return 'Seerr heeft de nieuwe sessiecookie geweigerd';
+			case 'seerr.noUserInformation': return 'Seerr heeft geen gebruikersgegevens geretourneerd';
+			case 'seerr.sessionRejectedAfterReauth': return 'De sessie is na het opnieuw inloggen geweigerd';
+			case 'seerr.permissionDenied': return 'Seerr heeft deze actie geweigerd: je account heeft niet langer de vereiste machtiging';
+			case 'seerr.permissionRevoked': return 'Je hebt geen toestemming meer om dit aan te vragen';
+			case 'services.title': return 'Diensten';
+			case 'services.hubSubtitle': return 'Synchroniseer kijkvoortgang en vraag nieuwe titels aan.';
+			case 'services.integrations': return 'Integraties';
+			case 'services.notConnected': return 'Niet verbonden';
+			case 'services.connectedAs': return ({required Object username}) => 'Verbonden als @${username}';
+			case 'services.scrobble': return 'Voortgang automatisch volgen';
+			case 'services.scrobbleDescription': return 'Werk je lijst bij wanneer je een aflevering of film afrondt.';
+			case 'services.disconnectConfirm': return ({required Object service}) => '${service} loskoppelen?';
+			case 'services.disconnectConfirmBody': return ({required Object service}) => 'Plezy werkt ${service} niet meer bij. Je kunt op elk moment opnieuw verbinding maken.';
+			case 'services.connectFailed': return ({required Object service}) => 'Verbinding maken met ${service} is mislukt. Probeer het opnieuw.';
+			case 'services.names.mal': return 'MyAnimeList';
+			case 'services.names.anilist': return 'AniList';
+			case 'services.names.simkl': return 'Simkl';
+			case 'services.names.seerr': return 'Seerr';
+			case 'services.names.mdblist': return 'MDBList';
+			case 'services.simklReconnect.title': return 'Simkl opnieuw verbinden';
+			case 'services.simklReconnect.subtitle': return 'Simkl stopt met de aanmeldmethode die deze verbinding gebruikt. Bij opnieuw verbinden wordt simkl.com geopend om Plezy goed te keuren — Plezy ziet je wachtwoord nooit. Je kijkgeschiedenis blijft op Simkl.';
+			case 'services.deviceCode.title': return ({required Object service}) => 'Plezy activeren op ${service}';
+			case 'services.deviceCode.instructions': return 'Scan de QR-code of ga naar het onderstaande adres en voer deze code in:';
+			case 'services.deviceCode.openToActivate': return ({required Object service}) => 'Open ${service} om te activeren';
+			case 'services.deviceCode.copyCode': return 'Activeringscode kopiëren';
+			case 'services.deviceCode.waitingForAuthorization': return 'Wachten op autorisatie…';
+			case 'services.deviceCode.codeCopied': return 'Code gekopieerd';
+			case 'services.oauthProxy.title': return ({required Object service}) => 'Aanmelden bij ${service}';
+			case 'services.oauthProxy.body': return 'Scan deze QR-code of open de URL op een apparaat.';
+			case 'services.oauthProxy.openToSignIn': return ({required Object service}) => '${service} openen om aan te melden';
+			case 'services.pendingAuth.copyUrl': return 'Aanmeldings-URL kopiëren';
+			case 'services.pendingAuth.urlCopied': return 'URL gekopieerd';
+			case 'services.libraryFilter.title': return 'Bibliotheekfilter';
+			case 'services.libraryFilter.subtitleAllSyncing': return 'Alle bibliotheken synchroniseren';
+			case 'services.libraryFilter.subtitleNoneSyncing': return 'Niets wordt gesynchroniseerd';
+			case 'services.libraryFilter.subtitleBlocked': return ({required Object count}) => '${count} geblokkeerd';
+			case 'services.libraryFilter.subtitleAllowed': return ({required Object count}) => '${count} toegestaan';
+			case 'services.libraryFilter.mode': return 'Filtermodus';
+			case 'services.libraryFilter.modeBlacklist': return 'Blokkeerlijst';
+			case 'services.libraryFilter.modeWhitelist': return 'Toelatingslijst';
+			case 'services.libraryFilter.modeHintBlacklist': return 'Synchroniseer alle bibliotheken behalve de hieronder aangevinkte.';
+			case 'services.libraryFilter.modeHintWhitelist': return 'Synchroniseer alleen de hieronder aangevinkte bibliotheken.';
+			case 'services.libraryFilter.libraries': return 'Bibliotheken';
+			case 'services.libraryFilter.noLibraries': return 'Geen bibliotheken beschikbaar';
+			case 'addServer.addMediaBrowserTitle': return ({required Object product}) => '${product}-server toevoegen';
+			case 'addServer.serverUrls': return 'Server-URL\'s';
+			case 'addServer.serverUrlsHelper': return 'Meerdere URL\'s toegestaan, gescheiden door komma\'s.';
+			case 'addServer.findServer': return 'Server zoeken';
+			case 'addServer.searchingLocalMediaBrowserServers': return ({required Object product}) => 'Zoeken naar lokale ${product}-servers...';
+			case 'addServer.localMediaBrowserServers': return ({required Object product}) => 'Lokale ${product}-servers';
+			case 'addServer.username': return 'Gebruikersnaam';
+			case 'addServer.password': return 'Wachtwoord';
+			case 'addServer.signIn': return 'Inloggen';
+			case 'addServer.change': return 'Wijzigen';
+			case 'addServer.required': return 'Vereist';
+			case 'addServer.couldNotReachServer': return ({required Object error}) => 'Kon de server niet bereiken: ${error}';
+			case 'addServer.signInFailed': return ({required Object error}) => 'Inloggen mislukt: ${error}';
+			case 'addServer.quickConnectFailed': return ({required Object error}) => 'Quick Connect mislukt: ${error}';
+			case 'addServer.addPlexTitle': return 'Inloggen met Plex';
+			case 'addServer.pinExpired': return 'De pincode verliep voordat je kon inloggen. Probeer het opnieuw.';
+			case 'addServer.failedToRegisterAccount': return ({required Object error}) => 'Account registreren mislukt: ${error}';
+			case 'addServer.enterMediaBrowserUrlError': return ({required Object product}) => 'Voer de URL van je ${product}-server in';
+			case 'addServer.addConnectionTitle': return 'Verbinding toevoegen';
+			case 'addServer.addConnectionTitleScoped': return ({required Object name}) => 'Toevoegen aan ${name}';
+			case 'addServer.signInWithPlexCard': return 'Inloggen met Plex';
+			case 'addServer.signInWithPlexCardSubtitle': return 'Autoriseer dit apparaat. Gedeelde servers worden toegevoegd.';
+			case 'addServer.signInWithPlexCardSubtitleScoped': return 'Autoriseer een Plex-account. Home-gebruikers worden profielen.';
+			case 'addServer.connectToMediaBrowserCard': return ({required Object product}) => 'Verbinding maken met ${product}';
+			case 'addServer.connectToMediaBrowserCardSubtitle': return 'Voer je server-URL, gebruikersnaam en wachtwoord in.';
+			case 'addServer.connectToMediaBrowserCardSubtitleScoped': return ({required Object product, required Object name}) => 'Meld je aan bij je ${product}-server. Wordt gekoppeld aan ${name}.';
+			case 'addServer.borrowFromAnotherProfile': return 'Van een ander profiel lenen';
+			case 'addServer.borrowFromAnotherProfileSubtitle': return 'Hergebruik de verbinding van een ander profiel. Voor profielen met pincodebeveiliging is een pincode vereist.';
+			case 'addServer.invalidCredentials': return 'Ongeldige gebruikersnaam of ongeldig wachtwoord';
+			case 'addServer.authResponseNotJson': return 'Het authenticatieantwoord was geen geldige JSON';
+			case 'addServer.authResponseIncomplete': return 'Het aanmeldingsantwoord van de server was onvolledig';
+			case 'addServer.quickConnectRejected': return 'Quick Connect is door de server geweigerd';
+			case 'addServer.quickConnectNotJson': return 'Het Quick Connect-antwoord was geen geldige JSON';
+			case 'addServer.quickConnectMissingFields': return 'In het Quick Connect-antwoord ontbreekt een code of geheim';
+			case 'addServer.quickConnectPollRejected': return 'Quick Connect-polling is door de server geweigerd';
+			case 'addServer.serverTimedOut': return 'De server heeft niet op tijd gereageerd';
+			case 'addServer.responseNotJson': return 'Het serverantwoord was geen geldige JSON';
+			case 'addServer.responseMissingIdentity': return ({required Object product}) => 'In het antwoord ontbreekt een ID of servernaam — is dit een ${product}-server?';
+			case 'addServer.probeFailed': return ({required Object error}) => 'Kon de server niet bereiken: ${error}';
+			case 'addServer.enterAtLeastOneUrl': return ({required Object product}) => 'Voer ten minste één URL van een ${product}-server in';
+			case 'addServer.noReachableServer': return ({required Object product}) => 'Er is geen bereikbare ${product}-server gevonden';
+			case 'addServer.urlsPointToDifferentServers': return ({required Object product}) => 'Deze URL\'s verwijzen naar verschillende ${product}-servers';
+			case 'addServer.urlDoesNotMatchServer': return ({required Object product}) => 'Deze URL komt niet overeen met de ${product}-server';
+			case 'addServer.redirectUnsupported': return 'De server heeft doorgestuurd naar een niet-ondersteunde URL';
+			case 'addServer.redirectDifferentHost': return ({required Object product}) => 'De server heeft doorgestuurd naar een andere host. Voer de uiteindelijke ${product}-URL rechtstreeks in.';
+			case 'addServer.redirectInsecure': return 'De server heeft van HTTPS doorgestuurd naar een onbeveiligde URL';
+			case 'addServer.redirectUnsupportedEnterFinal': return ({required Object product}) => 'De server heeft doorgestuurd naar een niet-ondersteunde URL. Voer de uiteindelijke ${product}-URL rechtstreeks in.';
+			default: return null;
+		}
 	}
 }
+

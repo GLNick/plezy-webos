@@ -3,7 +3,6 @@
 ///
 // coverage:ignore-file
 // ignore_for_file: type=lint, unused_import
-// dart format off
 
 import 'package:flutter/widgets.dart';
 import 'package:intl/intl.dart';
@@ -11,7 +10,7 @@ import 'package:slang/generated.dart';
 import 'strings.g.dart';
 
 // Path: <root>
-class TranslationsIt extends Translations with BaseTranslations<AppLocale, Translations> {
+class TranslationsIt extends Translations {
 	/// You can call this constructor and build your own translation instance of this locale.
 	/// Constructing via the enum [AppLocale.build] is preferred.
 	TranslationsIt({Map<String, Node>? overrides, PluralResolver? cardinalResolver, PluralResolver? ordinalResolver, TranslationMetadata<AppLocale, Translations>? meta})
@@ -39,65 +38,67 @@ class TranslationsIt extends Translations with BaseTranslations<AppLocale, Trans
 	TranslationsIt $copyWith({TranslationMetadata<AppLocale, Translations>? meta}) => TranslationsIt(meta: meta ?? this.$meta);
 
 	// Translations
-	@override late final _Translations$app$it app = _Translations$app$it._(_root);
-	@override late final _Translations$appIcon$it appIcon = _Translations$appIcon$it._(_root);
-	@override late final _Translations$auth$it auth = _Translations$auth$it._(_root);
-	@override late final _Translations$common$it common = _Translations$common$it._(_root);
-	@override late final _Translations$screens$it screens = _Translations$screens$it._(_root);
-	@override late final _Translations$update$it update = _Translations$update$it._(_root);
-	@override late final _Translations$supporter$it supporter = _Translations$supporter$it._(_root);
-	@override late final _Translations$settings$it settings = _Translations$settings$it._(_root);
-	@override late final _Translations$themeEditor$it themeEditor = _Translations$themeEditor$it._(_root);
-	@override late final _Translations$search$it search = _Translations$search$it._(_root);
-	@override late final _Translations$hotkeys$it hotkeys = _Translations$hotkeys$it._(_root);
-	@override late final _Translations$fileInfo$it fileInfo = _Translations$fileInfo$it._(_root);
-	@override late final _Translations$mediaMenu$it mediaMenu = _Translations$mediaMenu$it._(_root);
-	@override late final _Translations$rateSheet$it rateSheet = _Translations$rateSheet$it._(_root);
-	@override late final _Translations$accessibility$it accessibility = _Translations$accessibility$it._(_root);
-	@override late final _Translations$tooltips$it tooltips = _Translations$tooltips$it._(_root);
-	@override late final _Translations$audioTracks$it audioTracks = _Translations$audioTracks$it._(_root);
-	@override late final _Translations$videoControls$it videoControls = _Translations$videoControls$it._(_root);
-	@override late final _Translations$messages$it messages = _Translations$messages$it._(_root);
-	@override late final _Translations$subtitlingStyling$it subtitlingStyling = _Translations$subtitlingStyling$it._(_root);
-	@override late final _Translations$mpvConfig$it mpvConfig = _Translations$mpvConfig$it._(_root);
-	@override late final _Translations$dialog$it dialog = _Translations$dialog$it._(_root);
-	@override late final _Translations$profiles$it profiles = _Translations$profiles$it._(_root);
-	@override late final _Translations$connections$it connections = _Translations$connections$it._(_root);
-	@override late final _Translations$accountPreferences$it accountPreferences = _Translations$accountPreferences$it._(_root);
-	@override late final _Translations$discover$it discover = _Translations$discover$it._(_root);
-	@override late final _Translations$errors$it errors = _Translations$errors$it._(_root);
-	@override late final _Translations$libraries$it libraries = _Translations$libraries$it._(_root);
-	@override late final _Translations$about$it about = _Translations$about$it._(_root);
-	@override late final _Translations$serverSelection$it serverSelection = _Translations$serverSelection$it._(_root);
-	@override late final _Translations$hubDetail$it hubDetail = _Translations$hubDetail$it._(_root);
-	@override late final _Translations$logs$it logs = _Translations$logs$it._(_root);
-	@override late final _Translations$startup$it startup = _Translations$startup$it._(_root);
-	@override late final _Translations$licenses$it licenses = _Translations$licenses$it._(_root);
-	@override late final _Translations$navigation$it navigation = _Translations$navigation$it._(_root);
-	@override late final _Translations$explore$it explore = _Translations$explore$it._(_root);
-	@override late final _Translations$liveTv$it liveTv = _Translations$liveTv$it._(_root);
-	@override late final _Translations$collections$it collections = _Translations$collections$it._(_root);
-	@override late final _Translations$playlists$it playlists = _Translations$playlists$it._(_root);
-	@override late final _Translations$music$it music = _Translations$music$it._(_root);
-	@override late final _Translations$watchTogether$it watchTogether = _Translations$watchTogether$it._(_root);
-	@override late final _Translations$downloads$it downloads = _Translations$downloads$it._(_root);
-	@override late final _Translations$shaders$it shaders = _Translations$shaders$it._(_root);
-	@override late final _Translations$companionRemote$it companionRemote = _Translations$companionRemote$it._(_root);
-	@override late final _Translations$videoSettings$it videoSettings = _Translations$videoSettings$it._(_root);
-	@override late final _Translations$performanceOverlay$it performanceOverlay = _Translations$performanceOverlay$it._(_root);
-	@override late final _Translations$externalPlayer$it externalPlayer = _Translations$externalPlayer$it._(_root);
-	@override late final _Translations$metadataEdit$it metadataEdit = _Translations$metadataEdit$it._(_root);
-	@override late final _Translations$matchScreen$it matchScreen = _Translations$matchScreen$it._(_root);
-	@override late final _Translations$serverTasks$it serverTasks = _Translations$serverTasks$it._(_root);
-	@override late final _Translations$trakt$it trakt = _Translations$trakt$it._(_root);
-	@override late final _Translations$seerr$it seerr = _Translations$seerr$it._(_root);
-	@override late final _Translations$services$it services = _Translations$services$it._(_root);
-	@override late final _Translations$addServer$it addServer = _Translations$addServer$it._(_root);
+	@override late final _TranslationsAppIt app = _TranslationsAppIt._(_root);
+	@override late final _TranslationsAppIconIt appIcon = _TranslationsAppIconIt._(_root);
+	@override late final _TranslationsAuthIt auth = _TranslationsAuthIt._(_root);
+	@override late final _TranslationsCommonIt common = _TranslationsCommonIt._(_root);
+	@override late final _TranslationsScreensIt screens = _TranslationsScreensIt._(_root);
+	@override late final _TranslationsUpdateIt update = _TranslationsUpdateIt._(_root);
+	@override late final _TranslationsSupporterIt supporter = _TranslationsSupporterIt._(_root);
+	@override late final _TranslationsSettingsIt settings = _TranslationsSettingsIt._(_root);
+	@override late final _TranslationsThemeEditorIt themeEditor = _TranslationsThemeEditorIt._(_root);
+	@override late final _TranslationsSearchIt search = _TranslationsSearchIt._(_root);
+	@override late final _TranslationsHotkeysIt hotkeys = _TranslationsHotkeysIt._(_root);
+	@override late final _TranslationsFileInfoIt fileInfo = _TranslationsFileInfoIt._(_root);
+	@override late final _TranslationsMediaMenuIt mediaMenu = _TranslationsMediaMenuIt._(_root);
+	@override late final _TranslationsRateSheetIt rateSheet = _TranslationsRateSheetIt._(_root);
+	@override late final _TranslationsAccessibilityIt accessibility = _TranslationsAccessibilityIt._(_root);
+	@override late final _TranslationsTooltipsIt tooltips = _TranslationsTooltipsIt._(_root);
+	@override late final _TranslationsAudioTracksIt audioTracks = _TranslationsAudioTracksIt._(_root);
+	@override late final _TranslationsVideoControlsIt videoControls = _TranslationsVideoControlsIt._(_root);
+	@override late final _TranslationsUserStatusIt userStatus = _TranslationsUserStatusIt._(_root);
+	@override late final _TranslationsMessagesIt messages = _TranslationsMessagesIt._(_root);
+	@override late final _TranslationsSubtitlingStylingIt subtitlingStyling = _TranslationsSubtitlingStylingIt._(_root);
+	@override late final _TranslationsMpvConfigIt mpvConfig = _TranslationsMpvConfigIt._(_root);
+	@override late final _TranslationsDialogIt dialog = _TranslationsDialogIt._(_root);
+	@override late final _TranslationsProfilesIt profiles = _TranslationsProfilesIt._(_root);
+	@override late final _TranslationsConnectionsIt connections = _TranslationsConnectionsIt._(_root);
+	@override late final _TranslationsAccountPreferencesIt accountPreferences = _TranslationsAccountPreferencesIt._(_root);
+	@override late final _TranslationsDiscoverIt discover = _TranslationsDiscoverIt._(_root);
+	@override late final _TranslationsErrorsIt errors = _TranslationsErrorsIt._(_root);
+	@override late final _TranslationsLibrariesIt libraries = _TranslationsLibrariesIt._(_root);
+	@override late final _TranslationsAboutIt about = _TranslationsAboutIt._(_root);
+	@override late final _TranslationsServerSelectionIt serverSelection = _TranslationsServerSelectionIt._(_root);
+	@override late final _TranslationsHubDetailIt hubDetail = _TranslationsHubDetailIt._(_root);
+	@override late final _TranslationsLogsIt logs = _TranslationsLogsIt._(_root);
+	@override late final _TranslationsStartupIt startup = _TranslationsStartupIt._(_root);
+	@override late final _TranslationsLicensesIt licenses = _TranslationsLicensesIt._(_root);
+	@override late final _TranslationsNavigationIt navigation = _TranslationsNavigationIt._(_root);
+	@override late final _TranslationsExploreIt explore = _TranslationsExploreIt._(_root);
+	@override late final _TranslationsLiveTvIt liveTv = _TranslationsLiveTvIt._(_root);
+	@override late final _TranslationsCollectionsIt collections = _TranslationsCollectionsIt._(_root);
+	@override late final _TranslationsPlaylistsIt playlists = _TranslationsPlaylistsIt._(_root);
+	@override late final _TranslationsMusicIt music = _TranslationsMusicIt._(_root);
+	@override late final _TranslationsWatchTogetherIt watchTogether = _TranslationsWatchTogetherIt._(_root);
+	@override late final _TranslationsDownloadsIt downloads = _TranslationsDownloadsIt._(_root);
+	@override late final _TranslationsShadersIt shaders = _TranslationsShadersIt._(_root);
+	@override late final _TranslationsCompanionRemoteIt companionRemote = _TranslationsCompanionRemoteIt._(_root);
+	@override late final _TranslationsVideoSettingsIt videoSettings = _TranslationsVideoSettingsIt._(_root);
+	@override late final _TranslationsPerformanceOverlayIt performanceOverlay = _TranslationsPerformanceOverlayIt._(_root);
+	@override late final _TranslationsExternalPlayerIt externalPlayer = _TranslationsExternalPlayerIt._(_root);
+	@override late final _TranslationsMetadataEditIt metadataEdit = _TranslationsMetadataEditIt._(_root);
+	@override late final _TranslationsMatchScreenIt matchScreen = _TranslationsMatchScreenIt._(_root);
+	@override late final _TranslationsServerTasksIt serverTasks = _TranslationsServerTasksIt._(_root);
+	@override late final _TranslationsTraktIt trakt = _TranslationsTraktIt._(_root);
+	@override late final _TranslationsSeerrIt seerr = _TranslationsSeerrIt._(_root);
+	@override late final _TranslationsServicesIt services = _TranslationsServicesIt._(_root);
+	@override late final _TranslationsAddServerIt addServer = _TranslationsAddServerIt._(_root);
+	@override late final _TranslationsDeepLinksIt deepLinks = _TranslationsDeepLinksIt._(_root);
 }
 
 // Path: app
-class _Translations$app$it extends Translations$app$en {
-	_Translations$app$it._(TranslationsIt root) : this._root = root, super.internal(root);
+class _TranslationsAppIt extends TranslationsAppEn {
+	_TranslationsAppIt._(TranslationsIt root) : this._root = root, super.internal(root);
 
 	final TranslationsIt _root; // ignore: unused_field
 
@@ -106,8 +107,8 @@ class _Translations$app$it extends Translations$app$en {
 }
 
 // Path: appIcon
-class _Translations$appIcon$it extends Translations$appIcon$en {
-	_Translations$appIcon$it._(TranslationsIt root) : this._root = root, super.internal(root);
+class _TranslationsAppIconIt extends TranslationsAppIconEn {
+	_TranslationsAppIconIt._(TranslationsIt root) : this._root = root, super.internal(root);
 
 	final TranslationsIt _root; // ignore: unused_field
 
@@ -120,12 +121,12 @@ class _Translations$appIcon$it extends Translations$appIcon$en {
 	@override String get changeFailed => 'Impossibile cambiare l\'icona dell\'app';
 	@override String get launcherHint => 'La nuova icona appare nella schermata Home quando esci da Plezy.';
 	@override String get tvLauncherHint => 'Il nuovo banner appare quando esci da Plezy. Android TV potrebbe continuare a mostrare quello precedente fino al riavvio del televisore.';
-	@override late final _Translations$appIcon$names$it names = _Translations$appIcon$names$it._(_root);
+	@override late final _TranslationsAppIconNamesIt names = _TranslationsAppIconNamesIt._(_root);
 }
 
 // Path: auth
-class _Translations$auth$it extends Translations$auth$en {
-	_Translations$auth$it._(TranslationsIt root) : this._root = root, super.internal(root);
+class _TranslationsAuthIt extends TranslationsAuthEn {
+	_TranslationsAuthIt._(TranslationsIt root) : this._root = root, super.internal(root);
 
 	final TranslationsIt _root; // ignore: unused_field
 
@@ -150,8 +151,8 @@ class _Translations$auth$it extends Translations$auth$en {
 }
 
 // Path: common
-class _Translations$common$it extends Translations$common$en {
-	_Translations$common$it._(TranslationsIt root) : this._root = root, super.internal(root);
+class _TranslationsCommonIt extends TranslationsCommonEn {
+	_TranslationsCommonIt._(TranslationsIt root) : this._root = root, super.internal(root);
 
 	final TranslationsIt _root; // ignore: unused_field
 
@@ -202,16 +203,16 @@ class _Translations$common$it extends Translations$common$en {
 	@override String get fullscreen => 'Schermo intero';
 	@override String get exitFullscreen => 'Esci dalla modalità a schermo intero';
 	@override String get pressBackAgainToExit => 'Premi di nuovo Indietro per uscire';
-	@override late final _Translations$common$ratingSource$it ratingSource = _Translations$common$ratingSource$it._(_root);
+	@override late final _TranslationsCommonRatingSourceIt ratingSource = _TranslationsCommonRatingSourceIt._(_root);
 	@override String get notAvailable => 'N/D';
 	@override String get url => 'URL';
 	@override String get letterKeys => 'ABC';
-	@override late final _Translations$common$mediaKind$it mediaKind = _Translations$common$mediaKind$it._(_root);
+	@override late final _TranslationsCommonMediaKindIt mediaKind = _TranslationsCommonMediaKindIt._(_root);
 }
 
 // Path: screens
-class _Translations$screens$it extends Translations$screens$en {
-	_Translations$screens$it._(TranslationsIt root) : this._root = root, super.internal(root);
+class _TranslationsScreensIt extends TranslationsScreensEn {
+	_TranslationsScreensIt._(TranslationsIt root) : this._root = root, super.internal(root);
 
 	final TranslationsIt _root; // ignore: unused_field
 
@@ -224,8 +225,8 @@ class _Translations$screens$it extends Translations$screens$en {
 }
 
 // Path: update
-class _Translations$update$it extends Translations$update$en {
-	_Translations$update$it._(TranslationsIt root) : this._root = root, super.internal(root);
+class _TranslationsUpdateIt extends TranslationsUpdateEn {
+	_TranslationsUpdateIt._(TranslationsIt root) : this._root = root, super.internal(root);
 
 	final TranslationsIt _root; // ignore: unused_field
 
@@ -240,8 +241,8 @@ class _Translations$update$it extends Translations$update$en {
 }
 
 // Path: supporter
-class _Translations$supporter$it extends Translations$supporter$en {
-	_Translations$supporter$it._(TranslationsIt root) : this._root = root, super.internal(root);
+class _TranslationsSupporterIt extends TranslationsSupporterEn {
+	_TranslationsSupporterIt._(TranslationsIt root) : this._root = root, super.internal(root);
 
 	final TranslationsIt _root; // ignore: unused_field
 
@@ -263,12 +264,12 @@ class _Translations$supporter$it extends Translations$supporter$en {
 	@override String get tileSubtitle => 'Sblocca temi e icone dell\'app con un acquisto una tantum';
 	@override String get tileSubtitleThemesOnly => 'Sblocca i temi con un acquisto una tantum';
 	@override String get tileUnlocked => 'Sbloccato — grazie per l\'acquisto';
-	@override late final _Translations$supporter$errors$it errors = _Translations$supporter$errors$it._(_root);
+	@override late final _TranslationsSupporterErrorsIt errors = _TranslationsSupporterErrorsIt._(_root);
 }
 
 // Path: settings
-class _Translations$settings$it extends Translations$settings$en {
-	_Translations$settings$it._(TranslationsIt root) : this._root = root, super.internal(root);
+class _TranslationsSettingsIt extends TranslationsSettingsEn {
+	_TranslationsSettingsIt._(TranslationsIt root) : this._root = root, super.internal(root);
 
 	final TranslationsIt _root; // ignore: unused_field
 
@@ -612,8 +613,8 @@ class _Translations$settings$it extends Translations$settings$en {
 }
 
 // Path: themeEditor
-class _Translations$themeEditor$it extends Translations$themeEditor$en {
-	_Translations$themeEditor$it._(TranslationsIt root) : this._root = root, super.internal(root);
+class _TranslationsThemeEditorIt extends TranslationsThemeEditorEn {
+	_TranslationsThemeEditorIt._(TranslationsIt root) : this._root = root, super.internal(root);
 
 	final TranslationsIt _root; // ignore: unused_field
 
@@ -631,12 +632,12 @@ class _Translations$themeEditor$it extends Translations$themeEditor$en {
 	@override String get startFromDescription => 'Copia tutti i colori da un altro tema';
 	@override String get colors => 'Colori';
 	@override String get preview => 'Anteprima';
-	@override late final _Translations$themeEditor$slots$it slots = _Translations$themeEditor$slots$it._(_root);
+	@override late final _TranslationsThemeEditorSlotsIt slots = _TranslationsThemeEditorSlotsIt._(_root);
 	@override String get opacity => 'Opacità';
 	@override String get hexHint => '#RRGGBB o #AARRGGBB';
 	@override String get fromOtherThemes => 'Da altri temi';
 	@override String swatchLabel({required Object color, required Object theme}) => '${color} ${theme}';
-	@override late final _Translations$themeEditor$contrast$it contrast = _Translations$themeEditor$contrast$it._(_root);
+	@override late final _TranslationsThemeEditorContrastIt contrast = _TranslationsThemeEditorContrastIt._(_root);
 	@override String lowContrast({required Object pair, required Object ratio, required Object minimum}) => '${pair}: ${ratio}:1, sotto il valore consigliato di ${minimum}:1';
 	@override String get discardTitle => 'Scartare le modifiche?';
 	@override String get discardMessage => 'Le modifiche ai colori non salvate andranno perse.';
@@ -648,8 +649,8 @@ class _Translations$themeEditor$it extends Translations$themeEditor$en {
 }
 
 // Path: search
-class _Translations$search$it extends Translations$search$en {
-	_Translations$search$it._(TranslationsIt root) : this._root = root, super.internal(root);
+class _TranslationsSearchIt extends TranslationsSearchEn {
+	_TranslationsSearchIt._(TranslationsIt root) : this._root = root, super.internal(root);
 
 	final TranslationsIt _root; // ignore: unused_field
 
@@ -662,8 +663,8 @@ class _Translations$search$it extends Translations$search$en {
 }
 
 // Path: hotkeys
-class _Translations$hotkeys$it extends Translations$hotkeys$en {
-	_Translations$hotkeys$it._(TranslationsIt root) : this._root = root, super.internal(root);
+class _TranslationsHotkeysIt extends TranslationsHotkeysEn {
+	_TranslationsHotkeysIt._(TranslationsIt root) : this._root = root, super.internal(root);
 
 	final TranslationsIt _root; // ignore: unused_field
 
@@ -674,12 +675,12 @@ class _Translations$hotkeys$it extends Translations$hotkeys$en {
 	@override String get currentShortcut => 'Scorciatoia attuale:';
 	@override String get pressToRecord => 'Seleziona per registrare una scorciatoia';
 	@override String get recordingShortcut => 'Premi ora la scorciatoia';
-	@override late final _Translations$hotkeys$actions$it actions = _Translations$hotkeys$actions$it._(_root);
+	@override late final _TranslationsHotkeysActionsIt actions = _TranslationsHotkeysActionsIt._(_root);
 }
 
 // Path: fileInfo
-class _Translations$fileInfo$it extends Translations$fileInfo$en {
-	_Translations$fileInfo$it._(TranslationsIt root) : this._root = root, super.internal(root);
+class _TranslationsFileInfoIt extends TranslationsFileInfoEn {
+	_TranslationsFileInfoIt._(TranslationsIt root) : this._root = root, super.internal(root);
 
 	final TranslationsIt _root; // ignore: unused_field
 
@@ -802,8 +803,8 @@ class _Translations$fileInfo$it extends Translations$fileInfo$en {
 }
 
 // Path: mediaMenu
-class _Translations$mediaMenu$it extends Translations$mediaMenu$en {
-	_Translations$mediaMenu$it._(TranslationsIt root) : this._root = root, super.internal(root);
+class _TranslationsMediaMenuIt extends TranslationsMediaMenuEn {
+	_TranslationsMediaMenuIt._(TranslationsIt root) : this._root = root, super.internal(root);
 
 	final TranslationsIt _root; // ignore: unused_field
 
@@ -853,8 +854,8 @@ class _Translations$mediaMenu$it extends Translations$mediaMenu$en {
 }
 
 // Path: rateSheet
-class _Translations$rateSheet$it extends Translations$rateSheet$en {
-	_Translations$rateSheet$it._(TranslationsIt root) : this._root = root, super.internal(root);
+class _TranslationsRateSheetIt extends TranslationsRateSheetEn {
+	_TranslationsRateSheetIt._(TranslationsIt root) : this._root = root, super.internal(root);
 
 	final TranslationsIt _root; // ignore: unused_field
 
@@ -869,8 +870,8 @@ class _Translations$rateSheet$it extends Translations$rateSheet$en {
 }
 
 // Path: accessibility
-class _Translations$accessibility$it extends Translations$accessibility$en {
-	_Translations$accessibility$it._(TranslationsIt root) : this._root = root, super.internal(root);
+class _TranslationsAccessibilityIt extends TranslationsAccessibilityEn {
+	_TranslationsAccessibilityIt._(TranslationsIt root) : this._root = root, super.internal(root);
 
 	final TranslationsIt _root; // ignore: unused_field
 
@@ -905,8 +906,8 @@ class _Translations$accessibility$it extends Translations$accessibility$en {
 }
 
 // Path: tooltips
-class _Translations$tooltips$it extends Translations$tooltips$en {
-	_Translations$tooltips$it._(TranslationsIt root) : this._root = root, super.internal(root);
+class _TranslationsTooltipsIt extends TranslationsTooltipsEn {
+	_TranslationsTooltipsIt._(TranslationsIt root) : this._root = root, super.internal(root);
 
 	final TranslationsIt _root; // ignore: unused_field
 
@@ -918,8 +919,8 @@ class _Translations$tooltips$it extends Translations$tooltips$en {
 }
 
 // Path: audioTracks
-class _Translations$audioTracks$it extends Translations$audioTracks$en {
-	_Translations$audioTracks$it._(TranslationsIt root) : this._root = root, super.internal(root);
+class _TranslationsAudioTracksIt extends TranslationsAudioTracksEn {
+	_TranslationsAudioTracksIt._(TranslationsIt root) : this._root = root, super.internal(root);
 
 	final TranslationsIt _root; // ignore: unused_field
 
@@ -928,8 +929,8 @@ class _Translations$audioTracks$it extends Translations$audioTracks$en {
 }
 
 // Path: videoControls
-class _Translations$videoControls$it extends Translations$videoControls$en {
-	_Translations$videoControls$it._(TranslationsIt root) : this._root = root, super.internal(root);
+class _TranslationsVideoControlsIt extends TranslationsVideoControlsEn {
+	_TranslationsVideoControlsIt._(TranslationsIt root) : this._root = root, super.internal(root);
 
 	final TranslationsIt _root; // ignore: unused_field
 
@@ -996,7 +997,7 @@ class _Translations$videoControls$it extends Translations$videoControls$en {
 	@override String get screenshotFailed => 'Impossibile catturare la schermata';
 	@override String zoomPercent({required Object percent}) => 'Zoom ${percent}%';
 	@override String volumePercent({required Object percent}) => 'Volume ${percent}%';
-	@override late final _Translations$videoControls$pipErrors$it pipErrors = _Translations$videoControls$pipErrors$it._(_root);
+	@override late final _TranslationsVideoControlsPipErrorsIt pipErrors = _TranslationsVideoControlsPipErrorsIt._(_root);
 	@override String get chapters => 'Capitoli';
 	@override String get noChaptersAvailable => 'Nessun capitolo disponibile';
 	@override String get queue => 'Coda';
@@ -1021,9 +1022,18 @@ class _Translations$videoControls$it extends Translations$videoControls$en {
 	@override String osdAudio({required Object track}) => 'Audio: ${track}';
 }
 
+// Path: userStatus
+class _TranslationsUserStatusIt extends TranslationsUserStatusEn {
+	_TranslationsUserStatusIt._(TranslationsIt root) : this._root = root, super.internal(root);
+
+	final TranslationsIt _root; // ignore: unused_field
+
+	// Translations
+}
+
 // Path: messages
-class _Translations$messages$it extends Translations$messages$en {
-	_Translations$messages$it._(TranslationsIt root) : this._root = root, super.internal(root);
+class _TranslationsMessagesIt extends TranslationsMessagesEn {
+	_TranslationsMessagesIt._(TranslationsIt root) : this._root = root, super.internal(root);
 
 	final TranslationsIt _root; // ignore: unused_field
 
@@ -1101,8 +1111,8 @@ class _Translations$messages$it extends Translations$messages$en {
 }
 
 // Path: subtitlingStyling
-class _Translations$subtitlingStyling$it extends Translations$subtitlingStyling$en {
-	_Translations$subtitlingStyling$it._(TranslationsIt root) : this._root = root, super.internal(root);
+class _TranslationsSubtitlingStylingIt extends TranslationsSubtitlingStylingEn {
+	_TranslationsSubtitlingStylingIt._(TranslationsIt root) : this._root = root, super.internal(root);
 
 	final TranslationsIt _root; // ignore: unused_field
 
@@ -1135,8 +1145,8 @@ class _Translations$subtitlingStyling$it extends Translations$subtitlingStyling$
 }
 
 // Path: mpvConfig
-class _Translations$mpvConfig$it extends Translations$mpvConfig$en {
-	_Translations$mpvConfig$it._(TranslationsIt root) : this._root = root, super.internal(root);
+class _TranslationsMpvConfigIt extends TranslationsMpvConfigEn {
+	_TranslationsMpvConfigIt._(TranslationsIt root) : this._root = root, super.internal(root);
 
 	final TranslationsIt _root; // ignore: unused_field
 
@@ -1162,8 +1172,8 @@ class _Translations$mpvConfig$it extends Translations$mpvConfig$en {
 }
 
 // Path: dialog
-class _Translations$dialog$it extends Translations$dialog$en {
-	_Translations$dialog$it._(TranslationsIt root) : this._root = root, super.internal(root);
+class _TranslationsDialogIt extends TranslationsDialogEn {
+	_TranslationsDialogIt._(TranslationsIt root) : this._root = root, super.internal(root);
 
 	final TranslationsIt _root; // ignore: unused_field
 
@@ -1172,8 +1182,8 @@ class _Translations$dialog$it extends Translations$dialog$en {
 }
 
 // Path: profiles
-class _Translations$profiles$it extends Translations$profiles$en {
-	_Translations$profiles$it._(TranslationsIt root) : this._root = root, super.internal(root);
+class _TranslationsProfilesIt extends TranslationsProfilesEn {
+	_TranslationsProfilesIt._(TranslationsIt root) : this._root = root, super.internal(root);
 
 	final TranslationsIt _root; // ignore: unused_field
 
@@ -1246,8 +1256,8 @@ class _Translations$profiles$it extends Translations$profiles$en {
 }
 
 // Path: connections
-class _Translations$connections$it extends Translations$connections$en {
-	_Translations$connections$it._(TranslationsIt root) : this._root = root, super.internal(root);
+class _TranslationsConnectionsIt extends TranslationsConnectionsEn {
+	_TranslationsConnectionsIt._(TranslationsIt root) : this._root = root, super.internal(root);
 
 	final TranslationsIt _root; // ignore: unused_field
 
@@ -1266,8 +1276,8 @@ class _Translations$connections$it extends Translations$connections$en {
 }
 
 // Path: accountPreferences
-class _Translations$accountPreferences$it extends Translations$accountPreferences$en {
-	_Translations$accountPreferences$it._(TranslationsIt root) : this._root = root, super.internal(root);
+class _TranslationsAccountPreferencesIt extends TranslationsAccountPreferencesEn {
+	_TranslationsAccountPreferencesIt._(TranslationsIt root) : this._root = root, super.internal(root);
 
 	final TranslationsIt _root; // ignore: unused_field
 
@@ -1283,17 +1293,17 @@ class _Translations$accountPreferences$it extends Translations$accountPreference
 	@override String get loadFailed => 'Impossibile caricare queste preferenze';
 	@override String get noPreference => 'Nessuna preferenza';
 	@override String get notSet => 'Non impostato';
-	@override late final _Translations$accountPreferences$groups$it groups = _Translations$accountPreferences$groups$it._(_root);
+	@override late final _TranslationsAccountPreferencesGroupsIt groups = _TranslationsAccountPreferencesGroupsIt._(_root);
 	@override String get preferredAudioLanguage => 'Lingua audio preferita';
 	@override String get autoSelectAudio => 'Scegli l\'audio in base alla lingua';
 	@override String get autoSelectAudioDescription => 'Se disattivata, viene mantenuta la traccia audio che il file indica come predefinita.';
 	@override String get preferredSubtitleLanguage => 'Lingua dei sottotitoli preferita';
 	@override String get subtitleMode => 'Attiva i sottotitoli';
-	@override late final _Translations$accountPreferences$subtitleModes$it subtitleModes = _Translations$accountPreferences$subtitleModes$it._(_root);
+	@override late final _TranslationsAccountPreferencesSubtitleModesIt subtitleModes = _TranslationsAccountPreferencesSubtitleModesIt._(_root);
 	@override String get subtitleAccessibility => 'Sottotitoli SDH';
-	@override late final _Translations$accountPreferences$subtitleAccessibilityOptions$it subtitleAccessibilityOptions = _Translations$accountPreferences$subtitleAccessibilityOptions$it._(_root);
+	@override late final _TranslationsAccountPreferencesSubtitleAccessibilityOptionsIt subtitleAccessibilityOptions = _TranslationsAccountPreferencesSubtitleAccessibilityOptionsIt._(_root);
 	@override String get forcedSubtitles => 'Sottotitoli forzati';
-	@override late final _Translations$accountPreferences$forcedSubtitleOptions$it forcedSubtitleOptions = _Translations$accountPreferences$forcedSubtitleOptions$it._(_root);
+	@override late final _TranslationsAccountPreferencesForcedSubtitleOptionsIt forcedSubtitleOptions = _TranslationsAccountPreferencesForcedSubtitleOptionsIt._(_root);
 	@override String get displayMissingEpisodes => 'Mostra gli episodi mancanti';
 	@override String get displayMissingEpisodesDescription => 'Elenca gli episodi noti al server ma senza un file associato.';
 	@override String get hidePlayedInLatest => 'Nascondi gli elementi visti da Aggiunti di recente';
@@ -1303,14 +1313,14 @@ class _Translations$accountPreferences$it extends Translations$accountPreference
 	@override String get rewatchingInNextUp => 'Mantieni le serie riviste in Prossimi episodi';
 	@override String get rewatchingInNextUpDescription => 'Quando finisci una serie e la ricominci, Prossimi episodi segue la nuova visione invece di rimuovere la serie.';
 	@override String get watchedIndicator => 'Indicatori di visione';
-	@override late final _Translations$accountPreferences$watchedIndicatorOptions$it watchedIndicatorOptions = _Translations$accountPreferences$watchedIndicatorOptions$it._(_root);
+	@override late final _TranslationsAccountPreferencesWatchedIndicatorOptionsIt watchedIndicatorOptions = _TranslationsAccountPreferencesWatchedIndicatorOptionsIt._(_root);
 	@override String get mediaReviewsVisibility => 'Valutazioni e recensioni';
-	@override late final _Translations$accountPreferences$mediaReviewsOptions$it mediaReviewsOptions = _Translations$accountPreferences$mediaReviewsOptions$it._(_root);
+	@override late final _TranslationsAccountPreferencesMediaReviewsOptionsIt mediaReviewsOptions = _TranslationsAccountPreferencesMediaReviewsOptionsIt._(_root);
 }
 
 // Path: discover
-class _Translations$discover$it extends Translations$discover$en {
-	_Translations$discover$it._(TranslationsIt root) : this._root = root, super.internal(root);
+class _TranslationsDiscoverIt extends TranslationsDiscoverEn {
+	_TranslationsDiscoverIt._(TranslationsIt root) : this._root = root, super.internal(root);
 
 	final TranslationsIt _root; // ignore: unused_field
 
@@ -1343,12 +1353,12 @@ class _Translations$discover$it extends Translations$discover$en {
 		one: '${n} titolo',
 		other: '${n} titoli',
 	);
-	@override late final _Translations$discover$person$it person = _Translations$discover$person$it._(_root);
+	@override late final _TranslationsDiscoverPersonIt person = _TranslationsDiscoverPersonIt._(_root);
 }
 
 // Path: errors
-class _Translations$errors$it extends Translations$errors$en {
-	_Translations$errors$it._(TranslationsIt root) : this._root = root, super.internal(root);
+class _TranslationsErrorsIt extends TranslationsErrorsEn {
+	_TranslationsErrorsIt._(TranslationsIt root) : this._root = root, super.internal(root);
 
 	final TranslationsIt _root; // ignore: unused_field
 
@@ -1375,8 +1385,8 @@ class _Translations$errors$it extends Translations$errors$en {
 }
 
 // Path: libraries
-class _Translations$libraries$it extends Translations$libraries$en {
-	_Translations$libraries$it._(TranslationsIt root) : this._root = root, super.internal(root);
+class _TranslationsLibrariesIt extends TranslationsLibrariesEn {
+	_TranslationsLibrariesIt._(TranslationsIt root) : this._root = root, super.internal(root);
 
 	final TranslationsIt _root; // ignore: unused_field
 
@@ -1422,16 +1432,16 @@ class _Translations$libraries$it extends Translations$libraries$en {
 	@override String get noCollections => 'Nessuna raccolta in questa libreria';
 	@override String get noFoldersFound => 'Nessuna cartella trovata';
 	@override String get folders => 'cartelle';
-	@override late final _Translations$libraries$tabs$it tabs = _Translations$libraries$tabs$it._(_root);
-	@override late final _Translations$libraries$groupings$it groupings = _Translations$libraries$groupings$it._(_root);
-	@override late final _Translations$libraries$filterCategories$it filterCategories = _Translations$libraries$filterCategories$it._(_root);
-	@override late final _Translations$libraries$sortLabels$it sortLabels = _Translations$libraries$sortLabels$it._(_root);
-	@override late final _Translations$libraries$advancedFilters$it advancedFilters = _Translations$libraries$advancedFilters$it._(_root);
+	@override late final _TranslationsLibrariesTabsIt tabs = _TranslationsLibrariesTabsIt._(_root);
+	@override late final _TranslationsLibrariesGroupingsIt groupings = _TranslationsLibrariesGroupingsIt._(_root);
+	@override late final _TranslationsLibrariesFilterCategoriesIt filterCategories = _TranslationsLibrariesFilterCategoriesIt._(_root);
+	@override late final _TranslationsLibrariesSortLabelsIt sortLabels = _TranslationsLibrariesSortLabelsIt._(_root);
+	@override late final _TranslationsLibrariesAdvancedFiltersIt advancedFilters = _TranslationsLibrariesAdvancedFiltersIt._(_root);
 }
 
 // Path: about
-class _Translations$about$it extends Translations$about$en {
-	_Translations$about$it._(TranslationsIt root) : this._root = root, super.internal(root);
+class _TranslationsAboutIt extends TranslationsAboutEn {
+	_TranslationsAboutIt._(TranslationsIt root) : this._root = root, super.internal(root);
 
 	final TranslationsIt _root; // ignore: unused_field
 
@@ -1444,8 +1454,8 @@ class _Translations$about$it extends Translations$about$en {
 }
 
 // Path: serverSelection
-class _Translations$serverSelection$it extends Translations$serverSelection$en {
-	_Translations$serverSelection$it._(TranslationsIt root) : this._root = root, super.internal(root);
+class _TranslationsServerSelectionIt extends TranslationsServerSelectionEn {
+	_TranslationsServerSelectionIt._(TranslationsIt root) : this._root = root, super.internal(root);
 
 	final TranslationsIt _root; // ignore: unused_field
 
@@ -1456,8 +1466,8 @@ class _Translations$serverSelection$it extends Translations$serverSelection$en {
 }
 
 // Path: hubDetail
-class _Translations$hubDetail$it extends Translations$hubDetail$en {
-	_Translations$hubDetail$it._(TranslationsIt root) : this._root = root, super.internal(root);
+class _TranslationsHubDetailIt extends TranslationsHubDetailEn {
+	_TranslationsHubDetailIt._(TranslationsIt root) : this._root = root, super.internal(root);
 
 	final TranslationsIt _root; // ignore: unused_field
 
@@ -1470,8 +1480,8 @@ class _Translations$hubDetail$it extends Translations$hubDetail$en {
 }
 
 // Path: logs
-class _Translations$logs$it extends Translations$logs$en {
-	_Translations$logs$it._(TranslationsIt root) : this._root = root, super.internal(root);
+class _TranslationsLogsIt extends TranslationsLogsEn {
+	_TranslationsLogsIt._(TranslationsIt root) : this._root = root, super.internal(root);
 
 	final TranslationsIt _root; // ignore: unused_field
 
@@ -1482,8 +1492,8 @@ class _Translations$logs$it extends Translations$logs$en {
 }
 
 // Path: startup
-class _Translations$startup$it extends Translations$startup$en {
-	_Translations$startup$it._(TranslationsIt root) : this._root = root, super.internal(root);
+class _TranslationsStartupIt extends TranslationsStartupEn {
+	_TranslationsStartupIt._(TranslationsIt root) : this._root = root, super.internal(root);
 
 	final TranslationsIt _root; // ignore: unused_field
 
@@ -1521,8 +1531,8 @@ class _Translations$startup$it extends Translations$startup$en {
 }
 
 // Path: licenses
-class _Translations$licenses$it extends Translations$licenses$en {
-	_Translations$licenses$it._(TranslationsIt root) : this._root = root, super.internal(root);
+class _TranslationsLicensesIt extends TranslationsLicensesEn {
+	_TranslationsLicensesIt._(TranslationsIt root) : this._root = root, super.internal(root);
 
 	final TranslationsIt _root; // ignore: unused_field
 
@@ -1534,8 +1544,8 @@ class _Translations$licenses$it extends Translations$licenses$en {
 }
 
 // Path: navigation
-class _Translations$navigation$it extends Translations$navigation$en {
-	_Translations$navigation$it._(TranslationsIt root) : this._root = root, super.internal(root);
+class _TranslationsNavigationIt extends TranslationsNavigationEn {
+	_TranslationsNavigationIt._(TranslationsIt root) : this._root = root, super.internal(root);
 
 	final TranslationsIt _root; // ignore: unused_field
 
@@ -1547,16 +1557,16 @@ class _Translations$navigation$it extends Translations$navigation$en {
 }
 
 // Path: explore
-class _Translations$explore$it extends Translations$explore$en {
-	_Translations$explore$it._(TranslationsIt root) : this._root = root, super.internal(root);
+class _TranslationsExploreIt extends TranslationsExploreEn {
+	_TranslationsExploreIt._(TranslationsIt root) : this._root = root, super.internal(root);
 
 	final TranslationsIt _root; // ignore: unused_field
 
 	// Translations
 	@override String get title => 'Esplora';
 	@override String get selectSource => 'Seleziona fonte';
-	@override late final _Translations$explore$rows$it rows = _Translations$explore$rows$it._(_root);
-	@override late final _Translations$explore$status$it status = _Translations$explore$status$it._(_root);
+	@override late final _TranslationsExploreRowsIt rows = _TranslationsExploreRowsIt._(_root);
+	@override late final _TranslationsExploreStatusIt status = _TranslationsExploreStatusIt._(_root);
 	@override String episodeCount({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('it'))(n,
 		one: '${n} episodio',
 		other: '${n} episodi',
@@ -1582,16 +1592,16 @@ class _Translations$explore$it extends Translations$explore$en {
 	@override String searchEmpty({required Object query}) => 'Nessun risultato per "${query}"';
 	@override String searchPrompt({required Object source}) => 'Cerca film e serie TV su ${source}.';
 	@override String get searchFailed => 'Ricerca fallita. Controlla la connessione e riprova.';
-	@override late final _Translations$explore$badge$it badge = _Translations$explore$badge$it._(_root);
-	@override late final _Translations$explore$stats$it stats = _Translations$explore$stats$it._(_root);
-	@override late final _Translations$explore$season$it season = _Translations$explore$season$it._(_root);
-	@override late final _Translations$explore$format$it format = _Translations$explore$format$it._(_root);
-	@override late final _Translations$explore$sourceMaterial$it sourceMaterial = _Translations$explore$sourceMaterial$it._(_root);
-	@override late final _Translations$explore$creditRole$it creditRole = _Translations$explore$creditRole$it._(_root);
-	@override late final _Translations$explore$relation$it relation = _Translations$explore$relation$it._(_root);
+	@override late final _TranslationsExploreBadgeIt badge = _TranslationsExploreBadgeIt._(_root);
+	@override late final _TranslationsExploreStatsIt stats = _TranslationsExploreStatsIt._(_root);
+	@override late final _TranslationsExploreSeasonIt season = _TranslationsExploreSeasonIt._(_root);
+	@override late final _TranslationsExploreFormatIt format = _TranslationsExploreFormatIt._(_root);
+	@override late final _TranslationsExploreSourceMaterialIt sourceMaterial = _TranslationsExploreSourceMaterialIt._(_root);
+	@override late final _TranslationsExploreCreditRoleIt creditRole = _TranslationsExploreCreditRoleIt._(_root);
+	@override late final _TranslationsExploreRelationIt relation = _TranslationsExploreRelationIt._(_root);
 	@override String broadcast({required Object day, required Object time}) => 'Va in onda ${day} alle ${time}';
 	@override String broadcastWithZone({required Object day, required Object time, required Object timezone}) => 'Va in onda ${day} alle ${time} ${timezone}';
-	@override late final _Translations$explore$detail$it detail = _Translations$explore$detail$it._(_root);
+	@override late final _TranslationsExploreDetailIt detail = _TranslationsExploreDetailIt._(_root);
 	@override String totalResults({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('it'))(n,
 		one: '${n} risultato',
 		other: '${n} risultati',
@@ -1599,8 +1609,8 @@ class _Translations$explore$it extends Translations$explore$en {
 }
 
 // Path: liveTv
-class _Translations$liveTv$it extends Translations$liveTv$en {
-	_Translations$liveTv$it._(TranslationsIt root) : this._root = root, super.internal(root);
+class _TranslationsLiveTvIt extends TranslationsLiveTvEn {
+	_TranslationsLiveTvIt._(TranslationsIt root) : this._root = root, super.internal(root);
 
 	final TranslationsIt _root; // ignore: unused_field
 
@@ -1682,7 +1692,7 @@ class _Translations$liveTv$it extends Translations$liveTv$en {
 	@override String get rulesProcessRequested => 'Rielaborazione delle regole richiesta';
 	@override String get rulesProcessFailed => 'Impossibile rielaborare le regole di registrazione';
 	@override String get recordShow => 'Registra programma';
-	@override late final _Translations$liveTv$recordSettings$it recordSettings = _Translations$liveTv$recordSettings$it._(_root);
+	@override late final _TranslationsLiveTvRecordSettingsIt recordSettings = _TranslationsLiveTvRecordSettingsIt._(_root);
 	@override String startingInMinutes({required Object minutes}) => 'Inizia tra ${minutes} min';
 	@override String dayAtTime({required Object day, required Object time}) => '${day} alle ${time}';
 	@override String invalidPlaybackData({required Object product}) => '${product} ha restituito dati di riproduzione della TV in diretta non validi';
@@ -1693,8 +1703,8 @@ class _Translations$liveTv$it extends Translations$liveTv$en {
 }
 
 // Path: collections
-class _Translations$collections$it extends Translations$collections$en {
-	_Translations$collections$it._(TranslationsIt root) : this._root = root, super.internal(root);
+class _TranslationsCollectionsIt extends TranslationsCollectionsEn {
+	_TranslationsCollectionsIt._(TranslationsIt root) : this._root = root, super.internal(root);
 
 	final TranslationsIt _root; // ignore: unused_field
 
@@ -1722,8 +1732,8 @@ class _Translations$collections$it extends Translations$collections$en {
 }
 
 // Path: playlists
-class _Translations$playlists$it extends Translations$playlists$en {
-	_Translations$playlists$it._(TranslationsIt root) : this._root = root, super.internal(root);
+class _TranslationsPlaylistsIt extends TranslationsPlaylistsEn {
+	_TranslationsPlaylistsIt._(TranslationsIt root) : this._root = root, super.internal(root);
 
 	final TranslationsIt _root; // ignore: unused_field
 
@@ -1757,8 +1767,8 @@ class _Translations$playlists$it extends Translations$playlists$en {
 }
 
 // Path: music
-class _Translations$music$it extends Translations$music$en {
-	_Translations$music$it._(TranslationsIt root) : this._root = root, super.internal(root);
+class _TranslationsMusicIt extends TranslationsMusicEn {
+	_TranslationsMusicIt._(TranslationsIt root) : this._root = root, super.internal(root);
 
 	final TranslationsIt _root; // ignore: unused_field
 
@@ -1792,12 +1802,12 @@ class _Translations$music$it extends Translations$music$en {
 	@override String get instantMixFailed => 'Impossibile caricare il mix istantaneo';
 	@override String get instantMixEmpty => 'Il mix istantaneo non ha prodotto alcun brano';
 	@override String noAudioUrl({required Object track}) => 'Nessun URL audio disponibile per ${track}';
-	@override late final _Translations$music$discography$it discography = _Translations$music$discography$it._(_root);
+	@override late final _TranslationsMusicDiscographyIt discography = _TranslationsMusicDiscographyIt._(_root);
 }
 
 // Path: watchTogether
-class _Translations$watchTogether$it extends Translations$watchTogether$en {
-	_Translations$watchTogether$it._(TranslationsIt root) : this._root = root, super.internal(root);
+class _TranslationsWatchTogetherIt extends TranslationsWatchTogetherEn {
+	_TranslationsWatchTogetherIt._(TranslationsIt root) : this._root = root, super.internal(root);
 
 	final TranslationsIt _root; // ignore: unused_field
 
@@ -1907,15 +1917,15 @@ class _Translations$watchTogether$it extends Translations$watchTogether$en {
 	@override String get end => 'Termina';
 	@override String get playBlockedTitle => 'La riproduzione non è partita';
 	@override String get playBlockedDescription => 'Premi Riproduci per iniziare a guardare con la stanza.';
-	@override late final _Translations$watchTogether$notices$it notices = _Translations$watchTogether$notices$it._(_root);
-	@override late final _Translations$watchTogether$ended$it ended = _Translations$watchTogether$ended$it._(_root);
-	@override late final _Translations$watchTogether$errors$it errors = _Translations$watchTogether$errors$it._(_root);
+	@override late final _TranslationsWatchTogetherNoticesIt notices = _TranslationsWatchTogetherNoticesIt._(_root);
+	@override late final _TranslationsWatchTogetherEndedIt ended = _TranslationsWatchTogetherEndedIt._(_root);
+	@override late final _TranslationsWatchTogetherErrorsIt errors = _TranslationsWatchTogetherErrorsIt._(_root);
 	@override String untitledEpisode({required Object number}) => 'Episodio ${number}';
 }
 
 // Path: downloads
-class _Translations$downloads$it extends Translations$downloads$en {
-	_Translations$downloads$it._(TranslationsIt root) : this._root = root, super.internal(root);
+class _TranslationsDownloadsIt extends TranslationsDownloadsEn {
+	_TranslationsDownloadsIt._(TranslationsIt root) : this._root = root, super.internal(root);
 
 	final TranslationsIt _root; // ignore: unused_field
 
@@ -2001,9 +2011,9 @@ class _Translations$downloads$it extends Translations$downloads$en {
 	@override String get syncRuleNotAvailableForProfile => 'Non disponibile per il profilo attuale';
 	@override String get syncRuleUnknownServer => 'Server sconosciuto';
 	@override String get syncRuleListCreated => 'Regola di sincronizzazione creata';
-	@override late final _Translations$downloads$backgroundWarning$it backgroundWarning = _Translations$downloads$backgroundWarning$it._(_root);
+	@override late final _TranslationsDownloadsBackgroundWarningIt backgroundWarning = _TranslationsDownloadsBackgroundWarningIt._(_root);
 	@override String get options => 'Opzioni download';
-	@override late final _Translations$downloads$groupings$it groupings = _Translations$downloads$groupings$it._(_root);
+	@override late final _TranslationsDownloadsGroupingsIt groupings = _TranslationsDownloadsGroupingsIt._(_root);
 	@override String get unknownLibrary => 'Libreria sconosciuta';
 	@override String get unknownShow => 'Serie sconosciuta';
 	@override String get unknownSeason => 'Stagione sconosciuta';
@@ -2024,8 +2034,8 @@ class _Translations$downloads$it extends Translations$downloads$en {
 }
 
 // Path: shaders
-class _Translations$shaders$it extends Translations$shaders$en {
-	_Translations$shaders$it._(TranslationsIt root) : this._root = root, super.internal(root);
+class _TranslationsShadersIt extends TranslationsShadersEn {
+	_TranslationsShadersIt._(TranslationsIt root) : this._root = root, super.internal(root);
 
 	final TranslationsIt _root; // ignore: unused_field
 
@@ -2048,8 +2058,8 @@ class _Translations$shaders$it extends Translations$shaders$en {
 }
 
 // Path: companionRemote
-class _Translations$companionRemote$it extends Translations$companionRemote$en {
-	_Translations$companionRemote$it._(TranslationsIt root) : this._root = root, super.internal(root);
+class _TranslationsCompanionRemoteIt extends TranslationsCompanionRemoteEn {
+	_TranslationsCompanionRemoteIt._(TranslationsIt root) : this._root = root, super.internal(root);
 
 	final TranslationsIt _root; // ignore: unused_field
 
@@ -2057,16 +2067,16 @@ class _Translations$companionRemote$it extends Translations$companionRemote$en {
 	@override String get title => 'Telecomando';
 	@override String connectedTo({required Object name}) => 'Connesso a ${name}';
 	@override String get unknownDevice => 'Dispositivo sconosciuto';
-	@override late final _Translations$companionRemote$session$it session = _Translations$companionRemote$session$it._(_root);
-	@override late final _Translations$companionRemote$pairing$it pairing = _Translations$companionRemote$pairing$it._(_root);
-	@override late final _Translations$companionRemote$remote$it remote = _Translations$companionRemote$remote$it._(_root);
-	@override late final _Translations$companionRemote$errors$it errors = _Translations$companionRemote$errors$it._(_root);
+	@override late final _TranslationsCompanionRemoteSessionIt session = _TranslationsCompanionRemoteSessionIt._(_root);
+	@override late final _TranslationsCompanionRemotePairingIt pairing = _TranslationsCompanionRemotePairingIt._(_root);
+	@override late final _TranslationsCompanionRemoteRemoteIt remote = _TranslationsCompanionRemoteRemoteIt._(_root);
+	@override late final _TranslationsCompanionRemoteErrorsIt errors = _TranslationsCompanionRemoteErrorsIt._(_root);
 	@override String get closedBeforeAuth => 'La connessione si è chiusa prima dell\'autenticazione';
 }
 
 // Path: videoSettings
-class _Translations$videoSettings$it extends Translations$videoSettings$en {
-	_Translations$videoSettings$it._(TranslationsIt root) : this._root = root, super.internal(root);
+class _TranslationsVideoSettingsIt extends TranslationsVideoSettingsEn {
+	_TranslationsVideoSettingsIt._(TranslationsIt root) : this._root = root, super.internal(root);
 
 	final TranslationsIt _root; // ignore: unused_field
 
@@ -2098,8 +2108,8 @@ class _Translations$videoSettings$it extends Translations$videoSettings$en {
 }
 
 // Path: performanceOverlay
-class _Translations$performanceOverlay$it extends Translations$performanceOverlay$en {
-	_Translations$performanceOverlay$it._(TranslationsIt root) : this._root = root, super.internal(root);
+class _TranslationsPerformanceOverlayIt extends TranslationsPerformanceOverlayEn {
+	_TranslationsPerformanceOverlayIt._(TranslationsIt root) : this._root = root, super.internal(root);
 
 	final TranslationsIt _root; // ignore: unused_field
 
@@ -2160,8 +2170,8 @@ class _Translations$performanceOverlay$it extends Translations$performanceOverla
 }
 
 // Path: externalPlayer
-class _Translations$externalPlayer$it extends Translations$externalPlayer$en {
-	_Translations$externalPlayer$it._(TranslationsIt root) : this._root = root, super.internal(root);
+class _TranslationsExternalPlayerIt extends TranslationsExternalPlayerEn {
+	_TranslationsExternalPlayerIt._(TranslationsIt root) : this._root = root, super.internal(root);
 
 	final TranslationsIt _root; // ignore: unused_field
 
@@ -2185,8 +2195,8 @@ class _Translations$externalPlayer$it extends Translations$externalPlayer$en {
 }
 
 // Path: metadataEdit
-class _Translations$metadataEdit$it extends Translations$metadataEdit$en {
-	_Translations$metadataEdit$it._(TranslationsIt root) : this._root = root, super.internal(root);
+class _TranslationsMetadataEditIt extends TranslationsMetadataEditEn {
+	_TranslationsMetadataEditIt._(TranslationsIt root) : this._root = root, super.internal(root);
 
 	final TranslationsIt _root; // ignore: unused_field
 
@@ -2269,8 +2279,8 @@ class _Translations$metadataEdit$it extends Translations$metadataEdit$en {
 }
 
 // Path: matchScreen
-class _Translations$matchScreen$it extends Translations$matchScreen$en {
-	_Translations$matchScreen$it._(TranslationsIt root) : this._root = root, super.internal(root);
+class _TranslationsMatchScreenIt extends TranslationsMatchScreenEn {
+	_TranslationsMatchScreenIt._(TranslationsIt root) : this._root = root, super.internal(root);
 
 	final TranslationsIt _root; // ignore: unused_field
 
@@ -2290,8 +2300,8 @@ class _Translations$matchScreen$it extends Translations$matchScreen$en {
 }
 
 // Path: serverTasks
-class _Translations$serverTasks$it extends Translations$serverTasks$en {
-	_Translations$serverTasks$it._(TranslationsIt root) : this._root = root, super.internal(root);
+class _TranslationsServerTasksIt extends TranslationsServerTasksEn {
+	_TranslationsServerTasksIt._(TranslationsIt root) : this._root = root, super.internal(root);
 
 	final TranslationsIt _root; // ignore: unused_field
 
@@ -2302,8 +2312,8 @@ class _Translations$serverTasks$it extends Translations$serverTasks$en {
 }
 
 // Path: trakt
-class _Translations$trakt$it extends Translations$trakt$en {
-	_Translations$trakt$it._(TranslationsIt root) : this._root = root, super.internal(root);
+class _TranslationsTraktIt extends TranslationsTraktEn {
+	_TranslationsTraktIt._(TranslationsIt root) : this._root = root, super.internal(root);
 
 	final TranslationsIt _root; // ignore: unused_field
 
@@ -2320,8 +2330,8 @@ class _Translations$trakt$it extends Translations$trakt$en {
 }
 
 // Path: seerr
-class _Translations$seerr$it extends Translations$seerr$en {
-	_Translations$seerr$it._(TranslationsIt root) : this._root = root, super.internal(root);
+class _TranslationsSeerrIt extends TranslationsSeerrEn {
+	_TranslationsSeerrIt._(TranslationsIt root) : this._root = root, super.internal(root);
 
 	final TranslationsIt _root; // ignore: unused_field
 
@@ -2379,8 +2389,8 @@ class _Translations$seerr$it extends Translations$seerr$en {
 }
 
 // Path: services
-class _Translations$services$it extends Translations$services$en {
-	_Translations$services$it._(TranslationsIt root) : this._root = root, super.internal(root);
+class _TranslationsServicesIt extends TranslationsServicesEn {
+	_TranslationsServicesIt._(TranslationsIt root) : this._root = root, super.internal(root);
 
 	final TranslationsIt _root; // ignore: unused_field
 
@@ -2395,17 +2405,17 @@ class _Translations$services$it extends Translations$services$en {
 	@override String disconnectConfirm({required Object service}) => 'Disconnettere ${service}?';
 	@override String disconnectConfirmBody({required Object service}) => 'Plezy smetterà di aggiornare ${service}. Riconnetti quando vuoi.';
 	@override String connectFailed({required Object service}) => 'Impossibile connettersi a ${service}. Riprova.';
-	@override late final _Translations$services$names$it names = _Translations$services$names$it._(_root);
-	@override late final _Translations$services$simklReconnect$it simklReconnect = _Translations$services$simklReconnect$it._(_root);
-	@override late final _Translations$services$deviceCode$it deviceCode = _Translations$services$deviceCode$it._(_root);
-	@override late final _Translations$services$oauthProxy$it oauthProxy = _Translations$services$oauthProxy$it._(_root);
-	@override late final _Translations$services$pendingAuth$it pendingAuth = _Translations$services$pendingAuth$it._(_root);
-	@override late final _Translations$services$libraryFilter$it libraryFilter = _Translations$services$libraryFilter$it._(_root);
+	@override late final _TranslationsServicesNamesIt names = _TranslationsServicesNamesIt._(_root);
+	@override late final _TranslationsServicesSimklReconnectIt simklReconnect = _TranslationsServicesSimklReconnectIt._(_root);
+	@override late final _TranslationsServicesDeviceCodeIt deviceCode = _TranslationsServicesDeviceCodeIt._(_root);
+	@override late final _TranslationsServicesOauthProxyIt oauthProxy = _TranslationsServicesOauthProxyIt._(_root);
+	@override late final _TranslationsServicesPendingAuthIt pendingAuth = _TranslationsServicesPendingAuthIt._(_root);
+	@override late final _TranslationsServicesLibraryFilterIt libraryFilter = _TranslationsServicesLibraryFilterIt._(_root);
 }
 
 // Path: addServer
-class _Translations$addServer$it extends Translations$addServer$en {
-	_Translations$addServer$it._(TranslationsIt root) : this._root = root, super.internal(root);
+class _TranslationsAddServerIt extends TranslationsAddServerEn {
+	_TranslationsAddServerIt._(TranslationsIt root) : this._root = root, super.internal(root);
 
 	final TranslationsIt _root; // ignore: unused_field
 
@@ -2459,9 +2469,18 @@ class _Translations$addServer$it extends Translations$addServer$en {
 	@override String redirectUnsupportedEnterFinal({required Object product}) => 'Il server ha reindirizzato a un URL non supportato. Inserisci direttamente l\'URL finale del server ${product}.';
 }
 
+// Path: deepLinks
+class _TranslationsDeepLinksIt extends TranslationsDeepLinksEn {
+	_TranslationsDeepLinksIt._(TranslationsIt root) : this._root = root, super.internal(root);
+
+	final TranslationsIt _root; // ignore: unused_field
+
+	// Translations
+}
+
 // Path: appIcon.names
-class _Translations$appIcon$names$it extends Translations$appIcon$names$en {
-	_Translations$appIcon$names$it._(TranslationsIt root) : this._root = root, super.internal(root);
+class _TranslationsAppIconNamesIt extends TranslationsAppIconNamesEn {
+	_TranslationsAppIconNamesIt._(TranslationsIt root) : this._root = root, super.internal(root);
 
 	final TranslationsIt _root; // ignore: unused_field
 
@@ -2492,8 +2511,8 @@ class _Translations$appIcon$names$it extends Translations$appIcon$names$en {
 }
 
 // Path: common.ratingSource
-class _Translations$common$ratingSource$it extends Translations$common$ratingSource$en {
-	_Translations$common$ratingSource$it._(TranslationsIt root) : this._root = root, super.internal(root);
+class _TranslationsCommonRatingSourceIt extends TranslationsCommonRatingSourceEn {
+	_TranslationsCommonRatingSourceIt._(TranslationsIt root) : this._root = root, super.internal(root);
 
 	final TranslationsIt _root; // ignore: unused_field
 
@@ -2514,8 +2533,8 @@ class _Translations$common$ratingSource$it extends Translations$common$ratingSou
 }
 
 // Path: common.mediaKind
-class _Translations$common$mediaKind$it extends Translations$common$mediaKind$en {
-	_Translations$common$mediaKind$it._(TranslationsIt root) : this._root = root, super.internal(root);
+class _TranslationsCommonMediaKindIt extends TranslationsCommonMediaKindEn {
+	_TranslationsCommonMediaKindIt._(TranslationsIt root) : this._root = root, super.internal(root);
 
 	final TranslationsIt _root; // ignore: unused_field
 
@@ -2535,8 +2554,8 @@ class _Translations$common$mediaKind$it extends Translations$common$mediaKind$en
 }
 
 // Path: supporter.errors
-class _Translations$supporter$errors$it extends Translations$supporter$errors$en {
-	_Translations$supporter$errors$it._(TranslationsIt root) : this._root = root, super.internal(root);
+class _TranslationsSupporterErrorsIt extends TranslationsSupporterErrorsEn {
+	_TranslationsSupporterErrorsIt._(TranslationsIt root) : this._root = root, super.internal(root);
 
 	final TranslationsIt _root; // ignore: unused_field
 
@@ -2550,8 +2569,8 @@ class _Translations$supporter$errors$it extends Translations$supporter$errors$en
 }
 
 // Path: themeEditor.slots
-class _Translations$themeEditor$slots$it extends Translations$themeEditor$slots$en {
-	_Translations$themeEditor$slots$it._(TranslationsIt root) : this._root = root, super.internal(root);
+class _TranslationsThemeEditorSlotsIt extends TranslationsThemeEditorSlotsEn {
+	_TranslationsThemeEditorSlotsIt._(TranslationsIt root) : this._root = root, super.internal(root);
 
 	final TranslationsIt _root; // ignore: unused_field
 
@@ -2565,8 +2584,8 @@ class _Translations$themeEditor$slots$it extends Translations$themeEditor$slots$
 }
 
 // Path: themeEditor.contrast
-class _Translations$themeEditor$contrast$it extends Translations$themeEditor$contrast$en {
-	_Translations$themeEditor$contrast$it._(TranslationsIt root) : this._root = root, super.internal(root);
+class _TranslationsThemeEditorContrastIt extends TranslationsThemeEditorContrastEn {
+	_TranslationsThemeEditorContrastIt._(TranslationsIt root) : this._root = root, super.internal(root);
 
 	final TranslationsIt _root; // ignore: unused_field
 
@@ -2581,8 +2600,8 @@ class _Translations$themeEditor$contrast$it extends Translations$themeEditor$con
 }
 
 // Path: hotkeys.actions
-class _Translations$hotkeys$actions$it extends Translations$hotkeys$actions$en {
-	_Translations$hotkeys$actions$it._(TranslationsIt root) : this._root = root, super.internal(root);
+class _TranslationsHotkeysActionsIt extends TranslationsHotkeysActionsEn {
+	_TranslationsHotkeysActionsIt._(TranslationsIt root) : this._root = root, super.internal(root);
 
 	final TranslationsIt _root; // ignore: unused_field
 
@@ -2615,8 +2634,8 @@ class _Translations$hotkeys$actions$it extends Translations$hotkeys$actions$en {
 }
 
 // Path: videoControls.pipErrors
-class _Translations$videoControls$pipErrors$it extends Translations$videoControls$pipErrors$en {
-	_Translations$videoControls$pipErrors$it._(TranslationsIt root) : this._root = root, super.internal(root);
+class _TranslationsVideoControlsPipErrorsIt extends TranslationsVideoControlsPipErrorsEn {
+	_TranslationsVideoControlsPipErrorsIt._(TranslationsIt root) : this._root = root, super.internal(root);
 
 	final TranslationsIt _root; // ignore: unused_field
 
@@ -2632,8 +2651,8 @@ class _Translations$videoControls$pipErrors$it extends Translations$videoControl
 }
 
 // Path: accountPreferences.groups
-class _Translations$accountPreferences$groups$it extends Translations$accountPreferences$groups$en {
-	_Translations$accountPreferences$groups$it._(TranslationsIt root) : this._root = root, super.internal(root);
+class _TranslationsAccountPreferencesGroupsIt extends TranslationsAccountPreferencesGroupsEn {
+	_TranslationsAccountPreferencesGroupsIt._(TranslationsIt root) : this._root = root, super.internal(root);
 
 	final TranslationsIt _root; // ignore: unused_field
 
@@ -2644,8 +2663,8 @@ class _Translations$accountPreferences$groups$it extends Translations$accountPre
 }
 
 // Path: accountPreferences.subtitleModes
-class _Translations$accountPreferences$subtitleModes$it extends Translations$accountPreferences$subtitleModes$en {
-	_Translations$accountPreferences$subtitleModes$it._(TranslationsIt root) : this._root = root, super.internal(root);
+class _TranslationsAccountPreferencesSubtitleModesIt extends TranslationsAccountPreferencesSubtitleModesEn {
+	_TranslationsAccountPreferencesSubtitleModesIt._(TranslationsIt root) : this._root = root, super.internal(root);
 
 	final TranslationsIt _root; // ignore: unused_field
 
@@ -2663,8 +2682,8 @@ class _Translations$accountPreferences$subtitleModes$it extends Translations$acc
 }
 
 // Path: accountPreferences.subtitleAccessibilityOptions
-class _Translations$accountPreferences$subtitleAccessibilityOptions$it extends Translations$accountPreferences$subtitleAccessibilityOptions$en {
-	_Translations$accountPreferences$subtitleAccessibilityOptions$it._(TranslationsIt root) : this._root = root, super.internal(root);
+class _TranslationsAccountPreferencesSubtitleAccessibilityOptionsIt extends TranslationsAccountPreferencesSubtitleAccessibilityOptionsEn {
+	_TranslationsAccountPreferencesSubtitleAccessibilityOptionsIt._(TranslationsIt root) : this._root = root, super.internal(root);
 
 	final TranslationsIt _root; // ignore: unused_field
 
@@ -2676,8 +2695,8 @@ class _Translations$accountPreferences$subtitleAccessibilityOptions$it extends T
 }
 
 // Path: accountPreferences.forcedSubtitleOptions
-class _Translations$accountPreferences$forcedSubtitleOptions$it extends Translations$accountPreferences$forcedSubtitleOptions$en {
-	_Translations$accountPreferences$forcedSubtitleOptions$it._(TranslationsIt root) : this._root = root, super.internal(root);
+class _TranslationsAccountPreferencesForcedSubtitleOptionsIt extends TranslationsAccountPreferencesForcedSubtitleOptionsEn {
+	_TranslationsAccountPreferencesForcedSubtitleOptionsIt._(TranslationsIt root) : this._root = root, super.internal(root);
 
 	final TranslationsIt _root; // ignore: unused_field
 
@@ -2689,8 +2708,8 @@ class _Translations$accountPreferences$forcedSubtitleOptions$it extends Translat
 }
 
 // Path: accountPreferences.watchedIndicatorOptions
-class _Translations$accountPreferences$watchedIndicatorOptions$it extends Translations$accountPreferences$watchedIndicatorOptions$en {
-	_Translations$accountPreferences$watchedIndicatorOptions$it._(TranslationsIt root) : this._root = root, super.internal(root);
+class _TranslationsAccountPreferencesWatchedIndicatorOptionsIt extends TranslationsAccountPreferencesWatchedIndicatorOptionsEn {
+	_TranslationsAccountPreferencesWatchedIndicatorOptionsIt._(TranslationsIt root) : this._root = root, super.internal(root);
 
 	final TranslationsIt _root; // ignore: unused_field
 
@@ -2702,8 +2721,8 @@ class _Translations$accountPreferences$watchedIndicatorOptions$it extends Transl
 }
 
 // Path: accountPreferences.mediaReviewsOptions
-class _Translations$accountPreferences$mediaReviewsOptions$it extends Translations$accountPreferences$mediaReviewsOptions$en {
-	_Translations$accountPreferences$mediaReviewsOptions$it._(TranslationsIt root) : this._root = root, super.internal(root);
+class _TranslationsAccountPreferencesMediaReviewsOptionsIt extends TranslationsAccountPreferencesMediaReviewsOptionsEn {
+	_TranslationsAccountPreferencesMediaReviewsOptionsIt._(TranslationsIt root) : this._root = root, super.internal(root);
 
 	final TranslationsIt _root; // ignore: unused_field
 
@@ -2715,8 +2734,8 @@ class _Translations$accountPreferences$mediaReviewsOptions$it extends Translatio
 }
 
 // Path: discover.person
-class _Translations$discover$person$it extends Translations$discover$person$en {
-	_Translations$discover$person$it._(TranslationsIt root) : this._root = root, super.internal(root);
+class _TranslationsDiscoverPersonIt extends TranslationsDiscoverPersonEn {
+	_TranslationsDiscoverPersonIt._(TranslationsIt root) : this._root = root, super.internal(root);
 
 	final TranslationsIt _root; // ignore: unused_field
 
@@ -2729,8 +2748,8 @@ class _Translations$discover$person$it extends Translations$discover$person$en {
 }
 
 // Path: libraries.tabs
-class _Translations$libraries$tabs$it extends Translations$libraries$tabs$en {
-	_Translations$libraries$tabs$it._(TranslationsIt root) : this._root = root, super.internal(root);
+class _TranslationsLibrariesTabsIt extends TranslationsLibrariesTabsEn {
+	_TranslationsLibrariesTabsIt._(TranslationsIt root) : this._root = root, super.internal(root);
 
 	final TranslationsIt _root; // ignore: unused_field
 
@@ -2742,8 +2761,8 @@ class _Translations$libraries$tabs$it extends Translations$libraries$tabs$en {
 }
 
 // Path: libraries.groupings
-class _Translations$libraries$groupings$it extends Translations$libraries$groupings$en {
-	_Translations$libraries$groupings$it._(TranslationsIt root) : this._root = root, super.internal(root);
+class _TranslationsLibrariesGroupingsIt extends TranslationsLibrariesGroupingsEn {
+	_TranslationsLibrariesGroupingsIt._(TranslationsIt root) : this._root = root, super.internal(root);
 
 	final TranslationsIt _root; // ignore: unused_field
 
@@ -2761,8 +2780,8 @@ class _Translations$libraries$groupings$it extends Translations$libraries$groupi
 }
 
 // Path: libraries.filterCategories
-class _Translations$libraries$filterCategories$it extends Translations$libraries$filterCategories$en {
-	_Translations$libraries$filterCategories$it._(TranslationsIt root) : this._root = root, super.internal(root);
+class _TranslationsLibrariesFilterCategoriesIt extends TranslationsLibrariesFilterCategoriesEn {
+	_TranslationsLibrariesFilterCategoriesIt._(TranslationsIt root) : this._root = root, super.internal(root);
 
 	final TranslationsIt _root; // ignore: unused_field
 
@@ -2778,8 +2797,8 @@ class _Translations$libraries$filterCategories$it extends Translations$libraries
 }
 
 // Path: libraries.sortLabels
-class _Translations$libraries$sortLabels$it extends Translations$libraries$sortLabels$en {
-	_Translations$libraries$sortLabels$it._(TranslationsIt root) : this._root = root, super.internal(root);
+class _TranslationsLibrariesSortLabelsIt extends TranslationsLibrariesSortLabelsEn {
+	_TranslationsLibrariesSortLabelsIt._(TranslationsIt root) : this._root = root, super.internal(root);
 
 	final TranslationsIt _root; // ignore: unused_field
 
@@ -2810,8 +2829,8 @@ class _Translations$libraries$sortLabels$it extends Translations$libraries$sortL
 }
 
 // Path: libraries.advancedFilters
-class _Translations$libraries$advancedFilters$it extends Translations$libraries$advancedFilters$en {
-	_Translations$libraries$advancedFilters$it._(TranslationsIt root) : this._root = root, super.internal(root);
+class _TranslationsLibrariesAdvancedFiltersIt extends TranslationsLibrariesAdvancedFiltersEn {
+	_TranslationsLibrariesAdvancedFiltersIt._(TranslationsIt root) : this._root = root, super.internal(root);
 
 	final TranslationsIt _root; // ignore: unused_field
 
@@ -2845,8 +2864,8 @@ class _Translations$libraries$advancedFilters$it extends Translations$libraries$
 }
 
 // Path: explore.rows
-class _Translations$explore$rows$it extends Translations$explore$rows$en {
-	_Translations$explore$rows$it._(TranslationsIt root) : this._root = root, super.internal(root);
+class _TranslationsExploreRowsIt extends TranslationsExploreRowsEn {
+	_TranslationsExploreRowsIt._(TranslationsIt root) : this._root = root, super.internal(root);
 
 	final TranslationsIt _root; // ignore: unused_field
 
@@ -2868,8 +2887,8 @@ class _Translations$explore$rows$it extends Translations$explore$rows$en {
 }
 
 // Path: explore.status
-class _Translations$explore$status$it extends Translations$explore$status$en {
-	_Translations$explore$status$it._(TranslationsIt root) : this._root = root, super.internal(root);
+class _TranslationsExploreStatusIt extends TranslationsExploreStatusEn {
+	_TranslationsExploreStatusIt._(TranslationsIt root) : this._root = root, super.internal(root);
 
 	final TranslationsIt _root; // ignore: unused_field
 
@@ -2881,8 +2900,8 @@ class _Translations$explore$status$it extends Translations$explore$status$en {
 }
 
 // Path: explore.badge
-class _Translations$explore$badge$it extends Translations$explore$badge$en {
-	_Translations$explore$badge$it._(TranslationsIt root) : this._root = root, super.internal(root);
+class _TranslationsExploreBadgeIt extends TranslationsExploreBadgeEn {
+	_TranslationsExploreBadgeIt._(TranslationsIt root) : this._root = root, super.internal(root);
 
 	final TranslationsIt _root; // ignore: unused_field
 
@@ -2911,8 +2930,8 @@ class _Translations$explore$badge$it extends Translations$explore$badge$en {
 }
 
 // Path: explore.stats
-class _Translations$explore$stats$it extends Translations$explore$stats$en {
-	_Translations$explore$stats$it._(TranslationsIt root) : this._root = root, super.internal(root);
+class _TranslationsExploreStatsIt extends TranslationsExploreStatsEn {
+	_TranslationsExploreStatsIt._(TranslationsIt root) : this._root = root, super.internal(root);
 
 	final TranslationsIt _root; // ignore: unused_field
 
@@ -2938,8 +2957,8 @@ class _Translations$explore$stats$it extends Translations$explore$stats$en {
 }
 
 // Path: explore.season
-class _Translations$explore$season$it extends Translations$explore$season$en {
-	_Translations$explore$season$it._(TranslationsIt root) : this._root = root, super.internal(root);
+class _TranslationsExploreSeasonIt extends TranslationsExploreSeasonEn {
+	_TranslationsExploreSeasonIt._(TranslationsIt root) : this._root = root, super.internal(root);
 
 	final TranslationsIt _root; // ignore: unused_field
 
@@ -2952,8 +2971,8 @@ class _Translations$explore$season$it extends Translations$explore$season$en {
 }
 
 // Path: explore.format
-class _Translations$explore$format$it extends Translations$explore$format$en {
-	_Translations$explore$format$it._(TranslationsIt root) : this._root = root, super.internal(root);
+class _TranslationsExploreFormatIt extends TranslationsExploreFormatEn {
+	_TranslationsExploreFormatIt._(TranslationsIt root) : this._root = root, super.internal(root);
 
 	final TranslationsIt _root; // ignore: unused_field
 
@@ -2969,8 +2988,8 @@ class _Translations$explore$format$it extends Translations$explore$format$en {
 }
 
 // Path: explore.sourceMaterial
-class _Translations$explore$sourceMaterial$it extends Translations$explore$sourceMaterial$en {
-	_Translations$explore$sourceMaterial$it._(TranslationsIt root) : this._root = root, super.internal(root);
+class _TranslationsExploreSourceMaterialIt extends TranslationsExploreSourceMaterialEn {
+	_TranslationsExploreSourceMaterialIt._(TranslationsIt root) : this._root = root, super.internal(root);
 
 	final TranslationsIt _root; // ignore: unused_field
 
@@ -2987,8 +3006,8 @@ class _Translations$explore$sourceMaterial$it extends Translations$explore$sourc
 }
 
 // Path: explore.creditRole
-class _Translations$explore$creditRole$it extends Translations$explore$creditRole$en {
-	_Translations$explore$creditRole$it._(TranslationsIt root) : this._root = root, super.internal(root);
+class _TranslationsExploreCreditRoleIt extends TranslationsExploreCreditRoleEn {
+	_TranslationsExploreCreditRoleIt._(TranslationsIt root) : this._root = root, super.internal(root);
 
 	final TranslationsIt _root; // ignore: unused_field
 
@@ -3002,8 +3021,8 @@ class _Translations$explore$creditRole$it extends Translations$explore$creditRol
 }
 
 // Path: explore.relation
-class _Translations$explore$relation$it extends Translations$explore$relation$en {
-	_Translations$explore$relation$it._(TranslationsIt root) : this._root = root, super.internal(root);
+class _TranslationsExploreRelationIt extends TranslationsExploreRelationEn {
+	_TranslationsExploreRelationIt._(TranslationsIt root) : this._root = root, super.internal(root);
 
 	final TranslationsIt _root; // ignore: unused_field
 
@@ -3020,8 +3039,8 @@ class _Translations$explore$relation$it extends Translations$explore$relation$en
 }
 
 // Path: explore.detail
-class _Translations$explore$detail$it extends Translations$explore$detail$en {
-	_Translations$explore$detail$it._(TranslationsIt root) : this._root = root, super.internal(root);
+class _TranslationsExploreDetailIt extends TranslationsExploreDetailEn {
+	_TranslationsExploreDetailIt._(TranslationsIt root) : this._root = root, super.internal(root);
 
 	final TranslationsIt _root; // ignore: unused_field
 
@@ -3063,8 +3082,8 @@ class _Translations$explore$detail$it extends Translations$explore$detail$en {
 }
 
 // Path: liveTv.recordSettings
-class _Translations$liveTv$recordSettings$it extends Translations$liveTv$recordSettings$en {
-	_Translations$liveTv$recordSettings$it._(TranslationsIt root) : this._root = root, super.internal(root);
+class _TranslationsLiveTvRecordSettingsIt extends TranslationsLiveTvRecordSettingsEn {
+	_TranslationsLiveTvRecordSettingsIt._(TranslationsIt root) : this._root = root, super.internal(root);
 
 	final TranslationsIt _root; // ignore: unused_field
 
@@ -3080,8 +3099,8 @@ class _Translations$liveTv$recordSettings$it extends Translations$liveTv$recordS
 }
 
 // Path: music.discography
-class _Translations$music$discography$it extends Translations$music$discography$en {
-	_Translations$music$discography$it._(TranslationsIt root) : this._root = root, super.internal(root);
+class _TranslationsMusicDiscographyIt extends TranslationsMusicDiscographyEn {
+	_TranslationsMusicDiscographyIt._(TranslationsIt root) : this._root = root, super.internal(root);
 
 	final TranslationsIt _root; // ignore: unused_field
 
@@ -3092,8 +3111,8 @@ class _Translations$music$discography$it extends Translations$music$discography$
 }
 
 // Path: watchTogether.notices
-class _Translations$watchTogether$notices$it extends Translations$watchTogether$notices$en {
-	_Translations$watchTogether$notices$it._(TranslationsIt root) : this._root = root, super.internal(root);
+class _TranslationsWatchTogetherNoticesIt extends TranslationsWatchTogetherNoticesEn {
+	_TranslationsWatchTogetherNoticesIt._(TranslationsIt root) : this._root = root, super.internal(root);
 
 	final TranslationsIt _root; // ignore: unused_field
 
@@ -3126,8 +3145,8 @@ class _Translations$watchTogether$notices$it extends Translations$watchTogether$
 }
 
 // Path: watchTogether.ended
-class _Translations$watchTogether$ended$it extends Translations$watchTogether$ended$en {
-	_Translations$watchTogether$ended$it._(TranslationsIt root) : this._root = root, super.internal(root);
+class _TranslationsWatchTogetherEndedIt extends TranslationsWatchTogetherEndedEn {
+	_TranslationsWatchTogetherEndedIt._(TranslationsIt root) : this._root = root, super.internal(root);
 
 	final TranslationsIt _root; // ignore: unused_field
 
@@ -3140,8 +3159,8 @@ class _Translations$watchTogether$ended$it extends Translations$watchTogether$en
 }
 
 // Path: watchTogether.errors
-class _Translations$watchTogether$errors$it extends Translations$watchTogether$errors$en {
-	_Translations$watchTogether$errors$it._(TranslationsIt root) : this._root = root, super.internal(root);
+class _TranslationsWatchTogetherErrorsIt extends TranslationsWatchTogetherErrorsEn {
+	_TranslationsWatchTogetherErrorsIt._(TranslationsIt root) : this._root = root, super.internal(root);
 
 	final TranslationsIt _root; // ignore: unused_field
 
@@ -3163,8 +3182,8 @@ class _Translations$watchTogether$errors$it extends Translations$watchTogether$e
 }
 
 // Path: downloads.backgroundWarning
-class _Translations$downloads$backgroundWarning$it extends Translations$downloads$backgroundWarning$en {
-	_Translations$downloads$backgroundWarning$it._(TranslationsIt root) : this._root = root, super.internal(root);
+class _TranslationsDownloadsBackgroundWarningIt extends TranslationsDownloadsBackgroundWarningEn {
+	_TranslationsDownloadsBackgroundWarningIt._(TranslationsIt root) : this._root = root, super.internal(root);
 
 	final TranslationsIt _root; // ignore: unused_field
 
@@ -3198,8 +3217,8 @@ class _Translations$downloads$backgroundWarning$it extends Translations$download
 }
 
 // Path: downloads.groupings
-class _Translations$downloads$groupings$it extends Translations$downloads$groupings$en {
-	_Translations$downloads$groupings$it._(TranslationsIt root) : this._root = root, super.internal(root);
+class _TranslationsDownloadsGroupingsIt extends TranslationsDownloadsGroupingsEn {
+	_TranslationsDownloadsGroupingsIt._(TranslationsIt root) : this._root = root, super.internal(root);
 
 	final TranslationsIt _root; // ignore: unused_field
 
@@ -3209,8 +3228,8 @@ class _Translations$downloads$groupings$it extends Translations$downloads$groupi
 }
 
 // Path: companionRemote.session
-class _Translations$companionRemote$session$it extends Translations$companionRemote$session$en {
-	_Translations$companionRemote$session$it._(TranslationsIt root) : this._root = root, super.internal(root);
+class _TranslationsCompanionRemoteSessionIt extends TranslationsCompanionRemoteSessionEn {
+	_TranslationsCompanionRemoteSessionIt._(TranslationsIt root) : this._root = root, super.internal(root);
 
 	final TranslationsIt _root; // ignore: unused_field
 
@@ -3230,8 +3249,8 @@ class _Translations$companionRemote$session$it extends Translations$companionRem
 }
 
 // Path: companionRemote.pairing
-class _Translations$companionRemote$pairing$it extends Translations$companionRemote$pairing$en {
-	_Translations$companionRemote$pairing$it._(TranslationsIt root) : this._root = root, super.internal(root);
+class _TranslationsCompanionRemotePairingIt extends TranslationsCompanionRemotePairingEn {
+	_TranslationsCompanionRemotePairingIt._(TranslationsIt root) : this._root = root, super.internal(root);
 
 	final TranslationsIt _root; // ignore: unused_field
 
@@ -3254,8 +3273,8 @@ class _Translations$companionRemote$pairing$it extends Translations$companionRem
 }
 
 // Path: companionRemote.remote
-class _Translations$companionRemote$remote$it extends Translations$companionRemote$remote$en {
-	_Translations$companionRemote$remote$it._(TranslationsIt root) : this._root = root, super.internal(root);
+class _TranslationsCompanionRemoteRemoteIt extends TranslationsCompanionRemoteRemoteEn {
+	_TranslationsCompanionRemoteRemoteIt._(TranslationsIt root) : this._root = root, super.internal(root);
 
 	final TranslationsIt _root; // ignore: unused_field
 
@@ -3290,8 +3309,8 @@ class _Translations$companionRemote$remote$it extends Translations$companionRemo
 }
 
 // Path: companionRemote.errors
-class _Translations$companionRemote$errors$it extends Translations$companionRemote$errors$en {
-	_Translations$companionRemote$errors$it._(TranslationsIt root) : this._root = root, super.internal(root);
+class _TranslationsCompanionRemoteErrorsIt extends TranslationsCompanionRemoteErrorsEn {
+	_TranslationsCompanionRemoteErrorsIt._(TranslationsIt root) : this._root = root, super.internal(root);
 
 	final TranslationsIt _root; // ignore: unused_field
 
@@ -3307,8 +3326,8 @@ class _Translations$companionRemote$errors$it extends Translations$companionRemo
 }
 
 // Path: services.names
-class _Translations$services$names$it extends Translations$services$names$en {
-	_Translations$services$names$it._(TranslationsIt root) : this._root = root, super.internal(root);
+class _TranslationsServicesNamesIt extends TranslationsServicesNamesEn {
+	_TranslationsServicesNamesIt._(TranslationsIt root) : this._root = root, super.internal(root);
 
 	final TranslationsIt _root; // ignore: unused_field
 
@@ -3321,8 +3340,8 @@ class _Translations$services$names$it extends Translations$services$names$en {
 }
 
 // Path: services.simklReconnect
-class _Translations$services$simklReconnect$it extends Translations$services$simklReconnect$en {
-	_Translations$services$simklReconnect$it._(TranslationsIt root) : this._root = root, super.internal(root);
+class _TranslationsServicesSimklReconnectIt extends TranslationsServicesSimklReconnectEn {
+	_TranslationsServicesSimklReconnectIt._(TranslationsIt root) : this._root = root, super.internal(root);
 
 	final TranslationsIt _root; // ignore: unused_field
 
@@ -3332,8 +3351,8 @@ class _Translations$services$simklReconnect$it extends Translations$services$sim
 }
 
 // Path: services.deviceCode
-class _Translations$services$deviceCode$it extends Translations$services$deviceCode$en {
-	_Translations$services$deviceCode$it._(TranslationsIt root) : this._root = root, super.internal(root);
+class _TranslationsServicesDeviceCodeIt extends TranslationsServicesDeviceCodeEn {
+	_TranslationsServicesDeviceCodeIt._(TranslationsIt root) : this._root = root, super.internal(root);
 
 	final TranslationsIt _root; // ignore: unused_field
 
@@ -3347,8 +3366,8 @@ class _Translations$services$deviceCode$it extends Translations$services$deviceC
 }
 
 // Path: services.oauthProxy
-class _Translations$services$oauthProxy$it extends Translations$services$oauthProxy$en {
-	_Translations$services$oauthProxy$it._(TranslationsIt root) : this._root = root, super.internal(root);
+class _TranslationsServicesOauthProxyIt extends TranslationsServicesOauthProxyEn {
+	_TranslationsServicesOauthProxyIt._(TranslationsIt root) : this._root = root, super.internal(root);
 
 	final TranslationsIt _root; // ignore: unused_field
 
@@ -3359,8 +3378,8 @@ class _Translations$services$oauthProxy$it extends Translations$services$oauthPr
 }
 
 // Path: services.pendingAuth
-class _Translations$services$pendingAuth$it extends Translations$services$pendingAuth$en {
-	_Translations$services$pendingAuth$it._(TranslationsIt root) : this._root = root, super.internal(root);
+class _TranslationsServicesPendingAuthIt extends TranslationsServicesPendingAuthEn {
+	_TranslationsServicesPendingAuthIt._(TranslationsIt root) : this._root = root, super.internal(root);
 
 	final TranslationsIt _root; // ignore: unused_field
 
@@ -3370,8 +3389,8 @@ class _Translations$services$pendingAuth$it extends Translations$services$pendin
 }
 
 // Path: services.libraryFilter
-class _Translations$services$libraryFilter$it extends Translations$services$libraryFilter$en {
-	_Translations$services$libraryFilter$it._(TranslationsIt root) : this._root = root, super.internal(root);
+class _TranslationsServicesLibraryFilterIt extends TranslationsServicesLibraryFilterEn {
+	_TranslationsServicesLibraryFilterIt._(TranslationsIt root) : this._root = root, super.internal(root);
 
 	final TranslationsIt _root; // ignore: unused_field
 
@@ -3390,2326 +3409,2352 @@ class _Translations$services$libraryFilter$it extends Translations$services$libr
 	@override String get noLibraries => 'Nessuna libreria disponibile';
 }
 
-/// The flat map containing all translations for locale <it>.
+/// Flat map(s) containing all translations.
 /// Only for edge cases! For simple maps, use the map function of this library.
-///
-/// The Dart AOT compiler has issues with very large switch statements,
-/// so the map is split into smaller functions (512 entries each).
 extension on TranslationsIt {
 	dynamic _flatMapFunction(String path) {
-		return switch (path) {
-			'app.title' => 'Plezy',
-			'appIcon.title' => 'Icona dell\'app',
-			'appIcon.defaultIcon' => 'Predefinita',
-			'appIcon.current' => 'Icona attuale',
-			'appIcon.locked' => 'Incluso nel Pacchetto temi e icone',
-			'appIcon.lockedHint' => 'Le icone alternative sono incluse nel Pacchetto temi e icone.',
-			'appIcon.changeFailed' => 'Impossibile cambiare l\'icona dell\'app',
-			'appIcon.launcherHint' => 'La nuova icona appare nella schermata Home quando esci da Plezy.',
-			'appIcon.tvLauncherHint' => 'Il nuovo banner appare quando esci da Plezy. Android TV potrebbe continuare a mostrare quello precedente fino al riavvio del televisore.',
-			'appIcon.names.midnight' => 'Mezzanotte',
-			'appIcon.names.ember' => 'Brace',
-			'appIcon.names.paper' => 'Carta',
-			'appIcon.names.oled' => 'OLED',
-			'appIcon.names.line' => 'Linea',
-			'appIcon.names.ocean' => 'Oceano',
-			'appIcon.names.ultraviolet' => 'Ultravioletto',
-			'appIcon.names.matcha' => 'Matcha',
-			'appIcon.names.sunset' => 'Tramonto',
-			'appIcon.names.gold' => 'Oro',
-			'appIcon.names.titanium' => 'Titanio',
-			'appIcon.names.glass' => 'Vetro',
-			'appIcon.names.crt' => 'CRT',
-			'appIcon.names.vhs' => 'VHS',
-			'appIcon.names.synthwave' => 'Synthwave',
-			'appIcon.names.pixel' => 'Pixel',
-			'appIcon.names.neon' => 'Neon',
-			'appIcon.names.sticker' => 'Adesivo',
-			'appIcon.names.ticket' => 'Biglietto',
-			'appIcon.names.pop' => 'Pop',
-			'appIcon.names.strata' => 'Strati',
-			'appIcon.names.facet' => 'Sfaccettature',
-			'appIcon.names.tilde' => 'Tilde',
-			'auth.signInWithPlex' => 'Accedi con Plex',
-			'auth.showQRCode' => 'Mostra codice QR',
-			'auth.authenticate' => 'Autenticati',
-			'auth.authenticationTimeout' => 'Tempo scaduto per l\'autenticazione. Riprova.',
-			'auth.scanQRToSignIn' => 'Scansiona questo codice QR per accedere',
-			'auth.waitingForAuth' => 'In attesa di autenticazione...\nAccedi dal browser.',
-			'auth.useBrowser' => 'Usa il browser',
-			'auth.or' => 'o',
-			'auth.connectToMediaBrowser' => ({required Object product}) => 'Connettiti a ${product}',
-			'auth.quickConnect' => 'Quick Connect',
-			'auth.useQuickConnect' => 'Usa Quick Connect',
-			'auth.quickConnectInstructions' => 'Apri Quick Connect in Jellyfin e inserisci questo codice.',
-			'auth.quickConnectWaiting' => 'In attesa di approvazione…',
-			'auth.quickConnectCancel' => 'Annulla',
-			'auth.quickConnectExpired' => 'Quick Connect scaduto. Riprova.',
-			'auth.localDataRecoveryRequired' => 'Plezy non è riuscito a recuperare in sicurezza i dati locali di accesso e delle riproduzioni in sospeso. Accedi di nuovo.',
-			'auth.pinCheckRejected' => 'La verifica del PIN Plex è stata rifiutata',
-			'common.cancel' => 'Annulla',
-			'common.save' => 'Salva',
-			'common.close' => 'Chiudi',
-			'common.clear' => 'Cancella',
-			'common.reset' => 'Ripristina',
-			'common.later' => 'Più tardi',
-			'common.submit' => 'Invia',
-			'common.confirm' => 'Conferma',
-			'common.retry' => 'Riprova',
-			'common.logout' => 'Esci',
-			'common.unknown' => 'Sconosciuto',
-			'common.refresh' => 'Aggiorna',
-			'common.yes' => 'Sì',
-			'common.no' => 'No',
-			'common.delete' => 'Elimina',
-			'common.edit' => 'Modifica',
-			'common.shuffle' => 'Riproduzione casuale',
-			'common.addTo' => 'Aggiungi a...',
-			'common.createNew' => 'Crea nuovo',
-			'common.connect' => 'Connetti',
-			'common.disconnect' => 'Disconnetti',
-			'common.play' => 'Riproduci',
-			'common.pause' => 'Pausa',
-			'common.resume' => 'Riprendi',
-			'common.error' => 'Errore',
-			'common.search' => 'Cerca',
-			'common.home' => 'Home',
-			'common.back' => 'Indietro',
-			'common.settings' => 'Impostazioni',
-			'common.mute' => 'Disattiva audio',
-			'common.ok' => 'OK',
-			'common.off' => 'Disattivato',
-			'common.options' => 'Opzioni',
-			'common.seasonNumber' => ({required Object number}) => 'Stagione ${number}',
-			'common.episodeNumberTitle' => ({required Object number, required Object title}) => 'Episodio ${number} - ${title}',
-			'common.chapterNumber' => ({required Object number}) => 'Capitolo ${number}',
-			'common.reconnect' => 'Riconnetti',
-			'common.viewAll' => 'Mostra tutto',
-			'common.checkingNetwork' => 'Controllo della rete...',
-			'common.loadingServers' => 'Caricamento server...',
-			'common.connectingToServers' => 'Connessione ai server...',
-			'common.startingOfflineMode' => 'Avvio modalità offline...',
-			'common.loading' => 'Caricamento...',
-			'common.fullscreen' => 'Schermo intero',
-			'common.exitFullscreen' => 'Esci dalla modalità a schermo intero',
-			'common.pressBackAgainToExit' => 'Premi di nuovo Indietro per uscire',
-			'common.ratingSource.critic' => 'Critici',
-			'common.ratingSource.audience' => 'Pubblico',
-			'common.ratingSource.imdb' => 'IMDb',
-			'common.ratingSource.tmdb' => 'TMDB',
-			'common.ratingSource.rottenTomatoes' => 'Rotten Tomatoes',
-			'common.ratingSource.simkl' => 'Simkl',
-			'common.ratingSource.mal' => 'MyAnimeList',
-			'common.ratingSource.anilist' => 'AniList',
-			'common.ratingSource.trakt' => 'Trakt',
-			'common.ratingSource.rottenTomatoesCritic' => 'Critici di Rotten Tomatoes',
-			'common.ratingSource.rottenTomatoesAudience' => 'Pubblico di Rotten Tomatoes',
-			'common.ratingSource.metacritic' => 'Metacritic',
-			'common.ratingSource.letterboxd' => 'Letterboxd',
-			'common.notAvailable' => 'N/D',
-			'common.url' => 'URL',
-			'common.letterKeys' => 'ABC',
-			'common.mediaKind.movie' => 'Film',
-			'common.mediaKind.show' => 'Serie',
-			'common.mediaKind.season' => 'Stagione',
-			'common.mediaKind.episode' => 'Episodio',
-			'common.mediaKind.artist' => 'Artista',
-			'common.mediaKind.album' => 'Album',
-			'common.mediaKind.track' => 'Traccia',
-			'common.mediaKind.collection' => 'Raccolta',
-			'common.mediaKind.playlist' => 'Playlist',
-			'common.mediaKind.clip' => 'Clip',
-			'common.mediaKind.photo' => 'Foto',
-			'common.mediaKind.folder' => 'Cartella',
-			'screens.licenses' => 'Licenze',
-			'screens.switchProfile' => 'Cambia profilo',
-			'screens.subtitleStyling' => 'Stile sottotitoli',
-			'screens.mpvConfig' => 'mpv.conf',
-			'screens.logs' => 'Log',
-			'update.available' => 'Aggiornamento disponibile',
-			'update.versionAvailable' => ({required Object version}) => 'Versione ${version} disponibile',
-			'update.currentVersion' => ({required Object version}) => 'Attuale: ${version}',
-			'update.skipVersion' => 'Salta questa versione',
-			'update.viewRelease' => 'Visualizza note di rilascio',
-			'update.latestVersion' => 'La versione installata è l\'ultima disponibile',
-			'update.checkFailed' => 'Impossibile controllare gli aggiornamenti',
-			'supporter.title' => 'Pacchetto temi e icone',
-			'supporter.intro' => 'Un acquisto una tantum facoltativo che aggiunge extra estetici:',
-			'supporter.presetThemes' => 'Temi preimpostati',
-			'supporter.presetThemesDescription' => 'Brace, Ghiacciaio, Foresta, Prugna e Carta',
-			'supporter.customTheme' => 'Tema personalizzato',
-			'supporter.customThemeDescription' => 'Scegli tu ogni colore',
-			'supporter.appIcons' => 'Icone dell\'app',
-			'supporter.appIconsDescription' => 'Scegli un\'icona alternativa per Plezy',
-			'supporter.buy' => ({required Object price}) => 'Acquista a ${price}',
-			'supporter.loadingPrice' => 'Caricamento del prezzo...',
-			'supporter.restore' => 'Ripristina acquisti',
-			'supporter.pending' => 'Il tuo acquisto è in attesa di pagamento o approvazione. Gli extra verranno sbloccati non appena lo store lo avrà completato.',
-			'supporter.thankYouTitle' => 'Grazie per l\'acquisto',
-			'supporter.thankYouBody' => 'Il Pacchetto temi e icone è sbloccato.',
-			'supporter.tileSubtitle' => 'Sblocca temi e icone dell\'app con un acquisto una tantum',
-			'supporter.tileSubtitleThemesOnly' => 'Sblocca i temi con un acquisto una tantum',
-			'supporter.tileUnlocked' => 'Sbloccato — grazie per l\'acquisto',
-			'supporter.errors.storeUnavailable' => 'Gli acquisti non sono disponibili. Verifica di aver effettuato l\'accesso allo store e che gli acquisti siano consentiti su questo dispositivo.',
-			'supporter.errors.productNotFound' => 'Il Pacchetto temi e icone non è al momento disponibile nel tuo store.',
-			'supporter.errors.productQueryFailed' => 'Impossibile caricare il prezzo. Controlla la connessione e riprova.',
-			'supporter.errors.purchaseFailed' => 'L\'acquisto non è andato a buon fine. Riprova.',
-			'supporter.errors.restoreFailed' => 'Impossibile raggiungere lo store per ripristinare l\'acquisto. Riprova.',
-			'supporter.errors.nothingToRestore' => 'Nessun acquisto del Pacchetto temi e icone trovato per questo account dello store.',
-			'settings.title' => 'Impostazioni',
-			'settings.supportDeveloper' => 'Supporta Plezy',
-			'settings.supportDeveloperDescription' => 'Dona tramite Liberapay per finanziare lo sviluppo',
-			'settings.language' => 'Lingua',
-			'settings.theme' => 'Tema',
-			'settings.appearance' => 'Aspetto',
-			'settings.videoPlayback' => 'Riproduzione video',
-			'settings.videoPlaybackDescription' => 'Configura il comportamento di riproduzione',
-			'settings.advanced' => 'Avanzate',
-			'settings.episodePosterMode' => 'Stile poster episodio',
-			'settings.seriesPoster' => 'Poster della serie',
-			'settings.seasonPoster' => 'Poster della stagione',
-			'settings.episodeThumbnail' => 'Miniatura',
-			'settings.showHeroSectionDescription' => 'Visualizza il carosello dei contenuti in primo piano sulla schermata iniziale',
-			'settings.secondsLabel' => 'Secondi',
-			'settings.minutesLabel' => 'Minuti',
-			'settings.secondsShort' => 's',
-			'settings.minutesShort' => 'm',
-			'settings.durationHint' => ({required Object min, required Object max}) => 'Inserisci una durata (${min}-${max})',
-			'settings.systemTheme' => 'Sistema',
-			'settings.lightTheme' => 'Chiaro',
-			'settings.darkTheme' => 'Scuro',
-			'settings.oledTheme' => 'OLED',
-			'settings.emberTheme' => 'Brace',
-			'settings.glacierTheme' => 'Ghiacciaio',
-			'settings.forestTheme' => 'Foresta',
-			'settings.plumTheme' => 'Prugna',
-			'settings.paperTheme' => 'Carta',
-			'settings.libraryDensity' => 'Densità della libreria',
-			'settings.displayScale' => 'Scala di visualizzazione',
-			'settings.compact' => 'Compatta',
-			'settings.comfortable' => 'Comoda',
-			'settings.gridSpacing' => 'Spaziatura della griglia',
-			'settings.gridSpacingTight' => 'Ristretta',
-			'settings.gridSpacingNormal' => 'Normale',
-			'settings.gridSpacingSpacious' => 'Ampia',
-			'settings.tvCornerSpotlightBackdrop' => 'Sfondo in evidenza nell\'angolo',
-			'settings.tvCornerSpotlightBackdropDescription' => 'Mostra l\'immagine in evidenza nell\'angolo in alto a destra anziché a schermo intero',
-			'settings.viewMode' => 'Modalità di visualizzazione',
-			'settings.gridView' => 'Griglia',
-			'settings.listView' => 'Elenco',
-			'settings.showHeroSection' => 'Mostra sezione in evidenza',
-			'settings.continueWatchingAction' => 'Azione per Continua a guardare',
-			'settings.continueWatchingPlay' => 'Riproduci',
-			'settings.continueWatchingDetails' => 'Apri dettagli',
-			'settings.episodeAction' => 'Azione episodio',
-			'settings.episodePlay' => 'Riproduci',
-			'settings.episodeDetails' => 'Apri dettagli',
-			'settings.useGlobalHubs' => 'Usa il layout della Home',
-			'settings.useGlobalHubsDescription' => 'Mostra sezioni Home unificate. In caso contrario, usa i consigli della libreria.',
-			'settings.showServerNameOnHubs' => 'Mostra il nome del server nelle sezioni',
-			'settings.showServerNameOnHubsDescription' => 'Mostra sempre i nomi dei server nei titoli delle sezioni.',
-			'settings.groupLibrariesByServer' => 'Raggruppa le librerie per server',
-			'settings.groupLibrariesByServerDescription' => 'Raggruppa le librerie della barra laterale sotto ciascun server multimediale.',
-			'settings.alwaysKeepSidebarOpen' => 'Mantieni sempre aperta la barra laterale',
-			'settings.alwaysKeepSidebarOpenDescription' => 'La barra laterale rimane espansa e l\'area del contenuto si adatta',
-			'settings.showUnwatchedCount' => 'Mostra il numero di episodi non visti',
-			'settings.showUnwatchedCountDescription' => 'Mostra il numero di episodi non visti per serie e stagioni',
-			'settings.showWatchedIndicators' => 'Mostra indicatori di visione',
-			'settings.showWatchedIndicatorsDescription' => 'Mostra un segno di spunta su film, serie TV ed episodi già visti',
-			'settings.showEpisodeNumberOnCards' => 'Mostra il numero dell\'episodio sulle schede',
-			'settings.showEpisodeNumberOnCardsDescription' => 'Mostra il numero della stagione e dell\'episodio sulle schede degli episodi',
-			'settings.showSeasonPostersOnTabs' => 'Mostra i poster delle stagioni nelle schede',
-			'settings.showSeasonPostersOnTabsDescription' => 'Mostra il poster di ogni stagione sopra la sua scheda',
-			'settings.tvFullCardLayout' => 'Schede TV a tutta immagine',
-			'settings.tvFullCardLayoutDescription' => 'Usa schede TV con la sola immagine e i nomi degli attori sovrapposti',
-			'settings.focusGlow' => 'Bagliore di selezione',
-			'settings.focusGlowDescription' => 'Mostra un leggero bagliore attorno alla scheda selezionata',
-			'settings.visualEffects' => 'Effetti visivi',
-			'settings.visualEffectsAuto' => 'Automatico',
-			'settings.visualEffectsAutoDescription' => 'Riduci automaticamente gli effetti sui dispositivi a basso consumo',
-			'settings.visualEffectsFull' => 'Completi',
-			'settings.visualEffectsReduced' => 'Ridotti',
-			'settings.visualEffectsReducedDescription' => 'Meno animazioni e immagini a risoluzione inferiore',
-			'settings.hideSpoilers' => 'Nascondi spoiler per episodi non visti',
-			'settings.hideSpoilersDescription' => 'Sfoca miniature e descrizioni degli episodi non visti',
-			'settings.playerBackend' => 'Motore di riproduzione',
-			'settings.exoPlayer' => 'ExoPlayer',
-			'settings.mpv' => 'mpv',
-			'settings.hardwareDecoding' => 'Decodifica hardware',
-			'settings.hardwareDecodingDescription' => 'Utilizza l\'accelerazione hardware quando disponibile',
-			'settings.playbackBuffer' => 'Buffer di riproduzione',
-			'settings.playbackBufferAuto' => 'Auto (consigliato)',
-			'settings.playbackBufferLarge' => 'Grande',
-			'settings.playbackBufferExtraLarge' => 'Extra grande',
-			'settings.playbackBufferDescription' => 'Bufferizza di più contro connessioni instabili. Limitato anche dalla dimensione del buffer.',
-			'settings.defaultQualityTitle' => 'Qualità predefinita',
-			'settings.cellularQualityTitle' => 'Qualità predefinita sulla rete mobile',
-			'settings.cellularQualitySameAsDefault' => 'Come la qualità predefinita',
-			'settings.directPlayCoveredQuality' => 'Riproduci i video più piccoli in qualità originale',
-			'settings.directPlayCoveredQualityDescription' => 'Riproduci direttamente i video già entro il limite di qualità invece di transcodificarli',
-			'settings.videoCodecs' => 'Codec video',
-			'settings.videoCodecsDescription' => 'Il server transcodifica i codec non selezionati',
-			'settings.videoCodecsAlwaysAccepted' => 'Sempre accettato',
-			'settings.musicQualityTitle' => 'Qualità musicale',
-			'settings.subtitleStyling' => 'Stile sottotitoli',
-			'settings.subtitleStylingDescription' => 'Personalizza l\'aspetto dei sottotitoli',
-			'settings.smallSkipDuration' => 'Salto breve',
-			'settings.largeSkipDuration' => 'Salto lungo',
-			'settings.rewindOnResume' => 'Riavvolgimento alla ripresa',
-			'settings.secondsUnit' => ({required Object seconds}) => '${seconds} secondi',
-			'settings.defaultSleepTimer' => 'Timer spegnimento predefinito',
-			'settings.minutesUnit' => ({required Object minutes}) => '${minutes} minuti',
-			'settings.rememberTrackSelections' => 'Ricorda la selezione delle tracce per ogni serie o film',
-			'settings.rememberTrackSelectionsDescription' => 'Ricorda le scelte di audio e sottotitoli per ogni titolo',
-			'settings.rememberTrackSelectionsBackendRule' => 'Plex salva ogni scelta sul server per ogni file; Jellyfin attiva anche l\'opzione Ricorda selezioni dell\'account; Emby non è supportato',
-			'settings.followServerTrackSelections' => 'Usa le tracce selezionate sul server per ogni episodio',
-			'settings.followServerTrackSelectionsDescription' => 'Al cambio di episodio applica l\'audio e i sottotitoli selezionati sul server invece di mantenere la scelta corrente',
-			'settings.resumeMusicOnLaunch' => 'Ricorda la sessione musicale',
-			'settings.resumeMusicOnLaunchDescription' => 'All\'avvio dell\'app riapri l\'ultimo brano in pausa dal punto in cui era rimasto',
-			'settings.showChapterMarkersOnTimeline' => 'Mostra i marcatori dei capitoli sulla barra di avanzamento',
-			'settings.showChapterMarkersOnTimelineDescription' => 'Segmenta la barra di avanzamento ai confini dei capitoli',
-			'settings.specialsOrdering' => 'Speciali nell\'ordine degli episodi',
-			'settings.specialsOrderingDescription' => 'Dove vengono riprodotti gli speciali nell\'ordine di visione di una serie',
-			'settings.specialsOrderingServer' => 'Segui l\'ordine del server',
-			'settings.specialsOrderingAirDate' => 'Intercalati per data di trasmissione',
-			'settings.specialsOrderingLast' => 'Dopo le stagioni normali',
-			'settings.clickVideoTogglesPlayback' => 'Fai clic sul video per alternare riproduzione e pausa',
-			'settings.clickVideoTogglesPlaybackDescription' => 'Fai clic sul video per riprodurre o mettere in pausa anziché mostrare i controlli.',
-			'settings.videoPlayerControls' => 'Controlli del lettore video',
-			'settings.keyboardShortcuts' => 'Scorciatoie da tastiera',
-			'settings.keyboardShortcutsDescription' => 'Personalizza le scorciatoie da tastiera',
-			'settings.videoPlayerNavigation' => 'Navigazione del lettore video',
-			'settings.videoPlayerNavigationDescription' => 'Usa i tasti freccia per navigare nei controlli del lettore video',
-			'settings.watchTogetherRelay' => 'Relay di Guarda insieme',
-			'settings.watchTogetherRelayDescription' => 'Relay pubblici di Open Watch Party, se non ne imposti uno tuo',
-			'settings.watchTogetherRelayHint' => 'https://mio-relay.esempio.it',
-			'settings.watchTogetherRelayInvalid' => 'Inserisci un URL di base HTTP o HTTPS valido per il relay.',
-			'settings.crashReporting' => 'Segnalazione degli arresti anomali',
-			'settings.crashReportingDescription' => 'Invia segnalazioni sugli arresti anomali per contribuire a migliorare l\'app',
-			'settings.debugLogging' => 'Registrazione di debug',
-			'settings.debugLoggingDescription' => 'Abilita una registrazione dettagliata per la risoluzione dei problemi',
-			'settings.viewLogs' => 'Visualizza i log',
-			'settings.viewLogsDescription' => 'Visualizza i log dell\'applicazione',
-			'settings.clearImageCache' => 'Svuota cache immagini',
-			'settings.clearImageCacheDescription' => 'Svuota le immagini e le miniature memorizzate nella cache. Le immagini potrebbero caricarsi più lentamente finché non vengono scaricate di nuovo.',
-			'settings.clearImageCacheSuccess' => 'Cache immagini svuotata correttamente',
-			'settings.resetSettings' => 'Ripristina impostazioni',
-			'settings.resetSettingsDescription' => 'Ripristina le impostazioni predefinite. Questa operazione non può essere annullata.',
-			'settings.resetSettingsSuccess' => 'Impostazioni ripristinate correttamente',
-			'settings.backup' => 'Backup',
-			'settings.exportSettings' => 'Esporta impostazioni',
-			'settings.exportSettingsDescription' => 'Salva le tue preferenze in un file',
-			'settings.exportSettingsSuccess' => 'Impostazioni esportate',
-			'settings.importSettings' => 'Importa impostazioni',
-			'settings.importSettingsDescription' => 'Ripristina le preferenze da un file',
-			'settings.importSettingsConfirm' => 'Questa azione sostituirà le impostazioni attuali. Continuare?',
-			'settings.importSettingsSuccess' => 'Impostazioni importate',
-			'settings.importSettingsInvalidFile' => 'Questo file non è un\'esportazione Plezy valida',
-			'settings.importSettingsNoUser' => 'Accedi prima di importare le impostazioni',
-			'settings.shortcutsReset' => 'Scorciatoie ripristinate alle impostazioni predefinite',
-			'settings.resetShortcutsConfirm' => 'Le scorciatoie personalizzate verranno sostituite con quelle predefinite. Continuare?',
-			'settings.about' => 'Informazioni',
-			'settings.aboutDescription' => 'Informazioni sull\'app e le licenze',
-			'settings.updates' => 'Aggiornamenti',
-			'settings.updateAvailable' => 'Aggiornamento disponibile',
-			'settings.checkForUpdates' => 'Controlla aggiornamenti',
-			'settings.autoCheckUpdatesOnStartup' => 'Controlla automaticamente gli aggiornamenti all\'avvio',
-			'settings.autoCheckUpdatesOnStartupDescription' => 'Avvisa all\'avvio quando è disponibile un aggiornamento',
-			'settings.validationErrorEnterNumber' => 'Inserisci un numero valido',
-			'settings.validationErrorDuration' => ({required Object min, required Object max, required Object unit}) => 'La durata deve essere compresa tra ${min} e ${max} ${unit}',
-			'settings.shortcutAlreadyAssigned' => ({required Object action}) => 'Scorciatoia già assegnata a ${action}',
-			'settings.shortcutUpdated' => ({required Object action}) => 'Scorciatoia aggiornata per ${action}',
-			'settings.saveFailed' => 'Impossibile salvare le modifiche. Riprova.',
-			'settings.autoPlayAndSkip' => 'Riproduzione automatica e salti',
-			'settings.autoPlayNextEpisode' => 'Riproduci automaticamente l\'episodio successivo',
-			'settings.autoPlayNextEpisodeDescription' => 'Avvia automaticamente l\'episodio successivo quando termina quello in riproduzione',
-			'settings.shuffleStartsFromBeginning' => 'La riproduzione casuale inizia dall\'inizio',
-			'settings.shuffleStartsFromBeginningDescription' => 'Avvia ogni episodio dall\'inizio durante la riproduzione casuale invece di riprenderlo',
-			'settings.playNextCountdown' => 'Conto alla rovescia del successivo',
-			'settings.playNextCountdownImmediate' => 'Riproduci subito',
-			'settings.skipIntroMode' => 'Salta intro',
-			'settings.skipIntroModeOffDescription' => 'Riproduci le intro normalmente senza pulsante di salto',
-			'settings.skipIntroModeButtonDescription' => 'Mostra un pulsante di salto quando inizia un\'intro',
-			'settings.skipIntroModeAutoDescription' => 'Salta automaticamente le intro dopo il ritardo indicato sotto',
-			'settings.skipCreditsMode' => 'Salta titoli di coda',
-			'settings.skipCreditsModeOffDescription' => 'Riproduci i titoli di coda normalmente senza pulsante di salto',
-			'settings.skipCreditsModeButtonDescription' => 'Mostra un pulsante di salto quando iniziano i titoli di coda',
-			'settings.skipCreditsModeAutoDescription' => 'Salta automaticamente i titoli di coda e riproduci l\'episodio successivo',
-			'settings.skipMarkerModeOff' => 'Disattivato',
-			'settings.skipMarkerModeButton' => 'Mostra pulsante',
-			'settings.skipMarkerModeAuto' => 'Automatico',
-			'settings.forceSkipMarkerFallback' => 'Forza i marcatori di ripiego',
-			'settings.forceSkipMarkerFallbackDescription' => 'Usa i modelli dei titoli dei capitoli anche quando Plex dispone di marcatori',
-			'settings.autoSkipDelay' => 'Ritardo del salto automatico',
-			'settings.autoSkipDelayDescription' => ({required Object seconds}) => 'Attendi ${seconds} secondi prima del salto automatico',
-			'settings.introPattern' => 'Modello del marcatore della sigla iniziale',
-			'settings.introPatternDescription' => 'Espressione regolare per individuare i marcatori della sigla iniziale nei titoli dei capitoli',
-			'settings.creditsPattern' => 'Modello del marcatore dei titoli di coda',
-			'settings.creditsPatternDescription' => 'Espressione regolare per individuare i marcatori dei titoli di coda nei titoli dei capitoli',
-			'settings.invalidRegex' => 'Espressione regolare non valida',
-			'settings.regex' => 'Espressione regolare',
-			'settings.downloads' => 'Download',
-			'settings.downloadLocationDescription' => 'Scegli dove archiviare i contenuti scaricati',
-			'settings.downloadLocationDefault' => 'Predefinita (archivio dell\'app)',
-			'settings.downloadLocationCustom' => 'Posizione personalizzata',
-			'settings.selectFolder' => 'Seleziona cartella',
-			'settings.resetToDefault' => 'Ripristina posizione predefinita',
-			'settings.currentPath' => ({required Object path}) => 'Attuale: ${path}',
-			'settings.downloadLocationChanged' => 'Posizione di download modificata',
-			'settings.downloadLocationReset' => 'Posizione di download ripristinata a predefinita',
-			'settings.downloadLocationInvalid' => 'La cartella selezionata non è scrivibile',
-			'settings.downloadLocationPickerUnavailable' => 'La selezione della cartella non è disponibile su questo dispositivo',
-			'settings.downloadOnWifiOnly' => 'Scarica solo tramite Wi-Fi',
-			'settings.downloadOnWifiOnlyDescription' => 'Impedisci i download quando si utilizza la rete dati cellulare',
-			'settings.autoRemoveWatchedDownloads' => 'Rimuovi automaticamente i download visti',
-			'settings.autoRemoveWatchedDownloadsDescription' => 'Elimina automaticamente i download già visti',
-			'settings.cellularDownloadBlocked' => 'I download sono bloccati sulla rete mobile. Usa il Wi-Fi o modifica l\'impostazione.',
-			'settings.maxVolume' => 'Volume massimo consentito',
-			'settings.maxVolumeDescription' => 'Consenti di aumentare il volume oltre il 100% per i contenuti con audio basso',
-			'settings.maxVolumePercent' => ({required Object percent}) => '${percent}%',
-			'settings.discordRichPresence' => 'Discord Rich Presence',
-			'settings.discordRichPresenceDescription' => 'Mostra su Discord cosa stai guardando',
-			'settings.services' => 'Servizi',
-			'settings.servicesDescription' => 'Connetti Trakt, MyAnimeList, Seerr e altro',
-			'settings.manageLibrariesDescription' => 'Riordina e nascondi le librerie',
-			'settings.companionRemoteServer' => 'Server del telecomando',
-			'settings.companionRemoteServerDescription' => 'Consenti ai dispositivi mobili della tua rete di controllare questa app',
-			'settings.companionRemoteServerStartFailed' => 'Impossibile avviare il server del telecomando',
-			'settings.companionRemoteServerStopFailed' => 'Impossibile arrestare il server del telecomando',
-			'settings.autoPip' => 'Picture-in-Picture automatica',
-			'settings.autoPipDescription' => 'Attiva automaticamente la modalità Picture-in-Picture quando esci dall\'app durante la riproduzione',
-			'settings.matchContentFrameRate' => 'Adatta la frequenza dei fotogrammi',
-			'settings.matchContentFrameRateDescription' => 'Adatta la frequenza di aggiornamento dello schermo al contenuto video',
-			'settings.matchContentResolution' => 'Adatta alla risoluzione del contenuto',
-			'settings.matchContentResolutionDescription' => 'Passa lo schermo alla risoluzione nativa del video, così è la TV a occuparsi dell\'upscaling. Durante la riproduzione vengono ridimensionati anche menu e sottotitoli',
-			'settings.matchRefreshRate' => 'Adatta la frequenza di aggiornamento',
-			'settings.matchRefreshRateDescription' => 'Adatta la frequenza di aggiornamento dello schermo in modalità a schermo intero',
-			'settings.matchDynamicRange' => 'Adatta la gamma dinamica',
-			'settings.matchDynamicRangeDescription' => 'Attiva l\'HDR per i contenuti HDR, quindi torna all\'SDR',
-			'settings.displaySwitchDelay' => 'Ritardo del cambio di modalità dello schermo',
-			'settings.tunneledPlayback' => 'Riproduzione con tunneling',
-			'settings.tunneledPlaybackDescription' => 'Usa il tunneling video. Disattivalo se durante la riproduzione HDR lo schermo rimane nero o il movimento scatta.',
-			'settings.audioPassthrough' => 'Passthrough audio',
-			'settings.audioPassthroughDescription' => 'Invia l\'audio Dolby/DTS al ricevitore o al televisore senza ricodificarlo, preservando l\'audio surround. Disattiva questa opzione se non senti alcun suono.',
-			'settings.audioPassthroughDescriptionApple' => 'Usa il decoder Dolby nativo di Apple per Dolby Digital Plus, incluso Atmos. DTS e TrueHD vengono comunque riprodotti come PCM multicanale. Disattiva questa opzione se non senti alcun suono.',
-			'settings.audioPassthroughDescriptionAppleSpatial' => 'Usa il decoder Dolby nativo di Apple per Dolby Digital Plus, incluso Atmos. Su iOS, iPadOS e tvOS 26 o versioni successive, TrueHD Atmos e DTS:X vengono riprodotti come audio spaziale. Le altre tracce DTS e TrueHD vengono riprodotte come PCM multicanale. Disattiva questa opzione se non senti alcun suono.',
-			'settings.audioPassthroughOverriddenByNormalization' => 'Disattivato mentre la normalizzazione del volume è attiva',
-			'settings.audioChannelLimit' => 'Canali audio',
-			'settings.audioChannelLimitDescription' => 'Esegui il downmix dell\'audio decodificato per altoparlanti, cuffie o configurazioni HDMI che non possono riprodurre tutti i canali',
-			'settings.audioChannelLimitOriginal' => 'Originale',
-			'settings.audioChannelLimitOriginalDescription' => 'Riproduci tutti i canali della traccia',
-			'settings.audioChannelLimitSurround51' => 'Fino a 5.1',
-			'settings.audioChannelLimitSurround51Description' => 'Esegui il downmix da 7.1 a 5.1 per televisori e ricevitori che accettano solo PCM 5.1. Il passthrough non viene modificato.',
-			'settings.audioChannelLimitStereo' => 'Stereo',
-			'settings.audioChannelLimitStereoDescription' => 'Esegui il downmix a due canali per altoparlanti stereo o cuffie. Disattiva il passthrough.',
-			'settings.downmixCenterBoost' => 'Amplificazione canale centrale',
-			'settings.downmixCenterBoostValue' => ({required Object db}) => '${db} dB',
-			'settings.downmixCenterBoostLabel' => 'Amplificazione (dB)',
-			'settings.downmixCenterBoostShort' => 'dB',
-			'settings.audioDownmixNormalize' => 'Normalizza il volume durante il downmix',
-			'settings.audioDownmixNormalizeDescription' => 'Riduce il volume del mix per evitare il clipping. Disattiva questa opzione per mantenere il volume originale (le scene più rumorose potrebbero risultare distorte).',
-			'settings.dvConversionMode' => 'Conversione Dolby Vision',
-			'settings.dvConversionModeDescription' => 'Scegli come gestire i file Dolby Vision con profilo 7.',
-			'settings.dvConversionAuto' => 'Auto',
-			'settings.dvConversionNative' => 'Nativa / disattivata',
-			'settings.dvConversionDv81' => 'P7 → P8.1',
-			'settings.dvConversionHevcStrip' => 'P7 → HEVC',
-			'settings.dvConversionAutoDescription' => 'Rileva le capacità del dispositivo e usa il normale meccanismo di ripiego',
-			'settings.dvConversionNativeDescription' => 'Forza il DV7 nativo e impedisce nuovi tentativi di conversione DV',
-			'settings.dvConversionDv81Description' => 'Forza la conversione RPU diretta al profilo Dolby Vision 8.1',
-			'settings.dvConversionHevcStripDescription' => 'Rimuove i livelli RPU/EL di Dolby Vision e riproduce il video come semplice HEVC',
-			'settings.disableDolbyVision' => 'Disattiva Dolby Vision',
-			'settings.disableDolbyVisionDescription' => 'Riproduci il livello HDR10 o HLG del file al posto di Dolby Vision, se presente',
-			'settings.hdrSdrConversion' => 'Conversione da HDR a SDR',
-			'settings.hdrSdrConversionDescription' => 'Scegli cosa converte i video HDR quando lo schermo non può mostrare l\'HDR.',
-			'settings.hdrSdrConversionAuto' => 'Auto',
-			'settings.hdrSdrConversionAutoDescription' => 'Dispositivo da Android 9 in poi, lettore nelle versioni precedenti',
-			'settings.hdrSdrConversionDevice' => 'Dispositivo',
-			'settings.hdrSdrConversionDeviceDescription' => 'La conversione è affidata all\'hardware video del dispositivo. La più veloce, ma i colori dipendono dal dispositivo',
-			'settings.hdrSdrConversionPlayer' => 'Lettore',
-			'settings.hdrSdrConversionPlayerDescription' => 'La conversione avviene nel lettore. Colori uniformi, ma il 4K può scattare sui TV box di fascia bassa',
-			'settings.deinterlace' => 'Deinterlacciamento',
-			'settings.deinterlaceDescription' => 'Rimuove gli artefatti a pettine dai video interlacciati (solo lettore mpv)',
-			'settings.deinterlaceOff' => 'Disattivato',
-			'settings.deinterlaceOffDescription' => 'Mostra il video interlacciato così come viene decodificato',
-			'settings.deinterlaceVideo' => 'Video',
-			'settings.deinterlaceVideoDescription' => 'Trasforma ogni semiquadro in un fotogramma completo. Per video girati per la TV, come sport, notiziari e concerti',
-			'settings.deinterlaceFilm' => 'Film',
-			'settings.deinterlaceFilmDescription' => 'Ripristina i fotogrammi originali di film e animazioni sottoposti a telecine a 29,97 fps, frequenti nei DVD NTSC. I video girati per la TV scattano. La TV in diretta usa Video',
-			'settings.requireProfileSelectionOnOpen' => 'Chiedi di scegliere il profilo all\'apertura',
-			'settings.requireProfileSelectionOnOpenDescription' => 'Mostra la selezione del profilo ogni volta che l\'app viene aperta',
-			'settings.forceTvMode' => 'Forza modalità TV',
-			'settings.forceTvModeDescription' => 'Forza il layout TV sui dispositivi che non vengono rilevati automaticamente. Richiede il riavvio.',
-			'settings.startInFullscreen' => 'Avvia a schermo intero',
-			'settings.startInFullscreenDescription' => 'Apri Plezy a schermo intero all\'avvio',
-			'settings.exitFullscreenOnPlayerClose' => 'Esci dalla modalità a schermo intero alla chiusura del lettore',
-			'settings.exitFullscreenOnPlayerCloseDescription' => 'Esce automaticamente dalla modalità a schermo intero quando chiudi il lettore video',
-			'settings.autoHidePerformanceOverlay' => 'Nascondi automaticamente il riquadro delle prestazioni',
-			'settings.autoHidePerformanceOverlayDescription' => 'Dissolvi il riquadro delle prestazioni insieme ai controlli di riproduzione',
-			'settings.showNavBarLabels' => 'Mostra le etichette della barra di navigazione',
-			'settings.showNavBarLabelsDescription' => 'Mostra le etichette di testo sotto le icone della barra di navigazione',
-			'settings.startupSection' => 'Sezione di avvio',
-			'settings.showExploreTab' => 'Mostra la scheda Esplora',
-			'settings.showExploreTabDescription' => 'Visualizza la scheda Esplora con contenuti di Esplora di Plex e dei tracker collegati',
-			'settings.liveTvDefaultFavorites' => 'Apri sui canali preferiti',
-			'settings.liveTvDefaultFavoritesDescription' => 'Mostra solo i canali preferiti quando apri la TV in diretta',
-			'settings.general' => 'Generali',
-			'settings.generalDescription' => 'Lingua, avvio e comportamento della finestra',
-			'settings.languageAndRegion' => 'Lingua e regione',
-			'settings.startup' => 'Avvio',
-			'settings.display' => 'Schermo',
-			'settings.libraryAndCards' => 'Libreria e schede',
-			'settings.homeScreen' => 'Schermata iniziale',
-			'settings.navigation' => 'Navigazione',
-			'settings.window' => 'Finestra',
-			'settings.liveTv' => 'TV in diretta',
-			'settings.player' => 'Lettore',
-			'settings.videoAndDisplay' => 'Video e schermo',
-			'settings.audio' => 'Audio',
-			'settings.quality' => 'Qualità',
-			'settings.subtitles' => 'Sottotitoli',
-			'settings.seekAndTiming' => 'Avanzamento e tempi',
-			'settings.behavior' => 'Comportamento',
-			'settings.gestures' => 'Gesti',
-			'settings.gestureBrightnessSwipe' => 'Scorrimento per la luminosità',
-			'settings.gestureBrightnessSwipeDescription' => 'Scorri verso l\'alto o il basso sul bordo sinistro per regolare la luminosità',
-			'settings.gestureVolumeSwipe' => 'Scorrimento per il volume',
-			'settings.gestureVolumeSwipeDescription' => 'Scorri verso l\'alto o il basso sul bordo destro per regolare il volume',
-			'settings.gesturePinchToZoom' => 'Pizzica per lo zoom',
-			'settings.gesturePinchToZoomDescription' => 'Pizzica il video per ingrandire o ridurre',
-			'settings.rememberBrightnessLevel' => 'Ricorda il livello di luminosità',
-			'settings.rememberBrightnessLevelDescription' => 'Avvia la riproduzione con la luminosità impostata dall\'ultimo scorrimento',
-			'settings.controls' => 'Controlli',
-			'settings.rememberPlayerChanges' => 'Ricorda le modifiche del lettore',
-			'settings.rememberPlayerChangesDescription' => 'Dove viene salvata e riapplicata una modifica effettuata durante la riproduzione',
-			'settings.scopePlaybackSpeed' => 'Velocità di riproduzione',
-			'settings.scopeShaderPreset' => 'Preimpostazione shader',
-			'settings.scopeAspectRatio' => 'Proporzioni',
-			'settings.scopeZoom' => 'Zoom',
-			'settings.scopeSyncOffsets' => 'Sincronizzazione audio e sottotitoli',
-			'settings.playerScopeOff' => 'Non salvare',
-			'settings.playerScopeGlobal' => 'Ovunque',
-			'settings.playerScopeLibrary' => 'Per libreria',
-			'settings.playerScopeTitle' => 'Per serie o film',
-			'settings.exportDialogTitle' => 'Esporta le impostazioni di Plezy',
-			'themeEditor.builtIn' => 'Integrati',
-			'themeEditor.presets' => 'Preimpostati',
-			'themeEditor.custom' => 'Personalizzato',
-			'themeEditor.customEmpty' => 'Non ancora creato',
-			'themeEditor.editCustom' => 'Modifica tema personalizzato',
-			'themeEditor.editCustomDescription' => 'Scegli tu ogni colore',
-			'themeEditor.locked' => 'Sblocca con il Pacchetto temi e icone',
-			'themeEditor.savedLocked' => 'Salvato — si sblocca con il Pacchetto temi e icone',
-			'themeEditor.title' => 'Tema personalizzato',
-			'themeEditor.startFrom' => 'Parti da',
-			'themeEditor.startFromDescription' => 'Copia tutti i colori da un altro tema',
-			'themeEditor.colors' => 'Colori',
-			'themeEditor.preview' => 'Anteprima',
-			'themeEditor.slots.bg' => 'Sfondo',
-			'themeEditor.slots.surface' => 'Superficie',
-			'themeEditor.slots.outline' => 'Contorno',
-			'themeEditor.slots.text' => 'Testo',
-			'themeEditor.slots.textMuted' => 'Testo secondario',
-			_ => null,
-		} ?? switch (path) {
-			'themeEditor.slots.accent' => 'Accento',
-			'themeEditor.opacity' => 'Opacità',
-			'themeEditor.hexHint' => '#RRGGBB o #AARRGGBB',
-			'themeEditor.fromOtherThemes' => 'Da altri temi',
-			'themeEditor.swatchLabel' => ({required Object color, required Object theme}) => '${color} ${theme}',
-			'themeEditor.contrast.textOnBg' => 'Testo sullo sfondo',
-			'themeEditor.contrast.textOnSurface' => 'Testo sulla superficie',
-			'themeEditor.contrast.textMutedOnBg' => 'Testo secondario sullo sfondo',
-			'themeEditor.contrast.textMutedOnSurface' => 'Testo secondario sulla superficie',
-			'themeEditor.contrast.accentOnBg' => 'Accento sullo sfondo',
-			'themeEditor.contrast.accentOnSurface' => 'Accento sulla superficie',
-			'themeEditor.contrast.labelOnAccent' => 'Etichetta dei pulsanti sull\'accento',
-			'themeEditor.lowContrast' => ({required Object pair, required Object ratio, required Object minimum}) => '${pair}: ${ratio}:1, sotto il valore consigliato di ${minimum}:1',
-			'themeEditor.discardTitle' => 'Scartare le modifiche?',
-			'themeEditor.discardMessage' => 'Le modifiche ai colori non salvate andranno perse.',
-			'themeEditor.discard' => 'Scarta',
-			'themeEditor.previewCardTitle' => ({required Object number}) => 'Episodio ${number}',
-			'themeEditor.previewCardSubtitle' => ({required Object minutes}) => '${minutes} min rimanenti',
-			'themeEditor.previewSwitch' => 'Riproduzione automatica',
-			'themeEditor.previewMutedText' => 'Così appare il testo secondario',
-			'search.hint' => 'Cerca film, serie TV e musica...',
-			'search.tryDifferentTerm' => 'Prova altri termini di ricerca',
-			'search.searchYourMedia' => 'Cerca nei tuoi media',
-			'search.enterTitleActorOrKeyword' => 'Inserisci un titolo, attore o parola chiave',
-			'search.people' => 'Persone',
-			'hotkeys.setShortcutFor' => ({required Object actionName}) => 'Imposta una scorciatoia per ${actionName}',
-			'hotkeys.clearShortcut' => 'Elimina scorciatoia',
-			'hotkeys.noShortcutSet' => 'Nessuna scorciatoia impostata',
-			'hotkeys.currentShortcut' => 'Scorciatoia attuale:',
-			'hotkeys.pressToRecord' => 'Seleziona per registrare una scorciatoia',
-			'hotkeys.recordingShortcut' => 'Premi ora la scorciatoia',
-			'hotkeys.actions.playPause' => 'Riproduci/Pausa',
-			'hotkeys.actions.volumeUp' => 'Alza volume',
-			'hotkeys.actions.volumeDown' => 'Abbassa volume',
-			'hotkeys.actions.seekForward' => ({required Object seconds}) => 'Avanti (${seconds}s)',
-			'hotkeys.actions.seekBackward' => ({required Object seconds}) => 'Indietro (${seconds}s)',
-			'hotkeys.actions.fullscreenToggle' => 'Attiva/disattiva schermo intero',
-			'hotkeys.actions.muteToggle' => 'Attiva/disattiva audio',
-			'hotkeys.actions.subtitleToggle' => 'Attiva/disattiva sottotitoli',
-			'hotkeys.actions.audioTrackNext' => 'Traccia audio successiva',
-			'hotkeys.actions.subtitleTrackNext' => 'Sottotitoli successivi',
-			'hotkeys.actions.chapterNext' => 'Capitolo successivo',
-			'hotkeys.actions.chapterPrevious' => 'Capitolo precedente',
-			'hotkeys.actions.episodeNext' => 'Episodio successivo',
-			'hotkeys.actions.episodePrevious' => 'Episodio precedente',
-			'hotkeys.actions.speedIncrease' => 'Aumenta velocità',
-			'hotkeys.actions.speedDecrease' => 'Diminuisci velocità',
-			'hotkeys.actions.speedReset' => 'Ripristina velocità',
-			'hotkeys.actions.zoomIn' => 'Aumenta zoom',
-			'hotkeys.actions.zoomOut' => 'Riduci zoom',
-			'hotkeys.actions.zoomReset' => 'Ripristina zoom',
-			'hotkeys.actions.subSeekNext' => 'Vai al sottotitolo successivo',
-			'hotkeys.actions.subSeekPrev' => 'Vai al sottotitolo precedente',
-			'hotkeys.actions.shaderToggle' => 'Attiva/disattiva shader',
-			'hotkeys.actions.skipMarker' => 'Salta intro/titoli di coda',
-			'hotkeys.actions.screenshot' => 'Cattura schermata',
-			'fileInfo.title' => 'Info sul file',
-			'fileInfo.overview' => 'Panoramica',
-			'fileInfo.video' => 'Video',
-			'fileInfo.audio' => 'Audio',
-			'fileInfo.subtitles' => 'Sottotitoli',
-			'fileInfo.images' => 'Immagini incorporate',
-			'fileInfo.dataStreams' => 'Flussi di dati',
-			'fileInfo.lyrics' => 'Testi',
-			'fileInfo.file' => 'File',
-			'fileInfo.attachments' => 'Allegati',
-			'fileInfo.delivery' => 'Distribuzione',
-			'fileInfo.versionCounter' => ({required Object index, required Object count}) => 'Versione ${index} di ${count}',
-			'fileInfo.fileCounter' => ({required Object index, required Object count}) => 'File ${index} di ${count}',
-			'fileInfo.noStreams' => 'Il server non ha segnalato flussi per questo file.',
-			'fileInfo.copyPath' => 'Copia percorso',
-			'fileInfo.pathCopied' => 'Percorso del file copiato',
-			'fileInfo.codec' => 'Codec',
-			'fileInfo.codecTag' => 'Tag codec',
-			'fileInfo.resolution' => 'Risoluzione',
-			'fileInfo.codedResolution' => 'Risoluzione codificata',
-			'fileInfo.bitrate' => 'Bitrate',
-			'fileInfo.frameRate' => 'Frequenza fotogrammi',
-			'fileInfo.rotation' => 'Rotazione',
-			'fileInfo.comment' => 'Commento',
-			'fileInfo.audioDescription' => 'Descrizione audio',
-			'fileInfo.headerCompression' => 'Compressione header',
-			'fileInfo.sidecarFile' => 'File sidecar',
-			'fileInfo.transportTimestamp' => 'Timestamp di trasporto',
-			'fileInfo.displayOffset' => 'Offset di visualizzazione',
-			'fileInfo.previewFailureCode' => 'Codice errore anteprima',
-			'fileInfo.previewRetries' => 'Riprova anteprima',
-			'fileInfo.aspectRatio' => 'Proporzioni',
-			'fileInfo.pixelAspectRatio' => 'Aspect ratio pixel',
-			'fileInfo.profile' => 'Profilo',
-			'fileInfo.level' => 'Livello',
-			'fileInfo.bitDepth' => 'Profondità in bit',
-			'fileInfo.pixelFormat' => 'Formato pixel',
-			'fileInfo.colorSpace' => 'Spazio colore',
-			'fileInfo.colorRange' => 'Gamma colori',
-			'fileInfo.colorPrimaries' => 'Colori primari',
-			'fileInfo.colorTransfer' => 'Trasferimento colore',
-			'fileInfo.chromaSubsampling' => 'Sottocampionamento cromatico',
-			'fileInfo.chromaLocation' => 'Posizione crominanza',
-			'fileInfo.scanType' => 'Tipo di scansione',
-			'fileInfo.interlaced' => 'Interlacciato',
-			'fileInfo.anamorphic' => 'Anamorfico',
-			'fileInfo.referenceFrames' => 'Frame di riferimento',
-			'fileInfo.dynamicRange' => 'Gamma dinamica',
-			'fileInfo.dolbyVision' => 'Dolby Vision',
-			'fileInfo.dolbyVisionLevel' => 'Livello Dolby Vision',
-			'fileInfo.dolbyVisionVersion' => 'Versione Dolby Vision',
-			'fileInfo.dolbyVisionLayers' => 'Layer Dolby Vision',
-			'fileInfo.baseLayerCompatibility' => 'Compatibilità layer di base',
-			'fileInfo.avcBitstream' => 'Bitstream AVC',
-			'fileInfo.nalLengthSize' => 'Dimensione lunghezza NAL',
-			'fileInfo.scalingMatrix' => 'Matrice di scaling personalizzata',
-			'fileInfo.streamIdentifier' => 'Identificatore flusso',
-			'fileInfo.streamIndex' => 'Indice flusso',
-			'fileInfo.streamId' => 'ID flusso',
-			'fileInfo.language' => 'Lingua',
-			'fileInfo.languageCode' => 'Codice lingua',
-			'fileInfo.streamTitle' => 'Titolo traccia',
-			'fileInfo.channels' => 'Canali',
-			'fileInfo.sampleRate' => 'Frequenza di campionamento',
-			'fileInfo.spatialAudio' => 'Audio spaziale',
-			'fileInfo.textBased' => 'Testuale',
-			'fileInfo.subtitleFormat' => 'Formato sidecar',
-			'fileInfo.provider' => 'Provider',
-			'fileInfo.matchScore' => 'Punteggio corrispondenza',
-			'fileInfo.externalDelivery' => 'Può essere servito separatamente',
-			'fileInfo.sidecarPath' => 'Percorso sidecar',
-			'fileInfo.sourceStream' => 'Copiato da',
-			'fileInfo.temporary' => 'Temporaneo',
-			'fileInfo.timeBase' => 'Base temporale',
-			'fileInfo.overallBitrate' => 'Bitrate complessivo',
-			'fileInfo.path' => 'Percorso',
-			'fileInfo.fileName' => 'Nome file',
-			'fileInfo.size' => 'Dimensione',
-			'fileInfo.totalSize' => 'Dimensione totale',
-			'fileInfo.container' => 'Contenitore',
-			'fileInfo.duration' => 'Durata',
-			'fileInfo.previewThumbnails' => 'Miniature anteprima',
-			'fileInfo.previewIndex' => 'Indice anteprima',
-			'fileInfo.packetLength' => 'Lunghezza pacchetto',
-			'fileInfo.filePresent' => 'File presente',
-			'fileInfo.fileReadable' => 'Leggibile dal server',
-			'fileInfo.streamPath' => 'Percorso flusso',
-			'fileInfo.optimizedForStreaming' => 'Ottimizzato per lo streaming',
-			'fileInfo.has64bitOffsets' => 'Offset a 64 bit',
-			'fileInfo.protocol' => 'Protocollo',
-			'fileInfo.mediaType' => 'Tipo di supporto',
-			'fileInfo.sourceKind' => 'Tipo di origine',
-			'fileInfo.optimizedVersion' => 'Versione ottimizzata',
-			'fileInfo.optimizationTarget' => 'Obiettivo ottimizzazione',
-			'fileInfo.deletedAt' => 'Eliminato',
-			'fileInfo.remoteSource' => 'Origine remota',
-			'fileInfo.infiniteStream' => 'Flusso infinito',
-			'fileInfo.directPlay' => 'Riproduzione diretta',
-			'fileInfo.directStream' => 'Streaming diretto',
-			'fileInfo.transcoding' => 'Transcodifica',
-			'fileInfo.etag' => 'ETag',
-			'fileInfo.versionId' => 'ID versione',
-			'fileInfo.fileId' => 'ID file',
-			'fileInfo.defaultAudioTrack' => 'Traccia audio predefinita',
-			'fileInfo.defaultSubtitleTrack' => 'Traccia sottotitoli predefinita',
-			'fileInfo.subtitlesOff' => 'Disattivati',
-			'fileInfo.flagDefault' => 'Predefinito',
-			'fileInfo.flagForced' => 'Forzato',
-			'fileInfo.flagSelected' => 'Selezionato',
-			'fileInfo.flagExternal' => 'Esterno',
-			'fileInfo.flagHearingImpaired' => 'Non udenti',
-			'fileInfo.flagDub' => 'Doppiato',
-			'fileInfo.flagOriginal' => 'Originale',
-			'fileInfo.channelsMono' => 'Mono',
-			'fileInfo.dolbyVisionProfile' => ({required Object profile}) => 'Profilo ${profile}',
-			'mediaMenu.markAsWatched' => 'Segna come visto',
-			'mediaMenu.markAsUnwatched' => 'Segna come non visto',
-			'mediaMenu.removeFromContinueWatching' => 'Rimuovi da Continua a guardare',
-			'mediaMenu.viewDetails' => 'Visualizza dettagli',
-			'mediaMenu.goToSeries' => 'Vai alla serie',
-			'mediaMenu.shufflePlay' => 'Riproduzione casuale',
-			'mediaMenu.shuffleNotAvailableOffline' => 'Riproduzione casuale non disponibile offline',
-			'mediaMenu.fileInfo' => 'Info sul file',
-			'mediaMenu.deleteEpisodeFromServer' => 'Elimina episodio dal server',
-			'mediaMenu.deleteSeasonFromServer' => 'Elimina stagione dal server',
-			'mediaMenu.deleteShowFromServer' => 'Elimina serie dal server',
-			'mediaMenu.deleteMovieFromServer' => 'Elimina film dal server',
-			'mediaMenu.deleteEpisodeTitle' => 'Eliminare questo episodio?',
-			'mediaMenu.deleteSeasonTitle' => 'Eliminare questa stagione?',
-			'mediaMenu.deleteShowTitle' => 'Eliminare questa serie?',
-			'mediaMenu.deleteMovieTitle' => 'Eliminare questo film?',
-			'mediaMenu.deleteEpisodeConfirm' => 'Elimina episodio',
-			'mediaMenu.deleteSeasonConfirm' => 'Elimina stagione',
-			'mediaMenu.deleteShowConfirm' => 'Elimina serie',
-			'mediaMenu.deleteMovieConfirm' => 'Elimina film',
-			'mediaMenu.deleteAnyway' => 'Elimina comunque',
-			'mediaMenu.confirmDeleteTarget' => ({required Object title}) => 'Eliminare definitivamente ${title} dal tuo server?',
-			'mediaMenu.deleteMultipleWarning' => 'Sono inclusi tutti gli episodi e i relativi file.',
-			'mediaMenu.deleteEpisodeCountWarning' => ({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('it'))(n, one: 'Questo elimina tutti i ${n} episodio in essa contenuto e il relativo file.', other: 'Questo elimina tutti i ${n} episodi in essa contenuti e i relativi file.', ), 
-			'mediaMenu.deleteMultiPartWarning' => ({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('it'))(n, one: 'Questo elemento è archiviato in ${n} file, che verrà eliminato.', other: 'Questo elemento è archiviato in ${n} file, e tutti verranno eliminati.', ), 
-			'mediaMenu.deleteSharedFileHeading' => ({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('it'))(n, one: '${n} altro episodio è archiviato nello stesso file e verrà eliminato anche lui:', other: '${n} altri episodi sono archiviati nello stesso file e verranno eliminati anche loro:', ), 
-			'mediaMenu.deleteScopeUnverifiedProbeFailed' => 'Plezy non ha potuto verificare quali file rimuoverà, quindi potrebbe eliminare più di quanto indicato sopra. Annulla e riprova, oppure elimina comunque.',
-			'mediaMenu.deleteScopeUnverifiedNoFileInfo' => 'Il tuo server non ha fornito i dettagli del file per questo elemento, quindi Plezy non può verificare quali file rimuoverà. Potrebbe eliminare più di quanto indicato sopra.',
-			'mediaMenu.mediaDeletedSuccessfully' => 'Elemento multimediale eliminato correttamente',
-			'mediaMenu.mediaFailedToDelete' => 'Impossibile eliminare l\'elemento multimediale',
-			'mediaMenu.rate' => 'Valuta',
-			'mediaMenu.playFromBeginning' => 'Riproduci dall\'inizio',
-			'mediaMenu.playVersion' => 'Riproduci versione...',
-			'rateSheet.title' => 'Valuta',
-			'rateSheet.server' => 'Server',
-			'rateSheet.favorite' => 'Preferito',
-			'rateSheet.favorited' => 'Aggiunto ai preferiti',
-			'rateSheet.saved' => 'Salvato',
-			'rateSheet.notAvailable' => 'Nessuna corrispondenza trovata',
-			'rateSheet.noConnectedServices' => 'Collega un servizio nelle Impostazioni per assegnare valutazioni anche su quel servizio.',
-			'accessibility.mediaCardMovie' => ({required Object title}) => '${title}, film',
-			'accessibility.mediaCardShow' => ({required Object title}) => '${title}, serie TV',
-			'accessibility.mediaCardEpisode' => ({required Object title, required Object episodeInfo}) => '${title}, ${episodeInfo}',
-			'accessibility.mediaCardSeason' => ({required Object title, required Object seasonInfo}) => '${title}, ${seasonInfo}',
-			'accessibility.mediaCardWatched' => 'visto',
-			'accessibility.mediaCardPartiallyWatched' => ({required Object percent}) => 'visto al ${percent}%',
-			'accessibility.mediaCardUnwatched' => 'non visto',
-			'accessibility.tapToPlay' => 'Tocca per riprodurre',
-			'accessibility.decrease' => 'Diminuisci',
-			'accessibility.increase' => 'Aumenta',
-			'accessibility.decreaseValue' => ({required Object label}) => 'Diminuisci ${label}',
-			'accessibility.increaseValue' => ({required Object label}) => 'Aumenta ${label}',
-			'accessibility.hue' => 'Tonalità',
-			'accessibility.saturation' => 'Saturazione',
-			'accessibility.brightness' => 'Luminosità',
-			'accessibility.hexColor' => 'Colore esadecimale',
-			'accessibility.expandText' => 'Espandi il testo',
-			'accessibility.collapseText' => 'Comprimi il testo',
-			'accessibility.alphabetNavigation' => 'Navigazione alfabetica',
-			'accessibility.alphabetScrollHint' => 'Scorri verso l\'alto o il basso per cambiare lettera',
-			'accessibility.rowColumnPosition' => ({required Object row, required Object rowCount, required Object column, required Object columnCount}) => 'Riga ${row} di ${rowCount}, colonna ${column} di ${columnCount}',
-			'accessibility.rowPosition' => ({required Object row, required Object rowCount}) => 'Riga ${row} di ${rowCount}',
-			'accessibility.autoScrollPlay' => 'Avvia scorrimento automatico',
-			'accessibility.autoScrollPause' => 'Sospendi scorrimento automatico',
-			'accessibility.hueShort' => 'T',
-			'accessibility.saturationShort' => 'S',
-			'accessibility.valueShort' => 'V',
-			'tooltips.shufflePlay' => 'Riproduzione casuale',
-			'tooltips.playTrailer' => 'Riproduci trailer',
-			'tooltips.markAsWatched' => 'Segna come visto',
-			'tooltips.markAsUnwatched' => 'Segna come non visto',
-			'audioTracks.track' => ({required Object n}) => 'Traccia audio ${n}',
-			'videoControls.audioLabel' => 'Audio',
-			'videoControls.subtitlesLabel' => 'Sottotitoli',
-			'videoControls.addTime' => ({required Object amount, required Object unit}) => '+${amount}${unit}',
-			'videoControls.letterbox' => 'Letterbox',
-			'videoControls.fillScreen' => 'Riempi lo schermo',
-			'videoControls.stretch' => 'Allunga',
-			'videoControls.lockRotation' => 'Blocca rotazione',
-			'videoControls.unlockRotation' => 'Sblocca rotazione',
-			'videoControls.timerActive' => 'Timer attivo',
-			'videoControls.playbackWillPauseIn' => ({required Object duration}) => 'La riproduzione verrà messa in pausa tra ${duration}',
-			'videoControls.sleepTimerEndOfVideo' => 'Fine del video corrente',
-			'videoControls.sleepTimerStopAtHeader' => 'Interrompi alle',
-			'videoControls.sleepTimerDurationHeader' => 'Timer',
-			'videoControls.playbackWillPauseAtEnd' => 'La riproduzione verrà messa in pausa alla fine di questo video',
-			'videoControls.stillWatching' => 'Stai ancora guardando?',
-			'videoControls.pausingIn' => ({required Object seconds}) => 'Pausa tra ${seconds}s',
-			'videoControls.continueWatching' => 'Continua',
-			'videoControls.autoPlayNext' => 'Riproduci automaticamente il successivo',
-			'videoControls.playNext' => 'Riproduci il successivo',
-			'videoControls.playButton' => 'Riproduci',
-			'videoControls.pauseButton' => 'Pausa',
-			'videoControls.playbackPaused' => 'In pausa',
-			'videoControls.playbackResumed' => 'Riproduzione',
-			'videoControls.loadingVideo' => 'Caricamento video',
-			'videoControls.showPlaybackControls' => 'Mostra i controlli di riproduzione',
-			'videoControls.hidePlaybackControls' => 'Nascondi i controlli di riproduzione',
-			'videoControls.seekBackwardButton' => ({required Object seconds}) => 'Riavvolgi di ${seconds} secondi',
-			'videoControls.seekForwardButton' => ({required Object seconds}) => 'Avanza di ${seconds} secondi',
-			'videoControls.previousButton' => 'Episodio precedente',
-			'videoControls.nextButton' => 'Episodio successivo',
-			'videoControls.previousChapterButton' => 'Capitolo precedente',
-			'videoControls.nextChapterButton' => 'Capitolo successivo',
-			'videoControls.muteButton' => 'Silenzia',
-			'videoControls.unmuteButton' => 'Riattiva audio',
-			'videoControls.settingsButton' => 'Impostazioni di riproduzione',
-			'videoControls.tracksButton' => 'Audio e sottotitoli',
-			'videoControls.chaptersButton' => 'Capitoli',
-			'videoControls.versionQualityButton' => 'Versione e qualità',
-			'videoControls.versionColumnHeader' => 'Versione',
-			'videoControls.qualityColumnHeader' => 'Qualità',
-			'videoControls.qualityOriginal' => 'Originale',
-			'videoControls.qualityPresetLabel' => ({required Object resolution, required Object bitrate}) => '${resolution}p ${bitrate} Mbps',
-			'videoControls.transcodeUnavailableFallback' => 'Transcodifica non disponibile — riproduzione in qualità originale',
-			'videoControls.subtitleUnavailableFallback' => 'Impossibile caricare i sottotitoli selezionati — la riproduzione continua senza sottotitoli',
-			'videoControls.pipButton' => 'Modalità Picture-in-Picture',
-			'videoControls.aspectRatioButton' => 'Proporzioni',
-			'videoControls.ambientLighting' => 'Illuminazione ambientale',
-			'videoControls.fullscreenButton' => 'Attiva schermo intero',
-			'videoControls.exitFullscreenButton' => 'Esci da schermo intero',
-			'videoControls.alwaysOnTopButton' => 'Sempre in primo piano',
-			'videoControls.rotationLockButton' => 'Blocco rotazione',
-			'videoControls.lockScreen' => 'Blocca schermo',
-			'videoControls.screenLockButton' => 'Blocco schermo',
-			'videoControls.timelineSlider' => 'Timeline video',
-			'videoControls.volumeSlider' => 'Livello volume',
-			'videoControls.endsAt' => ({required Object time}) => 'Termina alle ${time}',
-			'videoControls.pipActive' => 'Riproduzione in Picture-in-Picture',
-			'videoControls.pipFailed' => 'Impossibile avviare la modalità Picture-in-Picture',
-			'videoControls.screenshotSaved' => 'Schermata salvata',
-			'videoControls.screenshotFailed' => 'Impossibile catturare la schermata',
-			'videoControls.zoomPercent' => ({required Object percent}) => 'Zoom ${percent}%',
-			'videoControls.volumePercent' => ({required Object percent}) => 'Volume ${percent}%',
-			'videoControls.pipErrors.androidVersion' => 'Richiede Android 8.0 o versioni successive',
-			'videoControls.pipErrors.iosVersion' => 'Richiede iOS 15.0 o versioni successive',
-			'videoControls.pipErrors.permissionDisabled' => 'La modalità Picture-in-Picture è disattivata. Attivala nelle impostazioni di sistema.',
-			'videoControls.pipErrors.notSupported' => 'Questo dispositivo non supporta la modalità Picture-in-Picture',
-			'videoControls.pipErrors.voSwitchFailed' => 'Impossibile cambiare l\'uscita video per Picture-in-Picture',
-			'videoControls.pipErrors.failed' => 'Impossibile avviare la modalità Picture-in-Picture',
-			'videoControls.pipErrors.prepareFailed' => 'Impossibile preparare la modalità Picture-in-Picture',
-			'videoControls.pipErrors.unknown' => ({required Object error}) => 'Si è verificato un errore: ${error}',
-			'videoControls.chapters' => 'Capitoli',
-			'videoControls.noChaptersAvailable' => 'Nessun capitolo disponibile',
-			'videoControls.queue' => 'Coda',
-			'videoControls.noQueueItems' => 'Nessun elemento in coda',
-			'videoControls.noAudioDevicesAvailable' => 'Nessun dispositivo audio disponibile',
-			'videoControls.searchSubtitles' => 'Cerca sottotitoli',
-			'videoControls.language' => 'Lingua',
-			'videoControls.noSubtitlesFound' => 'Nessun sottotitolo trovato',
-			'videoControls.subtitleDownloaded' => 'Sottotitolo scaricato',
-			'videoControls.subtitleDownloadedNotApplied' => 'Il sottotitolo è stato scaricato, ma non è stato possibile selezionarlo',
-			'videoControls.subtitleDownloadFailed' => 'Impossibile scaricare il sottotitolo',
-			'videoControls.subtitleDownloadTimedOut' => 'Il sottotitolo non è comparso in tempo. Il download potrebbe non essere riuscito',
-			'videoControls.searchLanguages' => 'Cerca lingue...',
-			'videoControls.skipIntro' => 'Salta intro',
-			'videoControls.skipCredits' => 'Salta titoli',
-			'videoControls.nextEpisode' => 'Episodio successivo',
-			'videoControls.subtitleTrack' => ({required Object n}) => 'Traccia ${n}',
-			'videoControls.subtitleFile' => ({required Object name}) => 'Sottotitolo ${name}',
-			'videoControls.forcedTrack' => ({required Object label}) => '${label} (Forzato)',
-			'videoControls.osdSubtitlesOff' => 'Sottotitoli: Disattivati',
-			'videoControls.osdSubtitles' => ({required Object track}) => 'Sottotitoli: ${track}',
-			'videoControls.osdAudio' => ({required Object track}) => 'Audio: ${track}',
-			'messages.markedAsWatched' => 'Segnato come visto',
-			'messages.markedAsUnwatched' => 'Segnato come non visto',
-			'messages.markedAsWatchedOffline' => 'Segnato come visto (verrà sincronizzato quando torni online)',
-			'messages.markedAsUnwatchedOffline' => 'Segnato come non visto (verrà sincronizzato quando torni online)',
-			'messages.autoRemovedWatchedDownload' => ({required Object title}) => 'Rimosso automaticamente: ${title}',
-			'messages.autoRemovedWatchedDownloads' => ({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('it'))(n, one: 'Rimosso automaticamente ${n} download già visto', other: 'Rimossi automaticamente ${n} download già visti', ), 
-			'messages.removedFromContinueWatching' => 'Rimosso da Continua a guardare',
-			'messages.errorLoading' => ({required Object error}) => 'Errore: ${error}',
-			'messages.searchPartialResults' => 'Non è stato possibile cercare in alcuni server multimediali. Vengono mostrati i risultati disponibili.',
-			'messages.streamInterrupted' => 'La riproduzione si è interrotta. Premi Riproduci o vai a un altro punto per riprovare.',
-			'messages.liveStreamInterrupted' => 'La diretta si è interrotta. Premi Riproduci per riprovare.',
-			'messages.fileInfoNotAvailable' => 'Informazioni sul file non disponibili',
-			'messages.playbackAuthenticationRequired' => 'Accedi di nuovo al server multimediale per riprodurre questo elemento.',
-			'messages.playbackServerUnavailable' => 'Il server multimediale non è disponibile. Riprova più tardi.',
-			'messages.playbackDataInvalid' => 'Il server ha restituito informazioni di riproduzione non valide.',
-			'messages.playbackCancelled' => 'Riproduzione annullata.',
-			'messages.playbackFailed' => 'Impossibile avviare la riproduzione.',
-			'messages.playbackFailedDetail' => ({required Object error}) => 'Impossibile avviare la riproduzione: ${error}',
-			'messages.audioOutputFailed' => 'L\'uscita audio ha smesso di rispondere. Controlla la connessione audio del televisore o del ricevitore; se anche le altre app non hanno audio, riavvia il dispositivo.',
-			'messages.mediaUnavailable' => 'Questo contenuto non è più disponibile.',
-			'messages.errorLoadingFileInfo' => ({required Object error}) => 'Errore durante il caricamento delle informazioni sul file: ${error}',
-			'messages.errorLoadingSeries' => 'Errore durante il caricamento della serie',
-			'messages.musicNotSupported' => 'La riproduzione musicale non è ancora supportata',
-			'messages.noDescriptionAvailable' => 'Nessuna descrizione disponibile',
-			'messages.noProfilesAvailable' => 'Nessun profilo disponibile',
-			'messages.contactAdminForProfiles' => 'Contatta l\'amministratore del server per aggiungere profili',
-			'messages.unableToDetermineLibrarySection' => 'Impossibile determinare la sezione della libreria per questo elemento',
-			'messages.logsCleared' => 'Log eliminati',
-			'messages.logsCopied' => 'Log copiati negli appunti',
-			'messages.noLogsAvailable' => 'Nessun log disponibile',
-			'messages.libraryScanning' => ({required Object title}) => 'Scansione di "${title}"...',
-			'messages.libraryScanStarted' => ({required Object title}) => 'Scansione della libreria avviata per "${title}"',
-			'messages.libraryScanFailed' => ({required Object error}) => 'Impossibile eseguire la scansione della libreria: ${error}',
-			'messages.metadataRefreshing' => ({required Object title}) => 'Aggiornamento dei metadati di "${title}"...',
-			'messages.metadataRefreshStarted' => ({required Object title}) => 'Aggiornamento dei metadati avviato per "${title}"',
-			'messages.metadataRefreshFailed' => ({required Object error}) => 'Impossibile aggiornare i metadati: ${error}',
-			'messages.logoutConfirm' => 'Vuoi uscire dall\'account?',
-			'messages.noSeasonsFound' => 'Nessuna stagione trovata',
-			'messages.seasonsLoadFailed' => 'Impossibile caricare le stagioni',
-			'messages.noEpisodesFound' => 'Nessun episodio trovato nella prima stagione',
-			'messages.noEpisodesFoundGeneral' => 'Nessun episodio trovato',
-			'messages.episodesLoadFailed' => 'Impossibile caricare gli episodi',
-			'messages.noResultsFound' => 'Nessun risultato',
-			'messages.sleepTimerSet' => ({required Object label}) => 'Timer di spegnimento impostato su ${label}',
-			'messages.noItemsAvailable' => 'Nessun elemento disponibile',
-			'messages.failedToCreatePlayQueueNoItems' => 'Impossibile creare una coda di riproduzione: nessun elemento',
-			'messages.failedPlayback' => ({required Object action, required Object error}) => 'Impossibile eseguire l\'azione «${action}»: ${error}',
-			'messages.switchingToCompatiblePlayer' => 'Passaggio al lettore compatibile...',
-			'messages.serverLimitTitle' => 'Riproduzione non riuscita',
-			'messages.serverLimitBody' => 'Errore del server (HTTP 500). È probabile che un limite di banda o transcodifica abbia impedito questa sessione. Chiedi al proprietario di modificare il limite.',
-			'messages.mediaUnreadableTitle' => 'File non disponibile',
-			'messages.mediaUnreadableBody' => 'Il server ha trovato questo elemento ma non ha potuto leggere il suo file (HTTP 404). Il file è stato probabilmente spostato o eliminato, oppure il suo storage è offline. Chiedi al proprietario del server di controllare il file e di riscansionare la libreria.',
-			'messages.serverBusyTitle' => 'Streaming non disponibile',
-			'messages.serverBusyBody' => 'Il server ha continuato a rifiutare la riproduzione in streaming di questo file (HTTP 503). Potrebbe essere in fase di riavvio, occupato oppure l\'unità in cui si trova il file potrebbe essere offline. Riprova tra qualche istante. Se il problema persiste, chiedi al proprietario del server di controllare il server e l\'unità di archiviazione del file.',
-			'messages.playbackNotAllowedTitle' => 'Riproduzione non consentita',
-			'messages.playbackNotAllowedBody' => 'Il server ha rifiutato lo streaming di questo elemento (HTTP 403). Il tuo account potrebbe non avere l\'autorizzazione per riprodurlo, oppure il server potrebbe consentire la riproduzione solo sulla sua rete locale.',
-			'messages.logsUploaded' => 'Log caricati',
-			'messages.logsUploadFailed' => 'Impossibile caricare i log',
-			'messages.logId' => 'ID log',
-			'messages.burnedSubtitlesUseMenu' => 'I sottotitoli sono incorporati in questo stream. Cambiali dal menu dei sottotitoli.',
-			'messages.noVideoUrl' => 'Nessun URL video disponibile',
-			'messages.playbackNoMediaSources' => 'Il server non ha restituito sorgenti multimediali riproducibili',
-			'messages.playbackDataNotPrepared' => 'La riproduzione è stata avviata prima che i relativi dati fossero pronti',
-			'messages.streamSelectionUnavailable' => 'La selezione dei flussi non è disponibile per questa sorgente',
-			'messages.streamSelectionFailed' => 'Impossibile applicare i flussi selezionati',
-			'messages.trackSelectionNotRemembered' => 'Questa scelta di traccia vale solo per la riproduzione corrente.',
-			'messages.serverUnavailableForProfile' => 'Nessun server disponibile per il profilo attivo',
-			'subtitlingStyling.text' => 'Testo',
-			'subtitlingStyling.border' => 'Bordo',
-			'subtitlingStyling.background' => 'Sfondo',
-			'subtitlingStyling.fontSize' => 'Dimensione carattere',
-			'subtitlingStyling.textColor' => 'Colore del testo',
-			'subtitlingStyling.borderSize' => 'Dimensione del bordo',
-			'subtitlingStyling.borderColor' => 'Colore del bordo',
-			'subtitlingStyling.backgroundOpacity' => 'Opacità dello sfondo',
-			'subtitlingStyling.backgroundColor' => 'Colore dello sfondo',
-			'subtitlingStyling.position' => 'Posizione',
-			'subtitlingStyling.assOverride' => 'Sovrascrittura ASS',
-			'subtitlingStyling.overrideScale' => 'Ridimensiona',
-			'subtitlingStyling.overrideForce' => 'Forza',
-			'subtitlingStyling.overrideStrip' => 'Rimuovi stile',
-			'subtitlingStyling.positionTop' => 'In alto',
-			'subtitlingStyling.positionBottom' => 'In basso',
-			'subtitlingStyling.useMargins' => 'Usa i margini',
-			'subtitlingStyling.useMarginsDescription' => 'Consenti i sottotitoli testuali nello spazio esterno al video. I sottotitoli con stile possono mantenere la loro posizione originale.',
-			'subtitlingStyling.anchorToScreen' => 'Fissa allo schermo',
-			'subtitlingStyling.anchorToScreenDescription' => 'Mostra i sottotitoli testuali nelle bande nere sotto i video in formato panoramico',
-			'subtitlingStyling.bold' => 'Grassetto',
-			'subtitlingStyling.italic' => 'Corsivo',
-			'subtitlingStyling.renderResolution' => 'Risoluzione di rendering',
-			'subtitlingStyling.renderResolutionScreen' => 'Risoluzione dello schermo',
-			'subtitlingStyling.renderResolutionVideo' => 'Risoluzione del video',
-			'mpvConfig.title' => 'mpv.conf',
-			'mpvConfig.description' => 'Impostazioni avanzate del lettore video',
-			'mpvConfig.presets' => 'Preset',
-			'mpvConfig.noPresets' => 'Nessun preset salvato',
-			'mpvConfig.saveAsPreset' => 'Salva come preset...',
-			'mpvConfig.presetName' => 'Nome preset',
-			'mpvConfig.presetNameHint' => 'Inserisci un nome per questo preset',
-			'mpvConfig.loadPreset' => 'Carica',
-			'mpvConfig.deletePreset' => 'Elimina',
-			'mpvConfig.presetSaved' => 'Preset salvato',
-			'mpvConfig.presetLoaded' => 'Preset caricato',
-			'mpvConfig.presetDeleted' => 'Preset eliminato',
-			'mpvConfig.confirmDeletePreset' => 'Sei sicuro di voler eliminare questo preset?',
-			'mpvConfig.configPlaceholder' => 'gpu-api=vulkan\nhwdec=auto\n# comment',
-			'mpvConfig.lineHint' => 'option=value',
-			'mpvConfig.addLine' => 'Aggiungi riga',
-			'mpvConfig.removeLine' => 'Rimuovi riga',
-			'mpvConfig.embeddedVoHint' => 'vo, gpu-context e gpu-api vengono ignorati su Linux: il video incorporato viene sempre renderizzato tramite vo=libmpv sul piano video e gpu-next (che gli shader di calcolo come ArtCNN richiedono) non può essere eseguito in modalità incorporata.',
-			'dialog.confirmAction' => 'Conferma azione',
-			'profiles.addPlezyProfile' => 'Aggiungi profilo Plezy',
-			'profiles.switchingProfile' => 'Cambio profilo…',
-			'profiles.deleteThisProfileTitle' => 'Eliminare questo profilo?',
-			'profiles.deleteThisProfileMessage' => ({required Object displayName}) => 'Rimuovi ${displayName}. Le connessioni resteranno invariate.',
-			'profiles.active' => 'Attivo',
-			'profiles.manage' => 'Gestisci',
-			'profiles.delete' => 'Elimina',
-			'profiles.signOut' => 'Esci',
-			'profiles.signOutPlexTitle' => 'Uscire da Plex?',
-			'profiles.signOutPlexMessage' => ({required Object displayName}) => 'Verranno rimossi ${displayName} e tutti gli utenti Plex Home. Potrai accedere di nuovo in qualsiasi momento.',
-			'profiles.signOutPlexDeleteDownloads' => 'Elimina anche i download',
-			'profiles.signOutPlexDeleteDownloadsDescription' => 'Altrimenti restano su questo dispositivo e tornano disponibili quando accedi di nuovo a questo account.',
-			'profiles.signedOutPlex' => 'Disconnessione da Plex completata.',
-			'profiles.signOutFailed' => 'Disconnessione non riuscita.',
-			'profiles.sectionTitle' => 'Profili',
-			'profiles.summarySingle' => 'Aggiungi profili per combinare utenti gestiti e identità locali',
-			'profiles.summaryMultipleWithActive' => ({required Object count, required Object activeName}) => '${count} profili · attivo: ${activeName}',
-			'profiles.summaryMultiple' => ({required Object count}) => '${count} profili',
-			'profiles.removeConnectionTitle' => 'Rimuovere la connessione?',
-			'profiles.removeConnectionMessage' => ({required Object displayName, required Object connectionLabel}) => 'Rimuovi da ${displayName} l\'accesso a ${connectionLabel}. Gli altri profili continueranno ad avervi accesso.',
-			'profiles.deleteProfileTitle' => 'Eliminare il profilo?',
-			'profiles.deleteProfileMessage' => ({required Object displayName}) => 'Rimuovi ${displayName} e le relative connessioni. I server resteranno disponibili.',
-			'profiles.profileNameLabel' => 'Nome profilo',
-			'profiles.pinProtectionLabel' => 'Protezione PIN',
-			'profiles.pinManagedByPlex' => 'PIN gestito da Plex. Modifica su plex.tv.',
-			'profiles.noPinSetEditOnPlex' => 'Nessun PIN impostato. Per richiederne uno, modifica l\'utente Home su plex.tv.',
-			'profiles.setPin' => 'Imposta PIN',
-			'profiles.setPinTitle' => 'Imposta PIN',
-			'profiles.confirmPinTitle' => 'Conferma PIN',
-			'profiles.pinSet' => 'PIN impostato',
-			'profiles.changePin' => 'Cambia',
-			'profiles.removePin' => 'Rimuovi',
-			'profiles.connectionsLabel' => 'Connessioni',
-			'profiles.add' => 'Aggiungi',
-			'profiles.deleteProfileButton' => 'Elimina profilo',
-			'profiles.noConnectionsHint' => 'Nessuna connessione — aggiungine una per usare questo profilo.',
-			'profiles.noConnections' => 'Nessuna connessione',
-			'profiles.plexHomeAccount' => 'Account Plex Home',
-			'profiles.plexAccountChip' => ({required Object account}) => 'Account Plex: ${account}',
-			'profiles.plexAccountUserChip' => ({required Object user, required Object account}) => '${user} tramite ${account}',
-			'profiles.connectionDefault' => 'Predefinita',
-			'profiles.connectionAs' => ({required Object displayName}) => 'come ${displayName}',
-			'profiles.makeDefault' => 'Imposta come predefinita',
-			'profiles.removeConnection' => 'Rimuovi',
-			'profiles.profileRenamed' => 'Profilo rinominato.',
-			'profiles.borrowAddTo' => ({required Object displayName}) => 'Aggiungi a ${displayName}',
-			'profiles.borrowExplain' => 'Prendi in prestito la connessione di un altro profilo. I profili protetti da PIN richiedono un PIN.',
-			'profiles.borrowEmpty' => 'Nulla da prendere in prestito al momento.',
-			'profiles.borrowEmptySubtitle' => 'Collega prima Plex, Jellyfin o Emby a un altro profilo.',
-			'profiles.borrowLoadFailed' => 'Impossibile caricare le connessioni disponibili. Riprova.',
-			'profiles.borrowFromProfile' => ({required Object displayName}) => 'Da ${displayName}',
-			'profiles.borrowConnectionBorrowed' => 'Connessione presa in prestito.',
-			'profiles.borrowFailed' => 'Impossibile prendere in prestito la connessione.',
-			'profiles.incorrectPin' => 'PIN errato.',
-			'profiles.incorrectPinTryAgain' => 'PIN errato. Riprova.',
-			'profiles.sourceProfileMissingParentAccount' => 'Al profilo di origine manca l\'account principale.',
-			'profiles.failedToLoadHomeUsers' => 'Impossibile caricare gli utenti Plex Home. Controlla la connessione e riprova.',
-			'profiles.failedToVerifyPin' => 'Impossibile verificare il PIN.',
-			'profiles.newProfile' => 'Nuovo profilo',
-			'profiles.profileNameHint' => 'es. Ospiti, Bambini, Soggiorno',
-			'profiles.pinProtectionOptional' => 'Protezione PIN (opzionale)',
-			'profiles.pinExplain' => 'PIN a 4 cifre richiesto per cambiare profilo.',
-			'profiles.continueButton' => 'Continua',
-			'profiles.pinsDontMatch' => 'I PIN non corrispondono',
-			'profiles.tokenIdentityMismatch' => 'Il token del profilo Plex è stato associato a un server imprevisto',
-			'connections.sectionTitle' => 'Connessioni',
-			_ => null,
-		} ?? switch (path) {
-			'connections.addConnection' => 'Aggiungi connessione',
-			'connections.addConnectionSubtitleNoProfile' => 'Accedi con Plex o collega un server Jellyfin o Emby',
-			'connections.addConnectionSubtitleScoped' => ({required Object displayName}) => 'Aggiungi a ${displayName}: Plex, Jellyfin, Emby o la connessione di un altro profilo',
-			'connections.sessionExpiredOne' => ({required Object name}) => 'Sessione scaduta per ${name}',
-			'connections.sessionExpiredMany' => ({required Object count}) => 'Sessione scaduta per ${count} server',
-			'connections.accessDeniedOne' => ({required Object name}) => '${name} ha negato l\'accesso a questo account',
-			'connections.accessDeniedMany' => ({required Object count}) => '${count} server hanno negato l\'accesso a questo account',
-			'connections.signInAgain' => 'Accedi di nuovo',
-			'connections.editMediaBrowserTitle' => ({required Object product}) => 'Modifica connessione ${product}',
-			'connections.editMediaBrowserIntro' => ({required Object serverName}) => 'Aggiungi o rimuovi gli URL per ${serverName}. Plezy userà l\'URL raggiungibile con la latenza più bassa.',
-			'accountPreferences.sectionTitle' => 'Preferenze dell\'account',
-			'accountPreferences.hubSubtitleSingle' => ({required Object account}) => 'Opzioni di audio, sottotitoli e libreria salvate su ${account}',
-			'accountPreferences.hubSubtitleMultiple' => ({required Object count}) => 'Opzioni di audio, sottotitoli e libreria salvate su ${count} account',
-			'accountPreferences.pickAccount' => 'Ogni account conserva le proprie preferenze. Scegli quale modificare.',
-			'accountPreferences.storedOnAccount' => 'Queste opzioni vengono salvate sull\'account stesso, quindi ogni app che vi accede le usa — inclusa Plezy sugli altri tuoi dispositivi.',
-			'accountPreferences.noAccounts' => 'Nessun account da configurare',
-			'accountPreferences.noAccountsHint' => 'Accedi a Plex oppure connetti un server Jellyfin o Emby: le preferenze salvate su quell\'account appariranno qui.',
-			'accountPreferences.unavailable' => 'Impossibile raggiungere questo account',
-			'accountPreferences.loadFailed' => 'Impossibile caricare queste preferenze',
-			'accountPreferences.noPreference' => 'Nessuna preferenza',
-			'accountPreferences.notSet' => 'Non impostato',
-			'accountPreferences.groups.audioAndSubtitles' => 'Audio e sottotitoli',
-			'accountPreferences.groups.libraryDisplay' => 'Libreria',
-			'accountPreferences.groups.personalMedia' => 'Media personali',
-			'accountPreferences.preferredAudioLanguage' => 'Lingua audio preferita',
-			'accountPreferences.autoSelectAudio' => 'Scegli l\'audio in base alla lingua',
-			'accountPreferences.autoSelectAudioDescription' => 'Se disattivata, viene mantenuta la traccia audio che il file indica come predefinita.',
-			'accountPreferences.preferredSubtitleLanguage' => 'Lingua dei sottotitoli preferita',
-			'accountPreferences.subtitleMode' => 'Attiva i sottotitoli',
-			'accountPreferences.subtitleModes.none' => 'Selezionati manualmente',
-			'accountPreferences.subtitleModes.noneDescription' => 'Non attivare mai i sottotitoli automaticamente.',
-			'accountPreferences.subtitleModes.defaultMode' => 'Segui le flag della traccia',
-			'accountPreferences.subtitleModes.defaultModeDescription' => 'Usa le flag predefinite e forzate salvate su ogni traccia di sottotitoli.',
-			'accountPreferences.subtitleModes.always' => 'Sempre attivi',
-			'accountPreferences.subtitleModes.alwaysDescription' => 'Attiva una traccia di sottotitoli nella lingua preferita quando disponibile.',
-			'accountPreferences.subtitleModes.onlyForced' => 'Solo sottotitoli forzati',
-			'accountPreferences.subtitleModes.onlyForcedDescription' => 'Carica solo le tracce contrassegnate come forzate.',
-			'accountPreferences.subtitleModes.smart' => 'Mostrati con audio straniero',
-			'accountPreferences.subtitleModes.smartDescription' => 'Attiva i sottotitoli solo quando l\'audio è in un\'altra lingua.',
-			'accountPreferences.subtitleAccessibility' => 'Sottotitoli SDH',
-			'accountPreferences.subtitleAccessibilityOptions.preferNonSdh' => 'Preferisci i sottotitoli non SDH',
-			'accountPreferences.subtitleAccessibilityOptions.preferSdh' => 'Preferisci i sottotitoli SDH',
-			'accountPreferences.subtitleAccessibilityOptions.onlySdh' => 'Solo sottotitoli SDH',
-			'accountPreferences.subtitleAccessibilityOptions.onlyNonSdh' => 'Solo sottotitoli non SDH',
-			'accountPreferences.forcedSubtitles' => 'Sottotitoli forzati',
-			'accountPreferences.forcedSubtitleOptions.preferNonForced' => 'Preferisci i sottotitoli non forzati',
-			'accountPreferences.forcedSubtitleOptions.preferForced' => 'Preferisci i sottotitoli forzati',
-			'accountPreferences.forcedSubtitleOptions.onlyForced' => 'Solo sottotitoli forzati',
-			'accountPreferences.forcedSubtitleOptions.onlyNonForced' => 'Solo sottotitoli non forzati',
-			'accountPreferences.displayMissingEpisodes' => 'Mostra gli episodi mancanti',
-			'accountPreferences.displayMissingEpisodesDescription' => 'Elenca gli episodi noti al server ma senza un file associato.',
-			'accountPreferences.hidePlayedInLatest' => 'Nascondi gli elementi visti da Aggiunti di recente',
-			'accountPreferences.hidePlayedInLatestDescription' => 'Esclude dagli Aggiunti di recente del server gli elementi che hai già visto.',
-			'accountPreferences.displayCollectionsView' => 'Mostra la vista Raccolte',
-			'accountPreferences.displayCollectionsViewDescription' => 'Mostra la vista Raccolte del server insieme alle tue librerie.',
-			'accountPreferences.rewatchingInNextUp' => 'Mantieni le serie riviste in Prossimi episodi',
-			'accountPreferences.rewatchingInNextUpDescription' => 'Quando finisci una serie e la ricominci, Prossimi episodi segue la nuova visione invece di rimuovere la serie.',
-			'accountPreferences.watchedIndicator' => 'Indicatori di visione',
-			'accountPreferences.watchedIndicatorOptions.none' => 'Mai',
-			'accountPreferences.watchedIndicatorOptions.moviesAndShows' => 'Film e serie TV',
-			'accountPreferences.watchedIndicatorOptions.movies' => 'Solo film',
-			'accountPreferences.watchedIndicatorOptions.shows' => 'Solo serie TV',
-			'accountPreferences.mediaReviewsVisibility' => 'Valutazioni e recensioni',
-			'accountPreferences.mediaReviewsOptions.usersAndCritics' => 'Utenti e critici',
-			'accountPreferences.mediaReviewsOptions.usersOnly' => 'Solo utenti',
-			'accountPreferences.mediaReviewsOptions.criticsOnly' => 'Solo critici',
-			'accountPreferences.mediaReviewsOptions.nobody' => 'Nascoste',
-			'discover.title' => 'Esplora',
-			'discover.noContentAvailable' => 'Nessun contenuto disponibile',
-			'discover.addMediaToLibraries' => 'Aggiungi contenuti multimediali alle tue librerie',
-			'discover.continueWatching' => 'Continua a guardare',
-			'discover.continueWatchingIn' => ({required Object library}) => 'Continua a guardare in ${library}',
-			'discover.nextUp' => 'Prossimi episodi',
-			'discover.nextUpIn' => ({required Object library}) => 'Prossimi episodi in ${library}',
-			'discover.recentlyAdded' => 'Aggiunti di recente',
-			'discover.recentlyAddedIn' => ({required Object library}) => 'Aggiunti di recente in ${library}',
-			'discover.latestAlbumsIn' => ({required Object library}) => 'Ultimi album in ${library}',
-			'discover.recentlyPlayedIn' => ({required Object library}) => 'Riprodotti di recente in ${library}',
-			'discover.mostPlayedIn' => ({required Object library}) => 'Più riprodotti in ${library}',
-			'discover.playEpisode' => ({required Object season, required Object episode}) => 'S${season}E${episode}',
-			'discover.overview' => 'Panoramica',
-			'discover.cast' => 'Attori',
-			'discover.extras' => 'Trailer ed extra',
-			'discover.studio' => 'Studio',
-			'discover.rating' => 'Valutazione',
-			'discover.director' => 'Regista',
-			'discover.directors' => 'Registi',
-			'discover.movie' => 'Film',
-			'discover.tvShow' => 'Serie TV',
-			'discover.minutesLeft' => ({required Object minutes}) => '${minutes} minuti rimanenti',
-			'discover.moreLikeThis' => 'Altri contenuti simili',
-			'discover.titleCount' => ({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('it'))(n, one: '${n} titolo', other: '${n} titoli', ), 
-			'discover.person.born' => 'Data di nascita',
-			'discover.person.died' => 'Data di morte',
-			'discover.person.birthplace' => 'Luogo di nascita',
-			'discover.person.dateWithAge' => ({required Object date, required Object age}) => '${date} (${age} anni)',
-			'discover.person.dateWithAgeAtDeath' => ({required Object date, required Object age}) => '${date} (a ${age} anni)',
-			'errors.searchFailed' => ({required Object error}) => 'Ricerca non riuscita: ${error}',
-			'errors.searchUnavailable' => 'La ricerca non ha potuto raggiungere alcun server multimediale.',
-			'errors.connectionTimeout' => ({required Object context}) => 'Tempo scaduto per la connessione durante il caricamento di ${context}',
-			'errors.connectionFailed' => 'Impossibile connettersi al server multimediale',
-			'errors.unableToLoad' => ({required Object context}) => 'Impossibile caricare ${context}. Riprova.',
-			'errors.noClientAvailable' => 'Nessun client disponibile',
-			'errors.pleaseEnterToken' => 'Inserisci un token',
-			'errors.invalidToken' => 'Token non valido',
-			'errors.failedToVerifyToken' => ({required Object error}) => 'Impossibile verificare il token: ${error}',
-			'errors.failedToSwitchProfile' => ({required Object displayName}) => 'Impossibile passare a ${displayName}',
-			'errors.failedToDeleteProfile' => ({required Object displayName}) => 'Impossibile eliminare ${displayName}',
-			'errors.failedToRate' => 'Impossibile aggiornare la valutazione',
-			'errors.reasonTimedOut' => 'il tempo di connessione è scaduto',
-			'errors.reasonUnreachable' => 'non è stato possibile raggiungere il server',
-			'errors.reasonRefused' => 'il server ha rifiutato la richiesta',
-			'errors.reasonNotFound' => 'l\'elemento non è più presente sul server',
-			'errors.reasonServerError' => 'il server ha segnalato un errore',
-			'errors.reasonCancelled' => 'la richiesta è stata annullata',
-			'errors.reasonUnexpected' => 'si è verificato un errore imprevisto',
-			'libraries.title' => 'Librerie',
-			'libraries.fallbackTitle' => 'Libreria',
-			'libraries.scanLibraryFiles' => 'Scansiona i file della libreria',
-			'libraries.scanLibrary' => 'Scansiona libreria',
-			'libraries.analyze' => 'Analizza',
-			'libraries.analyzeLibrary' => 'Analizza libreria',
-			'libraries.refreshMetadata' => 'Aggiorna metadati',
-			'libraries.emptyTrash' => 'Svuota cestino',
-			'libraries.emptyingTrash' => ({required Object title}) => 'Svuotamento del cestino di "${title}"...',
-			'libraries.trashEmptied' => ({required Object title}) => 'Cestino di "${title}" svuotato',
-			'libraries.failedToEmptyTrash' => ({required Object error}) => 'Impossibile svuotare il cestino: ${error}',
-			'libraries.analyzing' => ({required Object title}) => 'Analisi di "${title}"...',
-			'libraries.analysisStarted' => ({required Object title}) => 'Analisi avviata per "${title}"',
-			'libraries.failedToAnalyze' => ({required Object error}) => 'Impossibile analizzare la libreria: ${error}',
-			'libraries.noLibrariesFound' => 'Nessuna libreria trovata',
-			'libraries.allLibrariesHidden' => 'Tutte le librerie sono nascoste',
-			'libraries.hiddenLibrariesCount' => ({required Object count}) => 'Librerie nascoste (${count})',
-			'libraries.thisLibraryIsEmpty' => 'Questa libreria è vuota',
-			'libraries.noItemsMatchFilters' => 'Nessun elemento corrisponde ai filtri attivi',
-			'libraries.resetFilters' => 'Reimposta filtri',
-			'libraries.all' => 'Tutto',
-			'libraries.clearAll' => 'Azzera tutto',
-			'libraries.scanLibraryConfirm' => ({required Object title}) => 'Vuoi scansionare "${title}"?',
-			'libraries.analyzeLibraryConfirm' => ({required Object title}) => 'Vuoi analizzare "${title}"?',
-			'libraries.refreshMetadataConfirm' => ({required Object title}) => 'Vuoi aggiornare i metadati di "${title}"?',
-			'libraries.emptyTrashConfirm' => ({required Object title}) => 'Vuoi svuotare il cestino di "${title}"?',
-			'libraries.manageLibraries' => 'Gestisci librerie',
-			'libraries.sort' => 'Ordina',
-			'libraries.sortBy' => 'Ordina per',
-			'libraries.filters' => 'Filtri',
-			'libraries.confirmActionMessage' => 'Sei sicuro di voler eseguire questa azione?',
-			'libraries.showLibrary' => 'Mostra libreria',
-			'libraries.hideLibrary' => 'Nascondi libreria',
-			'libraries.libraryOptions' => 'Opzioni libreria',
-			'libraries.content' => 'contenuto della libreria',
-			'libraries.selectLibrary' => 'Seleziona libreria',
-			'libraries.filtersWithCount' => ({required Object count}) => 'Filtri (${count})',
-			'libraries.noRecommendations' => 'Nessun consiglio disponibile',
-			'libraries.noCollections' => 'Nessuna raccolta in questa libreria',
-			'libraries.noFoldersFound' => 'Nessuna cartella trovata',
-			'libraries.folders' => 'cartelle',
-			'libraries.tabs.recommended' => 'Consigliati',
-			'libraries.tabs.browse' => 'Esplora',
-			'libraries.tabs.collections' => 'Raccolte',
-			'libraries.tabs.playlists' => 'Playlist',
-			'libraries.groupings.title' => 'Raggruppa per',
-			'libraries.groupings.all' => 'Tutti',
-			'libraries.groupings.movies' => 'Film',
-			'libraries.groupings.shows' => 'Serie TV',
-			'libraries.groupings.seasons' => 'Stagioni',
-			'libraries.groupings.episodes' => 'Episodi',
-			'libraries.groupings.artists' => 'Artisti',
-			'libraries.groupings.albums' => 'Album',
-			'libraries.groupings.tracks' => 'Brani',
-			'libraries.groupings.folders' => 'Cartelle',
-			'libraries.filterCategories.genre' => 'Genere',
-			'libraries.filterCategories.year' => 'Anno',
-			'libraries.filterCategories.contentRating' => 'Classificazione per età',
-			'libraries.filterCategories.tag' => 'Tag',
-			'libraries.filterCategories.unwatched' => 'Non visti',
-			'libraries.filterCategories.unplayed' => 'Non riprodotti',
-			'libraries.filterCategories.favorites' => 'Preferiti',
-			'libraries.filterCategories.filePath' => 'Percorso del file',
-			'libraries.sortLabels.title' => 'Titolo',
-			'libraries.sortLabels.dateAdded' => 'Data di aggiunta',
-			'libraries.sortLabels.releaseDate' => 'Data di uscita',
-			'libraries.sortLabels.rating' => 'Valutazione',
-			'libraries.sortLabels.communityRating' => 'Valutazione della comunità',
-			'libraries.sortLabels.criticRating' => 'Valutazione critica',
-			'libraries.sortLabels.userRating' => 'Valutazione utente',
-			'libraries.sortLabels.datePlayed' => 'Data di riproduzione',
-			'libraries.sortLabels.playCount' => 'Riproduzioni',
-			'libraries.sortLabels.productionYear' => 'Anno di produzione',
-			'libraries.sortLabels.runtime' => 'Durata',
-			'libraries.sortLabels.officialRating' => 'Classificazione ufficiale',
-			'libraries.sortLabels.premiereDate' => 'Data di première',
-			'libraries.sortLabels.startDate' => 'Data di inizio',
-			'libraries.sortLabels.airTime' => 'Orario di messa in onda',
-			'libraries.sortLabels.studio' => 'Studio',
-			'libraries.sortLabels.random' => 'Casuale',
-			'libraries.sortLabels.dateShared' => 'Data di condivisione',
-			'libraries.sortLabels.latestEpisodeAirDate' => 'Data di trasmissione dell\'ultimo episodio',
-			'libraries.sortLabels.lastEpisodeDateAdded' => 'Data di aggiunta dell\'ultimo episodio',
-			'libraries.sortLabels.dateDownloaded' => 'Data di download',
-			'libraries.sortLabels.size' => 'Dimensione',
-			'libraries.sortLabels.library' => 'Libreria',
-			'libraries.advancedFilters.include' => 'Includi',
-			'libraries.advancedFilters.exclude' => 'Escludi',
-			'libraries.advancedFilters.any' => 'Qualsiasi',
-			'libraries.advancedFilters.yes' => 'Sì',
-			'libraries.advancedFilters.no' => 'No',
-			'libraries.advancedFilters.not' => ({required Object value}) => 'Tranne ${value}',
-			'libraries.advancedFilters.valueCount' => ({required Object count}) => '${count} selezionati',
-			'libraries.advancedFilters.valueCountExcluded' => ({required Object count}) => '${count} esclusi',
-			'libraries.advancedFilters.searchValues' => 'Cerca valori',
-			'libraries.advancedFilters.noValues' => 'Nessun valore',
-			'libraries.advancedFilters.matchContains' => 'Contiene',
-			'libraries.advancedFilters.matchNotContains' => 'Non contiene',
-			'libraries.advancedFilters.matchIs' => 'È',
-			'libraries.advancedFilters.matchIsNot' => 'Non è',
-			'libraries.advancedFilters.matchBeginsWith' => 'Inizia con',
-			'libraries.advancedFilters.matchEndsWith' => 'Finisce con',
-			'libraries.advancedFilters.textHint' => 'Digita il testo da cercare',
-			'libraries.advancedFilters.from' => 'Da',
-			'libraries.advancedFilters.to' => 'A',
-			'libraries.advancedFilters.range' => ({required Object from, required Object to}) => 'Da ${from} a ${to}',
-			'libraries.advancedFilters.atLeast' => ({required Object value}) => '${value} e oltre',
-			'libraries.advancedFilters.atMost' => ({required Object value}) => 'Fino a ${value}',
-			'libraries.advancedFilters.dateLastDays' => ({required Object count}) => 'Ultimi ${count} giorni',
-			'libraries.advancedFilters.dateLastYear' => 'Ultimo anno',
-			'libraries.advancedFilters.dateOlderThanDays' => ({required Object count}) => 'Più di ${count} giorni fa',
-			'libraries.advancedFilters.dateOlderThanYear' => 'Più di un anno fa',
-			'about.title' => 'Informazioni',
-			'about.openSourceLicenses' => 'Licenze open source',
-			'about.versionLabel' => ({required Object version}) => 'Versione ${version}',
-			'about.appDescription' => 'Un elegante client Plex, Jellyfin ed Emby per Flutter',
-			'about.viewLicensesDescription' => 'Visualizza le licenze delle librerie di terze parti',
-			'serverSelection.noServersFoundForAccount' => ({required Object username, required Object email}) => 'Nessun server trovato per ${username} (${email})',
-			'serverSelection.failedToLoadServers' => ({required Object error}) => 'Impossibile caricare i server: ${error}',
-			'serverSelection.noValidServers' => 'Nessun server utilizzabile trovato per questo account',
-			'hubDetail.title' => 'Titolo',
-			'hubDetail.releaseYear' => 'Anno di uscita',
-			'hubDetail.dateAdded' => 'Data di aggiunta',
-			'hubDetail.rating' => 'Valutazione',
-			'hubDetail.noItemsFound' => 'Nessun elemento trovato',
-			'logs.clearLogs' => 'Cancella log',
-			'logs.copyLogs' => 'Copia log',
-			'logs.uploadLogs' => 'Carica log',
-			'startup.failedTitle' => 'Plezy non ha potuto avviarsi',
-			'startup.failedBody' => 'Si è verificato un errore durante l\'avvio. I dettagli seguenti indicano cosa non ha funzionato.',
-			'startup.failedBodyRepairable' => 'Il file delle impostazioni salvate di Plezy è danneggiato e deve essere ricostruito prima che Plezy possa avviarsi. Riprovare non servirà: scegli Ripara storage.',
-			'startup.phaseLabel' => 'Passaggio',
-			'startup.showDetails' => 'Mostra dettagli',
-			'startup.hideDetails' => 'Nascondi dettagli',
-			'startup.copyDetails' => 'Copia dettagli',
-			'startup.detailsCopied' => 'Dettagli copiati negli appunti',
-			'startup.uploadDetails' => 'Carica dettagli',
-			'startup.repairStorage' => 'Ripara storage',
-			'startup.repairTitle' => 'Riparare i dati archiviati?',
-			'startup.repairBodyCommon' => 'Il file delle impostazioni di Plezy è danneggiato e non può essere letto. La riparazione ripristina ogni impostazione al suo valore predefinito.',
-			'startup.repairBodyOneCredential' => 'Un accesso salvato è danneggiato e non può essere letto. La riparazione rimuove solo quello; le altre impostazioni restano intatte.',
-			'startup.repairBodySignInsKept' => 'I tuoi server e profili dovrebbero rimanere con accesso effettuato.',
-			'startup.repairBodySignInsLost' => 'La chiave che protegge i tuoi accessi salvati non può essere recuperata da questo file, quindi dovrai effettuare di nuovo l\'accesso a ogni server e profilo. Nulla sul tuo server multimediale è interessato.',
-			'startup.repairBodySessionsUncertain' => 'I tracker (MAL, AniList, Simkl, Trakt) e Seerr sono archiviati separatamente e potrebbero sopravvivere o meno. Plezy ti dirà esattamente cosa ha conservato.',
-			'startup.repairConfirm' => 'Ripara',
-			'startup.repairSucceeded' => 'Storage riparato',
-			'startup.repairNeedsRestart' => 'Storage riparato — riavvio richiesto',
-			'startup.restartRequiredBody' => 'I tuoi dati sono stati riparati, ma Plezy deve ripartire da zero prima di poterli usare. Chiudi Plezy e riaprilo.',
-			'startup.quitPlezy' => 'Esci da Plezy',
-			'startup.repairFailed' => 'Riparazione non riuscita',
-			'startup.repairKeptSignIns' => 'I tuoi server e profili hanno ancora l\'accesso effettuato.',
-			'startup.repairLostSignIns' => 'La chiave che protegge i tuoi accessi salvati non ha potuto essere recuperata. Dovrai effettuare di nuovo l\'accesso a ogni server e profilo.',
-			'startup.repairLostSessions' => 'Almeno una connessione a un tracker o a Seerr è andata persa e deve essere riconnessa.',
-			'startup.backupTitle' => 'È stata conservata una copia del file danneggiato',
-			'startup.backupWarning' => 'Contiene le tue credenziali di accesso. Non caricarla né condividerla.',
-			'startup.deleteBackup' => 'Elimina copia',
-			'startup.backupDeleted' => 'Copia eliminata.',
-			'startup.previousFailureTitle' => 'Plezy non è riuscito ad avviarsi l\'ultima volta',
-			'licenses.relatedPackages' => 'Pacchetti correlati',
-			'licenses.license' => 'Licenza',
-			'licenses.licenseNumber' => ({required Object number}) => 'Licenza ${number}',
-			'licenses.licensesCount' => ({required Object count}) => '${count} licenze',
-			'navigation.libraries' => 'Librerie',
-			'navigation.downloads' => 'Download',
-			'navigation.liveTv' => 'Diretta',
-			'navigation.explore' => 'Esplora',
-			'explore.title' => 'Esplora',
-			'explore.selectSource' => 'Seleziona fonte',
-			'explore.rows.watchlist' => 'Lista da guardare',
-			'explore.rows.recommendedMovies' => 'Film consigliati',
-			'explore.rows.recommendedShows' => 'Serie TV consigliate',
-			'explore.rows.trendingMovies' => 'Film di tendenza',
-			'explore.rows.trendingShows' => 'Serie TV di tendenza',
-			'explore.rows.popularMovies' => 'Film popolari',
-			'explore.rows.popularShows' => 'Serie TV popolari',
-			'explore.rows.trendingAnime' => 'Anime di tendenza',
-			'explore.rows.suggestedAnime' => 'Anime suggeriti',
-			'explore.rows.airingAnime' => 'Migliori anime in onda',
-			'explore.rows.popularAnime' => 'Anime più popolari',
-			'explore.rows.trending' => 'Di tendenza',
-			'explore.rows.upcomingMovies' => 'Film in arrivo',
-			'explore.rows.upcomingShows' => 'Serie TV in arrivo',
-			'explore.status.airing' => 'In onda',
-			'explore.status.ended' => 'Conclusa',
-			'explore.status.canceled' => 'Cancellata',
-			'explore.status.upcoming' => 'In arrivo',
-			'explore.episodeCount' => ({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('it'))(n, one: '${n} episodio', other: '${n} episodi', ), 
-			'explore.cast' => 'Attori',
-			'explore.characters' => 'Personaggi',
-			'explore.addToWatchlist' => 'Aggiungi alla lista da guardare',
-			'explore.removeFromWatchlist' => 'Rimuovi dalla lista da guardare',
-			'explore.addedToWatchlist' => 'Aggiunto alla lista titoli',
-			'explore.removedFromWatchlist' => 'Rimosso dalla lista titoli',
-			'explore.watchlistUpdateFailed' => 'Impossibile aggiornare la lista da guardare',
-			'explore.watchlistNoMatch' => 'Impossibile associare questo elemento a una lista titoli',
-			'explore.notInLibrary' => 'Non è nella tua libreria',
-			'explore.inTheseLibraries' => 'In queste librerie',
-			'explore.checkingLibrary' => 'Ricerca nella tua libreria...',
-			'explore.libraryCheckFailed' => ({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('it'))(n, one: 'Impossibile controllare ${n} server', other: 'Impossibile controllare ${n} server', ), 
-			'explore.emptyTitle' => 'Ancora niente qui',
-			'explore.emptyMessage' => ({required Object source}) => 'Le sezioni di ${source} appariranno qui quando saranno disponibili dei contenuti.',
-			'explore.searchHint' => ({required Object source}) => 'Cerca su ${source}',
-			'explore.searchEmpty' => ({required Object query}) => 'Nessun risultato per "${query}"',
-			'explore.searchPrompt' => ({required Object source}) => 'Cerca film e serie TV su ${source}.',
-			'explore.searchFailed' => 'Ricerca fallita. Controlla la connessione e riprova.',
-			'explore.badge.rankPopular' => ({required Object n}) => '#${n} popolari',
-			'explore.badge.rankAiring' => ({required Object n}) => '#${n} in onda',
-			'explore.badge.rankRated' => ({required Object n}) => '#${n} valutati',
-			'explore.badge.rankTrending' => ({required Object n}) => '#${n} di tendenza',
-			'explore.badge.rankSeasonal' => ({required Object n, required Object season}) => '#${n} in ${season}',
-			'explore.badge.watchingNow' => ({required Object n}) => '${n} in visione',
-			'explore.badge.available' => 'Disponibile',
-			'explore.badge.partiallyAvailable' => 'Parzialmente disponibile',
-			'explore.badge.availableIn4k' => 'Disponibile in 4K',
-			'explore.badge.requested' => 'Richiesto',
-			'explore.badge.pendingApproval' => 'In attesa di approvazione',
-			'explore.badge.processing' => 'In elaborazione',
-			'explore.badge.declined' => 'Rifiutato',
-			'explore.badge.requestFailed' => 'Richiesta non riuscita',
-			'explore.badge.requested4k' => 'Richiesto in 4K',
-			'explore.badge.seasonsAvailable' => ({required Object available, required Object total}) => '${available}/${total} stagioni',
-			'explore.badge.nextEpisodeIn' => ({required Object episode, required Object duration}) => 'Ep ${episode} tra ${duration}',
-			'explore.badge.nextAiringIn' => ({required Object duration}) => 'Prossimo tra ${duration}',
-			'explore.badge.episodesShort' => ({required Object n}) => '${n} ep',
-			'explore.badge.minutesPerEpisode' => ({required Object n}) => '${n} min/ep',
-			'explore.badge.adult' => '18+',
-			'explore.stats.listed' => ({required Object n}) => '${n} in elenco',
-			'explore.stats.viewersDay' => ({required Object n}) => '${n} guardati oggi',
-			'explore.stats.viewersWeek' => ({required Object n}) => '${n} guardati questa settimana',
-			'explore.stats.viewersMonth' => ({required Object n}) => '${n} guardati questo mese',
-			'explore.stats.viewersYear' => ({required Object n}) => '${n} guardati quest\'anno',
-			'explore.stats.viewersAllTime' => ({required Object n}) => '${n} spettatori',
-			'explore.stats.planning' => ({required Object n}) => '${n} hanno in programma di guardarlo',
-			'explore.stats.favorited' => ({required Object n}) => '${n} preferiti',
-			'explore.stats.dropRate' => ({required Object percent}) => '${percent} lo ha abbandonato',
-			'explore.stats.comments' => ({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('it'))(n, one: '${n} commento', other: '${n} commenti', ), 
-			'explore.stats.votes' => ({required Object n}) => '${n} voti',
-			'explore.stats.watching' => ({required Object n}) => '${n} lo stanno guardando',
-			'explore.stats.completed' => ({required Object n}) => '${n} completati',
-			'explore.stats.onHold' => ({required Object n}) => '${n} in pausa',
-			'explore.stats.dropped' => ({required Object n}) => '${n} abbandonati',
-			'explore.season.winter' => 'Inverno',
-			'explore.season.spring' => 'Primavera',
-			'explore.season.summer' => 'Estate',
-			'explore.season.fall' => 'Autunno',
-			'explore.season.withYear' => ({required Object season, required Object year}) => '${season} ${year}',
-			'explore.format.tv' => 'TV',
-			'explore.format.tvShort' => 'TV Short',
-			'explore.format.movie' => 'Film',
-			'explore.format.special' => 'Speciale',
-			'explore.format.ova' => 'OVA',
-			'explore.format.ona' => 'ONA',
-			'explore.format.music' => 'Musica',
-			'explore.format.other' => 'Altro',
-			'explore.sourceMaterial.original' => 'Originale',
-			'explore.sourceMaterial.manga' => 'Manga',
-			'explore.sourceMaterial.lightNovel' => 'Light novel',
-			'explore.sourceMaterial.novel' => 'Romanzo',
-			'explore.sourceMaterial.visualNovel' => 'Visual novel',
-			'explore.sourceMaterial.game' => 'Videogioco',
-			'explore.sourceMaterial.webComic' => 'Web comic',
-			'explore.sourceMaterial.musicRelease' => 'Musica',
-			'explore.sourceMaterial.otherMedia' => 'Altro',
-			'explore.creditRole.actor' => 'Attore',
-			'explore.creditRole.director' => 'Regista',
-			'explore.creditRole.writer' => 'Sceneggiatore',
-			'explore.creditRole.producer' => 'Produttore',
-			'explore.creditRole.creator' => 'Creatore',
-			'explore.creditRole.composer' => 'Compositore',
-			'explore.relation.prequel' => 'Prequel',
-			'explore.relation.sequel' => 'Sequel',
-			'explore.relation.sideStory' => 'Storia secondaria',
-			'explore.relation.spinOff' => 'Spin-off',
-			'explore.relation.alternativeVersion' => 'Versione alternativa',
-			'explore.relation.summary' => 'Riepilogo',
-			'explore.relation.parentStory' => 'Storia originale',
-			'explore.relation.adaptation' => 'Adattamento',
-			'explore.relation.other' => 'Correlati',
-			'explore.broadcast' => ({required Object day, required Object time}) => 'Va in onda ${day} alle ${time}',
-			'explore.broadcastWithZone' => ({required Object day, required Object time, required Object timezone}) => 'Va in onda ${day} alle ${time} ${timezone}',
-			'explore.detail.originalTitle' => 'Titolo originale',
-			'explore.detail.alsoKnownAs' => 'Conosciuto anche come',
-			'explore.detail.studios' => 'Studi',
-			'explore.detail.country' => 'Paese',
-			'explore.detail.language' => 'Lingua',
-			'explore.detail.released' => 'Uscito',
-			'explore.detail.physicalRelease' => 'Su disco',
-			'explore.detail.ended' => 'Concluso',
-			'explore.detail.addedOn' => ({required Object date}) => 'Aggiunto ${date}',
-			'explore.detail.yourRating' => 'La tua valutazione',
-			'explore.detail.budget' => 'Budget',
-			'explore.detail.revenue' => 'Incassi',
-			'explore.detail.contentAdvisory' => 'Guida all\'età',
-			'explore.detail.tags' => 'Tag',
-			'explore.detail.revealSpoilerTags' => 'Mostra tag spoiler',
-			'explore.detail.links' => 'Link',
-			'explore.detail.watchOn' => 'Guarda su',
-			'explore.detail.watchTrailer' => 'Guarda trailer',
-			'explore.detail.openOn' => ({required Object site}) => 'Apri su ${site}',
-			'explore.detail.trailerUnavailable' => 'Impossibile aprire il trailer su questo dispositivo',
-			'explore.detail.linkUnavailable' => 'Impossibile aprire il link su questo dispositivo',
-			'explore.detail.crew' => 'Cast tecnico',
-			'explore.detail.ratings' => 'Valutazioni',
-			'explore.detail.schedule' => 'Programmazione',
-			'explore.detail.recommendedByUsers' => ({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('it'))(n, one: 'Consigliato da ${n} utente', other: 'Consigliato da ${n} utenti', ), 
-			'explore.detail.recommendedBy' => ({required Object who}) => 'Consigliato da ${who}',
-			'explore.detail.favoritedBy' => ({required Object who}) => 'Preferito da ${who}',
-			'explore.detail.unairedEpisodes' => ({required Object n}) => '${n} non ancora in onda',
-			'explore.detail.recommendedByPercent' => ({required Object percent}) => 'Consigliato dal ${percent} degli spettatori',
-			'explore.detail.relatedTitles' => 'Titoli correlati',
-			'explore.detail.background' => 'Contesto',
-			'explore.totalResults' => ({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('it'))(n, one: '${n} risultato', other: '${n} risultati', ), 
-			'liveTv.title' => 'TV in diretta',
-			'liveTv.guide' => 'Guida',
-			'liveTv.noChannels' => 'Nessun canale disponibile',
-			'liveTv.noDvr' => 'Nessun DVR configurato su alcun server',
-			'liveTv.serverUnavailable' => 'Il server TV in diretta non è disponibile.',
-			'liveTv.serverNotConnected' => 'Il server TV in diretta non è connesso.',
-			'liveTv.noPrograms' => 'Nessun dato di programma disponibile',
-			'liveTv.liveStreamFailed' => 'Streaming in diretta non riuscito',
-			'liveTv.unknownProgram' => 'Programma sconosciuto',
-			'liveTv.unknownHub' => 'Sconosciuto',
-			'liveTv.unknownError' => 'Errore sconosciuto',
-			'liveTv.channelNumber' => ({required Object number}) => 'Canale ${number}',
-			'liveTv.unknownChannel' => 'Canale sconosciuto',
-			'liveTv.live' => 'IN DIRETTA',
-			'liveTv.reloadGuide' => 'Ricarica la guida',
-			'liveTv.searchGuide' => 'Cerca nella guida',
-			'liveTv.searchHint' => 'Cerca canali e programmi',
-			'liveTv.searchNoResults' => ({required Object query}) => 'Nessuna corrispondenza per "${query}"',
-			'liveTv.channelsSection' => 'Canali',
-			'liveTv.programsSection' => 'Programmi',
-			'liveTv.now' => 'Ora',
-			'liveTv.today' => 'Oggi',
-			'liveTv.tomorrow' => 'Domani',
-			'liveTv.midnight' => 'Mezzanotte',
-			'liveTv.overnight' => 'Durante la notte',
-			'liveTv.morning' => 'Mattina',
-			'liveTv.daytime' => 'Giornata',
-			'liveTv.evening' => 'Sera',
-			'liveTv.lateNight' => 'Tarda notte',
-			'liveTv.whatsOn' => 'In onda ora',
-			'liveTv.watchChannel' => 'Guarda il canale',
-			'liveTv.favorites' => 'Preferiti',
-			'liveTv.reorderFavorites' => 'Riordina i preferiti',
-			'liveTv.noFavoriteChannels' => 'Nessun canale preferito',
-			'liveTv.noFavoriteChannelsHint' => 'Mostra tutti i canali, quindi tieni premuto un canale per aggiungerlo ai preferiti.',
-			'liveTv.showAllChannels' => 'Mostra tutti i canali',
-			'liveTv.favoritesLoadFailed' => 'Impossibile caricare i preferiti. Controlla la connessione e riprova.',
-			'liveTv.favoritesUpdateFailed' => 'Impossibile aggiornare i preferiti. Controlla la connessione e riprova.',
-			'liveTv.joinSession' => 'Partecipa alla sessione in corso',
-			'liveTv.watchFromStart' => ({required Object minutes}) => 'Guarda dall\'inizio (${minutes} min fa)',
-			'liveTv.watchLive' => 'Guarda in diretta',
-			'liveTv.goToLive' => 'Vai alla diretta',
-			'liveTv.record' => 'Registra',
-			'liveTv.recordEpisode' => 'Registra episodio',
-			'liveTv.recordSeries' => 'Registra serie',
-			'liveTv.recordOptions' => 'Opzioni di registrazione',
-			'liveTv.saveTo' => 'Salva in',
-			'liveTv.recordings' => 'Registrazioni',
-			'liveTv.scheduledRecordings' => 'Programmate',
-			'liveTv.recordingRules' => 'Regole di registrazione',
-			'liveTv.noScheduledRecordings' => 'Nessuna registrazione in programma',
-			'liveTv.manageRecording' => 'Gestisci registrazione',
-			'liveTv.cancelRecording' => 'Annulla registrazione',
-			'liveTv.cancelRecordingTitle' => 'Annullare questa registrazione?',
-			'liveTv.cancelRecordingMessage' => ({required Object title}) => '${title} non sarà più registrato.',
-			'liveTv.deleteRule' => 'Elimina regola',
-			'liveTv.deleteRuleTitle' => 'Eliminare la regola di registrazione?',
-			'liveTv.deleteRuleMessage' => ({required Object title}) => 'I prossimi episodi di ${title} non saranno registrati.',
-			'liveTv.recordingScheduled' => 'Registrazione programmata',
-			'liveTv.alreadyScheduled' => 'La registrazione di questo programma è già pianificata',
-			'liveTv.dvrAdminRequired' => 'Le impostazioni DVR richiedono un account amministratore',
-			'liveTv.recordingFailed' => 'Impossibile programmare la registrazione',
-			'liveTv.recordingTargetMissing' => 'Impossibile determinare la libreria di registrazione',
-			'liveTv.recordNotAvailable' => 'Registrazione non disponibile per questo programma',
-			'liveTv.recordingCancelled' => 'Registrazione annullata',
-			'liveTv.recordingRuleDeleted' => 'Regola di registrazione eliminata',
-			'liveTv.processRecordingRules' => 'Rielabora le regole',
-			'liveTv.recordingInProgress' => 'Registrazione in corso',
-			'liveTv.recordingsCount' => ({required Object count}) => '${count} programmate',
-			'liveTv.editRule' => 'Modifica regola',
-			'liveTv.editRuleAction' => 'Modifica',
-			'liveTv.recordingRuleUpdated' => 'Regola di registrazione aggiornata',
-			'liveTv.guideReloadRequested' => 'Aggiornamento della guida richiesto',
-			'liveTv.guideReloadFailed' => 'Impossibile aggiornare la guida',
-			'liveTv.rulesProcessRequested' => 'Rielaborazione delle regole richiesta',
-			'liveTv.rulesProcessFailed' => 'Impossibile rielaborare le regole di registrazione',
-			'liveTv.recordShow' => 'Registra programma',
-			'liveTv.recordSettings.startEarly' => 'Inizia in anticipo (secondi)',
-			'liveTv.recordSettings.endLate' => 'Termina in ritardo (secondi)',
-			'liveTv.recordSettings.newOnly' => 'Solo nuovi episodi',
-			'liveTv.recordSettings.anyChannel' => 'Registra su qualsiasi canale',
-			'liveTv.recordSettings.anyTime' => 'Registra a qualsiasi ora',
-			'liveTv.recordSettings.skipInLibrary' => 'Salta gli episodi già presenti nella libreria',
-			'liveTv.recordSettings.keepUpTo' => 'Episodi da conservare',
-			_ => null,
-		} ?? switch (path) {
-			'liveTv.recordSettings.keepUpToHint' => '0 conserva tutti gli episodi',
-			'liveTv.startingInMinutes' => ({required Object minutes}) => 'Inizia tra ${minutes} min',
-			'liveTv.dayAtTime' => ({required Object day, required Object time}) => '${day} alle ${time}',
-			'liveTv.invalidPlaybackData' => ({required Object product}) => '${product} ha restituito dati di riproduzione della TV in diretta non validi',
-			'liveTv.failedToStartChannel' => 'Impossibile avviare il canale in diretta',
-			'liveTv.failedToBuildStreamUrl' => 'Impossibile creare l\'URL dello stream',
-			'liveTv.playbackStartFailed' => ({required Object reason}) => 'Impossibile avviare il canale: ${reason}',
-			'liveTv.channelSwitchFailed' => ({required Object reason}) => 'Impossibile cambiare canale: ${reason}',
-			'collections.title' => 'Raccolte',
-			'collections.collection' => 'Raccolta',
-			'collections.empty' => 'La raccolta è vuota',
-			'collections.deleteCollection' => 'Elimina raccolta',
-			'collections.deleteConfirm' => ({required Object title}) => 'Eliminare "${title}"? Non si può annullare.',
-			'collections.deleted' => 'Raccolta eliminata',
-			'collections.deleteFailed' => 'Impossibile eliminare la raccolta',
-			'collections.deleteFailedWithError' => ({required Object error}) => 'Impossibile eliminare la raccolta: ${error}',
-			'collections.selectCollection' => 'Seleziona raccolta',
-			'collections.collectionName' => 'Nome raccolta',
-			'collections.enterCollectionName' => 'Inserisci nome raccolta',
-			'collections.addedToCollection' => 'Elemento aggiunto alla raccolta',
-			'collections.errorAddingToCollection' => 'Impossibile aggiungere l\'elemento alla raccolta',
-			'collections.created' => 'Raccolta creata',
-			'collections.removeFromCollection' => 'Rimuovi dalla raccolta',
-			'collections.removeFromCollectionConfirm' => ({required Object title}) => 'Rimuovere "${title}" da questa raccolta?',
-			'collections.removedFromCollection' => 'Elemento rimosso dalla raccolta',
-			'collections.removeFromCollectionFailed' => 'Impossibile rimuovere dalla raccolta',
-			'collections.removeFromCollectionError' => ({required Object error}) => 'Errore durante la rimozione dell\'elemento dalla raccolta: ${error}',
-			'collections.searchCollections' => 'Cerca raccolte...',
-			'playlists.title' => 'Playlist',
-			'playlists.playlist' => 'Playlist',
-			'playlists.noPlaylists' => 'Nessuna playlist trovata',
-			'playlists.create' => 'Crea playlist',
-			'playlists.playlistName' => 'Nome playlist',
-			'playlists.enterPlaylistName' => 'Inserisci nome playlist',
-			'playlists.delete' => 'Elimina playlist',
-			'playlists.removeItem' => 'Rimuovi dalla playlist',
-			'playlists.smartPlaylist' => 'Playlist intelligente',
-			'playlists.itemCount' => ({required Object count}) => '${count} elementi',
-			'playlists.oneItem' => '1 elemento',
-			'playlists.emptyPlaylist' => 'Questa playlist è vuota',
-			'playlists.deleteConfirm' => 'Eliminare playlist?',
-			'playlists.deleteMessage' => ({required Object name}) => 'Sei sicuro di voler eliminare "${name}"?',
-			'playlists.created' => 'Playlist creata',
-			'playlists.deleted' => 'Playlist eliminata',
-			'playlists.itemAdded' => 'Aggiunto alla playlist',
-			'playlists.itemRemoved' => 'Rimosso dalla playlist',
-			'playlists.selectPlaylist' => 'Seleziona playlist',
-			'playlists.searchPlaylists' => 'Cerca playlist...',
-			'playlists.errorCreating' => 'Impossibile creare la playlist',
-			'playlists.errorDeleting' => 'Impossibile eliminare la playlist',
-			'playlists.errorLoading' => 'Impossibile caricare le playlist',
-			'playlists.errorAdding' => 'Impossibile aggiungere l\'elemento alla playlist',
-			'playlists.errorReordering' => 'Impossibile riordinare l\'elemento della playlist',
-			'playlists.errorRemoving' => 'Impossibile rimuovere l\'elemento dalla playlist',
-			'music.goToAlbum' => 'Vai all\'album',
-			'music.goToArtist' => 'Vai all\'artista',
-			'music.instantMix' => 'Mix istantaneo',
-			'music.playNext' => 'Riproduci come prossimo',
-			'music.addToQueue' => 'Aggiungi alla coda',
-			'music.discNumber' => ({required Object n}) => 'Disco ${n}',
-			'music.trackCount' => ({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('it'))(n, one: '${n} brano', other: '${n} brani', ), 
-			'music.nowPlaying' => 'In riproduzione',
-			'music.playingFrom' => ({required Object title}) => 'Riproduzione da ${title}',
-			'music.queue' => 'Coda',
-			'music.clearQueue' => 'Svuota la coda',
-			'music.lyrics' => 'Testo',
-			'music.noLyrics' => 'Nessun testo disponibile',
-			'music.sleepTimer' => 'Timer di spegnimento',
-			'music.sleepTimerEndOfTrack' => 'Fine del brano',
-			'music.sleepTimerMinutes' => ({required Object n}) => '${n} minuti',
-			'music.stopPlayback' => 'Interrompi riproduzione',
-			'music.previousTrack' => 'Brano precedente',
-			'music.nextTrack' => 'Brano successivo',
-			'music.repeat' => 'Ripeti',
-			'music.repeatAll' => 'Ripeti tutto',
-			'music.repeatOne' => 'Ripeti il brano',
-			'music.instantMixNoServer' => 'Nessun server disponibile per un mix istantaneo',
-			'music.instantMixFailed' => 'Impossibile caricare il mix istantaneo',
-			'music.instantMixEmpty' => 'Il mix istantaneo non ha prodotto alcun brano',
-			'music.noAudioUrl' => ({required Object track}) => 'Nessun URL audio disponibile per ${track}',
-			'music.discography.singlesAndEps' => 'Singoli ed EP',
-			'music.discography.live' => 'Dal vivo',
-			'music.discography.compilations' => 'Compilation',
-			'watchTogether.title' => 'Guarda insieme',
-			'watchTogether.description' => 'Guarda contenuti in sincronia con amici e familiari',
-			'watchTogether.createRoom' => 'Crea stanza',
-			'watchTogether.creatingRoom' => 'Creazione della stanza...',
-			'watchTogether.joinRoom' => 'Unisciti a una stanza',
-			'watchTogether.joiningRoom' => 'Ingresso nella stanza...',
-			'watchTogether.connecting' => 'Connessione in corso...',
-			'watchTogether.relayPublic' => 'Le stanze usano i relay pubblici di Open Watch Party.',
-			'watchTogether.relayCustom' => ({required Object url}) => 'Le stanze usano il tuo relay all\'indirizzo ${url}.',
-			'watchTogether.recentRooms' => 'Stanze usate di recente',
-			'watchTogether.roomActions' => 'Azioni della stanza',
-			'watchTogether.renameRoom' => 'Rinomina stanza',
-			'watchTogether.removeRoom' => 'Rimuovi',
-			'watchTogether.enterRoomCode' => 'Inserisci il codice di 6 caratteri ricevuto dall\'host.',
-			'watchTogether.roomCode' => 'Codice stanza',
-			'watchTogether.paste' => 'Incolla',
-			'watchTogether.noCodeInClipboard' => 'Gli appunti non contengono un codice stanza',
-			'watchTogether.copyCode' => 'Copia codice',
-			'watchTogether.codeCopied' => 'Codice stanza copiato',
-			'watchTogether.shareInvite' => 'Condividi invito',
-			'watchTogether.inviteCopied' => 'Invito copiato. Incollalo in un messaggio.',
-			'watchTogether.inviteMessage' => ({required Object code}) => 'Unisciti alla mia stanza di Guarda insieme su Plezy: apri «Guarda insieme», scegli «Unisciti a una stanza» e inserisci ${code}.',
-			'watchTogether.openSessionControls' => 'Apri i controlli della sessione di Guarda insieme',
-			'watchTogether.reconnecting' => 'Riconnessione...',
-			'watchTogether.reconnectingDescription' => 'La connessione si è interrotta. Rientrerai automaticamente nella stanza.',
-			'watchTogether.connected' => 'Connesso',
-			'watchTogether.disconnected' => 'Disconnesso',
-			'watchTogether.youAreHost' => 'Sei l\'host',
-			'watchTogether.hostedBy' => ({required Object name}) => 'Ospitata da ${name}',
-			'watchTogether.hostControlsPlayback' => 'L\'host controlla la riproduzione',
-			'watchTogether.anyoneCanControl' => 'Tutti possono controllare la riproduzione',
-			'watchTogether.roomLocked' => 'Stanza bloccata',
-			'watchTogether.nowPlaying' => 'In riproduzione',
-			'watchTogether.nothingPlaying' => 'Nessuna riproduzione in corso',
-			'watchTogether.nothingPlayingHost' => 'Riproduci qualcosa da una qualsiasi libreria per condividerlo con la stanza.',
-			'watchTogether.nothingPlayingGuest' => 'Quando l\'host avvia qualcosa, si aprirà qui.',
-			'watchTogether.notShareable' => 'Questo video non ha corrispondenze nel catalogo, quindi può riprodurlo solo chi ha accesso allo stesso server.',
-			'watchTogether.searching' => 'Ricerca di questo video nelle tue librerie...',
-			'watchTogether.yourCopy' => 'La tua copia',
-			'watchTogether.sharingYourCopy' => 'Stai condividendo la tua copia',
-			'watchTogether.playingOtherLength' => ({required Object difference}) => 'Riproduzione della tua copia, ${difference}',
-			'watchTogether.mismatchTitle' => 'La tua copia ha una durata diversa',
-			'watchTogether.mismatchDescription' => ({required Object difference}) => 'La tua copia più simile dura ${difference} rispetto al video della stanza. Potrebbe trattarsi di un altro montaggio o di un\'altra versione.',
-			'watchTogether.playAnyway' => 'Riproduci comunque',
-			'watchTogether.chooseAnotherCopy' => 'Scegli un\'altra copia',
-			'watchTogether.dontPlay' => 'Non riprodurre',
-			'watchTogether.unavailableTitle' => 'Non hai questo video',
-			'watchTogether.unavailableDescription' => 'Plezy non l\'ha trovato nelle tue librerie. Scegli tu una copia o cerca di nuovo.',
-			'watchTogether.chooseCopy' => 'Scegli una copia',
-			'watchTogether.searchAgain' => 'Cerca di nuovo',
-			'watchTogether.noCandidates' => 'Nessuna copia trovata nelle tue librerie.',
-			'watchTogether.choiceFailed' => 'Impossibile riprodurre questa copia per la stanza',
-			'watchTogether.lengthLonger' => ({required Object duration}) => '${duration} in più',
-			'watchTogether.lengthShorter' => ({required Object duration}) => '${duration} in meno',
-			'watchTogether.lengthSame' => 'Stessa durata',
-			'watchTogether.lengthUnknown' => 'Durata sconosciuta',
-			'watchTogether.joinCurrentPlayback' => 'Unisciti alla riproduzione corrente',
-			'watchTogether.joinCurrentPlaybackDescription' => 'Torna a ciò che l\'host sta guardando in questo momento',
-			'watchTogether.stopMedia' => 'Interrompi il video per tutti',
-			'watchTogether.syncOffset' => 'Offset di sincronizzazione',
-			'watchTogether.syncOffsetDescription' => 'Sposta il tuo video se è in anticipo o in ritardo rispetto alla stanza.',
-			'watchTogether.offsetHint' => ({required Object difference}) => 'La tua copia dura ${difference} rispetto al video della stanza.',
-			'watchTogether.applyDifference' => ({required Object offset}) => 'Usa ${offset}',
-			'watchTogether.offsetMinusSecond' => '-1 s',
-			'watchTogether.offsetMinusTenth' => '-100 ms',
-			'watchTogether.offsetPlusTenth' => '+100 ms',
-			'watchTogether.offsetPlusSecond' => '+1 s',
-			'watchTogether.participants' => 'Partecipanti',
-			'watchTogether.participantCount' => ({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('it'))(n, one: '${n} partecipante', other: '${n} partecipanti', ), 
-			'watchTogether.hostBadge' => 'HOST',
-			'watchTogether.nameYou' => ({required Object name}) => '${name} (tu)',
-			'watchTogether.playerIdle' => 'Inattivo',
-			'watchTogether.playerLoading' => 'Caricamento',
-			'watchTogether.playerReady' => 'Pronto',
-			'watchTogether.playerBuffering' => 'Buffering',
-			'watchTogether.matchSearching' => 'Ricerca in corso',
-			'watchTogether.matchMatched' => 'Ha il video',
-			'watchTogether.matchMismatched' => 'Durata diversa',
-			'watchTogether.matchUnavailable' => 'Non ha il video',
-			'watchTogether.participantOffset' => ({required Object offset}) => 'Offset ${offset}',
-			'watchTogether.makeHost' => 'Rendi host',
-			'watchTogether.makeHostQuestion' => 'Trasferire il ruolo di host?',
-			'watchTogether.makeHostConfirm' => ({required Object name}) => '${name} controllerà la riproduzione e guiderà la sessione per tutti.',
-			'watchTogether.transfer' => 'Trasferisci',
-			'watchTogether.removeParticipant' => 'Rimuovi dalla stanza',
-			'watchTogether.removeParticipantQuestion' => ({required Object name}) => 'Rimuovere ${name}?',
-			'watchTogether.removeParticipantConfirm' => ({required Object name}) => '${name} uscirà dalla stanza. Potrà rientrare con il codice, a meno che tu non blocchi la stanza.',
-			'watchTogether.remove' => 'Rimuovi',
-			'watchTogether.roomSettings' => 'Impostazioni della stanza',
-			'watchTogether.letEveryoneControl' => 'Consenti a tutti di controllare la riproduzione',
-			'watchTogether.lockRoom' => 'Blocca stanza',
-			'watchTogether.lockRoomDescription' => 'Nessun nuovo partecipante può entrare',
-			'watchTogether.leaveRoom' => 'Abbandona stanza',
-			'watchTogether.leaveRoomQuestion' => 'Abbandonare la stanza?',
-			'watchTogether.leaveRoomConfirm' => 'Potrai rientrare con il codice della stanza.',
-			'watchTogether.leave' => 'Abbandona',
-			'watchTogether.endRoom' => 'Chiudi stanza',
-			'watchTogether.endRoomQuestion' => 'Chiudere la stanza?',
-			'watchTogether.endRoomConfirm' => 'La stanza verrà chiusa per tutti.',
-			'watchTogether.end' => 'Termina',
-			'watchTogether.playBlockedTitle' => 'La riproduzione non è partita',
-			'watchTogether.playBlockedDescription' => 'Premi Riproduci per iniziare a guardare con la stanza.',
-			'watchTogether.notices.pressedPlay' => ({required Object name}) => '${name} ha premuto Riproduci',
-			'watchTogether.notices.playbackStarted' => 'Riproduzione avviata',
-			'watchTogether.notices.paused' => ({required Object name}) => '${name} ha messo in pausa',
-			'watchTogether.notices.playbackPaused' => 'Riproduzione in pausa',
-			'watchTogether.notices.jumpedTo' => ({required Object name, required Object position}) => '${name} è passato a ${position}',
-			'watchTogether.notices.roomJumpedTo' => ({required Object position}) => 'Riproduzione spostata a ${position}',
-			'watchTogether.notices.changedSpeed' => ({required Object name, required Object speed}) => '${name} ha impostato la velocità a ${speed}',
-			'watchTogether.notices.speedChanged' => ({required Object speed}) => 'Velocità impostata a ${speed}',
-			'watchTogether.notices.startedMedia' => ({required Object name, required Object title}) => '${name} ha avviato ${title}',
-			'watchTogether.notices.mediaStarted' => ({required Object title}) => 'In riproduzione: ${title}',
-			'watchTogether.notices.stoppedMedia' => ({required Object name}) => '${name} ha interrotto il video',
-			'watchTogether.notices.mediaStopped' => 'Il video è stato interrotto',
-			'watchTogether.notices.waitingFor' => ({required Object name}) => 'In attesa di ${name}...',
-			'watchTogether.notices.waitingForSomeone' => 'In attesa che qualcuno si metta in pari...',
-			'watchTogether.notices.finished' => 'Terminato',
-			'watchTogether.notices.hostChangedTo' => ({required Object name}) => '${name} è ora l\'host',
-			'watchTogether.notices.youAreNowHost' => 'Ora sei l\'host',
-			'watchTogether.notices.joined' => ({required Object name}) => '${name} si è unito',
-			'watchTogether.notices.left' => ({required Object name}) => '${name} se ne è andato',
-			'watchTogether.notices.controlRefused' => 'Solo l\'host può controllare la riproduzione',
-			'watchTogether.notices.searchFailed' => 'Su alcuni server non è stato possibile cercare il video della stanza',
-			'watchTogether.notices.playBlocked' => 'Premi Riproduci per iniziare',
-			'watchTogether.notices.shareFailed' => 'Impossibile condividere questo video con la stanza',
-			'watchTogether.notices.downloadNotShared' => 'I download non vengono condivisi con la stanza mentre il loro server è offline',
-			'watchTogether.notices.openFailed' => 'Impossibile aprire il video della stanza',
-			'watchTogether.ended.ended' => 'L\'host ha chiuso la stanza',
-			'watchTogether.ended.kicked' => 'Sei stato rimosso dalla stanza',
-			'watchTogether.ended.expired' => 'La stanza è scaduta',
-			'watchTogether.ended.replaced' => 'Sei entrato in questa stanza da un altro dispositivo',
-			'watchTogether.ended.lost' => 'Connessione alla stanza persa',
-			'watchTogether.errors.invalidCode' => 'Questo non è un codice stanza. I codici sono composti da 6 lettere e cifre, senza 0, 1, I, L o O.',
-			'watchTogether.errors.roomNotFound' => 'Nessuna stanza ha questo codice. Potrebbe essere stata chiusa.',
-			'watchTogether.errors.roomFull' => 'La stanza è piena.',
-			'watchTogether.errors.roomLocked' => 'L\'host ha bloccato la stanza.',
-			'watchTogether.errors.relayFull' => 'Guarda insieme è momentaneamente sovraccarico. Riprova più tardi.',
-			'watchTogether.errors.unreachable' => 'Impossibile raggiungere il relay di Guarda insieme. Controlla la connessione.',
-			'watchTogether.errors.rateLimited' => 'Troppi tentativi. Attendi un momento e riprova.',
-			'watchTogether.errors.clientBlocked' => 'Questa versione di Plezy non può usare il relay. Aggiorna l\'app.',
-			'watchTogether.errors.forbidden' => 'Solo l\'host può farlo.',
-			'watchTogether.errors.notInRoom' => 'Non sei in una stanza.',
-			'watchTogether.errors.alreadyInRoom' => 'Sei già in una stanza.',
-			'watchTogether.errors.resumeFailed' => 'Impossibile rientrare nella stanza.',
-			'watchTogether.errors.unsupported' => 'Il relay non supporta questa funzione.',
-			'watchTogether.errors.generic' => 'Si è verificato un problema. Riprova.',
-			'watchTogether.untitledEpisode' => ({required Object number}) => 'Episodio ${number}',
-			'downloads.title' => 'Download',
-			'downloads.manage' => 'Gestisci',
-			'downloads.tvShows' => 'Serie TV',
-			'downloads.movies' => 'Film',
-			'downloads.music' => 'Musica',
-			'downloads.tracksQueued' => ({required Object count}) => '${count} brani in coda per il download',
-			'downloads.noDownloads' => 'Ancora nessun download',
-			'downloads.noDownloadsDescription' => 'I contenuti scaricati appariranno qui per la visualizzazione offline',
-			'downloads.downloadNow' => 'Scarica',
-			'downloads.deleteDownload' => 'Elimina il download',
-			'downloads.retryDownload' => 'Riprova il download',
-			'downloads.downloadQueued' => 'Download in coda',
-			'downloads.downloadResumed' => 'Download ripreso',
-			'downloads.serverErrorBitrate' => 'Errore server: il file può superare il limite di bitrate remoto',
-			'downloads.storageFull' => 'I download sono stati interrotti per preservare lo spazio disponibile. Libera spazio o scegli un’altra posizione di download, quindi riprova.',
-			'downloads.storageUnavailable' => 'I download sono stati interrotti perché non è stato possibile verificare lo spazio di archiviazione disponibile. Controlla la posizione di download e riprova.',
-			'downloads.episodesQueued' => ({required Object count}) => '${count} episodi in coda per il download',
-			'downloads.downloadDeleted' => 'Download eliminato',
-			'downloads.deleteConfirm' => ({required Object title}) => 'Eliminare "${title}" da questo dispositivo?',
-			'downloads.deleteCollectionDownloads' => 'Elimina i download',
-			'downloads.deleteCollectionDownloadsConfirm' => ({required Object title}) => 'Eliminare tutti i download di "${title}" da questo dispositivo?',
-			'downloads.collectionDownloadsDeleted' => 'Download eliminati',
-			'downloads.cancelledDownloadTitle' => 'Download annullato',
-			'downloads.cancelledDownloadMessage' => 'Questo download è stato annullato. Cosa vuoi fare?',
-			'downloads.allEpisodesAlreadyDownloaded' => 'Tutti gli episodi sono già stati scaricati',
-			'downloads.resumeDownload' => 'Riprendi il download',
-			'downloads.cancelledDownload' => 'Download annullato',
-			'downloads.syncingFile' => ({required Object file, required Object status}) => '${file} (sincronizzazione ${status})',
-			'downloads.downloadedFileClickToComplete' => ({required Object file}) => '${file} scaricato — fai clic per completare',
-			'downloads.partialDownloadClickToComplete' => 'Scaricato parzialmente — fai clic per completare',
-			'downloads.deleting' => 'Eliminazione...',
-			'downloads.deletingWithProgress' => ({required Object title, required Object current, required Object total}) => 'Eliminazione di ${title}... (${current} di ${total})',
-			'downloads.queuedTooltip' => 'In coda',
-			'downloads.queuedFilesTooltip' => ({required Object files}) => 'In coda: ${files}',
-			'downloads.downloadingTooltip' => 'Download in corso...',
-			'downloads.downloadingFilesTooltip' => ({required Object files}) => 'Download di ${files}',
-			'downloads.noDownloadsTree' => 'Nessun download',
-			'downloads.pauseAll' => 'Metti tutto in pausa',
-			'downloads.resumeAll' => 'Riprendi tutto',
-			'downloads.retryAll' => 'Riprova tutti',
-			'downloads.retryFailed' => 'Riprova i download non riusciti',
-			'downloads.deleteAll' => 'Elimina tutto',
-			'downloads.selectVersion' => 'Seleziona la versione',
-			'downloads.allEpisodes' => 'Tutti gli episodi',
-			'downloads.unwatchedOnly' => 'Solo non visti',
-			'downloads.nextNUnwatched' => ({required Object count}) => 'Prossimi ${count} episodi non visti',
-			'downloads.customAmount' => 'Quantità personalizzata...',
-			'downloads.includeSpecials' => 'Includi gli speciali',
-			'downloads.howManyEpisodes' => 'Quanti episodi?',
-			'downloads.invalidEpisodeCount' => 'Inserisci un numero di episodi valido.',
-			'downloads.keepSynced' => 'Mantieni sincronizzato',
-			'downloads.downloadOnce' => 'Scarica una volta',
-			'downloads.keepNUnwatched' => ({required Object count}) => 'Mantieni ${count} episodi non visti',
-			'downloads.editSyncRule' => 'Modifica regola di sincronizzazione',
-			'downloads.removeSyncRule' => 'Rimuovi regola di sincronizzazione',
-			'downloads.removeSyncRuleConfirm' => ({required Object title}) => 'Interrompere la sincronizzazione di "${title}"? Gli episodi scaricati verranno mantenuti.',
-			'downloads.removeListSyncRuleConfirm' => ({required Object title}) => 'Interrompere la sincronizzazione di "${title}"?',
-			'downloads.deleteSyncRuleDownloads' => 'Elimina anche i download associati',
-			'downloads.deleteSyncRuleDownloadsDescription' => 'I download usati da un\'altra regola di sincronizzazione o da un altro profilo verranno conservati.',
-			'downloads.syncRuleCreated' => ({required Object count}) => 'Regola di sincronizzazione creata — ${count} episodi non visti mantenuti',
-			'downloads.syncRuleUpdated' => 'Regola di sincronizzazione aggiornata',
-			'downloads.syncRuleRemoved' => 'Regola di sincronizzazione rimossa',
-			'downloads.syncRuleAndDownloadsRemoved' => 'Regola di sincronizzazione e download associati rimossi',
-			'downloads.syncRuleCleanupBusy' => 'Le regole di sincronizzazione sono in fase di aggiornamento. Riprova tra un momento.',
-			'downloads.syncRuleCleanupUnavailable' => 'Non è stato possibile identificare in sicurezza i download associati. Riconnetti il server e riprova, oppure rimuovi la regola senza eliminare i download.',
-			'downloads.syncedNewEpisodes' => ({required Object count, required Object title}) => '${count} nuovi episodi sincronizzati per ${title}',
-			'downloads.activeSyncRules' => 'Regole di sincronizzazione',
-			'downloads.noSyncRules' => 'Nessuna regola di sincronizzazione',
-			'downloads.manageSyncRule' => 'Gestisci sincronizzazione',
-			'downloads.editEpisodeCount' => 'Numero di episodi',
-			'downloads.editSyncFilter' => 'Filtro di sincronizzazione',
-			'downloads.syncAllItems' => 'Sincronizzazione di tutti gli elementi',
-			'downloads.syncUnwatchedItems' => 'Sincronizzazione degli elementi non visti',
-			'downloads.syncRuleServerContext' => ({required Object server, required Object status}) => 'Server: ${server} • ${status}',
-			'downloads.syncRuleAvailable' => 'Disponibile',
-			'downloads.syncRuleOffline' => 'Offline',
-			'downloads.syncRuleSignInRequired' => 'Accesso richiesto',
-			'downloads.syncRuleAccessDenied' => 'Accesso negato',
-			'downloads.syncRuleNotAvailableForProfile' => 'Non disponibile per il profilo attuale',
-			'downloads.syncRuleUnknownServer' => 'Server sconosciuto',
-			'downloads.syncRuleListCreated' => 'Regola di sincronizzazione creata',
-			'downloads.backgroundWarning.bannerBlocked' => 'I download si interromperanno quando esci dall’app',
-			'downloads.backgroundWarning.bannerDegraded' => 'I download in background potrebbero essere limitati',
-			'downloads.backgroundWarning.bannerAction' => 'Dettagli',
-			'downloads.backgroundWarning.sheetTitle' => 'I download in background sono bloccati',
-			'downloads.backgroundWarning.sheetTitleDegraded' => 'I download in background potrebbero essere limitati',
-			'downloads.backgroundWarning.sheetIntro' => 'Android impedisce a Plezy di scaricare in modo affidabile in background.',
-			'downloads.backgroundWarning.sheetIntroDegraded' => 'Il dispositivo limita i momenti in cui Plezy può scaricare in background.',
-			'downloads.backgroundWarning.reasonBackgroundRestricted' => 'L’uso in background di Plezy è limitato. Nelle impostazioni della batteria o dell’uso in background, seleziona «Senza restrizioni».',
-			'downloads.backgroundWarning.reasonStandbyRestricted' => 'Android ha messo Plezy in uno stato di standby con restrizioni. Imposta l’uso della batteria su «Senza restrizioni».',
-			'downloads.backgroundWarning.reasonDownloadChannelBlocked' => 'Le notifiche dei download sono disattivate, quindi l’avanzamento e i controlli potrebbero non essere disponibili.',
-			'downloads.backgroundWarning.reasonNotificationsDisabled' => 'Le notifiche sono disattivate. Su Android 13 o versioni successive sono necessarie per i download prolungati in background.',
-			'downloads.backgroundWarning.reasonDataSaver' => 'Il Risparmio dati è attivo e blocca i download in background tramite dati mobili. I download dovrebbero comunque funzionare su Wi-Fi.',
-			'downloads.backgroundWarning.reasonOemUnknown' => 'I download si sono interrotti più volte mentre Plezy era in background. Controlla le impostazioni della batteria o dell’uso in background di Plezy.',
-			'downloads.backgroundWarning.openSettings' => 'Apri le impostazioni',
-			'downloads.backgroundWarning.stillNotWorking' => 'Guida specifica per il dispositivo',
-			'downloads.backgroundWarning.stillNotWorkingDescription' => 'Consulta la procedura per il tuo dispositivo oppure invia un log da Impostazioni › Visualizza i log se il problema persiste.',
-			'downloads.backgroundWarning.dialogTitle' => 'I download potrebbero non terminare',
-			'downloads.backgroundWarning.dialogDownloadAnyway' => 'Scarica comunque',
-			'downloads.backgroundWarning.dialogFixFirst' => 'Risolvi prima',
-			'downloads.backgroundWarning.statusTile' => 'Download in background',
-			'downloads.backgroundWarning.statusOk' => 'Esecuzione in background consentita',
-			'downloads.backgroundWarning.statusBlocked' => 'Bloccati dalle impostazioni di sistema',
-			'downloads.backgroundWarning.statusDegraded' => 'Limitati dalle impostazioni di sistema',
-			'downloads.backgroundWarning.statusUnknown' => 'Non ancora verificato',
-			'downloads.backgroundWarning.settingsUnavailable' => 'Impossibile aprire le impostazioni di sistema su questo dispositivo',
-			'downloads.backgroundWarning.linkUnavailable' => 'Impossibile aprire dontkillmyapp.com su questo dispositivo',
-			'downloads.options' => 'Opzioni download',
-			'downloads.groupings.library' => 'Libreria',
-			'downloads.groupings.collections' => 'Raccolte',
-			'downloads.unknownLibrary' => 'Libreria sconosciuta',
-			'downloads.unknownShow' => 'Serie sconosciuta',
-			'downloads.unknownSeason' => 'Stagione sconosciuta',
-			'downloads.unknownAlbum' => 'Album sconosciuto',
-			'downloads.completedOfTotal' => ({required Object completed, required Object total}) => '${completed}/${total} completati',
-			'downloads.errorFileNotFound' => 'File non trovato (404)',
-			'downloads.errorDownloadNotAllowed' => 'Download non consentito dal server (403)',
-			'downloads.errorDownloadFailed' => 'Download non riuscito',
-			'downloads.errorDownloadFailedWithReason' => ({required Object reason}) => 'Download non riuscito: ${reason}',
-			'downloads.errorHttpStatus' => ({required Object status}) => 'Download non riuscito (HTTP ${status})',
-			'downloads.errorPostProcessing' => ({required Object reason}) => 'Post-elaborazione non riuscita: ${reason}',
-			'downloads.reasonFileNotSaved' => 'non è stato possibile salvare il file su questo dispositivo',
-			'downloads.reasonCannotResume' => 'non è stato possibile riprendere il download parziale',
-			'downloads.reasonDeviceStorageFull' => 'lo spazio di archiviazione di questo dispositivo è esaurito',
-			'downloads.notificationDownloading' => 'Download in corso...',
-			'downloads.notificationComplete' => 'Download completato',
-			'downloads.notificationPaused' => 'Download in pausa',
-			'shaders.title' => 'Shader',
-			'shaders.noShaderDescription' => 'Nessun miglioramento video',
-			'shaders.nvscalerDescription' => 'Ridimensionamento NVIDIA per video più nitido',
-			'shaders.artcnnVariantNeutral' => 'Neutro',
-			'shaders.artcnnVariantDenoise' => 'Riduzione rumore',
-			'shaders.artcnnVariantDenoiseSharpen' => 'Riduzione rumore + nitidezza',
-			'shaders.qualityFast' => 'Veloce',
-			'shaders.qualityHQ' => 'Alta qualità',
-			'shaders.mode' => 'Modalità',
-			'shaders.importShader' => 'Importa shader',
-			'shaders.customShaderDescription' => 'Shader GLSL personalizzato',
-			'shaders.shaderImported' => 'Shader importato',
-			'shaders.shaderImportFailed' => 'Impossibile importare lo shader',
-			'shaders.deleteShader' => 'Elimina shader',
-			'shaders.deleteShaderConfirm' => ({required Object name}) => 'Eliminare "${name}"?',
-			'companionRemote.title' => 'Telecomando',
-			'companionRemote.connectedTo' => ({required Object name}) => 'Connesso a ${name}',
-			'companionRemote.unknownDevice' => 'Dispositivo sconosciuto',
-			'companionRemote.session.startingServer' => 'Avvio del server remoto...',
-			'companionRemote.session.hostAddress' => 'Indirizzo host',
-			'companionRemote.session.connected' => 'Connesso',
-			'companionRemote.session.serverRunning' => 'Server remoto attivo',
-			'companionRemote.session.serverStopped' => 'Server remoto arrestato',
-			'companionRemote.session.serverRunningDescription' => 'I dispositivi mobili della tua rete possono connettersi a questa app',
-			'companionRemote.session.serverStoppedDescription' => 'Avvia il server per consentire ai dispositivi mobili di connettersi',
-			'companionRemote.session.usePhoneToControl' => 'Usa il tuo dispositivo mobile per controllare questa app',
-			'companionRemote.session.startServer' => 'Avvia server',
-			'companionRemote.session.stopServer' => 'Arresta server',
-			'companionRemote.session.minimize' => 'Riduci',
-			'companionRemote.session.manualAddressHint' => 'Indirizzo di connessione manuale:',
-			'companionRemote.pairing.discoveryDescription' => 'I dispositivi Plezy con lo stesso account Plex appaiono qui',
-			'companionRemote.pairing.hostAddressHint' => '192.168.1.100:48632',
-			'companionRemote.pairing.connecting' => 'Connessione...',
-			'companionRemote.pairing.searchingForDevices' => 'Ricerca dispositivi...',
-			'companionRemote.pairing.noDevicesFound' => 'Nessun dispositivo trovato nella tua rete',
-			'companionRemote.pairing.noDevicesHint' => 'Apri Plezy sul computer e usa la stessa rete Wi-Fi',
-			'companionRemote.pairing.availableDevices' => 'Dispositivi disponibili',
-			'companionRemote.pairing.manualConnection' => 'Connessione manuale',
-			'companionRemote.pairing.cryptoInitFailed' => 'Impossibile avviare la connessione sicura. Accedi prima a Plex.',
-			'companionRemote.pairing.validationHostRequired' => 'Inserisci l\'indirizzo host',
-			'companionRemote.pairing.validationHostFormat' => 'Il formato deve essere IP:porta (es. 192.168.1.100:48632)',
-			'companionRemote.pairing.connectionTimedOut' => 'Tempo scaduto per la connessione. Usa la stessa rete su entrambi i dispositivi.',
-			'companionRemote.pairing.sessionNotFound' => 'Dispositivo non trovato. Assicurati che Plezy sia in esecuzione sull\'host.',
-			'companionRemote.pairing.authFailed' => 'Autenticazione non riuscita. Entrambi i dispositivi devono usare lo stesso account Plex.',
-			'companionRemote.pairing.failedToConnect' => ({required Object error}) => 'Connessione non riuscita: ${error}',
-			'companionRemote.remote.disconnectConfirm' => 'Vuoi disconnetterti dalla sessione remota?',
-			'companionRemote.remote.reconnecting' => 'Riconnessione...',
-			'companionRemote.remote.attemptOf' => ({required Object current}) => 'Tentativo ${current} di 5',
-			'companionRemote.remote.retryNow' => 'Riprova ora',
-			'companionRemote.remote.tabRemote' => 'Telecomando',
-			'companionRemote.remote.tabPlay' => 'Riproduci',
-			'companionRemote.remote.tabMore' => 'Altro',
-			'companionRemote.remote.menu' => 'Menu',
-			'companionRemote.remote.tabNavigation' => 'Navigazione',
-			'companionRemote.remote.tabDiscover' => 'Esplora',
-			'companionRemote.remote.tabLibraries' => 'Librerie',
-			'companionRemote.remote.tabSearch' => 'Cerca',
-			'companionRemote.remote.tabDownloads' => 'Download',
-			'companionRemote.remote.tabSettings' => 'Impostazioni',
-			'companionRemote.remote.previous' => 'Precedente',
-			'companionRemote.remote.playPause' => 'Riproduci/Pausa',
-			'companionRemote.remote.next' => 'Successivo',
-			'companionRemote.remote.seekBack' => 'Indietro',
-			'companionRemote.remote.stop' => 'Interrompi',
-			'companionRemote.remote.seekForward' => 'Avanti',
-			'companionRemote.remote.volume' => 'Volume',
-			'companionRemote.remote.volumeDown' => 'Abbassa',
-			'companionRemote.remote.volumeUp' => 'Alza',
-			'companionRemote.remote.fullscreen' => 'Schermo intero',
-			'companionRemote.remote.subtitles' => 'Sottotitoli',
-			'companionRemote.remote.audio' => 'Audio',
-			'companionRemote.remote.searchHint' => 'Cerca sul computer...',
-			'companionRemote.errors.noNetworkInterface' => 'Nessuna interfaccia di rete trovata',
-			'companionRemote.errors.authenticationFailed' => 'Autenticazione non riuscita',
-			'companionRemote.errors.serverStartFailed' => ({required Object error}) => 'Impossibile avviare il server remoto: ${error}',
-			'companionRemote.errors.commandFailed' => ({required Object error}) => 'Impossibile inviare il comando remoto: ${error}',
-			'companionRemote.errors.joinTimedOut' => 'Tempo scaduto durante la partecipazione alla sessione',
-			'companionRemote.errors.failedToConnectAnyAddress' => 'Impossibile connettersi a qualsiasi indirizzo',
-			'companionRemote.errors.connectionLostAfterAttempts' => ({required Object attempts}) => 'Connessione persa dopo ${attempts} tentativi',
-			'companionRemote.errors.connectionLost' => 'Connessione persa',
-			'companionRemote.closedBeforeAuth' => 'La connessione si è chiusa prima dell\'autenticazione',
-			'videoSettings.playbackSpeed' => 'Velocità di riproduzione',
-			'videoSettings.normalSpeed' => 'Normale',
-			'videoSettings.sleepTimerActive' => ({required Object duration}) => 'Attivo (${duration})',
-			'videoSettings.zoom' => 'Zoom',
-			'videoSettings.sleepTimer' => 'Timer di spegnimento',
-			'videoSettings.audioSync' => 'Sincronizzazione audio',
-			'videoSettings.subtitleSync' => 'Sincronizzazione sottotitoli',
-			'videoSettings.hdr' => 'HDR',
-			'videoSettings.hdrUnsupported' => 'HDR non è disponibile qui: questo compositore desktop o questa uscita video non possono gestirlo.',
-			'videoSettings.hdrToneMapping' => 'Mappatura dei toni HDR',
-			'videoSettings.hdrToneMappingCompositor' => 'Compositore',
-			'videoSettings.hdrToneMappingCompositorDescription' => 'Trasmette i metadati HDR della sorgente e lascia che il compositore desktop esegua la mappatura.',
-			'videoSettings.hdrToneMappingPlayer' => 'Lettore',
-			'videoSettings.hdrToneMappingPlayerDescription' => 'Esegue nel lettore la mappatura in base alla luminosità di picco dello schermo, quindi comunica il risultato al compositore.',
-			'videoSettings.hdrToneMappingFailed' => 'Impossibile modificare la mappatura dei toni HDR: la modalità precedente è ancora attiva.',
-			'videoSettings.audioOutput' => 'Uscita audio',
-			'videoSettings.performanceOverlay' => 'Overlay prestazioni',
-			'videoSettings.audioOutputDolbyAtmos' => 'Dolby Atmos',
-			'videoSettings.audioOutputDolbyAudio' => 'Dolby Audio',
-			'videoSettings.audioOutputSurround' => 'Surround',
-			'videoSettings.audioOutputSpatial' => 'Audio spaziale',
-			'videoSettings.audioOutputStereo' => 'Stereo',
-			'videoSettings.audioNormalization' => 'Normalizza il volume',
-			'videoSettings.audioNormalizationDisablesPassthrough' => 'Decodifica l\'audio in PCM; il passthrough è disattivato mentre questa opzione è attiva',
-			'performanceOverlay.color' => 'Colore',
-			'performanceOverlay.performance' => 'Prestazioni',
-			'performanceOverlay.buffer' => 'Buffer',
-			'performanceOverlay.app' => 'App',
-			'performanceOverlay.decoder' => 'Decoder',
-			'performanceOverlay.rawDecoder' => 'Decoder raw',
-			'performanceOverlay.tunneling' => 'Tunneling',
-			'performanceOverlay.passthrough' => 'Passthrough',
-			'performanceOverlay.aspect' => 'Proporzioni',
-			'performanceOverlay.rotation' => 'Rotazione',
-			'performanceOverlay.dvSource' => 'Sorgente DV',
-			'performanceOverlay.dvPath' => 'Percorso DV',
-			'performanceOverlay.dvRouteDecoder' => 'Decoder Dolby Vision',
-			'performanceOverlay.dvRouteDecoderP81' => 'Decoder Dolby Vision (P7→8.1)',
-			'performanceOverlay.dvRouteBaseLayer' => 'Livello base',
-			'performanceOverlay.dvRouteBaseLayerHdr10' => 'Livello base HDR10',
-			'performanceOverlay.dvRouteBaseLayerHlg' => 'Livello base HLG',
-			'performanceOverlay.dvRouteBaseLayerSdr' => 'Livello base SDR',
-			'performanceOverlay.dvRouteReshaped' => 'Rimodellato con RPU (gpu-next)',
-			'performanceOverlay.p7Conversion' => 'Conv. P7',
-			'performanceOverlay.sampleRate' => 'Frequenza camp.',
-			'performanceOverlay.pixelFormat' => 'Formato pixel',
-			'performanceOverlay.hwFormat' => 'Formato HW',
-			'performanceOverlay.matrix' => 'Matrice',
-			'performanceOverlay.primaries' => 'Colori primari',
-			'performanceOverlay.transfer' => 'Trasferimento',
-			'performanceOverlay.renderFps' => 'FPS rendering',
-			'performanceOverlay.displayFps' => 'FPS display',
-			'performanceOverlay.avSync' => 'Sync A/V',
-			'performanceOverlay.dropped' => 'Scartati',
-			'performanceOverlay.dvRpus' => 'DV RPU',
-			'performanceOverlay.dvRpuAverage' => 'Media DV RPU',
-			'performanceOverlay.dvSampleAverage' => 'Media camp. DV',
-			'performanceOverlay.maxLuma' => 'Luma max',
-			'performanceOverlay.minLuma' => 'Luma min',
-			'performanceOverlay.maxCll' => 'MaxCLL',
-			'performanceOverlay.maxFall' => 'MaxFALL',
-			'performanceOverlay.cacheUsed' => 'Cache usata',
-			'performanceOverlay.cacheLimit' => 'Limite cache',
-			'performanceOverlay.speed' => 'Velocità',
-			'performanceOverlay.player' => 'Lettore',
-			'performanceOverlay.memory' => 'Memoria',
-			'performanceOverlay.uiFps' => 'FPS UI',
-			'performanceOverlay.fps' => 'FPS',
-			'performanceOverlay.decoderAndroidHw' => 'Android HW',
-			'performanceOverlay.decoderNvidiaHw' => 'NVIDIA HW',
-			'performanceOverlay.decoderQualcommHw' => 'Qualcomm HW',
-			'performanceOverlay.decoderMediatekHw' => 'MediaTek HW',
-			'performanceOverlay.decoderExynosHw' => 'Exynos HW',
-			'performanceOverlay.decoderSoftware' => 'Software',
-			_ => null,
-		} ?? switch (path) {
-			'performanceOverlay.decoderHardware' => 'Hardware',
-			'performanceOverlay.tunnelingActive' => 'Attivo',
-			'performanceOverlay.dvRpuFailed' => ({required Object converted, required Object failures}) => '${converted} (${failures} errori)',
-			'externalPlayer.title' => 'Lettore esterno',
-			'externalPlayer.useExternalPlayer' => 'Usa un lettore esterno',
-			'externalPlayer.useExternalPlayerDescription' => 'Apri i video in un\'altra app',
-			'externalPlayer.selectPlayer' => 'Seleziona il lettore',
-			'externalPlayer.customPlayers' => 'Lettori personalizzati',
-			'externalPlayer.systemDefault' => 'Predefinito di sistema',
-			'externalPlayer.addCustomPlayer' => 'Aggiungi lettore personalizzato',
-			'externalPlayer.playerName' => 'Nome del lettore',
-			'externalPlayer.playerNameHint' => 'Il mio lettore',
-			'externalPlayer.playerCommand' => 'Comando',
-			'externalPlayer.playerPackage' => 'Nome pacchetto',
-			'externalPlayer.playerUrlScheme' => 'Schema URL',
-			'externalPlayer.off' => 'Disattivato',
-			'externalPlayer.launchFailed' => 'Impossibile aprire il lettore esterno',
-			'externalPlayer.appNotInstalled' => ({required Object name}) => '${name} non è installato',
-			'externalPlayer.playInExternalPlayer' => 'Riproduci nel lettore esterno',
-			'metadataEdit.editMetadata' => 'Modifica...',
-			'metadataEdit.screenTitle' => 'Modifica metadati',
-			'metadataEdit.basicInfo' => 'Informazioni di base',
-			'metadataEdit.artwork' => 'Immagini',
-			'metadataEdit.advancedSettings' => 'Impostazioni avanzate',
-			'metadataEdit.title' => 'Titolo',
-			'metadataEdit.sortTitle' => 'Titolo di ordinamento',
-			'metadataEdit.originalTitle' => 'Titolo originale',
-			'metadataEdit.releaseDate' => 'Data di uscita',
-			'metadataEdit.contentRating' => 'Classificazione per età',
-			'metadataEdit.studio' => 'Studio',
-			'metadataEdit.tagline' => 'Slogan',
-			'metadataEdit.summary' => 'Trama',
-			'metadataEdit.poster' => 'Poster',
-			'metadataEdit.background' => 'Sfondo',
-			'metadataEdit.logo' => 'Logo',
-			'metadataEdit.squareArt' => 'Immagine quadrata',
-			'metadataEdit.selectPoster' => 'Seleziona poster',
-			'metadataEdit.selectBackground' => 'Seleziona sfondo',
-			'metadataEdit.selectLogo' => 'Seleziona logo',
-			'metadataEdit.selectSquareArt' => 'Seleziona immagine quadrata',
-			'metadataEdit.fromUrl' => 'Da URL',
-			'metadataEdit.uploadFile' => 'Carica file',
-			'metadataEdit.enterImageUrl' => 'Inserisci URL immagine',
-			'metadataEdit.imageUrl' => 'URL immagine',
-			'metadataEdit.metadataUpdated' => 'Metadati aggiornati correttamente',
-			'metadataEdit.metadataUpdateFailed' => 'Impossibile aggiornare i metadati',
-			'metadataEdit.artworkUpdated' => 'Immagini aggiornate',
-			'metadataEdit.artworkUpdateFailed' => 'Impossibile aggiornare le immagini',
-			'metadataEdit.noArtworkAvailable' => 'Nessuna immagine disponibile',
-			'metadataEdit.artworkOption' => ({required Object index}) => 'Opzione immagine ${index}',
-			'metadataEdit.selectedArtworkOption' => ({required Object index}) => 'Opzione immagine ${index}, selezionata',
-			'metadataEdit.notSet' => 'Non impostato',
-			'metadataEdit.libraryDefault' => 'Predefinito della libreria',
-			'metadataEdit.accountDefault' => 'Predefinito dell\'account',
-			'metadataEdit.seriesDefault' => 'Predefinito della serie',
-			'metadataEdit.episodeSorting' => 'Ordinamento episodi',
-			'metadataEdit.oldestFirst' => 'Più vecchi prima',
-			'metadataEdit.newestFirst' => 'Più recenti prima',
-			'metadataEdit.keep' => 'Conserva',
-			'metadataEdit.allEpisodes' => 'Tutti gli episodi',
-			'metadataEdit.latestEpisodes' => ({required Object count}) => '${count} episodi più recenti',
-			'metadataEdit.latestEpisode' => 'Episodio più recente',
-			'metadataEdit.episodesAddedPastDays' => ({required Object count}) => 'Episodi aggiunti negli ultimi ${count} giorni',
-			'metadataEdit.deleteAfterPlaying' => 'Elimina episodi dopo la riproduzione',
-			'metadataEdit.never' => 'Mai',
-			'metadataEdit.afterADay' => 'Dopo un giorno',
-			'metadataEdit.afterAWeek' => 'Dopo una settimana',
-			'metadataEdit.afterAMonth' => 'Dopo un mese',
-			'metadataEdit.onNextRefresh' => 'Al prossimo aggiornamento',
-			'metadataEdit.seasons' => 'Stagioni',
-			'metadataEdit.show' => 'Mostra',
-			'metadataEdit.hide' => 'Nascondi',
-			'metadataEdit.episodeOrdering' => 'Ordine episodi',
-			'metadataEdit.tmdbAiring' => 'The Movie Database (ordine di trasmissione)',
-			'metadataEdit.tvdbAiring' => 'TheTVDB (ordine di trasmissione)',
-			'metadataEdit.tvdbAbsolute' => 'TheTVDB (ordine assoluto)',
-			'metadataEdit.metadataLanguage' => 'Lingua dei metadati',
-			'metadataEdit.useOriginalTitle' => 'Usa il titolo originale',
-			'metadataEdit.preferredAudioLanguage' => 'Lingua audio preferita',
-			'metadataEdit.preferredSubtitleLanguage' => 'Lingua dei sottotitoli preferita',
-			'metadataEdit.subtitleMode' => 'Modalità di selezione automatica dei sottotitoli',
-			'metadataEdit.manuallySelected' => 'Selezionato manualmente',
-			'metadataEdit.shownWithForeignAudio' => 'Mostrati con audio straniero',
-			'metadataEdit.alwaysEnabled' => 'Sempre attivo',
-			'metadataEdit.tags' => 'Tag',
-			'metadataEdit.addTag' => 'Aggiungi tag',
-			'metadataEdit.genre' => 'Genere',
-			'metadataEdit.director' => 'Regista',
-			'metadataEdit.writer' => 'Sceneggiatore',
-			'metadataEdit.producer' => 'Produttore',
-			'metadataEdit.country' => 'Paese',
-			'metadataEdit.collection' => 'Raccolta',
-			'metadataEdit.label' => 'Etichetta',
-			'metadataEdit.quickTag' => 'Tag rapido...',
-			'matchScreen.match' => 'Abbina...',
-			'matchScreen.fixMatch' => 'Correggi abbinamento...',
-			'matchScreen.unmatch' => 'Rimuovi abbinamento',
-			'matchScreen.unmatchConfirm' => 'Rimuovere questo abbinamento? Plex considererà l\'elemento non abbinato finché non verrà eseguito un nuovo abbinamento.',
-			'matchScreen.unmatchSuccess' => 'Abbinamento rimosso',
-			'matchScreen.unmatchFailed' => 'Rimozione dell\'abbinamento non riuscita',
-			'matchScreen.matchApplied' => 'Abbinamento applicato',
-			'matchScreen.matchFailed' => 'Applicazione dell\'abbinamento non riuscita',
-			'matchScreen.titleHint' => 'Titolo',
-			'matchScreen.yearHint' => 'Anno',
-			'matchScreen.search' => 'Cerca',
-			'matchScreen.noMatchesFound' => 'Nessun risultato',
-			'serverTasks.title' => 'Attività del server',
-			'serverTasks.failedToLoad' => 'Impossibile caricare le attività',
-			'serverTasks.noTasks' => 'Nessuna attività in corso',
-			'trakt.title' => 'Trakt',
-			'trakt.connected' => 'Connesso',
-			'trakt.connectedAs' => ({required Object username}) => 'Connesso come @${username}',
-			'trakt.disconnectConfirm' => 'Disconnettere l\'account Trakt?',
-			'trakt.disconnectConfirmBody' => 'Plezy smetterà di inviare eventi a Trakt. Puoi riconnetterti quando vuoi.',
-			'trakt.scrobble' => 'Scrobbling in tempo reale',
-			'trakt.scrobbleDescription' => 'Invia eventi di riproduzione, pausa e arresto a Trakt durante la riproduzione.',
-			'trakt.watchedSync' => 'Sincronizza lo stato di visione',
-			'trakt.watchedSyncDescription' => 'Quando contrassegni un elemento come visto in Plezy, viene contrassegnato come visto anche su Trakt.',
-			'seerr.title' => 'Seerr',
-			'seerr.connectTitle' => 'Connetti Seerr',
-			'seerr.serverUrl' => 'URL del server',
-			'seerr.serverUrlHelper' => 'L\'indirizzo della tua istanza Seerr',
-			'seerr.checkServer' => 'Continua',
-			'seerr.signInWithJellyfin' => 'Accedi con Jellyfin',
-			'seerr.signInWithEmby' => 'Accedi con Emby',
-			'seerr.signInWithLocal' => 'Usa un account locale',
-			'seerr.email' => 'Email',
-			'seerr.noSignInMethods' => 'Questa istanza Seerr non offre alcun metodo di accesso supportato da Plezy.',
-			'seerr.instance' => 'Istanza',
-			'seerr.disconnectConfirm' => 'Disconnettere Seerr?',
-			'seerr.disconnectConfirmBody' => 'Plezy rimuoverà questa istanza Seerr. Potrai riconnetterla in qualsiasi momento.',
-			'seerr.request' => 'Richiedi',
-			'seerr.request4k' => 'Richiedi in 4K',
-			'seerr.seasons' => 'Stagioni',
-			'seerr.allSeasons' => 'Tutte le stagioni',
-			'seerr.advancedOptions' => 'Avanzate',
-			'seerr.destinationServer' => 'Server di destinazione',
-			'seerr.qualityProfile' => 'Profilo di qualità',
-			'seerr.rootFolder' => 'Cartella radice',
-			'seerr.languageProfile' => 'Profilo della lingua',
-			'seerr.tags' => 'Tag',
-			'seerr.noTags' => 'Nessun tag',
-			'seerr.defaultOption' => ({required Object name}) => '${name} (predefinito)',
-			'seerr.animeNote' => 'Questa serie è un anime.',
-			'seerr.requestSubmitted' => 'Richiesta inviata',
-			'seerr.requestFailed' => ({required Object error}) => 'Richiesta non riuscita: ${error}',
-			'seerr.requestsLoadFailed' => 'Impossibile caricare le opzioni di richiesta',
-			'seerr.nothingToRequest' => 'Tutto è già disponibile o richiesto.',
-			'seerr.statusAvailable' => 'Disponibile',
-			'seerr.statusPartiallyAvailable' => 'Disponibile in parte',
-			'seerr.statusRequested' => 'Richiesto',
-			'seerr.statusProcessing' => 'In elaborazione',
-			'seerr.statusBlocklisted' => 'Nella lista di blocco',
-			'seerr.couldNotReach' => ({required Object url, required Object error}) => 'Impossibile raggiungere ${url}: ${error}',
-			'seerr.noInstanceAtUrl' => ({required Object url, required Object status}) => 'Nessuna istanza Seerr all\'indirizzo ${url} (HTTP ${status})',
-			'seerr.behindAuthProxy' => 'Un reverse proxy con autenticazione (SSO o autenticazione HTTP) ha risposto al posto di Seerr. Plezy non può accedere attraverso di esso: consenti al percorso /api/v1 di Seerr di bypassare il proxy per questa app, oppure usa un indirizzo che raggiunga Seerr direttamente.',
-			'seerr.invalidUrl' => 'Inserisci un indirizzo del server come https://seerr.example.com',
-			'seerr.quickConnectUnsupported' => 'Questa istanza Seerr non supporta Quick Connect. È necessaria la versione 3.4 o successiva di Seerr.',
-			'seerr.notInitialized' => 'Questa istanza Seerr non ha completato la configurazione iniziale',
-			'seerr.noPlexTokenForReauth' => 'Nessun token Plex disponibile per effettuare nuovamente l\'accesso',
-			'seerr.noStoredCredentials' => 'Nessuna credenziale salvata disponibile per effettuare nuovamente l\'accesso',
-			'seerr.signInRejected' => 'L\'accesso è stato rifiutato',
-			'seerr.noSessionCookie' => 'Seerr non ha generato un cookie di sessione',
-			'seerr.freshCookieRejected' => 'Seerr ha rifiutato il nuovo cookie di sessione',
-			'seerr.noUserInformation' => 'Seerr non ha restituito le informazioni sull\'utente',
-			'seerr.sessionRejectedAfterReauth' => 'La sessione è stata rifiutata dopo aver effettuato nuovamente l\'accesso',
-			'seerr.permissionDenied' => 'Seerr ha negato questa azione: il tuo account non dispone più dell\'autorizzazione richiesta',
-			'seerr.permissionRevoked' => 'Non hai più l\'autorizzazione per richiederlo',
-			'services.title' => 'Servizi',
-			'services.hubSubtitle' => 'Sincronizza i progressi di visione e richiedi nuovi titoli.',
-			'services.integrations' => 'Integrazioni',
-			'services.notConnected' => 'Non connesso',
-			'services.connectedAs' => ({required Object username}) => 'Connesso come @${username}',
-			'services.scrobble' => 'Registra automaticamente i progressi',
-			'services.scrobbleDescription' => 'Aggiorna la tua lista quando termini un episodio o un film.',
-			'services.disconnectConfirm' => ({required Object service}) => 'Disconnettere ${service}?',
-			'services.disconnectConfirmBody' => ({required Object service}) => 'Plezy smetterà di aggiornare ${service}. Riconnetti quando vuoi.',
-			'services.connectFailed' => ({required Object service}) => 'Impossibile connettersi a ${service}. Riprova.',
-			'services.names.mal' => 'MyAnimeList',
-			'services.names.anilist' => 'AniList',
-			'services.names.simkl' => 'Simkl',
-			'services.names.seerr' => 'Seerr',
-			'services.names.mdblist' => 'MDBList',
-			'services.simklReconnect.title' => 'Riconnetti Simkl',
-			'services.simklReconnect.subtitle' => 'Simkl sta dismettendo il metodo di accesso usato da questa connessione. La riconnessione apre simkl.com per autorizzare Plezy — Plezy non vede mai la tua password. La tua cronologia di visione resta su Simkl.',
-			'services.deviceCode.title' => ({required Object service}) => 'Attiva Plezy su ${service}',
-			'services.deviceCode.instructions' => 'Scansiona il codice QR oppure visita l\'indirizzo qui sotto e inserisci questo codice:',
-			'services.deviceCode.openToActivate' => ({required Object service}) => 'Apri ${service} per attivare',
-			'services.deviceCode.copyCode' => 'Copia il codice di attivazione',
-			'services.deviceCode.waitingForAuthorization' => 'In attesa di autorizzazione…',
-			'services.deviceCode.codeCopied' => 'Codice copiato',
-			'services.oauthProxy.title' => ({required Object service}) => 'Accedi a ${service}',
-			'services.oauthProxy.body' => 'Scansiona questo codice QR o apri l\'URL su qualsiasi dispositivo.',
-			'services.oauthProxy.openToSignIn' => ({required Object service}) => 'Apri ${service} per accedere',
-			'services.pendingAuth.copyUrl' => 'Copia l\'URL di accesso',
-			'services.pendingAuth.urlCopied' => 'URL copiato',
-			'services.libraryFilter.title' => 'Filtro delle librerie',
-			'services.libraryFilter.subtitleAllSyncing' => 'Sincronizzazione di tutte le librerie',
-			'services.libraryFilter.subtitleNoneSyncing' => 'Nessuna sincronizzazione',
-			'services.libraryFilter.subtitleBlocked' => ({required Object count}) => '${count} bloccate',
-			'services.libraryFilter.subtitleAllowed' => ({required Object count}) => '${count} consentite',
-			'services.libraryFilter.mode' => 'Modalità filtro',
-			'services.libraryFilter.modeBlacklist' => 'Lista nera',
-			'services.libraryFilter.modeWhitelist' => 'Lista bianca',
-			'services.libraryFilter.modeHintBlacklist' => 'Sincronizza tutte le librerie tranne quelle selezionate qui sotto.',
-			'services.libraryFilter.modeHintWhitelist' => 'Sincronizza solo le librerie selezionate qui sotto.',
-			'services.libraryFilter.libraries' => 'Librerie',
-			'services.libraryFilter.noLibraries' => 'Nessuna libreria disponibile',
-			'addServer.addMediaBrowserTitle' => ({required Object product}) => 'Aggiungi server ${product}',
-			'addServer.serverUrls' => 'URL del server',
-			'addServer.serverUrlsHelper' => 'Sono consentiti più URL, separati da virgole.',
-			'addServer.findServer' => 'Trova il server',
-			'addServer.searchingLocalMediaBrowserServers' => ({required Object product}) => 'Ricerca di server ${product} locali...',
-			'addServer.localMediaBrowserServers' => ({required Object product}) => 'Server ${product} locali',
-			'addServer.username' => 'Nome utente',
-			'addServer.password' => 'Password',
-			'addServer.signIn' => 'Accedi',
-			'addServer.change' => 'Modifica',
-			'addServer.required' => 'Obbligatorio',
-			'addServer.couldNotReachServer' => ({required Object error}) => 'Impossibile raggiungere il server: ${error}',
-			'addServer.signInFailed' => ({required Object error}) => 'Accesso non riuscito: ${error}',
-			'addServer.quickConnectFailed' => ({required Object error}) => 'Quick Connect non riuscito: ${error}',
-			'addServer.addPlexTitle' => 'Accedi con Plex',
-			'addServer.pinExpired' => 'PIN scaduto prima dell\'accesso. Riprova.',
-			'addServer.failedToRegisterAccount' => ({required Object error}) => 'Registrazione account non riuscita: ${error}',
-			'addServer.enterMediaBrowserUrlError' => ({required Object product}) => 'Inserisci l\'URL del server ${product}',
-			'addServer.addConnectionTitle' => 'Aggiungi connessione',
-			'addServer.addConnectionTitleScoped' => ({required Object name}) => 'Aggiungi a ${name}',
-			'addServer.signInWithPlexCard' => 'Accedi con Plex',
-			'addServer.signInWithPlexCardSubtitle' => 'Autorizza questo dispositivo. I server condivisi vengono aggiunti.',
-			'addServer.signInWithPlexCardSubtitleScoped' => 'Autorizza un account Plex. Gli utenti Home diventano profili.',
-			'addServer.connectToMediaBrowserCard' => ({required Object product}) => 'Connettiti a ${product}',
-			'addServer.connectToMediaBrowserCardSubtitle' => 'Inserisci l\'URL del server, il nome utente e la password.',
-			'addServer.connectToMediaBrowserCardSubtitleScoped' => ({required Object product, required Object name}) => 'Accedi al tuo server ${product}. Associato a ${name}.',
-			'addServer.borrowFromAnotherProfile' => 'Prendi in prestito da un altro profilo',
-			'addServer.borrowFromAnotherProfileSubtitle' => 'Riutilizza la connessione di un altro profilo. I profili protetti da PIN richiedono un PIN.',
-			'addServer.invalidCredentials' => 'Nome utente o password non validi',
-			'addServer.authResponseNotJson' => 'La risposta di autenticazione non era un JSON valido',
-			'addServer.authResponseIncomplete' => 'La risposta di accesso del server era incompleta',
-			'addServer.quickConnectRejected' => 'Quick Connect è stato rifiutato dal server',
-			'addServer.quickConnectNotJson' => 'La risposta di Quick Connect non era un JSON valido',
-			'addServer.quickConnectMissingFields' => 'Nella risposta di Quick Connect manca un codice o un segreto',
-			'addServer.quickConnectPollRejected' => 'Il polling di Quick Connect è stato rifiutato dal server',
-			'addServer.serverTimedOut' => 'Il server non ha risposto in tempo',
-			'addServer.responseNotJson' => 'La risposta del server non era un JSON valido',
-			'addServer.responseMissingIdentity' => ({required Object product}) => 'Nella risposta manca un ID o il nome del server: è un server ${product}?',
-			'addServer.probeFailed' => ({required Object error}) => 'Impossibile raggiungere il server: ${error}',
-			'addServer.enterAtLeastOneUrl' => ({required Object product}) => 'Inserisci almeno un URL di un server ${product}',
-			'addServer.noReachableServer' => ({required Object product}) => 'Non è stato trovato alcun server ${product} raggiungibile',
-			'addServer.urlsPointToDifferentServers' => ({required Object product}) => 'Questi URL rimandano a server ${product} diversi',
-			'addServer.urlDoesNotMatchServer' => ({required Object product}) => 'Questo URL non corrisponde al server ${product}',
-			'addServer.redirectUnsupported' => 'Il server ha reindirizzato a un URL non supportato',
-			'addServer.redirectDifferentHost' => ({required Object product}) => 'Il server ha reindirizzato a un host diverso. Inserisci direttamente l\'URL finale del server ${product}.',
-			'addServer.redirectInsecure' => 'Il server ha reindirizzato da HTTPS a un URL non sicuro',
-			'addServer.redirectUnsupportedEnterFinal' => ({required Object product}) => 'Il server ha reindirizzato a un URL non supportato. Inserisci direttamente l\'URL finale del server ${product}.',
-			_ => null,
-		};
+		switch (path) {
+			case 'app.title': return 'Plezy';
+			case 'appIcon.title': return 'Icona dell\'app';
+			case 'appIcon.defaultIcon': return 'Predefinita';
+			case 'appIcon.current': return 'Icona attuale';
+			case 'appIcon.locked': return 'Incluso nel Pacchetto temi e icone';
+			case 'appIcon.lockedHint': return 'Le icone alternative sono incluse nel Pacchetto temi e icone.';
+			case 'appIcon.changeFailed': return 'Impossibile cambiare l\'icona dell\'app';
+			case 'appIcon.launcherHint': return 'La nuova icona appare nella schermata Home quando esci da Plezy.';
+			case 'appIcon.tvLauncherHint': return 'Il nuovo banner appare quando esci da Plezy. Android TV potrebbe continuare a mostrare quello precedente fino al riavvio del televisore.';
+			case 'appIcon.names.midnight': return 'Mezzanotte';
+			case 'appIcon.names.ember': return 'Brace';
+			case 'appIcon.names.paper': return 'Carta';
+			case 'appIcon.names.oled': return 'OLED';
+			case 'appIcon.names.line': return 'Linea';
+			case 'appIcon.names.ocean': return 'Oceano';
+			case 'appIcon.names.ultraviolet': return 'Ultravioletto';
+			case 'appIcon.names.matcha': return 'Matcha';
+			case 'appIcon.names.sunset': return 'Tramonto';
+			case 'appIcon.names.gold': return 'Oro';
+			case 'appIcon.names.titanium': return 'Titanio';
+			case 'appIcon.names.glass': return 'Vetro';
+			case 'appIcon.names.crt': return 'CRT';
+			case 'appIcon.names.vhs': return 'VHS';
+			case 'appIcon.names.synthwave': return 'Synthwave';
+			case 'appIcon.names.pixel': return 'Pixel';
+			case 'appIcon.names.neon': return 'Neon';
+			case 'appIcon.names.sticker': return 'Adesivo';
+			case 'appIcon.names.ticket': return 'Biglietto';
+			case 'appIcon.names.pop': return 'Pop';
+			case 'appIcon.names.strata': return 'Strati';
+			case 'appIcon.names.facet': return 'Sfaccettature';
+			case 'appIcon.names.tilde': return 'Tilde';
+			case 'auth.signInWithPlex': return 'Accedi con Plex';
+			case 'auth.showQRCode': return 'Mostra codice QR';
+			case 'auth.authenticate': return 'Autenticati';
+			case 'auth.authenticationTimeout': return 'Tempo scaduto per l\'autenticazione. Riprova.';
+			case 'auth.scanQRToSignIn': return 'Scansiona questo codice QR per accedere';
+			case 'auth.waitingForAuth': return 'In attesa di autenticazione...\nAccedi dal browser.';
+			case 'auth.useBrowser': return 'Usa il browser';
+			case 'auth.or': return 'o';
+			case 'auth.connectToMediaBrowser': return ({required Object product}) => 'Connettiti a ${product}';
+			case 'auth.quickConnect': return 'Quick Connect';
+			case 'auth.useQuickConnect': return 'Usa Quick Connect';
+			case 'auth.quickConnectInstructions': return 'Apri Quick Connect in Jellyfin e inserisci questo codice.';
+			case 'auth.quickConnectWaiting': return 'In attesa di approvazione…';
+			case 'auth.quickConnectCancel': return 'Annulla';
+			case 'auth.quickConnectExpired': return 'Quick Connect scaduto. Riprova.';
+			case 'auth.localDataRecoveryRequired': return 'Plezy non è riuscito a recuperare in sicurezza i dati locali di accesso e delle riproduzioni in sospeso. Accedi di nuovo.';
+			case 'auth.pinCheckRejected': return 'La verifica del PIN Plex è stata rifiutata';
+			case 'common.cancel': return 'Annulla';
+			case 'common.save': return 'Salva';
+			case 'common.close': return 'Chiudi';
+			case 'common.clear': return 'Cancella';
+			case 'common.reset': return 'Ripristina';
+			case 'common.later': return 'Più tardi';
+			case 'common.submit': return 'Invia';
+			case 'common.confirm': return 'Conferma';
+			case 'common.retry': return 'Riprova';
+			case 'common.logout': return 'Esci';
+			case 'common.unknown': return 'Sconosciuto';
+			case 'common.refresh': return 'Aggiorna';
+			case 'common.yes': return 'Sì';
+			case 'common.no': return 'No';
+			case 'common.delete': return 'Elimina';
+			case 'common.edit': return 'Modifica';
+			case 'common.shuffle': return 'Riproduzione casuale';
+			case 'common.addTo': return 'Aggiungi a...';
+			case 'common.createNew': return 'Crea nuovo';
+			case 'common.connect': return 'Connetti';
+			case 'common.disconnect': return 'Disconnetti';
+			case 'common.play': return 'Riproduci';
+			case 'common.pause': return 'Pausa';
+			case 'common.resume': return 'Riprendi';
+			case 'common.error': return 'Errore';
+			case 'common.search': return 'Cerca';
+			case 'common.home': return 'Home';
+			case 'common.back': return 'Indietro';
+			case 'common.settings': return 'Impostazioni';
+			case 'common.mute': return 'Disattiva audio';
+			case 'common.ok': return 'OK';
+			case 'common.off': return 'Disattivato';
+			case 'common.options': return 'Opzioni';
+			case 'common.seasonNumber': return ({required Object number}) => 'Stagione ${number}';
+			case 'common.episodeNumberTitle': return ({required Object number, required Object title}) => 'Episodio ${number} - ${title}';
+			case 'common.chapterNumber': return ({required Object number}) => 'Capitolo ${number}';
+			case 'common.reconnect': return 'Riconnetti';
+			case 'common.viewAll': return 'Mostra tutto';
+			case 'common.checkingNetwork': return 'Controllo della rete...';
+			case 'common.loadingServers': return 'Caricamento server...';
+			case 'common.connectingToServers': return 'Connessione ai server...';
+			case 'common.startingOfflineMode': return 'Avvio modalità offline...';
+			case 'common.loading': return 'Caricamento...';
+			case 'common.fullscreen': return 'Schermo intero';
+			case 'common.exitFullscreen': return 'Esci dalla modalità a schermo intero';
+			case 'common.pressBackAgainToExit': return 'Premi di nuovo Indietro per uscire';
+			case 'common.ratingSource.critic': return 'Critici';
+			case 'common.ratingSource.audience': return 'Pubblico';
+			case 'common.ratingSource.imdb': return 'IMDb';
+			case 'common.ratingSource.tmdb': return 'TMDB';
+			case 'common.ratingSource.rottenTomatoes': return 'Rotten Tomatoes';
+			case 'common.ratingSource.simkl': return 'Simkl';
+			case 'common.ratingSource.mal': return 'MyAnimeList';
+			case 'common.ratingSource.anilist': return 'AniList';
+			case 'common.ratingSource.trakt': return 'Trakt';
+			case 'common.ratingSource.rottenTomatoesCritic': return 'Critici di Rotten Tomatoes';
+			case 'common.ratingSource.rottenTomatoesAudience': return 'Pubblico di Rotten Tomatoes';
+			case 'common.ratingSource.metacritic': return 'Metacritic';
+			case 'common.ratingSource.letterboxd': return 'Letterboxd';
+			case 'common.notAvailable': return 'N/D';
+			case 'common.url': return 'URL';
+			case 'common.letterKeys': return 'ABC';
+			case 'common.mediaKind.movie': return 'Film';
+			case 'common.mediaKind.show': return 'Serie';
+			case 'common.mediaKind.season': return 'Stagione';
+			case 'common.mediaKind.episode': return 'Episodio';
+			case 'common.mediaKind.artist': return 'Artista';
+			case 'common.mediaKind.album': return 'Album';
+			case 'common.mediaKind.track': return 'Traccia';
+			case 'common.mediaKind.collection': return 'Raccolta';
+			case 'common.mediaKind.playlist': return 'Playlist';
+			case 'common.mediaKind.clip': return 'Clip';
+			case 'common.mediaKind.photo': return 'Foto';
+			case 'common.mediaKind.folder': return 'Cartella';
+			case 'screens.licenses': return 'Licenze';
+			case 'screens.switchProfile': return 'Cambia profilo';
+			case 'screens.subtitleStyling': return 'Stile sottotitoli';
+			case 'screens.mpvConfig': return 'mpv.conf';
+			case 'screens.logs': return 'Log';
+			case 'update.available': return 'Aggiornamento disponibile';
+			case 'update.versionAvailable': return ({required Object version}) => 'Versione ${version} disponibile';
+			case 'update.currentVersion': return ({required Object version}) => 'Attuale: ${version}';
+			case 'update.skipVersion': return 'Salta questa versione';
+			case 'update.viewRelease': return 'Visualizza note di rilascio';
+			case 'update.latestVersion': return 'La versione installata è l\'ultima disponibile';
+			case 'update.checkFailed': return 'Impossibile controllare gli aggiornamenti';
+			case 'supporter.title': return 'Pacchetto temi e icone';
+			case 'supporter.intro': return 'Un acquisto una tantum facoltativo che aggiunge extra estetici:';
+			case 'supporter.presetThemes': return 'Temi preimpostati';
+			case 'supporter.presetThemesDescription': return 'Brace, Ghiacciaio, Foresta, Prugna e Carta';
+			case 'supporter.customTheme': return 'Tema personalizzato';
+			case 'supporter.customThemeDescription': return 'Scegli tu ogni colore';
+			case 'supporter.appIcons': return 'Icone dell\'app';
+			case 'supporter.appIconsDescription': return 'Scegli un\'icona alternativa per Plezy';
+			case 'supporter.buy': return ({required Object price}) => 'Acquista a ${price}';
+			case 'supporter.loadingPrice': return 'Caricamento del prezzo...';
+			case 'supporter.restore': return 'Ripristina acquisti';
+			case 'supporter.pending': return 'Il tuo acquisto è in attesa di pagamento o approvazione. Gli extra verranno sbloccati non appena lo store lo avrà completato.';
+			case 'supporter.thankYouTitle': return 'Grazie per l\'acquisto';
+			case 'supporter.thankYouBody': return 'Il Pacchetto temi e icone è sbloccato.';
+			case 'supporter.tileSubtitle': return 'Sblocca temi e icone dell\'app con un acquisto una tantum';
+			case 'supporter.tileSubtitleThemesOnly': return 'Sblocca i temi con un acquisto una tantum';
+			case 'supporter.tileUnlocked': return 'Sbloccato — grazie per l\'acquisto';
+			case 'supporter.errors.storeUnavailable': return 'Gli acquisti non sono disponibili. Verifica di aver effettuato l\'accesso allo store e che gli acquisti siano consentiti su questo dispositivo.';
+			case 'supporter.errors.productNotFound': return 'Il Pacchetto temi e icone non è al momento disponibile nel tuo store.';
+			case 'supporter.errors.productQueryFailed': return 'Impossibile caricare il prezzo. Controlla la connessione e riprova.';
+			case 'supporter.errors.purchaseFailed': return 'L\'acquisto non è andato a buon fine. Riprova.';
+			case 'supporter.errors.restoreFailed': return 'Impossibile raggiungere lo store per ripristinare l\'acquisto. Riprova.';
+			case 'supporter.errors.nothingToRestore': return 'Nessun acquisto del Pacchetto temi e icone trovato per questo account dello store.';
+			case 'settings.title': return 'Impostazioni';
+			case 'settings.supportDeveloper': return 'Supporta Plezy';
+			case 'settings.supportDeveloperDescription': return 'Dona tramite Liberapay per finanziare lo sviluppo';
+			case 'settings.language': return 'Lingua';
+			case 'settings.theme': return 'Tema';
+			case 'settings.appearance': return 'Aspetto';
+			case 'settings.videoPlayback': return 'Riproduzione video';
+			case 'settings.videoPlaybackDescription': return 'Configura il comportamento di riproduzione';
+			case 'settings.advanced': return 'Avanzate';
+			case 'settings.episodePosterMode': return 'Stile poster episodio';
+			case 'settings.seriesPoster': return 'Poster della serie';
+			case 'settings.seasonPoster': return 'Poster della stagione';
+			case 'settings.episodeThumbnail': return 'Miniatura';
+			case 'settings.showHeroSectionDescription': return 'Visualizza il carosello dei contenuti in primo piano sulla schermata iniziale';
+			case 'settings.secondsLabel': return 'Secondi';
+			case 'settings.minutesLabel': return 'Minuti';
+			case 'settings.secondsShort': return 's';
+			case 'settings.minutesShort': return 'm';
+			case 'settings.durationHint': return ({required Object min, required Object max}) => 'Inserisci una durata (${min}-${max})';
+			case 'settings.systemTheme': return 'Sistema';
+			case 'settings.lightTheme': return 'Chiaro';
+			case 'settings.darkTheme': return 'Scuro';
+			case 'settings.oledTheme': return 'OLED';
+			case 'settings.emberTheme': return 'Brace';
+			case 'settings.glacierTheme': return 'Ghiacciaio';
+			case 'settings.forestTheme': return 'Foresta';
+			case 'settings.plumTheme': return 'Prugna';
+			case 'settings.paperTheme': return 'Carta';
+			case 'settings.libraryDensity': return 'Densità della libreria';
+			case 'settings.displayScale': return 'Scala di visualizzazione';
+			case 'settings.compact': return 'Compatta';
+			case 'settings.comfortable': return 'Comoda';
+			case 'settings.gridSpacing': return 'Spaziatura della griglia';
+			case 'settings.gridSpacingTight': return 'Ristretta';
+			case 'settings.gridSpacingNormal': return 'Normale';
+			case 'settings.gridSpacingSpacious': return 'Ampia';
+			case 'settings.tvCornerSpotlightBackdrop': return 'Sfondo in evidenza nell\'angolo';
+			case 'settings.tvCornerSpotlightBackdropDescription': return 'Mostra l\'immagine in evidenza nell\'angolo in alto a destra anziché a schermo intero';
+			case 'settings.viewMode': return 'Modalità di visualizzazione';
+			case 'settings.gridView': return 'Griglia';
+			case 'settings.listView': return 'Elenco';
+			case 'settings.showHeroSection': return 'Mostra sezione in evidenza';
+			case 'settings.continueWatchingAction': return 'Azione per Continua a guardare';
+			case 'settings.continueWatchingPlay': return 'Riproduci';
+			case 'settings.continueWatchingDetails': return 'Apri dettagli';
+			case 'settings.episodeAction': return 'Azione episodio';
+			case 'settings.episodePlay': return 'Riproduci';
+			case 'settings.episodeDetails': return 'Apri dettagli';
+			case 'settings.useGlobalHubs': return 'Usa il layout della Home';
+			case 'settings.useGlobalHubsDescription': return 'Mostra sezioni Home unificate. In caso contrario, usa i consigli della libreria.';
+			case 'settings.showServerNameOnHubs': return 'Mostra il nome del server nelle sezioni';
+			case 'settings.showServerNameOnHubsDescription': return 'Mostra sempre i nomi dei server nei titoli delle sezioni.';
+			case 'settings.groupLibrariesByServer': return 'Raggruppa le librerie per server';
+			case 'settings.groupLibrariesByServerDescription': return 'Raggruppa le librerie della barra laterale sotto ciascun server multimediale.';
+			case 'settings.alwaysKeepSidebarOpen': return 'Mantieni sempre aperta la barra laterale';
+			case 'settings.alwaysKeepSidebarOpenDescription': return 'La barra laterale rimane espansa e l\'area del contenuto si adatta';
+			case 'settings.showUnwatchedCount': return 'Mostra il numero di episodi non visti';
+			case 'settings.showUnwatchedCountDescription': return 'Mostra il numero di episodi non visti per serie e stagioni';
+			case 'settings.showWatchedIndicators': return 'Mostra indicatori di visione';
+			case 'settings.showWatchedIndicatorsDescription': return 'Mostra un segno di spunta su film, serie TV ed episodi già visti';
+			case 'settings.showEpisodeNumberOnCards': return 'Mostra il numero dell\'episodio sulle schede';
+			case 'settings.showEpisodeNumberOnCardsDescription': return 'Mostra il numero della stagione e dell\'episodio sulle schede degli episodi';
+			case 'settings.showSeasonPostersOnTabs': return 'Mostra i poster delle stagioni nelle schede';
+			case 'settings.showSeasonPostersOnTabsDescription': return 'Mostra il poster di ogni stagione sopra la sua scheda';
+			case 'settings.tvFullCardLayout': return 'Schede TV a tutta immagine';
+			case 'settings.tvFullCardLayoutDescription': return 'Usa schede TV con la sola immagine e i nomi degli attori sovrapposti';
+			case 'settings.focusGlow': return 'Bagliore di selezione';
+			case 'settings.focusGlowDescription': return 'Mostra un leggero bagliore attorno alla scheda selezionata';
+			case 'settings.visualEffects': return 'Effetti visivi';
+			case 'settings.visualEffectsAuto': return 'Automatico';
+			case 'settings.visualEffectsAutoDescription': return 'Riduci automaticamente gli effetti sui dispositivi a basso consumo';
+			case 'settings.visualEffectsFull': return 'Completi';
+			case 'settings.visualEffectsReduced': return 'Ridotti';
+			case 'settings.visualEffectsReducedDescription': return 'Meno animazioni e immagini a risoluzione inferiore';
+			case 'settings.hideSpoilers': return 'Nascondi spoiler per episodi non visti';
+			case 'settings.hideSpoilersDescription': return 'Sfoca miniature e descrizioni degli episodi non visti';
+			case 'settings.playerBackend': return 'Motore di riproduzione';
+			case 'settings.exoPlayer': return 'ExoPlayer';
+			case 'settings.mpv': return 'mpv';
+			case 'settings.hardwareDecoding': return 'Decodifica hardware';
+			case 'settings.hardwareDecodingDescription': return 'Utilizza l\'accelerazione hardware quando disponibile';
+			case 'settings.playbackBuffer': return 'Buffer di riproduzione';
+			case 'settings.playbackBufferAuto': return 'Auto (consigliato)';
+			case 'settings.playbackBufferLarge': return 'Grande';
+			case 'settings.playbackBufferExtraLarge': return 'Extra grande';
+			case 'settings.playbackBufferDescription': return 'Bufferizza di più contro connessioni instabili. Limitato anche dalla dimensione del buffer.';
+			case 'settings.defaultQualityTitle': return 'Qualità predefinita';
+			case 'settings.cellularQualityTitle': return 'Qualità predefinita sulla rete mobile';
+			case 'settings.cellularQualitySameAsDefault': return 'Come la qualità predefinita';
+			case 'settings.directPlayCoveredQuality': return 'Riproduci i video più piccoli in qualità originale';
+			case 'settings.directPlayCoveredQualityDescription': return 'Riproduci direttamente i video già entro il limite di qualità invece di transcodificarli';
+			case 'settings.videoCodecs': return 'Codec video';
+			case 'settings.videoCodecsDescription': return 'Il server transcodifica i codec non selezionati';
+			case 'settings.videoCodecsAlwaysAccepted': return 'Sempre accettato';
+			case 'settings.musicQualityTitle': return 'Qualità musicale';
+			case 'settings.subtitleStyling': return 'Stile sottotitoli';
+			case 'settings.subtitleStylingDescription': return 'Personalizza l\'aspetto dei sottotitoli';
+			case 'settings.smallSkipDuration': return 'Salto breve';
+			case 'settings.largeSkipDuration': return 'Salto lungo';
+			case 'settings.rewindOnResume': return 'Riavvolgimento alla ripresa';
+			case 'settings.secondsUnit': return ({required Object seconds}) => '${seconds} secondi';
+			case 'settings.defaultSleepTimer': return 'Timer spegnimento predefinito';
+			case 'settings.minutesUnit': return ({required Object minutes}) => '${minutes} minuti';
+			case 'settings.rememberTrackSelections': return 'Ricorda la selezione delle tracce per ogni serie o film';
+			case 'settings.rememberTrackSelectionsDescription': return 'Ricorda le scelte di audio e sottotitoli per ogni titolo';
+			case 'settings.rememberTrackSelectionsBackendRule': return 'Plex salva ogni scelta sul server per ogni file; Jellyfin attiva anche l\'opzione Ricorda selezioni dell\'account; Emby non è supportato';
+			case 'settings.followServerTrackSelections': return 'Usa le tracce selezionate sul server per ogni episodio';
+			case 'settings.followServerTrackSelectionsDescription': return 'Al cambio di episodio applica l\'audio e i sottotitoli selezionati sul server invece di mantenere la scelta corrente';
+			case 'settings.resumeMusicOnLaunch': return 'Ricorda la sessione musicale';
+			case 'settings.resumeMusicOnLaunchDescription': return 'All\'avvio dell\'app riapri l\'ultimo brano in pausa dal punto in cui era rimasto';
+			case 'settings.showChapterMarkersOnTimeline': return 'Mostra i marcatori dei capitoli sulla barra di avanzamento';
+			case 'settings.showChapterMarkersOnTimelineDescription': return 'Segmenta la barra di avanzamento ai confini dei capitoli';
+			case 'settings.specialsOrdering': return 'Speciali nell\'ordine degli episodi';
+			case 'settings.specialsOrderingDescription': return 'Dove vengono riprodotti gli speciali nell\'ordine di visione di una serie';
+			case 'settings.specialsOrderingServer': return 'Segui l\'ordine del server';
+			case 'settings.specialsOrderingAirDate': return 'Intercalati per data di trasmissione';
+			case 'settings.specialsOrderingLast': return 'Dopo le stagioni normali';
+			case 'settings.clickVideoTogglesPlayback': return 'Fai clic sul video per alternare riproduzione e pausa';
+			case 'settings.clickVideoTogglesPlaybackDescription': return 'Fai clic sul video per riprodurre o mettere in pausa anziché mostrare i controlli.';
+			case 'settings.videoPlayerControls': return 'Controlli del lettore video';
+			case 'settings.keyboardShortcuts': return 'Scorciatoie da tastiera';
+			case 'settings.keyboardShortcutsDescription': return 'Personalizza le scorciatoie da tastiera';
+			case 'settings.videoPlayerNavigation': return 'Navigazione del lettore video';
+			case 'settings.videoPlayerNavigationDescription': return 'Usa i tasti freccia per navigare nei controlli del lettore video';
+			case 'settings.watchTogetherRelay': return 'Relay di Guarda insieme';
+			case 'settings.watchTogetherRelayDescription': return 'Relay pubblici di Open Watch Party, se non ne imposti uno tuo';
+			case 'settings.watchTogetherRelayHint': return 'https://mio-relay.esempio.it';
+			case 'settings.watchTogetherRelayInvalid': return 'Inserisci un URL di base HTTP o HTTPS valido per il relay.';
+			case 'settings.crashReporting': return 'Segnalazione degli arresti anomali';
+			case 'settings.crashReportingDescription': return 'Invia segnalazioni sugli arresti anomali per contribuire a migliorare l\'app';
+			case 'settings.debugLogging': return 'Registrazione di debug';
+			case 'settings.debugLoggingDescription': return 'Abilita una registrazione dettagliata per la risoluzione dei problemi';
+			case 'settings.viewLogs': return 'Visualizza i log';
+			case 'settings.viewLogsDescription': return 'Visualizza i log dell\'applicazione';
+			case 'settings.clearImageCache': return 'Svuota cache immagini';
+			case 'settings.clearImageCacheDescription': return 'Svuota le immagini e le miniature memorizzate nella cache. Le immagini potrebbero caricarsi più lentamente finché non vengono scaricate di nuovo.';
+			case 'settings.clearImageCacheSuccess': return 'Cache immagini svuotata correttamente';
+			case 'settings.resetSettings': return 'Ripristina impostazioni';
+			case 'settings.resetSettingsDescription': return 'Ripristina le impostazioni predefinite. Questa operazione non può essere annullata.';
+			case 'settings.resetSettingsSuccess': return 'Impostazioni ripristinate correttamente';
+			case 'settings.backup': return 'Backup';
+			case 'settings.exportSettings': return 'Esporta impostazioni';
+			case 'settings.exportSettingsDescription': return 'Salva le tue preferenze in un file';
+			case 'settings.exportSettingsSuccess': return 'Impostazioni esportate';
+			case 'settings.importSettings': return 'Importa impostazioni';
+			case 'settings.importSettingsDescription': return 'Ripristina le preferenze da un file';
+			case 'settings.importSettingsConfirm': return 'Questa azione sostituirà le impostazioni attuali. Continuare?';
+			case 'settings.importSettingsSuccess': return 'Impostazioni importate';
+			case 'settings.importSettingsInvalidFile': return 'Questo file non è un\'esportazione Plezy valida';
+			case 'settings.importSettingsNoUser': return 'Accedi prima di importare le impostazioni';
+			case 'settings.shortcutsReset': return 'Scorciatoie ripristinate alle impostazioni predefinite';
+			case 'settings.resetShortcutsConfirm': return 'Le scorciatoie personalizzate verranno sostituite con quelle predefinite. Continuare?';
+			case 'settings.about': return 'Informazioni';
+			case 'settings.aboutDescription': return 'Informazioni sull\'app e le licenze';
+			case 'settings.updates': return 'Aggiornamenti';
+			case 'settings.updateAvailable': return 'Aggiornamento disponibile';
+			case 'settings.checkForUpdates': return 'Controlla aggiornamenti';
+			case 'settings.autoCheckUpdatesOnStartup': return 'Controlla automaticamente gli aggiornamenti all\'avvio';
+			case 'settings.autoCheckUpdatesOnStartupDescription': return 'Avvisa all\'avvio quando è disponibile un aggiornamento';
+			case 'settings.validationErrorEnterNumber': return 'Inserisci un numero valido';
+			case 'settings.validationErrorDuration': return ({required Object min, required Object max, required Object unit}) => 'La durata deve essere compresa tra ${min} e ${max} ${unit}';
+			case 'settings.shortcutAlreadyAssigned': return ({required Object action}) => 'Scorciatoia già assegnata a ${action}';
+			case 'settings.shortcutUpdated': return ({required Object action}) => 'Scorciatoia aggiornata per ${action}';
+			case 'settings.saveFailed': return 'Impossibile salvare le modifiche. Riprova.';
+			case 'settings.autoPlayAndSkip': return 'Riproduzione automatica e salti';
+			case 'settings.autoPlayNextEpisode': return 'Riproduci automaticamente l\'episodio successivo';
+			case 'settings.autoPlayNextEpisodeDescription': return 'Avvia automaticamente l\'episodio successivo quando termina quello in riproduzione';
+			case 'settings.shuffleStartsFromBeginning': return 'La riproduzione casuale inizia dall\'inizio';
+			case 'settings.shuffleStartsFromBeginningDescription': return 'Avvia ogni episodio dall\'inizio durante la riproduzione casuale invece di riprenderlo';
+			case 'settings.playNextCountdown': return 'Conto alla rovescia del successivo';
+			case 'settings.playNextCountdownImmediate': return 'Riproduci subito';
+			case 'settings.skipIntroMode': return 'Salta intro';
+			case 'settings.skipIntroModeOffDescription': return 'Riproduci le intro normalmente senza pulsante di salto';
+			case 'settings.skipIntroModeButtonDescription': return 'Mostra un pulsante di salto quando inizia un\'intro';
+			case 'settings.skipIntroModeAutoDescription': return 'Salta automaticamente le intro dopo il ritardo indicato sotto';
+			case 'settings.skipCreditsMode': return 'Salta titoli di coda';
+			case 'settings.skipCreditsModeOffDescription': return 'Riproduci i titoli di coda normalmente senza pulsante di salto';
+			case 'settings.skipCreditsModeButtonDescription': return 'Mostra un pulsante di salto quando iniziano i titoli di coda';
+			case 'settings.skipCreditsModeAutoDescription': return 'Salta automaticamente i titoli di coda e riproduci l\'episodio successivo';
+			case 'settings.skipMarkerModeOff': return 'Disattivato';
+			case 'settings.skipMarkerModeButton': return 'Mostra pulsante';
+			case 'settings.skipMarkerModeAuto': return 'Automatico';
+			case 'settings.forceSkipMarkerFallback': return 'Forza i marcatori di ripiego';
+			case 'settings.forceSkipMarkerFallbackDescription': return 'Usa i modelli dei titoli dei capitoli anche quando Plex dispone di marcatori';
+			case 'settings.autoSkipDelay': return 'Ritardo del salto automatico';
+			case 'settings.autoSkipDelayDescription': return ({required Object seconds}) => 'Attendi ${seconds} secondi prima del salto automatico';
+			case 'settings.introPattern': return 'Modello del marcatore della sigla iniziale';
+			case 'settings.introPatternDescription': return 'Espressione regolare per individuare i marcatori della sigla iniziale nei titoli dei capitoli';
+			case 'settings.creditsPattern': return 'Modello del marcatore dei titoli di coda';
+			case 'settings.creditsPatternDescription': return 'Espressione regolare per individuare i marcatori dei titoli di coda nei titoli dei capitoli';
+			case 'settings.invalidRegex': return 'Espressione regolare non valida';
+			case 'settings.regex': return 'Espressione regolare';
+			case 'settings.downloads': return 'Download';
+			case 'settings.downloadLocationDescription': return 'Scegli dove archiviare i contenuti scaricati';
+			case 'settings.downloadLocationDefault': return 'Predefinita (archivio dell\'app)';
+			case 'settings.downloadLocationCustom': return 'Posizione personalizzata';
+			case 'settings.selectFolder': return 'Seleziona cartella';
+			case 'settings.resetToDefault': return 'Ripristina posizione predefinita';
+			case 'settings.currentPath': return ({required Object path}) => 'Attuale: ${path}';
+			case 'settings.downloadLocationChanged': return 'Posizione di download modificata';
+			case 'settings.downloadLocationReset': return 'Posizione di download ripristinata a predefinita';
+			case 'settings.downloadLocationInvalid': return 'La cartella selezionata non è scrivibile';
+			case 'settings.downloadLocationPickerUnavailable': return 'La selezione della cartella non è disponibile su questo dispositivo';
+			case 'settings.downloadOnWifiOnly': return 'Scarica solo tramite Wi-Fi';
+			case 'settings.downloadOnWifiOnlyDescription': return 'Impedisci i download quando si utilizza la rete dati cellulare';
+			case 'settings.autoRemoveWatchedDownloads': return 'Rimuovi automaticamente i download visti';
+			case 'settings.autoRemoveWatchedDownloadsDescription': return 'Elimina automaticamente i download già visti';
+			case 'settings.cellularDownloadBlocked': return 'I download sono bloccati sulla rete mobile. Usa il Wi-Fi o modifica l\'impostazione.';
+			case 'settings.maxVolume': return 'Volume massimo consentito';
+			case 'settings.maxVolumeDescription': return 'Consenti di aumentare il volume oltre il 100% per i contenuti con audio basso';
+			case 'settings.maxVolumePercent': return ({required Object percent}) => '${percent}%';
+			case 'settings.discordRichPresence': return 'Discord Rich Presence';
+			case 'settings.discordRichPresenceDescription': return 'Mostra su Discord cosa stai guardando';
+			case 'settings.services': return 'Servizi';
+			case 'settings.servicesDescription': return 'Connetti Trakt, MyAnimeList, Seerr e altro';
+			case 'settings.manageLibrariesDescription': return 'Riordina e nascondi le librerie';
+			case 'settings.companionRemoteServer': return 'Server del telecomando';
+			case 'settings.companionRemoteServerDescription': return 'Consenti ai dispositivi mobili della tua rete di controllare questa app';
+			case 'settings.companionRemoteServerStartFailed': return 'Impossibile avviare il server del telecomando';
+			case 'settings.companionRemoteServerStopFailed': return 'Impossibile arrestare il server del telecomando';
+			case 'settings.autoPip': return 'Picture-in-Picture automatica';
+			case 'settings.autoPipDescription': return 'Attiva automaticamente la modalità Picture-in-Picture quando esci dall\'app durante la riproduzione';
+			case 'settings.matchContentFrameRate': return 'Adatta la frequenza dei fotogrammi';
+			case 'settings.matchContentFrameRateDescription': return 'Adatta la frequenza di aggiornamento dello schermo al contenuto video';
+			case 'settings.matchContentResolution': return 'Adatta alla risoluzione del contenuto';
+			case 'settings.matchContentResolutionDescription': return 'Passa lo schermo alla risoluzione nativa del video, così è la TV a occuparsi dell\'upscaling. Durante la riproduzione vengono ridimensionati anche menu e sottotitoli';
+			case 'settings.matchRefreshRate': return 'Adatta la frequenza di aggiornamento';
+			case 'settings.matchRefreshRateDescription': return 'Adatta la frequenza di aggiornamento dello schermo in modalità a schermo intero';
+			case 'settings.matchDynamicRange': return 'Adatta la gamma dinamica';
+			case 'settings.matchDynamicRangeDescription': return 'Attiva l\'HDR per i contenuti HDR, quindi torna all\'SDR';
+			case 'settings.displaySwitchDelay': return 'Ritardo del cambio di modalità dello schermo';
+			case 'settings.tunneledPlayback': return 'Riproduzione con tunneling';
+			case 'settings.tunneledPlaybackDescription': return 'Usa il tunneling video. Disattivalo se durante la riproduzione HDR lo schermo rimane nero o il movimento scatta.';
+			case 'settings.audioPassthrough': return 'Passthrough audio';
+			case 'settings.audioPassthroughDescription': return 'Invia l\'audio Dolby/DTS al ricevitore o al televisore senza ricodificarlo, preservando l\'audio surround. Disattiva questa opzione se non senti alcun suono.';
+			case 'settings.audioPassthroughDescriptionApple': return 'Usa il decoder Dolby nativo di Apple per Dolby Digital Plus, incluso Atmos. DTS e TrueHD vengono comunque riprodotti come PCM multicanale. Disattiva questa opzione se non senti alcun suono.';
+			case 'settings.audioPassthroughDescriptionAppleSpatial': return 'Usa il decoder Dolby nativo di Apple per Dolby Digital Plus, incluso Atmos. Su iOS, iPadOS e tvOS 26 o versioni successive, TrueHD Atmos e DTS:X vengono riprodotti come audio spaziale. Le altre tracce DTS e TrueHD vengono riprodotte come PCM multicanale. Disattiva questa opzione se non senti alcun suono.';
+			case 'settings.audioPassthroughOverriddenByNormalization': return 'Disattivato mentre la normalizzazione del volume è attiva';
+			case 'settings.audioChannelLimit': return 'Canali audio';
+			case 'settings.audioChannelLimitDescription': return 'Esegui il downmix dell\'audio decodificato per altoparlanti, cuffie o configurazioni HDMI che non possono riprodurre tutti i canali';
+			case 'settings.audioChannelLimitOriginal': return 'Originale';
+			case 'settings.audioChannelLimitOriginalDescription': return 'Riproduci tutti i canali della traccia';
+			case 'settings.audioChannelLimitSurround51': return 'Fino a 5.1';
+			case 'settings.audioChannelLimitSurround51Description': return 'Esegui il downmix da 7.1 a 5.1 per televisori e ricevitori che accettano solo PCM 5.1. Il passthrough non viene modificato.';
+			case 'settings.audioChannelLimitStereo': return 'Stereo';
+			case 'settings.audioChannelLimitStereoDescription': return 'Esegui il downmix a due canali per altoparlanti stereo o cuffie. Disattiva il passthrough.';
+			case 'settings.downmixCenterBoost': return 'Amplificazione canale centrale';
+			case 'settings.downmixCenterBoostValue': return ({required Object db}) => '${db} dB';
+			case 'settings.downmixCenterBoostLabel': return 'Amplificazione (dB)';
+			case 'settings.downmixCenterBoostShort': return 'dB';
+			case 'settings.audioDownmixNormalize': return 'Normalizza il volume durante il downmix';
+			case 'settings.audioDownmixNormalizeDescription': return 'Riduce il volume del mix per evitare il clipping. Disattiva questa opzione per mantenere il volume originale (le scene più rumorose potrebbero risultare distorte).';
+			case 'settings.dvConversionMode': return 'Conversione Dolby Vision';
+			case 'settings.dvConversionModeDescription': return 'Scegli come gestire i file Dolby Vision con profilo 7.';
+			case 'settings.dvConversionAuto': return 'Auto';
+			case 'settings.dvConversionNative': return 'Nativa / disattivata';
+			case 'settings.dvConversionDv81': return 'P7 → P8.1';
+			case 'settings.dvConversionHevcStrip': return 'P7 → HEVC';
+			case 'settings.dvConversionAutoDescription': return 'Rileva le capacità del dispositivo e usa il normale meccanismo di ripiego';
+			case 'settings.dvConversionNativeDescription': return 'Forza il DV7 nativo e impedisce nuovi tentativi di conversione DV';
+			case 'settings.dvConversionDv81Description': return 'Forza la conversione RPU diretta al profilo Dolby Vision 8.1';
+			case 'settings.dvConversionHevcStripDescription': return 'Rimuove i livelli RPU/EL di Dolby Vision e riproduce il video come semplice HEVC';
+			case 'settings.disableDolbyVision': return 'Disattiva Dolby Vision';
+			case 'settings.disableDolbyVisionDescription': return 'Riproduci il livello HDR10 o HLG del file al posto di Dolby Vision, se presente';
+			case 'settings.hdrSdrConversion': return 'Conversione da HDR a SDR';
+			case 'settings.hdrSdrConversionDescription': return 'Scegli cosa converte i video HDR quando lo schermo non può mostrare l\'HDR.';
+			case 'settings.hdrSdrConversionAuto': return 'Auto';
+			case 'settings.hdrSdrConversionAutoDescription': return 'Dispositivo da Android 9 in poi, lettore nelle versioni precedenti';
+			case 'settings.hdrSdrConversionDevice': return 'Dispositivo';
+			case 'settings.hdrSdrConversionDeviceDescription': return 'La conversione è affidata all\'hardware video del dispositivo. La più veloce, ma i colori dipendono dal dispositivo';
+			case 'settings.hdrSdrConversionPlayer': return 'Lettore';
+			case 'settings.hdrSdrConversionPlayerDescription': return 'La conversione avviene nel lettore. Colori uniformi, ma il 4K può scattare sui TV box di fascia bassa';
+			case 'settings.deinterlace': return 'Deinterlacciamento';
+			case 'settings.deinterlaceDescription': return 'Rimuove gli artefatti a pettine dai video interlacciati (solo lettore mpv)';
+			case 'settings.deinterlaceOff': return 'Disattivato';
+			case 'settings.deinterlaceOffDescription': return 'Mostra il video interlacciato così come viene decodificato';
+			case 'settings.deinterlaceVideo': return 'Video';
+			case 'settings.deinterlaceVideoDescription': return 'Trasforma ogni semiquadro in un fotogramma completo. Per video girati per la TV, come sport, notiziari e concerti';
+			case 'settings.deinterlaceFilm': return 'Film';
+			case 'settings.deinterlaceFilmDescription': return 'Ripristina i fotogrammi originali di film e animazioni sottoposti a telecine a 29,97 fps, frequenti nei DVD NTSC. I video girati per la TV scattano. La TV in diretta usa Video';
+			case 'settings.requireProfileSelectionOnOpen': return 'Chiedi di scegliere il profilo all\'apertura';
+			case 'settings.requireProfileSelectionOnOpenDescription': return 'Mostra la selezione del profilo ogni volta che l\'app viene aperta';
+			case 'settings.forceTvMode': return 'Forza modalità TV';
+			case 'settings.forceTvModeDescription': return 'Forza il layout TV sui dispositivi che non vengono rilevati automaticamente. Richiede il riavvio.';
+			case 'settings.startInFullscreen': return 'Avvia a schermo intero';
+			case 'settings.startInFullscreenDescription': return 'Apri Plezy a schermo intero all\'avvio';
+			case 'settings.exitFullscreenOnPlayerClose': return 'Esci dalla modalità a schermo intero alla chiusura del lettore';
+			case 'settings.exitFullscreenOnPlayerCloseDescription': return 'Esce automaticamente dalla modalità a schermo intero quando chiudi il lettore video';
+			case 'settings.autoHidePerformanceOverlay': return 'Nascondi automaticamente il riquadro delle prestazioni';
+			case 'settings.autoHidePerformanceOverlayDescription': return 'Dissolvi il riquadro delle prestazioni insieme ai controlli di riproduzione';
+			case 'settings.showNavBarLabels': return 'Mostra le etichette della barra di navigazione';
+			case 'settings.showNavBarLabelsDescription': return 'Mostra le etichette di testo sotto le icone della barra di navigazione';
+			case 'settings.startupSection': return 'Sezione di avvio';
+			case 'settings.showExploreTab': return 'Mostra la scheda Esplora';
+			case 'settings.showExploreTabDescription': return 'Visualizza la scheda Esplora con contenuti di Esplora di Plex e dei tracker collegati';
+			case 'settings.liveTvDefaultFavorites': return 'Apri sui canali preferiti';
+			case 'settings.liveTvDefaultFavoritesDescription': return 'Mostra solo i canali preferiti quando apri la TV in diretta';
+			case 'settings.general': return 'Generali';
+			case 'settings.generalDescription': return 'Lingua, avvio e comportamento della finestra';
+			case 'settings.languageAndRegion': return 'Lingua e regione';
+			case 'settings.startup': return 'Avvio';
+			case 'settings.display': return 'Schermo';
+			case 'settings.libraryAndCards': return 'Libreria e schede';
+			case 'settings.homeScreen': return 'Schermata iniziale';
+			case 'settings.navigation': return 'Navigazione';
+			case 'settings.window': return 'Finestra';
+			case 'settings.liveTv': return 'TV in diretta';
+			case 'settings.player': return 'Lettore';
+			case 'settings.videoAndDisplay': return 'Video e schermo';
+			case 'settings.audio': return 'Audio';
+			case 'settings.quality': return 'Qualità';
+			case 'settings.subtitles': return 'Sottotitoli';
+			case 'settings.seekAndTiming': return 'Avanzamento e tempi';
+			case 'settings.behavior': return 'Comportamento';
+			case 'settings.gestures': return 'Gesti';
+			case 'settings.gestureBrightnessSwipe': return 'Scorrimento per la luminosità';
+			case 'settings.gestureBrightnessSwipeDescription': return 'Scorri verso l\'alto o il basso sul bordo sinistro per regolare la luminosità';
+			case 'settings.gestureVolumeSwipe': return 'Scorrimento per il volume';
+			case 'settings.gestureVolumeSwipeDescription': return 'Scorri verso l\'alto o il basso sul bordo destro per regolare il volume';
+			case 'settings.gesturePinchToZoom': return 'Pizzica per lo zoom';
+			case 'settings.gesturePinchToZoomDescription': return 'Pizzica il video per ingrandire o ridurre';
+			case 'settings.rememberBrightnessLevel': return 'Ricorda il livello di luminosità';
+			case 'settings.rememberBrightnessLevelDescription': return 'Avvia la riproduzione con la luminosità impostata dall\'ultimo scorrimento';
+			case 'settings.controls': return 'Controlli';
+			case 'settings.rememberPlayerChanges': return 'Ricorda le modifiche del lettore';
+			case 'settings.rememberPlayerChangesDescription': return 'Dove viene salvata e riapplicata una modifica effettuata durante la riproduzione';
+			case 'settings.scopePlaybackSpeed': return 'Velocità di riproduzione';
+			case 'settings.scopeShaderPreset': return 'Preimpostazione shader';
+			case 'settings.scopeAspectRatio': return 'Proporzioni';
+			case 'settings.scopeZoom': return 'Zoom';
+			case 'settings.scopeSyncOffsets': return 'Sincronizzazione audio e sottotitoli';
+			case 'settings.playerScopeOff': return 'Non salvare';
+			case 'settings.playerScopeGlobal': return 'Ovunque';
+			case 'settings.playerScopeLibrary': return 'Per libreria';
+			case 'settings.playerScopeTitle': return 'Per serie o film';
+			case 'settings.exportDialogTitle': return 'Esporta le impostazioni di Plezy';
+			case 'themeEditor.builtIn': return 'Integrati';
+			case 'themeEditor.presets': return 'Preimpostati';
+			case 'themeEditor.custom': return 'Personalizzato';
+			case 'themeEditor.customEmpty': return 'Non ancora creato';
+			case 'themeEditor.editCustom': return 'Modifica tema personalizzato';
+			case 'themeEditor.editCustomDescription': return 'Scegli tu ogni colore';
+			case 'themeEditor.locked': return 'Sblocca con il Pacchetto temi e icone';
+			case 'themeEditor.savedLocked': return 'Salvato — si sblocca con il Pacchetto temi e icone';
+			case 'themeEditor.title': return 'Tema personalizzato';
+			case 'themeEditor.startFrom': return 'Parti da';
+			case 'themeEditor.startFromDescription': return 'Copia tutti i colori da un altro tema';
+			case 'themeEditor.colors': return 'Colori';
+			case 'themeEditor.preview': return 'Anteprima';
+			case 'themeEditor.slots.bg': return 'Sfondo';
+			case 'themeEditor.slots.surface': return 'Superficie';
+			case 'themeEditor.slots.outline': return 'Contorno';
+			case 'themeEditor.slots.text': return 'Testo';
+			case 'themeEditor.slots.textMuted': return 'Testo secondario';
+			case 'themeEditor.slots.accent': return 'Accento';
+			case 'themeEditor.opacity': return 'Opacità';
+			case 'themeEditor.hexHint': return '#RRGGBB o #AARRGGBB';
+			case 'themeEditor.fromOtherThemes': return 'Da altri temi';
+			case 'themeEditor.swatchLabel': return ({required Object color, required Object theme}) => '${color} ${theme}';
+			case 'themeEditor.contrast.textOnBg': return 'Testo sullo sfondo';
+			case 'themeEditor.contrast.textOnSurface': return 'Testo sulla superficie';
+			case 'themeEditor.contrast.textMutedOnBg': return 'Testo secondario sullo sfondo';
+			case 'themeEditor.contrast.textMutedOnSurface': return 'Testo secondario sulla superficie';
+			case 'themeEditor.contrast.accentOnBg': return 'Accento sullo sfondo';
+			case 'themeEditor.contrast.accentOnSurface': return 'Accento sulla superficie';
+			case 'themeEditor.contrast.labelOnAccent': return 'Etichetta dei pulsanti sull\'accento';
+			case 'themeEditor.lowContrast': return ({required Object pair, required Object ratio, required Object minimum}) => '${pair}: ${ratio}:1, sotto il valore consigliato di ${minimum}:1';
+			case 'themeEditor.discardTitle': return 'Scartare le modifiche?';
+			case 'themeEditor.discardMessage': return 'Le modifiche ai colori non salvate andranno perse.';
+			case 'themeEditor.discard': return 'Scarta';
+			case 'themeEditor.previewCardTitle': return ({required Object number}) => 'Episodio ${number}';
+			case 'themeEditor.previewCardSubtitle': return ({required Object minutes}) => '${minutes} min rimanenti';
+			case 'themeEditor.previewSwitch': return 'Riproduzione automatica';
+			case 'themeEditor.previewMutedText': return 'Così appare il testo secondario';
+			case 'search.hint': return 'Cerca film, serie TV e musica...';
+			case 'search.tryDifferentTerm': return 'Prova altri termini di ricerca';
+			case 'search.searchYourMedia': return 'Cerca nei tuoi media';
+			case 'search.enterTitleActorOrKeyword': return 'Inserisci un titolo, attore o parola chiave';
+			case 'search.people': return 'Persone';
+			case 'hotkeys.setShortcutFor': return ({required Object actionName}) => 'Imposta una scorciatoia per ${actionName}';
+			case 'hotkeys.clearShortcut': return 'Elimina scorciatoia';
+			case 'hotkeys.noShortcutSet': return 'Nessuna scorciatoia impostata';
+			case 'hotkeys.currentShortcut': return 'Scorciatoia attuale:';
+			case 'hotkeys.pressToRecord': return 'Seleziona per registrare una scorciatoia';
+			case 'hotkeys.recordingShortcut': return 'Premi ora la scorciatoia';
+			case 'hotkeys.actions.playPause': return 'Riproduci/Pausa';
+			case 'hotkeys.actions.volumeUp': return 'Alza volume';
+			case 'hotkeys.actions.volumeDown': return 'Abbassa volume';
+			case 'hotkeys.actions.seekForward': return ({required Object seconds}) => 'Avanti (${seconds}s)';
+			case 'hotkeys.actions.seekBackward': return ({required Object seconds}) => 'Indietro (${seconds}s)';
+			case 'hotkeys.actions.fullscreenToggle': return 'Attiva/disattiva schermo intero';
+			case 'hotkeys.actions.muteToggle': return 'Attiva/disattiva audio';
+			case 'hotkeys.actions.subtitleToggle': return 'Attiva/disattiva sottotitoli';
+			case 'hotkeys.actions.audioTrackNext': return 'Traccia audio successiva';
+			case 'hotkeys.actions.subtitleTrackNext': return 'Sottotitoli successivi';
+			case 'hotkeys.actions.chapterNext': return 'Capitolo successivo';
+			case 'hotkeys.actions.chapterPrevious': return 'Capitolo precedente';
+			case 'hotkeys.actions.episodeNext': return 'Episodio successivo';
+			case 'hotkeys.actions.episodePrevious': return 'Episodio precedente';
+			case 'hotkeys.actions.speedIncrease': return 'Aumenta velocità';
+			case 'hotkeys.actions.speedDecrease': return 'Diminuisci velocità';
+			case 'hotkeys.actions.speedReset': return 'Ripristina velocità';
+			case 'hotkeys.actions.zoomIn': return 'Aumenta zoom';
+			case 'hotkeys.actions.zoomOut': return 'Riduci zoom';
+			case 'hotkeys.actions.zoomReset': return 'Ripristina zoom';
+			case 'hotkeys.actions.subSeekNext': return 'Vai al sottotitolo successivo';
+			case 'hotkeys.actions.subSeekPrev': return 'Vai al sottotitolo precedente';
+			case 'hotkeys.actions.shaderToggle': return 'Attiva/disattiva shader';
+			case 'hotkeys.actions.skipMarker': return 'Salta intro/titoli di coda';
+			case 'hotkeys.actions.screenshot': return 'Cattura schermata';
+			case 'fileInfo.title': return 'Info sul file';
+			case 'fileInfo.overview': return 'Panoramica';
+			case 'fileInfo.video': return 'Video';
+			case 'fileInfo.audio': return 'Audio';
+			case 'fileInfo.subtitles': return 'Sottotitoli';
+			case 'fileInfo.images': return 'Immagini incorporate';
+			case 'fileInfo.dataStreams': return 'Flussi di dati';
+			case 'fileInfo.lyrics': return 'Testi';
+			case 'fileInfo.file': return 'File';
+			case 'fileInfo.attachments': return 'Allegati';
+			case 'fileInfo.delivery': return 'Distribuzione';
+			case 'fileInfo.versionCounter': return ({required Object index, required Object count}) => 'Versione ${index} di ${count}';
+			case 'fileInfo.fileCounter': return ({required Object index, required Object count}) => 'File ${index} di ${count}';
+			case 'fileInfo.noStreams': return 'Il server non ha segnalato flussi per questo file.';
+			case 'fileInfo.copyPath': return 'Copia percorso';
+			case 'fileInfo.pathCopied': return 'Percorso del file copiato';
+			case 'fileInfo.codec': return 'Codec';
+			case 'fileInfo.codecTag': return 'Tag codec';
+			case 'fileInfo.resolution': return 'Risoluzione';
+			case 'fileInfo.codedResolution': return 'Risoluzione codificata';
+			case 'fileInfo.bitrate': return 'Bitrate';
+			case 'fileInfo.frameRate': return 'Frequenza fotogrammi';
+			case 'fileInfo.rotation': return 'Rotazione';
+			case 'fileInfo.comment': return 'Commento';
+			case 'fileInfo.audioDescription': return 'Descrizione audio';
+			case 'fileInfo.headerCompression': return 'Compressione header';
+			case 'fileInfo.sidecarFile': return 'File sidecar';
+			case 'fileInfo.transportTimestamp': return 'Timestamp di trasporto';
+			case 'fileInfo.displayOffset': return 'Offset di visualizzazione';
+			case 'fileInfo.previewFailureCode': return 'Codice errore anteprima';
+			case 'fileInfo.previewRetries': return 'Riprova anteprima';
+			case 'fileInfo.aspectRatio': return 'Proporzioni';
+			case 'fileInfo.pixelAspectRatio': return 'Aspect ratio pixel';
+			case 'fileInfo.profile': return 'Profilo';
+			case 'fileInfo.level': return 'Livello';
+			case 'fileInfo.bitDepth': return 'Profondità in bit';
+			case 'fileInfo.pixelFormat': return 'Formato pixel';
+			case 'fileInfo.colorSpace': return 'Spazio colore';
+			case 'fileInfo.colorRange': return 'Gamma colori';
+			case 'fileInfo.colorPrimaries': return 'Colori primari';
+			case 'fileInfo.colorTransfer': return 'Trasferimento colore';
+			case 'fileInfo.chromaSubsampling': return 'Sottocampionamento cromatico';
+			case 'fileInfo.chromaLocation': return 'Posizione crominanza';
+			case 'fileInfo.scanType': return 'Tipo di scansione';
+			case 'fileInfo.interlaced': return 'Interlacciato';
+			case 'fileInfo.anamorphic': return 'Anamorfico';
+			case 'fileInfo.referenceFrames': return 'Frame di riferimento';
+			case 'fileInfo.dynamicRange': return 'Gamma dinamica';
+			case 'fileInfo.dolbyVision': return 'Dolby Vision';
+			case 'fileInfo.dolbyVisionLevel': return 'Livello Dolby Vision';
+			case 'fileInfo.dolbyVisionVersion': return 'Versione Dolby Vision';
+			case 'fileInfo.dolbyVisionLayers': return 'Layer Dolby Vision';
+			case 'fileInfo.baseLayerCompatibility': return 'Compatibilità layer di base';
+			case 'fileInfo.avcBitstream': return 'Bitstream AVC';
+			case 'fileInfo.nalLengthSize': return 'Dimensione lunghezza NAL';
+			case 'fileInfo.scalingMatrix': return 'Matrice di scaling personalizzata';
+			case 'fileInfo.streamIdentifier': return 'Identificatore flusso';
+			case 'fileInfo.streamIndex': return 'Indice flusso';
+			case 'fileInfo.streamId': return 'ID flusso';
+			case 'fileInfo.language': return 'Lingua';
+			case 'fileInfo.languageCode': return 'Codice lingua';
+			case 'fileInfo.streamTitle': return 'Titolo traccia';
+			case 'fileInfo.channels': return 'Canali';
+			case 'fileInfo.sampleRate': return 'Frequenza di campionamento';
+			case 'fileInfo.spatialAudio': return 'Audio spaziale';
+			case 'fileInfo.textBased': return 'Testuale';
+			case 'fileInfo.subtitleFormat': return 'Formato sidecar';
+			case 'fileInfo.provider': return 'Provider';
+			case 'fileInfo.matchScore': return 'Punteggio corrispondenza';
+			case 'fileInfo.externalDelivery': return 'Può essere servito separatamente';
+			case 'fileInfo.sidecarPath': return 'Percorso sidecar';
+			case 'fileInfo.sourceStream': return 'Copiato da';
+			case 'fileInfo.temporary': return 'Temporaneo';
+			case 'fileInfo.timeBase': return 'Base temporale';
+			case 'fileInfo.overallBitrate': return 'Bitrate complessivo';
+			case 'fileInfo.path': return 'Percorso';
+			case 'fileInfo.fileName': return 'Nome file';
+			case 'fileInfo.size': return 'Dimensione';
+			case 'fileInfo.totalSize': return 'Dimensione totale';
+			case 'fileInfo.container': return 'Contenitore';
+			case 'fileInfo.duration': return 'Durata';
+			case 'fileInfo.previewThumbnails': return 'Miniature anteprima';
+			case 'fileInfo.previewIndex': return 'Indice anteprima';
+			case 'fileInfo.packetLength': return 'Lunghezza pacchetto';
+			case 'fileInfo.filePresent': return 'File presente';
+			case 'fileInfo.fileReadable': return 'Leggibile dal server';
+			case 'fileInfo.streamPath': return 'Percorso flusso';
+			case 'fileInfo.optimizedForStreaming': return 'Ottimizzato per lo streaming';
+			case 'fileInfo.has64bitOffsets': return 'Offset a 64 bit';
+			case 'fileInfo.protocol': return 'Protocollo';
+			case 'fileInfo.mediaType': return 'Tipo di supporto';
+			case 'fileInfo.sourceKind': return 'Tipo di origine';
+			case 'fileInfo.optimizedVersion': return 'Versione ottimizzata';
+			case 'fileInfo.optimizationTarget': return 'Obiettivo ottimizzazione';
+			case 'fileInfo.deletedAt': return 'Eliminato';
+			case 'fileInfo.remoteSource': return 'Origine remota';
+			case 'fileInfo.infiniteStream': return 'Flusso infinito';
+			case 'fileInfo.directPlay': return 'Riproduzione diretta';
+			case 'fileInfo.directStream': return 'Streaming diretto';
+			case 'fileInfo.transcoding': return 'Transcodifica';
+			case 'fileInfo.etag': return 'ETag';
+			case 'fileInfo.versionId': return 'ID versione';
+			case 'fileInfo.fileId': return 'ID file';
+			case 'fileInfo.defaultAudioTrack': return 'Traccia audio predefinita';
+			case 'fileInfo.defaultSubtitleTrack': return 'Traccia sottotitoli predefinita';
+			case 'fileInfo.subtitlesOff': return 'Disattivati';
+			case 'fileInfo.flagDefault': return 'Predefinito';
+			case 'fileInfo.flagForced': return 'Forzato';
+			case 'fileInfo.flagSelected': return 'Selezionato';
+			case 'fileInfo.flagExternal': return 'Esterno';
+			case 'fileInfo.flagHearingImpaired': return 'Non udenti';
+			case 'fileInfo.flagDub': return 'Doppiato';
+			case 'fileInfo.flagOriginal': return 'Originale';
+			case 'fileInfo.channelsMono': return 'Mono';
+			case 'fileInfo.dolbyVisionProfile': return ({required Object profile}) => 'Profilo ${profile}';
+			case 'mediaMenu.markAsWatched': return 'Segna come visto';
+			case 'mediaMenu.markAsUnwatched': return 'Segna come non visto';
+			case 'mediaMenu.removeFromContinueWatching': return 'Rimuovi da Continua a guardare';
+			case 'mediaMenu.viewDetails': return 'Visualizza dettagli';
+			case 'mediaMenu.goToSeries': return 'Vai alla serie';
+			case 'mediaMenu.shufflePlay': return 'Riproduzione casuale';
+			case 'mediaMenu.shuffleNotAvailableOffline': return 'Riproduzione casuale non disponibile offline';
+			case 'mediaMenu.fileInfo': return 'Info sul file';
+			case 'mediaMenu.deleteEpisodeFromServer': return 'Elimina episodio dal server';
+			case 'mediaMenu.deleteSeasonFromServer': return 'Elimina stagione dal server';
+			case 'mediaMenu.deleteShowFromServer': return 'Elimina serie dal server';
+			case 'mediaMenu.deleteMovieFromServer': return 'Elimina film dal server';
+			case 'mediaMenu.deleteEpisodeTitle': return 'Eliminare questo episodio?';
+			case 'mediaMenu.deleteSeasonTitle': return 'Eliminare questa stagione?';
+			case 'mediaMenu.deleteShowTitle': return 'Eliminare questa serie?';
+			case 'mediaMenu.deleteMovieTitle': return 'Eliminare questo film?';
+			case 'mediaMenu.deleteEpisodeConfirm': return 'Elimina episodio';
+			case 'mediaMenu.deleteSeasonConfirm': return 'Elimina stagione';
+			case 'mediaMenu.deleteShowConfirm': return 'Elimina serie';
+			case 'mediaMenu.deleteMovieConfirm': return 'Elimina film';
+			case 'mediaMenu.deleteAnyway': return 'Elimina comunque';
+			case 'mediaMenu.confirmDeleteTarget': return ({required Object title}) => 'Eliminare definitivamente ${title} dal tuo server?';
+			case 'mediaMenu.deleteMultipleWarning': return 'Sono inclusi tutti gli episodi e i relativi file.';
+			case 'mediaMenu.deleteEpisodeCountWarning': return ({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('it'))(n,
+				one: 'Questo elimina tutti i ${n} episodio in essa contenuto e il relativo file.',
+				other: 'Questo elimina tutti i ${n} episodi in essa contenuti e i relativi file.',
+			);
+			case 'mediaMenu.deleteMultiPartWarning': return ({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('it'))(n,
+				one: 'Questo elemento è archiviato in ${n} file, che verrà eliminato.',
+				other: 'Questo elemento è archiviato in ${n} file, e tutti verranno eliminati.',
+			);
+			case 'mediaMenu.deleteSharedFileHeading': return ({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('it'))(n,
+				one: '${n} altro episodio è archiviato nello stesso file e verrà eliminato anche lui:',
+				other: '${n} altri episodi sono archiviati nello stesso file e verranno eliminati anche loro:',
+			);
+			case 'mediaMenu.deleteScopeUnverifiedProbeFailed': return 'Plezy non ha potuto verificare quali file rimuoverà, quindi potrebbe eliminare più di quanto indicato sopra. Annulla e riprova, oppure elimina comunque.';
+			case 'mediaMenu.deleteScopeUnverifiedNoFileInfo': return 'Il tuo server non ha fornito i dettagli del file per questo elemento, quindi Plezy non può verificare quali file rimuoverà. Potrebbe eliminare più di quanto indicato sopra.';
+			case 'mediaMenu.mediaDeletedSuccessfully': return 'Elemento multimediale eliminato correttamente';
+			case 'mediaMenu.mediaFailedToDelete': return 'Impossibile eliminare l\'elemento multimediale';
+			case 'mediaMenu.rate': return 'Valuta';
+			case 'mediaMenu.playFromBeginning': return 'Riproduci dall\'inizio';
+			case 'mediaMenu.playVersion': return 'Riproduci versione...';
+			case 'rateSheet.title': return 'Valuta';
+			case 'rateSheet.server': return 'Server';
+			case 'rateSheet.favorite': return 'Preferito';
+			case 'rateSheet.favorited': return 'Aggiunto ai preferiti';
+			case 'rateSheet.saved': return 'Salvato';
+			case 'rateSheet.notAvailable': return 'Nessuna corrispondenza trovata';
+			case 'rateSheet.noConnectedServices': return 'Collega un servizio nelle Impostazioni per assegnare valutazioni anche su quel servizio.';
+			case 'accessibility.mediaCardMovie': return ({required Object title}) => '${title}, film';
+			case 'accessibility.mediaCardShow': return ({required Object title}) => '${title}, serie TV';
+			case 'accessibility.mediaCardEpisode': return ({required Object title, required Object episodeInfo}) => '${title}, ${episodeInfo}';
+			case 'accessibility.mediaCardSeason': return ({required Object title, required Object seasonInfo}) => '${title}, ${seasonInfo}';
+			case 'accessibility.mediaCardWatched': return 'visto';
+			case 'accessibility.mediaCardPartiallyWatched': return ({required Object percent}) => 'visto al ${percent}%';
+			case 'accessibility.mediaCardUnwatched': return 'non visto';
+			case 'accessibility.tapToPlay': return 'Tocca per riprodurre';
+			case 'accessibility.decrease': return 'Diminuisci';
+			case 'accessibility.increase': return 'Aumenta';
+			case 'accessibility.decreaseValue': return ({required Object label}) => 'Diminuisci ${label}';
+			case 'accessibility.increaseValue': return ({required Object label}) => 'Aumenta ${label}';
+			case 'accessibility.hue': return 'Tonalità';
+			case 'accessibility.saturation': return 'Saturazione';
+			case 'accessibility.brightness': return 'Luminosità';
+			case 'accessibility.hexColor': return 'Colore esadecimale';
+			case 'accessibility.expandText': return 'Espandi il testo';
+			case 'accessibility.collapseText': return 'Comprimi il testo';
+			case 'accessibility.alphabetNavigation': return 'Navigazione alfabetica';
+			case 'accessibility.alphabetScrollHint': return 'Scorri verso l\'alto o il basso per cambiare lettera';
+			case 'accessibility.rowColumnPosition': return ({required Object row, required Object rowCount, required Object column, required Object columnCount}) => 'Riga ${row} di ${rowCount}, colonna ${column} di ${columnCount}';
+			case 'accessibility.rowPosition': return ({required Object row, required Object rowCount}) => 'Riga ${row} di ${rowCount}';
+			case 'accessibility.autoScrollPlay': return 'Avvia scorrimento automatico';
+			case 'accessibility.autoScrollPause': return 'Sospendi scorrimento automatico';
+			case 'accessibility.hueShort': return 'T';
+			case 'accessibility.saturationShort': return 'S';
+			case 'accessibility.valueShort': return 'V';
+			case 'tooltips.shufflePlay': return 'Riproduzione casuale';
+			case 'tooltips.playTrailer': return 'Riproduci trailer';
+			case 'tooltips.markAsWatched': return 'Segna come visto';
+			case 'tooltips.markAsUnwatched': return 'Segna come non visto';
+			case 'audioTracks.track': return ({required Object n}) => 'Traccia audio ${n}';
+			case 'videoControls.audioLabel': return 'Audio';
+			case 'videoControls.subtitlesLabel': return 'Sottotitoli';
+			case 'videoControls.addTime': return ({required Object amount, required Object unit}) => '+${amount}${unit}';
+			case 'videoControls.letterbox': return 'Letterbox';
+			case 'videoControls.fillScreen': return 'Riempi lo schermo';
+			case 'videoControls.stretch': return 'Allunga';
+			case 'videoControls.lockRotation': return 'Blocca rotazione';
+			case 'videoControls.unlockRotation': return 'Sblocca rotazione';
+			case 'videoControls.timerActive': return 'Timer attivo';
+			case 'videoControls.playbackWillPauseIn': return ({required Object duration}) => 'La riproduzione verrà messa in pausa tra ${duration}';
+			case 'videoControls.sleepTimerEndOfVideo': return 'Fine del video corrente';
+			case 'videoControls.sleepTimerStopAtHeader': return 'Interrompi alle';
+			case 'videoControls.sleepTimerDurationHeader': return 'Timer';
+			case 'videoControls.playbackWillPauseAtEnd': return 'La riproduzione verrà messa in pausa alla fine di questo video';
+			case 'videoControls.stillWatching': return 'Stai ancora guardando?';
+			case 'videoControls.pausingIn': return ({required Object seconds}) => 'Pausa tra ${seconds}s';
+			case 'videoControls.continueWatching': return 'Continua';
+			case 'videoControls.autoPlayNext': return 'Riproduci automaticamente il successivo';
+			case 'videoControls.playNext': return 'Riproduci il successivo';
+			case 'videoControls.playButton': return 'Riproduci';
+			case 'videoControls.pauseButton': return 'Pausa';
+			case 'videoControls.playbackPaused': return 'In pausa';
+			case 'videoControls.playbackResumed': return 'Riproduzione';
+			case 'videoControls.loadingVideo': return 'Caricamento video';
+			case 'videoControls.showPlaybackControls': return 'Mostra i controlli di riproduzione';
+			case 'videoControls.hidePlaybackControls': return 'Nascondi i controlli di riproduzione';
+			case 'videoControls.seekBackwardButton': return ({required Object seconds}) => 'Riavvolgi di ${seconds} secondi';
+			case 'videoControls.seekForwardButton': return ({required Object seconds}) => 'Avanza di ${seconds} secondi';
+			case 'videoControls.previousButton': return 'Episodio precedente';
+			case 'videoControls.nextButton': return 'Episodio successivo';
+			case 'videoControls.previousChapterButton': return 'Capitolo precedente';
+			case 'videoControls.nextChapterButton': return 'Capitolo successivo';
+			case 'videoControls.muteButton': return 'Silenzia';
+			case 'videoControls.unmuteButton': return 'Riattiva audio';
+			case 'videoControls.settingsButton': return 'Impostazioni di riproduzione';
+			case 'videoControls.tracksButton': return 'Audio e sottotitoli';
+			case 'videoControls.chaptersButton': return 'Capitoli';
+			case 'videoControls.versionQualityButton': return 'Versione e qualità';
+			case 'videoControls.versionColumnHeader': return 'Versione';
+			case 'videoControls.qualityColumnHeader': return 'Qualità';
+			case 'videoControls.qualityOriginal': return 'Originale';
+			case 'videoControls.qualityPresetLabel': return ({required Object resolution, required Object bitrate}) => '${resolution}p ${bitrate} Mbps';
+			case 'videoControls.transcodeUnavailableFallback': return 'Transcodifica non disponibile — riproduzione in qualità originale';
+			case 'videoControls.subtitleUnavailableFallback': return 'Impossibile caricare i sottotitoli selezionati — la riproduzione continua senza sottotitoli';
+			case 'videoControls.pipButton': return 'Modalità Picture-in-Picture';
+			case 'videoControls.aspectRatioButton': return 'Proporzioni';
+			case 'videoControls.ambientLighting': return 'Illuminazione ambientale';
+			case 'videoControls.fullscreenButton': return 'Attiva schermo intero';
+			case 'videoControls.exitFullscreenButton': return 'Esci da schermo intero';
+			case 'videoControls.alwaysOnTopButton': return 'Sempre in primo piano';
+			case 'videoControls.rotationLockButton': return 'Blocco rotazione';
+			case 'videoControls.lockScreen': return 'Blocca schermo';
+			case 'videoControls.screenLockButton': return 'Blocco schermo';
+			case 'videoControls.timelineSlider': return 'Timeline video';
+			case 'videoControls.volumeSlider': return 'Livello volume';
+			case 'videoControls.endsAt': return ({required Object time}) => 'Termina alle ${time}';
+			case 'videoControls.pipActive': return 'Riproduzione in Picture-in-Picture';
+			case 'videoControls.pipFailed': return 'Impossibile avviare la modalità Picture-in-Picture';
+			case 'videoControls.screenshotSaved': return 'Schermata salvata';
+			case 'videoControls.screenshotFailed': return 'Impossibile catturare la schermata';
+			case 'videoControls.zoomPercent': return ({required Object percent}) => 'Zoom ${percent}%';
+			case 'videoControls.volumePercent': return ({required Object percent}) => 'Volume ${percent}%';
+			case 'videoControls.pipErrors.androidVersion': return 'Richiede Android 8.0 o versioni successive';
+			case 'videoControls.pipErrors.iosVersion': return 'Richiede iOS 15.0 o versioni successive';
+			case 'videoControls.pipErrors.permissionDisabled': return 'La modalità Picture-in-Picture è disattivata. Attivala nelle impostazioni di sistema.';
+			case 'videoControls.pipErrors.notSupported': return 'Questo dispositivo non supporta la modalità Picture-in-Picture';
+			case 'videoControls.pipErrors.voSwitchFailed': return 'Impossibile cambiare l\'uscita video per Picture-in-Picture';
+			case 'videoControls.pipErrors.failed': return 'Impossibile avviare la modalità Picture-in-Picture';
+			case 'videoControls.pipErrors.prepareFailed': return 'Impossibile preparare la modalità Picture-in-Picture';
+			case 'videoControls.pipErrors.unknown': return ({required Object error}) => 'Si è verificato un errore: ${error}';
+			case 'videoControls.chapters': return 'Capitoli';
+			case 'videoControls.noChaptersAvailable': return 'Nessun capitolo disponibile';
+			case 'videoControls.queue': return 'Coda';
+			case 'videoControls.noQueueItems': return 'Nessun elemento in coda';
+			case 'videoControls.noAudioDevicesAvailable': return 'Nessun dispositivo audio disponibile';
+			case 'videoControls.searchSubtitles': return 'Cerca sottotitoli';
+			case 'videoControls.language': return 'Lingua';
+			case 'videoControls.noSubtitlesFound': return 'Nessun sottotitolo trovato';
+			case 'videoControls.subtitleDownloaded': return 'Sottotitolo scaricato';
+			case 'videoControls.subtitleDownloadedNotApplied': return 'Il sottotitolo è stato scaricato, ma non è stato possibile selezionarlo';
+			case 'videoControls.subtitleDownloadFailed': return 'Impossibile scaricare il sottotitolo';
+			case 'videoControls.subtitleDownloadTimedOut': return 'Il sottotitolo non è comparso in tempo. Il download potrebbe non essere riuscito';
+			case 'videoControls.searchLanguages': return 'Cerca lingue...';
+			case 'videoControls.skipIntro': return 'Salta intro';
+			case 'videoControls.skipCredits': return 'Salta titoli';
+			case 'videoControls.nextEpisode': return 'Episodio successivo';
+			case 'videoControls.subtitleTrack': return ({required Object n}) => 'Traccia ${n}';
+			case 'videoControls.subtitleFile': return ({required Object name}) => 'Sottotitolo ${name}';
+			case 'videoControls.forcedTrack': return ({required Object label}) => '${label} (Forzato)';
+			case 'videoControls.osdSubtitlesOff': return 'Sottotitoli: Disattivati';
+			case 'videoControls.osdSubtitles': return ({required Object track}) => 'Sottotitoli: ${track}';
+			case 'videoControls.osdAudio': return ({required Object track}) => 'Audio: ${track}';
+			case 'messages.markedAsWatched': return 'Segnato come visto';
+			case 'messages.markedAsUnwatched': return 'Segnato come non visto';
+			case 'messages.markedAsWatchedOffline': return 'Segnato come visto (verrà sincronizzato quando torni online)';
+			case 'messages.markedAsUnwatchedOffline': return 'Segnato come non visto (verrà sincronizzato quando torni online)';
+			case 'messages.autoRemovedWatchedDownload': return ({required Object title}) => 'Rimosso automaticamente: ${title}';
+			case 'messages.autoRemovedWatchedDownloads': return ({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('it'))(n,
+				one: 'Rimosso automaticamente ${n} download già visto',
+				other: 'Rimossi automaticamente ${n} download già visti',
+			);
+			case 'messages.removedFromContinueWatching': return 'Rimosso da Continua a guardare';
+			case 'messages.errorLoading': return ({required Object error}) => 'Errore: ${error}';
+			case 'messages.searchPartialResults': return 'Non è stato possibile cercare in alcuni server multimediali. Vengono mostrati i risultati disponibili.';
+			case 'messages.streamInterrupted': return 'La riproduzione si è interrotta. Premi Riproduci o vai a un altro punto per riprovare.';
+			case 'messages.liveStreamInterrupted': return 'La diretta si è interrotta. Premi Riproduci per riprovare.';
+			case 'messages.fileInfoNotAvailable': return 'Informazioni sul file non disponibili';
+			case 'messages.playbackAuthenticationRequired': return 'Accedi di nuovo al server multimediale per riprodurre questo elemento.';
+			case 'messages.playbackServerUnavailable': return 'Il server multimediale non è disponibile. Riprova più tardi.';
+			case 'messages.playbackDataInvalid': return 'Il server ha restituito informazioni di riproduzione non valide.';
+			case 'messages.playbackCancelled': return 'Riproduzione annullata.';
+			case 'messages.playbackFailed': return 'Impossibile avviare la riproduzione.';
+			case 'messages.playbackFailedDetail': return ({required Object error}) => 'Impossibile avviare la riproduzione: ${error}';
+			case 'messages.audioOutputFailed': return 'L\'uscita audio ha smesso di rispondere. Controlla la connessione audio del televisore o del ricevitore; se anche le altre app non hanno audio, riavvia il dispositivo.';
+			case 'messages.mediaUnavailable': return 'Questo contenuto non è più disponibile.';
+			case 'messages.errorLoadingFileInfo': return ({required Object error}) => 'Errore durante il caricamento delle informazioni sul file: ${error}';
+			case 'messages.errorLoadingSeries': return 'Errore durante il caricamento della serie';
+			case 'messages.musicNotSupported': return 'La riproduzione musicale non è ancora supportata';
+			case 'messages.noDescriptionAvailable': return 'Nessuna descrizione disponibile';
+			case 'messages.noProfilesAvailable': return 'Nessun profilo disponibile';
+			case 'messages.contactAdminForProfiles': return 'Contatta l\'amministratore del server per aggiungere profili';
+			case 'messages.unableToDetermineLibrarySection': return 'Impossibile determinare la sezione della libreria per questo elemento';
+			case 'messages.logsCleared': return 'Log eliminati';
+			case 'messages.logsCopied': return 'Log copiati negli appunti';
+			case 'messages.noLogsAvailable': return 'Nessun log disponibile';
+			case 'messages.libraryScanning': return ({required Object title}) => 'Scansione di "${title}"...';
+			case 'messages.libraryScanStarted': return ({required Object title}) => 'Scansione della libreria avviata per "${title}"';
+			case 'messages.libraryScanFailed': return ({required Object error}) => 'Impossibile eseguire la scansione della libreria: ${error}';
+			case 'messages.metadataRefreshing': return ({required Object title}) => 'Aggiornamento dei metadati di "${title}"...';
+			case 'messages.metadataRefreshStarted': return ({required Object title}) => 'Aggiornamento dei metadati avviato per "${title}"';
+			case 'messages.metadataRefreshFailed': return ({required Object error}) => 'Impossibile aggiornare i metadati: ${error}';
+			case 'messages.logoutConfirm': return 'Vuoi uscire dall\'account?';
+			case 'messages.noSeasonsFound': return 'Nessuna stagione trovata';
+			case 'messages.seasonsLoadFailed': return 'Impossibile caricare le stagioni';
+			case 'messages.noEpisodesFound': return 'Nessun episodio trovato nella prima stagione';
+			case 'messages.noEpisodesFoundGeneral': return 'Nessun episodio trovato';
+			case 'messages.episodesLoadFailed': return 'Impossibile caricare gli episodi';
+			case 'messages.noResultsFound': return 'Nessun risultato';
+			case 'messages.sleepTimerSet': return ({required Object label}) => 'Timer di spegnimento impostato su ${label}';
+			case 'messages.noItemsAvailable': return 'Nessun elemento disponibile';
+			case 'messages.failedToCreatePlayQueueNoItems': return 'Impossibile creare una coda di riproduzione: nessun elemento';
+			case 'messages.failedPlayback': return ({required Object action, required Object error}) => 'Impossibile eseguire l\'azione «${action}»: ${error}';
+			case 'messages.switchingToCompatiblePlayer': return 'Passaggio al lettore compatibile...';
+			case 'messages.serverLimitTitle': return 'Riproduzione non riuscita';
+			case 'messages.serverLimitBody': return 'Errore del server (HTTP 500). È probabile che un limite di banda o transcodifica abbia impedito questa sessione. Chiedi al proprietario di modificare il limite.';
+			case 'messages.mediaUnreadableTitle': return 'File non disponibile';
+			case 'messages.mediaUnreadableBody': return 'Il server ha trovato questo elemento ma non ha potuto leggere il suo file (HTTP 404). Il file è stato probabilmente spostato o eliminato, oppure il suo storage è offline. Chiedi al proprietario del server di controllare il file e di riscansionare la libreria.';
+			case 'messages.serverBusyTitle': return 'Streaming non disponibile';
+			case 'messages.serverBusyBody': return 'Il server ha continuato a rifiutare la riproduzione in streaming di questo file (HTTP 503). Potrebbe essere in fase di riavvio, occupato oppure l\'unità in cui si trova il file potrebbe essere offline. Riprova tra qualche istante. Se il problema persiste, chiedi al proprietario del server di controllare il server e l\'unità di archiviazione del file.';
+			case 'messages.playbackNotAllowedTitle': return 'Riproduzione non consentita';
+			case 'messages.playbackNotAllowedBody': return 'Il server ha rifiutato lo streaming di questo elemento (HTTP 403). Il tuo account potrebbe non avere l\'autorizzazione per riprodurlo, oppure il server potrebbe consentire la riproduzione solo sulla sua rete locale.';
+			case 'messages.logsUploaded': return 'Log caricati';
+			case 'messages.logsUploadFailed': return 'Impossibile caricare i log';
+			case 'messages.logId': return 'ID log';
+			case 'messages.burnedSubtitlesUseMenu': return 'I sottotitoli sono incorporati in questo stream. Cambiali dal menu dei sottotitoli.';
+			case 'messages.noVideoUrl': return 'Nessun URL video disponibile';
+			case 'messages.playbackNoMediaSources': return 'Il server non ha restituito sorgenti multimediali riproducibili';
+			case 'messages.playbackDataNotPrepared': return 'La riproduzione è stata avviata prima che i relativi dati fossero pronti';
+			case 'messages.streamSelectionUnavailable': return 'La selezione dei flussi non è disponibile per questa sorgente';
+			case 'messages.streamSelectionFailed': return 'Impossibile applicare i flussi selezionati';
+			case 'messages.trackSelectionNotRemembered': return 'Questa scelta di traccia vale solo per la riproduzione corrente.';
+			case 'messages.serverUnavailableForProfile': return 'Nessun server disponibile per il profilo attivo';
+			case 'subtitlingStyling.text': return 'Testo';
+			case 'subtitlingStyling.border': return 'Bordo';
+			case 'subtitlingStyling.background': return 'Sfondo';
+			case 'subtitlingStyling.fontSize': return 'Dimensione carattere';
+			case 'subtitlingStyling.textColor': return 'Colore del testo';
+			case 'subtitlingStyling.borderSize': return 'Dimensione del bordo';
+			case 'subtitlingStyling.borderColor': return 'Colore del bordo';
+			case 'subtitlingStyling.backgroundOpacity': return 'Opacità dello sfondo';
+			case 'subtitlingStyling.backgroundColor': return 'Colore dello sfondo';
+			case 'subtitlingStyling.position': return 'Posizione';
+			case 'subtitlingStyling.assOverride': return 'Sovrascrittura ASS';
+			case 'subtitlingStyling.overrideScale': return 'Ridimensiona';
+			case 'subtitlingStyling.overrideForce': return 'Forza';
+			case 'subtitlingStyling.overrideStrip': return 'Rimuovi stile';
+			case 'subtitlingStyling.positionTop': return 'In alto';
+			case 'subtitlingStyling.positionBottom': return 'In basso';
+			case 'subtitlingStyling.useMargins': return 'Usa i margini';
+			case 'subtitlingStyling.useMarginsDescription': return 'Consenti i sottotitoli testuali nello spazio esterno al video. I sottotitoli con stile possono mantenere la loro posizione originale.';
+			case 'subtitlingStyling.anchorToScreen': return 'Fissa allo schermo';
+			case 'subtitlingStyling.anchorToScreenDescription': return 'Mostra i sottotitoli testuali nelle bande nere sotto i video in formato panoramico';
+			case 'subtitlingStyling.bold': return 'Grassetto';
+			case 'subtitlingStyling.italic': return 'Corsivo';
+			case 'subtitlingStyling.renderResolution': return 'Risoluzione di rendering';
+			case 'subtitlingStyling.renderResolutionScreen': return 'Risoluzione dello schermo';
+			case 'subtitlingStyling.renderResolutionVideo': return 'Risoluzione del video';
+			case 'mpvConfig.title': return 'mpv.conf';
+			case 'mpvConfig.description': return 'Impostazioni avanzate del lettore video';
+			case 'mpvConfig.presets': return 'Preset';
+			case 'mpvConfig.noPresets': return 'Nessun preset salvato';
+			case 'mpvConfig.saveAsPreset': return 'Salva come preset...';
+			case 'mpvConfig.presetName': return 'Nome preset';
+			case 'mpvConfig.presetNameHint': return 'Inserisci un nome per questo preset';
+			case 'mpvConfig.loadPreset': return 'Carica';
+			case 'mpvConfig.deletePreset': return 'Elimina';
+			case 'mpvConfig.presetSaved': return 'Preset salvato';
+			case 'mpvConfig.presetLoaded': return 'Preset caricato';
+			case 'mpvConfig.presetDeleted': return 'Preset eliminato';
+			case 'mpvConfig.confirmDeletePreset': return 'Sei sicuro di voler eliminare questo preset?';
+			case 'mpvConfig.configPlaceholder': return 'gpu-api=vulkan\nhwdec=auto\n# comment';
+			case 'mpvConfig.lineHint': return 'option=value';
+			case 'mpvConfig.addLine': return 'Aggiungi riga';
+			case 'mpvConfig.removeLine': return 'Rimuovi riga';
+			case 'mpvConfig.embeddedVoHint': return 'vo, gpu-context e gpu-api vengono ignorati su Linux: il video incorporato viene sempre renderizzato tramite vo=libmpv sul piano video e gpu-next (che gli shader di calcolo come ArtCNN richiedono) non può essere eseguito in modalità incorporata.';
+			case 'dialog.confirmAction': return 'Conferma azione';
+			case 'profiles.addPlezyProfile': return 'Aggiungi profilo Plezy';
+			case 'profiles.switchingProfile': return 'Cambio profilo…';
+			case 'profiles.deleteThisProfileTitle': return 'Eliminare questo profilo?';
+			case 'profiles.deleteThisProfileMessage': return ({required Object displayName}) => 'Rimuovi ${displayName}. Le connessioni resteranno invariate.';
+			case 'profiles.active': return 'Attivo';
+			case 'profiles.manage': return 'Gestisci';
+			case 'profiles.delete': return 'Elimina';
+			case 'profiles.signOut': return 'Esci';
+			case 'profiles.signOutPlexTitle': return 'Uscire da Plex?';
+			case 'profiles.signOutPlexMessage': return ({required Object displayName}) => 'Verranno rimossi ${displayName} e tutti gli utenti Plex Home. Potrai accedere di nuovo in qualsiasi momento.';
+			case 'profiles.signOutPlexDeleteDownloads': return 'Elimina anche i download';
+			case 'profiles.signOutPlexDeleteDownloadsDescription': return 'Altrimenti restano su questo dispositivo e tornano disponibili quando accedi di nuovo a questo account.';
+			case 'profiles.signedOutPlex': return 'Disconnessione da Plex completata.';
+			case 'profiles.signOutFailed': return 'Disconnessione non riuscita.';
+			case 'profiles.sectionTitle': return 'Profili';
+			case 'profiles.summarySingle': return 'Aggiungi profili per combinare utenti gestiti e identità locali';
+			case 'profiles.summaryMultipleWithActive': return ({required Object count, required Object activeName}) => '${count} profili · attivo: ${activeName}';
+			case 'profiles.summaryMultiple': return ({required Object count}) => '${count} profili';
+			case 'profiles.removeConnectionTitle': return 'Rimuovere la connessione?';
+			case 'profiles.removeConnectionMessage': return ({required Object displayName, required Object connectionLabel}) => 'Rimuovi da ${displayName} l\'accesso a ${connectionLabel}. Gli altri profili continueranno ad avervi accesso.';
+			case 'profiles.deleteProfileTitle': return 'Eliminare il profilo?';
+			case 'profiles.deleteProfileMessage': return ({required Object displayName}) => 'Rimuovi ${displayName} e le relative connessioni. I server resteranno disponibili.';
+			case 'profiles.profileNameLabel': return 'Nome profilo';
+			case 'profiles.pinProtectionLabel': return 'Protezione PIN';
+			case 'profiles.pinManagedByPlex': return 'PIN gestito da Plex. Modifica su plex.tv.';
+			case 'profiles.noPinSetEditOnPlex': return 'Nessun PIN impostato. Per richiederne uno, modifica l\'utente Home su plex.tv.';
+			case 'profiles.setPin': return 'Imposta PIN';
+			case 'profiles.setPinTitle': return 'Imposta PIN';
+			case 'profiles.confirmPinTitle': return 'Conferma PIN';
+			case 'profiles.pinSet': return 'PIN impostato';
+			case 'profiles.changePin': return 'Cambia';
+			case 'profiles.removePin': return 'Rimuovi';
+			case 'profiles.connectionsLabel': return 'Connessioni';
+			case 'profiles.add': return 'Aggiungi';
+			case 'profiles.deleteProfileButton': return 'Elimina profilo';
+			case 'profiles.noConnectionsHint': return 'Nessuna connessione — aggiungine una per usare questo profilo.';
+			case 'profiles.noConnections': return 'Nessuna connessione';
+			case 'profiles.plexHomeAccount': return 'Account Plex Home';
+			case 'profiles.plexAccountChip': return ({required Object account}) => 'Account Plex: ${account}';
+			case 'profiles.plexAccountUserChip': return ({required Object user, required Object account}) => '${user} tramite ${account}';
+			case 'profiles.connectionDefault': return 'Predefinita';
+			case 'profiles.connectionAs': return ({required Object displayName}) => 'come ${displayName}';
+			case 'profiles.makeDefault': return 'Imposta come predefinita';
+			case 'profiles.removeConnection': return 'Rimuovi';
+			case 'profiles.profileRenamed': return 'Profilo rinominato.';
+			case 'profiles.borrowAddTo': return ({required Object displayName}) => 'Aggiungi a ${displayName}';
+			case 'profiles.borrowExplain': return 'Prendi in prestito la connessione di un altro profilo. I profili protetti da PIN richiedono un PIN.';
+			case 'profiles.borrowEmpty': return 'Nulla da prendere in prestito al momento.';
+			case 'profiles.borrowEmptySubtitle': return 'Collega prima Plex, Jellyfin o Emby a un altro profilo.';
+			case 'profiles.borrowLoadFailed': return 'Impossibile caricare le connessioni disponibili. Riprova.';
+			case 'profiles.borrowFromProfile': return ({required Object displayName}) => 'Da ${displayName}';
+			case 'profiles.borrowConnectionBorrowed': return 'Connessione presa in prestito.';
+			case 'profiles.borrowFailed': return 'Impossibile prendere in prestito la connessione.';
+			case 'profiles.incorrectPin': return 'PIN errato.';
+			case 'profiles.incorrectPinTryAgain': return 'PIN errato. Riprova.';
+			case 'profiles.sourceProfileMissingParentAccount': return 'Al profilo di origine manca l\'account principale.';
+			case 'profiles.failedToLoadHomeUsers': return 'Impossibile caricare gli utenti Plex Home. Controlla la connessione e riprova.';
+			case 'profiles.failedToVerifyPin': return 'Impossibile verificare il PIN.';
+			case 'profiles.newProfile': return 'Nuovo profilo';
+			case 'profiles.profileNameHint': return 'es. Ospiti, Bambini, Soggiorno';
+			case 'profiles.pinProtectionOptional': return 'Protezione PIN (opzionale)';
+			case 'profiles.pinExplain': return 'PIN a 4 cifre richiesto per cambiare profilo.';
+			case 'profiles.continueButton': return 'Continua';
+			case 'profiles.pinsDontMatch': return 'I PIN non corrispondono';
+			case 'profiles.tokenIdentityMismatch': return 'Il token del profilo Plex è stato associato a un server imprevisto';
+			case 'connections.sectionTitle': return 'Connessioni';
+			case 'connections.addConnection': return 'Aggiungi connessione';
+			case 'connections.addConnectionSubtitleNoProfile': return 'Accedi con Plex o collega un server Jellyfin o Emby';
+			case 'connections.addConnectionSubtitleScoped': return ({required Object displayName}) => 'Aggiungi a ${displayName}: Plex, Jellyfin, Emby o la connessione di un altro profilo';
+			case 'connections.sessionExpiredOne': return ({required Object name}) => 'Sessione scaduta per ${name}';
+			case 'connections.sessionExpiredMany': return ({required Object count}) => 'Sessione scaduta per ${count} server';
+			case 'connections.accessDeniedOne': return ({required Object name}) => '${name} ha negato l\'accesso a questo account';
+			case 'connections.accessDeniedMany': return ({required Object count}) => '${count} server hanno negato l\'accesso a questo account';
+			case 'connections.signInAgain': return 'Accedi di nuovo';
+			case 'connections.editMediaBrowserTitle': return ({required Object product}) => 'Modifica connessione ${product}';
+			case 'connections.editMediaBrowserIntro': return ({required Object serverName}) => 'Aggiungi o rimuovi gli URL per ${serverName}. Plezy userà l\'URL raggiungibile con la latenza più bassa.';
+			case 'accountPreferences.sectionTitle': return 'Preferenze dell\'account';
+			case 'accountPreferences.hubSubtitleSingle': return ({required Object account}) => 'Opzioni di audio, sottotitoli e libreria salvate su ${account}';
+			case 'accountPreferences.hubSubtitleMultiple': return ({required Object count}) => 'Opzioni di audio, sottotitoli e libreria salvate su ${count} account';
+			case 'accountPreferences.pickAccount': return 'Ogni account conserva le proprie preferenze. Scegli quale modificare.';
+			case 'accountPreferences.storedOnAccount': return 'Queste opzioni vengono salvate sull\'account stesso, quindi ogni app che vi accede le usa — inclusa Plezy sugli altri tuoi dispositivi.';
+			case 'accountPreferences.noAccounts': return 'Nessun account da configurare';
+			case 'accountPreferences.noAccountsHint': return 'Accedi a Plex oppure connetti un server Jellyfin o Emby: le preferenze salvate su quell\'account appariranno qui.';
+			case 'accountPreferences.unavailable': return 'Impossibile raggiungere questo account';
+			case 'accountPreferences.loadFailed': return 'Impossibile caricare queste preferenze';
+			case 'accountPreferences.noPreference': return 'Nessuna preferenza';
+			case 'accountPreferences.notSet': return 'Non impostato';
+			case 'accountPreferences.groups.audioAndSubtitles': return 'Audio e sottotitoli';
+			case 'accountPreferences.groups.libraryDisplay': return 'Libreria';
+			case 'accountPreferences.groups.personalMedia': return 'Media personali';
+			case 'accountPreferences.preferredAudioLanguage': return 'Lingua audio preferita';
+			case 'accountPreferences.autoSelectAudio': return 'Scegli l\'audio in base alla lingua';
+			case 'accountPreferences.autoSelectAudioDescription': return 'Se disattivata, viene mantenuta la traccia audio che il file indica come predefinita.';
+			case 'accountPreferences.preferredSubtitleLanguage': return 'Lingua dei sottotitoli preferita';
+			case 'accountPreferences.subtitleMode': return 'Attiva i sottotitoli';
+			case 'accountPreferences.subtitleModes.none': return 'Selezionati manualmente';
+			case 'accountPreferences.subtitleModes.noneDescription': return 'Non attivare mai i sottotitoli automaticamente.';
+			case 'accountPreferences.subtitleModes.defaultMode': return 'Segui le flag della traccia';
+			case 'accountPreferences.subtitleModes.defaultModeDescription': return 'Usa le flag predefinite e forzate salvate su ogni traccia di sottotitoli.';
+			case 'accountPreferences.subtitleModes.always': return 'Sempre attivi';
+			case 'accountPreferences.subtitleModes.alwaysDescription': return 'Attiva una traccia di sottotitoli nella lingua preferita quando disponibile.';
+			case 'accountPreferences.subtitleModes.onlyForced': return 'Solo sottotitoli forzati';
+			case 'accountPreferences.subtitleModes.onlyForcedDescription': return 'Carica solo le tracce contrassegnate come forzate.';
+			case 'accountPreferences.subtitleModes.smart': return 'Mostrati con audio straniero';
+			case 'accountPreferences.subtitleModes.smartDescription': return 'Attiva i sottotitoli solo quando l\'audio è in un\'altra lingua.';
+			case 'accountPreferences.subtitleAccessibility': return 'Sottotitoli SDH';
+			case 'accountPreferences.subtitleAccessibilityOptions.preferNonSdh': return 'Preferisci i sottotitoli non SDH';
+			case 'accountPreferences.subtitleAccessibilityOptions.preferSdh': return 'Preferisci i sottotitoli SDH';
+			case 'accountPreferences.subtitleAccessibilityOptions.onlySdh': return 'Solo sottotitoli SDH';
+			case 'accountPreferences.subtitleAccessibilityOptions.onlyNonSdh': return 'Solo sottotitoli non SDH';
+			case 'accountPreferences.forcedSubtitles': return 'Sottotitoli forzati';
+			case 'accountPreferences.forcedSubtitleOptions.preferNonForced': return 'Preferisci i sottotitoli non forzati';
+			case 'accountPreferences.forcedSubtitleOptions.preferForced': return 'Preferisci i sottotitoli forzati';
+			case 'accountPreferences.forcedSubtitleOptions.onlyForced': return 'Solo sottotitoli forzati';
+			case 'accountPreferences.forcedSubtitleOptions.onlyNonForced': return 'Solo sottotitoli non forzati';
+			case 'accountPreferences.displayMissingEpisodes': return 'Mostra gli episodi mancanti';
+			case 'accountPreferences.displayMissingEpisodesDescription': return 'Elenca gli episodi noti al server ma senza un file associato.';
+			case 'accountPreferences.hidePlayedInLatest': return 'Nascondi gli elementi visti da Aggiunti di recente';
+			case 'accountPreferences.hidePlayedInLatestDescription': return 'Esclude dagli Aggiunti di recente del server gli elementi che hai già visto.';
+			case 'accountPreferences.displayCollectionsView': return 'Mostra la vista Raccolte';
+			case 'accountPreferences.displayCollectionsViewDescription': return 'Mostra la vista Raccolte del server insieme alle tue librerie.';
+			case 'accountPreferences.rewatchingInNextUp': return 'Mantieni le serie riviste in Prossimi episodi';
+			case 'accountPreferences.rewatchingInNextUpDescription': return 'Quando finisci una serie e la ricominci, Prossimi episodi segue la nuova visione invece di rimuovere la serie.';
+			case 'accountPreferences.watchedIndicator': return 'Indicatori di visione';
+			case 'accountPreferences.watchedIndicatorOptions.none': return 'Mai';
+			case 'accountPreferences.watchedIndicatorOptions.moviesAndShows': return 'Film e serie TV';
+			case 'accountPreferences.watchedIndicatorOptions.movies': return 'Solo film';
+			case 'accountPreferences.watchedIndicatorOptions.shows': return 'Solo serie TV';
+			case 'accountPreferences.mediaReviewsVisibility': return 'Valutazioni e recensioni';
+			case 'accountPreferences.mediaReviewsOptions.usersAndCritics': return 'Utenti e critici';
+			case 'accountPreferences.mediaReviewsOptions.usersOnly': return 'Solo utenti';
+			case 'accountPreferences.mediaReviewsOptions.criticsOnly': return 'Solo critici';
+			case 'accountPreferences.mediaReviewsOptions.nobody': return 'Nascoste';
+			case 'discover.title': return 'Esplora';
+			case 'discover.noContentAvailable': return 'Nessun contenuto disponibile';
+			case 'discover.addMediaToLibraries': return 'Aggiungi contenuti multimediali alle tue librerie';
+			case 'discover.continueWatching': return 'Continua a guardare';
+			case 'discover.continueWatchingIn': return ({required Object library}) => 'Continua a guardare in ${library}';
+			case 'discover.nextUp': return 'Prossimi episodi';
+			case 'discover.nextUpIn': return ({required Object library}) => 'Prossimi episodi in ${library}';
+			case 'discover.recentlyAdded': return 'Aggiunti di recente';
+			case 'discover.recentlyAddedIn': return ({required Object library}) => 'Aggiunti di recente in ${library}';
+			case 'discover.latestAlbumsIn': return ({required Object library}) => 'Ultimi album in ${library}';
+			case 'discover.recentlyPlayedIn': return ({required Object library}) => 'Riprodotti di recente in ${library}';
+			case 'discover.mostPlayedIn': return ({required Object library}) => 'Più riprodotti in ${library}';
+			case 'discover.playEpisode': return ({required Object season, required Object episode}) => 'S${season}E${episode}';
+			case 'discover.overview': return 'Panoramica';
+			case 'discover.cast': return 'Attori';
+			case 'discover.extras': return 'Trailer ed extra';
+			case 'discover.studio': return 'Studio';
+			case 'discover.rating': return 'Valutazione';
+			case 'discover.director': return 'Regista';
+			case 'discover.directors': return 'Registi';
+			case 'discover.movie': return 'Film';
+			case 'discover.tvShow': return 'Serie TV';
+			case 'discover.minutesLeft': return ({required Object minutes}) => '${minutes} minuti rimanenti';
+			case 'discover.moreLikeThis': return 'Altri contenuti simili';
+			case 'discover.titleCount': return ({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('it'))(n,
+				one: '${n} titolo',
+				other: '${n} titoli',
+			);
+			case 'discover.person.born': return 'Data di nascita';
+			case 'discover.person.died': return 'Data di morte';
+			case 'discover.person.birthplace': return 'Luogo di nascita';
+			case 'discover.person.dateWithAge': return ({required Object date, required Object age}) => '${date} (${age} anni)';
+			case 'discover.person.dateWithAgeAtDeath': return ({required Object date, required Object age}) => '${date} (a ${age} anni)';
+			case 'errors.searchFailed': return ({required Object error}) => 'Ricerca non riuscita: ${error}';
+			case 'errors.searchUnavailable': return 'La ricerca non ha potuto raggiungere alcun server multimediale.';
+			case 'errors.connectionTimeout': return ({required Object context}) => 'Tempo scaduto per la connessione durante il caricamento di ${context}';
+			case 'errors.connectionFailed': return 'Impossibile connettersi al server multimediale';
+			case 'errors.unableToLoad': return ({required Object context}) => 'Impossibile caricare ${context}. Riprova.';
+			case 'errors.noClientAvailable': return 'Nessun client disponibile';
+			case 'errors.pleaseEnterToken': return 'Inserisci un token';
+			case 'errors.invalidToken': return 'Token non valido';
+			case 'errors.failedToVerifyToken': return ({required Object error}) => 'Impossibile verificare il token: ${error}';
+			case 'errors.failedToSwitchProfile': return ({required Object displayName}) => 'Impossibile passare a ${displayName}';
+			case 'errors.failedToDeleteProfile': return ({required Object displayName}) => 'Impossibile eliminare ${displayName}';
+			case 'errors.failedToRate': return 'Impossibile aggiornare la valutazione';
+			case 'errors.reasonTimedOut': return 'il tempo di connessione è scaduto';
+			case 'errors.reasonUnreachable': return 'non è stato possibile raggiungere il server';
+			case 'errors.reasonRefused': return 'il server ha rifiutato la richiesta';
+			case 'errors.reasonNotFound': return 'l\'elemento non è più presente sul server';
+			case 'errors.reasonServerError': return 'il server ha segnalato un errore';
+			case 'errors.reasonCancelled': return 'la richiesta è stata annullata';
+			case 'errors.reasonUnexpected': return 'si è verificato un errore imprevisto';
+			case 'libraries.title': return 'Librerie';
+			case 'libraries.fallbackTitle': return 'Libreria';
+			case 'libraries.scanLibraryFiles': return 'Scansiona i file della libreria';
+			case 'libraries.scanLibrary': return 'Scansiona libreria';
+			case 'libraries.analyze': return 'Analizza';
+			case 'libraries.analyzeLibrary': return 'Analizza libreria';
+			case 'libraries.refreshMetadata': return 'Aggiorna metadati';
+			case 'libraries.emptyTrash': return 'Svuota cestino';
+			case 'libraries.emptyingTrash': return ({required Object title}) => 'Svuotamento del cestino di "${title}"...';
+			case 'libraries.trashEmptied': return ({required Object title}) => 'Cestino di "${title}" svuotato';
+			case 'libraries.failedToEmptyTrash': return ({required Object error}) => 'Impossibile svuotare il cestino: ${error}';
+			case 'libraries.analyzing': return ({required Object title}) => 'Analisi di "${title}"...';
+			case 'libraries.analysisStarted': return ({required Object title}) => 'Analisi avviata per "${title}"';
+			case 'libraries.failedToAnalyze': return ({required Object error}) => 'Impossibile analizzare la libreria: ${error}';
+			case 'libraries.noLibrariesFound': return 'Nessuna libreria trovata';
+			case 'libraries.allLibrariesHidden': return 'Tutte le librerie sono nascoste';
+			case 'libraries.hiddenLibrariesCount': return ({required Object count}) => 'Librerie nascoste (${count})';
+			case 'libraries.thisLibraryIsEmpty': return 'Questa libreria è vuota';
+			case 'libraries.noItemsMatchFilters': return 'Nessun elemento corrisponde ai filtri attivi';
+			case 'libraries.resetFilters': return 'Reimposta filtri';
+			case 'libraries.all': return 'Tutto';
+			case 'libraries.clearAll': return 'Azzera tutto';
+			case 'libraries.scanLibraryConfirm': return ({required Object title}) => 'Vuoi scansionare "${title}"?';
+			case 'libraries.analyzeLibraryConfirm': return ({required Object title}) => 'Vuoi analizzare "${title}"?';
+			case 'libraries.refreshMetadataConfirm': return ({required Object title}) => 'Vuoi aggiornare i metadati di "${title}"?';
+			case 'libraries.emptyTrashConfirm': return ({required Object title}) => 'Vuoi svuotare il cestino di "${title}"?';
+			case 'libraries.manageLibraries': return 'Gestisci librerie';
+			case 'libraries.sort': return 'Ordina';
+			case 'libraries.sortBy': return 'Ordina per';
+			case 'libraries.filters': return 'Filtri';
+			case 'libraries.confirmActionMessage': return 'Sei sicuro di voler eseguire questa azione?';
+			case 'libraries.showLibrary': return 'Mostra libreria';
+			case 'libraries.hideLibrary': return 'Nascondi libreria';
+			case 'libraries.libraryOptions': return 'Opzioni libreria';
+			case 'libraries.content': return 'contenuto della libreria';
+			case 'libraries.selectLibrary': return 'Seleziona libreria';
+			case 'libraries.filtersWithCount': return ({required Object count}) => 'Filtri (${count})';
+			case 'libraries.noRecommendations': return 'Nessun consiglio disponibile';
+			case 'libraries.noCollections': return 'Nessuna raccolta in questa libreria';
+			case 'libraries.noFoldersFound': return 'Nessuna cartella trovata';
+			case 'libraries.folders': return 'cartelle';
+			case 'libraries.tabs.recommended': return 'Consigliati';
+			case 'libraries.tabs.browse': return 'Esplora';
+			case 'libraries.tabs.collections': return 'Raccolte';
+			case 'libraries.tabs.playlists': return 'Playlist';
+			case 'libraries.groupings.title': return 'Raggruppa per';
+			case 'libraries.groupings.all': return 'Tutti';
+			case 'libraries.groupings.movies': return 'Film';
+			case 'libraries.groupings.shows': return 'Serie TV';
+			case 'libraries.groupings.seasons': return 'Stagioni';
+			case 'libraries.groupings.episodes': return 'Episodi';
+			case 'libraries.groupings.artists': return 'Artisti';
+			case 'libraries.groupings.albums': return 'Album';
+			case 'libraries.groupings.tracks': return 'Brani';
+			case 'libraries.groupings.folders': return 'Cartelle';
+			case 'libraries.filterCategories.genre': return 'Genere';
+			case 'libraries.filterCategories.year': return 'Anno';
+			case 'libraries.filterCategories.contentRating': return 'Classificazione per età';
+			case 'libraries.filterCategories.tag': return 'Tag';
+			case 'libraries.filterCategories.unwatched': return 'Non visti';
+			case 'libraries.filterCategories.unplayed': return 'Non riprodotti';
+			case 'libraries.filterCategories.favorites': return 'Preferiti';
+			case 'libraries.filterCategories.filePath': return 'Percorso del file';
+			case 'libraries.sortLabels.title': return 'Titolo';
+			case 'libraries.sortLabels.dateAdded': return 'Data di aggiunta';
+			case 'libraries.sortLabels.releaseDate': return 'Data di uscita';
+			case 'libraries.sortLabels.rating': return 'Valutazione';
+			case 'libraries.sortLabels.communityRating': return 'Valutazione della comunità';
+			case 'libraries.sortLabels.criticRating': return 'Valutazione critica';
+			case 'libraries.sortLabels.userRating': return 'Valutazione utente';
+			case 'libraries.sortLabels.datePlayed': return 'Data di riproduzione';
+			case 'libraries.sortLabels.playCount': return 'Riproduzioni';
+			case 'libraries.sortLabels.productionYear': return 'Anno di produzione';
+			case 'libraries.sortLabels.runtime': return 'Durata';
+			case 'libraries.sortLabels.officialRating': return 'Classificazione ufficiale';
+			case 'libraries.sortLabels.premiereDate': return 'Data di première';
+			case 'libraries.sortLabels.startDate': return 'Data di inizio';
+			case 'libraries.sortLabels.airTime': return 'Orario di messa in onda';
+			case 'libraries.sortLabels.studio': return 'Studio';
+			case 'libraries.sortLabels.random': return 'Casuale';
+			case 'libraries.sortLabels.dateShared': return 'Data di condivisione';
+			case 'libraries.sortLabels.latestEpisodeAirDate': return 'Data di trasmissione dell\'ultimo episodio';
+			case 'libraries.sortLabels.lastEpisodeDateAdded': return 'Data di aggiunta dell\'ultimo episodio';
+			case 'libraries.sortLabels.dateDownloaded': return 'Data di download';
+			case 'libraries.sortLabels.size': return 'Dimensione';
+			case 'libraries.sortLabels.library': return 'Libreria';
+			case 'libraries.advancedFilters.include': return 'Includi';
+			case 'libraries.advancedFilters.exclude': return 'Escludi';
+			case 'libraries.advancedFilters.any': return 'Qualsiasi';
+			case 'libraries.advancedFilters.yes': return 'Sì';
+			case 'libraries.advancedFilters.no': return 'No';
+			case 'libraries.advancedFilters.not': return ({required Object value}) => 'Tranne ${value}';
+			case 'libraries.advancedFilters.valueCount': return ({required Object count}) => '${count} selezionati';
+			case 'libraries.advancedFilters.valueCountExcluded': return ({required Object count}) => '${count} esclusi';
+			case 'libraries.advancedFilters.searchValues': return 'Cerca valori';
+			case 'libraries.advancedFilters.noValues': return 'Nessun valore';
+			case 'libraries.advancedFilters.matchContains': return 'Contiene';
+			case 'libraries.advancedFilters.matchNotContains': return 'Non contiene';
+			case 'libraries.advancedFilters.matchIs': return 'È';
+			case 'libraries.advancedFilters.matchIsNot': return 'Non è';
+			case 'libraries.advancedFilters.matchBeginsWith': return 'Inizia con';
+			case 'libraries.advancedFilters.matchEndsWith': return 'Finisce con';
+			case 'libraries.advancedFilters.textHint': return 'Digita il testo da cercare';
+			case 'libraries.advancedFilters.from': return 'Da';
+			case 'libraries.advancedFilters.to': return 'A';
+			case 'libraries.advancedFilters.range': return ({required Object from, required Object to}) => 'Da ${from} a ${to}';
+			case 'libraries.advancedFilters.atLeast': return ({required Object value}) => '${value} e oltre';
+			case 'libraries.advancedFilters.atMost': return ({required Object value}) => 'Fino a ${value}';
+			case 'libraries.advancedFilters.dateLastDays': return ({required Object count}) => 'Ultimi ${count} giorni';
+			case 'libraries.advancedFilters.dateLastYear': return 'Ultimo anno';
+			case 'libraries.advancedFilters.dateOlderThanDays': return ({required Object count}) => 'Più di ${count} giorni fa';
+			case 'libraries.advancedFilters.dateOlderThanYear': return 'Più di un anno fa';
+			case 'about.title': return 'Informazioni';
+			case 'about.openSourceLicenses': return 'Licenze open source';
+			case 'about.versionLabel': return ({required Object version}) => 'Versione ${version}';
+			case 'about.appDescription': return 'Un elegante client Plex, Jellyfin ed Emby per Flutter';
+			case 'about.viewLicensesDescription': return 'Visualizza le licenze delle librerie di terze parti';
+			case 'serverSelection.noServersFoundForAccount': return ({required Object username, required Object email}) => 'Nessun server trovato per ${username} (${email})';
+			case 'serverSelection.failedToLoadServers': return ({required Object error}) => 'Impossibile caricare i server: ${error}';
+			case 'serverSelection.noValidServers': return 'Nessun server utilizzabile trovato per questo account';
+			case 'hubDetail.title': return 'Titolo';
+			case 'hubDetail.releaseYear': return 'Anno di uscita';
+			case 'hubDetail.dateAdded': return 'Data di aggiunta';
+			case 'hubDetail.rating': return 'Valutazione';
+			case 'hubDetail.noItemsFound': return 'Nessun elemento trovato';
+			case 'logs.clearLogs': return 'Cancella log';
+			case 'logs.copyLogs': return 'Copia log';
+			case 'logs.uploadLogs': return 'Carica log';
+			case 'startup.failedTitle': return 'Plezy non ha potuto avviarsi';
+			case 'startup.failedBody': return 'Si è verificato un errore durante l\'avvio. I dettagli seguenti indicano cosa non ha funzionato.';
+			case 'startup.failedBodyRepairable': return 'Il file delle impostazioni salvate di Plezy è danneggiato e deve essere ricostruito prima che Plezy possa avviarsi. Riprovare non servirà: scegli Ripara storage.';
+			case 'startup.phaseLabel': return 'Passaggio';
+			case 'startup.showDetails': return 'Mostra dettagli';
+			case 'startup.hideDetails': return 'Nascondi dettagli';
+			case 'startup.copyDetails': return 'Copia dettagli';
+			case 'startup.detailsCopied': return 'Dettagli copiati negli appunti';
+			case 'startup.uploadDetails': return 'Carica dettagli';
+			case 'startup.repairStorage': return 'Ripara storage';
+			case 'startup.repairTitle': return 'Riparare i dati archiviati?';
+			case 'startup.repairBodyCommon': return 'Il file delle impostazioni di Plezy è danneggiato e non può essere letto. La riparazione ripristina ogni impostazione al suo valore predefinito.';
+			case 'startup.repairBodyOneCredential': return 'Un accesso salvato è danneggiato e non può essere letto. La riparazione rimuove solo quello; le altre impostazioni restano intatte.';
+			case 'startup.repairBodySignInsKept': return 'I tuoi server e profili dovrebbero rimanere con accesso effettuato.';
+			case 'startup.repairBodySignInsLost': return 'La chiave che protegge i tuoi accessi salvati non può essere recuperata da questo file, quindi dovrai effettuare di nuovo l\'accesso a ogni server e profilo. Nulla sul tuo server multimediale è interessato.';
+			case 'startup.repairBodySessionsUncertain': return 'I tracker (MAL, AniList, Simkl, Trakt) e Seerr sono archiviati separatamente e potrebbero sopravvivere o meno. Plezy ti dirà esattamente cosa ha conservato.';
+			case 'startup.repairConfirm': return 'Ripara';
+			case 'startup.repairSucceeded': return 'Storage riparato';
+			case 'startup.repairNeedsRestart': return 'Storage riparato — riavvio richiesto';
+			case 'startup.restartRequiredBody': return 'I tuoi dati sono stati riparati, ma Plezy deve ripartire da zero prima di poterli usare. Chiudi Plezy e riaprilo.';
+			case 'startup.quitPlezy': return 'Esci da Plezy';
+			case 'startup.repairFailed': return 'Riparazione non riuscita';
+			case 'startup.repairKeptSignIns': return 'I tuoi server e profili hanno ancora l\'accesso effettuato.';
+			case 'startup.repairLostSignIns': return 'La chiave che protegge i tuoi accessi salvati non ha potuto essere recuperata. Dovrai effettuare di nuovo l\'accesso a ogni server e profilo.';
+			case 'startup.repairLostSessions': return 'Almeno una connessione a un tracker o a Seerr è andata persa e deve essere riconnessa.';
+			case 'startup.backupTitle': return 'È stata conservata una copia del file danneggiato';
+			case 'startup.backupWarning': return 'Contiene le tue credenziali di accesso. Non caricarla né condividerla.';
+			case 'startup.deleteBackup': return 'Elimina copia';
+			case 'startup.backupDeleted': return 'Copia eliminata.';
+			case 'startup.previousFailureTitle': return 'Plezy non è riuscito ad avviarsi l\'ultima volta';
+			case 'licenses.relatedPackages': return 'Pacchetti correlati';
+			case 'licenses.license': return 'Licenza';
+			case 'licenses.licenseNumber': return ({required Object number}) => 'Licenza ${number}';
+			case 'licenses.licensesCount': return ({required Object count}) => '${count} licenze';
+			case 'navigation.libraries': return 'Librerie';
+			case 'navigation.downloads': return 'Download';
+			case 'navigation.liveTv': return 'Diretta';
+			case 'navigation.explore': return 'Esplora';
+			case 'explore.title': return 'Esplora';
+			case 'explore.selectSource': return 'Seleziona fonte';
+			case 'explore.rows.watchlist': return 'Lista da guardare';
+			case 'explore.rows.recommendedMovies': return 'Film consigliati';
+			case 'explore.rows.recommendedShows': return 'Serie TV consigliate';
+			case 'explore.rows.trendingMovies': return 'Film di tendenza';
+			case 'explore.rows.trendingShows': return 'Serie TV di tendenza';
+			case 'explore.rows.popularMovies': return 'Film popolari';
+			case 'explore.rows.popularShows': return 'Serie TV popolari';
+			case 'explore.rows.trendingAnime': return 'Anime di tendenza';
+			case 'explore.rows.suggestedAnime': return 'Anime suggeriti';
+			case 'explore.rows.airingAnime': return 'Migliori anime in onda';
+			case 'explore.rows.popularAnime': return 'Anime più popolari';
+			case 'explore.rows.trending': return 'Di tendenza';
+			case 'explore.rows.upcomingMovies': return 'Film in arrivo';
+			case 'explore.rows.upcomingShows': return 'Serie TV in arrivo';
+			case 'explore.status.airing': return 'In onda';
+			case 'explore.status.ended': return 'Conclusa';
+			case 'explore.status.canceled': return 'Cancellata';
+			case 'explore.status.upcoming': return 'In arrivo';
+			case 'explore.episodeCount': return ({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('it'))(n,
+				one: '${n} episodio',
+				other: '${n} episodi',
+			);
+			case 'explore.cast': return 'Attori';
+			case 'explore.characters': return 'Personaggi';
+			case 'explore.addToWatchlist': return 'Aggiungi alla lista da guardare';
+			case 'explore.removeFromWatchlist': return 'Rimuovi dalla lista da guardare';
+			case 'explore.addedToWatchlist': return 'Aggiunto alla lista titoli';
+			case 'explore.removedFromWatchlist': return 'Rimosso dalla lista titoli';
+			case 'explore.watchlistUpdateFailed': return 'Impossibile aggiornare la lista da guardare';
+			case 'explore.watchlistNoMatch': return 'Impossibile associare questo elemento a una lista titoli';
+			case 'explore.notInLibrary': return 'Non è nella tua libreria';
+			case 'explore.inTheseLibraries': return 'In queste librerie';
+			case 'explore.checkingLibrary': return 'Ricerca nella tua libreria...';
+			case 'explore.libraryCheckFailed': return ({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('it'))(n,
+				one: 'Impossibile controllare ${n} server',
+				other: 'Impossibile controllare ${n} server',
+			);
+			case 'explore.emptyTitle': return 'Ancora niente qui';
+			case 'explore.emptyMessage': return ({required Object source}) => 'Le sezioni di ${source} appariranno qui quando saranno disponibili dei contenuti.';
+			case 'explore.searchHint': return ({required Object source}) => 'Cerca su ${source}';
+			case 'explore.searchEmpty': return ({required Object query}) => 'Nessun risultato per "${query}"';
+			case 'explore.searchPrompt': return ({required Object source}) => 'Cerca film e serie TV su ${source}.';
+			case 'explore.searchFailed': return 'Ricerca fallita. Controlla la connessione e riprova.';
+			case 'explore.badge.rankPopular': return ({required Object n}) => '#${n} popolari';
+			case 'explore.badge.rankAiring': return ({required Object n}) => '#${n} in onda';
+			case 'explore.badge.rankRated': return ({required Object n}) => '#${n} valutati';
+			case 'explore.badge.rankTrending': return ({required Object n}) => '#${n} di tendenza';
+			case 'explore.badge.rankSeasonal': return ({required Object n, required Object season}) => '#${n} in ${season}';
+			case 'explore.badge.watchingNow': return ({required Object n}) => '${n} in visione';
+			case 'explore.badge.available': return 'Disponibile';
+			case 'explore.badge.partiallyAvailable': return 'Parzialmente disponibile';
+			case 'explore.badge.availableIn4k': return 'Disponibile in 4K';
+			case 'explore.badge.requested': return 'Richiesto';
+			case 'explore.badge.pendingApproval': return 'In attesa di approvazione';
+			case 'explore.badge.processing': return 'In elaborazione';
+			case 'explore.badge.declined': return 'Rifiutato';
+			case 'explore.badge.requestFailed': return 'Richiesta non riuscita';
+			case 'explore.badge.requested4k': return 'Richiesto in 4K';
+			case 'explore.badge.seasonsAvailable': return ({required Object available, required Object total}) => '${available}/${total} stagioni';
+			case 'explore.badge.nextEpisodeIn': return ({required Object episode, required Object duration}) => 'Ep ${episode} tra ${duration}';
+			case 'explore.badge.nextAiringIn': return ({required Object duration}) => 'Prossimo tra ${duration}';
+			case 'explore.badge.episodesShort': return ({required Object n}) => '${n} ep';
+			case 'explore.badge.minutesPerEpisode': return ({required Object n}) => '${n} min/ep';
+			case 'explore.badge.adult': return '18+';
+			case 'explore.stats.listed': return ({required Object n}) => '${n} in elenco';
+			case 'explore.stats.viewersDay': return ({required Object n}) => '${n} guardati oggi';
+			case 'explore.stats.viewersWeek': return ({required Object n}) => '${n} guardati questa settimana';
+			case 'explore.stats.viewersMonth': return ({required Object n}) => '${n} guardati questo mese';
+			case 'explore.stats.viewersYear': return ({required Object n}) => '${n} guardati quest\'anno';
+			case 'explore.stats.viewersAllTime': return ({required Object n}) => '${n} spettatori';
+			case 'explore.stats.planning': return ({required Object n}) => '${n} hanno in programma di guardarlo';
+			case 'explore.stats.favorited': return ({required Object n}) => '${n} preferiti';
+			case 'explore.stats.dropRate': return ({required Object percent}) => '${percent} lo ha abbandonato';
+			case 'explore.stats.comments': return ({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('it'))(n,
+				one: '${n} commento',
+				other: '${n} commenti',
+			);
+			case 'explore.stats.votes': return ({required Object n}) => '${n} voti';
+			case 'explore.stats.watching': return ({required Object n}) => '${n} lo stanno guardando';
+			case 'explore.stats.completed': return ({required Object n}) => '${n} completati';
+			case 'explore.stats.onHold': return ({required Object n}) => '${n} in pausa';
+			case 'explore.stats.dropped': return ({required Object n}) => '${n} abbandonati';
+			case 'explore.season.winter': return 'Inverno';
+			case 'explore.season.spring': return 'Primavera';
+			case 'explore.season.summer': return 'Estate';
+			case 'explore.season.fall': return 'Autunno';
+			case 'explore.season.withYear': return ({required Object season, required Object year}) => '${season} ${year}';
+			case 'explore.format.tv': return 'TV';
+			case 'explore.format.tvShort': return 'TV Short';
+			case 'explore.format.movie': return 'Film';
+			case 'explore.format.special': return 'Speciale';
+			case 'explore.format.ova': return 'OVA';
+			case 'explore.format.ona': return 'ONA';
+			case 'explore.format.music': return 'Musica';
+			case 'explore.format.other': return 'Altro';
+			case 'explore.sourceMaterial.original': return 'Originale';
+			case 'explore.sourceMaterial.manga': return 'Manga';
+			case 'explore.sourceMaterial.lightNovel': return 'Light novel';
+			case 'explore.sourceMaterial.novel': return 'Romanzo';
+			case 'explore.sourceMaterial.visualNovel': return 'Visual novel';
+			case 'explore.sourceMaterial.game': return 'Videogioco';
+			case 'explore.sourceMaterial.webComic': return 'Web comic';
+			case 'explore.sourceMaterial.musicRelease': return 'Musica';
+			case 'explore.sourceMaterial.otherMedia': return 'Altro';
+			case 'explore.creditRole.actor': return 'Attore';
+			case 'explore.creditRole.director': return 'Regista';
+			case 'explore.creditRole.writer': return 'Sceneggiatore';
+			case 'explore.creditRole.producer': return 'Produttore';
+			case 'explore.creditRole.creator': return 'Creatore';
+			case 'explore.creditRole.composer': return 'Compositore';
+			case 'explore.relation.prequel': return 'Prequel';
+			case 'explore.relation.sequel': return 'Sequel';
+			case 'explore.relation.sideStory': return 'Storia secondaria';
+			case 'explore.relation.spinOff': return 'Spin-off';
+			case 'explore.relation.alternativeVersion': return 'Versione alternativa';
+			case 'explore.relation.summary': return 'Riepilogo';
+			case 'explore.relation.parentStory': return 'Storia originale';
+			case 'explore.relation.adaptation': return 'Adattamento';
+			case 'explore.relation.other': return 'Correlati';
+			case 'explore.broadcast': return ({required Object day, required Object time}) => 'Va in onda ${day} alle ${time}';
+			case 'explore.broadcastWithZone': return ({required Object day, required Object time, required Object timezone}) => 'Va in onda ${day} alle ${time} ${timezone}';
+			case 'explore.detail.originalTitle': return 'Titolo originale';
+			case 'explore.detail.alsoKnownAs': return 'Conosciuto anche come';
+			case 'explore.detail.studios': return 'Studi';
+			case 'explore.detail.country': return 'Paese';
+			case 'explore.detail.language': return 'Lingua';
+			case 'explore.detail.released': return 'Uscito';
+			case 'explore.detail.physicalRelease': return 'Su disco';
+			case 'explore.detail.ended': return 'Concluso';
+			case 'explore.detail.addedOn': return ({required Object date}) => 'Aggiunto ${date}';
+			case 'explore.detail.yourRating': return 'La tua valutazione';
+			case 'explore.detail.budget': return 'Budget';
+			case 'explore.detail.revenue': return 'Incassi';
+			case 'explore.detail.contentAdvisory': return 'Guida all\'età';
+			case 'explore.detail.tags': return 'Tag';
+			case 'explore.detail.revealSpoilerTags': return 'Mostra tag spoiler';
+			case 'explore.detail.links': return 'Link';
+			case 'explore.detail.watchOn': return 'Guarda su';
+			case 'explore.detail.watchTrailer': return 'Guarda trailer';
+			case 'explore.detail.openOn': return ({required Object site}) => 'Apri su ${site}';
+			case 'explore.detail.trailerUnavailable': return 'Impossibile aprire il trailer su questo dispositivo';
+			case 'explore.detail.linkUnavailable': return 'Impossibile aprire il link su questo dispositivo';
+			case 'explore.detail.crew': return 'Cast tecnico';
+			case 'explore.detail.ratings': return 'Valutazioni';
+			case 'explore.detail.schedule': return 'Programmazione';
+			case 'explore.detail.recommendedByUsers': return ({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('it'))(n,
+				one: 'Consigliato da ${n} utente',
+				other: 'Consigliato da ${n} utenti',
+			);
+			case 'explore.detail.recommendedBy': return ({required Object who}) => 'Consigliato da ${who}';
+			case 'explore.detail.favoritedBy': return ({required Object who}) => 'Preferito da ${who}';
+			case 'explore.detail.unairedEpisodes': return ({required Object n}) => '${n} non ancora in onda';
+			case 'explore.detail.recommendedByPercent': return ({required Object percent}) => 'Consigliato dal ${percent} degli spettatori';
+			case 'explore.detail.relatedTitles': return 'Titoli correlati';
+			case 'explore.detail.background': return 'Contesto';
+			case 'explore.totalResults': return ({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('it'))(n,
+				one: '${n} risultato',
+				other: '${n} risultati',
+			);
+			case 'liveTv.title': return 'TV in diretta';
+			case 'liveTv.guide': return 'Guida';
+			case 'liveTv.noChannels': return 'Nessun canale disponibile';
+			case 'liveTv.noDvr': return 'Nessun DVR configurato su alcun server';
+			case 'liveTv.serverUnavailable': return 'Il server TV in diretta non è disponibile.';
+			case 'liveTv.serverNotConnected': return 'Il server TV in diretta non è connesso.';
+			case 'liveTv.noPrograms': return 'Nessun dato di programma disponibile';
+			case 'liveTv.liveStreamFailed': return 'Streaming in diretta non riuscito';
+			case 'liveTv.unknownProgram': return 'Programma sconosciuto';
+			case 'liveTv.unknownHub': return 'Sconosciuto';
+			case 'liveTv.unknownError': return 'Errore sconosciuto';
+			case 'liveTv.channelNumber': return ({required Object number}) => 'Canale ${number}';
+			case 'liveTv.unknownChannel': return 'Canale sconosciuto';
+			case 'liveTv.live': return 'IN DIRETTA';
+			case 'liveTv.reloadGuide': return 'Ricarica la guida';
+			case 'liveTv.searchGuide': return 'Cerca nella guida';
+			case 'liveTv.searchHint': return 'Cerca canali e programmi';
+			case 'liveTv.searchNoResults': return ({required Object query}) => 'Nessuna corrispondenza per "${query}"';
+			case 'liveTv.channelsSection': return 'Canali';
+			case 'liveTv.programsSection': return 'Programmi';
+			case 'liveTv.now': return 'Ora';
+			case 'liveTv.today': return 'Oggi';
+			case 'liveTv.tomorrow': return 'Domani';
+			case 'liveTv.midnight': return 'Mezzanotte';
+			case 'liveTv.overnight': return 'Durante la notte';
+			case 'liveTv.morning': return 'Mattina';
+			case 'liveTv.daytime': return 'Giornata';
+			case 'liveTv.evening': return 'Sera';
+			case 'liveTv.lateNight': return 'Tarda notte';
+			case 'liveTv.whatsOn': return 'In onda ora';
+			case 'liveTv.watchChannel': return 'Guarda il canale';
+			case 'liveTv.favorites': return 'Preferiti';
+			case 'liveTv.reorderFavorites': return 'Riordina i preferiti';
+			case 'liveTv.noFavoriteChannels': return 'Nessun canale preferito';
+			case 'liveTv.noFavoriteChannelsHint': return 'Mostra tutti i canali, quindi tieni premuto un canale per aggiungerlo ai preferiti.';
+			case 'liveTv.showAllChannels': return 'Mostra tutti i canali';
+			case 'liveTv.favoritesLoadFailed': return 'Impossibile caricare i preferiti. Controlla la connessione e riprova.';
+			case 'liveTv.favoritesUpdateFailed': return 'Impossibile aggiornare i preferiti. Controlla la connessione e riprova.';
+			case 'liveTv.joinSession': return 'Partecipa alla sessione in corso';
+			case 'liveTv.watchFromStart': return ({required Object minutes}) => 'Guarda dall\'inizio (${minutes} min fa)';
+			case 'liveTv.watchLive': return 'Guarda in diretta';
+			case 'liveTv.goToLive': return 'Vai alla diretta';
+			case 'liveTv.record': return 'Registra';
+			case 'liveTv.recordEpisode': return 'Registra episodio';
+			case 'liveTv.recordSeries': return 'Registra serie';
+			case 'liveTv.recordOptions': return 'Opzioni di registrazione';
+			case 'liveTv.saveTo': return 'Salva in';
+			case 'liveTv.recordings': return 'Registrazioni';
+			case 'liveTv.scheduledRecordings': return 'Programmate';
+			case 'liveTv.recordingRules': return 'Regole di registrazione';
+			case 'liveTv.noScheduledRecordings': return 'Nessuna registrazione in programma';
+			case 'liveTv.manageRecording': return 'Gestisci registrazione';
+			case 'liveTv.cancelRecording': return 'Annulla registrazione';
+			case 'liveTv.cancelRecordingTitle': return 'Annullare questa registrazione?';
+			case 'liveTv.cancelRecordingMessage': return ({required Object title}) => '${title} non sarà più registrato.';
+			case 'liveTv.deleteRule': return 'Elimina regola';
+			case 'liveTv.deleteRuleTitle': return 'Eliminare la regola di registrazione?';
+			case 'liveTv.deleteRuleMessage': return ({required Object title}) => 'I prossimi episodi di ${title} non saranno registrati.';
+			case 'liveTv.recordingScheduled': return 'Registrazione programmata';
+			case 'liveTv.alreadyScheduled': return 'La registrazione di questo programma è già pianificata';
+			case 'liveTv.dvrAdminRequired': return 'Le impostazioni DVR richiedono un account amministratore';
+			case 'liveTv.recordingFailed': return 'Impossibile programmare la registrazione';
+			case 'liveTv.recordingTargetMissing': return 'Impossibile determinare la libreria di registrazione';
+			case 'liveTv.recordNotAvailable': return 'Registrazione non disponibile per questo programma';
+			case 'liveTv.recordingCancelled': return 'Registrazione annullata';
+			case 'liveTv.recordingRuleDeleted': return 'Regola di registrazione eliminata';
+			case 'liveTv.processRecordingRules': return 'Rielabora le regole';
+			case 'liveTv.recordingInProgress': return 'Registrazione in corso';
+			case 'liveTv.recordingsCount': return ({required Object count}) => '${count} programmate';
+			case 'liveTv.editRule': return 'Modifica regola';
+			case 'liveTv.editRuleAction': return 'Modifica';
+			case 'liveTv.recordingRuleUpdated': return 'Regola di registrazione aggiornata';
+			case 'liveTv.guideReloadRequested': return 'Aggiornamento della guida richiesto';
+			case 'liveTv.guideReloadFailed': return 'Impossibile aggiornare la guida';
+			case 'liveTv.rulesProcessRequested': return 'Rielaborazione delle regole richiesta';
+			case 'liveTv.rulesProcessFailed': return 'Impossibile rielaborare le regole di registrazione';
+			case 'liveTv.recordShow': return 'Registra programma';
+			case 'liveTv.recordSettings.startEarly': return 'Inizia in anticipo (secondi)';
+			case 'liveTv.recordSettings.endLate': return 'Termina in ritardo (secondi)';
+			case 'liveTv.recordSettings.newOnly': return 'Solo nuovi episodi';
+			case 'liveTv.recordSettings.anyChannel': return 'Registra su qualsiasi canale';
+			case 'liveTv.recordSettings.anyTime': return 'Registra a qualsiasi ora';
+			case 'liveTv.recordSettings.skipInLibrary': return 'Salta gli episodi già presenti nella libreria';
+			case 'liveTv.recordSettings.keepUpTo': return 'Episodi da conservare';
+			case 'liveTv.recordSettings.keepUpToHint': return '0 conserva tutti gli episodi';
+			case 'liveTv.startingInMinutes': return ({required Object minutes}) => 'Inizia tra ${minutes} min';
+			case 'liveTv.dayAtTime': return ({required Object day, required Object time}) => '${day} alle ${time}';
+			case 'liveTv.invalidPlaybackData': return ({required Object product}) => '${product} ha restituito dati di riproduzione della TV in diretta non validi';
+			case 'liveTv.failedToStartChannel': return 'Impossibile avviare il canale in diretta';
+			case 'liveTv.failedToBuildStreamUrl': return 'Impossibile creare l\'URL dello stream';
+			case 'liveTv.playbackStartFailed': return ({required Object reason}) => 'Impossibile avviare il canale: ${reason}';
+			case 'liveTv.channelSwitchFailed': return ({required Object reason}) => 'Impossibile cambiare canale: ${reason}';
+			case 'collections.title': return 'Raccolte';
+			case 'collections.collection': return 'Raccolta';
+			case 'collections.empty': return 'La raccolta è vuota';
+			case 'collections.deleteCollection': return 'Elimina raccolta';
+			case 'collections.deleteConfirm': return ({required Object title}) => 'Eliminare "${title}"? Non si può annullare.';
+			case 'collections.deleted': return 'Raccolta eliminata';
+			case 'collections.deleteFailed': return 'Impossibile eliminare la raccolta';
+			case 'collections.deleteFailedWithError': return ({required Object error}) => 'Impossibile eliminare la raccolta: ${error}';
+			case 'collections.selectCollection': return 'Seleziona raccolta';
+			case 'collections.collectionName': return 'Nome raccolta';
+			case 'collections.enterCollectionName': return 'Inserisci nome raccolta';
+			case 'collections.addedToCollection': return 'Elemento aggiunto alla raccolta';
+			case 'collections.errorAddingToCollection': return 'Impossibile aggiungere l\'elemento alla raccolta';
+			case 'collections.created': return 'Raccolta creata';
+			case 'collections.removeFromCollection': return 'Rimuovi dalla raccolta';
+			case 'collections.removeFromCollectionConfirm': return ({required Object title}) => 'Rimuovere "${title}" da questa raccolta?';
+			case 'collections.removedFromCollection': return 'Elemento rimosso dalla raccolta';
+			case 'collections.removeFromCollectionFailed': return 'Impossibile rimuovere dalla raccolta';
+			case 'collections.removeFromCollectionError': return ({required Object error}) => 'Errore durante la rimozione dell\'elemento dalla raccolta: ${error}';
+			case 'collections.searchCollections': return 'Cerca raccolte...';
+			case 'playlists.title': return 'Playlist';
+			case 'playlists.playlist': return 'Playlist';
+			case 'playlists.noPlaylists': return 'Nessuna playlist trovata';
+			case 'playlists.create': return 'Crea playlist';
+			case 'playlists.playlistName': return 'Nome playlist';
+			case 'playlists.enterPlaylistName': return 'Inserisci nome playlist';
+			case 'playlists.delete': return 'Elimina playlist';
+			case 'playlists.removeItem': return 'Rimuovi dalla playlist';
+			case 'playlists.smartPlaylist': return 'Playlist intelligente';
+			case 'playlists.itemCount': return ({required Object count}) => '${count} elementi';
+			case 'playlists.oneItem': return '1 elemento';
+			case 'playlists.emptyPlaylist': return 'Questa playlist è vuota';
+			case 'playlists.deleteConfirm': return 'Eliminare playlist?';
+			case 'playlists.deleteMessage': return ({required Object name}) => 'Sei sicuro di voler eliminare "${name}"?';
+			case 'playlists.created': return 'Playlist creata';
+			case 'playlists.deleted': return 'Playlist eliminata';
+			case 'playlists.itemAdded': return 'Aggiunto alla playlist';
+			case 'playlists.itemRemoved': return 'Rimosso dalla playlist';
+			case 'playlists.selectPlaylist': return 'Seleziona playlist';
+			case 'playlists.searchPlaylists': return 'Cerca playlist...';
+			case 'playlists.errorCreating': return 'Impossibile creare la playlist';
+			case 'playlists.errorDeleting': return 'Impossibile eliminare la playlist';
+			case 'playlists.errorLoading': return 'Impossibile caricare le playlist';
+			case 'playlists.errorAdding': return 'Impossibile aggiungere l\'elemento alla playlist';
+			case 'playlists.errorReordering': return 'Impossibile riordinare l\'elemento della playlist';
+			case 'playlists.errorRemoving': return 'Impossibile rimuovere l\'elemento dalla playlist';
+			case 'music.goToAlbum': return 'Vai all\'album';
+			case 'music.goToArtist': return 'Vai all\'artista';
+			case 'music.instantMix': return 'Mix istantaneo';
+			case 'music.playNext': return 'Riproduci come prossimo';
+			case 'music.addToQueue': return 'Aggiungi alla coda';
+			case 'music.discNumber': return ({required Object n}) => 'Disco ${n}';
+			case 'music.trackCount': return ({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('it'))(n,
+				one: '${n} brano',
+				other: '${n} brani',
+			);
+			case 'music.nowPlaying': return 'In riproduzione';
+			case 'music.playingFrom': return ({required Object title}) => 'Riproduzione da ${title}';
+			case 'music.queue': return 'Coda';
+			case 'music.clearQueue': return 'Svuota la coda';
+			case 'music.lyrics': return 'Testo';
+			case 'music.noLyrics': return 'Nessun testo disponibile';
+			case 'music.sleepTimer': return 'Timer di spegnimento';
+			case 'music.sleepTimerEndOfTrack': return 'Fine del brano';
+			case 'music.sleepTimerMinutes': return ({required Object n}) => '${n} minuti';
+			case 'music.stopPlayback': return 'Interrompi riproduzione';
+			case 'music.previousTrack': return 'Brano precedente';
+			case 'music.nextTrack': return 'Brano successivo';
+			case 'music.repeat': return 'Ripeti';
+			case 'music.repeatAll': return 'Ripeti tutto';
+			case 'music.repeatOne': return 'Ripeti il brano';
+			case 'music.instantMixNoServer': return 'Nessun server disponibile per un mix istantaneo';
+			case 'music.instantMixFailed': return 'Impossibile caricare il mix istantaneo';
+			case 'music.instantMixEmpty': return 'Il mix istantaneo non ha prodotto alcun brano';
+			case 'music.noAudioUrl': return ({required Object track}) => 'Nessun URL audio disponibile per ${track}';
+			case 'music.discography.singlesAndEps': return 'Singoli ed EP';
+			case 'music.discography.live': return 'Dal vivo';
+			case 'music.discography.compilations': return 'Compilation';
+			case 'watchTogether.title': return 'Guarda insieme';
+			case 'watchTogether.description': return 'Guarda contenuti in sincronia con amici e familiari';
+			case 'watchTogether.createRoom': return 'Crea stanza';
+			case 'watchTogether.creatingRoom': return 'Creazione della stanza...';
+			case 'watchTogether.joinRoom': return 'Unisciti a una stanza';
+			case 'watchTogether.joiningRoom': return 'Ingresso nella stanza...';
+			case 'watchTogether.connecting': return 'Connessione in corso...';
+			case 'watchTogether.relayPublic': return 'Le stanze usano i relay pubblici di Open Watch Party.';
+			case 'watchTogether.relayCustom': return ({required Object url}) => 'Le stanze usano il tuo relay all\'indirizzo ${url}.';
+			case 'watchTogether.recentRooms': return 'Stanze usate di recente';
+			case 'watchTogether.roomActions': return 'Azioni della stanza';
+			case 'watchTogether.renameRoom': return 'Rinomina stanza';
+			case 'watchTogether.removeRoom': return 'Rimuovi';
+			case 'watchTogether.enterRoomCode': return 'Inserisci il codice di 6 caratteri ricevuto dall\'host.';
+			case 'watchTogether.roomCode': return 'Codice stanza';
+			case 'watchTogether.paste': return 'Incolla';
+			case 'watchTogether.noCodeInClipboard': return 'Gli appunti non contengono un codice stanza';
+			case 'watchTogether.copyCode': return 'Copia codice';
+			case 'watchTogether.codeCopied': return 'Codice stanza copiato';
+			case 'watchTogether.shareInvite': return 'Condividi invito';
+			case 'watchTogether.inviteCopied': return 'Invito copiato. Incollalo in un messaggio.';
+			case 'watchTogether.inviteMessage': return ({required Object code}) => 'Unisciti alla mia stanza di Guarda insieme su Plezy: apri «Guarda insieme», scegli «Unisciti a una stanza» e inserisci ${code}.';
+			case 'watchTogether.openSessionControls': return 'Apri i controlli della sessione di Guarda insieme';
+			case 'watchTogether.reconnecting': return 'Riconnessione...';
+			case 'watchTogether.reconnectingDescription': return 'La connessione si è interrotta. Rientrerai automaticamente nella stanza.';
+			case 'watchTogether.connected': return 'Connesso';
+			case 'watchTogether.disconnected': return 'Disconnesso';
+			case 'watchTogether.youAreHost': return 'Sei l\'host';
+			case 'watchTogether.hostedBy': return ({required Object name}) => 'Ospitata da ${name}';
+			case 'watchTogether.hostControlsPlayback': return 'L\'host controlla la riproduzione';
+			case 'watchTogether.anyoneCanControl': return 'Tutti possono controllare la riproduzione';
+			case 'watchTogether.roomLocked': return 'Stanza bloccata';
+			case 'watchTogether.nowPlaying': return 'In riproduzione';
+			case 'watchTogether.nothingPlaying': return 'Nessuna riproduzione in corso';
+			case 'watchTogether.nothingPlayingHost': return 'Riproduci qualcosa da una qualsiasi libreria per condividerlo con la stanza.';
+			case 'watchTogether.nothingPlayingGuest': return 'Quando l\'host avvia qualcosa, si aprirà qui.';
+			case 'watchTogether.notShareable': return 'Questo video non ha corrispondenze nel catalogo, quindi può riprodurlo solo chi ha accesso allo stesso server.';
+			case 'watchTogether.searching': return 'Ricerca di questo video nelle tue librerie...';
+			case 'watchTogether.yourCopy': return 'La tua copia';
+			case 'watchTogether.sharingYourCopy': return 'Stai condividendo la tua copia';
+			case 'watchTogether.playingOtherLength': return ({required Object difference}) => 'Riproduzione della tua copia, ${difference}';
+			case 'watchTogether.mismatchTitle': return 'La tua copia ha una durata diversa';
+			case 'watchTogether.mismatchDescription': return ({required Object difference}) => 'La tua copia più simile dura ${difference} rispetto al video della stanza. Potrebbe trattarsi di un altro montaggio o di un\'altra versione.';
+			case 'watchTogether.playAnyway': return 'Riproduci comunque';
+			case 'watchTogether.chooseAnotherCopy': return 'Scegli un\'altra copia';
+			case 'watchTogether.dontPlay': return 'Non riprodurre';
+			case 'watchTogether.unavailableTitle': return 'Non hai questo video';
+			case 'watchTogether.unavailableDescription': return 'Plezy non l\'ha trovato nelle tue librerie. Scegli tu una copia o cerca di nuovo.';
+			case 'watchTogether.chooseCopy': return 'Scegli una copia';
+			case 'watchTogether.searchAgain': return 'Cerca di nuovo';
+			case 'watchTogether.noCandidates': return 'Nessuna copia trovata nelle tue librerie.';
+			case 'watchTogether.choiceFailed': return 'Impossibile riprodurre questa copia per la stanza';
+			case 'watchTogether.lengthLonger': return ({required Object duration}) => '${duration} in più';
+			case 'watchTogether.lengthShorter': return ({required Object duration}) => '${duration} in meno';
+			case 'watchTogether.lengthSame': return 'Stessa durata';
+			case 'watchTogether.lengthUnknown': return 'Durata sconosciuta';
+			case 'watchTogether.joinCurrentPlayback': return 'Unisciti alla riproduzione corrente';
+			case 'watchTogether.joinCurrentPlaybackDescription': return 'Torna a ciò che l\'host sta guardando in questo momento';
+			case 'watchTogether.stopMedia': return 'Interrompi il video per tutti';
+			case 'watchTogether.syncOffset': return 'Offset di sincronizzazione';
+			case 'watchTogether.syncOffsetDescription': return 'Sposta il tuo video se è in anticipo o in ritardo rispetto alla stanza.';
+			case 'watchTogether.offsetHint': return ({required Object difference}) => 'La tua copia dura ${difference} rispetto al video della stanza.';
+			case 'watchTogether.applyDifference': return ({required Object offset}) => 'Usa ${offset}';
+			case 'watchTogether.offsetMinusSecond': return '-1 s';
+			case 'watchTogether.offsetMinusTenth': return '-100 ms';
+			case 'watchTogether.offsetPlusTenth': return '+100 ms';
+			case 'watchTogether.offsetPlusSecond': return '+1 s';
+			case 'watchTogether.participants': return 'Partecipanti';
+			case 'watchTogether.participantCount': return ({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('it'))(n,
+				one: '${n} partecipante',
+				other: '${n} partecipanti',
+			);
+			case 'watchTogether.hostBadge': return 'HOST';
+			case 'watchTogether.nameYou': return ({required Object name}) => '${name} (tu)';
+			case 'watchTogether.playerIdle': return 'Inattivo';
+			case 'watchTogether.playerLoading': return 'Caricamento';
+			case 'watchTogether.playerReady': return 'Pronto';
+			case 'watchTogether.playerBuffering': return 'Buffering';
+			case 'watchTogether.matchSearching': return 'Ricerca in corso';
+			case 'watchTogether.matchMatched': return 'Ha il video';
+			case 'watchTogether.matchMismatched': return 'Durata diversa';
+			case 'watchTogether.matchUnavailable': return 'Non ha il video';
+			case 'watchTogether.participantOffset': return ({required Object offset}) => 'Offset ${offset}';
+			case 'watchTogether.makeHost': return 'Rendi host';
+			case 'watchTogether.makeHostQuestion': return 'Trasferire il ruolo di host?';
+			case 'watchTogether.makeHostConfirm': return ({required Object name}) => '${name} controllerà la riproduzione e guiderà la sessione per tutti.';
+			case 'watchTogether.transfer': return 'Trasferisci';
+			case 'watchTogether.removeParticipant': return 'Rimuovi dalla stanza';
+			case 'watchTogether.removeParticipantQuestion': return ({required Object name}) => 'Rimuovere ${name}?';
+			case 'watchTogether.removeParticipantConfirm': return ({required Object name}) => '${name} uscirà dalla stanza. Potrà rientrare con il codice, a meno che tu non blocchi la stanza.';
+			case 'watchTogether.remove': return 'Rimuovi';
+			case 'watchTogether.roomSettings': return 'Impostazioni della stanza';
+			case 'watchTogether.letEveryoneControl': return 'Consenti a tutti di controllare la riproduzione';
+			case 'watchTogether.lockRoom': return 'Blocca stanza';
+			case 'watchTogether.lockRoomDescription': return 'Nessun nuovo partecipante può entrare';
+			case 'watchTogether.leaveRoom': return 'Abbandona stanza';
+			case 'watchTogether.leaveRoomQuestion': return 'Abbandonare la stanza?';
+			case 'watchTogether.leaveRoomConfirm': return 'Potrai rientrare con il codice della stanza.';
+			case 'watchTogether.leave': return 'Abbandona';
+			case 'watchTogether.endRoom': return 'Chiudi stanza';
+			case 'watchTogether.endRoomQuestion': return 'Chiudere la stanza?';
+			case 'watchTogether.endRoomConfirm': return 'La stanza verrà chiusa per tutti.';
+			case 'watchTogether.end': return 'Termina';
+			case 'watchTogether.playBlockedTitle': return 'La riproduzione non è partita';
+			case 'watchTogether.playBlockedDescription': return 'Premi Riproduci per iniziare a guardare con la stanza.';
+			case 'watchTogether.notices.pressedPlay': return ({required Object name}) => '${name} ha premuto Riproduci';
+			case 'watchTogether.notices.playbackStarted': return 'Riproduzione avviata';
+			case 'watchTogether.notices.paused': return ({required Object name}) => '${name} ha messo in pausa';
+			case 'watchTogether.notices.playbackPaused': return 'Riproduzione in pausa';
+			case 'watchTogether.notices.jumpedTo': return ({required Object name, required Object position}) => '${name} è passato a ${position}';
+			case 'watchTogether.notices.roomJumpedTo': return ({required Object position}) => 'Riproduzione spostata a ${position}';
+			case 'watchTogether.notices.changedSpeed': return ({required Object name, required Object speed}) => '${name} ha impostato la velocità a ${speed}';
+			case 'watchTogether.notices.speedChanged': return ({required Object speed}) => 'Velocità impostata a ${speed}';
+			case 'watchTogether.notices.startedMedia': return ({required Object name, required Object title}) => '${name} ha avviato ${title}';
+			case 'watchTogether.notices.mediaStarted': return ({required Object title}) => 'In riproduzione: ${title}';
+			case 'watchTogether.notices.stoppedMedia': return ({required Object name}) => '${name} ha interrotto il video';
+			case 'watchTogether.notices.mediaStopped': return 'Il video è stato interrotto';
+			case 'watchTogether.notices.waitingFor': return ({required Object name}) => 'In attesa di ${name}...';
+			case 'watchTogether.notices.waitingForSomeone': return 'In attesa che qualcuno si metta in pari...';
+			case 'watchTogether.notices.finished': return 'Terminato';
+			case 'watchTogether.notices.hostChangedTo': return ({required Object name}) => '${name} è ora l\'host';
+			case 'watchTogether.notices.youAreNowHost': return 'Ora sei l\'host';
+			case 'watchTogether.notices.joined': return ({required Object name}) => '${name} si è unito';
+			case 'watchTogether.notices.left': return ({required Object name}) => '${name} se ne è andato';
+			case 'watchTogether.notices.controlRefused': return 'Solo l\'host può controllare la riproduzione';
+			case 'watchTogether.notices.searchFailed': return 'Su alcuni server non è stato possibile cercare il video della stanza';
+			case 'watchTogether.notices.playBlocked': return 'Premi Riproduci per iniziare';
+			case 'watchTogether.notices.shareFailed': return 'Impossibile condividere questo video con la stanza';
+			case 'watchTogether.notices.downloadNotShared': return 'I download non vengono condivisi con la stanza mentre il loro server è offline';
+			case 'watchTogether.notices.openFailed': return 'Impossibile aprire il video della stanza';
+			case 'watchTogether.ended.ended': return 'L\'host ha chiuso la stanza';
+			case 'watchTogether.ended.kicked': return 'Sei stato rimosso dalla stanza';
+			case 'watchTogether.ended.expired': return 'La stanza è scaduta';
+			case 'watchTogether.ended.replaced': return 'Sei entrato in questa stanza da un altro dispositivo';
+			case 'watchTogether.ended.lost': return 'Connessione alla stanza persa';
+			case 'watchTogether.errors.invalidCode': return 'Questo non è un codice stanza. I codici sono composti da 6 lettere e cifre, senza 0, 1, I, L o O.';
+			case 'watchTogether.errors.roomNotFound': return 'Nessuna stanza ha questo codice. Potrebbe essere stata chiusa.';
+			case 'watchTogether.errors.roomFull': return 'La stanza è piena.';
+			case 'watchTogether.errors.roomLocked': return 'L\'host ha bloccato la stanza.';
+			case 'watchTogether.errors.relayFull': return 'Guarda insieme è momentaneamente sovraccarico. Riprova più tardi.';
+			case 'watchTogether.errors.unreachable': return 'Impossibile raggiungere il relay di Guarda insieme. Controlla la connessione.';
+			case 'watchTogether.errors.rateLimited': return 'Troppi tentativi. Attendi un momento e riprova.';
+			case 'watchTogether.errors.clientBlocked': return 'Questa versione di Plezy non può usare il relay. Aggiorna l\'app.';
+			case 'watchTogether.errors.forbidden': return 'Solo l\'host può farlo.';
+			case 'watchTogether.errors.notInRoom': return 'Non sei in una stanza.';
+			case 'watchTogether.errors.alreadyInRoom': return 'Sei già in una stanza.';
+			case 'watchTogether.errors.resumeFailed': return 'Impossibile rientrare nella stanza.';
+			case 'watchTogether.errors.unsupported': return 'Il relay non supporta questa funzione.';
+			case 'watchTogether.errors.generic': return 'Si è verificato un problema. Riprova.';
+			case 'watchTogether.untitledEpisode': return ({required Object number}) => 'Episodio ${number}';
+			case 'downloads.title': return 'Download';
+			case 'downloads.manage': return 'Gestisci';
+			case 'downloads.tvShows': return 'Serie TV';
+			case 'downloads.movies': return 'Film';
+			case 'downloads.music': return 'Musica';
+			case 'downloads.tracksQueued': return ({required Object count}) => '${count} brani in coda per il download';
+			case 'downloads.noDownloads': return 'Ancora nessun download';
+			case 'downloads.noDownloadsDescription': return 'I contenuti scaricati appariranno qui per la visualizzazione offline';
+			case 'downloads.downloadNow': return 'Scarica';
+			case 'downloads.deleteDownload': return 'Elimina il download';
+			case 'downloads.retryDownload': return 'Riprova il download';
+			case 'downloads.downloadQueued': return 'Download in coda';
+			case 'downloads.downloadResumed': return 'Download ripreso';
+			case 'downloads.serverErrorBitrate': return 'Errore server: il file può superare il limite di bitrate remoto';
+			case 'downloads.storageFull': return 'I download sono stati interrotti per preservare lo spazio disponibile. Libera spazio o scegli un’altra posizione di download, quindi riprova.';
+			case 'downloads.storageUnavailable': return 'I download sono stati interrotti perché non è stato possibile verificare lo spazio di archiviazione disponibile. Controlla la posizione di download e riprova.';
+			case 'downloads.episodesQueued': return ({required Object count}) => '${count} episodi in coda per il download';
+			case 'downloads.downloadDeleted': return 'Download eliminato';
+			case 'downloads.deleteConfirm': return ({required Object title}) => 'Eliminare "${title}" da questo dispositivo?';
+			case 'downloads.deleteCollectionDownloads': return 'Elimina i download';
+			case 'downloads.deleteCollectionDownloadsConfirm': return ({required Object title}) => 'Eliminare tutti i download di "${title}" da questo dispositivo?';
+			case 'downloads.collectionDownloadsDeleted': return 'Download eliminati';
+			case 'downloads.cancelledDownloadTitle': return 'Download annullato';
+			case 'downloads.cancelledDownloadMessage': return 'Questo download è stato annullato. Cosa vuoi fare?';
+			case 'downloads.allEpisodesAlreadyDownloaded': return 'Tutti gli episodi sono già stati scaricati';
+			case 'downloads.resumeDownload': return 'Riprendi il download';
+			case 'downloads.cancelledDownload': return 'Download annullato';
+			case 'downloads.syncingFile': return ({required Object file, required Object status}) => '${file} (sincronizzazione ${status})';
+			case 'downloads.downloadedFileClickToComplete': return ({required Object file}) => '${file} scaricato — fai clic per completare';
+			case 'downloads.partialDownloadClickToComplete': return 'Scaricato parzialmente — fai clic per completare';
+			case 'downloads.deleting': return 'Eliminazione...';
+			case 'downloads.deletingWithProgress': return ({required Object title, required Object current, required Object total}) => 'Eliminazione di ${title}... (${current} di ${total})';
+			case 'downloads.queuedTooltip': return 'In coda';
+			case 'downloads.queuedFilesTooltip': return ({required Object files}) => 'In coda: ${files}';
+			case 'downloads.downloadingTooltip': return 'Download in corso...';
+			case 'downloads.downloadingFilesTooltip': return ({required Object files}) => 'Download di ${files}';
+			case 'downloads.noDownloadsTree': return 'Nessun download';
+			case 'downloads.pauseAll': return 'Metti tutto in pausa';
+			case 'downloads.resumeAll': return 'Riprendi tutto';
+			case 'downloads.retryAll': return 'Riprova tutti';
+			case 'downloads.retryFailed': return 'Riprova i download non riusciti';
+			case 'downloads.deleteAll': return 'Elimina tutto';
+			case 'downloads.selectVersion': return 'Seleziona la versione';
+			case 'downloads.allEpisodes': return 'Tutti gli episodi';
+			case 'downloads.unwatchedOnly': return 'Solo non visti';
+			case 'downloads.nextNUnwatched': return ({required Object count}) => 'Prossimi ${count} episodi non visti';
+			case 'downloads.customAmount': return 'Quantità personalizzata...';
+			case 'downloads.includeSpecials': return 'Includi gli speciali';
+			case 'downloads.howManyEpisodes': return 'Quanti episodi?';
+			case 'downloads.invalidEpisodeCount': return 'Inserisci un numero di episodi valido.';
+			case 'downloads.keepSynced': return 'Mantieni sincronizzato';
+			case 'downloads.downloadOnce': return 'Scarica una volta';
+			case 'downloads.keepNUnwatched': return ({required Object count}) => 'Mantieni ${count} episodi non visti';
+			case 'downloads.editSyncRule': return 'Modifica regola di sincronizzazione';
+			case 'downloads.removeSyncRule': return 'Rimuovi regola di sincronizzazione';
+			case 'downloads.removeSyncRuleConfirm': return ({required Object title}) => 'Interrompere la sincronizzazione di "${title}"? Gli episodi scaricati verranno mantenuti.';
+			case 'downloads.removeListSyncRuleConfirm': return ({required Object title}) => 'Interrompere la sincronizzazione di "${title}"?';
+			case 'downloads.deleteSyncRuleDownloads': return 'Elimina anche i download associati';
+			case 'downloads.deleteSyncRuleDownloadsDescription': return 'I download usati da un\'altra regola di sincronizzazione o da un altro profilo verranno conservati.';
+			case 'downloads.syncRuleCreated': return ({required Object count}) => 'Regola di sincronizzazione creata — ${count} episodi non visti mantenuti';
+			case 'downloads.syncRuleUpdated': return 'Regola di sincronizzazione aggiornata';
+			case 'downloads.syncRuleRemoved': return 'Regola di sincronizzazione rimossa';
+			case 'downloads.syncRuleAndDownloadsRemoved': return 'Regola di sincronizzazione e download associati rimossi';
+			case 'downloads.syncRuleCleanupBusy': return 'Le regole di sincronizzazione sono in fase di aggiornamento. Riprova tra un momento.';
+			case 'downloads.syncRuleCleanupUnavailable': return 'Non è stato possibile identificare in sicurezza i download associati. Riconnetti il server e riprova, oppure rimuovi la regola senza eliminare i download.';
+			case 'downloads.syncedNewEpisodes': return ({required Object count, required Object title}) => '${count} nuovi episodi sincronizzati per ${title}';
+			case 'downloads.activeSyncRules': return 'Regole di sincronizzazione';
+			case 'downloads.noSyncRules': return 'Nessuna regola di sincronizzazione';
+			case 'downloads.manageSyncRule': return 'Gestisci sincronizzazione';
+			case 'downloads.editEpisodeCount': return 'Numero di episodi';
+			case 'downloads.editSyncFilter': return 'Filtro di sincronizzazione';
+			case 'downloads.syncAllItems': return 'Sincronizzazione di tutti gli elementi';
+			case 'downloads.syncUnwatchedItems': return 'Sincronizzazione degli elementi non visti';
+			case 'downloads.syncRuleServerContext': return ({required Object server, required Object status}) => 'Server: ${server} • ${status}';
+			case 'downloads.syncRuleAvailable': return 'Disponibile';
+			case 'downloads.syncRuleOffline': return 'Offline';
+			case 'downloads.syncRuleSignInRequired': return 'Accesso richiesto';
+			case 'downloads.syncRuleAccessDenied': return 'Accesso negato';
+			case 'downloads.syncRuleNotAvailableForProfile': return 'Non disponibile per il profilo attuale';
+			case 'downloads.syncRuleUnknownServer': return 'Server sconosciuto';
+			case 'downloads.syncRuleListCreated': return 'Regola di sincronizzazione creata';
+			case 'downloads.backgroundWarning.bannerBlocked': return 'I download si interromperanno quando esci dall’app';
+			case 'downloads.backgroundWarning.bannerDegraded': return 'I download in background potrebbero essere limitati';
+			case 'downloads.backgroundWarning.bannerAction': return 'Dettagli';
+			case 'downloads.backgroundWarning.sheetTitle': return 'I download in background sono bloccati';
+			case 'downloads.backgroundWarning.sheetTitleDegraded': return 'I download in background potrebbero essere limitati';
+			case 'downloads.backgroundWarning.sheetIntro': return 'Android impedisce a Plezy di scaricare in modo affidabile in background.';
+			case 'downloads.backgroundWarning.sheetIntroDegraded': return 'Il dispositivo limita i momenti in cui Plezy può scaricare in background.';
+			case 'downloads.backgroundWarning.reasonBackgroundRestricted': return 'L’uso in background di Plezy è limitato. Nelle impostazioni della batteria o dell’uso in background, seleziona «Senza restrizioni».';
+			case 'downloads.backgroundWarning.reasonStandbyRestricted': return 'Android ha messo Plezy in uno stato di standby con restrizioni. Imposta l’uso della batteria su «Senza restrizioni».';
+			case 'downloads.backgroundWarning.reasonDownloadChannelBlocked': return 'Le notifiche dei download sono disattivate, quindi l’avanzamento e i controlli potrebbero non essere disponibili.';
+			case 'downloads.backgroundWarning.reasonNotificationsDisabled': return 'Le notifiche sono disattivate. Su Android 13 o versioni successive sono necessarie per i download prolungati in background.';
+			case 'downloads.backgroundWarning.reasonDataSaver': return 'Il Risparmio dati è attivo e blocca i download in background tramite dati mobili. I download dovrebbero comunque funzionare su Wi-Fi.';
+			case 'downloads.backgroundWarning.reasonOemUnknown': return 'I download si sono interrotti più volte mentre Plezy era in background. Controlla le impostazioni della batteria o dell’uso in background di Plezy.';
+			case 'downloads.backgroundWarning.openSettings': return 'Apri le impostazioni';
+			case 'downloads.backgroundWarning.stillNotWorking': return 'Guida specifica per il dispositivo';
+			case 'downloads.backgroundWarning.stillNotWorkingDescription': return 'Consulta la procedura per il tuo dispositivo oppure invia un log da Impostazioni › Visualizza i log se il problema persiste.';
+			case 'downloads.backgroundWarning.dialogTitle': return 'I download potrebbero non terminare';
+			case 'downloads.backgroundWarning.dialogDownloadAnyway': return 'Scarica comunque';
+			case 'downloads.backgroundWarning.dialogFixFirst': return 'Risolvi prima';
+			case 'downloads.backgroundWarning.statusTile': return 'Download in background';
+			case 'downloads.backgroundWarning.statusOk': return 'Esecuzione in background consentita';
+			case 'downloads.backgroundWarning.statusBlocked': return 'Bloccati dalle impostazioni di sistema';
+			case 'downloads.backgroundWarning.statusDegraded': return 'Limitati dalle impostazioni di sistema';
+			case 'downloads.backgroundWarning.statusUnknown': return 'Non ancora verificato';
+			case 'downloads.backgroundWarning.settingsUnavailable': return 'Impossibile aprire le impostazioni di sistema su questo dispositivo';
+			case 'downloads.backgroundWarning.linkUnavailable': return 'Impossibile aprire dontkillmyapp.com su questo dispositivo';
+			case 'downloads.options': return 'Opzioni download';
+			case 'downloads.groupings.library': return 'Libreria';
+			case 'downloads.groupings.collections': return 'Raccolte';
+			case 'downloads.unknownLibrary': return 'Libreria sconosciuta';
+			case 'downloads.unknownShow': return 'Serie sconosciuta';
+			case 'downloads.unknownSeason': return 'Stagione sconosciuta';
+			case 'downloads.unknownAlbum': return 'Album sconosciuto';
+			case 'downloads.completedOfTotal': return ({required Object completed, required Object total}) => '${completed}/${total} completati';
+			case 'downloads.errorFileNotFound': return 'File non trovato (404)';
+			case 'downloads.errorDownloadNotAllowed': return 'Download non consentito dal server (403)';
+			case 'downloads.errorDownloadFailed': return 'Download non riuscito';
+			case 'downloads.errorDownloadFailedWithReason': return ({required Object reason}) => 'Download non riuscito: ${reason}';
+			case 'downloads.errorHttpStatus': return ({required Object status}) => 'Download non riuscito (HTTP ${status})';
+			case 'downloads.errorPostProcessing': return ({required Object reason}) => 'Post-elaborazione non riuscita: ${reason}';
+			case 'downloads.reasonFileNotSaved': return 'non è stato possibile salvare il file su questo dispositivo';
+			case 'downloads.reasonCannotResume': return 'non è stato possibile riprendere il download parziale';
+			case 'downloads.reasonDeviceStorageFull': return 'lo spazio di archiviazione di questo dispositivo è esaurito';
+			case 'downloads.notificationDownloading': return 'Download in corso...';
+			case 'downloads.notificationComplete': return 'Download completato';
+			case 'downloads.notificationPaused': return 'Download in pausa';
+			case 'shaders.title': return 'Shader';
+			case 'shaders.noShaderDescription': return 'Nessun miglioramento video';
+			case 'shaders.nvscalerDescription': return 'Ridimensionamento NVIDIA per video più nitido';
+			case 'shaders.artcnnVariantNeutral': return 'Neutro';
+			case 'shaders.artcnnVariantDenoise': return 'Riduzione rumore';
+			case 'shaders.artcnnVariantDenoiseSharpen': return 'Riduzione rumore + nitidezza';
+			case 'shaders.qualityFast': return 'Veloce';
+			case 'shaders.qualityHQ': return 'Alta qualità';
+			case 'shaders.mode': return 'Modalità';
+			case 'shaders.importShader': return 'Importa shader';
+			case 'shaders.customShaderDescription': return 'Shader GLSL personalizzato';
+			case 'shaders.shaderImported': return 'Shader importato';
+			case 'shaders.shaderImportFailed': return 'Impossibile importare lo shader';
+			case 'shaders.deleteShader': return 'Elimina shader';
+			case 'shaders.deleteShaderConfirm': return ({required Object name}) => 'Eliminare "${name}"?';
+			case 'companionRemote.title': return 'Telecomando';
+			case 'companionRemote.connectedTo': return ({required Object name}) => 'Connesso a ${name}';
+			case 'companionRemote.unknownDevice': return 'Dispositivo sconosciuto';
+			case 'companionRemote.session.startingServer': return 'Avvio del server remoto...';
+			case 'companionRemote.session.hostAddress': return 'Indirizzo host';
+			case 'companionRemote.session.connected': return 'Connesso';
+			case 'companionRemote.session.serverRunning': return 'Server remoto attivo';
+			case 'companionRemote.session.serverStopped': return 'Server remoto arrestato';
+			case 'companionRemote.session.serverRunningDescription': return 'I dispositivi mobili della tua rete possono connettersi a questa app';
+			case 'companionRemote.session.serverStoppedDescription': return 'Avvia il server per consentire ai dispositivi mobili di connettersi';
+			case 'companionRemote.session.usePhoneToControl': return 'Usa il tuo dispositivo mobile per controllare questa app';
+			case 'companionRemote.session.startServer': return 'Avvia server';
+			case 'companionRemote.session.stopServer': return 'Arresta server';
+			case 'companionRemote.session.minimize': return 'Riduci';
+			case 'companionRemote.session.manualAddressHint': return 'Indirizzo di connessione manuale:';
+			case 'companionRemote.pairing.discoveryDescription': return 'I dispositivi Plezy con lo stesso account Plex appaiono qui';
+			case 'companionRemote.pairing.hostAddressHint': return '192.168.1.100:48632';
+			case 'companionRemote.pairing.connecting': return 'Connessione...';
+			case 'companionRemote.pairing.searchingForDevices': return 'Ricerca dispositivi...';
+			case 'companionRemote.pairing.noDevicesFound': return 'Nessun dispositivo trovato nella tua rete';
+			case 'companionRemote.pairing.noDevicesHint': return 'Apri Plezy sul computer e usa la stessa rete Wi-Fi';
+			case 'companionRemote.pairing.availableDevices': return 'Dispositivi disponibili';
+			case 'companionRemote.pairing.manualConnection': return 'Connessione manuale';
+			case 'companionRemote.pairing.cryptoInitFailed': return 'Impossibile avviare la connessione sicura. Accedi prima a Plex.';
+			case 'companionRemote.pairing.validationHostRequired': return 'Inserisci l\'indirizzo host';
+			case 'companionRemote.pairing.validationHostFormat': return 'Il formato deve essere IP:porta (es. 192.168.1.100:48632)';
+			case 'companionRemote.pairing.connectionTimedOut': return 'Tempo scaduto per la connessione. Usa la stessa rete su entrambi i dispositivi.';
+			case 'companionRemote.pairing.sessionNotFound': return 'Dispositivo non trovato. Assicurati che Plezy sia in esecuzione sull\'host.';
+			case 'companionRemote.pairing.authFailed': return 'Autenticazione non riuscita. Entrambi i dispositivi devono usare lo stesso account Plex.';
+			case 'companionRemote.pairing.failedToConnect': return ({required Object error}) => 'Connessione non riuscita: ${error}';
+			case 'companionRemote.remote.disconnectConfirm': return 'Vuoi disconnetterti dalla sessione remota?';
+			case 'companionRemote.remote.reconnecting': return 'Riconnessione...';
+			case 'companionRemote.remote.attemptOf': return ({required Object current}) => 'Tentativo ${current} di 5';
+			case 'companionRemote.remote.retryNow': return 'Riprova ora';
+			case 'companionRemote.remote.tabRemote': return 'Telecomando';
+			case 'companionRemote.remote.tabPlay': return 'Riproduci';
+			case 'companionRemote.remote.tabMore': return 'Altro';
+			case 'companionRemote.remote.menu': return 'Menu';
+			case 'companionRemote.remote.tabNavigation': return 'Navigazione';
+			case 'companionRemote.remote.tabDiscover': return 'Esplora';
+			case 'companionRemote.remote.tabLibraries': return 'Librerie';
+			case 'companionRemote.remote.tabSearch': return 'Cerca';
+			case 'companionRemote.remote.tabDownloads': return 'Download';
+			case 'companionRemote.remote.tabSettings': return 'Impostazioni';
+			case 'companionRemote.remote.previous': return 'Precedente';
+			case 'companionRemote.remote.playPause': return 'Riproduci/Pausa';
+			case 'companionRemote.remote.next': return 'Successivo';
+			case 'companionRemote.remote.seekBack': return 'Indietro';
+			case 'companionRemote.remote.stop': return 'Interrompi';
+			case 'companionRemote.remote.seekForward': return 'Avanti';
+			case 'companionRemote.remote.volume': return 'Volume';
+			case 'companionRemote.remote.volumeDown': return 'Abbassa';
+			case 'companionRemote.remote.volumeUp': return 'Alza';
+			case 'companionRemote.remote.fullscreen': return 'Schermo intero';
+			case 'companionRemote.remote.subtitles': return 'Sottotitoli';
+			case 'companionRemote.remote.audio': return 'Audio';
+			case 'companionRemote.remote.searchHint': return 'Cerca sul computer...';
+			case 'companionRemote.errors.noNetworkInterface': return 'Nessuna interfaccia di rete trovata';
+			case 'companionRemote.errors.authenticationFailed': return 'Autenticazione non riuscita';
+			case 'companionRemote.errors.serverStartFailed': return ({required Object error}) => 'Impossibile avviare il server remoto: ${error}';
+			case 'companionRemote.errors.commandFailed': return ({required Object error}) => 'Impossibile inviare il comando remoto: ${error}';
+			case 'companionRemote.errors.joinTimedOut': return 'Tempo scaduto durante la partecipazione alla sessione';
+			case 'companionRemote.errors.failedToConnectAnyAddress': return 'Impossibile connettersi a qualsiasi indirizzo';
+			case 'companionRemote.errors.connectionLostAfterAttempts': return ({required Object attempts}) => 'Connessione persa dopo ${attempts} tentativi';
+			case 'companionRemote.errors.connectionLost': return 'Connessione persa';
+			case 'companionRemote.closedBeforeAuth': return 'La connessione si è chiusa prima dell\'autenticazione';
+			case 'videoSettings.playbackSpeed': return 'Velocità di riproduzione';
+			case 'videoSettings.normalSpeed': return 'Normale';
+			case 'videoSettings.sleepTimerActive': return ({required Object duration}) => 'Attivo (${duration})';
+			case 'videoSettings.zoom': return 'Zoom';
+			case 'videoSettings.sleepTimer': return 'Timer di spegnimento';
+			case 'videoSettings.audioSync': return 'Sincronizzazione audio';
+			case 'videoSettings.subtitleSync': return 'Sincronizzazione sottotitoli';
+			case 'videoSettings.hdr': return 'HDR';
+			case 'videoSettings.hdrUnsupported': return 'HDR non è disponibile qui: questo compositore desktop o questa uscita video non possono gestirlo.';
+			case 'videoSettings.hdrToneMapping': return 'Mappatura dei toni HDR';
+			case 'videoSettings.hdrToneMappingCompositor': return 'Compositore';
+			case 'videoSettings.hdrToneMappingCompositorDescription': return 'Trasmette i metadati HDR della sorgente e lascia che il compositore desktop esegua la mappatura.';
+			case 'videoSettings.hdrToneMappingPlayer': return 'Lettore';
+			case 'videoSettings.hdrToneMappingPlayerDescription': return 'Esegue nel lettore la mappatura in base alla luminosità di picco dello schermo, quindi comunica il risultato al compositore.';
+			case 'videoSettings.hdrToneMappingFailed': return 'Impossibile modificare la mappatura dei toni HDR: la modalità precedente è ancora attiva.';
+			case 'videoSettings.audioOutput': return 'Uscita audio';
+			case 'videoSettings.performanceOverlay': return 'Overlay prestazioni';
+			case 'videoSettings.audioOutputDolbyAtmos': return 'Dolby Atmos';
+			case 'videoSettings.audioOutputDolbyAudio': return 'Dolby Audio';
+			case 'videoSettings.audioOutputSurround': return 'Surround';
+			case 'videoSettings.audioOutputSpatial': return 'Audio spaziale';
+			case 'videoSettings.audioOutputStereo': return 'Stereo';
+			case 'videoSettings.audioNormalization': return 'Normalizza il volume';
+			case 'videoSettings.audioNormalizationDisablesPassthrough': return 'Decodifica l\'audio in PCM; il passthrough è disattivato mentre questa opzione è attiva';
+			case 'performanceOverlay.color': return 'Colore';
+			case 'performanceOverlay.performance': return 'Prestazioni';
+			case 'performanceOverlay.buffer': return 'Buffer';
+			case 'performanceOverlay.app': return 'App';
+			case 'performanceOverlay.decoder': return 'Decoder';
+			case 'performanceOverlay.rawDecoder': return 'Decoder raw';
+			case 'performanceOverlay.tunneling': return 'Tunneling';
+			case 'performanceOverlay.passthrough': return 'Passthrough';
+			case 'performanceOverlay.aspect': return 'Proporzioni';
+			case 'performanceOverlay.rotation': return 'Rotazione';
+			case 'performanceOverlay.dvSource': return 'Sorgente DV';
+			case 'performanceOverlay.dvPath': return 'Percorso DV';
+			case 'performanceOverlay.dvRouteDecoder': return 'Decoder Dolby Vision';
+			case 'performanceOverlay.dvRouteDecoderP81': return 'Decoder Dolby Vision (P7→8.1)';
+			case 'performanceOverlay.dvRouteBaseLayer': return 'Livello base';
+			case 'performanceOverlay.dvRouteBaseLayerHdr10': return 'Livello base HDR10';
+			case 'performanceOverlay.dvRouteBaseLayerHlg': return 'Livello base HLG';
+			case 'performanceOverlay.dvRouteBaseLayerSdr': return 'Livello base SDR';
+			case 'performanceOverlay.dvRouteReshaped': return 'Rimodellato con RPU (gpu-next)';
+			case 'performanceOverlay.p7Conversion': return 'Conv. P7';
+			case 'performanceOverlay.sampleRate': return 'Frequenza camp.';
+			case 'performanceOverlay.pixelFormat': return 'Formato pixel';
+			case 'performanceOverlay.hwFormat': return 'Formato HW';
+			case 'performanceOverlay.matrix': return 'Matrice';
+			case 'performanceOverlay.primaries': return 'Colori primari';
+			case 'performanceOverlay.transfer': return 'Trasferimento';
+			case 'performanceOverlay.renderFps': return 'FPS rendering';
+			case 'performanceOverlay.displayFps': return 'FPS display';
+			case 'performanceOverlay.avSync': return 'Sync A/V';
+			case 'performanceOverlay.dropped': return 'Scartati';
+			case 'performanceOverlay.dvRpus': return 'DV RPU';
+			case 'performanceOverlay.dvRpuAverage': return 'Media DV RPU';
+			case 'performanceOverlay.dvSampleAverage': return 'Media camp. DV';
+			case 'performanceOverlay.maxLuma': return 'Luma max';
+			case 'performanceOverlay.minLuma': return 'Luma min';
+			case 'performanceOverlay.maxCll': return 'MaxCLL';
+			case 'performanceOverlay.maxFall': return 'MaxFALL';
+			case 'performanceOverlay.cacheUsed': return 'Cache usata';
+			case 'performanceOverlay.cacheLimit': return 'Limite cache';
+			case 'performanceOverlay.speed': return 'Velocità';
+			case 'performanceOverlay.player': return 'Lettore';
+			case 'performanceOverlay.memory': return 'Memoria';
+			case 'performanceOverlay.uiFps': return 'FPS UI';
+			case 'performanceOverlay.fps': return 'FPS';
+			case 'performanceOverlay.decoderAndroidHw': return 'Android HW';
+			case 'performanceOverlay.decoderNvidiaHw': return 'NVIDIA HW';
+			case 'performanceOverlay.decoderQualcommHw': return 'Qualcomm HW';
+			case 'performanceOverlay.decoderMediatekHw': return 'MediaTek HW';
+			case 'performanceOverlay.decoderExynosHw': return 'Exynos HW';
+			case 'performanceOverlay.decoderSoftware': return 'Software';
+			case 'performanceOverlay.decoderHardware': return 'Hardware';
+			case 'performanceOverlay.tunnelingActive': return 'Attivo';
+			case 'performanceOverlay.dvRpuFailed': return ({required Object converted, required Object failures}) => '${converted} (${failures} errori)';
+			case 'externalPlayer.title': return 'Lettore esterno';
+			case 'externalPlayer.useExternalPlayer': return 'Usa un lettore esterno';
+			case 'externalPlayer.useExternalPlayerDescription': return 'Apri i video in un\'altra app';
+			case 'externalPlayer.selectPlayer': return 'Seleziona il lettore';
+			case 'externalPlayer.customPlayers': return 'Lettori personalizzati';
+			case 'externalPlayer.systemDefault': return 'Predefinito di sistema';
+			case 'externalPlayer.addCustomPlayer': return 'Aggiungi lettore personalizzato';
+			case 'externalPlayer.playerName': return 'Nome del lettore';
+			case 'externalPlayer.playerNameHint': return 'Il mio lettore';
+			case 'externalPlayer.playerCommand': return 'Comando';
+			case 'externalPlayer.playerPackage': return 'Nome pacchetto';
+			case 'externalPlayer.playerUrlScheme': return 'Schema URL';
+			case 'externalPlayer.off': return 'Disattivato';
+			case 'externalPlayer.launchFailed': return 'Impossibile aprire il lettore esterno';
+			case 'externalPlayer.appNotInstalled': return ({required Object name}) => '${name} non è installato';
+			case 'externalPlayer.playInExternalPlayer': return 'Riproduci nel lettore esterno';
+			case 'metadataEdit.editMetadata': return 'Modifica...';
+			case 'metadataEdit.screenTitle': return 'Modifica metadati';
+			case 'metadataEdit.basicInfo': return 'Informazioni di base';
+			case 'metadataEdit.artwork': return 'Immagini';
+			case 'metadataEdit.advancedSettings': return 'Impostazioni avanzate';
+			case 'metadataEdit.title': return 'Titolo';
+			case 'metadataEdit.sortTitle': return 'Titolo di ordinamento';
+			case 'metadataEdit.originalTitle': return 'Titolo originale';
+			case 'metadataEdit.releaseDate': return 'Data di uscita';
+			case 'metadataEdit.contentRating': return 'Classificazione per età';
+			case 'metadataEdit.studio': return 'Studio';
+			case 'metadataEdit.tagline': return 'Slogan';
+			case 'metadataEdit.summary': return 'Trama';
+			case 'metadataEdit.poster': return 'Poster';
+			case 'metadataEdit.background': return 'Sfondo';
+			case 'metadataEdit.logo': return 'Logo';
+			case 'metadataEdit.squareArt': return 'Immagine quadrata';
+			case 'metadataEdit.selectPoster': return 'Seleziona poster';
+			case 'metadataEdit.selectBackground': return 'Seleziona sfondo';
+			case 'metadataEdit.selectLogo': return 'Seleziona logo';
+			case 'metadataEdit.selectSquareArt': return 'Seleziona immagine quadrata';
+			case 'metadataEdit.fromUrl': return 'Da URL';
+			case 'metadataEdit.uploadFile': return 'Carica file';
+			case 'metadataEdit.enterImageUrl': return 'Inserisci URL immagine';
+			case 'metadataEdit.imageUrl': return 'URL immagine';
+			case 'metadataEdit.metadataUpdated': return 'Metadati aggiornati correttamente';
+			case 'metadataEdit.metadataUpdateFailed': return 'Impossibile aggiornare i metadati';
+			case 'metadataEdit.artworkUpdated': return 'Immagini aggiornate';
+			case 'metadataEdit.artworkUpdateFailed': return 'Impossibile aggiornare le immagini';
+			case 'metadataEdit.noArtworkAvailable': return 'Nessuna immagine disponibile';
+			case 'metadataEdit.artworkOption': return ({required Object index}) => 'Opzione immagine ${index}';
+			case 'metadataEdit.selectedArtworkOption': return ({required Object index}) => 'Opzione immagine ${index}, selezionata';
+			case 'metadataEdit.notSet': return 'Non impostato';
+			case 'metadataEdit.libraryDefault': return 'Predefinito della libreria';
+			case 'metadataEdit.accountDefault': return 'Predefinito dell\'account';
+			case 'metadataEdit.seriesDefault': return 'Predefinito della serie';
+			case 'metadataEdit.episodeSorting': return 'Ordinamento episodi';
+			case 'metadataEdit.oldestFirst': return 'Più vecchi prima';
+			case 'metadataEdit.newestFirst': return 'Più recenti prima';
+			case 'metadataEdit.keep': return 'Conserva';
+			case 'metadataEdit.allEpisodes': return 'Tutti gli episodi';
+			case 'metadataEdit.latestEpisodes': return ({required Object count}) => '${count} episodi più recenti';
+			case 'metadataEdit.latestEpisode': return 'Episodio più recente';
+			case 'metadataEdit.episodesAddedPastDays': return ({required Object count}) => 'Episodi aggiunti negli ultimi ${count} giorni';
+			case 'metadataEdit.deleteAfterPlaying': return 'Elimina episodi dopo la riproduzione';
+			case 'metadataEdit.never': return 'Mai';
+			case 'metadataEdit.afterADay': return 'Dopo un giorno';
+			case 'metadataEdit.afterAWeek': return 'Dopo una settimana';
+			case 'metadataEdit.afterAMonth': return 'Dopo un mese';
+			case 'metadataEdit.onNextRefresh': return 'Al prossimo aggiornamento';
+			case 'metadataEdit.seasons': return 'Stagioni';
+			case 'metadataEdit.show': return 'Mostra';
+			case 'metadataEdit.hide': return 'Nascondi';
+			case 'metadataEdit.episodeOrdering': return 'Ordine episodi';
+			case 'metadataEdit.tmdbAiring': return 'The Movie Database (ordine di trasmissione)';
+			case 'metadataEdit.tvdbAiring': return 'TheTVDB (ordine di trasmissione)';
+			case 'metadataEdit.tvdbAbsolute': return 'TheTVDB (ordine assoluto)';
+			case 'metadataEdit.metadataLanguage': return 'Lingua dei metadati';
+			case 'metadataEdit.useOriginalTitle': return 'Usa il titolo originale';
+			case 'metadataEdit.preferredAudioLanguage': return 'Lingua audio preferita';
+			case 'metadataEdit.preferredSubtitleLanguage': return 'Lingua dei sottotitoli preferita';
+			case 'metadataEdit.subtitleMode': return 'Modalità di selezione automatica dei sottotitoli';
+			case 'metadataEdit.manuallySelected': return 'Selezionato manualmente';
+			case 'metadataEdit.shownWithForeignAudio': return 'Mostrati con audio straniero';
+			case 'metadataEdit.alwaysEnabled': return 'Sempre attivo';
+			case 'metadataEdit.tags': return 'Tag';
+			case 'metadataEdit.addTag': return 'Aggiungi tag';
+			case 'metadataEdit.genre': return 'Genere';
+			case 'metadataEdit.director': return 'Regista';
+			case 'metadataEdit.writer': return 'Sceneggiatore';
+			case 'metadataEdit.producer': return 'Produttore';
+			case 'metadataEdit.country': return 'Paese';
+			case 'metadataEdit.collection': return 'Raccolta';
+			case 'metadataEdit.label': return 'Etichetta';
+			case 'metadataEdit.quickTag': return 'Tag rapido...';
+			case 'matchScreen.match': return 'Abbina...';
+			case 'matchScreen.fixMatch': return 'Correggi abbinamento...';
+			case 'matchScreen.unmatch': return 'Rimuovi abbinamento';
+			case 'matchScreen.unmatchConfirm': return 'Rimuovere questo abbinamento? Plex considererà l\'elemento non abbinato finché non verrà eseguito un nuovo abbinamento.';
+			case 'matchScreen.unmatchSuccess': return 'Abbinamento rimosso';
+			case 'matchScreen.unmatchFailed': return 'Rimozione dell\'abbinamento non riuscita';
+			case 'matchScreen.matchApplied': return 'Abbinamento applicato';
+			case 'matchScreen.matchFailed': return 'Applicazione dell\'abbinamento non riuscita';
+			case 'matchScreen.titleHint': return 'Titolo';
+			case 'matchScreen.yearHint': return 'Anno';
+			case 'matchScreen.search': return 'Cerca';
+			case 'matchScreen.noMatchesFound': return 'Nessun risultato';
+			case 'serverTasks.title': return 'Attività del server';
+			case 'serverTasks.failedToLoad': return 'Impossibile caricare le attività';
+			case 'serverTasks.noTasks': return 'Nessuna attività in corso';
+			case 'trakt.title': return 'Trakt';
+			case 'trakt.connected': return 'Connesso';
+			case 'trakt.connectedAs': return ({required Object username}) => 'Connesso come @${username}';
+			case 'trakt.disconnectConfirm': return 'Disconnettere l\'account Trakt?';
+			case 'trakt.disconnectConfirmBody': return 'Plezy smetterà di inviare eventi a Trakt. Puoi riconnetterti quando vuoi.';
+			case 'trakt.scrobble': return 'Scrobbling in tempo reale';
+			case 'trakt.scrobbleDescription': return 'Invia eventi di riproduzione, pausa e arresto a Trakt durante la riproduzione.';
+			case 'trakt.watchedSync': return 'Sincronizza lo stato di visione';
+			case 'trakt.watchedSyncDescription': return 'Quando contrassegni un elemento come visto in Plezy, viene contrassegnato come visto anche su Trakt.';
+			case 'seerr.title': return 'Seerr';
+			case 'seerr.connectTitle': return 'Connetti Seerr';
+			case 'seerr.serverUrl': return 'URL del server';
+			case 'seerr.serverUrlHelper': return 'L\'indirizzo della tua istanza Seerr';
+			case 'seerr.checkServer': return 'Continua';
+			case 'seerr.signInWithJellyfin': return 'Accedi con Jellyfin';
+			case 'seerr.signInWithEmby': return 'Accedi con Emby';
+			case 'seerr.signInWithLocal': return 'Usa un account locale';
+			case 'seerr.email': return 'Email';
+			case 'seerr.noSignInMethods': return 'Questa istanza Seerr non offre alcun metodo di accesso supportato da Plezy.';
+			case 'seerr.instance': return 'Istanza';
+			case 'seerr.disconnectConfirm': return 'Disconnettere Seerr?';
+			case 'seerr.disconnectConfirmBody': return 'Plezy rimuoverà questa istanza Seerr. Potrai riconnetterla in qualsiasi momento.';
+			case 'seerr.request': return 'Richiedi';
+			case 'seerr.request4k': return 'Richiedi in 4K';
+			case 'seerr.seasons': return 'Stagioni';
+			case 'seerr.allSeasons': return 'Tutte le stagioni';
+			case 'seerr.advancedOptions': return 'Avanzate';
+			case 'seerr.destinationServer': return 'Server di destinazione';
+			case 'seerr.qualityProfile': return 'Profilo di qualità';
+			case 'seerr.rootFolder': return 'Cartella radice';
+			case 'seerr.languageProfile': return 'Profilo della lingua';
+			case 'seerr.tags': return 'Tag';
+			case 'seerr.noTags': return 'Nessun tag';
+			case 'seerr.defaultOption': return ({required Object name}) => '${name} (predefinito)';
+			case 'seerr.animeNote': return 'Questa serie è un anime.';
+			case 'seerr.requestSubmitted': return 'Richiesta inviata';
+			case 'seerr.requestFailed': return ({required Object error}) => 'Richiesta non riuscita: ${error}';
+			case 'seerr.requestsLoadFailed': return 'Impossibile caricare le opzioni di richiesta';
+			case 'seerr.nothingToRequest': return 'Tutto è già disponibile o richiesto.';
+			case 'seerr.statusAvailable': return 'Disponibile';
+			case 'seerr.statusPartiallyAvailable': return 'Disponibile in parte';
+			case 'seerr.statusRequested': return 'Richiesto';
+			case 'seerr.statusProcessing': return 'In elaborazione';
+			case 'seerr.statusBlocklisted': return 'Nella lista di blocco';
+			case 'seerr.couldNotReach': return ({required Object url, required Object error}) => 'Impossibile raggiungere ${url}: ${error}';
+			case 'seerr.noInstanceAtUrl': return ({required Object url, required Object status}) => 'Nessuna istanza Seerr all\'indirizzo ${url} (HTTP ${status})';
+			case 'seerr.behindAuthProxy': return 'Un reverse proxy con autenticazione (SSO o autenticazione HTTP) ha risposto al posto di Seerr. Plezy non può accedere attraverso di esso: consenti al percorso /api/v1 di Seerr di bypassare il proxy per questa app, oppure usa un indirizzo che raggiunga Seerr direttamente.';
+			case 'seerr.invalidUrl': return 'Inserisci un indirizzo del server come https://seerr.example.com';
+			case 'seerr.quickConnectUnsupported': return 'Questa istanza Seerr non supporta Quick Connect. È necessaria la versione 3.4 o successiva di Seerr.';
+			case 'seerr.notInitialized': return 'Questa istanza Seerr non ha completato la configurazione iniziale';
+			case 'seerr.noPlexTokenForReauth': return 'Nessun token Plex disponibile per effettuare nuovamente l\'accesso';
+			case 'seerr.noStoredCredentials': return 'Nessuna credenziale salvata disponibile per effettuare nuovamente l\'accesso';
+			case 'seerr.signInRejected': return 'L\'accesso è stato rifiutato';
+			case 'seerr.noSessionCookie': return 'Seerr non ha generato un cookie di sessione';
+			case 'seerr.freshCookieRejected': return 'Seerr ha rifiutato il nuovo cookie di sessione';
+			case 'seerr.noUserInformation': return 'Seerr non ha restituito le informazioni sull\'utente';
+			case 'seerr.sessionRejectedAfterReauth': return 'La sessione è stata rifiutata dopo aver effettuato nuovamente l\'accesso';
+			case 'seerr.permissionDenied': return 'Seerr ha negato questa azione: il tuo account non dispone più dell\'autorizzazione richiesta';
+			case 'seerr.permissionRevoked': return 'Non hai più l\'autorizzazione per richiederlo';
+			case 'services.title': return 'Servizi';
+			case 'services.hubSubtitle': return 'Sincronizza i progressi di visione e richiedi nuovi titoli.';
+			case 'services.integrations': return 'Integrazioni';
+			case 'services.notConnected': return 'Non connesso';
+			case 'services.connectedAs': return ({required Object username}) => 'Connesso come @${username}';
+			case 'services.scrobble': return 'Registra automaticamente i progressi';
+			case 'services.scrobbleDescription': return 'Aggiorna la tua lista quando termini un episodio o un film.';
+			case 'services.disconnectConfirm': return ({required Object service}) => 'Disconnettere ${service}?';
+			case 'services.disconnectConfirmBody': return ({required Object service}) => 'Plezy smetterà di aggiornare ${service}. Riconnetti quando vuoi.';
+			case 'services.connectFailed': return ({required Object service}) => 'Impossibile connettersi a ${service}. Riprova.';
+			case 'services.names.mal': return 'MyAnimeList';
+			case 'services.names.anilist': return 'AniList';
+			case 'services.names.simkl': return 'Simkl';
+			case 'services.names.seerr': return 'Seerr';
+			case 'services.names.mdblist': return 'MDBList';
+			case 'services.simklReconnect.title': return 'Riconnetti Simkl';
+			case 'services.simklReconnect.subtitle': return 'Simkl sta dismettendo il metodo di accesso usato da questa connessione. La riconnessione apre simkl.com per autorizzare Plezy — Plezy non vede mai la tua password. La tua cronologia di visione resta su Simkl.';
+			case 'services.deviceCode.title': return ({required Object service}) => 'Attiva Plezy su ${service}';
+			case 'services.deviceCode.instructions': return 'Scansiona il codice QR oppure visita l\'indirizzo qui sotto e inserisci questo codice:';
+			case 'services.deviceCode.openToActivate': return ({required Object service}) => 'Apri ${service} per attivare';
+			case 'services.deviceCode.copyCode': return 'Copia il codice di attivazione';
+			case 'services.deviceCode.waitingForAuthorization': return 'In attesa di autorizzazione…';
+			case 'services.deviceCode.codeCopied': return 'Codice copiato';
+			case 'services.oauthProxy.title': return ({required Object service}) => 'Accedi a ${service}';
+			case 'services.oauthProxy.body': return 'Scansiona questo codice QR o apri l\'URL su qualsiasi dispositivo.';
+			case 'services.oauthProxy.openToSignIn': return ({required Object service}) => 'Apri ${service} per accedere';
+			case 'services.pendingAuth.copyUrl': return 'Copia l\'URL di accesso';
+			case 'services.pendingAuth.urlCopied': return 'URL copiato';
+			case 'services.libraryFilter.title': return 'Filtro delle librerie';
+			case 'services.libraryFilter.subtitleAllSyncing': return 'Sincronizzazione di tutte le librerie';
+			case 'services.libraryFilter.subtitleNoneSyncing': return 'Nessuna sincronizzazione';
+			case 'services.libraryFilter.subtitleBlocked': return ({required Object count}) => '${count} bloccate';
+			case 'services.libraryFilter.subtitleAllowed': return ({required Object count}) => '${count} consentite';
+			case 'services.libraryFilter.mode': return 'Modalità filtro';
+			case 'services.libraryFilter.modeBlacklist': return 'Lista nera';
+			case 'services.libraryFilter.modeWhitelist': return 'Lista bianca';
+			case 'services.libraryFilter.modeHintBlacklist': return 'Sincronizza tutte le librerie tranne quelle selezionate qui sotto.';
+			case 'services.libraryFilter.modeHintWhitelist': return 'Sincronizza solo le librerie selezionate qui sotto.';
+			case 'services.libraryFilter.libraries': return 'Librerie';
+			case 'services.libraryFilter.noLibraries': return 'Nessuna libreria disponibile';
+			case 'addServer.addMediaBrowserTitle': return ({required Object product}) => 'Aggiungi server ${product}';
+			case 'addServer.serverUrls': return 'URL del server';
+			case 'addServer.serverUrlsHelper': return 'Sono consentiti più URL, separati da virgole.';
+			case 'addServer.findServer': return 'Trova il server';
+			case 'addServer.searchingLocalMediaBrowserServers': return ({required Object product}) => 'Ricerca di server ${product} locali...';
+			case 'addServer.localMediaBrowserServers': return ({required Object product}) => 'Server ${product} locali';
+			case 'addServer.username': return 'Nome utente';
+			case 'addServer.password': return 'Password';
+			case 'addServer.signIn': return 'Accedi';
+			case 'addServer.change': return 'Modifica';
+			case 'addServer.required': return 'Obbligatorio';
+			case 'addServer.couldNotReachServer': return ({required Object error}) => 'Impossibile raggiungere il server: ${error}';
+			case 'addServer.signInFailed': return ({required Object error}) => 'Accesso non riuscito: ${error}';
+			case 'addServer.quickConnectFailed': return ({required Object error}) => 'Quick Connect non riuscito: ${error}';
+			case 'addServer.addPlexTitle': return 'Accedi con Plex';
+			case 'addServer.pinExpired': return 'PIN scaduto prima dell\'accesso. Riprova.';
+			case 'addServer.failedToRegisterAccount': return ({required Object error}) => 'Registrazione account non riuscita: ${error}';
+			case 'addServer.enterMediaBrowserUrlError': return ({required Object product}) => 'Inserisci l\'URL del server ${product}';
+			case 'addServer.addConnectionTitle': return 'Aggiungi connessione';
+			case 'addServer.addConnectionTitleScoped': return ({required Object name}) => 'Aggiungi a ${name}';
+			case 'addServer.signInWithPlexCard': return 'Accedi con Plex';
+			case 'addServer.signInWithPlexCardSubtitle': return 'Autorizza questo dispositivo. I server condivisi vengono aggiunti.';
+			case 'addServer.signInWithPlexCardSubtitleScoped': return 'Autorizza un account Plex. Gli utenti Home diventano profili.';
+			case 'addServer.connectToMediaBrowserCard': return ({required Object product}) => 'Connettiti a ${product}';
+			case 'addServer.connectToMediaBrowserCardSubtitle': return 'Inserisci l\'URL del server, il nome utente e la password.';
+			case 'addServer.connectToMediaBrowserCardSubtitleScoped': return ({required Object product, required Object name}) => 'Accedi al tuo server ${product}. Associato a ${name}.';
+			case 'addServer.borrowFromAnotherProfile': return 'Prendi in prestito da un altro profilo';
+			case 'addServer.borrowFromAnotherProfileSubtitle': return 'Riutilizza la connessione di un altro profilo. I profili protetti da PIN richiedono un PIN.';
+			case 'addServer.invalidCredentials': return 'Nome utente o password non validi';
+			case 'addServer.authResponseNotJson': return 'La risposta di autenticazione non era un JSON valido';
+			case 'addServer.authResponseIncomplete': return 'La risposta di accesso del server era incompleta';
+			case 'addServer.quickConnectRejected': return 'Quick Connect è stato rifiutato dal server';
+			case 'addServer.quickConnectNotJson': return 'La risposta di Quick Connect non era un JSON valido';
+			case 'addServer.quickConnectMissingFields': return 'Nella risposta di Quick Connect manca un codice o un segreto';
+			case 'addServer.quickConnectPollRejected': return 'Il polling di Quick Connect è stato rifiutato dal server';
+			case 'addServer.serverTimedOut': return 'Il server non ha risposto in tempo';
+			case 'addServer.responseNotJson': return 'La risposta del server non era un JSON valido';
+			case 'addServer.responseMissingIdentity': return ({required Object product}) => 'Nella risposta manca un ID o il nome del server: è un server ${product}?';
+			case 'addServer.probeFailed': return ({required Object error}) => 'Impossibile raggiungere il server: ${error}';
+			case 'addServer.enterAtLeastOneUrl': return ({required Object product}) => 'Inserisci almeno un URL di un server ${product}';
+			case 'addServer.noReachableServer': return ({required Object product}) => 'Non è stato trovato alcun server ${product} raggiungibile';
+			case 'addServer.urlsPointToDifferentServers': return ({required Object product}) => 'Questi URL rimandano a server ${product} diversi';
+			case 'addServer.urlDoesNotMatchServer': return ({required Object product}) => 'Questo URL non corrisponde al server ${product}';
+			case 'addServer.redirectUnsupported': return 'Il server ha reindirizzato a un URL non supportato';
+			case 'addServer.redirectDifferentHost': return ({required Object product}) => 'Il server ha reindirizzato a un host diverso. Inserisci direttamente l\'URL finale del server ${product}.';
+			case 'addServer.redirectInsecure': return 'Il server ha reindirizzato da HTTPS a un URL non sicuro';
+			case 'addServer.redirectUnsupportedEnterFinal': return ({required Object product}) => 'Il server ha reindirizzato a un URL non supportato. Inserisci direttamente l\'URL finale del server ${product}.';
+			default: return null;
+		}
 	}
 }
+

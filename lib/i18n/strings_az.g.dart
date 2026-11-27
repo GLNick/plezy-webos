@@ -3,7 +3,6 @@
 ///
 // coverage:ignore-file
 // ignore_for_file: type=lint, unused_import
-// dart format off
 
 import 'package:flutter/widgets.dart';
 import 'package:intl/intl.dart';
@@ -11,7 +10,7 @@ import 'package:slang/generated.dart';
 import 'strings.g.dart';
 
 // Path: <root>
-class TranslationsAz extends Translations with BaseTranslations<AppLocale, Translations> {
+class TranslationsAz extends Translations {
 	/// You can call this constructor and build your own translation instance of this locale.
 	/// Constructing via the enum [AppLocale.build] is preferred.
 	TranslationsAz({Map<String, Node>? overrides, PluralResolver? cardinalResolver, PluralResolver? ordinalResolver, TranslationMetadata<AppLocale, Translations>? meta})
@@ -39,65 +38,67 @@ class TranslationsAz extends Translations with BaseTranslations<AppLocale, Trans
 	TranslationsAz $copyWith({TranslationMetadata<AppLocale, Translations>? meta}) => TranslationsAz(meta: meta ?? this.$meta);
 
 	// Translations
-	@override late final _Translations$app$az app = _Translations$app$az._(_root);
-	@override late final _Translations$appIcon$az appIcon = _Translations$appIcon$az._(_root);
-	@override late final _Translations$auth$az auth = _Translations$auth$az._(_root);
-	@override late final _Translations$common$az common = _Translations$common$az._(_root);
-	@override late final _Translations$screens$az screens = _Translations$screens$az._(_root);
-	@override late final _Translations$update$az update = _Translations$update$az._(_root);
-	@override late final _Translations$supporter$az supporter = _Translations$supporter$az._(_root);
-	@override late final _Translations$settings$az settings = _Translations$settings$az._(_root);
-	@override late final _Translations$themeEditor$az themeEditor = _Translations$themeEditor$az._(_root);
-	@override late final _Translations$search$az search = _Translations$search$az._(_root);
-	@override late final _Translations$hotkeys$az hotkeys = _Translations$hotkeys$az._(_root);
-	@override late final _Translations$fileInfo$az fileInfo = _Translations$fileInfo$az._(_root);
-	@override late final _Translations$mediaMenu$az mediaMenu = _Translations$mediaMenu$az._(_root);
-	@override late final _Translations$rateSheet$az rateSheet = _Translations$rateSheet$az._(_root);
-	@override late final _Translations$accessibility$az accessibility = _Translations$accessibility$az._(_root);
-	@override late final _Translations$tooltips$az tooltips = _Translations$tooltips$az._(_root);
-	@override late final _Translations$audioTracks$az audioTracks = _Translations$audioTracks$az._(_root);
-	@override late final _Translations$videoControls$az videoControls = _Translations$videoControls$az._(_root);
-	@override late final _Translations$messages$az messages = _Translations$messages$az._(_root);
-	@override late final _Translations$subtitlingStyling$az subtitlingStyling = _Translations$subtitlingStyling$az._(_root);
-	@override late final _Translations$mpvConfig$az mpvConfig = _Translations$mpvConfig$az._(_root);
-	@override late final _Translations$dialog$az dialog = _Translations$dialog$az._(_root);
-	@override late final _Translations$profiles$az profiles = _Translations$profiles$az._(_root);
-	@override late final _Translations$connections$az connections = _Translations$connections$az._(_root);
-	@override late final _Translations$accountPreferences$az accountPreferences = _Translations$accountPreferences$az._(_root);
-	@override late final _Translations$discover$az discover = _Translations$discover$az._(_root);
-	@override late final _Translations$errors$az errors = _Translations$errors$az._(_root);
-	@override late final _Translations$libraries$az libraries = _Translations$libraries$az._(_root);
-	@override late final _Translations$about$az about = _Translations$about$az._(_root);
-	@override late final _Translations$serverSelection$az serverSelection = _Translations$serverSelection$az._(_root);
-	@override late final _Translations$hubDetail$az hubDetail = _Translations$hubDetail$az._(_root);
-	@override late final _Translations$logs$az logs = _Translations$logs$az._(_root);
-	@override late final _Translations$startup$az startup = _Translations$startup$az._(_root);
-	@override late final _Translations$licenses$az licenses = _Translations$licenses$az._(_root);
-	@override late final _Translations$navigation$az navigation = _Translations$navigation$az._(_root);
-	@override late final _Translations$explore$az explore = _Translations$explore$az._(_root);
-	@override late final _Translations$liveTv$az liveTv = _Translations$liveTv$az._(_root);
-	@override late final _Translations$collections$az collections = _Translations$collections$az._(_root);
-	@override late final _Translations$playlists$az playlists = _Translations$playlists$az._(_root);
-	@override late final _Translations$music$az music = _Translations$music$az._(_root);
-	@override late final _Translations$watchTogether$az watchTogether = _Translations$watchTogether$az._(_root);
-	@override late final _Translations$downloads$az downloads = _Translations$downloads$az._(_root);
-	@override late final _Translations$shaders$az shaders = _Translations$shaders$az._(_root);
-	@override late final _Translations$companionRemote$az companionRemote = _Translations$companionRemote$az._(_root);
-	@override late final _Translations$videoSettings$az videoSettings = _Translations$videoSettings$az._(_root);
-	@override late final _Translations$performanceOverlay$az performanceOverlay = _Translations$performanceOverlay$az._(_root);
-	@override late final _Translations$externalPlayer$az externalPlayer = _Translations$externalPlayer$az._(_root);
-	@override late final _Translations$metadataEdit$az metadataEdit = _Translations$metadataEdit$az._(_root);
-	@override late final _Translations$matchScreen$az matchScreen = _Translations$matchScreen$az._(_root);
-	@override late final _Translations$serverTasks$az serverTasks = _Translations$serverTasks$az._(_root);
-	@override late final _Translations$trakt$az trakt = _Translations$trakt$az._(_root);
-	@override late final _Translations$seerr$az seerr = _Translations$seerr$az._(_root);
-	@override late final _Translations$services$az services = _Translations$services$az._(_root);
-	@override late final _Translations$addServer$az addServer = _Translations$addServer$az._(_root);
+	@override late final _TranslationsAppAz app = _TranslationsAppAz._(_root);
+	@override late final _TranslationsAppIconAz appIcon = _TranslationsAppIconAz._(_root);
+	@override late final _TranslationsAuthAz auth = _TranslationsAuthAz._(_root);
+	@override late final _TranslationsCommonAz common = _TranslationsCommonAz._(_root);
+	@override late final _TranslationsScreensAz screens = _TranslationsScreensAz._(_root);
+	@override late final _TranslationsUpdateAz update = _TranslationsUpdateAz._(_root);
+	@override late final _TranslationsSupporterAz supporter = _TranslationsSupporterAz._(_root);
+	@override late final _TranslationsSettingsAz settings = _TranslationsSettingsAz._(_root);
+	@override late final _TranslationsThemeEditorAz themeEditor = _TranslationsThemeEditorAz._(_root);
+	@override late final _TranslationsSearchAz search = _TranslationsSearchAz._(_root);
+	@override late final _TranslationsHotkeysAz hotkeys = _TranslationsHotkeysAz._(_root);
+	@override late final _TranslationsFileInfoAz fileInfo = _TranslationsFileInfoAz._(_root);
+	@override late final _TranslationsMediaMenuAz mediaMenu = _TranslationsMediaMenuAz._(_root);
+	@override late final _TranslationsRateSheetAz rateSheet = _TranslationsRateSheetAz._(_root);
+	@override late final _TranslationsAccessibilityAz accessibility = _TranslationsAccessibilityAz._(_root);
+	@override late final _TranslationsTooltipsAz tooltips = _TranslationsTooltipsAz._(_root);
+	@override late final _TranslationsAudioTracksAz audioTracks = _TranslationsAudioTracksAz._(_root);
+	@override late final _TranslationsVideoControlsAz videoControls = _TranslationsVideoControlsAz._(_root);
+	@override late final _TranslationsUserStatusAz userStatus = _TranslationsUserStatusAz._(_root);
+	@override late final _TranslationsMessagesAz messages = _TranslationsMessagesAz._(_root);
+	@override late final _TranslationsSubtitlingStylingAz subtitlingStyling = _TranslationsSubtitlingStylingAz._(_root);
+	@override late final _TranslationsMpvConfigAz mpvConfig = _TranslationsMpvConfigAz._(_root);
+	@override late final _TranslationsDialogAz dialog = _TranslationsDialogAz._(_root);
+	@override late final _TranslationsProfilesAz profiles = _TranslationsProfilesAz._(_root);
+	@override late final _TranslationsConnectionsAz connections = _TranslationsConnectionsAz._(_root);
+	@override late final _TranslationsAccountPreferencesAz accountPreferences = _TranslationsAccountPreferencesAz._(_root);
+	@override late final _TranslationsDiscoverAz discover = _TranslationsDiscoverAz._(_root);
+	@override late final _TranslationsErrorsAz errors = _TranslationsErrorsAz._(_root);
+	@override late final _TranslationsLibrariesAz libraries = _TranslationsLibrariesAz._(_root);
+	@override late final _TranslationsAboutAz about = _TranslationsAboutAz._(_root);
+	@override late final _TranslationsServerSelectionAz serverSelection = _TranslationsServerSelectionAz._(_root);
+	@override late final _TranslationsHubDetailAz hubDetail = _TranslationsHubDetailAz._(_root);
+	@override late final _TranslationsLogsAz logs = _TranslationsLogsAz._(_root);
+	@override late final _TranslationsStartupAz startup = _TranslationsStartupAz._(_root);
+	@override late final _TranslationsLicensesAz licenses = _TranslationsLicensesAz._(_root);
+	@override late final _TranslationsNavigationAz navigation = _TranslationsNavigationAz._(_root);
+	@override late final _TranslationsExploreAz explore = _TranslationsExploreAz._(_root);
+	@override late final _TranslationsLiveTvAz liveTv = _TranslationsLiveTvAz._(_root);
+	@override late final _TranslationsCollectionsAz collections = _TranslationsCollectionsAz._(_root);
+	@override late final _TranslationsPlaylistsAz playlists = _TranslationsPlaylistsAz._(_root);
+	@override late final _TranslationsMusicAz music = _TranslationsMusicAz._(_root);
+	@override late final _TranslationsWatchTogetherAz watchTogether = _TranslationsWatchTogetherAz._(_root);
+	@override late final _TranslationsDownloadsAz downloads = _TranslationsDownloadsAz._(_root);
+	@override late final _TranslationsShadersAz shaders = _TranslationsShadersAz._(_root);
+	@override late final _TranslationsCompanionRemoteAz companionRemote = _TranslationsCompanionRemoteAz._(_root);
+	@override late final _TranslationsVideoSettingsAz videoSettings = _TranslationsVideoSettingsAz._(_root);
+	@override late final _TranslationsPerformanceOverlayAz performanceOverlay = _TranslationsPerformanceOverlayAz._(_root);
+	@override late final _TranslationsExternalPlayerAz externalPlayer = _TranslationsExternalPlayerAz._(_root);
+	@override late final _TranslationsMetadataEditAz metadataEdit = _TranslationsMetadataEditAz._(_root);
+	@override late final _TranslationsMatchScreenAz matchScreen = _TranslationsMatchScreenAz._(_root);
+	@override late final _TranslationsServerTasksAz serverTasks = _TranslationsServerTasksAz._(_root);
+	@override late final _TranslationsTraktAz trakt = _TranslationsTraktAz._(_root);
+	@override late final _TranslationsSeerrAz seerr = _TranslationsSeerrAz._(_root);
+	@override late final _TranslationsServicesAz services = _TranslationsServicesAz._(_root);
+	@override late final _TranslationsAddServerAz addServer = _TranslationsAddServerAz._(_root);
+	@override late final _TranslationsDeepLinksAz deepLinks = _TranslationsDeepLinksAz._(_root);
 }
 
 // Path: app
-class _Translations$app$az extends Translations$app$en {
-	_Translations$app$az._(TranslationsAz root) : this._root = root, super.internal(root);
+class _TranslationsAppAz extends TranslationsAppEn {
+	_TranslationsAppAz._(TranslationsAz root) : this._root = root, super.internal(root);
 
 	final TranslationsAz _root; // ignore: unused_field
 
@@ -106,8 +107,8 @@ class _Translations$app$az extends Translations$app$en {
 }
 
 // Path: appIcon
-class _Translations$appIcon$az extends Translations$appIcon$en {
-	_Translations$appIcon$az._(TranslationsAz root) : this._root = root, super.internal(root);
+class _TranslationsAppIconAz extends TranslationsAppIconEn {
+	_TranslationsAppIconAz._(TranslationsAz root) : this._root = root, super.internal(root);
 
 	final TranslationsAz _root; // ignore: unused_field
 
@@ -120,12 +121,12 @@ class _Translations$appIcon$az extends Translations$appIcon$en {
 	@override String get changeFailed => 'Tətbiq ikonu dəyişdirilə bilmədi';
 	@override String get launcherHint => 'Plezy-dən çıxdıqdan sonra yeni ikon ana ekranınızda görünəcək.';
 	@override String get tvLauncherHint => 'Plezy-dən çıxdıqdan sonra yeni banner görünəcək. Android TV televizor yenidən başladılana qədər köhnəsini göstərə bilər.';
-	@override late final _Translations$appIcon$names$az names = _Translations$appIcon$names$az._(_root);
+	@override late final _TranslationsAppIconNamesAz names = _TranslationsAppIconNamesAz._(_root);
 }
 
 // Path: auth
-class _Translations$auth$az extends Translations$auth$en {
-	_Translations$auth$az._(TranslationsAz root) : this._root = root, super.internal(root);
+class _TranslationsAuthAz extends TranslationsAuthEn {
+	_TranslationsAuthAz._(TranslationsAz root) : this._root = root, super.internal(root);
 
 	final TranslationsAz _root; // ignore: unused_field
 
@@ -150,8 +151,8 @@ class _Translations$auth$az extends Translations$auth$en {
 }
 
 // Path: common
-class _Translations$common$az extends Translations$common$en {
-	_Translations$common$az._(TranslationsAz root) : this._root = root, super.internal(root);
+class _TranslationsCommonAz extends TranslationsCommonEn {
+	_TranslationsCommonAz._(TranslationsAz root) : this._root = root, super.internal(root);
 
 	final TranslationsAz _root; // ignore: unused_field
 
@@ -202,16 +203,16 @@ class _Translations$common$az extends Translations$common$en {
 	@override String get fullscreen => 'Tam ekran';
 	@override String get exitFullscreen => 'Tam ekrandan çıx';
 	@override String get pressBackAgainToExit => 'Çıxmaq üçün geri düyməsinə bir daha basın';
-	@override late final _Translations$common$ratingSource$az ratingSource = _Translations$common$ratingSource$az._(_root);
+	@override late final _TranslationsCommonRatingSourceAz ratingSource = _TranslationsCommonRatingSourceAz._(_root);
 	@override String get notAvailable => 'Yoxdur';
 	@override String get url => 'URL';
 	@override String get letterKeys => 'ABC';
-	@override late final _Translations$common$mediaKind$az mediaKind = _Translations$common$mediaKind$az._(_root);
+	@override late final _TranslationsCommonMediaKindAz mediaKind = _TranslationsCommonMediaKindAz._(_root);
 }
 
 // Path: screens
-class _Translations$screens$az extends Translations$screens$en {
-	_Translations$screens$az._(TranslationsAz root) : this._root = root, super.internal(root);
+class _TranslationsScreensAz extends TranslationsScreensEn {
+	_TranslationsScreensAz._(TranslationsAz root) : this._root = root, super.internal(root);
 
 	final TranslationsAz _root; // ignore: unused_field
 
@@ -224,8 +225,8 @@ class _Translations$screens$az extends Translations$screens$en {
 }
 
 // Path: update
-class _Translations$update$az extends Translations$update$en {
-	_Translations$update$az._(TranslationsAz root) : this._root = root, super.internal(root);
+class _TranslationsUpdateAz extends TranslationsUpdateEn {
+	_TranslationsUpdateAz._(TranslationsAz root) : this._root = root, super.internal(root);
 
 	final TranslationsAz _root; // ignore: unused_field
 
@@ -240,8 +241,8 @@ class _Translations$update$az extends Translations$update$en {
 }
 
 // Path: supporter
-class _Translations$supporter$az extends Translations$supporter$en {
-	_Translations$supporter$az._(TranslationsAz root) : this._root = root, super.internal(root);
+class _TranslationsSupporterAz extends TranslationsSupporterEn {
+	_TranslationsSupporterAz._(TranslationsAz root) : this._root = root, super.internal(root);
 
 	final TranslationsAz _root; // ignore: unused_field
 
@@ -263,12 +264,12 @@ class _Translations$supporter$az extends Translations$supporter$en {
 	@override String get tileSubtitle => 'Mövzuları və tətbiq ikonlarını birdəfəlik alışla açın';
 	@override String get tileSubtitleThemesOnly => 'Mövzuları birdəfəlik alışla açın';
 	@override String get tileUnlocked => 'Açıldı — alışınız üçün təşəkkür edirik';
-	@override late final _Translations$supporter$errors$az errors = _Translations$supporter$errors$az._(_root);
+	@override late final _TranslationsSupporterErrorsAz errors = _TranslationsSupporterErrorsAz._(_root);
 }
 
 // Path: settings
-class _Translations$settings$az extends Translations$settings$en {
-	_Translations$settings$az._(TranslationsAz root) : this._root = root, super.internal(root);
+class _TranslationsSettingsAz extends TranslationsSettingsEn {
+	_TranslationsSettingsAz._(TranslationsAz root) : this._root = root, super.internal(root);
 
 	final TranslationsAz _root; // ignore: unused_field
 
@@ -612,8 +613,8 @@ class _Translations$settings$az extends Translations$settings$en {
 }
 
 // Path: themeEditor
-class _Translations$themeEditor$az extends Translations$themeEditor$en {
-	_Translations$themeEditor$az._(TranslationsAz root) : this._root = root, super.internal(root);
+class _TranslationsThemeEditorAz extends TranslationsThemeEditorEn {
+	_TranslationsThemeEditorAz._(TranslationsAz root) : this._root = root, super.internal(root);
 
 	final TranslationsAz _root; // ignore: unused_field
 
@@ -631,12 +632,12 @@ class _Translations$themeEditor$az extends Translations$themeEditor$en {
 	@override String get startFromDescription => 'Bütün rəngləri başqa mövzudan kopyala';
 	@override String get colors => 'Rənglər';
 	@override String get preview => 'Önizləmə';
-	@override late final _Translations$themeEditor$slots$az slots = _Translations$themeEditor$slots$az._(_root);
+	@override late final _TranslationsThemeEditorSlotsAz slots = _TranslationsThemeEditorSlotsAz._(_root);
 	@override String get opacity => 'Şəffaflıq';
 	@override String get hexHint => '#RRGGBB və ya #AARRGGBB';
 	@override String get fromOtherThemes => 'Digər mövzulardan';
 	@override String swatchLabel({required Object theme, required Object color}) => '${theme}: ${color}';
-	@override late final _Translations$themeEditor$contrast$az contrast = _Translations$themeEditor$contrast$az._(_root);
+	@override late final _TranslationsThemeEditorContrastAz contrast = _TranslationsThemeEditorContrastAz._(_root);
 	@override String lowContrast({required Object pair, required Object ratio, required Object minimum}) => '${pair}: ${ratio}:1, tövsiyə olunan ${minimum}:1-dən aşağı';
 	@override String get discardTitle => 'Dəyişikliklərdən imtina edilsin?';
 	@override String get discardMessage => 'Yadda saxlanmamış rəng dəyişiklikləriniz itəcək.';
@@ -648,8 +649,8 @@ class _Translations$themeEditor$az extends Translations$themeEditor$en {
 }
 
 // Path: search
-class _Translations$search$az extends Translations$search$en {
-	_Translations$search$az._(TranslationsAz root) : this._root = root, super.internal(root);
+class _TranslationsSearchAz extends TranslationsSearchEn {
+	_TranslationsSearchAz._(TranslationsAz root) : this._root = root, super.internal(root);
 
 	final TranslationsAz _root; // ignore: unused_field
 
@@ -662,8 +663,8 @@ class _Translations$search$az extends Translations$search$en {
 }
 
 // Path: hotkeys
-class _Translations$hotkeys$az extends Translations$hotkeys$en {
-	_Translations$hotkeys$az._(TranslationsAz root) : this._root = root, super.internal(root);
+class _TranslationsHotkeysAz extends TranslationsHotkeysEn {
+	_TranslationsHotkeysAz._(TranslationsAz root) : this._root = root, super.internal(root);
 
 	final TranslationsAz _root; // ignore: unused_field
 
@@ -674,12 +675,12 @@ class _Translations$hotkeys$az extends Translations$hotkeys$en {
 	@override String get currentShortcut => 'Cari qısayol:';
 	@override String get pressToRecord => 'Qısayol yazmaq üçün seçin';
 	@override String get recordingShortcut => 'İndi qısayol düymələrinə basın';
-	@override late final _Translations$hotkeys$actions$az actions = _Translations$hotkeys$actions$az._(_root);
+	@override late final _TranslationsHotkeysActionsAz actions = _TranslationsHotkeysActionsAz._(_root);
 }
 
 // Path: fileInfo
-class _Translations$fileInfo$az extends Translations$fileInfo$en {
-	_Translations$fileInfo$az._(TranslationsAz root) : this._root = root, super.internal(root);
+class _TranslationsFileInfoAz extends TranslationsFileInfoEn {
+	_TranslationsFileInfoAz._(TranslationsAz root) : this._root = root, super.internal(root);
 
 	final TranslationsAz _root; // ignore: unused_field
 
@@ -802,8 +803,8 @@ class _Translations$fileInfo$az extends Translations$fileInfo$en {
 }
 
 // Path: mediaMenu
-class _Translations$mediaMenu$az extends Translations$mediaMenu$en {
-	_Translations$mediaMenu$az._(TranslationsAz root) : this._root = root, super.internal(root);
+class _TranslationsMediaMenuAz extends TranslationsMediaMenuEn {
+	_TranslationsMediaMenuAz._(TranslationsAz root) : this._root = root, super.internal(root);
 
 	final TranslationsAz _root; // ignore: unused_field
 
@@ -853,8 +854,8 @@ class _Translations$mediaMenu$az extends Translations$mediaMenu$en {
 }
 
 // Path: rateSheet
-class _Translations$rateSheet$az extends Translations$rateSheet$en {
-	_Translations$rateSheet$az._(TranslationsAz root) : this._root = root, super.internal(root);
+class _TranslationsRateSheetAz extends TranslationsRateSheetEn {
+	_TranslationsRateSheetAz._(TranslationsAz root) : this._root = root, super.internal(root);
 
 	final TranslationsAz _root; // ignore: unused_field
 
@@ -869,8 +870,8 @@ class _Translations$rateSheet$az extends Translations$rateSheet$en {
 }
 
 // Path: accessibility
-class _Translations$accessibility$az extends Translations$accessibility$en {
-	_Translations$accessibility$az._(TranslationsAz root) : this._root = root, super.internal(root);
+class _TranslationsAccessibilityAz extends TranslationsAccessibilityEn {
+	_TranslationsAccessibilityAz._(TranslationsAz root) : this._root = root, super.internal(root);
 
 	final TranslationsAz _root; // ignore: unused_field
 
@@ -905,8 +906,8 @@ class _Translations$accessibility$az extends Translations$accessibility$en {
 }
 
 // Path: tooltips
-class _Translations$tooltips$az extends Translations$tooltips$en {
-	_Translations$tooltips$az._(TranslationsAz root) : this._root = root, super.internal(root);
+class _TranslationsTooltipsAz extends TranslationsTooltipsEn {
+	_TranslationsTooltipsAz._(TranslationsAz root) : this._root = root, super.internal(root);
 
 	final TranslationsAz _root; // ignore: unused_field
 
@@ -918,8 +919,8 @@ class _Translations$tooltips$az extends Translations$tooltips$en {
 }
 
 // Path: audioTracks
-class _Translations$audioTracks$az extends Translations$audioTracks$en {
-	_Translations$audioTracks$az._(TranslationsAz root) : this._root = root, super.internal(root);
+class _TranslationsAudioTracksAz extends TranslationsAudioTracksEn {
+	_TranslationsAudioTracksAz._(TranslationsAz root) : this._root = root, super.internal(root);
 
 	final TranslationsAz _root; // ignore: unused_field
 
@@ -928,8 +929,8 @@ class _Translations$audioTracks$az extends Translations$audioTracks$en {
 }
 
 // Path: videoControls
-class _Translations$videoControls$az extends Translations$videoControls$en {
-	_Translations$videoControls$az._(TranslationsAz root) : this._root = root, super.internal(root);
+class _TranslationsVideoControlsAz extends TranslationsVideoControlsEn {
+	_TranslationsVideoControlsAz._(TranslationsAz root) : this._root = root, super.internal(root);
 
 	final TranslationsAz _root; // ignore: unused_field
 
@@ -996,7 +997,7 @@ class _Translations$videoControls$az extends Translations$videoControls$en {
 	@override String get screenshotFailed => 'Ekran şəkli çəkilə bilmədi';
 	@override String zoomPercent({required Object percent}) => 'Miqyas %${percent}';
 	@override String volumePercent({required Object percent}) => 'Səs ${percent}%';
-	@override late final _Translations$videoControls$pipErrors$az pipErrors = _Translations$videoControls$pipErrors$az._(_root);
+	@override late final _TranslationsVideoControlsPipErrorsAz pipErrors = _TranslationsVideoControlsPipErrorsAz._(_root);
 	@override String get chapters => 'Hissələr';
 	@override String get noChaptersAvailable => 'Hissələr əlçatan deyil';
 	@override String get queue => 'Növbə';
@@ -1021,9 +1022,18 @@ class _Translations$videoControls$az extends Translations$videoControls$en {
 	@override String osdAudio({required Object track}) => 'Səs: ${track}';
 }
 
+// Path: userStatus
+class _TranslationsUserStatusAz extends TranslationsUserStatusEn {
+	_TranslationsUserStatusAz._(TranslationsAz root) : this._root = root, super.internal(root);
+
+	final TranslationsAz _root; // ignore: unused_field
+
+	// Translations
+}
+
 // Path: messages
-class _Translations$messages$az extends Translations$messages$en {
-	_Translations$messages$az._(TranslationsAz root) : this._root = root, super.internal(root);
+class _TranslationsMessagesAz extends TranslationsMessagesEn {
+	_TranslationsMessagesAz._(TranslationsAz root) : this._root = root, super.internal(root);
 
 	final TranslationsAz _root; // ignore: unused_field
 
@@ -1101,8 +1111,8 @@ class _Translations$messages$az extends Translations$messages$en {
 }
 
 // Path: subtitlingStyling
-class _Translations$subtitlingStyling$az extends Translations$subtitlingStyling$en {
-	_Translations$subtitlingStyling$az._(TranslationsAz root) : this._root = root, super.internal(root);
+class _TranslationsSubtitlingStylingAz extends TranslationsSubtitlingStylingEn {
+	_TranslationsSubtitlingStylingAz._(TranslationsAz root) : this._root = root, super.internal(root);
 
 	final TranslationsAz _root; // ignore: unused_field
 
@@ -1135,8 +1145,8 @@ class _Translations$subtitlingStyling$az extends Translations$subtitlingStyling$
 }
 
 // Path: mpvConfig
-class _Translations$mpvConfig$az extends Translations$mpvConfig$en {
-	_Translations$mpvConfig$az._(TranslationsAz root) : this._root = root, super.internal(root);
+class _TranslationsMpvConfigAz extends TranslationsMpvConfigEn {
+	_TranslationsMpvConfigAz._(TranslationsAz root) : this._root = root, super.internal(root);
 
 	final TranslationsAz _root; // ignore: unused_field
 
@@ -1162,8 +1172,8 @@ class _Translations$mpvConfig$az extends Translations$mpvConfig$en {
 }
 
 // Path: dialog
-class _Translations$dialog$az extends Translations$dialog$en {
-	_Translations$dialog$az._(TranslationsAz root) : this._root = root, super.internal(root);
+class _TranslationsDialogAz extends TranslationsDialogEn {
+	_TranslationsDialogAz._(TranslationsAz root) : this._root = root, super.internal(root);
 
 	final TranslationsAz _root; // ignore: unused_field
 
@@ -1172,8 +1182,8 @@ class _Translations$dialog$az extends Translations$dialog$en {
 }
 
 // Path: profiles
-class _Translations$profiles$az extends Translations$profiles$en {
-	_Translations$profiles$az._(TranslationsAz root) : this._root = root, super.internal(root);
+class _TranslationsProfilesAz extends TranslationsProfilesEn {
+	_TranslationsProfilesAz._(TranslationsAz root) : this._root = root, super.internal(root);
 
 	final TranslationsAz _root; // ignore: unused_field
 
@@ -1246,8 +1256,8 @@ class _Translations$profiles$az extends Translations$profiles$en {
 }
 
 // Path: connections
-class _Translations$connections$az extends Translations$connections$en {
-	_Translations$connections$az._(TranslationsAz root) : this._root = root, super.internal(root);
+class _TranslationsConnectionsAz extends TranslationsConnectionsEn {
+	_TranslationsConnectionsAz._(TranslationsAz root) : this._root = root, super.internal(root);
 
 	final TranslationsAz _root; // ignore: unused_field
 
@@ -1266,8 +1276,8 @@ class _Translations$connections$az extends Translations$connections$en {
 }
 
 // Path: accountPreferences
-class _Translations$accountPreferences$az extends Translations$accountPreferences$en {
-	_Translations$accountPreferences$az._(TranslationsAz root) : this._root = root, super.internal(root);
+class _TranslationsAccountPreferencesAz extends TranslationsAccountPreferencesEn {
+	_TranslationsAccountPreferencesAz._(TranslationsAz root) : this._root = root, super.internal(root);
 
 	final TranslationsAz _root; // ignore: unused_field
 
@@ -1283,17 +1293,17 @@ class _Translations$accountPreferences$az extends Translations$accountPreference
 	@override String get loadFailed => 'Bu tərcihlər yüklənə bilmədi';
 	@override String get noPreference => 'Tərcih yoxdur';
 	@override String get notSet => 'Təyin edilməyib';
-	@override late final _Translations$accountPreferences$groups$az groups = _Translations$accountPreferences$groups$az._(_root);
+	@override late final _TranslationsAccountPreferencesGroupsAz groups = _TranslationsAccountPreferencesGroupsAz._(_root);
 	@override String get preferredAudioLanguage => 'Üstünlük verilən səs dili';
 	@override String get autoSelectAudio => 'Səsi dilə görə seç';
 	@override String get autoSelectAudioDescription => 'Söndürüldükdə faylın defolt olaraq işarələdiyi səs treki istifadə olunur.';
 	@override String get preferredSubtitleLanguage => 'Üstünlük verilən altyazı dili';
 	@override String get subtitleMode => 'Altyazıları aç';
-	@override late final _Translations$accountPreferences$subtitleModes$az subtitleModes = _Translations$accountPreferences$subtitleModes$az._(_root);
+	@override late final _TranslationsAccountPreferencesSubtitleModesAz subtitleModes = _TranslationsAccountPreferencesSubtitleModesAz._(_root);
 	@override String get subtitleAccessibility => 'SDH altyazıları';
-	@override late final _Translations$accountPreferences$subtitleAccessibilityOptions$az subtitleAccessibilityOptions = _Translations$accountPreferences$subtitleAccessibilityOptions$az._(_root);
+	@override late final _TranslationsAccountPreferencesSubtitleAccessibilityOptionsAz subtitleAccessibilityOptions = _TranslationsAccountPreferencesSubtitleAccessibilityOptionsAz._(_root);
 	@override String get forcedSubtitles => 'Məcburi altyazılar';
-	@override late final _Translations$accountPreferences$forcedSubtitleOptions$az forcedSubtitleOptions = _Translations$accountPreferences$forcedSubtitleOptions$az._(_root);
+	@override late final _TranslationsAccountPreferencesForcedSubtitleOptionsAz forcedSubtitleOptions = _TranslationsAccountPreferencesForcedSubtitleOptionsAz._(_root);
 	@override String get displayMissingEpisodes => 'Çatışmayan seriyaları göstər';
 	@override String get displayMissingEpisodesDescription => 'Serverin bildiyi, lakin faylı olmayan seriyaları siyahıya al.';
 	@override String get hidePlayedInLatest => 'Baxılmış elementləri Son əlavə olunanlarda gizlət';
@@ -1303,14 +1313,14 @@ class _Translations$accountPreferences$az extends Translations$accountPreference
 	@override String get rewatchingInNextUp => 'Təkrar baxılan serialları Sırada saxla';
 	@override String get rewatchingInNextUpDescription => 'Bir serialı bitirdikdən sonra yenidən başlasanız, Sırada serialı atmaq əvəzinə təkrar baxışı izləyir.';
 	@override String get watchedIndicator => 'Baxıldı göstəriciləri';
-	@override late final _Translations$accountPreferences$watchedIndicatorOptions$az watchedIndicatorOptions = _Translations$accountPreferences$watchedIndicatorOptions$az._(_root);
+	@override late final _TranslationsAccountPreferencesWatchedIndicatorOptionsAz watchedIndicatorOptions = _TranslationsAccountPreferencesWatchedIndicatorOptionsAz._(_root);
 	@override String get mediaReviewsVisibility => 'Reytinq və rəylər';
-	@override late final _Translations$accountPreferences$mediaReviewsOptions$az mediaReviewsOptions = _Translations$accountPreferences$mediaReviewsOptions$az._(_root);
+	@override late final _TranslationsAccountPreferencesMediaReviewsOptionsAz mediaReviewsOptions = _TranslationsAccountPreferencesMediaReviewsOptionsAz._(_root);
 }
 
 // Path: discover
-class _Translations$discover$az extends Translations$discover$en {
-	_Translations$discover$az._(TranslationsAz root) : this._root = root, super.internal(root);
+class _TranslationsDiscoverAz extends TranslationsDiscoverEn {
+	_TranslationsDiscoverAz._(TranslationsAz root) : this._root = root, super.internal(root);
 
 	final TranslationsAz _root; // ignore: unused_field
 
@@ -1343,12 +1353,12 @@ class _Translations$discover$az extends Translations$discover$en {
 		one: '${n} başlıq',
 		other: '${n} başlıq',
 	);
-	@override late final _Translations$discover$person$az person = _Translations$discover$person$az._(_root);
+	@override late final _TranslationsDiscoverPersonAz person = _TranslationsDiscoverPersonAz._(_root);
 }
 
 // Path: errors
-class _Translations$errors$az extends Translations$errors$en {
-	_Translations$errors$az._(TranslationsAz root) : this._root = root, super.internal(root);
+class _TranslationsErrorsAz extends TranslationsErrorsEn {
+	_TranslationsErrorsAz._(TranslationsAz root) : this._root = root, super.internal(root);
 
 	final TranslationsAz _root; // ignore: unused_field
 
@@ -1375,8 +1385,8 @@ class _Translations$errors$az extends Translations$errors$en {
 }
 
 // Path: libraries
-class _Translations$libraries$az extends Translations$libraries$en {
-	_Translations$libraries$az._(TranslationsAz root) : this._root = root, super.internal(root);
+class _TranslationsLibrariesAz extends TranslationsLibrariesEn {
+	_TranslationsLibrariesAz._(TranslationsAz root) : this._root = root, super.internal(root);
 
 	final TranslationsAz _root; // ignore: unused_field
 
@@ -1422,16 +1432,16 @@ class _Translations$libraries$az extends Translations$libraries$en {
 	@override String get noCollections => 'Bu kitabxanada kolleksiya yoxdur';
 	@override String get noFoldersFound => 'Qovluq tapılmadı';
 	@override String get folders => 'qovluqlar';
-	@override late final _Translations$libraries$tabs$az tabs = _Translations$libraries$tabs$az._(_root);
-	@override late final _Translations$libraries$groupings$az groupings = _Translations$libraries$groupings$az._(_root);
-	@override late final _Translations$libraries$filterCategories$az filterCategories = _Translations$libraries$filterCategories$az._(_root);
-	@override late final _Translations$libraries$sortLabels$az sortLabels = _Translations$libraries$sortLabels$az._(_root);
-	@override late final _Translations$libraries$advancedFilters$az advancedFilters = _Translations$libraries$advancedFilters$az._(_root);
+	@override late final _TranslationsLibrariesTabsAz tabs = _TranslationsLibrariesTabsAz._(_root);
+	@override late final _TranslationsLibrariesGroupingsAz groupings = _TranslationsLibrariesGroupingsAz._(_root);
+	@override late final _TranslationsLibrariesFilterCategoriesAz filterCategories = _TranslationsLibrariesFilterCategoriesAz._(_root);
+	@override late final _TranslationsLibrariesSortLabelsAz sortLabels = _TranslationsLibrariesSortLabelsAz._(_root);
+	@override late final _TranslationsLibrariesAdvancedFiltersAz advancedFilters = _TranslationsLibrariesAdvancedFiltersAz._(_root);
 }
 
 // Path: about
-class _Translations$about$az extends Translations$about$en {
-	_Translations$about$az._(TranslationsAz root) : this._root = root, super.internal(root);
+class _TranslationsAboutAz extends TranslationsAboutEn {
+	_TranslationsAboutAz._(TranslationsAz root) : this._root = root, super.internal(root);
 
 	final TranslationsAz _root; // ignore: unused_field
 
@@ -1444,8 +1454,8 @@ class _Translations$about$az extends Translations$about$en {
 }
 
 // Path: serverSelection
-class _Translations$serverSelection$az extends Translations$serverSelection$en {
-	_Translations$serverSelection$az._(TranslationsAz root) : this._root = root, super.internal(root);
+class _TranslationsServerSelectionAz extends TranslationsServerSelectionEn {
+	_TranslationsServerSelectionAz._(TranslationsAz root) : this._root = root, super.internal(root);
 
 	final TranslationsAz _root; // ignore: unused_field
 
@@ -1456,8 +1466,8 @@ class _Translations$serverSelection$az extends Translations$serverSelection$en {
 }
 
 // Path: hubDetail
-class _Translations$hubDetail$az extends Translations$hubDetail$en {
-	_Translations$hubDetail$az._(TranslationsAz root) : this._root = root, super.internal(root);
+class _TranslationsHubDetailAz extends TranslationsHubDetailEn {
+	_TranslationsHubDetailAz._(TranslationsAz root) : this._root = root, super.internal(root);
 
 	final TranslationsAz _root; // ignore: unused_field
 
@@ -1470,8 +1480,8 @@ class _Translations$hubDetail$az extends Translations$hubDetail$en {
 }
 
 // Path: logs
-class _Translations$logs$az extends Translations$logs$en {
-	_Translations$logs$az._(TranslationsAz root) : this._root = root, super.internal(root);
+class _TranslationsLogsAz extends TranslationsLogsEn {
+	_TranslationsLogsAz._(TranslationsAz root) : this._root = root, super.internal(root);
 
 	final TranslationsAz _root; // ignore: unused_field
 
@@ -1482,8 +1492,8 @@ class _Translations$logs$az extends Translations$logs$en {
 }
 
 // Path: startup
-class _Translations$startup$az extends Translations$startup$en {
-	_Translations$startup$az._(TranslationsAz root) : this._root = root, super.internal(root);
+class _TranslationsStartupAz extends TranslationsStartupEn {
+	_TranslationsStartupAz._(TranslationsAz root) : this._root = root, super.internal(root);
 
 	final TranslationsAz _root; // ignore: unused_field
 
@@ -1521,8 +1531,8 @@ class _Translations$startup$az extends Translations$startup$en {
 }
 
 // Path: licenses
-class _Translations$licenses$az extends Translations$licenses$en {
-	_Translations$licenses$az._(TranslationsAz root) : this._root = root, super.internal(root);
+class _TranslationsLicensesAz extends TranslationsLicensesEn {
+	_TranslationsLicensesAz._(TranslationsAz root) : this._root = root, super.internal(root);
 
 	final TranslationsAz _root; // ignore: unused_field
 
@@ -1534,8 +1544,8 @@ class _Translations$licenses$az extends Translations$licenses$en {
 }
 
 // Path: navigation
-class _Translations$navigation$az extends Translations$navigation$en {
-	_Translations$navigation$az._(TranslationsAz root) : this._root = root, super.internal(root);
+class _TranslationsNavigationAz extends TranslationsNavigationEn {
+	_TranslationsNavigationAz._(TranslationsAz root) : this._root = root, super.internal(root);
 
 	final TranslationsAz _root; // ignore: unused_field
 
@@ -1547,16 +1557,16 @@ class _Translations$navigation$az extends Translations$navigation$en {
 }
 
 // Path: explore
-class _Translations$explore$az extends Translations$explore$en {
-	_Translations$explore$az._(TranslationsAz root) : this._root = root, super.internal(root);
+class _TranslationsExploreAz extends TranslationsExploreEn {
+	_TranslationsExploreAz._(TranslationsAz root) : this._root = root, super.internal(root);
 
 	final TranslationsAz _root; // ignore: unused_field
 
 	// Translations
 	@override String get title => 'Kəşf et';
 	@override String get selectSource => 'Mənbə seçin';
-	@override late final _Translations$explore$rows$az rows = _Translations$explore$rows$az._(_root);
-	@override late final _Translations$explore$status$az status = _Translations$explore$status$az._(_root);
+	@override late final _TranslationsExploreRowsAz rows = _TranslationsExploreRowsAz._(_root);
+	@override late final _TranslationsExploreStatusAz status = _TranslationsExploreStatusAz._(_root);
 	@override String episodeCount({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('az'))(n,
 		one: '${n} seriya',
 		other: '${n} seriya',
@@ -1582,16 +1592,16 @@ class _Translations$explore$az extends Translations$explore$en {
 	@override String searchEmpty({required Object query}) => '"${query}" üçün nəticə tapılmadı';
 	@override String searchPrompt({required Object source}) => '${source} vasitəsilə kino və seriallar axtarın.';
 	@override String get searchFailed => 'Axtarış uğursuz oldu. Bağlantınızı yoxlayın və yenidən cəhd edin.';
-	@override late final _Translations$explore$badge$az badge = _Translations$explore$badge$az._(_root);
-	@override late final _Translations$explore$stats$az stats = _Translations$explore$stats$az._(_root);
-	@override late final _Translations$explore$season$az season = _Translations$explore$season$az._(_root);
-	@override late final _Translations$explore$format$az format = _Translations$explore$format$az._(_root);
-	@override late final _Translations$explore$sourceMaterial$az sourceMaterial = _Translations$explore$sourceMaterial$az._(_root);
-	@override late final _Translations$explore$creditRole$az creditRole = _Translations$explore$creditRole$az._(_root);
-	@override late final _Translations$explore$relation$az relation = _Translations$explore$relation$az._(_root);
+	@override late final _TranslationsExploreBadgeAz badge = _TranslationsExploreBadgeAz._(_root);
+	@override late final _TranslationsExploreStatsAz stats = _TranslationsExploreStatsAz._(_root);
+	@override late final _TranslationsExploreSeasonAz season = _TranslationsExploreSeasonAz._(_root);
+	@override late final _TranslationsExploreFormatAz format = _TranslationsExploreFormatAz._(_root);
+	@override late final _TranslationsExploreSourceMaterialAz sourceMaterial = _TranslationsExploreSourceMaterialAz._(_root);
+	@override late final _TranslationsExploreCreditRoleAz creditRole = _TranslationsExploreCreditRoleAz._(_root);
+	@override late final _TranslationsExploreRelationAz relation = _TranslationsExploreRelationAz._(_root);
 	@override String broadcast({required Object day, required Object time}) => '${day} saat ${time}-da yayımlanır';
 	@override String broadcastWithZone({required Object day, required Object time, required Object timezone}) => '${day} saat ${time} (${timezone}) yayımlanır';
-	@override late final _Translations$explore$detail$az detail = _Translations$explore$detail$az._(_root);
+	@override late final _TranslationsExploreDetailAz detail = _TranslationsExploreDetailAz._(_root);
 	@override String totalResults({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('az'))(n,
 		one: '${n} nəticə',
 		other: '${n} nəticə',
@@ -1599,8 +1609,8 @@ class _Translations$explore$az extends Translations$explore$en {
 }
 
 // Path: liveTv
-class _Translations$liveTv$az extends Translations$liveTv$en {
-	_Translations$liveTv$az._(TranslationsAz root) : this._root = root, super.internal(root);
+class _TranslationsLiveTvAz extends TranslationsLiveTvEn {
+	_TranslationsLiveTvAz._(TranslationsAz root) : this._root = root, super.internal(root);
 
 	final TranslationsAz _root; // ignore: unused_field
 
@@ -1682,7 +1692,7 @@ class _Translations$liveTv$az extends Translations$liveTv$en {
 	@override String get rulesProcessRequested => 'Qaydaların yenidən qiymətləndirilməsi tələb olundu';
 	@override String get rulesProcessFailed => 'Yazı qaydaları yenidən qiymətləndirilmədi';
 	@override String get recordShow => 'Şounu yaz';
-	@override late final _Translations$liveTv$recordSettings$az recordSettings = _Translations$liveTv$recordSettings$az._(_root);
+	@override late final _TranslationsLiveTvRecordSettingsAz recordSettings = _TranslationsLiveTvRecordSettingsAz._(_root);
 	@override String startingInMinutes({required Object minutes}) => '${minutes} dəq sonra başlayır';
 	@override String dayAtTime({required Object day, required Object time}) => '${day}, saat ${time}';
 	@override String invalidPlaybackData({required Object product}) => '${product} etibarsız Canlı TV oynatma məlumatı qaytardı';
@@ -1693,8 +1703,8 @@ class _Translations$liveTv$az extends Translations$liveTv$en {
 }
 
 // Path: collections
-class _Translations$collections$az extends Translations$collections$en {
-	_Translations$collections$az._(TranslationsAz root) : this._root = root, super.internal(root);
+class _TranslationsCollectionsAz extends TranslationsCollectionsEn {
+	_TranslationsCollectionsAz._(TranslationsAz root) : this._root = root, super.internal(root);
 
 	final TranslationsAz _root; // ignore: unused_field
 
@@ -1722,8 +1732,8 @@ class _Translations$collections$az extends Translations$collections$en {
 }
 
 // Path: playlists
-class _Translations$playlists$az extends Translations$playlists$en {
-	_Translations$playlists$az._(TranslationsAz root) : this._root = root, super.internal(root);
+class _TranslationsPlaylistsAz extends TranslationsPlaylistsEn {
+	_TranslationsPlaylistsAz._(TranslationsAz root) : this._root = root, super.internal(root);
 
 	final TranslationsAz _root; // ignore: unused_field
 
@@ -1757,8 +1767,8 @@ class _Translations$playlists$az extends Translations$playlists$en {
 }
 
 // Path: music
-class _Translations$music$az extends Translations$music$en {
-	_Translations$music$az._(TranslationsAz root) : this._root = root, super.internal(root);
+class _TranslationsMusicAz extends TranslationsMusicEn {
+	_TranslationsMusicAz._(TranslationsAz root) : this._root = root, super.internal(root);
 
 	final TranslationsAz _root; // ignore: unused_field
 
@@ -1792,12 +1802,12 @@ class _Translations$music$az extends Translations$music$en {
 	@override String get instantMixFailed => 'Anında qarışıq yüklənə bilmədi';
 	@override String get instantMixEmpty => 'Anında qarışıq heç bir mahnı qaytarmadı';
 	@override String noAudioUrl({required Object track}) => '${track} üçün səs URL-i mövcud deyil';
-	@override late final _Translations$music$discography$az discography = _Translations$music$discography$az._(_root);
+	@override late final _TranslationsMusicDiscographyAz discography = _TranslationsMusicDiscographyAz._(_root);
 }
 
 // Path: watchTogether
-class _Translations$watchTogether$az extends Translations$watchTogether$en {
-	_Translations$watchTogether$az._(TranslationsAz root) : this._root = root, super.internal(root);
+class _TranslationsWatchTogetherAz extends TranslationsWatchTogetherEn {
+	_TranslationsWatchTogetherAz._(TranslationsAz root) : this._root = root, super.internal(root);
 
 	final TranslationsAz _root; // ignore: unused_field
 
@@ -1907,15 +1917,15 @@ class _Translations$watchTogether$az extends Translations$watchTogether$en {
 	@override String get end => 'Bitir';
 	@override String get playBlockedTitle => 'Oynatma başlamadı';
 	@override String get playBlockedDescription => 'Otaqla birlikdə baxmağa başlamaq üçün oynat düyməsinə basın.';
-	@override late final _Translations$watchTogether$notices$az notices = _Translations$watchTogether$notices$az._(_root);
-	@override late final _Translations$watchTogether$ended$az ended = _Translations$watchTogether$ended$az._(_root);
-	@override late final _Translations$watchTogether$errors$az errors = _Translations$watchTogether$errors$az._(_root);
+	@override late final _TranslationsWatchTogetherNoticesAz notices = _TranslationsWatchTogetherNoticesAz._(_root);
+	@override late final _TranslationsWatchTogetherEndedAz ended = _TranslationsWatchTogetherEndedAz._(_root);
+	@override late final _TranslationsWatchTogetherErrorsAz errors = _TranslationsWatchTogetherErrorsAz._(_root);
 	@override String untitledEpisode({required Object number}) => 'Seriya ${number}';
 }
 
 // Path: downloads
-class _Translations$downloads$az extends Translations$downloads$en {
-	_Translations$downloads$az._(TranslationsAz root) : this._root = root, super.internal(root);
+class _TranslationsDownloadsAz extends TranslationsDownloadsEn {
+	_TranslationsDownloadsAz._(TranslationsAz root) : this._root = root, super.internal(root);
 
 	final TranslationsAz _root; // ignore: unused_field
 
@@ -2001,9 +2011,9 @@ class _Translations$downloads$az extends Translations$downloads$en {
 	@override String get syncRuleNotAvailableForProfile => 'Cari profil üçün əlçatan deyil';
 	@override String get syncRuleUnknownServer => 'Bilinməyən server';
 	@override String get syncRuleListCreated => 'Eyniləşdirmə qaydası yaradıldı';
-	@override late final _Translations$downloads$backgroundWarning$az backgroundWarning = _Translations$downloads$backgroundWarning$az._(_root);
+	@override late final _TranslationsDownloadsBackgroundWarningAz backgroundWarning = _TranslationsDownloadsBackgroundWarningAz._(_root);
 	@override String get options => 'Yükləmə seçimləri';
-	@override late final _Translations$downloads$groupings$az groupings = _Translations$downloads$groupings$az._(_root);
+	@override late final _TranslationsDownloadsGroupingsAz groupings = _TranslationsDownloadsGroupingsAz._(_root);
 	@override String get unknownLibrary => 'Məlum olmayan kitabxana';
 	@override String get unknownShow => 'Məlum olmayan serial';
 	@override String get unknownSeason => 'Məlum olmayan mövsüm';
@@ -2024,8 +2034,8 @@ class _Translations$downloads$az extends Translations$downloads$en {
 }
 
 // Path: shaders
-class _Translations$shaders$az extends Translations$shaders$en {
-	_Translations$shaders$az._(TranslationsAz root) : this._root = root, super.internal(root);
+class _TranslationsShadersAz extends TranslationsShadersEn {
+	_TranslationsShadersAz._(TranslationsAz root) : this._root = root, super.internal(root);
 
 	final TranslationsAz _root; // ignore: unused_field
 
@@ -2048,8 +2058,8 @@ class _Translations$shaders$az extends Translations$shaders$en {
 }
 
 // Path: companionRemote
-class _Translations$companionRemote$az extends Translations$companionRemote$en {
-	_Translations$companionRemote$az._(TranslationsAz root) : this._root = root, super.internal(root);
+class _TranslationsCompanionRemoteAz extends TranslationsCompanionRemoteEn {
+	_TranslationsCompanionRemoteAz._(TranslationsAz root) : this._root = root, super.internal(root);
 
 	final TranslationsAz _root; // ignore: unused_field
 
@@ -2057,16 +2067,16 @@ class _Translations$companionRemote$az extends Translations$companionRemote$en {
 	@override String get title => 'Köməkçi pult';
 	@override String connectedTo({required Object name}) => '${name} cihazına qoşuldu';
 	@override String get unknownDevice => 'Bilinməyən cihaz';
-	@override late final _Translations$companionRemote$session$az session = _Translations$companionRemote$session$az._(_root);
-	@override late final _Translations$companionRemote$pairing$az pairing = _Translations$companionRemote$pairing$az._(_root);
-	@override late final _Translations$companionRemote$remote$az remote = _Translations$companionRemote$remote$az._(_root);
-	@override late final _Translations$companionRemote$errors$az errors = _Translations$companionRemote$errors$az._(_root);
+	@override late final _TranslationsCompanionRemoteSessionAz session = _TranslationsCompanionRemoteSessionAz._(_root);
+	@override late final _TranslationsCompanionRemotePairingAz pairing = _TranslationsCompanionRemotePairingAz._(_root);
+	@override late final _TranslationsCompanionRemoteRemoteAz remote = _TranslationsCompanionRemoteRemoteAz._(_root);
+	@override late final _TranslationsCompanionRemoteErrorsAz errors = _TranslationsCompanionRemoteErrorsAz._(_root);
 	@override String get closedBeforeAuth => 'Bağlantı autentifikasiyadan əvvəl bağlandı';
 }
 
 // Path: videoSettings
-class _Translations$videoSettings$az extends Translations$videoSettings$en {
-	_Translations$videoSettings$az._(TranslationsAz root) : this._root = root, super.internal(root);
+class _TranslationsVideoSettingsAz extends TranslationsVideoSettingsEn {
+	_TranslationsVideoSettingsAz._(TranslationsAz root) : this._root = root, super.internal(root);
 
 	final TranslationsAz _root; // ignore: unused_field
 
@@ -2098,8 +2108,8 @@ class _Translations$videoSettings$az extends Translations$videoSettings$en {
 }
 
 // Path: performanceOverlay
-class _Translations$performanceOverlay$az extends Translations$performanceOverlay$en {
-	_Translations$performanceOverlay$az._(TranslationsAz root) : this._root = root, super.internal(root);
+class _TranslationsPerformanceOverlayAz extends TranslationsPerformanceOverlayEn {
+	_TranslationsPerformanceOverlayAz._(TranslationsAz root) : this._root = root, super.internal(root);
 
 	final TranslationsAz _root; // ignore: unused_field
 
@@ -2160,8 +2170,8 @@ class _Translations$performanceOverlay$az extends Translations$performanceOverla
 }
 
 // Path: externalPlayer
-class _Translations$externalPlayer$az extends Translations$externalPlayer$en {
-	_Translations$externalPlayer$az._(TranslationsAz root) : this._root = root, super.internal(root);
+class _TranslationsExternalPlayerAz extends TranslationsExternalPlayerEn {
+	_TranslationsExternalPlayerAz._(TranslationsAz root) : this._root = root, super.internal(root);
 
 	final TranslationsAz _root; // ignore: unused_field
 
@@ -2185,8 +2195,8 @@ class _Translations$externalPlayer$az extends Translations$externalPlayer$en {
 }
 
 // Path: metadataEdit
-class _Translations$metadataEdit$az extends Translations$metadataEdit$en {
-	_Translations$metadataEdit$az._(TranslationsAz root) : this._root = root, super.internal(root);
+class _TranslationsMetadataEditAz extends TranslationsMetadataEditEn {
+	_TranslationsMetadataEditAz._(TranslationsAz root) : this._root = root, super.internal(root);
 
 	final TranslationsAz _root; // ignore: unused_field
 
@@ -2269,8 +2279,8 @@ class _Translations$metadataEdit$az extends Translations$metadataEdit$en {
 }
 
 // Path: matchScreen
-class _Translations$matchScreen$az extends Translations$matchScreen$en {
-	_Translations$matchScreen$az._(TranslationsAz root) : this._root = root, super.internal(root);
+class _TranslationsMatchScreenAz extends TranslationsMatchScreenEn {
+	_TranslationsMatchScreenAz._(TranslationsAz root) : this._root = root, super.internal(root);
 
 	final TranslationsAz _root; // ignore: unused_field
 
@@ -2290,8 +2300,8 @@ class _Translations$matchScreen$az extends Translations$matchScreen$en {
 }
 
 // Path: serverTasks
-class _Translations$serverTasks$az extends Translations$serverTasks$en {
-	_Translations$serverTasks$az._(TranslationsAz root) : this._root = root, super.internal(root);
+class _TranslationsServerTasksAz extends TranslationsServerTasksEn {
+	_TranslationsServerTasksAz._(TranslationsAz root) : this._root = root, super.internal(root);
 
 	final TranslationsAz _root; // ignore: unused_field
 
@@ -2302,8 +2312,8 @@ class _Translations$serverTasks$az extends Translations$serverTasks$en {
 }
 
 // Path: trakt
-class _Translations$trakt$az extends Translations$trakt$en {
-	_Translations$trakt$az._(TranslationsAz root) : this._root = root, super.internal(root);
+class _TranslationsTraktAz extends TranslationsTraktEn {
+	_TranslationsTraktAz._(TranslationsAz root) : this._root = root, super.internal(root);
 
 	final TranslationsAz _root; // ignore: unused_field
 
@@ -2320,8 +2330,8 @@ class _Translations$trakt$az extends Translations$trakt$en {
 }
 
 // Path: seerr
-class _Translations$seerr$az extends Translations$seerr$en {
-	_Translations$seerr$az._(TranslationsAz root) : this._root = root, super.internal(root);
+class _TranslationsSeerrAz extends TranslationsSeerrEn {
+	_TranslationsSeerrAz._(TranslationsAz root) : this._root = root, super.internal(root);
 
 	final TranslationsAz _root; // ignore: unused_field
 
@@ -2379,8 +2389,8 @@ class _Translations$seerr$az extends Translations$seerr$en {
 }
 
 // Path: services
-class _Translations$services$az extends Translations$services$en {
-	_Translations$services$az._(TranslationsAz root) : this._root = root, super.internal(root);
+class _TranslationsServicesAz extends TranslationsServicesEn {
+	_TranslationsServicesAz._(TranslationsAz root) : this._root = root, super.internal(root);
 
 	final TranslationsAz _root; // ignore: unused_field
 
@@ -2395,17 +2405,17 @@ class _Translations$services$az extends Translations$services$en {
 	@override String disconnectConfirm({required Object service}) => '${service} ayırılsın?';
 	@override String disconnectConfirmBody({required Object service}) => 'Plezy ${service} yeniləməyi dayandıracaq. İstənilən vaxt yenidən qoşula bilərsiniz.';
 	@override String connectFailed({required Object service}) => '${service} qoşula bilmədi. Təzədən cəhd edin.';
-	@override late final _Translations$services$names$az names = _Translations$services$names$az._(_root);
-	@override late final _Translations$services$simklReconnect$az simklReconnect = _Translations$services$simklReconnect$az._(_root);
-	@override late final _Translations$services$deviceCode$az deviceCode = _Translations$services$deviceCode$az._(_root);
-	@override late final _Translations$services$oauthProxy$az oauthProxy = _Translations$services$oauthProxy$az._(_root);
-	@override late final _Translations$services$pendingAuth$az pendingAuth = _Translations$services$pendingAuth$az._(_root);
-	@override late final _Translations$services$libraryFilter$az libraryFilter = _Translations$services$libraryFilter$az._(_root);
+	@override late final _TranslationsServicesNamesAz names = _TranslationsServicesNamesAz._(_root);
+	@override late final _TranslationsServicesSimklReconnectAz simklReconnect = _TranslationsServicesSimklReconnectAz._(_root);
+	@override late final _TranslationsServicesDeviceCodeAz deviceCode = _TranslationsServicesDeviceCodeAz._(_root);
+	@override late final _TranslationsServicesOauthProxyAz oauthProxy = _TranslationsServicesOauthProxyAz._(_root);
+	@override late final _TranslationsServicesPendingAuthAz pendingAuth = _TranslationsServicesPendingAuthAz._(_root);
+	@override late final _TranslationsServicesLibraryFilterAz libraryFilter = _TranslationsServicesLibraryFilterAz._(_root);
 }
 
 // Path: addServer
-class _Translations$addServer$az extends Translations$addServer$en {
-	_Translations$addServer$az._(TranslationsAz root) : this._root = root, super.internal(root);
+class _TranslationsAddServerAz extends TranslationsAddServerEn {
+	_TranslationsAddServerAz._(TranslationsAz root) : this._root = root, super.internal(root);
 
 	final TranslationsAz _root; // ignore: unused_field
 
@@ -2459,9 +2469,18 @@ class _Translations$addServer$az extends Translations$addServer$en {
 	@override String redirectUnsupportedEnterFinal({required Object product}) => 'Server dəstəklənməyən URL-ə yönləndirdi. Son ${product} URL-ni birbaşa daxil edin.';
 }
 
+// Path: deepLinks
+class _TranslationsDeepLinksAz extends TranslationsDeepLinksEn {
+	_TranslationsDeepLinksAz._(TranslationsAz root) : this._root = root, super.internal(root);
+
+	final TranslationsAz _root; // ignore: unused_field
+
+	// Translations
+}
+
 // Path: appIcon.names
-class _Translations$appIcon$names$az extends Translations$appIcon$names$en {
-	_Translations$appIcon$names$az._(TranslationsAz root) : this._root = root, super.internal(root);
+class _TranslationsAppIconNamesAz extends TranslationsAppIconNamesEn {
+	_TranslationsAppIconNamesAz._(TranslationsAz root) : this._root = root, super.internal(root);
 
 	final TranslationsAz _root; // ignore: unused_field
 
@@ -2492,8 +2511,8 @@ class _Translations$appIcon$names$az extends Translations$appIcon$names$en {
 }
 
 // Path: common.ratingSource
-class _Translations$common$ratingSource$az extends Translations$common$ratingSource$en {
-	_Translations$common$ratingSource$az._(TranslationsAz root) : this._root = root, super.internal(root);
+class _TranslationsCommonRatingSourceAz extends TranslationsCommonRatingSourceEn {
+	_TranslationsCommonRatingSourceAz._(TranslationsAz root) : this._root = root, super.internal(root);
 
 	final TranslationsAz _root; // ignore: unused_field
 
@@ -2514,8 +2533,8 @@ class _Translations$common$ratingSource$az extends Translations$common$ratingSou
 }
 
 // Path: common.mediaKind
-class _Translations$common$mediaKind$az extends Translations$common$mediaKind$en {
-	_Translations$common$mediaKind$az._(TranslationsAz root) : this._root = root, super.internal(root);
+class _TranslationsCommonMediaKindAz extends TranslationsCommonMediaKindEn {
+	_TranslationsCommonMediaKindAz._(TranslationsAz root) : this._root = root, super.internal(root);
 
 	final TranslationsAz _root; // ignore: unused_field
 
@@ -2535,8 +2554,8 @@ class _Translations$common$mediaKind$az extends Translations$common$mediaKind$en
 }
 
 // Path: supporter.errors
-class _Translations$supporter$errors$az extends Translations$supporter$errors$en {
-	_Translations$supporter$errors$az._(TranslationsAz root) : this._root = root, super.internal(root);
+class _TranslationsSupporterErrorsAz extends TranslationsSupporterErrorsEn {
+	_TranslationsSupporterErrorsAz._(TranslationsAz root) : this._root = root, super.internal(root);
 
 	final TranslationsAz _root; // ignore: unused_field
 
@@ -2550,8 +2569,8 @@ class _Translations$supporter$errors$az extends Translations$supporter$errors$en
 }
 
 // Path: themeEditor.slots
-class _Translations$themeEditor$slots$az extends Translations$themeEditor$slots$en {
-	_Translations$themeEditor$slots$az._(TranslationsAz root) : this._root = root, super.internal(root);
+class _TranslationsThemeEditorSlotsAz extends TranslationsThemeEditorSlotsEn {
+	_TranslationsThemeEditorSlotsAz._(TranslationsAz root) : this._root = root, super.internal(root);
 
 	final TranslationsAz _root; // ignore: unused_field
 
@@ -2565,8 +2584,8 @@ class _Translations$themeEditor$slots$az extends Translations$themeEditor$slots$
 }
 
 // Path: themeEditor.contrast
-class _Translations$themeEditor$contrast$az extends Translations$themeEditor$contrast$en {
-	_Translations$themeEditor$contrast$az._(TranslationsAz root) : this._root = root, super.internal(root);
+class _TranslationsThemeEditorContrastAz extends TranslationsThemeEditorContrastEn {
+	_TranslationsThemeEditorContrastAz._(TranslationsAz root) : this._root = root, super.internal(root);
 
 	final TranslationsAz _root; // ignore: unused_field
 
@@ -2581,8 +2600,8 @@ class _Translations$themeEditor$contrast$az extends Translations$themeEditor$con
 }
 
 // Path: hotkeys.actions
-class _Translations$hotkeys$actions$az extends Translations$hotkeys$actions$en {
-	_Translations$hotkeys$actions$az._(TranslationsAz root) : this._root = root, super.internal(root);
+class _TranslationsHotkeysActionsAz extends TranslationsHotkeysActionsEn {
+	_TranslationsHotkeysActionsAz._(TranslationsAz root) : this._root = root, super.internal(root);
 
 	final TranslationsAz _root; // ignore: unused_field
 
@@ -2615,8 +2634,8 @@ class _Translations$hotkeys$actions$az extends Translations$hotkeys$actions$en {
 }
 
 // Path: videoControls.pipErrors
-class _Translations$videoControls$pipErrors$az extends Translations$videoControls$pipErrors$en {
-	_Translations$videoControls$pipErrors$az._(TranslationsAz root) : this._root = root, super.internal(root);
+class _TranslationsVideoControlsPipErrorsAz extends TranslationsVideoControlsPipErrorsEn {
+	_TranslationsVideoControlsPipErrorsAz._(TranslationsAz root) : this._root = root, super.internal(root);
 
 	final TranslationsAz _root; // ignore: unused_field
 
@@ -2632,8 +2651,8 @@ class _Translations$videoControls$pipErrors$az extends Translations$videoControl
 }
 
 // Path: accountPreferences.groups
-class _Translations$accountPreferences$groups$az extends Translations$accountPreferences$groups$en {
-	_Translations$accountPreferences$groups$az._(TranslationsAz root) : this._root = root, super.internal(root);
+class _TranslationsAccountPreferencesGroupsAz extends TranslationsAccountPreferencesGroupsEn {
+	_TranslationsAccountPreferencesGroupsAz._(TranslationsAz root) : this._root = root, super.internal(root);
 
 	final TranslationsAz _root; // ignore: unused_field
 
@@ -2644,8 +2663,8 @@ class _Translations$accountPreferences$groups$az extends Translations$accountPre
 }
 
 // Path: accountPreferences.subtitleModes
-class _Translations$accountPreferences$subtitleModes$az extends Translations$accountPreferences$subtitleModes$en {
-	_Translations$accountPreferences$subtitleModes$az._(TranslationsAz root) : this._root = root, super.internal(root);
+class _TranslationsAccountPreferencesSubtitleModesAz extends TranslationsAccountPreferencesSubtitleModesEn {
+	_TranslationsAccountPreferencesSubtitleModesAz._(TranslationsAz root) : this._root = root, super.internal(root);
 
 	final TranslationsAz _root; // ignore: unused_field
 
@@ -2663,8 +2682,8 @@ class _Translations$accountPreferences$subtitleModes$az extends Translations$acc
 }
 
 // Path: accountPreferences.subtitleAccessibilityOptions
-class _Translations$accountPreferences$subtitleAccessibilityOptions$az extends Translations$accountPreferences$subtitleAccessibilityOptions$en {
-	_Translations$accountPreferences$subtitleAccessibilityOptions$az._(TranslationsAz root) : this._root = root, super.internal(root);
+class _TranslationsAccountPreferencesSubtitleAccessibilityOptionsAz extends TranslationsAccountPreferencesSubtitleAccessibilityOptionsEn {
+	_TranslationsAccountPreferencesSubtitleAccessibilityOptionsAz._(TranslationsAz root) : this._root = root, super.internal(root);
 
 	final TranslationsAz _root; // ignore: unused_field
 
@@ -2676,8 +2695,8 @@ class _Translations$accountPreferences$subtitleAccessibilityOptions$az extends T
 }
 
 // Path: accountPreferences.forcedSubtitleOptions
-class _Translations$accountPreferences$forcedSubtitleOptions$az extends Translations$accountPreferences$forcedSubtitleOptions$en {
-	_Translations$accountPreferences$forcedSubtitleOptions$az._(TranslationsAz root) : this._root = root, super.internal(root);
+class _TranslationsAccountPreferencesForcedSubtitleOptionsAz extends TranslationsAccountPreferencesForcedSubtitleOptionsEn {
+	_TranslationsAccountPreferencesForcedSubtitleOptionsAz._(TranslationsAz root) : this._root = root, super.internal(root);
 
 	final TranslationsAz _root; // ignore: unused_field
 
@@ -2689,8 +2708,8 @@ class _Translations$accountPreferences$forcedSubtitleOptions$az extends Translat
 }
 
 // Path: accountPreferences.watchedIndicatorOptions
-class _Translations$accountPreferences$watchedIndicatorOptions$az extends Translations$accountPreferences$watchedIndicatorOptions$en {
-	_Translations$accountPreferences$watchedIndicatorOptions$az._(TranslationsAz root) : this._root = root, super.internal(root);
+class _TranslationsAccountPreferencesWatchedIndicatorOptionsAz extends TranslationsAccountPreferencesWatchedIndicatorOptionsEn {
+	_TranslationsAccountPreferencesWatchedIndicatorOptionsAz._(TranslationsAz root) : this._root = root, super.internal(root);
 
 	final TranslationsAz _root; // ignore: unused_field
 
@@ -2702,8 +2721,8 @@ class _Translations$accountPreferences$watchedIndicatorOptions$az extends Transl
 }
 
 // Path: accountPreferences.mediaReviewsOptions
-class _Translations$accountPreferences$mediaReviewsOptions$az extends Translations$accountPreferences$mediaReviewsOptions$en {
-	_Translations$accountPreferences$mediaReviewsOptions$az._(TranslationsAz root) : this._root = root, super.internal(root);
+class _TranslationsAccountPreferencesMediaReviewsOptionsAz extends TranslationsAccountPreferencesMediaReviewsOptionsEn {
+	_TranslationsAccountPreferencesMediaReviewsOptionsAz._(TranslationsAz root) : this._root = root, super.internal(root);
 
 	final TranslationsAz _root; // ignore: unused_field
 
@@ -2715,8 +2734,8 @@ class _Translations$accountPreferences$mediaReviewsOptions$az extends Translatio
 }
 
 // Path: discover.person
-class _Translations$discover$person$az extends Translations$discover$person$en {
-	_Translations$discover$person$az._(TranslationsAz root) : this._root = root, super.internal(root);
+class _TranslationsDiscoverPersonAz extends TranslationsDiscoverPersonEn {
+	_TranslationsDiscoverPersonAz._(TranslationsAz root) : this._root = root, super.internal(root);
 
 	final TranslationsAz _root; // ignore: unused_field
 
@@ -2729,8 +2748,8 @@ class _Translations$discover$person$az extends Translations$discover$person$en {
 }
 
 // Path: libraries.tabs
-class _Translations$libraries$tabs$az extends Translations$libraries$tabs$en {
-	_Translations$libraries$tabs$az._(TranslationsAz root) : this._root = root, super.internal(root);
+class _TranslationsLibrariesTabsAz extends TranslationsLibrariesTabsEn {
+	_TranslationsLibrariesTabsAz._(TranslationsAz root) : this._root = root, super.internal(root);
 
 	final TranslationsAz _root; // ignore: unused_field
 
@@ -2742,8 +2761,8 @@ class _Translations$libraries$tabs$az extends Translations$libraries$tabs$en {
 }
 
 // Path: libraries.groupings
-class _Translations$libraries$groupings$az extends Translations$libraries$groupings$en {
-	_Translations$libraries$groupings$az._(TranslationsAz root) : this._root = root, super.internal(root);
+class _TranslationsLibrariesGroupingsAz extends TranslationsLibrariesGroupingsEn {
+	_TranslationsLibrariesGroupingsAz._(TranslationsAz root) : this._root = root, super.internal(root);
 
 	final TranslationsAz _root; // ignore: unused_field
 
@@ -2761,8 +2780,8 @@ class _Translations$libraries$groupings$az extends Translations$libraries$groupi
 }
 
 // Path: libraries.filterCategories
-class _Translations$libraries$filterCategories$az extends Translations$libraries$filterCategories$en {
-	_Translations$libraries$filterCategories$az._(TranslationsAz root) : this._root = root, super.internal(root);
+class _TranslationsLibrariesFilterCategoriesAz extends TranslationsLibrariesFilterCategoriesEn {
+	_TranslationsLibrariesFilterCategoriesAz._(TranslationsAz root) : this._root = root, super.internal(root);
 
 	final TranslationsAz _root; // ignore: unused_field
 
@@ -2778,8 +2797,8 @@ class _Translations$libraries$filterCategories$az extends Translations$libraries
 }
 
 // Path: libraries.sortLabels
-class _Translations$libraries$sortLabels$az extends Translations$libraries$sortLabels$en {
-	_Translations$libraries$sortLabels$az._(TranslationsAz root) : this._root = root, super.internal(root);
+class _TranslationsLibrariesSortLabelsAz extends TranslationsLibrariesSortLabelsEn {
+	_TranslationsLibrariesSortLabelsAz._(TranslationsAz root) : this._root = root, super.internal(root);
 
 	final TranslationsAz _root; // ignore: unused_field
 
@@ -2810,8 +2829,8 @@ class _Translations$libraries$sortLabels$az extends Translations$libraries$sortL
 }
 
 // Path: libraries.advancedFilters
-class _Translations$libraries$advancedFilters$az extends Translations$libraries$advancedFilters$en {
-	_Translations$libraries$advancedFilters$az._(TranslationsAz root) : this._root = root, super.internal(root);
+class _TranslationsLibrariesAdvancedFiltersAz extends TranslationsLibrariesAdvancedFiltersEn {
+	_TranslationsLibrariesAdvancedFiltersAz._(TranslationsAz root) : this._root = root, super.internal(root);
 
 	final TranslationsAz _root; // ignore: unused_field
 
@@ -2845,8 +2864,8 @@ class _Translations$libraries$advancedFilters$az extends Translations$libraries$
 }
 
 // Path: explore.rows
-class _Translations$explore$rows$az extends Translations$explore$rows$en {
-	_Translations$explore$rows$az._(TranslationsAz root) : this._root = root, super.internal(root);
+class _TranslationsExploreRowsAz extends TranslationsExploreRowsEn {
+	_TranslationsExploreRowsAz._(TranslationsAz root) : this._root = root, super.internal(root);
 
 	final TranslationsAz _root; // ignore: unused_field
 
@@ -2868,8 +2887,8 @@ class _Translations$explore$rows$az extends Translations$explore$rows$en {
 }
 
 // Path: explore.status
-class _Translations$explore$status$az extends Translations$explore$status$en {
-	_Translations$explore$status$az._(TranslationsAz root) : this._root = root, super.internal(root);
+class _TranslationsExploreStatusAz extends TranslationsExploreStatusEn {
+	_TranslationsExploreStatusAz._(TranslationsAz root) : this._root = root, super.internal(root);
 
 	final TranslationsAz _root; // ignore: unused_field
 
@@ -2881,8 +2900,8 @@ class _Translations$explore$status$az extends Translations$explore$status$en {
 }
 
 // Path: explore.badge
-class _Translations$explore$badge$az extends Translations$explore$badge$en {
-	_Translations$explore$badge$az._(TranslationsAz root) : this._root = root, super.internal(root);
+class _TranslationsExploreBadgeAz extends TranslationsExploreBadgeEn {
+	_TranslationsExploreBadgeAz._(TranslationsAz root) : this._root = root, super.internal(root);
 
 	final TranslationsAz _root; // ignore: unused_field
 
@@ -2911,8 +2930,8 @@ class _Translations$explore$badge$az extends Translations$explore$badge$en {
 }
 
 // Path: explore.stats
-class _Translations$explore$stats$az extends Translations$explore$stats$en {
-	_Translations$explore$stats$az._(TranslationsAz root) : this._root = root, super.internal(root);
+class _TranslationsExploreStatsAz extends TranslationsExploreStatsEn {
+	_TranslationsExploreStatsAz._(TranslationsAz root) : this._root = root, super.internal(root);
 
 	final TranslationsAz _root; // ignore: unused_field
 
@@ -2938,8 +2957,8 @@ class _Translations$explore$stats$az extends Translations$explore$stats$en {
 }
 
 // Path: explore.season
-class _Translations$explore$season$az extends Translations$explore$season$en {
-	_Translations$explore$season$az._(TranslationsAz root) : this._root = root, super.internal(root);
+class _TranslationsExploreSeasonAz extends TranslationsExploreSeasonEn {
+	_TranslationsExploreSeasonAz._(TranslationsAz root) : this._root = root, super.internal(root);
 
 	final TranslationsAz _root; // ignore: unused_field
 
@@ -2952,8 +2971,8 @@ class _Translations$explore$season$az extends Translations$explore$season$en {
 }
 
 // Path: explore.format
-class _Translations$explore$format$az extends Translations$explore$format$en {
-	_Translations$explore$format$az._(TranslationsAz root) : this._root = root, super.internal(root);
+class _TranslationsExploreFormatAz extends TranslationsExploreFormatEn {
+	_TranslationsExploreFormatAz._(TranslationsAz root) : this._root = root, super.internal(root);
 
 	final TranslationsAz _root; // ignore: unused_field
 
@@ -2969,8 +2988,8 @@ class _Translations$explore$format$az extends Translations$explore$format$en {
 }
 
 // Path: explore.sourceMaterial
-class _Translations$explore$sourceMaterial$az extends Translations$explore$sourceMaterial$en {
-	_Translations$explore$sourceMaterial$az._(TranslationsAz root) : this._root = root, super.internal(root);
+class _TranslationsExploreSourceMaterialAz extends TranslationsExploreSourceMaterialEn {
+	_TranslationsExploreSourceMaterialAz._(TranslationsAz root) : this._root = root, super.internal(root);
 
 	final TranslationsAz _root; // ignore: unused_field
 
@@ -2987,8 +3006,8 @@ class _Translations$explore$sourceMaterial$az extends Translations$explore$sourc
 }
 
 // Path: explore.creditRole
-class _Translations$explore$creditRole$az extends Translations$explore$creditRole$en {
-	_Translations$explore$creditRole$az._(TranslationsAz root) : this._root = root, super.internal(root);
+class _TranslationsExploreCreditRoleAz extends TranslationsExploreCreditRoleEn {
+	_TranslationsExploreCreditRoleAz._(TranslationsAz root) : this._root = root, super.internal(root);
 
 	final TranslationsAz _root; // ignore: unused_field
 
@@ -3002,8 +3021,8 @@ class _Translations$explore$creditRole$az extends Translations$explore$creditRol
 }
 
 // Path: explore.relation
-class _Translations$explore$relation$az extends Translations$explore$relation$en {
-	_Translations$explore$relation$az._(TranslationsAz root) : this._root = root, super.internal(root);
+class _TranslationsExploreRelationAz extends TranslationsExploreRelationEn {
+	_TranslationsExploreRelationAz._(TranslationsAz root) : this._root = root, super.internal(root);
 
 	final TranslationsAz _root; // ignore: unused_field
 
@@ -3020,8 +3039,8 @@ class _Translations$explore$relation$az extends Translations$explore$relation$en
 }
 
 // Path: explore.detail
-class _Translations$explore$detail$az extends Translations$explore$detail$en {
-	_Translations$explore$detail$az._(TranslationsAz root) : this._root = root, super.internal(root);
+class _TranslationsExploreDetailAz extends TranslationsExploreDetailEn {
+	_TranslationsExploreDetailAz._(TranslationsAz root) : this._root = root, super.internal(root);
 
 	final TranslationsAz _root; // ignore: unused_field
 
@@ -3063,8 +3082,8 @@ class _Translations$explore$detail$az extends Translations$explore$detail$en {
 }
 
 // Path: liveTv.recordSettings
-class _Translations$liveTv$recordSettings$az extends Translations$liveTv$recordSettings$en {
-	_Translations$liveTv$recordSettings$az._(TranslationsAz root) : this._root = root, super.internal(root);
+class _TranslationsLiveTvRecordSettingsAz extends TranslationsLiveTvRecordSettingsEn {
+	_TranslationsLiveTvRecordSettingsAz._(TranslationsAz root) : this._root = root, super.internal(root);
 
 	final TranslationsAz _root; // ignore: unused_field
 
@@ -3080,8 +3099,8 @@ class _Translations$liveTv$recordSettings$az extends Translations$liveTv$recordS
 }
 
 // Path: music.discography
-class _Translations$music$discography$az extends Translations$music$discography$en {
-	_Translations$music$discography$az._(TranslationsAz root) : this._root = root, super.internal(root);
+class _TranslationsMusicDiscographyAz extends TranslationsMusicDiscographyEn {
+	_TranslationsMusicDiscographyAz._(TranslationsAz root) : this._root = root, super.internal(root);
 
 	final TranslationsAz _root; // ignore: unused_field
 
@@ -3092,8 +3111,8 @@ class _Translations$music$discography$az extends Translations$music$discography$
 }
 
 // Path: watchTogether.notices
-class _Translations$watchTogether$notices$az extends Translations$watchTogether$notices$en {
-	_Translations$watchTogether$notices$az._(TranslationsAz root) : this._root = root, super.internal(root);
+class _TranslationsWatchTogetherNoticesAz extends TranslationsWatchTogetherNoticesEn {
+	_TranslationsWatchTogetherNoticesAz._(TranslationsAz root) : this._root = root, super.internal(root);
 
 	final TranslationsAz _root; // ignore: unused_field
 
@@ -3126,8 +3145,8 @@ class _Translations$watchTogether$notices$az extends Translations$watchTogether$
 }
 
 // Path: watchTogether.ended
-class _Translations$watchTogether$ended$az extends Translations$watchTogether$ended$en {
-	_Translations$watchTogether$ended$az._(TranslationsAz root) : this._root = root, super.internal(root);
+class _TranslationsWatchTogetherEndedAz extends TranslationsWatchTogetherEndedEn {
+	_TranslationsWatchTogetherEndedAz._(TranslationsAz root) : this._root = root, super.internal(root);
 
 	final TranslationsAz _root; // ignore: unused_field
 
@@ -3140,8 +3159,8 @@ class _Translations$watchTogether$ended$az extends Translations$watchTogether$en
 }
 
 // Path: watchTogether.errors
-class _Translations$watchTogether$errors$az extends Translations$watchTogether$errors$en {
-	_Translations$watchTogether$errors$az._(TranslationsAz root) : this._root = root, super.internal(root);
+class _TranslationsWatchTogetherErrorsAz extends TranslationsWatchTogetherErrorsEn {
+	_TranslationsWatchTogetherErrorsAz._(TranslationsAz root) : this._root = root, super.internal(root);
 
 	final TranslationsAz _root; // ignore: unused_field
 
@@ -3163,8 +3182,8 @@ class _Translations$watchTogether$errors$az extends Translations$watchTogether$e
 }
 
 // Path: downloads.backgroundWarning
-class _Translations$downloads$backgroundWarning$az extends Translations$downloads$backgroundWarning$en {
-	_Translations$downloads$backgroundWarning$az._(TranslationsAz root) : this._root = root, super.internal(root);
+class _TranslationsDownloadsBackgroundWarningAz extends TranslationsDownloadsBackgroundWarningEn {
+	_TranslationsDownloadsBackgroundWarningAz._(TranslationsAz root) : this._root = root, super.internal(root);
 
 	final TranslationsAz _root; // ignore: unused_field
 
@@ -3198,8 +3217,8 @@ class _Translations$downloads$backgroundWarning$az extends Translations$download
 }
 
 // Path: downloads.groupings
-class _Translations$downloads$groupings$az extends Translations$downloads$groupings$en {
-	_Translations$downloads$groupings$az._(TranslationsAz root) : this._root = root, super.internal(root);
+class _TranslationsDownloadsGroupingsAz extends TranslationsDownloadsGroupingsEn {
+	_TranslationsDownloadsGroupingsAz._(TranslationsAz root) : this._root = root, super.internal(root);
 
 	final TranslationsAz _root; // ignore: unused_field
 
@@ -3209,8 +3228,8 @@ class _Translations$downloads$groupings$az extends Translations$downloads$groupi
 }
 
 // Path: companionRemote.session
-class _Translations$companionRemote$session$az extends Translations$companionRemote$session$en {
-	_Translations$companionRemote$session$az._(TranslationsAz root) : this._root = root, super.internal(root);
+class _TranslationsCompanionRemoteSessionAz extends TranslationsCompanionRemoteSessionEn {
+	_TranslationsCompanionRemoteSessionAz._(TranslationsAz root) : this._root = root, super.internal(root);
 
 	final TranslationsAz _root; // ignore: unused_field
 
@@ -3230,8 +3249,8 @@ class _Translations$companionRemote$session$az extends Translations$companionRem
 }
 
 // Path: companionRemote.pairing
-class _Translations$companionRemote$pairing$az extends Translations$companionRemote$pairing$en {
-	_Translations$companionRemote$pairing$az._(TranslationsAz root) : this._root = root, super.internal(root);
+class _TranslationsCompanionRemotePairingAz extends TranslationsCompanionRemotePairingEn {
+	_TranslationsCompanionRemotePairingAz._(TranslationsAz root) : this._root = root, super.internal(root);
 
 	final TranslationsAz _root; // ignore: unused_field
 
@@ -3254,8 +3273,8 @@ class _Translations$companionRemote$pairing$az extends Translations$companionRem
 }
 
 // Path: companionRemote.remote
-class _Translations$companionRemote$remote$az extends Translations$companionRemote$remote$en {
-	_Translations$companionRemote$remote$az._(TranslationsAz root) : this._root = root, super.internal(root);
+class _TranslationsCompanionRemoteRemoteAz extends TranslationsCompanionRemoteRemoteEn {
+	_TranslationsCompanionRemoteRemoteAz._(TranslationsAz root) : this._root = root, super.internal(root);
 
 	final TranslationsAz _root; // ignore: unused_field
 
@@ -3290,8 +3309,8 @@ class _Translations$companionRemote$remote$az extends Translations$companionRemo
 }
 
 // Path: companionRemote.errors
-class _Translations$companionRemote$errors$az extends Translations$companionRemote$errors$en {
-	_Translations$companionRemote$errors$az._(TranslationsAz root) : this._root = root, super.internal(root);
+class _TranslationsCompanionRemoteErrorsAz extends TranslationsCompanionRemoteErrorsEn {
+	_TranslationsCompanionRemoteErrorsAz._(TranslationsAz root) : this._root = root, super.internal(root);
 
 	final TranslationsAz _root; // ignore: unused_field
 
@@ -3307,8 +3326,8 @@ class _Translations$companionRemote$errors$az extends Translations$companionRemo
 }
 
 // Path: services.names
-class _Translations$services$names$az extends Translations$services$names$en {
-	_Translations$services$names$az._(TranslationsAz root) : this._root = root, super.internal(root);
+class _TranslationsServicesNamesAz extends TranslationsServicesNamesEn {
+	_TranslationsServicesNamesAz._(TranslationsAz root) : this._root = root, super.internal(root);
 
 	final TranslationsAz _root; // ignore: unused_field
 
@@ -3321,8 +3340,8 @@ class _Translations$services$names$az extends Translations$services$names$en {
 }
 
 // Path: services.simklReconnect
-class _Translations$services$simklReconnect$az extends Translations$services$simklReconnect$en {
-	_Translations$services$simklReconnect$az._(TranslationsAz root) : this._root = root, super.internal(root);
+class _TranslationsServicesSimklReconnectAz extends TranslationsServicesSimklReconnectEn {
+	_TranslationsServicesSimklReconnectAz._(TranslationsAz root) : this._root = root, super.internal(root);
 
 	final TranslationsAz _root; // ignore: unused_field
 
@@ -3332,8 +3351,8 @@ class _Translations$services$simklReconnect$az extends Translations$services$sim
 }
 
 // Path: services.deviceCode
-class _Translations$services$deviceCode$az extends Translations$services$deviceCode$en {
-	_Translations$services$deviceCode$az._(TranslationsAz root) : this._root = root, super.internal(root);
+class _TranslationsServicesDeviceCodeAz extends TranslationsServicesDeviceCodeEn {
+	_TranslationsServicesDeviceCodeAz._(TranslationsAz root) : this._root = root, super.internal(root);
 
 	final TranslationsAz _root; // ignore: unused_field
 
@@ -3347,8 +3366,8 @@ class _Translations$services$deviceCode$az extends Translations$services$deviceC
 }
 
 // Path: services.oauthProxy
-class _Translations$services$oauthProxy$az extends Translations$services$oauthProxy$en {
-	_Translations$services$oauthProxy$az._(TranslationsAz root) : this._root = root, super.internal(root);
+class _TranslationsServicesOauthProxyAz extends TranslationsServicesOauthProxyEn {
+	_TranslationsServicesOauthProxyAz._(TranslationsAz root) : this._root = root, super.internal(root);
 
 	final TranslationsAz _root; // ignore: unused_field
 
@@ -3359,8 +3378,8 @@ class _Translations$services$oauthProxy$az extends Translations$services$oauthPr
 }
 
 // Path: services.pendingAuth
-class _Translations$services$pendingAuth$az extends Translations$services$pendingAuth$en {
-	_Translations$services$pendingAuth$az._(TranslationsAz root) : this._root = root, super.internal(root);
+class _TranslationsServicesPendingAuthAz extends TranslationsServicesPendingAuthEn {
+	_TranslationsServicesPendingAuthAz._(TranslationsAz root) : this._root = root, super.internal(root);
 
 	final TranslationsAz _root; // ignore: unused_field
 
@@ -3370,8 +3389,8 @@ class _Translations$services$pendingAuth$az extends Translations$services$pendin
 }
 
 // Path: services.libraryFilter
-class _Translations$services$libraryFilter$az extends Translations$services$libraryFilter$en {
-	_Translations$services$libraryFilter$az._(TranslationsAz root) : this._root = root, super.internal(root);
+class _TranslationsServicesLibraryFilterAz extends TranslationsServicesLibraryFilterEn {
+	_TranslationsServicesLibraryFilterAz._(TranslationsAz root) : this._root = root, super.internal(root);
 
 	final TranslationsAz _root; // ignore: unused_field
 
@@ -3390,2326 +3409,2352 @@ class _Translations$services$libraryFilter$az extends Translations$services$libr
 	@override String get noLibraries => 'Kitabxana yoxdur';
 }
 
-/// The flat map containing all translations for locale <az>.
+/// Flat map(s) containing all translations.
 /// Only for edge cases! For simple maps, use the map function of this library.
-///
-/// The Dart AOT compiler has issues with very large switch statements,
-/// so the map is split into smaller functions (512 entries each).
 extension on TranslationsAz {
 	dynamic _flatMapFunction(String path) {
-		return switch (path) {
-			'app.title' => 'Plezy',
-			'appIcon.title' => 'Tətbiq ikonu',
-			'appIcon.defaultIcon' => 'Defolt',
-			'appIcon.current' => 'Cari ikon',
-			'appIcon.locked' => 'Mövzu və ikon paketinə daxildir',
-			'appIcon.lockedHint' => 'Alternativ ikonlar Mövzu və ikon paketinə daxildir.',
-			'appIcon.changeFailed' => 'Tətbiq ikonu dəyişdirilə bilmədi',
-			'appIcon.launcherHint' => 'Plezy-dən çıxdıqdan sonra yeni ikon ana ekranınızda görünəcək.',
-			'appIcon.tvLauncherHint' => 'Plezy-dən çıxdıqdan sonra yeni banner görünəcək. Android TV televizor yenidən başladılana qədər köhnəsini göstərə bilər.',
-			'appIcon.names.midnight' => 'Gecəyarısı',
-			'appIcon.names.ember' => 'Köz',
-			'appIcon.names.paper' => 'Kağız',
-			'appIcon.names.oled' => 'OLED',
-			'appIcon.names.line' => 'Xətt',
-			'appIcon.names.ocean' => 'Okean',
-			'appIcon.names.ultraviolet' => 'Ultrabənövşəyi',
-			'appIcon.names.matcha' => 'Matça',
-			'appIcon.names.sunset' => 'Gün batımı',
-			'appIcon.names.gold' => 'Qızıl',
-			'appIcon.names.titanium' => 'Titan',
-			'appIcon.names.glass' => 'Şüşə',
-			'appIcon.names.crt' => 'CRT',
-			'appIcon.names.vhs' => 'VHS',
-			'appIcon.names.synthwave' => 'Synthwave',
-			'appIcon.names.pixel' => 'Piksel',
-			'appIcon.names.neon' => 'Neon',
-			'appIcon.names.sticker' => 'Stiker',
-			'appIcon.names.ticket' => 'Bilet',
-			'appIcon.names.pop' => 'Pop',
-			'appIcon.names.strata' => 'Laylar',
-			'appIcon.names.facet' => 'Faset',
-			'appIcon.names.tilde' => 'Tilda',
-			'auth.signInWithPlex' => 'Plex ilə daxil ol',
-			'auth.showQRCode' => 'QR kodu göstər',
-			'auth.authenticate' => 'Təsdiqlə',
-			'auth.authenticationTimeout' => 'Təsdiqləmə vaxtı bitdi. Lütfən təzədən cəhd edin.',
-			'auth.scanQRToSignIn' => 'Daxil olmaq üçün bu QR kodu skan edin',
-			'auth.waitingForAuth' => 'Təsdiqləmə gözlənilir...\nSəyahətçinizdən (brauzer) daxil olun.',
-			'auth.useBrowser' => 'Səyahətçini istifadə et',
-			'auth.or' => 'və ya',
-			'auth.connectToMediaBrowser' => ({required Object product}) => '${product}-a qoşul',
-			'auth.quickConnect' => 'Sürətli Qoşulma',
-			'auth.useQuickConnect' => 'Sürətli Qoşulmanı istifadə et',
-			'auth.quickConnectInstructions' => 'Jellyfin-də Sürətli Qoşulmanı açın və bu kodu daxil edin.',
-			'auth.quickConnectWaiting' => 'Təsdiq gözlənilir…',
-			'auth.quickConnectCancel' => 'Ləğv et',
-			'auth.quickConnectExpired' => 'Sürətli Qoşulmanın vaxtı bitdi. Təzədən cəhd edin.',
-			'auth.localDataRecoveryRequired' => 'Plezy yerli daxil olma və gözləyən oxutma məlumatlarını təhlükəsiz bərpa edə bilmədi. Lütfən təzədən daxil olun.',
-			'auth.pinCheckRejected' => 'Plex PIN yoxlaması rədd edildi',
-			'common.cancel' => 'Ləğv et',
-			'common.save' => 'Yadda saxla',
-			'common.close' => 'Bağla',
-			'common.clear' => 'Təmizlə',
-			'common.reset' => 'Sıfırla',
-			'common.later' => 'Sonra',
-			'common.submit' => 'Göndər',
-			'common.confirm' => 'Təsdiqlə',
-			'common.retry' => 'Təzədən cəhd et',
-			'common.logout' => 'Çıxış et',
-			'common.unknown' => 'Məlum deyil',
-			'common.refresh' => 'Yenilə',
-			'common.yes' => 'Bəli',
-			'common.no' => 'Xeyr',
-			'common.delete' => 'Sil',
-			'common.edit' => 'Düzəliş et',
-			'common.shuffle' => 'Qarışdır',
-			'common.addTo' => 'Əlavə et...',
-			'common.createNew' => 'Yenisini yarat',
-			'common.connect' => 'Qoşul',
-			'common.disconnect' => 'Əlaqəni kəs',
-			'common.play' => 'Oynat',
-			'common.pause' => 'Fasilə',
-			'common.resume' => 'Davam et',
-			'common.error' => 'Xəta',
-			'common.search' => 'Axtar',
-			'common.home' => 'Ana səhifə',
-			'common.back' => 'Geri',
-			'common.settings' => 'Tənzimləmələr',
-			'common.mute' => 'Səsi söndür',
-			'common.ok' => 'Oldu',
-			'common.off' => 'Söndürülüb',
-			'common.options' => 'Seçimlər',
-			'common.seasonNumber' => ({required Object number}) => 'Mövsüm ${number}',
-			'common.episodeNumberTitle' => ({required Object number, required Object title}) => 'Seriya ${number} - ${title}',
-			'common.chapterNumber' => ({required Object number}) => 'Hissə ${number}',
-			'common.reconnect' => 'Yenidən qoşul',
-			'common.viewAll' => 'Hamısına bax',
-			'common.checkingNetwork' => 'Şəbəkə yoxlanılır...',
-			'common.loadingServers' => 'Serverlər yüklənir...',
-			'common.connectingToServers' => 'Serverlərə qoşulunur...',
-			'common.startingOfflineMode' => 'Oflayn rejim başladılır...',
-			'common.loading' => 'Yüklənir...',
-			'common.fullscreen' => 'Tam ekran',
-			'common.exitFullscreen' => 'Tam ekrandan çıx',
-			'common.pressBackAgainToExit' => 'Çıxmaq üçün geri düyməsinə bir daha basın',
-			'common.ratingSource.critic' => 'Tənqidçilər',
-			'common.ratingSource.audience' => 'Tamaşaçılar',
-			'common.ratingSource.imdb' => 'IMDb',
-			'common.ratingSource.tmdb' => 'TMDB',
-			'common.ratingSource.rottenTomatoes' => 'Rotten Tomatoes',
-			'common.ratingSource.simkl' => 'Simkl',
-			'common.ratingSource.mal' => 'MyAnimeList',
-			'common.ratingSource.anilist' => 'AniList',
-			'common.ratingSource.trakt' => 'Trakt',
-			'common.ratingSource.rottenTomatoesCritic' => 'Rotten Tomatoes tənqidçiləri',
-			'common.ratingSource.rottenTomatoesAudience' => 'Rotten Tomatoes tamaşaçıları',
-			'common.ratingSource.metacritic' => 'Metacritic',
-			'common.ratingSource.letterboxd' => 'Letterboxd',
-			'common.notAvailable' => 'Yoxdur',
-			'common.url' => 'URL',
-			'common.letterKeys' => 'ABC',
-			'common.mediaKind.movie' => 'Film',
-			'common.mediaKind.show' => 'Serial',
-			'common.mediaKind.season' => 'Sezon',
-			'common.mediaKind.episode' => 'Epizod',
-			'common.mediaKind.artist' => 'İfaçı',
-			'common.mediaKind.album' => 'Albom',
-			'common.mediaKind.track' => 'Mahnı',
-			'common.mediaKind.collection' => 'Kolleksiya',
-			'common.mediaKind.playlist' => 'Pleylist',
-			'common.mediaKind.clip' => 'Klip',
-			'common.mediaKind.photo' => 'Şəkil',
-			'common.mediaKind.folder' => 'Qovluq',
-			'screens.licenses' => 'Lisenziyalar',
-			'screens.switchProfile' => 'Profili dəyiş',
-			'screens.subtitleStyling' => 'Altyazı tənzimləmələri',
-			'screens.mpvConfig' => 'mpv.conf',
-			'screens.logs' => 'Jurnallar',
-			'update.available' => 'Yenilənmə var',
-			'update.versionAvailable' => ({required Object version}) => '${version} versiyası əlçatandır',
-			'update.currentVersion' => ({required Object version}) => 'Cari: ${version}',
-			'update.skipVersion' => 'Bu versiyanı ötür',
-			'update.viewRelease' => 'Buraxılışa bax',
-			'update.latestVersion' => 'Siz ən son versiyadasınız',
-			'update.checkFailed' => 'Yenilənmələr yoxlanıla bilmədi',
-			'supporter.title' => 'Mövzu və ikon paketi',
-			'supporter.intro' => 'Kosmetik əlavələr gətirən istəyə bağlı birdəfəlik alış:',
-			'supporter.presetThemes' => 'Hazır mövzular',
-			'supporter.presetThemesDescription' => 'Köz, Buzlaq, Meşə, Gavalı və Kağız',
-			'supporter.customTheme' => 'Xüsusi mövzu',
-			'supporter.customThemeDescription' => 'Bütün rəngləri özünüz seçin',
-			'supporter.appIcons' => 'Tətbiq ikonları',
-			'supporter.appIconsDescription' => 'Alternativ Plezy ikonu seçin',
-			'supporter.buy' => ({required Object price}) => '${price} qiymətinə al',
-			'supporter.loadingPrice' => 'Qiymət yüklənir...',
-			'supporter.restore' => 'Alışları bərpa et',
-			'supporter.pending' => 'Alışınız ödəniş və ya təsdiq gözləyir. Mağaza onu tamamlayan kimi əlavələr açılacaq.',
-			'supporter.thankYouTitle' => 'Alışınız üçün təşəkkür edirik',
-			'supporter.thankYouBody' => 'Mövzu və ikon paketi açıldı.',
-			'supporter.tileSubtitle' => 'Mövzuları və tətbiq ikonlarını birdəfəlik alışla açın',
-			'supporter.tileSubtitleThemesOnly' => 'Mövzuları birdəfəlik alışla açın',
-			'supporter.tileUnlocked' => 'Açıldı — alışınız üçün təşəkkür edirik',
-			'supporter.errors.storeUnavailable' => 'Alışlar əlçatan deyil. Mağazaya daxil olduğunuzu və bu cihazda alışlara icazə verildiyini yoxlayın.',
-			'supporter.errors.productNotFound' => 'Mövzu və ikon paketi hazırda mağazanızda əlçatan deyil.',
-			'supporter.errors.productQueryFailed' => 'Qiymət yüklənə bilmədi. Bağlantınızı yoxlayın və yenidən cəhd edin.',
-			'supporter.errors.purchaseFailed' => 'Alış baş tutmadı. Yenidən cəhd edin.',
-			'supporter.errors.restoreFailed' => 'Alışınızı bərpa etmək üçün mağazaya qoşulmaq mümkün olmadı. Yenidən cəhd edin.',
-			'supporter.errors.nothingToRestore' => 'Bu mağaza hesabı üçün Mövzu və ikon paketi alışı tapılmadı.',
-			'settings.title' => 'Tənzimləmələr',
-			'settings.supportDeveloper' => 'Plezy-yə dəstək ol',
-			'settings.supportDeveloperDescription' => 'İnkişafı maliyyələşdirmək üçün Liberapay vasitəsilə iyanə edin',
-			'settings.language' => 'Dil',
-			'settings.theme' => 'Mövzu',
-			'settings.appearance' => 'Görünüş',
-			'settings.videoPlayback' => 'Video oynatma',
-			'settings.videoPlaybackDescription' => 'Oynatma davranışını tənzimləyin',
-			'settings.advanced' => 'Təkmilləşdirilmiş',
-			'settings.episodePosterMode' => 'Seriya poster stili',
-			'settings.seriesPoster' => 'Serial posteri',
-			'settings.seasonPoster' => 'Mövsüm posteri',
-			'settings.episodeThumbnail' => 'Kadr önizləməsi',
-			'settings.showHeroSectionDescription' => 'Ana səhifədə xüsusi məzmun karuselini göstər',
-			'settings.secondsLabel' => 'Saniyə',
-			'settings.minutesLabel' => 'Dəqiqə',
-			'settings.secondsShort' => 'san',
-			'settings.minutesShort' => 'dəq',
-			'settings.durationHint' => ({required Object min, required Object max}) => 'Müddəti daxil edin (${min}-${max})',
-			'settings.systemTheme' => 'Sistem',
-			'settings.lightTheme' => 'Açıq',
-			'settings.darkTheme' => 'Tünd',
-			'settings.oledTheme' => 'OLED',
-			'settings.emberTheme' => 'Köz',
-			'settings.glacierTheme' => 'Buzlaq',
-			'settings.forestTheme' => 'Meşə',
-			'settings.plumTheme' => 'Gavalı',
-			'settings.paperTheme' => 'Kağız',
-			'settings.libraryDensity' => 'Kitabxana sıxlığı',
-			'settings.displayScale' => 'Ekran miqyası',
-			'settings.compact' => 'Sıx',
-			'settings.comfortable' => 'Rəhat',
-			'settings.gridSpacing' => 'Tor aralığı',
-			'settings.gridSpacingTight' => 'Sıx',
-			'settings.gridSpacingNormal' => 'Normal',
-			'settings.gridSpacingSpacious' => 'Geniş',
-			'settings.tvCornerSpotlightBackdrop' => 'Künc işıqlandırma fonu',
-			'settings.tvCornerSpotlightBackdropDescription' => 'Arxa fonu ekranı örtmək əvəzinə sağ üst küncdə göstər',
-			'settings.viewMode' => 'Baxış rejimi',
-			'settings.gridView' => 'Tor',
-			'settings.listView' => 'Siyahı',
-			'settings.showHeroSection' => 'Xüsusi bölməni göstər',
-			'settings.continueWatchingAction' => 'İzləməyə davam et əməliyyatı',
-			'settings.continueWatchingPlay' => 'Oynat',
-			'settings.continueWatchingDetails' => 'Ətraflı aç',
-			'settings.episodeAction' => 'Seriya əməliyyatı',
-			'settings.episodePlay' => 'Oynat',
-			'settings.episodeDetails' => 'Ətraflı aç',
-			'settings.useGlobalHubs' => 'Ana səhifə quruluşunu istifadə et',
-			'settings.useGlobalHubsDescription' => 'Birləşdirilmiş ana səhifə bölmələrini göstər. Əks halda kitabxana tövsiyələrini istifadə edir.',
-			'settings.showServerNameOnHubs' => 'Bölmələrdə server adını göstər',
-			'settings.showServerNameOnHubsDescription' => 'Bölmə başlıqlarında həmişə server adlarını göstər.',
-			'settings.groupLibrariesByServer' => 'Kitabxanaları serverə görə qrupla',
-			'settings.groupLibrariesByServerDescription' => 'Yan menyu kitabxanalarını hər media serverinin altında qruplaşdır.',
-			'settings.alwaysKeepSidebarOpen' => 'Yan menyunu həmişə açıq saxla',
-			'settings.alwaysKeepSidebarOpenDescription' => 'Yan menyu genişlənmiş qalır və məzmun sahəsi buna uyğunlaşır',
-			'settings.showUnwatchedCount' => 'Baxılmamış sayını göstər',
-			'settings.showUnwatchedCountDescription' => 'Seriallarda və mövsümlərdə baxılmamış seriya sayını göstər',
-			'settings.showWatchedIndicators' => 'Baxılmış göstəriciləri göstər',
-			'settings.showWatchedIndicatorsDescription' => 'Baxılmış kinolarda, seriallarda və seriyalarda quşçuq göstər',
-			'settings.showEpisodeNumberOnCards' => 'Kartlarda seriya nömrəsini göstər',
-			'settings.showEpisodeNumberOnCardsDescription' => 'Seriya kartlarında mövsüm və seriya nömrəsini göstər',
-			'settings.showSeasonPostersOnTabs' => 'Mərhələlərdə mövsüm posterlərini göstər',
-			'settings.showSeasonPostersOnTabsDescription' => 'Hər mövsümün posterini öz bölməsinin üstündə göstər',
-			'settings.tvFullCardLayout' => 'Tam TV kartları',
-			'settings.tvFullCardLayoutDescription' => 'Aktyor adları üstündə olan yalnız şəkil tərkibli TV kartları istifadə et',
-			'settings.focusGlow' => 'Fokus parıltısı',
-			'settings.focusGlowDescription' => 'Fokuslanmış kartın ətrafında yumşaq parıltı çək',
-			'settings.visualEffects' => 'Vizual effektlər',
-			'settings.visualEffectsAuto' => 'Avtomatik',
-			'settings.visualEffectsAutoDescription' => 'Zəif cihazlarda effektləri avtomatik olaraq azalt',
-			'settings.visualEffectsFull' => 'Tam',
-			'settings.visualEffectsReduced' => 'Azaldılmış',
-			'settings.visualEffectsReducedDescription' => 'Daha az animasiya və daha aşağı keyfiyyətli şəkillər',
-			'settings.hideSpoilers' => 'Baxılmamış seriyalar üçün spoylerləri gizlə',
-			'settings.hideSpoilersDescription' => 'Baxılmamış seriyalar üçün miniatürləri və təsvirləri bulanıqlaşdır',
-			'settings.playerBackend' => 'Oynadıcı infrastrukturu',
-			'settings.exoPlayer' => 'ExoPlayer',
-			'settings.mpv' => 'mpv',
-			'settings.hardwareDecoding' => 'Avadanlıq kod açılması',
-			'settings.hardwareDecodingDescription' => 'Mümkün olduqda avadanlıq sürətləndirməsini istifadə et',
-			'settings.playbackBuffer' => 'Oxutma buferi',
-			'settings.playbackBufferAuto' => 'Avtomatik (tövsiyə olunur)',
-			'settings.playbackBufferLarge' => 'Böyük',
-			'settings.playbackBufferExtraLarge' => 'Çox böyük',
-			'settings.playbackBufferDescription' => 'Qeyri-sabit əlaqələrə qarşı daha çox buferləyir. Bufer ölçüsü ilə də məhdudlaşır.',
-			'settings.defaultQualityTitle' => 'Defolt keyfiyyət',
-			'settings.cellularQualityTitle' => 'Mobil şəbəkədə defolt keyfiyyət',
-			'settings.cellularQualitySameAsDefault' => 'Defolt keyfiyyətlə eyni',
-			'settings.directPlayCoveredQuality' => 'Kiçik videoları orijinal keyfiyyətdə oynat',
-			'settings.directPlayCoveredQualityDescription' => 'Keyfiyyət limitinə uyğun gələn videoları yenidən kodlaşdırmaq əvəzinə birbaşa oynat',
-			'settings.videoCodecs' => 'Video kodekləri',
-			'settings.videoCodecsDescription' => 'İşarələnməmiş kodekləri server yenidən kodlaşdırır',
-			'settings.videoCodecsAlwaysAccepted' => 'Həmişə qəbul edilir',
-			'settings.musicQualityTitle' => 'Musiqi keyfiyyəti',
-			'settings.subtitleStyling' => 'Altyazı tənzimləmələri',
-			'settings.subtitleStylingDescription' => 'Altyazı görünüşünü özünüləşdirin',
-			'settings.smallSkipDuration' => 'Kiçik ötürmə müddəti',
-			'settings.largeSkipDuration' => 'Böyük ötürmə müddəti',
-			'settings.rewindOnResume' => 'Davam edərkən geri sar',
-			'settings.secondsUnit' => ({required Object seconds}) => '${seconds} saniyə',
-			'settings.defaultSleepTimer' => 'Defolt yuxu taymeri',
-			'settings.minutesUnit' => ({required Object minutes}) => '${minutes} dəqiqə',
-			'settings.rememberTrackSelections' => 'Hər film/serial üçün səs/altyazı seçimlərini xatırla',
-			'settings.rememberTrackSelectionsDescription' => 'Hər məzmun üçün səs və altyazı seçimlərini yadda saxla',
-			'settings.rememberTrackSelectionsBackendRule' => 'Plex hər seçimi serverdə fayl üzrə saxlayır; Jellyfin həmçinin hesabın "Seçimləri xatırla" funksiyasını aktivləşdirir; Emby dəstəklənmir',
-			'settings.followServerTrackSelections' => 'Hər epizod üçün serverin trek seçimlərini istifadə et',
-			'settings.followServerTrackSelectionsDescription' => 'Epizod dəyişəndə cari seçimi köçürmək əvəzinə serverdə seçilmiş səs və altyazını tətbiq et',
-			'settings.resumeMusicOnLaunch' => 'Musiqi sessiyasını yadda saxla',
-			'settings.resumeMusicOnLaunchDescription' => 'Tətbiq açılanda son mahnını dayandırıldığı yerdə fasilədə aç',
-			'settings.showChapterMarkersOnTimeline' => 'Zaman çubuğunda hissə işarələrini göstər',
-			'settings.showChapterMarkersOnTimelineDescription' => 'Zaman çubuğunu hissə sərhədlərinə böl',
-			'settings.specialsOrdering' => 'Xüsusi bölmələr epizod sırasına görə',
-			'settings.specialsOrderingDescription' => 'Xüsusi bölmələrin serialın izləmə sırasındakı yeri',
-			'settings.specialsOrderingServer' => 'Server sırasını izlə',
-			'settings.specialsOrderingAirDate' => 'Yayım tarixinə görə qarışdır',
-			'settings.specialsOrderingLast' => 'Adi mövsümlərdən sonra',
-			'settings.clickVideoTogglesPlayback' => 'Oynat/fasilə üçün videoya toxun',
-			'settings.clickVideoTogglesPlaybackDescription' => 'İdarəetməni göstərmək əvəzinə oynatmaq/fasilə etmək üçün videoya toxun.',
-			'settings.videoPlayerControls' => 'Video oynadıcı idarəetmələri',
-			'settings.keyboardShortcuts' => 'Klaviatura qısayolları',
-			'settings.keyboardShortcutsDescription' => 'Klaviatura qısayollarını özünüləşdirin',
-			'settings.videoPlayerNavigation' => 'Video oynadıcı naviqasiyası',
-			'settings.videoPlayerNavigationDescription' => 'Oynadıcı idarəetmələrində hərəkət etmək üçün ox düymələrini istifadə edin',
-			'settings.watchTogetherRelay' => 'Birlikdə İzlə relesi',
-			'settings.watchTogetherRelayDescription' => 'Öz relenizi təyin etməsəniz, ictimai Open Watch Party releləri istifadə olunur',
-			'settings.watchTogetherRelayHint' => 'https://my-relay.example.com',
-			'settings.watchTogetherRelayInvalid' => 'Düzgün HTTP və ya HTTPS rele ünvanı daxil edin.',
-			'settings.crashReporting' => 'Xəta hesabatı',
-			'settings.crashReportingDescription' => 'Tətbiqi təkmilləşdirməyə kömək etmək üçün xəta hesabatları göndərin',
-			'settings.debugLogging' => 'Xəta saxlama jurnalı',
-			'settings.debugLoggingDescription' => 'Problemləri həll etmək üçün ətraflı jurnal qeydiyyatını aktivləşdirin',
-			'settings.viewLogs' => 'Jurnallara bax',
-			'settings.viewLogsDescription' => 'Tətbiq jurnallarına baxın',
-			'settings.clearImageCache' => 'Şəkil keşini təmizlə',
-			'settings.clearImageCacheDescription' => 'Keşlənmiş şəkilləri təmizləyir. Yenidən yüklənənədək şəkillər daha yavaş yüklənə bilər.',
-			'settings.clearImageCacheSuccess' => 'Şəkil keşi uğurla təmizləndi',
-			'settings.resetSettings' => 'Tənzimləmələri sıfırla',
-			'settings.resetSettingsDescription' => 'Defolt tənzimləmələri bərpa edin. Bu əməliyyat geri qaytarıla bilməz.',
-			'settings.resetSettingsSuccess' => 'Tənzimləmələr uğurla sıfırlandı',
-			'settings.backup' => 'Ehtiyat nüsxə',
-			'settings.exportSettings' => 'Tənzimləmələri ixrac et',
-			'settings.exportSettingsDescription' => 'Seçimlərinizi fayla yadda saxlayın',
-			'settings.exportSettingsSuccess' => 'Tənzimləmələr ixrac edildi',
-			'settings.importSettings' => 'Tənzimləmələri idxal et',
-			'settings.importSettingsDescription' => 'Seçimləri fayldan bərpa edin',
-			'settings.importSettingsConfirm' => 'Bu cari tənzimləmələrinizin üzərinə yazacaq. Davam edilsin?',
-			'settings.importSettingsSuccess' => 'Tənzimləmələr idxal edildi',
-			'settings.importSettingsInvalidFile' => 'Bu fayl düzgün Plezy tənzimləmələr faylı deyil',
-			'settings.importSettingsNoUser' => 'Tənzimləmələri idxal etməzdən əvvəl daxil olun',
-			'settings.shortcutsReset' => 'Qısayollar defolt vəziyyətə sıfırlandı',
-			'settings.resetShortcutsConfirm' => 'Bu, xüsusi qısayollarınızı defolt qısayollarla əvəz edəcək. Davam edilsin?',
-			'settings.about' => 'Haqqında',
-			'settings.aboutDescription' => 'Tətbiq məlumatı və lisenziyalar',
-			'settings.updates' => 'Yenilənmələr',
-			'settings.updateAvailable' => 'Yenilənmə var',
-			'settings.checkForUpdates' => 'Yenilənmələri yoxla',
-			'settings.autoCheckUpdatesOnStartup' => 'Açılışda yenilənmələri avtomatik yoxla',
-			'settings.autoCheckUpdatesOnStartupDescription' => 'Açılışda yenilənmə olduqda xəbərdar et',
-			'settings.validationErrorEnterNumber' => 'Lütfən düzgün rəqəm daxil edin',
-			'settings.validationErrorDuration' => ({required Object min, required Object max, required Object unit}) => 'Müddət ${min} və ${max} ${unit} arasında olmalıdır',
-			'settings.shortcutAlreadyAssigned' => ({required Object action}) => 'Qısayol artıq ${action} üçün təyin edilib',
-			'settings.shortcutUpdated' => ({required Object action}) => '${action} üçün qısayol yeniləndi',
-			'settings.saveFailed' => 'Dəyişikliklər yadda saxlanıla bilmədi. Təzədən cəhd edin.',
-			'settings.autoPlayAndSkip' => 'Avtomatik oynat və ötür',
-			'settings.autoPlayNextEpisode' => 'Növbəti seriyanı avtomatik oynat',
-			'settings.autoPlayNextEpisodeDescription' => 'Bir seriya bitdikdə növbətisini avtomatik başlat',
-			'settings.shuffleStartsFromBeginning' => 'Qarışdırma əvvəldən başlayır',
-			'settings.shuffleStartsFromBeginningDescription' => 'Qarışdırarkən hər seriyanı davam etdirmək əvəzinə əvvəldən başlat',
-			'settings.playNextCountdown' => 'Növbəti seriya geri sayımı',
-			'settings.playNextCountdownImmediate' => 'Dərhal oynat',
-			'settings.skipIntroMode' => 'Girişi ötür',
-			'settings.skipIntroModeOffDescription' => 'Girişləri ötürmə düyməsi olmadan normal oynat',
-			'settings.skipIntroModeButtonDescription' => 'Giriş başlayanda ötürmə düyməsini göstər',
-			'settings.skipIntroModeAutoDescription' => 'Girişləri aşağıdakı ləngimədən sonra avtomatik ötür',
-			'settings.skipCreditsMode' => 'Titrləri ötür',
-			'settings.skipCreditsModeOffDescription' => 'Titrləri ötürmə düyməsi olmadan normal oynat',
-			'settings.skipCreditsModeButtonDescription' => 'Titrlər başlayanda ötürmə düyməsini göstər',
-			'settings.skipCreditsModeAutoDescription' => 'Titrləri avtomatik ötür və növbəti seriyanı oynat',
-			'settings.skipMarkerModeOff' => 'Söndürülüb',
-			'settings.skipMarkerModeButton' => 'Düyməni göstər',
-			'settings.skipMarkerModeAuto' => 'Avtomatik',
-			'settings.forceSkipMarkerFallback' => 'Ehtiyat işarələri məcburi et',
-			'settings.forceSkipMarkerFallbackDescription' => 'Plex işarələri olsa belə hissə başlığı şablonlarını istifadə et',
-			'settings.autoSkipDelay' => 'Avtomatik ötürmə ləngiməsi',
-			'settings.autoSkipDelayDescription' => ({required Object seconds}) => 'Avtomatik ötürməzdən əvvəl ${seconds} saniyə gözlə',
-			'settings.introPattern' => 'Giriş işarəsi şablonu',
-			'settings.introPatternDescription' => 'Hissə başlıqlarında giriş işarələrini tapmaq üçün Regex şablonu',
-			'settings.creditsPattern' => 'Titr işarəsi şablonu',
-			'settings.creditsPatternDescription' => 'Hissə başlıqlarında titr işarələrini tapmaq üçün Regex şablonu',
-			'settings.invalidRegex' => 'Səhv requlyar ifadə (Regex)',
-			'settings.regex' => 'Requlyar ifadə (Regex)',
-			'settings.downloads' => 'Yükləmələr',
-			'settings.downloadLocationDescription' => 'Yüklənmiş məzmunun harada saxlanacağını seçin',
-			'settings.downloadLocationDefault' => 'Defolt (Tətbiq yaddaşı)',
-			'settings.downloadLocationCustom' => 'Xüsusi məkan',
-			'settings.selectFolder' => 'Qovluq seç',
-			'settings.resetToDefault' => 'Defolt vəziyyətə sıfırla',
-			'settings.currentPath' => ({required Object path}) => 'Cari: ${path}',
-			'settings.downloadLocationChanged' => 'Yükləmə məkanı dəyişdirildi',
-			'settings.downloadLocationReset' => 'Yükləmə məkanı defolt vəziyyətə sıfırlandı',
-			'settings.downloadLocationInvalid' => 'Seçilmiş qovluğa yazmaq olmur',
-			'settings.downloadLocationPickerUnavailable' => 'Qovluq seçimi bu cihazda əlçatan deyil',
-			'settings.downloadOnWifiOnly' => 'Yalnız Wi-Fi ilə yüklə',
-			'settings.downloadOnWifiOnlyDescription' => 'Mobil məlumat istifadə edildikdə yükləmələri dayandır',
-			'settings.autoRemoveWatchedDownloads' => 'Baxılmış yükləmələri avtomatik sil',
-			'settings.autoRemoveWatchedDownloadsDescription' => 'Baxılmış yükləmələri avtomatik olaraq sil',
-			'settings.cellularDownloadBlocked' => 'Mobil şəbəkədə yükləmələr bloklanıb. Wi-Fi istifadə edin və ya tənzimləməni dəyişin.',
-			'settings.maxVolume' => 'Maksimal səs',
-			'settings.maxVolumeDescription' => 'Sakit videolar üçün səsin 100%-dən yuxarı qalxmasına icazə ver',
-			'settings.maxVolumePercent' => ({required Object percent}) => '%${percent}',
-			'settings.discordRichPresence' => 'Discord Rich Presence',
-			'settings.discordRichPresenceDescription' => 'Discord-da nəyə baxdığınızı göstərin',
-			'settings.services' => 'Xidmətlər',
-			'settings.servicesDescription' => 'Trakt, MyAnimeList, Seerr və daha çoxunu qoşun',
-			'settings.manageLibrariesDescription' => 'Kitabxanaları yenidən sıralayın və gizlədin',
-			'settings.companionRemoteServer' => 'Köməkçi pult serveri',
-			'settings.companionRemoteServerDescription' => 'Şəbəkənizdəki mobil cihazların bu tətbiqi idarə etməsinə icazə verin',
-			'settings.companionRemoteServerStartFailed' => 'Köməkçi pult serveri başladıla bilmədi',
-			'settings.companionRemoteServerStopFailed' => 'Köməkçi pult serveri dayandırıla bilmədi',
-			'settings.autoPip' => 'Avtomatik Pəncərə daxilində Pəncərə (PiP)',
-			'settings.autoPipDescription' => 'Oynatma zamanı tətbiqdən çıxdıqda avtomatik PiP rejiminə keç',
-			'settings.matchContentFrameRate' => 'Kadr tezliyini uyğunlaşdır',
-			'settings.matchContentFrameRateDescription' => 'Ekran yenilənmə tezliyini video məzmununa uyğunlaşdır',
-			'settings.matchContentResolution' => 'Məzmunun görüntü keyfiyyətinə uyğunlaş',
-			'settings.matchContentResolutionDescription' => 'Ekranı videonun öz görüntü keyfiyyətinə keçirir ki, miqyaslandırmanı televizorunuz etsin. Oxutma zamanı menyular və altyazılar da miqyaslandırılır',
-			'settings.matchRefreshRate' => 'Yenilənmə tezliyini uyğunlaşdır',
-			'settings.matchRefreshRateDescription' => 'Tam ekranda ekran yenilənmə tezliyini uyğunlaşdır',
-			'settings.matchDynamicRange' => 'Dinamik diapazonu uyğunlaşdır',
-			'settings.matchDynamicRangeDescription' => 'HDR məzmun üçün HDR-ı açın, sonra SDR-a qayıdın',
-			'settings.displaySwitchDelay' => 'Ekran dəyişmə ləngiməsi',
-			'settings.tunneledPlayback' => 'Tünellənmiş oynatma',
-			'settings.tunneledPlaybackDescription' => 'Video tünelləməni istifadə et. HDR oynatmada qara ekran görünürsə və ya hərəkət takılırsa söndürün.',
-			'settings.audioPassthrough' => 'Səsin birbaşa ötürülməsi (Passthrough)',
-			'settings.audioPassthroughDescription' => 'Dolby/DTS səslərini yenidən kodlamadan TV və ya resiverə göndərir. Səs gəlmirsə söndürün.',
-			'settings.audioPassthroughDescriptionApple' => 'Atmos daxil olmaqla Dolby Digital Plus üçün Apple-ın daxili dekoderini istifadə edin. DTS və TrueHD yenə də çoxkanallı PCM kimi oynadılır. Səs gəlmirsə söndürün.',
-			'settings.audioPassthroughDescriptionAppleSpatial' => 'Atmos daxil olmaqla Dolby Digital Plus üçün Apple-ın daxili Dolby dekoderini istifadə edin. iOS, iPadOS və tvOS 26 və ya daha yeni versiyalarda TrueHD Atmos və DTS:X məkan səsi kimi oynadılır. Digər DTS və TrueHD trekləri çoxkanallı PCM kimi oynadılır. Səs gəlmirsə söndürün.',
-			'settings.audioPassthroughOverriddenByNormalization' => 'Səsin gurluğunu normallaşdırma aktivkən söndürülüb',
-			'settings.audioChannelLimit' => 'Səs kanalları',
-			'settings.audioChannelLimitDescription' => 'Bütün kanalları oynada bilməyən dinamiklər, qulaqlıqlar və ya HDMI qurğuları üçün dekodlanmış səsi daha az kanala endir',
-			'settings.audioChannelLimitOriginal' => 'Orijinal',
-			'settings.audioChannelLimitOriginalDescription' => 'Trekdəki bütün kanalları oynat',
-			'settings.audioChannelLimitSurround51' => '5.1-ə qədər',
-			'settings.audioChannelLimitSurround51Description' => 'Yalnız 5.1 PCM qəbul edən televizorlar və resiverlər üçün 7.1-i 5.1-ə endir. Birbaşa ötürməyə təsir etmir.',
-			'settings.audioChannelLimitStereo' => 'Stereo',
-			'settings.audioChannelLimitStereoDescription' => 'Stereo dinamiklər və ya qulaqlıqlar üçün iki kanala endir. Birbaşa ötürməni söndürür.',
-			'settings.downmixCenterBoost' => 'Mərkəz kanal gücləndirilməsi',
-			'settings.downmixCenterBoostValue' => ({required Object db}) => '${db} dB',
-			'settings.downmixCenterBoostLabel' => 'Gücləndirmə (dB)',
-			'settings.downmixCenterBoostShort' => 'dB',
-			'settings.audioDownmixNormalize' => 'Çevirmədə səsi normallaşdır',
-			'settings.audioDownmixNormalizeDescription' => 'Səs kəsilmələrinin qarşısını almaq üçün səviyyəni endirin. Orijinal səs səviyyəsini saxlamaq üçün söndürün (yüksək səsli səhnələr təhrif oluna bilər).',
-			'settings.dvConversionMode' => 'Dolby Vision çevrilməsi',
-			'settings.dvConversionModeDescription' => 'Dolby Vision Profile 7 fayllarının necə emal ediləcəyini seçin.',
-			'settings.dvConversionAuto' => 'Avtomatik',
-			'settings.dvConversionNative' => 'Daxili / Söndürülüb',
-			'settings.dvConversionDv81' => 'P7 → P8.1',
-			'settings.dvConversionHevcStrip' => 'P7 → HEVC',
-			'settings.dvConversionAutoDescription' => 'Cihaz imkanlarının təyini və normal davranışdan istifadə et',
-			'settings.dvConversionNativeDescription' => 'Daxili DV7-ni məcburi et',
-			'settings.dvConversionDv81Description' => 'Dolby Vision profile 8.1-ə çevrilməni məcburi et',
-			'settings.dvConversionHevcStripDescription' => 'Dolby Vision təbəqələrini sil və sadə HEVC kimi təqdim et',
-			'settings.disableDolbyVision' => 'Dolby Vision-u söndür',
-			'settings.disableDolbyVisionDescription' => 'Faylda varsa, Dolby Vision əvəzinə HDR10 və ya HLG təbəqəsini oynat',
-			'settings.hdrSdrConversion' => 'HDR-dən SDR-ə çevirmə',
-			'settings.hdrSdrConversionDescription' => 'Ekran HDR göstərə bilmədikdə HDR videonu nəyin çevirəcəyini seçin.',
-			'settings.hdrSdrConversionAuto' => 'Avtomatik',
-			'settings.hdrSdrConversionAutoDescription' => 'Android 9 və sonrakı versiyalarda cihaz, köhnə versiyalarda oynadıcı',
-			'settings.hdrSdrConversionDevice' => 'Cihaz',
-			'settings.hdrSdrConversionDeviceDescription' => 'Çevirməni cihazın video avadanlığı edir. Ən sürətlisi, lakin rənglər cihazdan asılıdır',
-			'settings.hdrSdrConversionPlayer' => 'Oynadıcı',
-			'settings.hdrSdrConversionPlayerDescription' => 'Çevirməni oynadıcı edir. Sabit rənglər, lakin zəif TV qutularında 4K ilişə bilər',
-			'settings.deinterlace' => 'Deinterleysinq',
-			'settings.deinterlaceDescription' => 'Sətirlərarası videodakı darama artefaktlarını aradan qaldır (yalnız mpv oynadıcısı)',
-			'settings.deinterlaceOff' => 'Söndürülüb',
-			'settings.deinterlaceOffDescription' => 'Sətirlərarası videonu dekodlandığı kimi göstər',
-			'settings.deinterlaceVideo' => 'Video',
-			'settings.deinterlaceVideoDescription' => 'Hər yarımkadrı tam kadra çevir. İdman, xəbər və konsert kimi TV üçün çəkilmiş videolar üçün',
-			'settings.deinterlaceFilm' => 'Film',
-			'settings.deinterlaceFilmDescription' => '29.97 fps-ə telesine edilmiş film və animasiyaların orijinal kadrlarını bərpa et (NTSC DVD-lərdə geniş yayılıb). TV üçün çəkilmiş video ilişir. Canlı TV Video rejimindən istifadə edir',
-			'settings.requireProfileSelectionOnOpen' => 'Açılışda profil soruş',
-			'settings.requireProfileSelectionOnOpenDescription' => 'Tətbiq hər dəfə açıldıqda profil seçimini göstər',
-			'settings.forceTvMode' => 'TV rejimini məcburi et',
-			'settings.forceTvModeDescription' => 'TV interfeysini məcburi et. Avtomatik təyin etməyən cihazlar üçündür. Yenidən başlatma tələb olunur.',
-			'settings.startInFullscreen' => 'Tam ekranda başlat',
-			'settings.startInFullscreenDescription' => 'Plezy-ni açılışda tam ekran rejimində aç',
-			'settings.exitFullscreenOnPlayerClose' => 'Oynadıcı bağlandıqda tam ekrandan çıx',
-			'settings.exitFullscreenOnPlayerCloseDescription' => 'Video oynadıcını bağlayarkən avtomatik tam ekrandan çıx',
-			'settings.autoHidePerformanceOverlay' => 'Məhsuldarlıq paneli avtomatik gizlənsin',
-			'settings.autoHidePerformanceOverlayDescription' => 'Məhsuldarlıq panelini oynatıcı idarəetmələri ilə birlikdə gizlət',
-			'settings.showNavBarLabels' => 'Naviqasiya paneli yazılarını göstər',
-			'settings.showNavBarLabelsDescription' => 'Naviqasiya paneli ikonlarının altında mətni göstər',
-			'settings.startupSection' => 'Başlanğıc bölməsi',
-			'settings.showExploreTab' => 'Kəşf et nişanını göstər',
-			'settings.showExploreTabDescription' => 'Plex Discover və qoşulmuş izləmə xidmətlərindəki məzmunla Kəşf et nişanını göstər',
-			'settings.liveTvDefaultFavorites' => 'Canlı TV-də sevimli kanalları defolt et',
-			'settings.liveTvDefaultFavoritesDescription' => 'Canlı TV açıldıqda yalnız sevimli kanalları göstər',
-			'settings.general' => 'Ümumi',
-			'settings.generalDescription' => 'Dil, başlanğıc və pəncərə davranışı',
-			'settings.languageAndRegion' => 'Dil və Region',
-			'settings.startup' => 'Başlanğıc',
-			'settings.display' => 'Ekran',
-			'settings.libraryAndCards' => 'Kitabxana və kartlar',
-			'settings.homeScreen' => 'Ana ekran',
-			'settings.navigation' => 'Naviqasiya',
-			'settings.window' => 'Pəncərə',
-			'settings.liveTv' => 'Canlı TV',
-			'settings.player' => 'Oynadıcı',
-			'settings.videoAndDisplay' => 'Video və Ekran',
-			'settings.audio' => 'Səs',
-			'settings.quality' => 'Keyfiyyət',
-			'settings.subtitles' => 'Altyazılar',
-			'settings.seekAndTiming' => 'Sarğı və vaxt tənzimləməsi',
-			'settings.behavior' => 'Davranış',
-			'settings.gestures' => 'Jestlər',
-			'settings.gestureBrightnessSwipe' => 'Parlaqlıq sürüşdürməsi',
-			'settings.gestureBrightnessSwipeDescription' => 'Parlaqlığı tənzimləmək üçün sol kənarda yuxarı və ya aşağı sürüşdürün',
-			'settings.gestureVolumeSwipe' => 'Səs sürüşdürməsi',
-			'settings.gestureVolumeSwipeDescription' => 'Səsi tənzimləmək üçün sağ kənarda yuxarı və ya aşağı sürüşdürün',
-			'settings.gesturePinchToZoom' => 'Çimdiklə yaxınlaşdır',
-			'settings.gesturePinchToZoomDescription' => 'Yaxınlaşdırmaq və ya uzaqlaşdırmaq üçün videoda çimdik hərəkəti edin',
-			'settings.rememberBrightnessLevel' => 'Parlaqlıq səviyyəsini xatırla',
-			'settings.rememberBrightnessLevelDescription' => 'Oxutmanı son sürüşdürmə ilə təyin edilmiş parlaqlıqda başlat',
-			'settings.controls' => 'İdarəetmələr',
-			'settings.rememberPlayerChanges' => 'Pleyer dəyişikliklərini yadda saxla',
-			'settings.rememberPlayerChangesDescription' => 'Oxutma zamanı edilən dəyişikliklərin harada saxlanacağı və yenidən tətbiq ediləcəyi',
-			'settings.scopePlaybackSpeed' => 'Oxutma sürəti',
-			'settings.scopeShaderPreset' => 'Şader ön ayarı',
-			'settings.scopeAspectRatio' => 'Tərəf nisbəti',
-			'settings.scopeZoom' => 'Miqyas',
-			'settings.scopeSyncOffsets' => 'Audio və subtitr sinxronizasiyası',
-			'settings.playerScopeOff' => 'Saxlama',
-			'settings.playerScopeGlobal' => 'Hər yerdə',
-			'settings.playerScopeLibrary' => 'Kitabxana üzrə',
-			'settings.playerScopeTitle' => 'Serial və ya film üzrə',
-			'settings.exportDialogTitle' => 'Plezy tənzimləmələrini ixrac et',
-			'themeEditor.builtIn' => 'Daxili',
-			'themeEditor.presets' => 'Hazır mövzular',
-			'themeEditor.custom' => 'Xüsusi',
-			'themeEditor.customEmpty' => 'Hələ yaradılmayıb',
-			'themeEditor.editCustom' => 'Xüsusi mövzuya düzəliş et',
-			'themeEditor.editCustomDescription' => 'Bütün rəngləri özünüz seçin',
-			'themeEditor.locked' => 'Mövzu və ikon paketi ilə açın',
-			'themeEditor.savedLocked' => 'Yadda saxlanılıb — Mövzu və ikon paketi ilə açılır',
-			'themeEditor.title' => 'Xüsusi mövzu',
-			'themeEditor.startFrom' => 'Başlanğıc mövzu',
-			'themeEditor.startFromDescription' => 'Bütün rəngləri başqa mövzudan kopyala',
-			'themeEditor.colors' => 'Rənglər',
-			'themeEditor.preview' => 'Önizləmə',
-			'themeEditor.slots.bg' => 'Arxa fon',
-			'themeEditor.slots.surface' => 'Səth',
-			'themeEditor.slots.outline' => 'Kontur',
-			'themeEditor.slots.text' => 'Mətn',
-			'themeEditor.slots.textMuted' => 'Köməkçi mətn',
-			_ => null,
-		} ?? switch (path) {
-			'themeEditor.slots.accent' => 'Vurğu',
-			'themeEditor.opacity' => 'Şəffaflıq',
-			'themeEditor.hexHint' => '#RRGGBB və ya #AARRGGBB',
-			'themeEditor.fromOtherThemes' => 'Digər mövzulardan',
-			'themeEditor.swatchLabel' => ({required Object theme, required Object color}) => '${theme}: ${color}',
-			'themeEditor.contrast.textOnBg' => 'Arxa fonda mətn',
-			'themeEditor.contrast.textOnSurface' => 'Səthdə mətn',
-			'themeEditor.contrast.textMutedOnBg' => 'Arxa fonda köməkçi mətn',
-			'themeEditor.contrast.textMutedOnSurface' => 'Səthdə köməkçi mətn',
-			'themeEditor.contrast.accentOnBg' => 'Arxa fonda vurğu',
-			'themeEditor.contrast.accentOnSurface' => 'Səthdə vurğu',
-			'themeEditor.contrast.labelOnAccent' => 'Vurğu üzərində düymə mətni',
-			'themeEditor.lowContrast' => ({required Object pair, required Object ratio, required Object minimum}) => '${pair}: ${ratio}:1, tövsiyə olunan ${minimum}:1-dən aşağı',
-			'themeEditor.discardTitle' => 'Dəyişikliklərdən imtina edilsin?',
-			'themeEditor.discardMessage' => 'Yadda saxlanmamış rəng dəyişiklikləriniz itəcək.',
-			'themeEditor.discard' => 'İmtina et',
-			'themeEditor.previewCardTitle' => ({required Object number}) => 'Seriya ${number}',
-			'themeEditor.previewCardSubtitle' => ({required Object minutes}) => '${minutes} dəq qaldı',
-			'themeEditor.previewSwitch' => 'Avtomatik oynatma',
-			'themeEditor.previewMutedText' => 'Köməkçi mətn belə görünür',
-			'search.hint' => 'Kino, serial, musiqi axtar...',
-			'search.tryDifferentTerm' => 'Fərqli axtarış sözü cəhd edin',
-			'search.searchYourMedia' => 'Mediyanızda axtarın',
-			'search.enterTitleActorOrKeyword' => 'Ad, aktyor və ya açar söz daxil edin',
-			'search.people' => 'Şəxslər',
-			'hotkeys.setShortcutFor' => ({required Object actionName}) => '${actionName} üçün qısayol təyin et',
-			'hotkeys.clearShortcut' => 'Qısayolu təmizlə',
-			'hotkeys.noShortcutSet' => 'Qısayol təyin edilməyib',
-			'hotkeys.currentShortcut' => 'Cari qısayol:',
-			'hotkeys.pressToRecord' => 'Qısayol yazmaq üçün seçin',
-			'hotkeys.recordingShortcut' => 'İndi qısayol düymələrinə basın',
-			'hotkeys.actions.playPause' => 'Oynat/Fasilə',
-			'hotkeys.actions.volumeUp' => 'Səsi artır',
-			'hotkeys.actions.volumeDown' => 'Səsi azalt',
-			'hotkeys.actions.seekForward' => ({required Object seconds}) => 'İrəli sar (${seconds}san)',
-			'hotkeys.actions.seekBackward' => ({required Object seconds}) => 'Geri sar (${seconds}san)',
-			'hotkeys.actions.fullscreenToggle' => 'Tam ekranı dəyişdir',
-			'hotkeys.actions.muteToggle' => 'Səsi aç/bağla',
-			'hotkeys.actions.subtitleToggle' => 'Altyazını aç/bağla',
-			'hotkeys.actions.audioTrackNext' => 'Növbəti səs zolağı',
-			'hotkeys.actions.subtitleTrackNext' => 'Növbəti altyazı zolağı',
-			'hotkeys.actions.chapterNext' => 'Növbəti hissə',
-			'hotkeys.actions.chapterPrevious' => 'Əvvəlki hissə',
-			'hotkeys.actions.episodeNext' => 'Növbəti seriya',
-			'hotkeys.actions.episodePrevious' => 'Əvvəlki seriya',
-			'hotkeys.actions.speedIncrease' => 'Sürəti artır',
-			'hotkeys.actions.speedDecrease' => 'Sürəti azalt',
-			'hotkeys.actions.speedReset' => 'Sürəti sıfırla',
-			'hotkeys.actions.zoomIn' => 'Yaxınlaşdır',
-			'hotkeys.actions.zoomOut' => 'Uzaqlaşdır',
-			'hotkeys.actions.zoomReset' => 'Miqyası sıfırla',
-			'hotkeys.actions.subSeekNext' => 'Növbəti altyazıya sar',
-			'hotkeys.actions.subSeekPrev' => 'Əvvəlki altyazıya sar',
-			'hotkeys.actions.shaderToggle' => 'Şeyderləri aç/bağla',
-			'hotkeys.actions.skipMarker' => 'Girişi/Titrləri ötür',
-			'hotkeys.actions.screenshot' => 'Ekran şəkli çək',
-			'fileInfo.title' => 'Fayl məlumatı',
-			'fileInfo.overview' => 'Ümumi baxış',
-			'fileInfo.video' => 'Video',
-			'fileInfo.audio' => 'Səs',
-			'fileInfo.subtitles' => 'Altyazılar',
-			'fileInfo.images' => 'Daxili şəkillər',
-			'fileInfo.dataStreams' => 'Məlumat axınları',
-			'fileInfo.lyrics' => 'Mahnı sözləri',
-			'fileInfo.file' => 'Fayl',
-			'fileInfo.attachments' => 'Əlavələr',
-			'fileInfo.delivery' => 'Çatdırılma',
-			'fileInfo.versionCounter' => ({required Object count, required Object index}) => '${count}-dən ${index} versiya',
-			'fileInfo.fileCounter' => ({required Object count, required Object index}) => '${count}-dən ${index} fayl',
-			'fileInfo.noStreams' => 'Server bu fayl üçün heç bir axın bildirmədi.',
-			'fileInfo.copyPath' => 'Yolu kopyala',
-			'fileInfo.pathCopied' => 'Fayl yolu kopyalandı',
-			'fileInfo.codec' => 'Kodek',
-			'fileInfo.codecTag' => 'Kodek teqi',
-			'fileInfo.resolution' => 'Ayırdetmə',
-			'fileInfo.codedResolution' => 'Kodlanmış rezolyusiya',
-			'fileInfo.bitrate' => 'Bit sürəti (Bitrate)',
-			'fileInfo.frameRate' => 'Kadr tezliyi',
-			'fileInfo.rotation' => 'Dönmə',
-			'fileInfo.comment' => 'Şərh',
-			'fileInfo.audioDescription' => 'Səs təsviri',
-			'fileInfo.headerCompression' => 'Başlıq sıxışdırması',
-			'fileInfo.sidecarFile' => 'Sidecar faylı',
-			'fileInfo.transportTimestamp' => 'Transport vaxt damğası',
-			'fileInfo.displayOffset' => 'Ekran ofseti',
-			'fileInfo.previewFailureCode' => 'Önizləmə xəta kodu',
-			'fileInfo.previewRetries' => 'Önizləmə cəhdləri',
-			'fileInfo.aspectRatio' => 'Tərəf nisbəti',
-			'fileInfo.pixelAspectRatio' => 'Piksel aspekt nisbəti',
-			'fileInfo.profile' => 'Profil',
-			'fileInfo.level' => 'Səviyyə',
-			'fileInfo.bitDepth' => 'Bit dərinliyi',
-			'fileInfo.pixelFormat' => 'Piksel formatı',
-			'fileInfo.colorSpace' => 'Rəng sahəsi',
-			'fileInfo.colorRange' => 'Rəng diapazonu',
-			'fileInfo.colorPrimaries' => 'Əsas rənglər',
-			'fileInfo.colorTransfer' => 'Rəng ötürməsi',
-			'fileInfo.chromaSubsampling' => 'Rəng alt-diskretləşdirməsi',
-			'fileInfo.chromaLocation' => 'Chroma mövqeyi',
-			'fileInfo.scanType' => 'Tarama növü',
-			'fileInfo.interlaced' => 'Sətirlərarası',
-			'fileInfo.anamorphic' => 'Anamorfik',
-			'fileInfo.referenceFrames' => 'İstinad kadrları',
-			'fileInfo.dynamicRange' => 'Dinamik diapazon',
-			'fileInfo.dolbyVision' => 'Dolby Vision',
-			'fileInfo.dolbyVisionLevel' => 'Dolby Vision səviyyəsi',
-			'fileInfo.dolbyVisionVersion' => 'Dolby Vision versiyası',
-			'fileInfo.dolbyVisionLayers' => 'Dolby Vision təbəqələri',
-			'fileInfo.baseLayerCompatibility' => 'Baza təbəqə uyğunluğu',
-			'fileInfo.avcBitstream' => 'AVC bit axını',
-			'fileInfo.nalLengthSize' => 'NAL uzunluq ölçüsü',
-			'fileInfo.scalingMatrix' => 'Xüsusi miqyaslama matrisi',
-			'fileInfo.streamIdentifier' => 'Axın identifikatoru',
-			'fileInfo.streamIndex' => 'Axın indeksi',
-			'fileInfo.streamId' => 'Axın ID-si',
-			'fileInfo.language' => 'Dil',
-			'fileInfo.languageCode' => 'Dil kodu',
-			'fileInfo.streamTitle' => 'Trek başlığı',
-			'fileInfo.channels' => 'Kanallar',
-			'fileInfo.sampleRate' => 'Diskretləşdirmə tezliyi',
-			'fileInfo.spatialAudio' => 'Məkan səsi',
-			'fileInfo.textBased' => 'Mətn əsaslı',
-			'fileInfo.subtitleFormat' => 'Sidecar formatı',
-			'fileInfo.provider' => 'Provayder',
-			'fileInfo.matchScore' => 'Uyğunluq balı',
-			'fileInfo.externalDelivery' => 'Ayrıca ötürülə bilər',
-			'fileInfo.sidecarPath' => 'Sidecar yolu',
-			'fileInfo.sourceStream' => 'Kopyalanan mənbə',
-			'fileInfo.temporary' => 'Müvəqqəti',
-			'fileInfo.timeBase' => 'Vaxt bazası',
-			'fileInfo.overallBitrate' => 'Ümumi bit sürəti',
-			'fileInfo.path' => 'Yol',
-			'fileInfo.fileName' => 'Fayl adı',
-			'fileInfo.size' => 'Həcm',
-			'fileInfo.totalSize' => 'Ümumi ölçü',
-			'fileInfo.container' => 'Konteyner',
-			'fileInfo.duration' => 'Müddət',
-			'fileInfo.previewThumbnails' => 'Önizləmə miniatürləri',
-			'fileInfo.previewIndex' => 'Önizləmə indeksi',
-			'fileInfo.packetLength' => 'Paket uzunluğu',
-			'fileInfo.filePresent' => 'Fayl mövcuddur',
-			'fileInfo.fileReadable' => 'Server tərəfindən oxuna bilir',
-			'fileInfo.streamPath' => 'Axın yolu',
-			'fileInfo.optimizedForStreaming' => 'Yayım üçün optimallaşdırılıb',
-			'fileInfo.has64bitOffsets' => '64-bit ofsetlər',
-			'fileInfo.protocol' => 'Protokol',
-			'fileInfo.mediaType' => 'Media növü',
-			'fileInfo.sourceKind' => 'Mənbə növü',
-			'fileInfo.optimizedVersion' => 'Optimallaşdırılmış versiya',
-			'fileInfo.optimizationTarget' => 'Optimallaşdırma hədəfi',
-			'fileInfo.deletedAt' => 'Silinib',
-			'fileInfo.remoteSource' => 'Uzaq mənbə',
-			'fileInfo.infiniteStream' => 'Sonsuz axın',
-			'fileInfo.directPlay' => 'Birbaşa oynatma',
-			'fileInfo.directStream' => 'Birbaşa axın',
-			'fileInfo.transcoding' => 'Yenidən kodlaşdırma',
-			'fileInfo.etag' => 'ETag',
-			'fileInfo.versionId' => 'Versiya ID-si',
-			'fileInfo.fileId' => 'Fayl ID-si',
-			'fileInfo.defaultAudioTrack' => 'Defolt səs treki',
-			'fileInfo.defaultSubtitleTrack' => 'Defolt altyazı treki',
-			'fileInfo.subtitlesOff' => 'Söndürülüb',
-			'fileInfo.flagDefault' => 'Defolt',
-			'fileInfo.flagForced' => 'Məcburi',
-			'fileInfo.flagSelected' => 'Seçilib',
-			'fileInfo.flagExternal' => 'Xarici',
-			'fileInfo.flagHearingImpaired' => 'Eşitmə qüsurlu üçün',
-			'fileInfo.flagDub' => 'Dublyaj',
-			'fileInfo.flagOriginal' => 'Orijinal',
-			'fileInfo.channelsMono' => 'Mono',
-			'fileInfo.dolbyVisionProfile' => ({required Object profile}) => 'Profil ${profile}',
-			'mediaMenu.markAsWatched' => 'Baxıldı olaraq işarələ',
-			'mediaMenu.markAsUnwatched' => 'Baxılmadı olaraq işarələ',
-			'mediaMenu.removeFromContinueWatching' => 'İzləməyə davam et-dən sil',
-			'mediaMenu.viewDetails' => 'Ətraflı bax',
-			'mediaMenu.goToSeries' => 'Seriala keç',
-			'mediaMenu.shufflePlay' => 'Qarışıq oynat',
-			'mediaMenu.shuffleNotAvailableOffline' => 'Qarışıq oynatma oflayn rejimdə əlçatan deyil',
-			'mediaMenu.fileInfo' => 'Fayl məlumatı',
-			'mediaMenu.deleteEpisodeFromServer' => 'Seriyanı serverdən sil',
-			'mediaMenu.deleteSeasonFromServer' => 'Mövsümü serverdən sil',
-			'mediaMenu.deleteShowFromServer' => 'Serialı serverdən sil',
-			'mediaMenu.deleteMovieFromServer' => 'Kinonu serverdən sil',
-			'mediaMenu.deleteEpisodeTitle' => 'Bu seriya silinsin?',
-			'mediaMenu.deleteSeasonTitle' => 'Bu mövsüm silinsin?',
-			'mediaMenu.deleteShowTitle' => 'Bu serial silinsin?',
-			'mediaMenu.deleteMovieTitle' => 'Bu kino silinsin?',
-			'mediaMenu.deleteEpisodeConfirm' => 'Seriyanı sil',
-			'mediaMenu.deleteSeasonConfirm' => 'Mövsümü sil',
-			'mediaMenu.deleteShowConfirm' => 'Serialı sil',
-			'mediaMenu.deleteMovieConfirm' => 'Kinonu sil',
-			'mediaMenu.deleteAnyway' => 'Yenə də sil',
-			'mediaMenu.confirmDeleteTarget' => ({required Object title}) => '${title} serverinizdən birdəfəlik silinsin?',
-			'mediaMenu.deleteMultipleWarning' => 'Bu bütün seriyaları və faylları əhatə edir.',
-			'mediaMenu.deleteEpisodeCountWarning' => ({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('az'))(n, one: 'Bu, içindəki ${n} seriyanı və onun faylını siləcək.', other: 'Bu, içindəki ${n} seriyanı və onların fayllarını siləcək.', ), 
-			'mediaMenu.deleteMultiPartWarning' => ({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('az'))(n, one: 'Bu element ${n} fayl kimi saxlanılır və o silinəcək.', other: 'Bu element ${n} faylda saxlanılır və hamısı silinəcək.', ), 
-			'mediaMenu.deleteSharedFileHeading' => ({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('az'))(n, one: 'Eyni faylda saxlanılan ${n} başqa seriya da silinəcək:', other: 'Eyni faylda saxlanılan ${n} başqa seriya da silinəcək:', ), 
-			'mediaMenu.deleteScopeUnverifiedProbeFailed' => 'Plezy bunun hansı faylları siləcəyini yoxlaya bilmədi, ona görə də yuxarıda adı çəkilən elementdən daha çoxunu silə bilər. Ləğv edib təzədən cəhd edin və ya yenə də silin.',
-			'mediaMenu.deleteScopeUnverifiedNoFileInfo' => 'Serveriniz bu element üçün fayl təfərrüatlarını təqdim etmədi, ona görə Plezy bunun hansı faylları siləcəyini yoxlaya bilmir. Yuxarıda adı çəkilən elementdən daha çoxunu silə bilər.',
-			'mediaMenu.mediaDeletedSuccessfully' => 'Media elementi uğurla silindi',
-			'mediaMenu.mediaFailedToDelete' => 'Media elementi silinə bilmədi',
-			'mediaMenu.rate' => 'Qiymətləndir',
-			'mediaMenu.playFromBeginning' => 'Əvvəldən oynat',
-			'mediaMenu.playVersion' => 'Versiyanı oynat...',
-			'rateSheet.title' => 'Qiymətləndir',
-			'rateSheet.server' => 'Server',
-			'rateSheet.favorite' => 'Sevimli',
-			'rateSheet.favorited' => 'Sevimlilərə əlavə edildi',
-			'rateSheet.saved' => 'Yadda saxlanıldı',
-			'rateSheet.notAvailable' => 'Uyğunluq tapılmadı',
-			'rateSheet.noConnectedServices' => 'Orada qiymətləndirmək üçün Tənzimləmələrdən xidmət qoşun.',
-			'accessibility.mediaCardMovie' => ({required Object title}) => '${title}, kino',
-			'accessibility.mediaCardShow' => ({required Object title}) => '${title}, TV şou',
-			'accessibility.mediaCardEpisode' => ({required Object title, required Object episodeInfo}) => '${title}, ${episodeInfo}',
-			'accessibility.mediaCardSeason' => ({required Object title, required Object seasonInfo}) => '${title}, ${seasonInfo}',
-			'accessibility.mediaCardWatched' => 'baxılıb',
-			'accessibility.mediaCardPartiallyWatched' => ({required Object percent}) => '%${percent} baxılıb',
-			'accessibility.mediaCardUnwatched' => 'baxılmayıb',
-			'accessibility.tapToPlay' => 'Oynatmaq üçün toxunun',
-			'accessibility.decrease' => 'Azalt',
-			'accessibility.increase' => 'Artır',
-			'accessibility.decreaseValue' => ({required Object label}) => '${label} dəyərini azalt',
-			'accessibility.increaseValue' => ({required Object label}) => '${label} dəyərini artır',
-			'accessibility.hue' => 'Rəng çaları',
-			'accessibility.saturation' => 'Doyğunluq',
-			'accessibility.brightness' => 'Parlaqlıq',
-			'accessibility.hexColor' => 'Hex rəngi',
-			'accessibility.expandText' => 'Mətni genişləndir',
-			'accessibility.collapseText' => 'Mətni yığ',
-			'accessibility.alphabetNavigation' => 'Əlifba naviqasiyası',
-			'accessibility.alphabetScrollHint' => 'Hərflərə görə keçmək üçün yuxarı və ya aşağı sürüşdürün',
-			'accessibility.rowColumnPosition' => ({required Object row, required Object rowCount, required Object column, required Object columnCount}) => 'Sətir ${row} / ${rowCount}, sütun ${column} / ${columnCount}',
-			'accessibility.rowPosition' => ({required Object row, required Object rowCount}) => 'Sətir ${row} / ${rowCount}',
-			'accessibility.autoScrollPlay' => 'Avtomatik sürüşdürməni başlat',
-			'accessibility.autoScrollPause' => 'Avtomatik sürüşdürməyə fasilə ver',
-			'accessibility.hueShort' => 'H',
-			'accessibility.saturationShort' => 'S',
-			'accessibility.valueShort' => 'V',
-			'tooltips.shufflePlay' => 'Qarışıq oynat',
-			'tooltips.playTrailer' => 'Treyleri oynat',
-			'tooltips.markAsWatched' => 'Baxıldı olaraq işarələ',
-			'tooltips.markAsUnwatched' => 'Baxılmadı olaraq işarələ',
-			'audioTracks.track' => ({required Object n}) => 'Səs zolağı ${n}',
-			'videoControls.audioLabel' => 'Səs',
-			'videoControls.subtitlesLabel' => 'Altyazı',
-			'videoControls.addTime' => ({required Object amount, required Object unit}) => '+${amount}${unit}',
-			'videoControls.letterbox' => 'Geniş ekran (Letterbox)',
-			'videoControls.fillScreen' => 'Ekrana doldur',
-			'videoControls.stretch' => 'Gərmək',
-			'videoControls.lockRotation' => 'Dönməni kilidlə',
-			'videoControls.unlockRotation' => 'Dönmə kilidini aç',
-			'videoControls.timerActive' => 'Taymer aktivdir',
-			'videoControls.playbackWillPauseIn' => ({required Object duration}) => 'Oynatma ${duration} sonra fasilə olunacaq',
-			'videoControls.sleepTimerEndOfVideo' => 'Cari videonun sonu',
-			'videoControls.sleepTimerStopAtHeader' => 'Dayanma vaxtı',
-			'videoControls.sleepTimerDurationHeader' => 'Taymer',
-			'videoControls.playbackWillPauseAtEnd' => 'Oynatma bu videonun sonunda fasilə olunacaq',
-			'videoControls.stillWatching' => 'Hələ də baxırsınız?',
-			'videoControls.pausingIn' => ({required Object seconds}) => '${seconds}san sonra fasilə edilir',
-			'videoControls.continueWatching' => 'Davam et',
-			'videoControls.autoPlayNext' => 'Növbətini avtomatik oynat',
-			'videoControls.playNext' => 'Növbətini oynat',
-			'videoControls.playButton' => 'Oynat',
-			'videoControls.pauseButton' => 'Fasilə',
-			'videoControls.playbackPaused' => 'Fasilədə',
-			'videoControls.playbackResumed' => 'Oynadılır',
-			'videoControls.loadingVideo' => 'Video yüklənir',
-			'videoControls.showPlaybackControls' => 'Oynatma idarəetmələrini göstər',
-			'videoControls.hidePlaybackControls' => 'Oynatma idarəetmələrini gizlət',
-			'videoControls.seekBackwardButton' => ({required Object seconds}) => '${seconds} saniyə geri sar',
-			'videoControls.seekForwardButton' => ({required Object seconds}) => '${seconds} saniyə irəli sar',
-			'videoControls.previousButton' => 'Əvvəlki seriya',
-			'videoControls.nextButton' => 'Növbəti seriya',
-			'videoControls.previousChapterButton' => 'Əvvəlki hissə',
-			'videoControls.nextChapterButton' => 'Növbəti hissə',
-			'videoControls.muteButton' => 'Səsi söndür',
-			'videoControls.unmuteButton' => 'Səsi aç',
-			'videoControls.settingsButton' => 'Oynatma tənzimləmələri',
-			'videoControls.tracksButton' => 'Səs və Altyazılar',
-			'videoControls.chaptersButton' => 'Hissələr',
-			'videoControls.versionQualityButton' => 'Versiya və Keyfiyyət',
-			'videoControls.versionColumnHeader' => 'Versiya',
-			'videoControls.qualityColumnHeader' => 'Keyfiyyət',
-			'videoControls.qualityOriginal' => 'Orijinal',
-			'videoControls.qualityPresetLabel' => ({required Object resolution, required Object bitrate}) => '${resolution}p ${bitrate} Mbps',
-			'videoControls.transcodeUnavailableFallback' => 'Kod dəyişmə əlçatan deyil — orijinal keyfiyyətdə oynadılır',
-			'videoControls.subtitleUnavailableFallback' => 'Seçilmiş altyazı yüklənə bilmədi — altyazısız davam edilir',
-			'videoControls.pipButton' => 'Pəncərə daxilində pəncərə rejimi',
-			'videoControls.aspectRatioButton' => 'Tərəf nisbəti',
-			'videoControls.ambientLighting' => 'Ətraf işıqlandırması',
-			'videoControls.fullscreenButton' => 'Tam ekrana keç',
-			'videoControls.exitFullscreenButton' => 'Tam ekrandan çıx',
-			'videoControls.alwaysOnTopButton' => 'Həmişə üstə',
-			'videoControls.rotationLockButton' => 'Dönmə kilidi',
-			'videoControls.lockScreen' => 'Ekranı kilidlə',
-			'videoControls.screenLockButton' => 'Ekran kilidi',
-			'videoControls.timelineSlider' => 'Video zaman çubuğu',
-			'videoControls.volumeSlider' => 'Səs səviyyəsi',
-			'videoControls.endsAt' => ({required Object time}) => 'Bitiş vaxtı: ${time}',
-			'videoControls.pipActive' => 'Pəncərə daxilində pəncərə rejimində oynadılır',
-			'videoControls.pipFailed' => 'PiP rejimi başladılarkən xəta',
-			'videoControls.screenshotSaved' => 'Ekran şəkli yadda saxlanıldı',
-			'videoControls.screenshotFailed' => 'Ekran şəkli çəkilə bilmədi',
-			'videoControls.zoomPercent' => ({required Object percent}) => 'Miqyas %${percent}',
-			'videoControls.volumePercent' => ({required Object percent}) => 'Səs ${percent}%',
-			'videoControls.pipErrors.androidVersion' => 'Android 8.0 və ya daha yenisini tələb edir',
-			'videoControls.pipErrors.iosVersion' => 'iOS 15.0 və ya daha yenisini tələb edir',
-			'videoControls.pipErrors.permissionDisabled' => 'PiP rejimi söndürülüb. Sistem tənzimləmələrindən aktivləşdirin.',
-			'videoControls.pipErrors.notSupported' => 'Cihaz PiP rejimini dəstəkləmir',
-			'videoControls.pipErrors.voSwitchFailed' => 'PiP üçün video çıxışı dəyişdirilə bilmədi',
-			'videoControls.pipErrors.failed' => 'PiP rejimi başladılarkən xəta',
-			'videoControls.pipErrors.prepareFailed' => 'PiP rejimi hazırlana bilmədi',
-			'videoControls.pipErrors.unknown' => ({required Object error}) => 'Xəta baş verdi: ${error}',
-			'videoControls.chapters' => 'Hissələr',
-			'videoControls.noChaptersAvailable' => 'Hissələr əlçatan deyil',
-			'videoControls.queue' => 'Növbə',
-			'videoControls.noQueueItems' => 'Növbədə element yoxdur',
-			'videoControls.noAudioDevicesAvailable' => 'Səs cihazları əlçatan deyil',
-			'videoControls.searchSubtitles' => 'Altyazı axtar',
-			'videoControls.language' => 'Dil',
-			'videoControls.noSubtitlesFound' => 'Altyazı tapılmadı',
-			'videoControls.subtitleDownloaded' => 'Altyazı yükləndi',
-			'videoControls.subtitleDownloadedNotApplied' => 'Altyazı yükləndi, lakin seçilə bilmədi',
-			'videoControls.subtitleDownloadFailed' => 'Altyazı yüklənə bilmədi',
-			'videoControls.subtitleDownloadTimedOut' => 'Altyazı vaxtında görünmədi. Yükləmə uğursuz olmuş ola bilər',
-			'videoControls.searchLanguages' => 'Dillərdə axtar...',
-			'videoControls.skipIntro' => 'Girişi keç',
-			'videoControls.skipCredits' => 'Titrləri keç',
-			'videoControls.nextEpisode' => 'Növbəti seriya',
-			'videoControls.subtitleTrack' => ({required Object n}) => 'Zolaq ${n}',
-			'videoControls.subtitleFile' => ({required Object name}) => 'Altyazı ${name}',
-			'videoControls.forcedTrack' => ({required Object label}) => '${label} (Məcburi)',
-			'videoControls.osdSubtitlesOff' => 'Altyazı: Söndürülüb',
-			'videoControls.osdSubtitles' => ({required Object track}) => 'Altyazı: ${track}',
-			'videoControls.osdAudio' => ({required Object track}) => 'Səs: ${track}',
-			'messages.markedAsWatched' => 'Baxıldı olaraq işarələndi',
-			'messages.markedAsUnwatched' => 'Baxılmadı olaraq işarələndi',
-			'messages.markedAsWatchedOffline' => 'Baxıldı olaraq işarələndi (onlayn olduqda eyniləşdiriləcək)',
-			'messages.markedAsUnwatchedOffline' => 'Baxılmadı olaraq işarələndi (onlayn olduqda eyniləşdiriləcək)',
-			'messages.autoRemovedWatchedDownload' => ({required Object title}) => 'Avtomatik silindi: ${title}',
-			'messages.autoRemovedWatchedDownloads' => ({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('az'))(n, one: 'Baxılmış ${n} yükləmə avtomatik silindi', other: 'Baxılmış ${n} yükləmə avtomatik silindi', ), 
-			'messages.removedFromContinueWatching' => 'İzləməyə davam et-dən silindi',
-			'messages.errorLoading' => ({required Object error}) => 'Xəta: ${error}',
-			'messages.searchPartialResults' => 'Bəzi media serverlərində axtarış aparıla bilmədi. Mövcud nəticələr göstərilir.',
-			'messages.streamInterrupted' => 'Yayım kəsildi. Yenidən cəhd etmək üçün oynat düyməsinə basın və ya irəli-geri çəkin.',
-			'messages.liveStreamInterrupted' => 'Canlı yayım kəsildi. Təzədən cəhd etmək üçün oynat düyməsinə basın.',
-			'messages.fileInfoNotAvailable' => 'Fayl məlumatı əlçatan deyil',
-			'messages.playbackAuthenticationRequired' => 'Bu elementi oynatmaq üçün media serverinə yenidən daxil olun.',
-			'messages.playbackServerUnavailable' => 'Media serveri əlçatan deyil. Sonra təzədən cəhd edin.',
-			'messages.playbackDataInvalid' => 'Server yanlış oynatma məlumatı qaytardı.',
-			'messages.playbackCancelled' => 'Oynatma ləğv edildi.',
-			'messages.playbackFailed' => 'Oynatma başladılarkən xəta.',
-			'messages.playbackFailedDetail' => ({required Object error}) => 'Oynatma başladıla bilmədi: ${error}',
-			'messages.audioOutputFailed' => 'Səs çıxışı cavab verməyi dayandırdı. TV və ya resiverin səs bağlantısını yoxlayın; başqa tətbiqlərdə də səs yoxdursa, cihazı yenidən başladın.',
-			'messages.mediaUnavailable' => 'Bu məzmun artıq əlçatan deyil.',
-			'messages.errorLoadingFileInfo' => ({required Object error}) => 'Fayl məlumatı yüklənərkən xəta: ${error}',
-			'messages.errorLoadingSeries' => 'Serial yüklənərkən xəta',
-			'messages.musicNotSupported' => 'Musiqi oynatması hələ dəstəklənmir',
-			'messages.noDescriptionAvailable' => 'Təsvir əlçatan deyil',
-			'messages.noProfilesAvailable' => 'Profil yoxdur',
-			'messages.contactAdminForProfiles' => 'Profil əlavə etmək üçün server inzibatçınızla əlaqə saxlayın',
-			'messages.unableToDetermineLibrarySection' => 'Bu element üçün kitabxana bölməsi müəyyən edilə bilmədi',
-			'messages.logsCleared' => 'Jurnallar təmizləndi',
-			'messages.logsCopied' => 'Jurnallar buferə kopyalandı',
-			'messages.noLogsAvailable' => 'Jurnal yoxdur',
-			'messages.libraryScanning' => ({required Object title}) => '"${title}" skan edilir...',
-			'messages.libraryScanStarted' => ({required Object title}) => '"${title}" üçün skan başladı',
-			'messages.libraryScanFailed' => ({required Object error}) => 'Kitabxana skan edilə bilmədi: ${error}',
-			'messages.metadataRefreshing' => ({required Object title}) => '"${title}" üçün meta-məlumatlar yenilənir...',
-			'messages.metadataRefreshStarted' => ({required Object title}) => '"${title}" üçün meta-məlumat yenilənməsi başladı',
-			'messages.metadataRefreshFailed' => ({required Object error}) => 'Meta-məlumatlar yenilənə bilmədi: ${error}',
-			'messages.logoutConfirm' => 'Çıxış etmək istədiyinizdən əminsiniz?',
-			'messages.noSeasonsFound' => 'Mövsüm tapılmadı',
-			'messages.seasonsLoadFailed' => 'Mövsümlər yüklənə bilmədi',
-			'messages.noEpisodesFound' => 'Birinci mövsümdə seriya tapılmadı',
-			'messages.noEpisodesFoundGeneral' => 'Seriya tapılmadı',
-			'messages.episodesLoadFailed' => 'Seriyalar yüklənə bilmədi',
-			'messages.noResultsFound' => 'Nəticə tapılmadı',
-			'messages.sleepTimerSet' => ({required Object label}) => 'Yuxu taymeri ${label} üçün təyin edildi',
-			'messages.noItemsAvailable' => 'Element yoxdur',
-			'messages.failedToCreatePlayQueueNoItems' => 'Oynatma növbəsi yaradıla bilmədi — element yoxdur',
-			'messages.failedPlayback' => ({required Object action, required Object error}) => '${action} uğursuz oldu: ${error}',
-			'messages.switchingToCompatiblePlayer' => 'Uyğun oynadıcıya keçilir...',
-			'messages.serverLimitTitle' => 'Oynatma uğursuz oldu',
-			'messages.serverLimitBody' => 'Server xətası (HTTP 500). Məhdudiyyət bu seansı rədd etdi.',
-			'messages.mediaUnreadableTitle' => 'Fayl əlçatan deyil',
-			'messages.mediaUnreadableBody' => 'Server bu elementi tapdı, lakin onun faylını oxuya bilmədi (HTTP 404). Fayl yəqin ki, köçürülüb, silinib və ya onun saxlanma yeri oflayndır. Server sahibindən faylı yoxlamasını və kitabxananı yenidən skan etməsini xahiş edin.',
-			'messages.serverBusyTitle' => 'Yayım əlçatan deyil',
-			'messages.serverBusyBody' => 'Server bu faylı yayımlamaqdan dəfələrlə imtina etdi (HTTP 503). Server yenidən başladılır və ya məşğul ola bilər, yaxud faylın yerləşdiyi yaddaş oflayn ola bilər. Bir az sonra təzədən cəhd edin — problem davam edərsə, server sahibindən serveri və faylın yerləşdiyi yaddaşı yoxlamasını istəyin.',
-			'messages.playbackNotAllowedTitle' => 'Oynatmaya icazə verilmir',
-			'messages.playbackNotAllowedBody' => 'Server bu elementi yayımlamaqdan imtina etdi (HTTP 403). Hesabınızın onu oynatmaq icazəsi olmaya bilər, yaxud server oynatmaya yalnız öz yerli şəbəkəsində icazə verə bilər.',
-			'messages.logsUploaded' => 'Jurnallar yükləndi',
-			'messages.logsUploadFailed' => 'Jurnallar yüklənə bilmədi',
-			'messages.logId' => 'Jurnal ID-si',
-			'messages.burnedSubtitlesUseMenu' => 'Altyazılar bu yayıma həkk edilib. Onları altyazı menyusundan dəyişin.',
-			'messages.noVideoUrl' => 'Video URL-i mövcud deyil',
-			'messages.playbackNoMediaSources' => 'Server oynadıla bilən media mənbəyi qaytarmadı',
-			'messages.playbackDataNotPrepared' => 'Məlumatları hazır olmadan oynatma başladıldı',
-			'messages.streamSelectionUnavailable' => 'Bu mənbə üçün yayım seçimi mövcud deyil',
-			'messages.streamSelectionFailed' => 'Seçilmiş yayımları tətbiq etmək olmadı',
-			'messages.trackSelectionNotRemembered' => 'Bu trek seçimi yalnız cari oynatmaya tətbiq olunur.',
-			'messages.serverUnavailableForProfile' => 'Aktiv profil üçün heç bir server mövcud deyil',
-			'subtitlingStyling.text' => 'Mətn',
-			'subtitlingStyling.border' => 'Haşiyə',
-			'subtitlingStyling.background' => 'Arxa fon',
-			'subtitlingStyling.fontSize' => 'Şrift ölçüsü',
-			'subtitlingStyling.textColor' => 'Mətn rəngi',
-			'subtitlingStyling.borderSize' => 'Haşiyə ölçüsü',
-			'subtitlingStyling.borderColor' => 'Haşiyə rəngi',
-			'subtitlingStyling.backgroundOpacity' => 'Arxa fon şəffaflığı',
-			'subtitlingStyling.backgroundColor' => 'Arxa fon rəngi',
-			'subtitlingStyling.position' => 'Mövqe',
-			'subtitlingStyling.assOverride' => 'ASS ləğvi',
-			'subtitlingStyling.overrideScale' => 'Miqyasla',
-			'subtitlingStyling.overrideForce' => 'Məcburi et',
-			'subtitlingStyling.overrideStrip' => 'Formatlaşdırmanı sil',
-			'subtitlingStyling.positionTop' => 'Yuxarı',
-			'subtitlingStyling.positionBottom' => 'Aşağı',
-			'subtitlingStyling.useMargins' => 'Kənar boşluqlardan istifadə et',
-			'subtitlingStyling.useMarginsDescription' => 'Mətn altyazılarına videodan kənar sahədə icazə ver. Üslublu altyazılar öz orijinal yerləşməsini saxlaya bilər.',
-			'subtitlingStyling.anchorToScreen' => 'Ekrana bərkit',
-			'subtitlingStyling.anchorToScreenDescription' => 'Mətn altyazılarını geniş ekranlı videonun altındakı qara zolaqlarda göstər',
-			'subtitlingStyling.bold' => 'Qalın',
-			'subtitlingStyling.italic' => 'Kursiv',
-			'subtitlingStyling.renderResolution' => 'Emal imkanı (Resolution)',
-			'subtitlingStyling.renderResolutionScreen' => 'Ekran imkanı',
-			'subtitlingStyling.renderResolutionVideo' => 'Video imkanı',
-			'mpvConfig.title' => 'mpv.conf',
-			'mpvConfig.description' => 'Təkmilləşdirilmiş video oynatıcı tənzimləmələri',
-			'mpvConfig.presets' => 'Ön ayarlar',
-			'mpvConfig.noPresets' => 'Yadda saxlanılmış ön ayar yoxdur',
-			'mpvConfig.saveAsPreset' => 'Ön ayar kimi yadda saxla...',
-			'mpvConfig.presetName' => 'Ön ayar adı',
-			'mpvConfig.presetNameHint' => 'Bu ön ayar üçün ad daxil edin',
-			'mpvConfig.loadPreset' => 'Yüklə',
-			'mpvConfig.deletePreset' => 'Sil',
-			'mpvConfig.presetSaved' => 'Ön ayar yadda saxlanıldı',
-			'mpvConfig.presetLoaded' => 'Ön ayar yükləndi',
-			'mpvConfig.presetDeleted' => 'Ön ayar silindi',
-			'mpvConfig.confirmDeletePreset' => 'Bu ön ayarı silmək istədiyinizə əminsiniz?',
-			'mpvConfig.configPlaceholder' => 'gpu-api=vulkan\nhwdec=auto\n# şərh',
-			'mpvConfig.lineHint' => 'option=value',
-			'mpvConfig.addLine' => 'Sətir əlavə et',
-			'mpvConfig.removeLine' => 'Sətiri sil',
-			'mpvConfig.embeddedVoHint' => 'vo, gpu-context və gpu-api Linux-da nəzərə alınmır: daxili video həmişə video müstəvisində vo=libmpv vasitəsilə göstərilir və gpu-next (ArtCNN kimi hesablama şeyderlərinə lazımdır) daxili işləyə bilməz.',
-			'dialog.confirmAction' => 'Əməliyyatı təsdiqlə',
-			'profiles.addPlezyProfile' => 'Plezy profili əlavə et',
-			'profiles.switchingProfile' => 'Profil dəyişdirilir…',
-			'profiles.deleteThisProfileTitle' => 'Bu profil silinsin?',
-			'profiles.deleteThisProfileMessage' => ({required Object displayName}) => '${displayName} silinəcək. Qoşulmalar təsirlənmir.',
-			'profiles.active' => 'Aktiv',
-			'profiles.manage' => 'İdarə et',
-			'profiles.delete' => 'Sil',
-			'profiles.signOut' => 'Çıxış et',
-			'profiles.signOutPlexTitle' => 'Plex-dən çıxılsın?',
-			'profiles.signOutPlexMessage' => ({required Object displayName}) => '${displayName} və bütün Plex Home istifadəçiləri silinsin? İstənilən vaxt yenidən daxil ola bilərsiniz.',
-			'profiles.signOutPlexDeleteDownloads' => 'Yükləmələri də sil',
-			'profiles.signOutPlexDeleteDownloadsDescription' => 'Əks halda onlar bu cihazda qalır və bu hesaba yenidən daxil olduqda geri qayıdır.',
-			'profiles.signedOutPlex' => 'Plex-dən çıxıldı.',
-			'profiles.signOutFailed' => 'Çıxış uğursuz oldu.',
-			'profiles.sectionTitle' => 'Profillər',
-			'profiles.summarySingle' => 'İdarə olunan istifadəçiləri və yerli kimlikləri qarışdırmaq üçün profillər əlavə edin',
-			'profiles.summaryMultipleWithActive' => ({required Object count, required Object activeName}) => '${count} profil · aktiv: ${activeName}',
-			'profiles.summaryMultiple' => ({required Object count}) => '${count} profil',
-			'profiles.removeConnectionTitle' => 'Qoşulma silinsin?',
-			'profiles.removeConnectionMessage' => ({required Object displayName, required Object connectionLabel}) => '${displayName} istifadəçisinin ${connectionLabel} giriş hüququ silinəcək. Digər profillərdə qalacaq.',
-			'profiles.deleteProfileTitle' => 'Profil silinsin?',
-			'profiles.deleteProfileMessage' => ({required Object displayName}) => '${displayName} və onun qoşulmaları silinəcək. Serverlər əlçatan qalır.',
-			'profiles.profileNameLabel' => 'Profil adı',
-			'profiles.pinProtectionLabel' => 'PIN mühafizəsi',
-			'profiles.pinManagedByPlex' => 'PIN Plex tərəfindən idarə olunur. plex.tv-də düzəliş edin.',
-			'profiles.noPinSetEditOnPlex' => 'PIN təyin edilməyib. Tələb etmək üçün plex.tv-də düzəliş edin.',
-			'profiles.setPin' => 'PIN təyin et',
-			'profiles.setPinTitle' => 'PIN təyin et',
-			'profiles.confirmPinTitle' => 'PIN-i təsdiqlə',
-			'profiles.pinSet' => 'PIN təyin edildi',
-			'profiles.changePin' => 'Dəyişdir',
-			'profiles.removePin' => 'Sil',
-			'profiles.connectionsLabel' => 'Qoşulmalar',
-			'profiles.add' => 'Əlavə et',
-			'profiles.deleteProfileButton' => 'Profili sil',
-			'profiles.noConnectionsHint' => 'Qoşulma yoxdur — bu profili istifadə etmək üçün birini əlavə edin.',
-			'profiles.noConnections' => 'Qoşulma yoxdur',
-			'profiles.plexHomeAccount' => 'Plex Ev hesabı',
-			'profiles.plexAccountChip' => ({required Object account}) => 'Plex hesabı: ${account}',
-			'profiles.plexAccountUserChip' => ({required Object account, required Object user}) => '${account} hesabı vasitəsilə ${user}',
-			'profiles.connectionDefault' => 'Defolt',
-			'profiles.connectionAs' => ({required Object displayName}) => '${displayName} olaraq',
-			'profiles.makeDefault' => 'Defolt et',
-			'profiles.removeConnection' => 'Sil',
-			'profiles.profileRenamed' => 'Profil adı dəyişdirildi.',
-			'profiles.borrowAddTo' => ({required Object displayName}) => '${displayName} profilinə əlavə et',
-			'profiles.borrowExplain' => 'Başqa profilin qoşulmasını istifadə edin. PIN ilə qorunan profillər PIN tələb edir.',
-			'profiles.borrowEmpty' => 'Hələ istifadə ediləcək bir şey yoxdur.',
-			'profiles.borrowEmptySubtitle' => 'Əvvəlcə başqa bir profile Plex, Jellyfin və ya Emby qoşun.',
-			'profiles.borrowLoadFailed' => 'Əlçatan qoşulmalar yüklənə bilmədi. Təzədən cəhd edin.',
-			'profiles.borrowFromProfile' => ({required Object displayName}) => '${displayName} profilindən',
-			'profiles.borrowConnectionBorrowed' => 'Qoşulma istifadə edildi.',
-			'profiles.borrowFailed' => 'Qoşulma istifadə edilə bilmədi.',
-			'profiles.incorrectPin' => 'Səhv PIN.',
-			'profiles.incorrectPinTryAgain' => 'Səhv PIN. Lütfən təzədən cəhd edin.',
-			'profiles.sourceProfileMissingParentAccount' => 'Mənbə profilin əsas hesabı yoxdur.',
-			'profiles.failedToLoadHomeUsers' => 'Plex Home istifadəçiləriniz yüklənə bilmədi. Bağlantınızı yoxlayın və yenidən cəhd edin.',
-			'profiles.failedToVerifyPin' => 'PIN təsdiqlənə bilmədi.',
-			'profiles.newProfile' => 'Yeni profil',
-			'profiles.profileNameHint' => 'məs. Qonaqlar, Uşaqlar, Qonaq otağı',
-			'profiles.pinProtectionOptional' => 'PIN mühafizəsi (istəyə bağlı)',
-			'profiles.pinExplain' => 'Profillər arası keçid üçün 4 rəqəmli PIN tələb olunur.',
-			'profiles.continueButton' => 'Davam et',
-			'profiles.pinsDontMatch' => 'PIN-lər uyğun gəlmir',
-			'profiles.tokenIdentityMismatch' => 'Plex profil tokeni gözlənilməyən serveri müəyyən etdi',
-			'connections.sectionTitle' => 'Qoşulmalar',
-			_ => null,
-		} ?? switch (path) {
-			'connections.addConnection' => 'Qoşulma əlavə et',
-			'connections.addConnectionSubtitleNoProfile' => 'Plex ilə daxil olun və ya Jellyfin yaxud Emby serverinə qoşulun',
-			'connections.addConnectionSubtitleScoped' => ({required Object displayName}) => '${displayName} profilinə əlavə et: Plex, Jellyfin, Emby və ya başqa profil qoşulması',
-			'connections.sessionExpiredOne' => ({required Object name}) => '${name} üçün seansın vaxtı bitdi',
-			'connections.sessionExpiredMany' => ({required Object count}) => '${count} server üçün seansın vaxtı bitdi',
-			'connections.accessDeniedOne' => ({required Object name}) => '${name} bu hesaba girişi rədd etdi',
-			'connections.accessDeniedMany' => ({required Object count}) => '${count} server bu hesaba girişi rədd etdi',
-			'connections.signInAgain' => 'Yenidən daxil ol',
-			'connections.editMediaBrowserTitle' => ({required Object product}) => '${product} qoşulmasını düzəliş et',
-			'connections.editMediaBrowserIntro' => ({required Object serverName}) => '${serverName} üçün URL-lər əlavə edin və ya silin. Plezy əlçatan olan ən aşağı gecikməli URL-i istifadə edəcək.',
-			'accountPreferences.sectionTitle' => 'Hesab tərcihləri',
-			'accountPreferences.hubSubtitleSingle' => ({required Object account}) => '${account} hesabında saxlanılan səs, altyazı və kitabxana seçimləri',
-			'accountPreferences.hubSubtitleMultiple' => ({required Object count}) => '${count} hesabda saxlanılan səs, altyazı və kitabxana seçimləri',
-			'accountPreferences.pickAccount' => 'Hər hesab öz tərcihlərini saxlayır. Düzəliş etmək üçün birini seçin.',
-			'accountPreferences.storedOnAccount' => 'Bu seçimlər hesabın özündə saxlanılır, ona görə də ona daxil olan hər tətbiq onlardan istifadə edir — digər cihazlarınızdakı Plezy də daxil olmaqla.',
-			'accountPreferences.noAccounts' => 'Konfiqurasiya ediləcək hesab yoxdur',
-			'accountPreferences.noAccountsHint' => 'Plex-ə daxil olun və ya Jellyfin və ya Emby serverinə qoşulun; o hesabda saxlanılan tərcihlər burada görünəcək.',
-			'accountPreferences.unavailable' => 'Bu hesaba çatmaq olmur',
-			'accountPreferences.loadFailed' => 'Bu tərcihlər yüklənə bilmədi',
-			'accountPreferences.noPreference' => 'Tərcih yoxdur',
-			'accountPreferences.notSet' => 'Təyin edilməyib',
-			'accountPreferences.groups.audioAndSubtitles' => 'Səs və altyazılar',
-			'accountPreferences.groups.libraryDisplay' => 'Kitabxana',
-			'accountPreferences.groups.personalMedia' => 'Şəxsi media',
-			'accountPreferences.preferredAudioLanguage' => 'Üstünlük verilən səs dili',
-			'accountPreferences.autoSelectAudio' => 'Səsi dilə görə seç',
-			'accountPreferences.autoSelectAudioDescription' => 'Söndürüldükdə faylın defolt olaraq işarələdiyi səs treki istifadə olunur.',
-			'accountPreferences.preferredSubtitleLanguage' => 'Üstünlük verilən altyazı dili',
-			'accountPreferences.subtitleMode' => 'Altyazıları aç',
-			'accountPreferences.subtitleModes.none' => 'Əl ilə seçilmiş',
-			'accountPreferences.subtitleModes.noneDescription' => 'Altyazıları heç vaxt özbaşına açma.',
-			'accountPreferences.subtitleModes.defaultMode' => 'Trek bayraqlarına əməl et',
-			'accountPreferences.subtitleModes.defaultModeDescription' => 'Hər altyazı trekində saxlanılan defolt və məcburi bayraqları istifadə et.',
-			'accountPreferences.subtitleModes.always' => 'Həmişə aktivdir',
-			'accountPreferences.subtitleModes.alwaysDescription' => 'Üstünlük verilən dildə altyazı treki mövcuddursa, onu aç.',
-			'accountPreferences.subtitleModes.onlyForced' => 'Yalnız məcburi altyazılar',
-			'accountPreferences.subtitleModes.onlyForcedDescription' => 'Yalnız məcburi işarələnmiş trekləri yüklə.',
-			'accountPreferences.subtitleModes.smart' => 'Xarici səs olduqda göstərilən',
-			'accountPreferences.subtitleModes.smartDescription' => 'Altyazıları yalnız səs başqa dildə olduqda aç.',
-			'accountPreferences.subtitleAccessibility' => 'SDH altyazıları',
-			'accountPreferences.subtitleAccessibilityOptions.preferNonSdh' => 'SDH olmayan altyazılara üstünlük ver',
-			'accountPreferences.subtitleAccessibilityOptions.preferSdh' => 'SDH altyazılarına üstünlük ver',
-			'accountPreferences.subtitleAccessibilityOptions.onlySdh' => 'Yalnız SDH altyazıları',
-			'accountPreferences.subtitleAccessibilityOptions.onlyNonSdh' => 'Yalnız SDH olmayan altyazılar',
-			'accountPreferences.forcedSubtitles' => 'Məcburi altyazılar',
-			'accountPreferences.forcedSubtitleOptions.preferNonForced' => 'Məcburi olmayan altyazılara üstünlük ver',
-			'accountPreferences.forcedSubtitleOptions.preferForced' => 'Məcburi altyazılara üstünlük ver',
-			'accountPreferences.forcedSubtitleOptions.onlyForced' => 'Yalnız məcburi altyazılar',
-			'accountPreferences.forcedSubtitleOptions.onlyNonForced' => 'Yalnız məcburi olmayan altyazılar',
-			'accountPreferences.displayMissingEpisodes' => 'Çatışmayan seriyaları göstər',
-			'accountPreferences.displayMissingEpisodesDescription' => 'Serverin bildiyi, lakin faylı olmayan seriyaları siyahıya al.',
-			'accountPreferences.hidePlayedInLatest' => 'Baxılmış elementləri Son əlavə olunanlarda gizlət',
-			'accountPreferences.hidePlayedInLatestDescription' => 'Artıq baxdığınız elementləri serverin Son əlavə olunanlar sətirlərində göstərmə.',
-			'accountPreferences.displayCollectionsView' => 'Kolleksiyalar görünüşünü göstər',
-			'accountPreferences.displayCollectionsViewDescription' => 'Kitabxanalarınızla yanaşı serverin Kolleksiyalar görünüşünü də təklif et.',
-			'accountPreferences.rewatchingInNextUp' => 'Təkrar baxılan serialları Sırada saxla',
-			'accountPreferences.rewatchingInNextUpDescription' => 'Bir serialı bitirdikdən sonra yenidən başlasanız, Sırada serialı atmaq əvəzinə təkrar baxışı izləyir.',
-			'accountPreferences.watchedIndicator' => 'Baxıldı göstəriciləri',
-			'accountPreferences.watchedIndicatorOptions.none' => 'Heç vaxt',
-			'accountPreferences.watchedIndicatorOptions.moviesAndShows' => 'Kinolar və TV şoular',
-			'accountPreferences.watchedIndicatorOptions.movies' => 'Yalnız kinolar',
-			'accountPreferences.watchedIndicatorOptions.shows' => 'Yalnız TV şoular',
-			'accountPreferences.mediaReviewsVisibility' => 'Reytinq və rəylər',
-			'accountPreferences.mediaReviewsOptions.usersAndCritics' => 'İstifadəçilər və tənqidçilər',
-			'accountPreferences.mediaReviewsOptions.usersOnly' => 'Yalnız istifadəçilər',
-			'accountPreferences.mediaReviewsOptions.criticsOnly' => 'Yalnız tənqidçilər',
-			'accountPreferences.mediaReviewsOptions.nobody' => 'Gizlədilib',
-			'discover.title' => 'Kəşf et',
-			'discover.noContentAvailable' => 'Məzmun əlçatan deyil',
-			'discover.addMediaToLibraries' => 'Kitabxanalarınıza bir az media əlavə edin',
-			'discover.continueWatching' => 'İzləməyə davam et',
-			'discover.continueWatchingIn' => ({required Object library}) => '${library} daxilində İzləməyə davam et',
-			'discover.nextUp' => 'Sırada',
-			'discover.nextUpIn' => ({required Object library}) => '${library} daxilində Sırada',
-			'discover.recentlyAdded' => 'Son əlavə olunanlar',
-			'discover.recentlyAddedIn' => ({required Object library}) => '${library} daxilində Son əlavə olunanlar',
-			'discover.latestAlbumsIn' => ({required Object library}) => '${library} daxilində Son albomlar',
-			'discover.recentlyPlayedIn' => ({required Object library}) => '${library} daxilində Son oynadılanlar',
-			'discover.mostPlayedIn' => ({required Object library}) => '${library} daxilində Ən çox oynadılanlar',
-			'discover.playEpisode' => ({required Object season, required Object episode}) => 'M${season}S${episode}',
-			'discover.overview' => 'İcmal',
-			'discover.cast' => 'Aktyorlar',
-			'discover.extras' => 'Treylerlər və Əlavələr',
-			'discover.studio' => 'Studiya',
-			'discover.rating' => 'Reytinq',
-			'discover.director' => 'Rejissor',
-			'discover.directors' => 'Rejissorlar',
-			'discover.movie' => 'Kino',
-			'discover.tvShow' => 'TV Şou',
-			'discover.minutesLeft' => ({required Object minutes}) => '${minutes} dəq qaldı',
-			'discover.moreLikeThis' => 'Buna bənzərlər',
-			'discover.titleCount' => ({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('az'))(n, one: '${n} başlıq', other: '${n} başlıq', ), 
-			'discover.person.born' => 'Doğum tarixi',
-			'discover.person.died' => 'Vəfat tarixi',
-			'discover.person.birthplace' => 'Doğum yeri',
-			'discover.person.dateWithAge' => ({required Object date, required Object age}) => '${date} (${age} yaş)',
-			'discover.person.dateWithAgeAtDeath' => ({required Object date, required Object age}) => '${date} (${age} yaşında)',
-			'errors.searchFailed' => ({required Object error}) => 'Axtarış uğursuz oldu: ${error}',
-			'errors.searchUnavailable' => 'Axtarış heç bir media serverinə çata bilmədi.',
-			'errors.connectionTimeout' => ({required Object context}) => '${context} yüklənərkən vaxt bitdi',
-			'errors.connectionFailed' => 'Media serverinə qoşulmaq olmur',
-			'errors.unableToLoad' => ({required Object context}) => '${context} yüklənə bilmədi. Lütfən təzədən cəhd edin.',
-			'errors.noClientAvailable' => 'Əlçatan klient yoxdur',
-			'errors.pleaseEnterToken' => 'Lütfən token daxil edin',
-			'errors.invalidToken' => 'Yanlış token',
-			'errors.failedToVerifyToken' => ({required Object error}) => 'Token təsdiqlənə bilmədi: ${error}',
-			'errors.failedToSwitchProfile' => ({required Object displayName}) => '${displayName} profilinə keçilə bilmədi',
-			'errors.failedToDeleteProfile' => ({required Object displayName}) => '${displayName} profili silinə bilmədi',
-			'errors.failedToRate' => 'Reytinq yenilənə bilmədi',
-			'errors.reasonTimedOut' => 'bağlantının vaxtı bitdi',
-			'errors.reasonUnreachable' => 'serverə çatmaq mümkün olmadı',
-			'errors.reasonRefused' => 'server sorğunu rədd etdi',
-			'errors.reasonNotFound' => 'element artıq serverdə yoxdur',
-			'errors.reasonServerError' => 'server xəta bildirdi',
-			'errors.reasonCancelled' => 'sorğu ləğv edildi',
-			'errors.reasonUnexpected' => 'gözlənilməz xəta baş verdi',
-			'libraries.title' => 'Kitabxanalar',
-			'libraries.fallbackTitle' => 'Kitabxana',
-			'libraries.scanLibraryFiles' => 'Kitabxana fayllarını skan et',
-			'libraries.scanLibrary' => 'Kitabxananı skan et',
-			'libraries.analyze' => 'Analiz et',
-			'libraries.analyzeLibrary' => 'Kitabxananı analiz et',
-			'libraries.refreshMetadata' => 'Meta-məlumatları yenilə',
-			'libraries.emptyTrash' => 'Zibil qutusunu təmizlə',
-			'libraries.emptyingTrash' => ({required Object title}) => '"${title}" üçün zibil qutusu təmizlənir...',
-			'libraries.trashEmptied' => ({required Object title}) => '"${title}" üçün zibil qutusu təmizləndi',
-			'libraries.failedToEmptyTrash' => ({required Object error}) => 'Zibil qutusu təmizlənə bilmədi: ${error}',
-			'libraries.analyzing' => ({required Object title}) => '"${title}" analiz edilir...',
-			'libraries.analysisStarted' => ({required Object title}) => '"${title}" üçün analiz başladı',
-			'libraries.failedToAnalyze' => ({required Object error}) => 'Kitabxana analiz edilə bilmədi: ${error}',
-			'libraries.noLibrariesFound' => 'Kitabxana tapılmadı',
-			'libraries.allLibrariesHidden' => 'Bütün kitabxanalar gizlədilib',
-			'libraries.hiddenLibrariesCount' => ({required Object count}) => 'Gizli kitabxanalar (${count})',
-			'libraries.thisLibraryIsEmpty' => 'Bu kitabxana boşdur',
-			'libraries.noItemsMatchFilters' => 'Filtrlərə uyğun element tapılmadı',
-			'libraries.resetFilters' => 'Filtrləri sıfırla',
-			'libraries.all' => 'Hamısı',
-			'libraries.clearAll' => 'Hamısını təmizlə',
-			'libraries.scanLibraryConfirm' => ({required Object title}) => '"${title}" kitabxanasını skan etmək istədiyinizdən əminsiniz?',
-			'libraries.analyzeLibraryConfirm' => ({required Object title}) => '"${title}" kitabxanasını analiz etmək istədiyinizdən əminsiniz?',
-			'libraries.refreshMetadataConfirm' => ({required Object title}) => '"${title}" üçün meta-məlumatları yeniləmək istədiyinizdən əminsiniz?',
-			'libraries.emptyTrashConfirm' => ({required Object title}) => '"${title}" üçün zibil qutusunu təmizləmək istədiyinizdən əminsiniz?',
-			'libraries.manageLibraries' => 'Kitabxanaları idarə et',
-			'libraries.sort' => 'Sırala',
-			'libraries.sortBy' => 'Sıralama meyarı',
-			'libraries.filters' => 'Filtrlər',
-			'libraries.confirmActionMessage' => 'Bu əməliyyatı yerinə yetirmək istədiyinizdən əminsiniz?',
-			'libraries.showLibrary' => 'Kitabxananı göstər',
-			'libraries.hideLibrary' => 'Kitabxananı gizlət',
-			'libraries.libraryOptions' => 'Kitabxana seçimləri',
-			'libraries.content' => 'kitabxana məzmunu',
-			'libraries.selectLibrary' => 'Kitabxana seç',
-			'libraries.filtersWithCount' => ({required Object count}) => 'Filtrlər (${count})',
-			'libraries.noRecommendations' => 'Tövsiyə yoxdur',
-			'libraries.noCollections' => 'Bu kitabxanada kolleksiya yoxdur',
-			'libraries.noFoldersFound' => 'Qovluq tapılmadı',
-			'libraries.folders' => 'qovluqlar',
-			'libraries.tabs.recommended' => 'Tövsiyə olunanlar',
-			'libraries.tabs.browse' => 'Baxış',
-			'libraries.tabs.collections' => 'Kolleksiyalar',
-			'libraries.tabs.playlists' => 'Oynatma siyahıları',
-			'libraries.groupings.title' => 'Qruplaşdırma',
-			'libraries.groupings.all' => 'Hamısı',
-			'libraries.groupings.movies' => 'Kinolar',
-			'libraries.groupings.shows' => 'TV Şoular',
-			'libraries.groupings.seasons' => 'Mövsümlər',
-			'libraries.groupings.episodes' => 'Seriyalar',
-			'libraries.groupings.artists' => 'Müğənnilər/Müəlliflər',
-			'libraries.groupings.albums' => 'Albomlar',
-			'libraries.groupings.tracks' => 'Mahnılar',
-			'libraries.groupings.folders' => 'Qovluqlar',
-			'libraries.filterCategories.genre' => 'Janr',
-			'libraries.filterCategories.year' => 'İl',
-			'libraries.filterCategories.contentRating' => 'Məzmun reytinqi',
-			'libraries.filterCategories.tag' => 'Teq',
-			'libraries.filterCategories.unwatched' => 'Baxılmayıb',
-			'libraries.filterCategories.unplayed' => 'Oynadılmayıb',
-			'libraries.filterCategories.favorites' => 'Sevimlilər',
-			'libraries.filterCategories.filePath' => 'Fayl yolu',
-			'libraries.sortLabels.title' => 'Ad',
-			'libraries.sortLabels.dateAdded' => 'Əlavə olunma tarixi',
-			'libraries.sortLabels.releaseDate' => 'Buraxılış tarixi',
-			'libraries.sortLabels.rating' => 'Reytinq',
-			'libraries.sortLabels.communityRating' => 'İcma reytinqi',
-			'libraries.sortLabels.criticRating' => 'Tənqidçi reytinqi',
-			'libraries.sortLabels.userRating' => 'İstifadəçi reytinqi',
-			'libraries.sortLabels.datePlayed' => 'Oynadılma tarixi',
-			'libraries.sortLabels.playCount' => 'Oynadılma sayı',
-			'libraries.sortLabels.productionYear' => 'İstehsal ili',
-			'libraries.sortLabels.runtime' => 'Müddət',
-			'libraries.sortLabels.officialRating' => 'Rəsmi reytinq',
-			'libraries.sortLabels.premiereDate' => 'Premyera tarixi',
-			'libraries.sortLabels.startDate' => 'Başlanğıc tarixi',
-			'libraries.sortLabels.airTime' => 'Yayımlanma vaxtı',
-			'libraries.sortLabels.studio' => 'Studiya',
-			'libraries.sortLabels.random' => 'Təsadüfi',
-			'libraries.sortLabels.dateShared' => 'Paylaşılma tarixi',
-			'libraries.sortLabels.latestEpisodeAirDate' => 'Son seriya yayın tarixi',
-			'libraries.sortLabels.lastEpisodeDateAdded' => 'Əlavə olunan son seriya tarixi',
-			'libraries.sortLabels.dateDownloaded' => 'Yüklənmə tarixi',
-			'libraries.sortLabels.size' => 'Həcm',
-			'libraries.sortLabels.library' => 'Kitabxana',
-			'libraries.advancedFilters.include' => 'Daxil et',
-			'libraries.advancedFilters.exclude' => 'Xaric et',
-			'libraries.advancedFilters.any' => 'İstənilən',
-			'libraries.advancedFilters.yes' => 'Bəli',
-			'libraries.advancedFilters.no' => 'Xeyr',
-			'libraries.advancedFilters.not' => ({required Object value}) => '${value} deyil',
-			'libraries.advancedFilters.valueCount' => ({required Object count}) => '${count} seçilib',
-			'libraries.advancedFilters.valueCountExcluded' => ({required Object count}) => '${count} xaric edilib',
-			'libraries.advancedFilters.searchValues' => 'Dəyərlərdə axtar',
-			'libraries.advancedFilters.noValues' => 'Dəyər yoxdur',
-			'libraries.advancedFilters.matchContains' => 'Ehtiva edir',
-			'libraries.advancedFilters.matchNotContains' => 'Ehtiva etmir',
-			'libraries.advancedFilters.matchIs' => 'Bərabərdir',
-			'libraries.advancedFilters.matchIsNot' => 'Bərabər deyil',
-			'libraries.advancedFilters.matchBeginsWith' => 'İlə başlayır',
-			'libraries.advancedFilters.matchEndsWith' => 'İlə bitir',
-			'libraries.advancedFilters.textHint' => 'Uyğunluq üçün yazın',
-			'libraries.advancedFilters.from' => 'Başlanğıc',
-			'libraries.advancedFilters.to' => 'Son',
-			'libraries.advancedFilters.range' => ({required Object from, required Object to}) => '${from} – ${to}',
-			'libraries.advancedFilters.atLeast' => ({required Object value}) => '${value} və yuxarı',
-			'libraries.advancedFilters.atMost' => ({required Object value}) => '${value} və aşağı',
-			'libraries.advancedFilters.dateLastDays' => ({required Object count}) => 'Son ${count} gün',
-			'libraries.advancedFilters.dateLastYear' => 'Son bir il',
-			'libraries.advancedFilters.dateOlderThanDays' => ({required Object count}) => '${count} gündən köhnə',
-			'libraries.advancedFilters.dateOlderThanYear' => 'Bir ildən köhnə',
-			'about.title' => 'Haqqında',
-			'about.openSourceLicenses' => 'Açıq mənbə lisenziyaları',
-			'about.versionLabel' => ({required Object version}) => 'Versiya ${version}',
-			'about.appDescription' => 'Flutter üçün gözəl bir Plex, Jellyfin və Emby klienti',
-			'about.viewLicensesDescription' => 'Üçüncü tərəf kitabxanalarının lisenziyalarına baxın',
-			'serverSelection.noServersFoundForAccount' => ({required Object username, required Object email}) => '${username} (${email}) üçün server tapılmadı',
-			'serverSelection.failedToLoadServers' => ({required Object error}) => 'Serverlər yüklənə bilmədi: ${error}',
-			'serverSelection.noValidServers' => 'Bu hesabda istifadəyə yararlı server tapılmadı',
-			'hubDetail.title' => 'Başlıq',
-			'hubDetail.releaseYear' => 'Buraxılış ili',
-			'hubDetail.dateAdded' => 'Əlavə olunma tarixi',
-			'hubDetail.rating' => 'Reytinq',
-			'hubDetail.noItemsFound' => 'Element tapılmadı',
-			'logs.clearLogs' => 'Jurnalları təmizlə',
-			'logs.copyLogs' => 'Jurnalları kopyala',
-			'logs.uploadLogs' => 'Jurnalları yüklə',
-			'startup.failedTitle' => 'Plezy başlaya bilmədi',
-			'startup.failedBody' => 'Başlatma zamanı nəsə səhv getdi. Aşağıdakı təfərrüatlar nəyin uğursuz olduğunu göstərir.',
-			'startup.failedBodyRepairable' => 'Plezy-nin saxlanmış tənzimləmə faylı zədələnib və Plezy başlamazdan əvvəl yenidən qurulmalıdır. Təzədən cəhd etmək kömək etməyəcək — Yaddaşı təmir et seçin.',
-			'startup.phaseLabel' => 'Addım',
-			'startup.showDetails' => 'Təfərrüatları göstər',
-			'startup.hideDetails' => 'Təfərrüatları gizlət',
-			'startup.copyDetails' => 'Təfərrüatları kopyala',
-			'startup.detailsCopied' => 'Təfərrüatlar buferə kopyalandı',
-			'startup.uploadDetails' => 'Təfərrüatları yüklə',
-			'startup.repairStorage' => 'Yaddaşı təmir et',
-			'startup.repairTitle' => 'Saxlanmış məlumatlar təmir edilsin?',
-			'startup.repairBodyCommon' => 'Plezy-nin tənzimləmə faylı zədələnib və oxuna bilmir. Təmir bütün tənzimləmələri defolt vəziyyətinə sıfırlayır.',
-			'startup.repairBodyOneCredential' => 'Bir saxlanmış daxil olma məlumatı zədələnib və oxuna bilmir. Təmir yalnız onu silir; digər tənzimləmələrinizə toxunulmur.',
-			'startup.repairBodySignInsKept' => 'Serverləriniz və profilləriniz daxil olmuş vəziyyətdə qalmalıdır.',
-			'startup.repairBodySignInsLost' => 'Saxlanmış daxil olmalarınızı qoruyan açar bu fayldan bərpa edilə bilmir, ona görə də hər serverə və profilə yenidən daxil olmalı olacaqsınız. Media serverinizdə heç nəyə təsir olunmur.',
-			'startup.repairBodySessionsUncertain' => 'İzləyicilər (MAL, AniList, Simkl, Trakt) və Seerr ayrıca saxlanılır və qalıb-qalmayacaqları bəlli deyil. Plezy sizə nəyi saxladığını dəqiq bildirəcək.',
-			'startup.repairConfirm' => 'Təmir et',
-			'startup.repairSucceeded' => 'Yaddaş təmir edildi',
-			'startup.repairNeedsRestart' => 'Yaddaş təmir edildi — yenidən başlatma tələb olunur',
-			'startup.restartRequiredBody' => 'Məlumatlarınız təmir edildi, lakin Plezy ondan istifadə etmək üçün yenidən başlamalıdır. Plezy-ni bağlayın və yenidən açın.',
-			'startup.quitPlezy' => 'Plezy-dən çıx',
-			'startup.repairFailed' => 'Təmir uğursuz oldu',
-			'startup.repairKeptSignIns' => 'Serverləriniz və profilləriniz hələ də daxil olub.',
-			'startup.repairLostSignIns' => 'Saxlanmış daxil olmalarınızı qoruyan açar bərpa edilə bilmədi. Hər serverə və profilə yenidən daxil olmalı olacaqsınız.',
-			'startup.repairLostSessions' => 'Ən azı bir izləyici və ya Seerr əlaqəsi itirildi və yenidən qoşulmalıdır.',
-			'startup.backupTitle' => 'Zədələnmiş faylın nüsxəsi saxlanıldı',
-			'startup.backupWarning' => 'O, daxil olma məlumatlarınızı ehtiva edir. Onu yükləməyin və ya paylaşmayın.',
-			'startup.deleteBackup' => 'Nüsxəni sil',
-			'startup.backupDeleted' => 'Nüsxə silindi.',
-			'startup.previousFailureTitle' => 'Plezy son dəfə başlaya bilmədi',
-			'licenses.relatedPackages' => 'Əlaqəli paketlər',
-			'licenses.license' => 'Lisenziya',
-			'licenses.licenseNumber' => ({required Object number}) => 'Lisenziya ${number}',
-			'licenses.licensesCount' => ({required Object count}) => '${count} lisenziya',
-			'navigation.libraries' => 'Kitabxanalar',
-			'navigation.downloads' => 'Yükləmələr',
-			'navigation.liveTv' => 'Canlı TV',
-			'navigation.explore' => 'Kəşf et',
-			'explore.title' => 'Kəşf et',
-			'explore.selectSource' => 'Mənbə seçin',
-			'explore.rows.watchlist' => 'İzləmə siyahısı',
-			'explore.rows.recommendedMovies' => 'Tövsiyə olunan kinolar',
-			'explore.rows.recommendedShows' => 'Tövsiyə olunan seriallar',
-			'explore.rows.trendingMovies' => 'Trend kinolar',
-			'explore.rows.trendingShows' => 'Trend seriallar',
-			'explore.rows.popularMovies' => 'Məşhur kinolar',
-			'explore.rows.popularShows' => 'Məşhur seriallar',
-			'explore.rows.trendingAnime' => 'Trend animelər',
-			'explore.rows.suggestedAnime' => 'Tövsiyə olunan animelər',
-			'explore.rows.airingAnime' => 'Ən yaxşı yayımlanan animelər',
-			'explore.rows.popularAnime' => 'Ən məşhur animelər',
-			'explore.rows.trending' => 'Trendlər',
-			'explore.rows.upcomingMovies' => 'Gələcək kinolar',
-			'explore.rows.upcomingShows' => 'Gələcək seriallar',
-			'explore.status.airing' => 'Yayımlanır',
-			'explore.status.ended' => 'Bitdi',
-			'explore.status.canceled' => 'Ləğv edildi',
-			'explore.status.upcoming' => 'Gələcək',
-			'explore.episodeCount' => ({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('az'))(n, one: '${n} seriya', other: '${n} seriya', ), 
-			'explore.cast' => 'Aktyorlar',
-			'explore.characters' => 'Personajlar',
-			'explore.addToWatchlist' => 'İzləmə siyahısına əlavə et',
-			'explore.removeFromWatchlist' => 'İzləmə siyahısından sil',
-			'explore.addedToWatchlist' => 'Baxış siyahısına əlavə edildi',
-			'explore.removedFromWatchlist' => 'Baxış siyahısından silindi',
-			'explore.watchlistUpdateFailed' => 'İzləmə siyahısı yenilənə bilmədi',
-			'explore.watchlistNoMatch' => 'Bu elementi heç bir baxış siyahısı ilə uyğunlaşdırmaq olmadı',
-			'explore.notInLibrary' => 'Kitabxananızda yoxdur',
-			'explore.inTheseLibraries' => 'Bu kitabxanalarda var',
-			'explore.checkingLibrary' => 'Kitabxananız yoxlanılır...',
-			'explore.libraryCheckFailed' => ({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('az'))(n, one: '${n} serveri yoxlamaq olmadı', other: '${n} serveri yoxlamaq olmadı', ), 
-			'explore.emptyTitle' => 'Hələlik burada heç nə yoxdur',
-			'explore.emptyMessage' => ({required Object source}) => '${source} mənbəsindən olan sətirlər burada görünəcək.',
-			'explore.searchHint' => ({required Object source}) => '${source} daxilində axtar',
-			'explore.searchEmpty' => ({required Object query}) => '"${query}" üçün nəticə tapılmadı',
-			'explore.searchPrompt' => ({required Object source}) => '${source} vasitəsilə kino və seriallar axtarın.',
-			'explore.searchFailed' => 'Axtarış uğursuz oldu. Bağlantınızı yoxlayın və yenidən cəhd edin.',
-			'explore.badge.rankPopular' => ({required Object n}) => '#${n} populyar',
-			'explore.badge.rankAiring' => ({required Object n}) => '#${n} yayımlanır',
-			'explore.badge.rankRated' => ({required Object n}) => '#${n} qiymətləndirilib',
-			'explore.badge.rankTrending' => ({required Object n}) => '#${n} trenddə',
-			'explore.badge.rankSeasonal' => ({required Object season, required Object n}) => '${season} üçün #${n}',
-			'explore.badge.watchingNow' => ({required Object n}) => '${n} izləyir',
-			'explore.badge.available' => 'Əlçatandır',
-			'explore.badge.partiallyAvailable' => 'Hissəvi əlçatandır',
-			'explore.badge.availableIn4k' => '4K əlçatandır',
-			'explore.badge.requested' => 'Sorğu göndərildi',
-			'explore.badge.pendingApproval' => 'Təsdiq gözlənilir',
-			'explore.badge.processing' => 'Emal edilir',
-			'explore.badge.declined' => 'Rədd edildi',
-			'explore.badge.requestFailed' => 'Sorğu uğursuz oldu',
-			'explore.badge.requested4k' => '4K sorğu göndərildi',
-			'explore.badge.seasonsAvailable' => ({required Object available, required Object total}) => '${available}/${total} mövsüm',
-			'explore.badge.nextEpisodeIn' => ({required Object episode, required Object duration}) => 'Ep ${episode} ${duration} sonra',
-			'explore.badge.nextAiringIn' => ({required Object duration}) => 'Növbəti ${duration} sonra',
-			'explore.badge.episodesShort' => ({required Object n}) => '${n} ep',
-			'explore.badge.minutesPerEpisode' => ({required Object n}) => '${n} dəq/ep',
-			'explore.badge.adult' => '18+',
-			'explore.stats.listed' => ({required Object n}) => '${n} siyahıya alınıb',
-			'explore.stats.viewersDay' => ({required Object n}) => 'Bu gün ${n} izlədi',
-			'explore.stats.viewersWeek' => ({required Object n}) => 'Bu həftə ${n} izlədi',
-			'explore.stats.viewersMonth' => ({required Object n}) => 'Bu ay ${n} izlədi',
-			'explore.stats.viewersYear' => ({required Object n}) => 'Bu il ${n} izlədi',
-			'explore.stats.viewersAllTime' => ({required Object n}) => '${n} izləyici',
-			'explore.stats.planning' => ({required Object n}) => '${n} izləməyi planlaşdırır',
-			'explore.stats.favorited' => ({required Object n}) => '${n} favorit',
-			'explore.stats.dropRate' => ({required Object percent}) => '${percent} izləməyi dayandırdı',
-			'explore.stats.comments' => ({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('az'))(n, one: '${n} şərh', other: '${n} şərh', ), 
-			'explore.stats.votes' => ({required Object n}) => '${n} səs',
-			'explore.stats.watching' => ({required Object n}) => '${n} izləyir',
-			'explore.stats.completed' => ({required Object n}) => '${n} tamamladı',
-			'explore.stats.onHold' => ({required Object n}) => '${n} fasilədə',
-			'explore.stats.dropped' => ({required Object n}) => '${n} izləməyi dayandırdı',
-			'explore.season.winter' => 'Qış',
-			'explore.season.spring' => 'Yaz',
-			'explore.season.summer' => 'Yay',
-			'explore.season.fall' => 'Payız',
-			'explore.season.withYear' => ({required Object season, required Object year}) => '${season} ${year}',
-			'explore.format.tv' => 'TV',
-			'explore.format.tvShort' => 'Qısa TV',
-			'explore.format.movie' => 'Kino',
-			'explore.format.special' => 'Xüsusi buraxılış',
-			'explore.format.ova' => 'OVA',
-			'explore.format.ona' => 'ONA',
-			'explore.format.music' => 'Musiqi',
-			'explore.format.other' => 'Digər',
-			'explore.sourceMaterial.original' => 'Orijinal',
-			'explore.sourceMaterial.manga' => 'Manga',
-			'explore.sourceMaterial.lightNovel' => 'Light novel',
-			'explore.sourceMaterial.novel' => 'Roman',
-			'explore.sourceMaterial.visualNovel' => 'Vizual roman',
-			'explore.sourceMaterial.game' => 'Oyun',
-			'explore.sourceMaterial.webComic' => 'Veb komiks',
-			'explore.sourceMaterial.musicRelease' => 'Musiqi',
-			'explore.sourceMaterial.otherMedia' => 'Digər',
-			'explore.creditRole.actor' => 'Aktyor',
-			'explore.creditRole.director' => 'Rejissor',
-			'explore.creditRole.writer' => 'Ssenarist',
-			'explore.creditRole.producer' => 'Prodüser',
-			'explore.creditRole.creator' => 'Yaradıcı',
-			'explore.creditRole.composer' => 'Bəstəkar',
-			'explore.relation.prequel' => 'Prikvel',
-			'explore.relation.sequel' => 'Sikvel',
-			'explore.relation.sideStory' => 'Yan hekayə',
-			'explore.relation.spinOff' => 'Spin-off',
-			'explore.relation.alternativeVersion' => 'Alternativ versiya',
-			'explore.relation.summary' => 'Xülasə',
-			'explore.relation.parentStory' => 'Əsas hekayə',
-			'explore.relation.adaptation' => 'Adaptasiya',
-			'explore.relation.other' => 'Əlaqəli',
-			'explore.broadcast' => ({required Object day, required Object time}) => '${day} saat ${time}-da yayımlanır',
-			'explore.broadcastWithZone' => ({required Object day, required Object time, required Object timezone}) => '${day} saat ${time} (${timezone}) yayımlanır',
-			'explore.detail.originalTitle' => 'Orijinal başlıq',
-			'explore.detail.alsoKnownAs' => 'Digər adları',
-			'explore.detail.studios' => 'Studiyalar',
-			'explore.detail.country' => 'Ölkə',
-			'explore.detail.language' => 'Dil',
-			'explore.detail.released' => 'Buraxılıb',
-			'explore.detail.physicalRelease' => 'Diskdə',
-			'explore.detail.ended' => 'Bitib',
-			'explore.detail.addedOn' => ({required Object date}) => '${date} əlavə edildi',
-			'explore.detail.yourRating' => 'Sizin qiymətləndirməniz',
-			'explore.detail.budget' => 'Büdcə',
-			'explore.detail.revenue' => 'Kassa gəliri',
-			'explore.detail.contentAdvisory' => 'Yaş tövsiyəsi',
-			'explore.detail.tags' => 'Teqlər',
-			'explore.detail.revealSpoilerTags' => 'Spoyler teqlərini göstər',
-			'explore.detail.links' => 'Keçidlər',
-			'explore.detail.watchOn' => 'İzlə',
-			'explore.detail.watchTrailer' => 'Treyleri izlə',
-			'explore.detail.openOn' => ({required Object site}) => '${site} saytında aç',
-			'explore.detail.trailerUnavailable' => 'Bu cihazda treyler açıla bilmədi',
-			'explore.detail.linkUnavailable' => 'Bu cihazda bu keçid açıla bilmədi',
-			'explore.detail.crew' => 'Heyət',
-			'explore.detail.ratings' => 'Reytinq',
-			'explore.detail.schedule' => 'Cədvəl',
-			'explore.detail.recommendedByUsers' => ({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('az'))(n, one: '${n} istifadəçi tövsiyə edir', other: '${n} istifadəçi tövsiyə edir', ), 
-			'explore.detail.recommendedBy' => ({required Object who}) => '${who} tövsiyə edir',
-			'explore.detail.favoritedBy' => ({required Object who}) => '${who} favorit edib',
-			'explore.detail.unairedEpisodes' => ({required Object n}) => '${n} hələ yayımlanmayıb',
-			'explore.detail.recommendedByPercent' => ({required Object percent}) => 'İzləyicilərin ${percent}-i tövsiyə edir',
-			'explore.detail.relatedTitles' => 'Əlaqəli başlıqlar',
-			'explore.detail.background' => 'Arxa fon',
-			'explore.totalResults' => ({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('az'))(n, one: '${n} nəticə', other: '${n} nəticə', ), 
-			'liveTv.title' => 'Canlı TV',
-			'liveTv.guide' => 'Bələdçi',
-			'liveTv.noChannels' => 'Əlçatan kanal yoxdur',
-			'liveTv.noDvr' => 'Serverdə DVR tənzimlənməyib',
-			'liveTv.serverUnavailable' => 'Canlı TV serveri əlçatan deyil.',
-			'liveTv.serverNotConnected' => 'Canlı TV serverinə qoşulmayıb.',
-			'liveTv.noPrograms' => 'Proqram məlumatı yoxdur',
-			'liveTv.liveStreamFailed' => 'Canlı yayım uğursuz oldu',
-			'liveTv.unknownProgram' => 'Bilinməyən proqram',
-			'liveTv.unknownHub' => 'Məlum deyil',
-			'liveTv.unknownError' => 'Bilinməyən xəta',
-			'liveTv.channelNumber' => ({required Object number}) => 'Kanal ${number}',
-			'liveTv.unknownChannel' => 'Bilinməyən kanal',
-			'liveTv.live' => 'CANLI',
-			'liveTv.reloadGuide' => 'Bələdçini yenilə',
-			'liveTv.searchGuide' => 'Bələdçidə axtar',
-			'liveTv.searchHint' => 'Kanal və proqram axtar',
-			'liveTv.searchNoResults' => ({required Object query}) => '"${query}" üçün uyğunluq tapılmadı',
-			'liveTv.channelsSection' => 'Kanallar',
-			'liveTv.programsSection' => 'Proqramlar',
-			'liveTv.now' => 'İndi',
-			'liveTv.today' => 'Bu gün',
-			'liveTv.tomorrow' => 'Sabah',
-			'liveTv.midnight' => 'Gecə yarısı',
-			'liveTv.overnight' => 'Gecə boyu',
-			'liveTv.morning' => 'Səhər',
-			'liveTv.daytime' => 'Gündüz',
-			'liveTv.evening' => 'Axşam',
-			'liveTv.lateNight' => 'Gecə vaxtı',
-			'liveTv.whatsOn' => 'İndi nə var?',
-			'liveTv.watchChannel' => 'Kanala bax',
-			'liveTv.favorites' => 'Sevimlilər',
-			'liveTv.reorderFavorites' => 'Sevimliləri yenidən sırala',
-			'liveTv.noFavoriteChannels' => 'Sevimli kanal yoxdur',
-			'liveTv.noFavoriteChannelsHint' => 'Bütün kanalları göstərin, sonra kanalı sevimlilərə əlavə etmək üçün üzərinə uzun basın.',
-			'liveTv.showAllChannels' => 'Bütün kanalları göstər',
-			'liveTv.favoritesLoadFailed' => 'Sevimlilər yüklənə bilmədi. Bağlantınızı yoxlayın və yenidən cəhd edin.',
-			'liveTv.favoritesUpdateFailed' => 'Sevimlilər yenilənə bilmədi.',
-			'liveTv.joinSession' => 'Davam edən seansa qoşul',
-			'liveTv.watchFromStart' => ({required Object minutes}) => 'Əvvəldən bax (${minutes} dəq əvvəl)',
-			'liveTv.watchLive' => 'Canlı bax',
-			'liveTv.goToLive' => 'Canlı yayıma keç',
-			'liveTv.record' => 'Yaz',
-			'liveTv.recordEpisode' => 'Seriyanı yaz',
-			'liveTv.recordSeries' => 'Serialı yaz',
-			'liveTv.recordOptions' => 'Yazma seçimləri',
-			'liveTv.saveTo' => 'Buraya saxla',
-			'liveTv.recordings' => 'Yazılmışlar',
-			'liveTv.scheduledRecordings' => 'Planlaşdırılmışlar',
-			'liveTv.recordingRules' => 'Yazma qaydaları',
-			'liveTv.noScheduledRecordings' => 'Yazılacaq heç nə planlaşdırılmayıb',
-			'liveTv.manageRecording' => 'Yazmanı idarə et',
-			'liveTv.cancelRecording' => 'Yazmanı ləğv et',
-			'liveTv.cancelRecordingTitle' => 'Bu yazma ləğv edilsin?',
-			'liveTv.cancelRecordingMessage' => ({required Object title}) => '${title} artıq yazılmayacaq.',
-			'liveTv.deleteRule' => 'Qaydanı sil',
-			'liveTv.deleteRuleTitle' => 'Yazma qaydası silinsin?',
-			'liveTv.deleteRuleMessage' => ({required Object title}) => '${title} serialının gələcək seriyaları yazılmayacaq.',
-			'liveTv.recordingScheduled' => 'Yazma planlaşdırıldı',
-			'liveTv.alreadyScheduled' => 'Bu proqram artıq planlaşdırılıb',
-			'liveTv.dvrAdminRequired' => 'DVR tənzimləmələri inzibatçı hesabı tələb edir',
-			'liveTv.recordingFailed' => 'Yazma planlaşdırıla bilmədi',
-			'liveTv.recordingTargetMissing' => 'Yazma kitabxanası müəyyən edilə bilmədi',
-			'liveTv.recordNotAvailable' => 'Bu proqram üçün yazma əlçatan deyil',
-			'liveTv.recordingCancelled' => 'Yazma ləğv edildi',
-			'liveTv.recordingRuleDeleted' => 'Yazma qaydası silindi',
-			'liveTv.processRecordingRules' => 'Qaydaları yenidən qiymətləndir',
-			'liveTv.recordingInProgress' => 'İndi yazılır',
-			'liveTv.recordingsCount' => ({required Object count}) => '${count} planlaşdırılıb',
-			'liveTv.editRule' => 'Qaydanı dəyişdir',
-			'liveTv.editRuleAction' => 'Düzəliş et',
-			'liveTv.recordingRuleUpdated' => 'Yazma qaydası yeniləndi',
-			'liveTv.guideReloadRequested' => 'Bələdçi yenilənməsi tələb olundu',
-			'liveTv.guideReloadFailed' => 'Bələdçi yenilənmədi',
-			'liveTv.rulesProcessRequested' => 'Qaydaların yenidən qiymətləndirilməsi tələb olundu',
-			'liveTv.rulesProcessFailed' => 'Yazı qaydaları yenidən qiymətləndirilmədi',
-			'liveTv.recordShow' => 'Şounu yaz',
-			'liveTv.recordSettings.startEarly' => 'Erkən başla (saniyə)',
-			'liveTv.recordSettings.endLate' => 'Gec bitir (saniyə)',
-			'liveTv.recordSettings.newOnly' => 'Yalnız yeni epizodlar',
-			'liveTv.recordSettings.anyChannel' => 'İstənilən kanalda yaz',
-			'liveTv.recordSettings.anyTime' => 'İstənilən vaxt yaz',
-			'liveTv.recordSettings.skipInLibrary' => 'Kitabxanada artıq olan epizodları ötür',
-			'liveTv.recordSettings.keepUpTo' => 'Saxlanılacaq epizodlar',
-			_ => null,
-		} ?? switch (path) {
-			'liveTv.recordSettings.keepUpToHint' => '0 bütün epizodları saxlayır',
-			'liveTv.startingInMinutes' => ({required Object minutes}) => '${minutes} dəq sonra başlayır',
-			'liveTv.dayAtTime' => ({required Object day, required Object time}) => '${day}, saat ${time}',
-			'liveTv.invalidPlaybackData' => ({required Object product}) => '${product} etibarsız Canlı TV oynatma məlumatı qaytardı',
-			'liveTv.failedToStartChannel' => 'Canlı kanalı başlatmaq olmadı',
-			'liveTv.failedToBuildStreamUrl' => 'Yayım URL-i yaratmaq olmadı',
-			'liveTv.playbackStartFailed' => ({required Object reason}) => 'Kanal başladıla bilmədi: ${reason}',
-			'liveTv.channelSwitchFailed' => ({required Object reason}) => 'Kanal dəyişdirilə bilmədi: ${reason}',
-			'collections.title' => 'Kolleksiyalar',
-			'collections.collection' => 'Kolleksiya',
-			'collections.empty' => 'Kolleksiya boşdur',
-			'collections.deleteCollection' => 'Kolleksiyanı sil',
-			'collections.deleteConfirm' => ({required Object title}) => '"${title}" silinsin? Bu əməliyyat geri qaytarıla bilməz.',
-			'collections.deleted' => 'Kolleksiya silindi',
-			'collections.deleteFailed' => 'Kolleksiya silinə bilmədi',
-			'collections.deleteFailedWithError' => ({required Object error}) => 'Kolleksiya silinə bilmədi: ${error}',
-			'collections.selectCollection' => 'Kolleksiya seç',
-			'collections.collectionName' => 'Kolleksiya adı',
-			'collections.enterCollectionName' => 'Kolleksiya adını daxil edin',
-			'collections.addedToCollection' => 'Kolleksiyaya əlavə edildi',
-			'collections.errorAddingToCollection' => 'Kolleksiyaya əlavə edilə bilmədi',
-			'collections.created' => 'Kolleksiya yaradıldı',
-			'collections.removeFromCollection' => 'Kolleksiyadan sil',
-			'collections.removeFromCollectionConfirm' => ({required Object title}) => '"${title}" bu kolleksiyadan silinsin?',
-			'collections.removedFromCollection' => 'Kolleksiyadan silindi',
-			'collections.removeFromCollectionFailed' => 'Kolleksiyadan silinə bilmədi',
-			'collections.removeFromCollectionError' => ({required Object error}) => 'Kolleksiyadan silinərkən xəta: ${error}',
-			'collections.searchCollections' => 'Kolleksiyalarda axtar...',
-			'playlists.title' => 'Oynatma siyahıları',
-			'playlists.playlist' => 'Oynatma siyahısı',
-			'playlists.noPlaylists' => 'Oynatma siyahısı tapılmadı',
-			'playlists.create' => 'Oynatma siyahısı yarat',
-			'playlists.playlistName' => 'Oynatma siyahısı adı',
-			'playlists.enterPlaylistName' => 'Oynatma siyahısı adını daxil edin',
-			'playlists.delete' => 'Oynatma siyahısını sil',
-			'playlists.removeItem' => 'Oynatma siyahısından sil',
-			'playlists.smartPlaylist' => 'Ağıllı oynatma siyahısı',
-			'playlists.itemCount' => ({required Object count}) => '${count} element',
-			'playlists.oneItem' => '1 element',
-			'playlists.emptyPlaylist' => 'Bu oynatma siyahısı boşdur',
-			'playlists.deleteConfirm' => 'Oynatma siyahısı silinsin?',
-			'playlists.deleteMessage' => ({required Object name}) => '"${name}" siyahısını silmək istədiyinizdən əminsiniz?',
-			'playlists.created' => 'Oynatma siyahısı yaradıldı',
-			'playlists.deleted' => 'Oynatma siyahısı silindi',
-			'playlists.itemAdded' => 'Oynatma siyahısına əlavə edildi',
-			'playlists.itemRemoved' => 'Oynatma siyahısından silindi',
-			'playlists.selectPlaylist' => 'Oynatma siyahısı seç',
-			'playlists.searchPlaylists' => 'Oynatma siyahılarında axtar...',
-			'playlists.errorCreating' => 'Oynatma siyahısı yaradıla bilmədi',
-			'playlists.errorDeleting' => 'Oynatma siyahısı silinə bilmədi',
-			'playlists.errorLoading' => 'Oynatma siyahıları yüklənə bilmədi',
-			'playlists.errorAdding' => 'Oynatma siyahısına əlavə edilə bilmədi',
-			'playlists.errorReordering' => 'Element yenidən sıralana bilmədi',
-			'playlists.errorRemoving' => 'Oynatma siyahısından silinə bilmədi',
-			'music.goToAlbum' => 'Alboma keç',
-			'music.goToArtist' => 'İfaçıya keç',
-			'music.instantMix' => 'Anında qarışıq',
-			'music.playNext' => 'Növbətini oynat',
-			'music.addToQueue' => 'Növbəyə əlavə et',
-			'music.discNumber' => ({required Object n}) => 'Disk ${n}',
-			'music.trackCount' => ({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('az'))(n, one: '${n} mahnı', other: '${n} mahnı', ), 
-			'music.nowPlaying' => 'İndi oynadılır',
-			'music.playingFrom' => ({required Object title}) => '${title} mənbəsindən oynadılır',
-			'music.queue' => 'Növbə',
-			'music.clearQueue' => 'Növbəni təmizlə',
-			'music.lyrics' => 'Mahnı sözləri',
-			'music.noLyrics' => 'Mahnı sözləri yoxdur',
-			'music.sleepTimer' => 'Yuxu taymeri',
-			'music.sleepTimerEndOfTrack' => 'Mahnının sonu',
-			'music.sleepTimerMinutes' => ({required Object n}) => '${n} dəqiqə',
-			'music.stopPlayback' => 'Oynatmanı saxla',
-			'music.previousTrack' => 'Əvvəlki mahnı',
-			'music.nextTrack' => 'Növbəti mahnı',
-			'music.repeat' => 'Təkrarla',
-			'music.repeatAll' => 'Hamısını təkrarla',
-			'music.repeatOne' => 'Birini təkrarla',
-			'music.instantMixNoServer' => 'Ani miks üçün heç bir server mövcud deyil',
-			'music.instantMixFailed' => 'Anında qarışıq yüklənə bilmədi',
-			'music.instantMixEmpty' => 'Anında qarışıq heç bir mahnı qaytarmadı',
-			'music.noAudioUrl' => ({required Object track}) => '${track} üçün səs URL-i mövcud deyil',
-			'music.discography.singlesAndEps' => 'Single-lar və EP-lər',
-			'music.discography.live' => 'Canlı',
-			'music.discography.compilations' => 'Kompilyasiyalar',
-			'watchTogether.title' => 'Birlikdə İzlə',
-			'watchTogether.description' => 'Dostlarınız və ailənizlə eyni vaxtda baxın',
-			'watchTogether.createRoom' => 'Otaq yarat',
-			'watchTogether.creatingRoom' => 'Otaq yaradılır...',
-			'watchTogether.joinRoom' => 'Otağa qoşul',
-			'watchTogether.joiningRoom' => 'Otağa qoşulunur...',
-			'watchTogether.connecting' => 'Qoşulunur...',
-			'watchTogether.relayPublic' => 'Otaqlar ictimai Open Watch Party relelərindən istifadə edir.',
-			'watchTogether.relayCustom' => ({required Object url}) => 'Otaqlar ${url} ünvanındakı relenizdən istifadə edir.',
-			'watchTogether.recentRooms' => 'Son otaqlar',
-			'watchTogether.roomActions' => 'Otaq əməliyyatları',
-			'watchTogether.renameRoom' => 'Otağın adını dəyişdir',
-			'watchTogether.removeRoom' => 'Sil',
-			'watchTogether.enterRoomCode' => 'Təşkilatçının verdiyi 6 simvollu kodu daxil edin.',
-			'watchTogether.roomCode' => 'Otaq kodu',
-			'watchTogether.paste' => 'Yapışdır',
-			'watchTogether.noCodeInClipboard' => 'Buferdə otaq kodu yoxdur',
-			'watchTogether.copyCode' => 'Kodu kopyala',
-			'watchTogether.codeCopied' => 'Otaq kodu kopyalandı',
-			'watchTogether.shareInvite' => 'Dəvəti paylaş',
-			'watchTogether.inviteCopied' => 'Dəvət kopyalandı. Onu mesaja yapışdırın.',
-			'watchTogether.inviteMessage' => ({required Object code}) => 'Plezy-də Birlikdə İzlə otağıma qoşul: Birlikdə İzlə bölməsini aç, "Otağa qoşul" düyməsinə bas və ${code} kodunu daxil et.',
-			'watchTogether.openSessionControls' => 'Birlikdə İzlə seans idarəetmələrini aç',
-			'watchTogether.reconnecting' => 'Yenidən qoşulunur...',
-			'watchTogether.reconnectingDescription' => 'Əlaqə kəsildi. Otağa avtomatik olaraq yenidən qoşulacaqsınız.',
-			'watchTogether.connected' => 'Qoşulub',
-			'watchTogether.disconnected' => 'Əlaqə kəsilib',
-			'watchTogether.youAreHost' => 'Təşkilatçı sizsiniz',
-			'watchTogether.hostedBy' => ({required Object name}) => 'Təşkilatçı: ${name}',
-			'watchTogether.hostControlsPlayback' => 'Oynatmanı təşkilatçı idarə edir',
-			'watchTogether.anyoneCanControl' => 'Oynatmanı hər kəs idarə edə bilər',
-			'watchTogether.roomLocked' => 'Otaq kilidlənib',
-			'watchTogether.nowPlaying' => 'İndi oynadılır',
-			'watchTogether.nothingPlaying' => 'Heç nə oynadılmır',
-			'watchTogether.nothingPlayingHost' => 'Otaqla paylaşmaq üçün istənilən kitabxanadan nəsə oynadın.',
-			'watchTogether.nothingPlayingGuest' => 'Təşkilatçı nəsə oynatdıqda, burada açılacaq.',
-			'watchTogether.notShareable' => 'Bu videonun kataloqda uyğunluğu yoxdur, ona görə də onu yalnız eyni serverə çıxışı olanlar oynada bilər.',
-			'watchTogether.searching' => 'Bu video kitabxanalarınızda axtarılır...',
-			'watchTogether.yourCopy' => 'Sizin nüsxəniz',
-			'watchTogether.sharingYourCopy' => 'Nüsxənizi paylaşırsınız',
-			'watchTogether.playingOtherLength' => ({required Object difference}) => 'Nüsxəniz oynadılır (${difference})',
-			'watchTogether.mismatchTitle' => 'Nüsxənizin uzunluğu fərqlidir',
-			'watchTogether.mismatchDescription' => ({required Object difference}) => 'Ən yaxın nüsxəniz otaqdakı videodan ${difference}. Bu, başqa montaj və ya versiya ola bilər.',
-			'watchTogether.playAnyway' => 'Yenə də oynat',
-			'watchTogether.chooseAnotherCopy' => 'Başqa nüsxə seç',
-			'watchTogether.dontPlay' => 'Oynatma',
-			'watchTogether.unavailableTitle' => 'Bu video sizdə yoxdur',
-			'watchTogether.unavailableDescription' => 'Plezy onu kitabxanalarınızda tapa bilmədi. Nüsxəni özünüz seçin və ya yenidən axtarın.',
-			'watchTogether.chooseCopy' => 'Nüsxə seç',
-			'watchTogether.searchAgain' => 'Yenidən axtar',
-			'watchTogether.noCandidates' => 'Kitabxanalarınızda nüsxə tapılmadı.',
-			'watchTogether.choiceFailed' => 'Bu nüsxəni otaq üçün oynatmaq mümkün olmadı',
-			'watchTogether.lengthLonger' => ({required Object duration}) => '${duration} daha uzun',
-			'watchTogether.lengthShorter' => ({required Object duration}) => '${duration} daha qısa',
-			'watchTogether.lengthSame' => 'Eyni uzunluq',
-			'watchTogether.lengthUnknown' => 'Uzunluq məlum deyil',
-			'watchTogether.joinCurrentPlayback' => 'Cari oynatmaya qoşul',
-			'watchTogether.joinCurrentPlaybackDescription' => 'Təşkilatçının indi baxdığı hissəyə keçin',
-			'watchTogether.stopMedia' => 'Videonu hamı üçün dayandır',
-			'watchTogether.syncOffset' => 'Sinxronizasiya ofseti',
-			'watchTogether.syncOffsetDescription' => 'Videonuz otaqdan qabaqda və ya geridə qalırsa, onu sürüşdürün.',
-			'watchTogether.offsetHint' => ({required Object difference}) => 'Nüsxəniz otaqdakı videodan ${difference}.',
-			'watchTogether.applyDifference' => ({required Object offset}) => '${offset} tətbiq et',
-			'watchTogether.offsetMinusSecond' => '-1 san',
-			'watchTogether.offsetMinusTenth' => '-100 ms',
-			'watchTogether.offsetPlusTenth' => '+100 ms',
-			'watchTogether.offsetPlusSecond' => '+1 san',
-			'watchTogether.participants' => 'İştirakçılar',
-			'watchTogether.participantCount' => ({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('az'))(n, one: '${n} iştirakçı', other: '${n} iştirakçı', ), 
-			'watchTogether.hostBadge' => 'TƏŞKİLATÇI',
-			'watchTogether.nameYou' => ({required Object name}) => '${name} (Siz)',
-			'watchTogether.playerIdle' => 'Gözləmədə',
-			'watchTogether.playerLoading' => 'Yüklənir',
-			'watchTogether.playerReady' => 'Hazırdır',
-			'watchTogether.playerBuffering' => 'Buferlənir',
-			'watchTogether.matchSearching' => 'Axtarır',
-			'watchTogether.matchMatched' => 'Video var',
-			'watchTogether.matchMismatched' => 'Fərqli uzunluq',
-			'watchTogether.matchUnavailable' => 'Video yoxdur',
-			'watchTogether.participantOffset' => ({required Object offset}) => 'Ofset ${offset}',
-			'watchTogether.makeHost' => 'Təşkilatçı təyin et',
-			'watchTogether.makeHostQuestion' => 'Təşkilatçı köçürülsün?',
-			'watchTogether.makeHostConfirm' => ({required Object name}) => '${name} oynatmanı idarə edəcək və seansı hər kəs üçün aparacaq.',
-			'watchTogether.transfer' => 'Köçür',
-			'watchTogether.removeParticipant' => 'Otaqdan çıxar',
-			'watchTogether.removeParticipantQuestion' => ({required Object name}) => '${name} çıxarılsın?',
-			'watchTogether.removeParticipantConfirm' => ({required Object name}) => '${name} otağı tərk edəcək. Otağı kilidləməsəniz, kodla yenidən qoşula bilər.',
-			'watchTogether.remove' => 'Çıxar',
-			'watchTogether.roomSettings' => 'Otaq tənzimləmələri',
-			'watchTogether.letEveryoneControl' => 'Hamıya oynatmanı idarə etməyə icazə ver',
-			'watchTogether.lockRoom' => 'Otağı kilidlə',
-			'watchTogether.lockRoomDescription' => 'Heç kim yeni qoşula bilməz',
-			'watchTogether.leaveRoom' => 'Otağı tərk et',
-			'watchTogether.leaveRoomQuestion' => 'Otaq tərk edilsin?',
-			'watchTogether.leaveRoomConfirm' => 'Otaq kodu ilə yenidən qoşula bilərsiniz.',
-			'watchTogether.leave' => 'Çıx',
-			'watchTogether.endRoom' => 'Otağı bağla',
-			'watchTogether.endRoomQuestion' => 'Otaq bağlansın?',
-			'watchTogether.endRoomConfirm' => 'Bu, otağı hamı üçün bağlayır.',
-			'watchTogether.end' => 'Bitir',
-			'watchTogether.playBlockedTitle' => 'Oynatma başlamadı',
-			'watchTogether.playBlockedDescription' => 'Otaqla birlikdə baxmağa başlamaq üçün oynat düyməsinə basın.',
-			'watchTogether.notices.pressedPlay' => ({required Object name}) => '${name} oynat düyməsinə basdı',
-			'watchTogether.notices.playbackStarted' => 'Oynatma başladı',
-			'watchTogether.notices.paused' => ({required Object name}) => '${name} fasilə etdi',
-			'watchTogether.notices.playbackPaused' => 'Oynatma fasilə edildi',
-			'watchTogether.notices.jumpedTo' => ({required Object name, required Object position}) => '${name} ${position} anına keçdi',
-			'watchTogether.notices.roomJumpedTo' => ({required Object position}) => '${position} anına keçildi',
-			'watchTogether.notices.changedSpeed' => ({required Object name, required Object speed}) => '${name} sürəti ${speed} olaraq təyin etdi',
-			'watchTogether.notices.speedChanged' => ({required Object speed}) => 'Sürət ${speed} olaraq təyin edildi',
-			'watchTogether.notices.startedMedia' => ({required Object name, required Object title}) => '${name} oynatmağa başladı: ${title}',
-			'watchTogether.notices.mediaStarted' => ({required Object title}) => 'İndi oynadılır: ${title}',
-			'watchTogether.notices.stoppedMedia' => ({required Object name}) => '${name} videonu dayandırdı',
-			'watchTogether.notices.mediaStopped' => 'Video dayandı',
-			'watchTogether.notices.waitingFor' => ({required Object name}) => '${name} gözlənilir...',
-			'watchTogether.notices.waitingForSomeone' => 'Kiminsə yetişməsi gözlənilir...',
-			'watchTogether.notices.finished' => 'Bitdi',
-			'watchTogether.notices.hostChangedTo' => ({required Object name}) => '${name} indi təşkilatçıdır',
-			'watchTogether.notices.youAreNowHost' => 'İndi təşkilatçı sizsiniz',
-			'watchTogether.notices.joined' => ({required Object name}) => '${name} qoşuldu',
-			'watchTogether.notices.left' => ({required Object name}) => '${name} ayrıldı',
-			'watchTogether.notices.controlRefused' => 'Oynatmanı yalnız təşkilatçı idarə edə bilər',
-			'watchTogether.notices.searchFailed' => 'Bəzi serverlərdə otağın videosunu axtarmaq mümkün olmadı',
-			'watchTogether.notices.playBlocked' => 'Başlamaq üçün oynat düyməsinə basın',
-			'watchTogether.notices.shareFailed' => 'Bu videonu otaqla paylaşmaq mümkün olmadı',
-			'watchTogether.notices.downloadNotShared' => 'Serverləri oflayn olduğu müddətdə yükləmələr otaqla paylaşılmır',
-			'watchTogether.notices.openFailed' => 'Otağın videosunu açmaq mümkün olmadı',
-			'watchTogether.ended.ended' => 'Təşkilatçı otağı bağladı',
-			'watchTogether.ended.kicked' => 'Siz otaqdan çıxarıldınız',
-			'watchTogether.ended.expired' => 'Otağın vaxtı bitdi',
-			'watchTogether.ended.replaced' => 'Bu otağa başqa cihazda qoşuldunuz',
-			'watchTogether.ended.lost' => 'Otaqla əlaqə kəsildi',
-			'watchTogether.errors.invalidCode' => 'Bu, otaq kodu deyil. Kodlar 0, 1, I, L və ya O olmadan 6 hərf və rəqəmdən ibarətdir.',
-			'watchTogether.errors.roomNotFound' => 'Bu kodla otaq yoxdur. O, bağlanmış ola bilər.',
-			'watchTogether.errors.roomFull' => 'Bu otaq doludur.',
-			'watchTogether.errors.roomLocked' => 'Təşkilatçı bu otağı kilidləyib.',
-			'watchTogether.errors.relayFull' => 'Birlikdə İzlə hazırda məşğuldur. Sonra yenidən cəhd edin.',
-			'watchTogether.errors.unreachable' => 'Birlikdə İzlə relesinə qoşulmaq mümkün olmadı. Bağlantınızı yoxlayın.',
-			'watchTogether.errors.rateLimited' => 'Həddindən çox cəhd. Bir az gözləyib yenidən cəhd edin.',
-			'watchTogether.errors.clientBlocked' => 'Plezy-nin bu versiyası releni istifadə edə bilmir. Tətbiqi yeniləyin.',
-			'watchTogether.errors.forbidden' => 'Bunu yalnız təşkilatçı edə bilər.',
-			'watchTogether.errors.notInRoom' => 'Siz otaqda deyilsiniz.',
-			'watchTogether.errors.alreadyInRoom' => 'Siz artıq otaqdasınız.',
-			'watchTogether.errors.resumeFailed' => 'Otağa yenidən qoşulmaq mümkün olmadı.',
-			'watchTogether.errors.unsupported' => 'Rele bunu dəstəkləmir.',
-			'watchTogether.errors.generic' => 'Nəsə səhv getdi. Yenidən cəhd edin.',
-			'watchTogether.untitledEpisode' => ({required Object number}) => 'Seriya ${number}',
-			'downloads.title' => 'Yükləmələr',
-			'downloads.manage' => 'İdarə et',
-			'downloads.tvShows' => 'TV Şoular',
-			'downloads.movies' => 'Kinolar',
-			'downloads.music' => 'Musiqi',
-			'downloads.tracksQueued' => ({required Object count}) => 'Yükləmə üçün ${count} mahnı növbəyə alındı',
-			'downloads.noDownloads' => 'Hələlik yükləmə yoxdur',
-			'downloads.noDownloadsDescription' => 'Yüklənmiş məzmun oflayn baxış üçün burada görünəcək',
-			'downloads.downloadNow' => 'Yüklə',
-			'downloads.deleteDownload' => 'Yükləməni sil',
-			'downloads.retryDownload' => 'Yükləməni təzədən cəhd et',
-			'downloads.downloadQueued' => 'Yükləmə növbəyə alındı',
-			'downloads.downloadResumed' => 'Yükləmə davam etdirildi',
-			'downloads.serverErrorBitrate' => 'Server xətası: fayl sürət limitini aşa bilər',
-			'downloads.storageFull' => 'Boş yaddaşı qorumaq üçün yükləmələr dayandırıldı. Yer boşaldın və ya başqa yükləmə yeri seçin, sonra yenidən cəhd edin.',
-			'downloads.storageUnavailable' => 'Boş yaddaşı yoxlamaq mümkün olmadığı üçün yükləmələr dayandırıldı. Yükləmə yerini yoxlayın, sonra təzədən cəhd edin.',
-			'downloads.episodesQueued' => ({required Object count}) => 'Yükləmə üçün ${count} seriya növbəyə alındı',
-			'downloads.downloadDeleted' => 'Yükləmə silindi',
-			'downloads.deleteConfirm' => ({required Object title}) => '"${title}" bu cihazdan silinsin?',
-			'downloads.deleteCollectionDownloads' => 'Yükləmələri sil',
-			'downloads.deleteCollectionDownloadsConfirm' => ({required Object title}) => '"${title}" daxilindəki bütün yükləmələr bu cihazdan silinsin?',
-			'downloads.collectionDownloadsDeleted' => 'Yükləmələr silindi',
-			'downloads.cancelledDownloadTitle' => 'Ləğv edilmiş yükləmə',
-			'downloads.cancelledDownloadMessage' => 'Bu yükləmə ləğv edildi. Nə etmək istərdiniz?',
-			'downloads.allEpisodesAlreadyDownloaded' => 'Bütün seriyalar artıq yüklənib',
-			'downloads.resumeDownload' => 'Yükləməni davam etdir',
-			'downloads.cancelledDownload' => 'Ləğv edilmiş yükləmə',
-			'downloads.syncingFile' => ({required Object file, required Object status}) => '${file} (${status} eyniləşdirilir)',
-			'downloads.downloadedFileClickToComplete' => ({required Object file}) => 'Yükləndi ${file} - Tamamlamaq üçün toxunun',
-			'downloads.partialDownloadClickToComplete' => 'Hissəvi yükləndi - Tamamlamaq üçün toxunun',
-			'downloads.deleting' => 'Silinir...',
-			'downloads.deletingWithProgress' => ({required Object title, required Object current, required Object total}) => '${title} silinir... (${current} / ${total})',
-			'downloads.queuedTooltip' => 'Növbədədir',
-			'downloads.queuedFilesTooltip' => ({required Object files}) => 'Növbəyə alınan fayllar: ${files}',
-			'downloads.downloadingTooltip' => 'Yüklənir...',
-			'downloads.downloadingFilesTooltip' => ({required Object files}) => 'Yüklənən fayllar: ${files}',
-			'downloads.noDownloadsTree' => 'Yükləmə yoxdur',
-			'downloads.pauseAll' => 'Hamısını fasilə et',
-			'downloads.resumeAll' => 'Hamısını davam etdir',
-			'downloads.retryAll' => 'Hamısını təzədən cəhd et',
-			'downloads.retryFailed' => 'Uğursuz yükləmələri təzədən cəhd et',
-			'downloads.deleteAll' => 'Hamısını sil',
-			'downloads.selectVersion' => 'Versiya seç',
-			'downloads.allEpisodes' => 'Bütün seriyalar',
-			'downloads.unwatchedOnly' => 'Yalnız baxılmayanlar',
-			'downloads.nextNUnwatched' => ({required Object count}) => 'Növbəti ${count} baxılmayan',
-			'downloads.customAmount' => 'Xüsusi miqdar...',
-			'downloads.includeSpecials' => 'Xüsusi seriyaları daxil et',
-			'downloads.howManyEpisodes' => 'Neçə seriya?',
-			'downloads.invalidEpisodeCount' => 'Düzgün seriya sayı daxil edin.',
-			'downloads.keepSynced' => 'Eyniləşdirilmiş saxla',
-			'downloads.downloadOnce' => 'Bir dəfə yüklə',
-			'downloads.keepNUnwatched' => ({required Object count}) => '${count} baxılmayan seriyanı saxla',
-			'downloads.editSyncRule' => 'Eyniləşdirmə qaydasını dəyişdir',
-			'downloads.removeSyncRule' => 'Eyniləşdirmə qaydasını sil',
-			'downloads.removeSyncRuleConfirm' => ({required Object title}) => '"${title}" eyniləşdirməsi dayandırılsın? Yüklənmiş seriyalar saxlanılacaq.',
-			'downloads.removeListSyncRuleConfirm' => ({required Object title}) => '"${title}" eyniləşdirməsi dayandırılsın?',
-			'downloads.deleteSyncRuleDownloads' => 'Əlaqəli yükləmələri də sil',
-			'downloads.deleteSyncRuleDownloadsDescription' => 'Başqa eyniləşdirmə qaydası və ya profil tərəfindən istifadə olunan yükləmələr saxlanılacaq.',
-			'downloads.syncRuleCreated' => ({required Object count}) => 'Eyniləşdirmə qaydası yaradıldı — ${count} baxılmayan seriya saxlanılır',
-			'downloads.syncRuleUpdated' => 'Eyniləşdirmə qaydası yeniləndi',
-			'downloads.syncRuleRemoved' => 'Eyniləşdirmə qaydası silindi',
-			'downloads.syncRuleAndDownloadsRemoved' => 'Eyniləşdirmə qaydası və əlaqəli yükləmələr silindi',
-			'downloads.syncRuleCleanupBusy' => 'Eyniləşdirmə qaydaları hazırda yenilənir. Bir azdan təzədən cəhd edin.',
-			'downloads.syncRuleCleanupUnavailable' => 'Əlaqəli yükləmələr təhlükəsiz şəkildə müəyyən edilə bilmədi. Serverə yenidən qoşulub cəhd edin və ya qaydanı yükləmələri silmədən silin.',
-			'downloads.syncedNewEpisodes' => ({required Object title, required Object count}) => '${title} üçün ${count} yeni seriya eyniləşdirildi',
-			'downloads.activeSyncRules' => 'Eyniləşdirmə qaydaları',
-			'downloads.noSyncRules' => 'Eyniləşdirmə qaydası yoxdur',
-			'downloads.manageSyncRule' => 'Eyniləşdirməni idarə et',
-			'downloads.editEpisodeCount' => 'Seriya sayı',
-			'downloads.editSyncFilter' => 'Eyniləşdirmə filtri',
-			'downloads.syncAllItems' => 'Bütün elementlər eyniləşdirilir',
-			'downloads.syncUnwatchedItems' => 'Baxılmayan elementlər eyniləşdirilir',
-			'downloads.syncRuleServerContext' => ({required Object server, required Object status}) => 'Server: ${server} • ${status}',
-			'downloads.syncRuleAvailable' => 'Əlçatandır',
-			'downloads.syncRuleOffline' => 'Oflayn',
-			'downloads.syncRuleSignInRequired' => 'Daxil olmaq tələb olunur',
-			'downloads.syncRuleAccessDenied' => 'Giriş rədd edildi',
-			'downloads.syncRuleNotAvailableForProfile' => 'Cari profil üçün əlçatan deyil',
-			'downloads.syncRuleUnknownServer' => 'Bilinməyən server',
-			'downloads.syncRuleListCreated' => 'Eyniləşdirmə qaydası yaradıldı',
-			'downloads.backgroundWarning.bannerBlocked' => 'Tətbiqdən çıxdıqda yükləmələr dayanacaq',
-			'downloads.backgroundWarning.bannerDegraded' => 'Arxa fonda yükləmələr məhdudlaşdırıla bilər',
-			'downloads.backgroundWarning.bannerAction' => 'Ətraflı',
-			'downloads.backgroundWarning.sheetTitle' => 'Arxa fonda yükləmələr bloklanıb',
-			'downloads.backgroundWarning.sheetTitleDegraded' => 'Arxa fonda yükləmələr məhdudlaşdırıla bilər',
-			'downloads.backgroundWarning.sheetIntro' => 'Android Plezy-nin arxa fonda etibarlı şəkildə yükləməsinə mane olur.',
-			'downloads.backgroundWarning.sheetIntroDegraded' => 'Cihazınız Plezy-nin arxa fonda nə vaxt yükləyə biləcəyini məhdudlaşdırır.',
-			'downloads.backgroundWarning.reasonBackgroundRestricted' => 'Plezy-nin arxa fon istifadəsi məhdudlaşdırılıb. Batareya və ya arxa fon istifadəsini "Məhdudiyyətsiz" edin.',
-			'downloads.backgroundWarning.reasonStandbyRestricted' => 'Android Plezy-ni məhdud gözləmə rejiminə salıb. Batareya istifadəsini "Məhdudiyyətsiz" edin.',
-			'downloads.backgroundWarning.reasonDownloadChannelBlocked' => 'Yükləmə bildirişləri söndürülüb, ona görə gedişat və idarəetmələr əlçatan olmaya bilər.',
-			'downloads.backgroundWarning.reasonNotificationsDisabled' => 'Bildirişlər söndürülüb. Android 13 və daha yeni versiyalarda uzun arxa fon yükləmələri üçün onlar tələb olunur.',
-			'downloads.backgroundWarning.reasonDataSaver' => 'Data Saver aktivdir və bu, mobil internetdə arxa fon yükləmələrini bloklayır. Wi-Fi ilə yükləmələr işləməlidir.',
-			'downloads.backgroundWarning.reasonOemUnknown' => 'Plezy arxa fonda olarkən yükləmələr dəfələrlə dayandı. Plezy-nin batareya və ya arxa fon istifadəsi tənzimləmələrini yoxlayın.',
-			'downloads.backgroundWarning.openSettings' => 'Tənzimləmələri aç',
-			'downloads.backgroundWarning.stillNotWorking' => 'Cihaza özəl kömək',
-			'downloads.backgroundWarning.stillNotWorkingDescription' => 'Cihazınız üçün addımlara baxın və ya problem davam edərsə Tənzimləmələr › Jurnallara bax bölməsindən jurnal göndərin.',
-			'downloads.backgroundWarning.dialogTitle' => 'Yükləmələr tamamlanmaya bilər',
-			'downloads.backgroundWarning.dialogDownloadAnyway' => 'Yenə də yüklə',
-			'downloads.backgroundWarning.dialogFixFirst' => 'Əvvəlcə bunu düzəlt',
-			'downloads.backgroundWarning.statusTile' => 'Arxa fonda yükləmələr',
-			'downloads.backgroundWarning.statusOk' => 'Arxa fonda işləməyə icazə verilir',
-			'downloads.backgroundWarning.statusBlocked' => 'Sistem tənzimləmələri ilə bloklanıb',
-			'downloads.backgroundWarning.statusDegraded' => 'Sistem tənzimləmələri ilə məhdudlaşdırılıb',
-			'downloads.backgroundWarning.statusUnknown' => 'Hələ yoxlanılmayıb',
-			'downloads.backgroundWarning.settingsUnavailable' => 'Bu cihazda sistem tənzimləmələri açıla bilmədi',
-			'downloads.backgroundWarning.linkUnavailable' => 'Bu cihazda dontkillmyapp.com açıla bilmədi',
-			'downloads.options' => 'Yükləmə seçimləri',
-			'downloads.groupings.library' => 'Kitabxana',
-			'downloads.groupings.collections' => 'Kolleksiyalar',
-			'downloads.unknownLibrary' => 'Məlum olmayan kitabxana',
-			'downloads.unknownShow' => 'Məlum olmayan serial',
-			'downloads.unknownSeason' => 'Məlum olmayan mövsüm',
-			'downloads.unknownAlbum' => 'Məlum olmayan albom',
-			'downloads.completedOfTotal' => ({required Object completed, required Object total}) => '${completed}/${total} tamamlandı',
-			'downloads.errorFileNotFound' => 'Fayl tapılmadı (404)',
-			'downloads.errorDownloadNotAllowed' => 'Server yükləməyə icazə vermir (403)',
-			'downloads.errorDownloadFailed' => 'Yükləmə uğursuz oldu',
-			'downloads.errorDownloadFailedWithReason' => ({required Object reason}) => 'Yükləmə uğursuz oldu: ${reason}',
-			'downloads.errorHttpStatus' => ({required Object status}) => 'Yükləmə uğursuz oldu (HTTP ${status})',
-			'downloads.errorPostProcessing' => ({required Object reason}) => 'Sonrakı emal uğursuz oldu: ${reason}',
-			'downloads.reasonFileNotSaved' => 'fayl bu cihazda saxlanıla bilmədi',
-			'downloads.reasonCannotResume' => 'yarımçıq yükləməni davam etdirmək mümkün olmadı',
-			'downloads.reasonDeviceStorageFull' => 'bu cihazda yer qalmayıb',
-			'downloads.notificationDownloading' => 'Yüklənir...',
-			'downloads.notificationComplete' => 'Yükləmə tamamlandı',
-			'downloads.notificationPaused' => 'Yükləmə dayandırıldı',
-			'shaders.title' => 'Şeyderlər',
-			'shaders.noShaderDescription' => 'Video təkmilləşdirməsi yoxdur',
-			'shaders.nvscalerDescription' => 'Daha kəskin video üçün NVIDIA miqyaslaması',
-			'shaders.artcnnVariantNeutral' => 'Neytral',
-			'shaders.artcnnVariantDenoise' => 'Küyün aradan qaldırılması',
-			'shaders.artcnnVariantDenoiseSharpen' => 'Küyün aradan qaldırılması + Kəskinləşdirmə',
-			'shaders.qualityFast' => 'Sürətli',
-			'shaders.qualityHQ' => 'Yüksək keyfiyyət',
-			'shaders.mode' => 'Rejim',
-			'shaders.importShader' => 'Şeyder idxal et',
-			'shaders.customShaderDescription' => 'Xüsusi GLSL şeyderi',
-			'shaders.shaderImported' => 'Şeyder idxal edildi',
-			'shaders.shaderImportFailed' => 'Şeyder idxal edilə bilmədi',
-			'shaders.deleteShader' => 'Şeyderi sil',
-			'shaders.deleteShaderConfirm' => ({required Object name}) => '"${name}" silinsin?',
-			'companionRemote.title' => 'Köməkçi pult',
-			'companionRemote.connectedTo' => ({required Object name}) => '${name} cihazına qoşuldu',
-			'companionRemote.unknownDevice' => 'Bilinməyən cihaz',
-			'companionRemote.session.startingServer' => 'Pult serveri başladılır...',
-			'companionRemote.session.hostAddress' => 'Əsas cihaz ünvanı',
-			'companionRemote.session.connected' => 'Qoşuldu',
-			'companionRemote.session.serverRunning' => 'Pult serveri aktivdir',
-			'companionRemote.session.serverStopped' => 'Pult serveri dayandırıldı',
-			'companionRemote.session.serverRunningDescription' => 'Şəbəkənizdəki mobil cihazlar qoşula bilər',
-			'companionRemote.session.serverStoppedDescription' => 'Mobil cihazların qoşulmasına icazə vermək üçün serveri başladın',
-			'companionRemote.session.usePhoneToControl' => 'Bu tətbiqi idarə etmək üçün mobil cihazınızı istifadə edin',
-			'companionRemote.session.startServer' => 'Serveri başlat',
-			'companionRemote.session.stopServer' => 'Serveri dayandır',
-			'companionRemote.session.minimize' => 'Yığ',
-			'companionRemote.session.manualAddressHint' => 'Əl ilə bağlantı ünvanı:',
-			'companionRemote.pairing.discoveryDescription' => 'Eyni Plex hesabına sahib Plezy cihazları burada görünür',
-			'companionRemote.pairing.hostAddressHint' => '192.168.1.100:48632',
-			'companionRemote.pairing.connecting' => 'Qoşulunur...',
-			'companionRemote.pairing.searchingForDevices' => 'Cihazlar axtarılır...',
-			'companionRemote.pairing.noDevicesFound' => 'Şəbəkənizdə cihaz tapılmadı',
-			'companionRemote.pairing.noDevicesHint' => 'Masaüstündə Plezy-ni açın və eyni Wi-Fi-dan istifadə edin',
-			'companionRemote.pairing.availableDevices' => 'Əlçatan cihazlar',
-			'companionRemote.pairing.manualConnection' => 'Əl ilə qoşulma',
-			'companionRemote.pairing.cryptoInitFailed' => 'Təhlükəsiz qoşulma başladılarkən xəta. Əvvəlcə Plex-ə daxil olun.',
-			'companionRemote.pairing.validationHostRequired' => 'Lütfən əsas cihaz ünvanını daxil edin',
-			'companionRemote.pairing.validationHostFormat' => 'Format IP:port şəklində olmalıdır',
-			'companionRemote.pairing.connectionTimedOut' => 'Qoşulma vaxtı bitdi. Hər iki cihazda eyni şəbəkədən istifadə edin.',
-			'companionRemote.pairing.sessionNotFound' => 'Cihaz tapılmadı.',
-			'companionRemote.pairing.authFailed' => 'Kimlik doğrulanması uğursuz oldu.',
-			'companionRemote.pairing.failedToConnect' => ({required Object error}) => 'Qoşulma uğursuz oldu: ${error}',
-			'companionRemote.remote.disconnectConfirm' => 'Pult seansından ayrılmaq istəyirsiniz?',
-			'companionRemote.remote.reconnecting' => 'Yenidən qoşulunur...',
-			'companionRemote.remote.attemptOf' => ({required Object current}) => 'Cəhd ${current} / 5',
-			'companionRemote.remote.retryNow' => 'İndi təzədən cəhd et',
-			'companionRemote.remote.tabRemote' => 'Pult',
-			'companionRemote.remote.tabPlay' => 'Oynat',
-			'companionRemote.remote.tabMore' => 'Daha çox',
-			'companionRemote.remote.menu' => 'Menyu',
-			'companionRemote.remote.tabNavigation' => 'Naviqasiya',
-			'companionRemote.remote.tabDiscover' => 'Kəşf et',
-			'companionRemote.remote.tabLibraries' => 'Kitabxanalar',
-			'companionRemote.remote.tabSearch' => 'Axtar',
-			'companionRemote.remote.tabDownloads' => 'Yükləmələr',
-			'companionRemote.remote.tabSettings' => 'Tənzimləmələr',
-			'companionRemote.remote.previous' => 'Əvvəlki',
-			'companionRemote.remote.playPause' => 'Oynat/Fasilə',
-			'companionRemote.remote.next' => 'Növbəti',
-			'companionRemote.remote.seekBack' => 'Geri sar',
-			'companionRemote.remote.stop' => 'Saxla',
-			'companionRemote.remote.seekForward' => 'İrəli sar',
-			'companionRemote.remote.volume' => 'Səs',
-			'companionRemote.remote.volumeDown' => 'Azalt',
-			'companionRemote.remote.volumeUp' => 'Artır',
-			'companionRemote.remote.fullscreen' => 'Tam ekran',
-			'companionRemote.remote.subtitles' => 'Altyazılar',
-			'companionRemote.remote.audio' => 'Səs',
-			'companionRemote.remote.searchHint' => 'Masaüstündə axtar...',
-			'companionRemote.errors.noNetworkInterface' => 'Şəbəkə interfeysi tapılmadı',
-			'companionRemote.errors.authenticationFailed' => 'Kimlik doğrulanması uğursuz oldu',
-			'companionRemote.errors.serverStartFailed' => ({required Object error}) => 'Pult serveri başladıla bilmədi: ${error}',
-			'companionRemote.errors.commandFailed' => ({required Object error}) => 'Pult əmri göndərilə bilmədi: ${error}',
-			'companionRemote.errors.joinTimedOut' => 'Seansa qoşulma vaxtı bitdi',
-			'companionRemote.errors.failedToConnectAnyAddress' => 'Heç bir ünvana qoşuluna bilmədi',
-			'companionRemote.errors.connectionLostAfterAttempts' => ({required Object attempts}) => '${attempts} cəhddən sonra əlaqə kəsildi',
-			'companionRemote.errors.connectionLost' => 'Əlaqə kəsildi',
-			'companionRemote.closedBeforeAuth' => 'Bağlantı autentifikasiyadan əvvəl bağlandı',
-			'videoSettings.playbackSpeed' => 'Oynatma sürəti',
-			'videoSettings.normalSpeed' => 'Normal',
-			'videoSettings.sleepTimerActive' => ({required Object duration}) => 'Aktivdir (${duration})',
-			'videoSettings.zoom' => 'Miqyas',
-			'videoSettings.sleepTimer' => 'Yuxu taymeri',
-			'videoSettings.audioSync' => 'Səs sinxronizasiyası',
-			'videoSettings.subtitleSync' => 'Altyazı sinxronizasiyası',
-			'videoSettings.hdr' => 'HDR',
-			'videoSettings.hdrUnsupported' => 'HDR burada əlçatan deyil — bu masaüstü kompozitoru və ya video çıxışı onu ötürə bilmir.',
-			'videoSettings.hdrToneMapping' => 'HDR ton uyğunlaşdırması',
-			'videoSettings.hdrToneMappingCompositor' => 'Kompozitor',
-			'videoSettings.hdrToneMappingCompositorDescription' => 'Mənbənin HDR metaməlumatlarını dəyişmədən ötür və ton uyğunlaşdırmasını masaüstü kompozitoruna həvalə et.',
-			'videoSettings.hdrToneMappingPlayer' => 'Oynadıcı',
-			'videoSettings.hdrToneMappingPlayerDescription' => 'Oynadıcıda tonları ekranın pik parlaqlığına uyğunlaşdır, sonra nəticəni kompozitora bildir.',
-			'videoSettings.hdrToneMappingFailed' => 'HDR ton uyğunlaşdırmasını dəyişmək olmadı — əvvəlki rejim hələ də aktivdir.',
-			'videoSettings.audioOutput' => 'Səs çıxışı',
-			'videoSettings.performanceOverlay' => 'Məhsuldarlıq paneli',
-			'videoSettings.audioOutputDolbyAtmos' => 'Dolby Atmos',
-			'videoSettings.audioOutputDolbyAudio' => 'Dolby Audio',
-			'videoSettings.audioOutputSurround' => 'Əhatəli səs',
-			'videoSettings.audioOutputSpatial' => 'Məkan səsi',
-			'videoSettings.audioOutputStereo' => 'Stereo',
-			'videoSettings.audioNormalization' => 'Səsin gurluğunu normallaşdır',
-			'videoSettings.audioNormalizationDisablesPassthrough' => 'Səsi PCM-ə dekodlayır; bu aktivkən birbaşa ötürmə söndürülür',
-			'performanceOverlay.color' => 'Rəng',
-			'performanceOverlay.performance' => 'Məhsuldarlıq',
-			'performanceOverlay.buffer' => 'Bufer',
-			'performanceOverlay.app' => 'Tətbiq',
-			'performanceOverlay.decoder' => 'Çözücü',
-			'performanceOverlay.rawDecoder' => 'Xam çözücü',
-			'performanceOverlay.tunneling' => 'Tünelləmə',
-			'performanceOverlay.passthrough' => 'Birbaşa ötürmə',
-			'performanceOverlay.aspect' => 'Nisbət',
-			'performanceOverlay.rotation' => 'Dönmə',
-			'performanceOverlay.dvSource' => 'DV mənbəyi',
-			'performanceOverlay.dvPath' => 'DV yolu',
-			'performanceOverlay.dvRouteDecoder' => 'Dolby Vision çözücüsü',
-			'performanceOverlay.dvRouteDecoderP81' => 'Dolby Vision çözücüsü (P7→8.1)',
-			'performanceOverlay.dvRouteBaseLayer' => 'Baza təbəqə',
-			'performanceOverlay.dvRouteBaseLayerHdr10' => 'HDR10 baza təbəqə',
-			'performanceOverlay.dvRouteBaseLayerHlg' => 'HLG baza təbəqə',
-			'performanceOverlay.dvRouteBaseLayerSdr' => 'SDR baza təbəqə',
-			'performanceOverlay.dvRouteReshaped' => 'RPU ilə yenidən formalaşdırılıb (gpu-next)',
-			'performanceOverlay.p7Conversion' => 'P7 çevrilməsi',
-			'performanceOverlay.sampleRate' => 'Diskretləşdirmə tezliyi',
-			'performanceOverlay.pixelFormat' => 'Piksel formatı',
-			'performanceOverlay.hwFormat' => 'HW formatı',
-			'performanceOverlay.matrix' => 'Matrisa',
-			'performanceOverlay.primaries' => 'Əsas rənglər',
-			'performanceOverlay.transfer' => 'Ötürmə',
-			'performanceOverlay.renderFps' => 'Emal FPS-i',
-			'performanceOverlay.displayFps' => 'Ekran FPS-i',
-			'performanceOverlay.avSync' => 'A/V Eyniləşdirilməsi',
-			'performanceOverlay.dropped' => 'İtirilmiş kadrlar',
-			'performanceOverlay.dvRpus' => 'DV RPU-ları',
-			'performanceOverlay.dvRpuAverage' => 'DV RPU Ort.',
-			'performanceOverlay.dvSampleAverage' => 'DV Nümunə Ort.',
-			'performanceOverlay.maxLuma' => 'Maks Luma',
-			'performanceOverlay.minLuma' => 'Min Luma',
-			'performanceOverlay.maxCll' => 'MaxCLL',
-			'performanceOverlay.maxFall' => 'MaxFALL',
-			'performanceOverlay.cacheUsed' => 'İstifadə olunan keş',
-			'performanceOverlay.cacheLimit' => 'Keş limiti',
-			'performanceOverlay.speed' => 'Sürət',
-			'performanceOverlay.player' => 'Oynadıcı',
-			'performanceOverlay.memory' => 'Yaddaş',
-			'performanceOverlay.uiFps' => 'Arayüz (UI) FPS-i',
-			'performanceOverlay.fps' => 'FPS',
-			'performanceOverlay.decoderAndroidHw' => 'Android HW',
-			'performanceOverlay.decoderNvidiaHw' => 'NVIDIA HW',
-			'performanceOverlay.decoderQualcommHw' => 'Qualcomm HW',
-			'performanceOverlay.decoderMediatekHw' => 'MediaTek HW',
-			'performanceOverlay.decoderExynosHw' => 'Exynos HW',
-			'performanceOverlay.decoderSoftware' => 'Proqram təminatı',
-			_ => null,
-		} ?? switch (path) {
-			'performanceOverlay.decoderHardware' => 'Aparat təminatı',
-			'performanceOverlay.tunnelingActive' => 'Aktiv',
-			'performanceOverlay.dvRpuFailed' => ({required Object converted, required Object failures}) => '${converted} (${failures} uğursuz)',
-			'externalPlayer.title' => 'Xarici oynadıcı',
-			'externalPlayer.useExternalPlayer' => 'Xarici oynadıcı istifadə et',
-			'externalPlayer.useExternalPlayerDescription' => 'Videoları başqa tətbiqdə açın',
-			'externalPlayer.selectPlayer' => 'Oynadıcı seç',
-			'externalPlayer.customPlayers' => 'Xüsusi oynadıcılar',
-			'externalPlayer.systemDefault' => 'Sistem defoltu',
-			'externalPlayer.addCustomPlayer' => 'Xüsusi oynadıcı əlavə et',
-			'externalPlayer.playerName' => 'Oynadıcı adı',
-			'externalPlayer.playerNameHint' => 'Mənim oynadıcım',
-			'externalPlayer.playerCommand' => 'Əmr',
-			'externalPlayer.playerPackage' => 'Paket adı',
-			'externalPlayer.playerUrlScheme' => 'URL sxemi',
-			'externalPlayer.off' => 'Söndürülüb',
-			'externalPlayer.launchFailed' => 'Xarici oynadıcı açıla bilmədi',
-			'externalPlayer.appNotInstalled' => ({required Object name}) => '${name} quraşdırılmayıb',
-			'externalPlayer.playInExternalPlayer' => 'Xarici oynadıcıda oynat',
-			'metadataEdit.editMetadata' => 'Düzəliş et...',
-			'metadataEdit.screenTitle' => 'Meta-məlumatlara düzəliş et',
-			'metadataEdit.basicInfo' => 'Əsas məlumatlar',
-			'metadataEdit.artwork' => 'Şəkillər/Posterlər',
-			'metadataEdit.advancedSettings' => 'Təkmilləşdirilmiş tənzimləmələr',
-			'metadataEdit.title' => 'Başlıq',
-			'metadataEdit.sortTitle' => 'Sıralama başlığı',
-			'metadataEdit.originalTitle' => 'Orijinal başlıq',
-			'metadataEdit.releaseDate' => 'Buraxılış tarixi',
-			'metadataEdit.contentRating' => 'Məzmun reytinqi',
-			'metadataEdit.studio' => 'Studiya',
-			'metadataEdit.tagline' => 'Deviz/Slogan',
-			'metadataEdit.summary' => 'Məzmun/Xülasə',
-			'metadataEdit.poster' => 'Poster',
-			'metadataEdit.background' => 'Arxa fon',
-			'metadataEdit.logo' => 'Loqo',
-			'metadataEdit.squareArt' => 'Kvadrat şəkil',
-			'metadataEdit.selectPoster' => 'Poster seç',
-			'metadataEdit.selectBackground' => 'Arxa fon seç',
-			'metadataEdit.selectLogo' => 'Loqo seç',
-			'metadataEdit.selectSquareArt' => 'Kvadrat şəkil seç',
-			'metadataEdit.fromUrl' => 'URL-dən',
-			'metadataEdit.uploadFile' => 'Fayl yüklə',
-			'metadataEdit.enterImageUrl' => 'Şəkil URL-i daxil edin',
-			'metadataEdit.imageUrl' => 'Şəkil URL-i',
-			'metadataEdit.metadataUpdated' => 'Meta-məlumatlar yeniləndi',
-			'metadataEdit.metadataUpdateFailed' => 'Meta-məlumatlar yenilənə bilmədi',
-			'metadataEdit.artworkUpdated' => 'Şəkillər yeniləndi',
-			'metadataEdit.artworkUpdateFailed' => 'Şəkillər yenilənə bilmədi',
-			'metadataEdit.noArtworkAvailable' => 'Şəkil əlçatan deyil',
-			'metadataEdit.artworkOption' => ({required Object index}) => 'Şəkil seçimi ${index}',
-			'metadataEdit.selectedArtworkOption' => ({required Object index}) => 'Şəkil seçimi ${index}, seçildi',
-			'metadataEdit.notSet' => 'Təyin edilməyib',
-			'metadataEdit.libraryDefault' => 'Kitabxana defoltu',
-			'metadataEdit.accountDefault' => 'Hesab defoltu',
-			'metadataEdit.seriesDefault' => 'Serial defoltu',
-			'metadataEdit.episodeSorting' => 'Seriya sıralaması',
-			'metadataEdit.oldestFirst' => 'Əvvəlcə ən köhnə',
-			'metadataEdit.newestFirst' => 'Əvvəlcə ən yeni',
-			'metadataEdit.keep' => 'Saxla',
-			'metadataEdit.allEpisodes' => 'Bütün seriyalar',
-			'metadataEdit.latestEpisodes' => ({required Object count}) => 'Ən son ${count} seriya',
-			'metadataEdit.latestEpisode' => 'Ən son seriya',
-			'metadataEdit.episodesAddedPastDays' => ({required Object count}) => 'Son ${count} gündə əlavə olunan seriyalar',
-			'metadataEdit.deleteAfterPlaying' => 'Oynatdıqdan sonra seriyaları sil',
-			'metadataEdit.never' => 'Heç vaxt',
-			'metadataEdit.afterADay' => 'Bir gün sonra',
-			'metadataEdit.afterAWeek' => 'Bir həftə sonra',
-			'metadataEdit.afterAMonth' => 'Bir ay sonra',
-			'metadataEdit.onNextRefresh' => 'Növbəti yenilənmədə',
-			'metadataEdit.seasons' => 'Mövsümlər',
-			'metadataEdit.show' => 'Göstər',
-			'metadataEdit.hide' => 'Gizlət',
-			'metadataEdit.episodeOrdering' => 'Seriya ardıcıllığı',
-			'metadataEdit.tmdbAiring' => 'The Movie Database (Yayımlanma)',
-			'metadataEdit.tvdbAiring' => 'TheTVDB (Yayımlanma)',
-			'metadataEdit.tvdbAbsolute' => 'TheTVDB (Mütləq)',
-			'metadataEdit.metadataLanguage' => 'Meta-məlumat dili',
-			'metadataEdit.useOriginalTitle' => 'Orijinal başlığı istifadə et',
-			'metadataEdit.preferredAudioLanguage' => 'Üstünlük verilən səs dili',
-			'metadataEdit.preferredSubtitleLanguage' => 'Üstünlük verilən altyazı dili',
-			'metadataEdit.subtitleMode' => 'Avtomatik altyazı seçim rejimi',
-			'metadataEdit.manuallySelected' => 'Əl ilə seçilmiş',
-			'metadataEdit.shownWithForeignAudio' => 'Xarici səs olduqda göstərilən',
-			'metadataEdit.alwaysEnabled' => 'Həmişə aktivdir',
-			'metadataEdit.tags' => 'Teqlər',
-			'metadataEdit.addTag' => 'Teq əlavə et',
-			'metadataEdit.genre' => 'Janr',
-			'metadataEdit.director' => 'Rejissor',
-			'metadataEdit.writer' => 'Ssenarist',
-			'metadataEdit.producer' => 'Prodüser',
-			'metadataEdit.country' => 'Ölkə',
-			'metadataEdit.collection' => 'Kolleksiya',
-			'metadataEdit.label' => 'Etiket',
-			'metadataEdit.quickTag' => 'Sürətli etiket...',
-			'matchScreen.match' => 'Uyğunlaşdır...',
-			'matchScreen.fixMatch' => 'Uyğunluğu düzəlt...',
-			'matchScreen.unmatch' => 'Uyğunluğu ləğv et',
-			'matchScreen.unmatchConfirm' => 'Bu uyğunluq təmizlənsin? Yenidən uyğunlaşdırılana qədər Plex onu uyğunlaşdırılmamış sayacaq.',
-			'matchScreen.unmatchSuccess' => 'Element uyğunluğu ləğv edildi',
-			'matchScreen.unmatchFailed' => 'Uyğunluq ləğv edilə bilmədi',
-			'matchScreen.matchApplied' => 'Uyğunluq tətbiq edildi',
-			'matchScreen.matchFailed' => 'Uyğunluq tətbiq edilə bilmədi',
-			'matchScreen.titleHint' => 'Ad',
-			'matchScreen.yearHint' => 'İl',
-			'matchScreen.search' => 'Axtar',
-			'matchScreen.noMatchesFound' => 'Uyğunluq tapılmadı',
-			'serverTasks.title' => 'Server tapşırıqları',
-			'serverTasks.failedToLoad' => 'Tapşırıqlar yüklənə bilmədi',
-			'serverTasks.noTasks' => 'İcra olunan tapşırıq yoxdur',
-			'trakt.title' => 'Trakt',
-			'trakt.connected' => 'Qoşuldu',
-			'trakt.connectedAs' => ({required Object username}) => '@${username} olaraq qoşuldu',
-			'trakt.disconnectConfirm' => 'Trakt hesabı ayırılsın?',
-			'trakt.disconnectConfirmBody' => 'Plezy Trakt-a məlumat göndərməyi dayandıracaq.',
-			'trakt.scrobble' => 'Real vaxt rejimində izləmə',
-			'trakt.scrobbleDescription' => 'Oynatma zamanı Trakt-a məlumat göndər.',
-			'trakt.watchedSync' => 'Baxış statusunu eyniləşdir',
-			'trakt.watchedSyncDescription' => 'Plezy-də baxıldı işarələdikdə Trakt-da da işarələnsin.',
-			'seerr.title' => 'Seerr',
-			'seerr.connectTitle' => 'Seerr qoş',
-			'seerr.serverUrl' => 'Server URL-i',
-			'seerr.serverUrlHelper' => 'Seerr ünvanınız',
-			'seerr.checkServer' => 'Davam et',
-			'seerr.signInWithJellyfin' => 'Jellyfin ilə daxil ol',
-			'seerr.signInWithEmby' => 'Emby ilə daxil ol',
-			'seerr.signInWithLocal' => 'Yerli hesab istifadə et',
-			'seerr.email' => 'E-poçt',
-			'seerr.noSignInMethods' => 'Bu Seerr dəstəklənən daxil olma üsulu təklif etmir.',
-			'seerr.instance' => 'Nüsxə',
-			'seerr.disconnectConfirm' => 'Seerr ayırılsın?',
-			'seerr.disconnectConfirmBody' => 'Plezy bu Seerr serverini unudacaq. İstənilən vaxt yenidən qoşula bilərsiniz.',
-			'seerr.request' => 'Sorğu göndər',
-			'seerr.request4k' => '4K sorğu göndər',
-			'seerr.seasons' => 'Mövsümlər',
-			'seerr.allSeasons' => 'Bütün mövsümlər',
-			'seerr.advancedOptions' => 'Təkmilləşdirilmiş',
-			'seerr.destinationServer' => 'Hədəf server',
-			'seerr.qualityProfile' => 'Keyfiyyət profili',
-			'seerr.rootFolder' => 'Kök qovluq',
-			'seerr.languageProfile' => 'Dil profili',
-			'seerr.tags' => 'Teqlər',
-			'seerr.noTags' => 'Teq yoxdur',
-			'seerr.defaultOption' => ({required Object name}) => '${name} (Defolt)',
-			'seerr.animeNote' => 'Bu serial animedir.',
-			'seerr.requestSubmitted' => 'Sorğu göndərildi',
-			'seerr.requestFailed' => ({required Object error}) => 'Sorğu uğursuz oldu: ${error}',
-			'seerr.requestsLoadFailed' => 'Seçimlər yüklənə bilmədi',
-			'seerr.nothingToRequest' => 'Hər şey artıq var və ya sorğu göndərilib.',
-			'seerr.statusAvailable' => 'Əlçatandır',
-			'seerr.statusPartiallyAvailable' => 'Hissəvi əlçatandır',
-			'seerr.statusRequested' => 'Sorğu göndərildi',
-			'seerr.statusProcessing' => 'Emal edilir',
-			'seerr.statusBlocklisted' => 'Bloklanmış',
-			'seerr.couldNotReach' => ({required Object url, required Object error}) => '${url} ünvanına çatmaq olmadı: ${error}',
-			'seerr.noInstanceAtUrl' => ({required Object url, required Object status}) => '${url} ünvanında Seerr instansiyası yoxdur (HTTP ${status})',
-			'seerr.behindAuthProxy' => 'Seerr əvəzinə autentifikasiya edən tərs proksi (SSO və ya HTTP auth) cavab verdi. Plezy onun vasitəsilə daxil ola bilmir: bu tətbiq üçün Seerr-in /api/v1 yolunun proksini yan keçməsinə icazə verin və ya Seerr-ə birbaşa çatan ünvan istifadə edin.',
-			'seerr.invalidUrl' => 'https://seerr.example.com kimi server ünvanı daxil edin',
-			'seerr.quickConnectUnsupported' => 'Bu Seerr nüsxəsi Sürətli Qoşulmanı dəstəkləmir. Seerr 3.4 və ya daha yeni versiya tələb olunur.',
-			'seerr.notInitialized' => 'Bu Seerr instansiyasının ilkin quraşdırılması tamamlanmayıb',
-			'seerr.noPlexTokenForReauth' => 'Yenidən daxil olmaq üçün Plex tokeni mövcud deyil',
-			'seerr.noStoredCredentials' => 'Yenidən daxil olmaq üçün yadda saxlanmış giriş məlumatları mövcud deyil',
-			'seerr.signInRejected' => 'Daxil olma rədd edildi',
-			'seerr.noSessionCookie' => 'Seerr sessiya kukisi yaratmadı',
-			'seerr.freshCookieRejected' => 'Seerr yeni sessiya kukisini rədd etdi',
-			'seerr.noUserInformation' => 'Seerr istifadəçi məlumatlarını qaytarmadı',
-			'seerr.sessionRejectedAfterReauth' => 'Yenidən daxil olduqdan sonra sessiya rədd edildi',
-			'seerr.permissionDenied' => 'Seerr bu əməliyyatı rədd etdi: hesabınızda artıq tələb olunan icazə yoxdur',
-			'seerr.permissionRevoked' => 'Bunu sorğulamaq üçün artıq icazəniz yoxdur',
-			'services.title' => 'Xidmətlər',
-			'services.hubSubtitle' => 'İzləmə tərəqqisini eyniləşdirin və yeni başlıqlar sorğulayın.',
-			'services.integrations' => 'İnteqrasiyalar',
-			'services.notConnected' => 'Qoşulmayıb',
-			'services.connectedAs' => ({required Object username}) => '@${username} olaraq qoşuldu',
-			'services.scrobble' => 'Tərəqqini avtomatik izlə',
-			'services.scrobbleDescription' => 'Bir epizodu və ya filmi bitirdikdə siyahınızı yeniləyin.',
-			'services.disconnectConfirm' => ({required Object service}) => '${service} ayırılsın?',
-			'services.disconnectConfirmBody' => ({required Object service}) => 'Plezy ${service} yeniləməyi dayandıracaq. İstənilən vaxt yenidən qoşula bilərsiniz.',
-			'services.connectFailed' => ({required Object service}) => '${service} qoşula bilmədi. Təzədən cəhd edin.',
-			'services.names.mal' => 'MyAnimeList',
-			'services.names.anilist' => 'AniList',
-			'services.names.simkl' => 'Simkl',
-			'services.names.seerr' => 'Seerr',
-			'services.names.mdblist' => 'MDBList',
-			'services.simklReconnect.title' => 'Simkl-ə yenidən qoşul',
-			'services.simklReconnect.subtitle' => 'Simkl bu bağlantının istifadə etdiyi daxil olma üsulunu ləğv edir. Yenidən qoşulduqda Plezy-ni təsdiqləmək üçün simkl.com açılır — Plezy parolunuzu heç vaxt görmür. Baxış tarixçəniz Simkl-də qalır.',
-			'services.deviceCode.title' => ({required Object service}) => 'Plezy-ni ${service} üzərində aktivləşdirin',
-			'services.deviceCode.instructions' => 'QR kodunu skan edin və ya aşağıdakı ünvana keçib bu kodu daxil edin:',
-			'services.deviceCode.openToActivate' => ({required Object service}) => 'Aktivləşdirmək üçün ${service} açın',
-			'services.deviceCode.copyCode' => 'Aktivləşdirmə kodunu kopyala',
-			'services.deviceCode.waitingForAuthorization' => 'Səlahiyyət gözlənilir…',
-			'services.deviceCode.codeCopied' => 'Kod kopyalandı',
-			'services.oauthProxy.title' => ({required Object service}) => '${service} xidmətinə daxil olun',
-			'services.oauthProxy.body' => 'Bu QR kodu skan edin və ya URL-i açın.',
-			'services.oauthProxy.openToSignIn' => ({required Object service}) => 'Daxil olmaq üçün ${service} açın',
-			'services.pendingAuth.copyUrl' => 'Daxil olma URL-ini kopyala',
-			'services.pendingAuth.urlCopied' => 'URL kopyalandı',
-			'services.libraryFilter.title' => 'Kitabxana filtri',
-			'services.libraryFilter.subtitleAllSyncing' => 'Bütün kitabxanalar eyniləşdirilir',
-			'services.libraryFilter.subtitleNoneSyncing' => 'Heç nə eyniləşdirilmir',
-			'services.libraryFilter.subtitleBlocked' => ({required Object count}) => '${count} bloklandı',
-			'services.libraryFilter.subtitleAllowed' => ({required Object count}) => '${count} icazə verildi',
-			'services.libraryFilter.mode' => 'Filtr rejimi',
-			'services.libraryFilter.modeBlacklist' => 'Qara siyahı',
-			'services.libraryFilter.modeWhitelist' => 'Ağ siyahı',
-			'services.libraryFilter.modeHintBlacklist' => 'Aşağıda seçilənlərdən başqa bütün kitabxanaları eyniləşdir.',
-			'services.libraryFilter.modeHintWhitelist' => 'Yalnız aşağıda seçilən kitabxanaları eyniləşdir.',
-			'services.libraryFilter.libraries' => 'Kitabxanalar',
-			'services.libraryFilter.noLibraries' => 'Kitabxana yoxdur',
-			'addServer.addMediaBrowserTitle' => ({required Object product}) => '${product} serveri əlavə et',
-			'addServer.serverUrls' => 'Server URL-ləri',
-			'addServer.serverUrlsHelper' => 'Vergüllə ayrılmış bir neçə URL-ə icazə verilir.',
-			'addServer.findServer' => 'Server tap',
-			'addServer.searchingLocalMediaBrowserServers' => ({required Object product}) => 'Yerli ${product} serverləri axtarılır...',
-			'addServer.localMediaBrowserServers' => ({required Object product}) => 'Yerli ${product} serverləri',
-			'addServer.username' => 'İstifadəçi adı',
-			'addServer.password' => 'Şifrə',
-			'addServer.signIn' => 'Daxil ol',
-			'addServer.change' => 'Dəyişdir',
-			'addServer.required' => 'Tələb olunur',
-			'addServer.couldNotReachServer' => ({required Object error}) => 'Serverə çatmaq olmadı: ${error}',
-			'addServer.signInFailed' => ({required Object error}) => 'Daxil olma uğursuz oldu: ${error}',
-			'addServer.quickConnectFailed' => ({required Object error}) => 'Sürətli Qoşulma uğursuz oldu: ${error}',
-			'addServer.addPlexTitle' => 'Plex ilə daxil ol',
-			'addServer.pinExpired' => 'PIN-in vaxtı bitdi. Lütfən təzədən cəhd edin.',
-			'addServer.failedToRegisterAccount' => ({required Object error}) => 'Hesab qeydiyyatı uğursuz oldu: ${error}',
-			'addServer.enterMediaBrowserUrlError' => ({required Object product}) => '${product} server URL-inizi daxil edin',
-			'addServer.addConnectionTitle' => 'Qoşulma əlavə et',
-			'addServer.addConnectionTitleScoped' => ({required Object name}) => '${name} profilinə əlavə et',
-			'addServer.signInWithPlexCard' => 'Plex ilə daxil ol',
-			'addServer.signInWithPlexCardSubtitle' => 'Bu cihazı səlahiyyətləndirin. Paylaşılan serverlər əlavə olunur.',
-			'addServer.signInWithPlexCardSubtitleScoped' => 'Plex hesabını səlahiyyətləndirin. Home istifadəçiləri profillərə çevrilir.',
-			'addServer.connectToMediaBrowserCard' => ({required Object product}) => '${product}-a qoşul',
-			'addServer.connectToMediaBrowserCardSubtitle' => 'Server URL-inizi, istifadəçi adınızı və şifrənizi daxil edin.',
-			'addServer.connectToMediaBrowserCardSubtitleScoped' => ({required Object product, required Object name}) => '${product} serverinizə daxil olun. ${name} ilə əlaqələndirilir.',
-			'addServer.borrowFromAnotherProfile' => 'Başqa profildən götür',
-			'addServer.borrowFromAnotherProfileSubtitle' => 'Başqa profilin qoşulmasını yenidən istifadə edin. PIN ilə qorunan profillər PIN tələb edir.',
-			'addServer.invalidCredentials' => 'İstifadəçi adı və ya şifrə yanlışdır',
-			'addServer.authResponseNotJson' => 'Autentifikasiya cavabı etibarlı JSON deyildi',
-			'addServer.authResponseIncomplete' => 'Serverin giriş cavabı natamam idi',
-			'addServer.quickConnectRejected' => 'Quick Connect server tərəfindən rədd edildi',
-			'addServer.quickConnectNotJson' => 'Quick Connect cavabı etibarlı JSON deyildi',
-			'addServer.quickConnectMissingFields' => 'Quick Connect cavabında kod və ya məxfi açar yoxdur',
-			'addServer.quickConnectPollRejected' => 'Quick Connect sorğulaması server tərəfindən rədd edildi',
-			'addServer.serverTimedOut' => 'Server vaxtında cavab vermədi',
-			'addServer.responseNotJson' => 'Server cavabı etibarlı JSON deyildi',
-			'addServer.responseMissingIdentity' => ({required Object product}) => 'Cavabda ID və ya server adı yoxdur — bu, ${product} serveridir?',
-			'addServer.probeFailed' => ({required Object error}) => 'Serverə çatmaq olmadı: ${error}',
-			'addServer.enterAtLeastOneUrl' => ({required Object product}) => 'Ən azı bir ${product} server URL-i daxil edin',
-			'addServer.noReachableServer' => ({required Object product}) => 'Əlçatan ${product} serveri tapılmadı',
-			'addServer.urlsPointToDifferentServers' => ({required Object product}) => 'Bu URL-lər fərqli ${product} serverlərinə aiddir',
-			'addServer.urlDoesNotMatchServer' => ({required Object product}) => 'Bu URL ${product} serverinə uyğun gəlmir',
-			'addServer.redirectUnsupported' => 'Server dəstəklənməyən URL-ə yönləndirdi',
-			'addServer.redirectDifferentHost' => ({required Object product}) => 'Server başqa hosta yönləndirdi. Son ${product} URL-ni birbaşa daxil edin.',
-			'addServer.redirectInsecure' => 'Server HTTPS-dən təhlükəsiz olmayan URL-ə yönləndirdi',
-			'addServer.redirectUnsupportedEnterFinal' => ({required Object product}) => 'Server dəstəklənməyən URL-ə yönləndirdi. Son ${product} URL-ni birbaşa daxil edin.',
-			_ => null,
-		};
+		switch (path) {
+			case 'app.title': return 'Plezy';
+			case 'appIcon.title': return 'Tətbiq ikonu';
+			case 'appIcon.defaultIcon': return 'Defolt';
+			case 'appIcon.current': return 'Cari ikon';
+			case 'appIcon.locked': return 'Mövzu və ikon paketinə daxildir';
+			case 'appIcon.lockedHint': return 'Alternativ ikonlar Mövzu və ikon paketinə daxildir.';
+			case 'appIcon.changeFailed': return 'Tətbiq ikonu dəyişdirilə bilmədi';
+			case 'appIcon.launcherHint': return 'Plezy-dən çıxdıqdan sonra yeni ikon ana ekranınızda görünəcək.';
+			case 'appIcon.tvLauncherHint': return 'Plezy-dən çıxdıqdan sonra yeni banner görünəcək. Android TV televizor yenidən başladılana qədər köhnəsini göstərə bilər.';
+			case 'appIcon.names.midnight': return 'Gecəyarısı';
+			case 'appIcon.names.ember': return 'Köz';
+			case 'appIcon.names.paper': return 'Kağız';
+			case 'appIcon.names.oled': return 'OLED';
+			case 'appIcon.names.line': return 'Xətt';
+			case 'appIcon.names.ocean': return 'Okean';
+			case 'appIcon.names.ultraviolet': return 'Ultrabənövşəyi';
+			case 'appIcon.names.matcha': return 'Matça';
+			case 'appIcon.names.sunset': return 'Gün batımı';
+			case 'appIcon.names.gold': return 'Qızıl';
+			case 'appIcon.names.titanium': return 'Titan';
+			case 'appIcon.names.glass': return 'Şüşə';
+			case 'appIcon.names.crt': return 'CRT';
+			case 'appIcon.names.vhs': return 'VHS';
+			case 'appIcon.names.synthwave': return 'Synthwave';
+			case 'appIcon.names.pixel': return 'Piksel';
+			case 'appIcon.names.neon': return 'Neon';
+			case 'appIcon.names.sticker': return 'Stiker';
+			case 'appIcon.names.ticket': return 'Bilet';
+			case 'appIcon.names.pop': return 'Pop';
+			case 'appIcon.names.strata': return 'Laylar';
+			case 'appIcon.names.facet': return 'Faset';
+			case 'appIcon.names.tilde': return 'Tilda';
+			case 'auth.signInWithPlex': return 'Plex ilə daxil ol';
+			case 'auth.showQRCode': return 'QR kodu göstər';
+			case 'auth.authenticate': return 'Təsdiqlə';
+			case 'auth.authenticationTimeout': return 'Təsdiqləmə vaxtı bitdi. Lütfən təzədən cəhd edin.';
+			case 'auth.scanQRToSignIn': return 'Daxil olmaq üçün bu QR kodu skan edin';
+			case 'auth.waitingForAuth': return 'Təsdiqləmə gözlənilir...\nSəyahətçinizdən (brauzer) daxil olun.';
+			case 'auth.useBrowser': return 'Səyahətçini istifadə et';
+			case 'auth.or': return 'və ya';
+			case 'auth.connectToMediaBrowser': return ({required Object product}) => '${product}-a qoşul';
+			case 'auth.quickConnect': return 'Sürətli Qoşulma';
+			case 'auth.useQuickConnect': return 'Sürətli Qoşulmanı istifadə et';
+			case 'auth.quickConnectInstructions': return 'Jellyfin-də Sürətli Qoşulmanı açın və bu kodu daxil edin.';
+			case 'auth.quickConnectWaiting': return 'Təsdiq gözlənilir…';
+			case 'auth.quickConnectCancel': return 'Ləğv et';
+			case 'auth.quickConnectExpired': return 'Sürətli Qoşulmanın vaxtı bitdi. Təzədən cəhd edin.';
+			case 'auth.localDataRecoveryRequired': return 'Plezy yerli daxil olma və gözləyən oxutma məlumatlarını təhlükəsiz bərpa edə bilmədi. Lütfən təzədən daxil olun.';
+			case 'auth.pinCheckRejected': return 'Plex PIN yoxlaması rədd edildi';
+			case 'common.cancel': return 'Ləğv et';
+			case 'common.save': return 'Yadda saxla';
+			case 'common.close': return 'Bağla';
+			case 'common.clear': return 'Təmizlə';
+			case 'common.reset': return 'Sıfırla';
+			case 'common.later': return 'Sonra';
+			case 'common.submit': return 'Göndər';
+			case 'common.confirm': return 'Təsdiqlə';
+			case 'common.retry': return 'Təzədən cəhd et';
+			case 'common.logout': return 'Çıxış et';
+			case 'common.unknown': return 'Məlum deyil';
+			case 'common.refresh': return 'Yenilə';
+			case 'common.yes': return 'Bəli';
+			case 'common.no': return 'Xeyr';
+			case 'common.delete': return 'Sil';
+			case 'common.edit': return 'Düzəliş et';
+			case 'common.shuffle': return 'Qarışdır';
+			case 'common.addTo': return 'Əlavə et...';
+			case 'common.createNew': return 'Yenisini yarat';
+			case 'common.connect': return 'Qoşul';
+			case 'common.disconnect': return 'Əlaqəni kəs';
+			case 'common.play': return 'Oynat';
+			case 'common.pause': return 'Fasilə';
+			case 'common.resume': return 'Davam et';
+			case 'common.error': return 'Xəta';
+			case 'common.search': return 'Axtar';
+			case 'common.home': return 'Ana səhifə';
+			case 'common.back': return 'Geri';
+			case 'common.settings': return 'Tənzimləmələr';
+			case 'common.mute': return 'Səsi söndür';
+			case 'common.ok': return 'Oldu';
+			case 'common.off': return 'Söndürülüb';
+			case 'common.options': return 'Seçimlər';
+			case 'common.seasonNumber': return ({required Object number}) => 'Mövsüm ${number}';
+			case 'common.episodeNumberTitle': return ({required Object number, required Object title}) => 'Seriya ${number} - ${title}';
+			case 'common.chapterNumber': return ({required Object number}) => 'Hissə ${number}';
+			case 'common.reconnect': return 'Yenidən qoşul';
+			case 'common.viewAll': return 'Hamısına bax';
+			case 'common.checkingNetwork': return 'Şəbəkə yoxlanılır...';
+			case 'common.loadingServers': return 'Serverlər yüklənir...';
+			case 'common.connectingToServers': return 'Serverlərə qoşulunur...';
+			case 'common.startingOfflineMode': return 'Oflayn rejim başladılır...';
+			case 'common.loading': return 'Yüklənir...';
+			case 'common.fullscreen': return 'Tam ekran';
+			case 'common.exitFullscreen': return 'Tam ekrandan çıx';
+			case 'common.pressBackAgainToExit': return 'Çıxmaq üçün geri düyməsinə bir daha basın';
+			case 'common.ratingSource.critic': return 'Tənqidçilər';
+			case 'common.ratingSource.audience': return 'Tamaşaçılar';
+			case 'common.ratingSource.imdb': return 'IMDb';
+			case 'common.ratingSource.tmdb': return 'TMDB';
+			case 'common.ratingSource.rottenTomatoes': return 'Rotten Tomatoes';
+			case 'common.ratingSource.simkl': return 'Simkl';
+			case 'common.ratingSource.mal': return 'MyAnimeList';
+			case 'common.ratingSource.anilist': return 'AniList';
+			case 'common.ratingSource.trakt': return 'Trakt';
+			case 'common.ratingSource.rottenTomatoesCritic': return 'Rotten Tomatoes tənqidçiləri';
+			case 'common.ratingSource.rottenTomatoesAudience': return 'Rotten Tomatoes tamaşaçıları';
+			case 'common.ratingSource.metacritic': return 'Metacritic';
+			case 'common.ratingSource.letterboxd': return 'Letterboxd';
+			case 'common.notAvailable': return 'Yoxdur';
+			case 'common.url': return 'URL';
+			case 'common.letterKeys': return 'ABC';
+			case 'common.mediaKind.movie': return 'Film';
+			case 'common.mediaKind.show': return 'Serial';
+			case 'common.mediaKind.season': return 'Sezon';
+			case 'common.mediaKind.episode': return 'Epizod';
+			case 'common.mediaKind.artist': return 'İfaçı';
+			case 'common.mediaKind.album': return 'Albom';
+			case 'common.mediaKind.track': return 'Mahnı';
+			case 'common.mediaKind.collection': return 'Kolleksiya';
+			case 'common.mediaKind.playlist': return 'Pleylist';
+			case 'common.mediaKind.clip': return 'Klip';
+			case 'common.mediaKind.photo': return 'Şəkil';
+			case 'common.mediaKind.folder': return 'Qovluq';
+			case 'screens.licenses': return 'Lisenziyalar';
+			case 'screens.switchProfile': return 'Profili dəyiş';
+			case 'screens.subtitleStyling': return 'Altyazı tənzimləmələri';
+			case 'screens.mpvConfig': return 'mpv.conf';
+			case 'screens.logs': return 'Jurnallar';
+			case 'update.available': return 'Yenilənmə var';
+			case 'update.versionAvailable': return ({required Object version}) => '${version} versiyası əlçatandır';
+			case 'update.currentVersion': return ({required Object version}) => 'Cari: ${version}';
+			case 'update.skipVersion': return 'Bu versiyanı ötür';
+			case 'update.viewRelease': return 'Buraxılışa bax';
+			case 'update.latestVersion': return 'Siz ən son versiyadasınız';
+			case 'update.checkFailed': return 'Yenilənmələr yoxlanıla bilmədi';
+			case 'supporter.title': return 'Mövzu və ikon paketi';
+			case 'supporter.intro': return 'Kosmetik əlavələr gətirən istəyə bağlı birdəfəlik alış:';
+			case 'supporter.presetThemes': return 'Hazır mövzular';
+			case 'supporter.presetThemesDescription': return 'Köz, Buzlaq, Meşə, Gavalı və Kağız';
+			case 'supporter.customTheme': return 'Xüsusi mövzu';
+			case 'supporter.customThemeDescription': return 'Bütün rəngləri özünüz seçin';
+			case 'supporter.appIcons': return 'Tətbiq ikonları';
+			case 'supporter.appIconsDescription': return 'Alternativ Plezy ikonu seçin';
+			case 'supporter.buy': return ({required Object price}) => '${price} qiymətinə al';
+			case 'supporter.loadingPrice': return 'Qiymət yüklənir...';
+			case 'supporter.restore': return 'Alışları bərpa et';
+			case 'supporter.pending': return 'Alışınız ödəniş və ya təsdiq gözləyir. Mağaza onu tamamlayan kimi əlavələr açılacaq.';
+			case 'supporter.thankYouTitle': return 'Alışınız üçün təşəkkür edirik';
+			case 'supporter.thankYouBody': return 'Mövzu və ikon paketi açıldı.';
+			case 'supporter.tileSubtitle': return 'Mövzuları və tətbiq ikonlarını birdəfəlik alışla açın';
+			case 'supporter.tileSubtitleThemesOnly': return 'Mövzuları birdəfəlik alışla açın';
+			case 'supporter.tileUnlocked': return 'Açıldı — alışınız üçün təşəkkür edirik';
+			case 'supporter.errors.storeUnavailable': return 'Alışlar əlçatan deyil. Mağazaya daxil olduğunuzu və bu cihazda alışlara icazə verildiyini yoxlayın.';
+			case 'supporter.errors.productNotFound': return 'Mövzu və ikon paketi hazırda mağazanızda əlçatan deyil.';
+			case 'supporter.errors.productQueryFailed': return 'Qiymət yüklənə bilmədi. Bağlantınızı yoxlayın və yenidən cəhd edin.';
+			case 'supporter.errors.purchaseFailed': return 'Alış baş tutmadı. Yenidən cəhd edin.';
+			case 'supporter.errors.restoreFailed': return 'Alışınızı bərpa etmək üçün mağazaya qoşulmaq mümkün olmadı. Yenidən cəhd edin.';
+			case 'supporter.errors.nothingToRestore': return 'Bu mağaza hesabı üçün Mövzu və ikon paketi alışı tapılmadı.';
+			case 'settings.title': return 'Tənzimləmələr';
+			case 'settings.supportDeveloper': return 'Plezy-yə dəstək ol';
+			case 'settings.supportDeveloperDescription': return 'İnkişafı maliyyələşdirmək üçün Liberapay vasitəsilə iyanə edin';
+			case 'settings.language': return 'Dil';
+			case 'settings.theme': return 'Mövzu';
+			case 'settings.appearance': return 'Görünüş';
+			case 'settings.videoPlayback': return 'Video oynatma';
+			case 'settings.videoPlaybackDescription': return 'Oynatma davranışını tənzimləyin';
+			case 'settings.advanced': return 'Təkmilləşdirilmiş';
+			case 'settings.episodePosterMode': return 'Seriya poster stili';
+			case 'settings.seriesPoster': return 'Serial posteri';
+			case 'settings.seasonPoster': return 'Mövsüm posteri';
+			case 'settings.episodeThumbnail': return 'Kadr önizləməsi';
+			case 'settings.showHeroSectionDescription': return 'Ana səhifədə xüsusi məzmun karuselini göstər';
+			case 'settings.secondsLabel': return 'Saniyə';
+			case 'settings.minutesLabel': return 'Dəqiqə';
+			case 'settings.secondsShort': return 'san';
+			case 'settings.minutesShort': return 'dəq';
+			case 'settings.durationHint': return ({required Object min, required Object max}) => 'Müddəti daxil edin (${min}-${max})';
+			case 'settings.systemTheme': return 'Sistem';
+			case 'settings.lightTheme': return 'Açıq';
+			case 'settings.darkTheme': return 'Tünd';
+			case 'settings.oledTheme': return 'OLED';
+			case 'settings.emberTheme': return 'Köz';
+			case 'settings.glacierTheme': return 'Buzlaq';
+			case 'settings.forestTheme': return 'Meşə';
+			case 'settings.plumTheme': return 'Gavalı';
+			case 'settings.paperTheme': return 'Kağız';
+			case 'settings.libraryDensity': return 'Kitabxana sıxlığı';
+			case 'settings.displayScale': return 'Ekran miqyası';
+			case 'settings.compact': return 'Sıx';
+			case 'settings.comfortable': return 'Rəhat';
+			case 'settings.gridSpacing': return 'Tor aralığı';
+			case 'settings.gridSpacingTight': return 'Sıx';
+			case 'settings.gridSpacingNormal': return 'Normal';
+			case 'settings.gridSpacingSpacious': return 'Geniş';
+			case 'settings.tvCornerSpotlightBackdrop': return 'Künc işıqlandırma fonu';
+			case 'settings.tvCornerSpotlightBackdropDescription': return 'Arxa fonu ekranı örtmək əvəzinə sağ üst küncdə göstər';
+			case 'settings.viewMode': return 'Baxış rejimi';
+			case 'settings.gridView': return 'Tor';
+			case 'settings.listView': return 'Siyahı';
+			case 'settings.showHeroSection': return 'Xüsusi bölməni göstər';
+			case 'settings.continueWatchingAction': return 'İzləməyə davam et əməliyyatı';
+			case 'settings.continueWatchingPlay': return 'Oynat';
+			case 'settings.continueWatchingDetails': return 'Ətraflı aç';
+			case 'settings.episodeAction': return 'Seriya əməliyyatı';
+			case 'settings.episodePlay': return 'Oynat';
+			case 'settings.episodeDetails': return 'Ətraflı aç';
+			case 'settings.useGlobalHubs': return 'Ana səhifə quruluşunu istifadə et';
+			case 'settings.useGlobalHubsDescription': return 'Birləşdirilmiş ana səhifə bölmələrini göstər. Əks halda kitabxana tövsiyələrini istifadə edir.';
+			case 'settings.showServerNameOnHubs': return 'Bölmələrdə server adını göstər';
+			case 'settings.showServerNameOnHubsDescription': return 'Bölmə başlıqlarında həmişə server adlarını göstər.';
+			case 'settings.groupLibrariesByServer': return 'Kitabxanaları serverə görə qrupla';
+			case 'settings.groupLibrariesByServerDescription': return 'Yan menyu kitabxanalarını hər media serverinin altında qruplaşdır.';
+			case 'settings.alwaysKeepSidebarOpen': return 'Yan menyunu həmişə açıq saxla';
+			case 'settings.alwaysKeepSidebarOpenDescription': return 'Yan menyu genişlənmiş qalır və məzmun sahəsi buna uyğunlaşır';
+			case 'settings.showUnwatchedCount': return 'Baxılmamış sayını göstər';
+			case 'settings.showUnwatchedCountDescription': return 'Seriallarda və mövsümlərdə baxılmamış seriya sayını göstər';
+			case 'settings.showWatchedIndicators': return 'Baxılmış göstəriciləri göstər';
+			case 'settings.showWatchedIndicatorsDescription': return 'Baxılmış kinolarda, seriallarda və seriyalarda quşçuq göstər';
+			case 'settings.showEpisodeNumberOnCards': return 'Kartlarda seriya nömrəsini göstər';
+			case 'settings.showEpisodeNumberOnCardsDescription': return 'Seriya kartlarında mövsüm və seriya nömrəsini göstər';
+			case 'settings.showSeasonPostersOnTabs': return 'Mərhələlərdə mövsüm posterlərini göstər';
+			case 'settings.showSeasonPostersOnTabsDescription': return 'Hər mövsümün posterini öz bölməsinin üstündə göstər';
+			case 'settings.tvFullCardLayout': return 'Tam TV kartları';
+			case 'settings.tvFullCardLayoutDescription': return 'Aktyor adları üstündə olan yalnız şəkil tərkibli TV kartları istifadə et';
+			case 'settings.focusGlow': return 'Fokus parıltısı';
+			case 'settings.focusGlowDescription': return 'Fokuslanmış kartın ətrafında yumşaq parıltı çək';
+			case 'settings.visualEffects': return 'Vizual effektlər';
+			case 'settings.visualEffectsAuto': return 'Avtomatik';
+			case 'settings.visualEffectsAutoDescription': return 'Zəif cihazlarda effektləri avtomatik olaraq azalt';
+			case 'settings.visualEffectsFull': return 'Tam';
+			case 'settings.visualEffectsReduced': return 'Azaldılmış';
+			case 'settings.visualEffectsReducedDescription': return 'Daha az animasiya və daha aşağı keyfiyyətli şəkillər';
+			case 'settings.hideSpoilers': return 'Baxılmamış seriyalar üçün spoylerləri gizlə';
+			case 'settings.hideSpoilersDescription': return 'Baxılmamış seriyalar üçün miniatürləri və təsvirləri bulanıqlaşdır';
+			case 'settings.playerBackend': return 'Oynadıcı infrastrukturu';
+			case 'settings.exoPlayer': return 'ExoPlayer';
+			case 'settings.mpv': return 'mpv';
+			case 'settings.hardwareDecoding': return 'Avadanlıq kod açılması';
+			case 'settings.hardwareDecodingDescription': return 'Mümkün olduqda avadanlıq sürətləndirməsini istifadə et';
+			case 'settings.playbackBuffer': return 'Oxutma buferi';
+			case 'settings.playbackBufferAuto': return 'Avtomatik (tövsiyə olunur)';
+			case 'settings.playbackBufferLarge': return 'Böyük';
+			case 'settings.playbackBufferExtraLarge': return 'Çox böyük';
+			case 'settings.playbackBufferDescription': return 'Qeyri-sabit əlaqələrə qarşı daha çox buferləyir. Bufer ölçüsü ilə də məhdudlaşır.';
+			case 'settings.defaultQualityTitle': return 'Defolt keyfiyyət';
+			case 'settings.cellularQualityTitle': return 'Mobil şəbəkədə defolt keyfiyyət';
+			case 'settings.cellularQualitySameAsDefault': return 'Defolt keyfiyyətlə eyni';
+			case 'settings.directPlayCoveredQuality': return 'Kiçik videoları orijinal keyfiyyətdə oynat';
+			case 'settings.directPlayCoveredQualityDescription': return 'Keyfiyyət limitinə uyğun gələn videoları yenidən kodlaşdırmaq əvəzinə birbaşa oynat';
+			case 'settings.videoCodecs': return 'Video kodekləri';
+			case 'settings.videoCodecsDescription': return 'İşarələnməmiş kodekləri server yenidən kodlaşdırır';
+			case 'settings.videoCodecsAlwaysAccepted': return 'Həmişə qəbul edilir';
+			case 'settings.musicQualityTitle': return 'Musiqi keyfiyyəti';
+			case 'settings.subtitleStyling': return 'Altyazı tənzimləmələri';
+			case 'settings.subtitleStylingDescription': return 'Altyazı görünüşünü özünüləşdirin';
+			case 'settings.smallSkipDuration': return 'Kiçik ötürmə müddəti';
+			case 'settings.largeSkipDuration': return 'Böyük ötürmə müddəti';
+			case 'settings.rewindOnResume': return 'Davam edərkən geri sar';
+			case 'settings.secondsUnit': return ({required Object seconds}) => '${seconds} saniyə';
+			case 'settings.defaultSleepTimer': return 'Defolt yuxu taymeri';
+			case 'settings.minutesUnit': return ({required Object minutes}) => '${minutes} dəqiqə';
+			case 'settings.rememberTrackSelections': return 'Hər film/serial üçün səs/altyazı seçimlərini xatırla';
+			case 'settings.rememberTrackSelectionsDescription': return 'Hər məzmun üçün səs və altyazı seçimlərini yadda saxla';
+			case 'settings.rememberTrackSelectionsBackendRule': return 'Plex hər seçimi serverdə fayl üzrə saxlayır; Jellyfin həmçinin hesabın "Seçimləri xatırla" funksiyasını aktivləşdirir; Emby dəstəklənmir';
+			case 'settings.followServerTrackSelections': return 'Hər epizod üçün serverin trek seçimlərini istifadə et';
+			case 'settings.followServerTrackSelectionsDescription': return 'Epizod dəyişəndə cari seçimi köçürmək əvəzinə serverdə seçilmiş səs və altyazını tətbiq et';
+			case 'settings.resumeMusicOnLaunch': return 'Musiqi sessiyasını yadda saxla';
+			case 'settings.resumeMusicOnLaunchDescription': return 'Tətbiq açılanda son mahnını dayandırıldığı yerdə fasilədə aç';
+			case 'settings.showChapterMarkersOnTimeline': return 'Zaman çubuğunda hissə işarələrini göstər';
+			case 'settings.showChapterMarkersOnTimelineDescription': return 'Zaman çubuğunu hissə sərhədlərinə böl';
+			case 'settings.specialsOrdering': return 'Xüsusi bölmələr epizod sırasına görə';
+			case 'settings.specialsOrderingDescription': return 'Xüsusi bölmələrin serialın izləmə sırasındakı yeri';
+			case 'settings.specialsOrderingServer': return 'Server sırasını izlə';
+			case 'settings.specialsOrderingAirDate': return 'Yayım tarixinə görə qarışdır';
+			case 'settings.specialsOrderingLast': return 'Adi mövsümlərdən sonra';
+			case 'settings.clickVideoTogglesPlayback': return 'Oynat/fasilə üçün videoya toxun';
+			case 'settings.clickVideoTogglesPlaybackDescription': return 'İdarəetməni göstərmək əvəzinə oynatmaq/fasilə etmək üçün videoya toxun.';
+			case 'settings.videoPlayerControls': return 'Video oynadıcı idarəetmələri';
+			case 'settings.keyboardShortcuts': return 'Klaviatura qısayolları';
+			case 'settings.keyboardShortcutsDescription': return 'Klaviatura qısayollarını özünüləşdirin';
+			case 'settings.videoPlayerNavigation': return 'Video oynadıcı naviqasiyası';
+			case 'settings.videoPlayerNavigationDescription': return 'Oynadıcı idarəetmələrində hərəkət etmək üçün ox düymələrini istifadə edin';
+			case 'settings.watchTogetherRelay': return 'Birlikdə İzlə relesi';
+			case 'settings.watchTogetherRelayDescription': return 'Öz relenizi təyin etməsəniz, ictimai Open Watch Party releləri istifadə olunur';
+			case 'settings.watchTogetherRelayHint': return 'https://my-relay.example.com';
+			case 'settings.watchTogetherRelayInvalid': return 'Düzgün HTTP və ya HTTPS rele ünvanı daxil edin.';
+			case 'settings.crashReporting': return 'Xəta hesabatı';
+			case 'settings.crashReportingDescription': return 'Tətbiqi təkmilləşdirməyə kömək etmək üçün xəta hesabatları göndərin';
+			case 'settings.debugLogging': return 'Xəta saxlama jurnalı';
+			case 'settings.debugLoggingDescription': return 'Problemləri həll etmək üçün ətraflı jurnal qeydiyyatını aktivləşdirin';
+			case 'settings.viewLogs': return 'Jurnallara bax';
+			case 'settings.viewLogsDescription': return 'Tətbiq jurnallarına baxın';
+			case 'settings.clearImageCache': return 'Şəkil keşini təmizlə';
+			case 'settings.clearImageCacheDescription': return 'Keşlənmiş şəkilləri təmizləyir. Yenidən yüklənənədək şəkillər daha yavaş yüklənə bilər.';
+			case 'settings.clearImageCacheSuccess': return 'Şəkil keşi uğurla təmizləndi';
+			case 'settings.resetSettings': return 'Tənzimləmələri sıfırla';
+			case 'settings.resetSettingsDescription': return 'Defolt tənzimləmələri bərpa edin. Bu əməliyyat geri qaytarıla bilməz.';
+			case 'settings.resetSettingsSuccess': return 'Tənzimləmələr uğurla sıfırlandı';
+			case 'settings.backup': return 'Ehtiyat nüsxə';
+			case 'settings.exportSettings': return 'Tənzimləmələri ixrac et';
+			case 'settings.exportSettingsDescription': return 'Seçimlərinizi fayla yadda saxlayın';
+			case 'settings.exportSettingsSuccess': return 'Tənzimləmələr ixrac edildi';
+			case 'settings.importSettings': return 'Tənzimləmələri idxal et';
+			case 'settings.importSettingsDescription': return 'Seçimləri fayldan bərpa edin';
+			case 'settings.importSettingsConfirm': return 'Bu cari tənzimləmələrinizin üzərinə yazacaq. Davam edilsin?';
+			case 'settings.importSettingsSuccess': return 'Tənzimləmələr idxal edildi';
+			case 'settings.importSettingsInvalidFile': return 'Bu fayl düzgün Plezy tənzimləmələr faylı deyil';
+			case 'settings.importSettingsNoUser': return 'Tənzimləmələri idxal etməzdən əvvəl daxil olun';
+			case 'settings.shortcutsReset': return 'Qısayollar defolt vəziyyətə sıfırlandı';
+			case 'settings.resetShortcutsConfirm': return 'Bu, xüsusi qısayollarınızı defolt qısayollarla əvəz edəcək. Davam edilsin?';
+			case 'settings.about': return 'Haqqında';
+			case 'settings.aboutDescription': return 'Tətbiq məlumatı və lisenziyalar';
+			case 'settings.updates': return 'Yenilənmələr';
+			case 'settings.updateAvailable': return 'Yenilənmə var';
+			case 'settings.checkForUpdates': return 'Yenilənmələri yoxla';
+			case 'settings.autoCheckUpdatesOnStartup': return 'Açılışda yenilənmələri avtomatik yoxla';
+			case 'settings.autoCheckUpdatesOnStartupDescription': return 'Açılışda yenilənmə olduqda xəbərdar et';
+			case 'settings.validationErrorEnterNumber': return 'Lütfən düzgün rəqəm daxil edin';
+			case 'settings.validationErrorDuration': return ({required Object min, required Object max, required Object unit}) => 'Müddət ${min} və ${max} ${unit} arasında olmalıdır';
+			case 'settings.shortcutAlreadyAssigned': return ({required Object action}) => 'Qısayol artıq ${action} üçün təyin edilib';
+			case 'settings.shortcutUpdated': return ({required Object action}) => '${action} üçün qısayol yeniləndi';
+			case 'settings.saveFailed': return 'Dəyişikliklər yadda saxlanıla bilmədi. Təzədən cəhd edin.';
+			case 'settings.autoPlayAndSkip': return 'Avtomatik oynat və ötür';
+			case 'settings.autoPlayNextEpisode': return 'Növbəti seriyanı avtomatik oynat';
+			case 'settings.autoPlayNextEpisodeDescription': return 'Bir seriya bitdikdə növbətisini avtomatik başlat';
+			case 'settings.shuffleStartsFromBeginning': return 'Qarışdırma əvvəldən başlayır';
+			case 'settings.shuffleStartsFromBeginningDescription': return 'Qarışdırarkən hər seriyanı davam etdirmək əvəzinə əvvəldən başlat';
+			case 'settings.playNextCountdown': return 'Növbəti seriya geri sayımı';
+			case 'settings.playNextCountdownImmediate': return 'Dərhal oynat';
+			case 'settings.skipIntroMode': return 'Girişi ötür';
+			case 'settings.skipIntroModeOffDescription': return 'Girişləri ötürmə düyməsi olmadan normal oynat';
+			case 'settings.skipIntroModeButtonDescription': return 'Giriş başlayanda ötürmə düyməsini göstər';
+			case 'settings.skipIntroModeAutoDescription': return 'Girişləri aşağıdakı ləngimədən sonra avtomatik ötür';
+			case 'settings.skipCreditsMode': return 'Titrləri ötür';
+			case 'settings.skipCreditsModeOffDescription': return 'Titrləri ötürmə düyməsi olmadan normal oynat';
+			case 'settings.skipCreditsModeButtonDescription': return 'Titrlər başlayanda ötürmə düyməsini göstər';
+			case 'settings.skipCreditsModeAutoDescription': return 'Titrləri avtomatik ötür və növbəti seriyanı oynat';
+			case 'settings.skipMarkerModeOff': return 'Söndürülüb';
+			case 'settings.skipMarkerModeButton': return 'Düyməni göstər';
+			case 'settings.skipMarkerModeAuto': return 'Avtomatik';
+			case 'settings.forceSkipMarkerFallback': return 'Ehtiyat işarələri məcburi et';
+			case 'settings.forceSkipMarkerFallbackDescription': return 'Plex işarələri olsa belə hissə başlığı şablonlarını istifadə et';
+			case 'settings.autoSkipDelay': return 'Avtomatik ötürmə ləngiməsi';
+			case 'settings.autoSkipDelayDescription': return ({required Object seconds}) => 'Avtomatik ötürməzdən əvvəl ${seconds} saniyə gözlə';
+			case 'settings.introPattern': return 'Giriş işarəsi şablonu';
+			case 'settings.introPatternDescription': return 'Hissə başlıqlarında giriş işarələrini tapmaq üçün Regex şablonu';
+			case 'settings.creditsPattern': return 'Titr işarəsi şablonu';
+			case 'settings.creditsPatternDescription': return 'Hissə başlıqlarında titr işarələrini tapmaq üçün Regex şablonu';
+			case 'settings.invalidRegex': return 'Səhv requlyar ifadə (Regex)';
+			case 'settings.regex': return 'Requlyar ifadə (Regex)';
+			case 'settings.downloads': return 'Yükləmələr';
+			case 'settings.downloadLocationDescription': return 'Yüklənmiş məzmunun harada saxlanacağını seçin';
+			case 'settings.downloadLocationDefault': return 'Defolt (Tətbiq yaddaşı)';
+			case 'settings.downloadLocationCustom': return 'Xüsusi məkan';
+			case 'settings.selectFolder': return 'Qovluq seç';
+			case 'settings.resetToDefault': return 'Defolt vəziyyətə sıfırla';
+			case 'settings.currentPath': return ({required Object path}) => 'Cari: ${path}';
+			case 'settings.downloadLocationChanged': return 'Yükləmə məkanı dəyişdirildi';
+			case 'settings.downloadLocationReset': return 'Yükləmə məkanı defolt vəziyyətə sıfırlandı';
+			case 'settings.downloadLocationInvalid': return 'Seçilmiş qovluğa yazmaq olmur';
+			case 'settings.downloadLocationPickerUnavailable': return 'Qovluq seçimi bu cihazda əlçatan deyil';
+			case 'settings.downloadOnWifiOnly': return 'Yalnız Wi-Fi ilə yüklə';
+			case 'settings.downloadOnWifiOnlyDescription': return 'Mobil məlumat istifadə edildikdə yükləmələri dayandır';
+			case 'settings.autoRemoveWatchedDownloads': return 'Baxılmış yükləmələri avtomatik sil';
+			case 'settings.autoRemoveWatchedDownloadsDescription': return 'Baxılmış yükləmələri avtomatik olaraq sil';
+			case 'settings.cellularDownloadBlocked': return 'Mobil şəbəkədə yükləmələr bloklanıb. Wi-Fi istifadə edin və ya tənzimləməni dəyişin.';
+			case 'settings.maxVolume': return 'Maksimal səs';
+			case 'settings.maxVolumeDescription': return 'Sakit videolar üçün səsin 100%-dən yuxarı qalxmasına icazə ver';
+			case 'settings.maxVolumePercent': return ({required Object percent}) => '%${percent}';
+			case 'settings.discordRichPresence': return 'Discord Rich Presence';
+			case 'settings.discordRichPresenceDescription': return 'Discord-da nəyə baxdığınızı göstərin';
+			case 'settings.services': return 'Xidmətlər';
+			case 'settings.servicesDescription': return 'Trakt, MyAnimeList, Seerr və daha çoxunu qoşun';
+			case 'settings.manageLibrariesDescription': return 'Kitabxanaları yenidən sıralayın və gizlədin';
+			case 'settings.companionRemoteServer': return 'Köməkçi pult serveri';
+			case 'settings.companionRemoteServerDescription': return 'Şəbəkənizdəki mobil cihazların bu tətbiqi idarə etməsinə icazə verin';
+			case 'settings.companionRemoteServerStartFailed': return 'Köməkçi pult serveri başladıla bilmədi';
+			case 'settings.companionRemoteServerStopFailed': return 'Köməkçi pult serveri dayandırıla bilmədi';
+			case 'settings.autoPip': return 'Avtomatik Pəncərə daxilində Pəncərə (PiP)';
+			case 'settings.autoPipDescription': return 'Oynatma zamanı tətbiqdən çıxdıqda avtomatik PiP rejiminə keç';
+			case 'settings.matchContentFrameRate': return 'Kadr tezliyini uyğunlaşdır';
+			case 'settings.matchContentFrameRateDescription': return 'Ekran yenilənmə tezliyini video məzmununa uyğunlaşdır';
+			case 'settings.matchContentResolution': return 'Məzmunun görüntü keyfiyyətinə uyğunlaş';
+			case 'settings.matchContentResolutionDescription': return 'Ekranı videonun öz görüntü keyfiyyətinə keçirir ki, miqyaslandırmanı televizorunuz etsin. Oxutma zamanı menyular və altyazılar da miqyaslandırılır';
+			case 'settings.matchRefreshRate': return 'Yenilənmə tezliyini uyğunlaşdır';
+			case 'settings.matchRefreshRateDescription': return 'Tam ekranda ekran yenilənmə tezliyini uyğunlaşdır';
+			case 'settings.matchDynamicRange': return 'Dinamik diapazonu uyğunlaşdır';
+			case 'settings.matchDynamicRangeDescription': return 'HDR məzmun üçün HDR-ı açın, sonra SDR-a qayıdın';
+			case 'settings.displaySwitchDelay': return 'Ekran dəyişmə ləngiməsi';
+			case 'settings.tunneledPlayback': return 'Tünellənmiş oynatma';
+			case 'settings.tunneledPlaybackDescription': return 'Video tünelləməni istifadə et. HDR oynatmada qara ekran görünürsə və ya hərəkət takılırsa söndürün.';
+			case 'settings.audioPassthrough': return 'Səsin birbaşa ötürülməsi (Passthrough)';
+			case 'settings.audioPassthroughDescription': return 'Dolby/DTS səslərini yenidən kodlamadan TV və ya resiverə göndərir. Səs gəlmirsə söndürün.';
+			case 'settings.audioPassthroughDescriptionApple': return 'Atmos daxil olmaqla Dolby Digital Plus üçün Apple-ın daxili dekoderini istifadə edin. DTS və TrueHD yenə də çoxkanallı PCM kimi oynadılır. Səs gəlmirsə söndürün.';
+			case 'settings.audioPassthroughDescriptionAppleSpatial': return 'Atmos daxil olmaqla Dolby Digital Plus üçün Apple-ın daxili Dolby dekoderini istifadə edin. iOS, iPadOS və tvOS 26 və ya daha yeni versiyalarda TrueHD Atmos və DTS:X məkan səsi kimi oynadılır. Digər DTS və TrueHD trekləri çoxkanallı PCM kimi oynadılır. Səs gəlmirsə söndürün.';
+			case 'settings.audioPassthroughOverriddenByNormalization': return 'Səsin gurluğunu normallaşdırma aktivkən söndürülüb';
+			case 'settings.audioChannelLimit': return 'Səs kanalları';
+			case 'settings.audioChannelLimitDescription': return 'Bütün kanalları oynada bilməyən dinamiklər, qulaqlıqlar və ya HDMI qurğuları üçün dekodlanmış səsi daha az kanala endir';
+			case 'settings.audioChannelLimitOriginal': return 'Orijinal';
+			case 'settings.audioChannelLimitOriginalDescription': return 'Trekdəki bütün kanalları oynat';
+			case 'settings.audioChannelLimitSurround51': return '5.1-ə qədər';
+			case 'settings.audioChannelLimitSurround51Description': return 'Yalnız 5.1 PCM qəbul edən televizorlar və resiverlər üçün 7.1-i 5.1-ə endir. Birbaşa ötürməyə təsir etmir.';
+			case 'settings.audioChannelLimitStereo': return 'Stereo';
+			case 'settings.audioChannelLimitStereoDescription': return 'Stereo dinamiklər və ya qulaqlıqlar üçün iki kanala endir. Birbaşa ötürməni söndürür.';
+			case 'settings.downmixCenterBoost': return 'Mərkəz kanal gücləndirilməsi';
+			case 'settings.downmixCenterBoostValue': return ({required Object db}) => '${db} dB';
+			case 'settings.downmixCenterBoostLabel': return 'Gücləndirmə (dB)';
+			case 'settings.downmixCenterBoostShort': return 'dB';
+			case 'settings.audioDownmixNormalize': return 'Çevirmədə səsi normallaşdır';
+			case 'settings.audioDownmixNormalizeDescription': return 'Səs kəsilmələrinin qarşısını almaq üçün səviyyəni endirin. Orijinal səs səviyyəsini saxlamaq üçün söndürün (yüksək səsli səhnələr təhrif oluna bilər).';
+			case 'settings.dvConversionMode': return 'Dolby Vision çevrilməsi';
+			case 'settings.dvConversionModeDescription': return 'Dolby Vision Profile 7 fayllarının necə emal ediləcəyini seçin.';
+			case 'settings.dvConversionAuto': return 'Avtomatik';
+			case 'settings.dvConversionNative': return 'Daxili / Söndürülüb';
+			case 'settings.dvConversionDv81': return 'P7 → P8.1';
+			case 'settings.dvConversionHevcStrip': return 'P7 → HEVC';
+			case 'settings.dvConversionAutoDescription': return 'Cihaz imkanlarının təyini və normal davranışdan istifadə et';
+			case 'settings.dvConversionNativeDescription': return 'Daxili DV7-ni məcburi et';
+			case 'settings.dvConversionDv81Description': return 'Dolby Vision profile 8.1-ə çevrilməni məcburi et';
+			case 'settings.dvConversionHevcStripDescription': return 'Dolby Vision təbəqələrini sil və sadə HEVC kimi təqdim et';
+			case 'settings.disableDolbyVision': return 'Dolby Vision-u söndür';
+			case 'settings.disableDolbyVisionDescription': return 'Faylda varsa, Dolby Vision əvəzinə HDR10 və ya HLG təbəqəsini oynat';
+			case 'settings.hdrSdrConversion': return 'HDR-dən SDR-ə çevirmə';
+			case 'settings.hdrSdrConversionDescription': return 'Ekran HDR göstərə bilmədikdə HDR videonu nəyin çevirəcəyini seçin.';
+			case 'settings.hdrSdrConversionAuto': return 'Avtomatik';
+			case 'settings.hdrSdrConversionAutoDescription': return 'Android 9 və sonrakı versiyalarda cihaz, köhnə versiyalarda oynadıcı';
+			case 'settings.hdrSdrConversionDevice': return 'Cihaz';
+			case 'settings.hdrSdrConversionDeviceDescription': return 'Çevirməni cihazın video avadanlığı edir. Ən sürətlisi, lakin rənglər cihazdan asılıdır';
+			case 'settings.hdrSdrConversionPlayer': return 'Oynadıcı';
+			case 'settings.hdrSdrConversionPlayerDescription': return 'Çevirməni oynadıcı edir. Sabit rənglər, lakin zəif TV qutularında 4K ilişə bilər';
+			case 'settings.deinterlace': return 'Deinterleysinq';
+			case 'settings.deinterlaceDescription': return 'Sətirlərarası videodakı darama artefaktlarını aradan qaldır (yalnız mpv oynadıcısı)';
+			case 'settings.deinterlaceOff': return 'Söndürülüb';
+			case 'settings.deinterlaceOffDescription': return 'Sətirlərarası videonu dekodlandığı kimi göstər';
+			case 'settings.deinterlaceVideo': return 'Video';
+			case 'settings.deinterlaceVideoDescription': return 'Hər yarımkadrı tam kadra çevir. İdman, xəbər və konsert kimi TV üçün çəkilmiş videolar üçün';
+			case 'settings.deinterlaceFilm': return 'Film';
+			case 'settings.deinterlaceFilmDescription': return '29.97 fps-ə telesine edilmiş film və animasiyaların orijinal kadrlarını bərpa et (NTSC DVD-lərdə geniş yayılıb). TV üçün çəkilmiş video ilişir. Canlı TV Video rejimindən istifadə edir';
+			case 'settings.requireProfileSelectionOnOpen': return 'Açılışda profil soruş';
+			case 'settings.requireProfileSelectionOnOpenDescription': return 'Tətbiq hər dəfə açıldıqda profil seçimini göstər';
+			case 'settings.forceTvMode': return 'TV rejimini məcburi et';
+			case 'settings.forceTvModeDescription': return 'TV interfeysini məcburi et. Avtomatik təyin etməyən cihazlar üçündür. Yenidən başlatma tələb olunur.';
+			case 'settings.startInFullscreen': return 'Tam ekranda başlat';
+			case 'settings.startInFullscreenDescription': return 'Plezy-ni açılışda tam ekran rejimində aç';
+			case 'settings.exitFullscreenOnPlayerClose': return 'Oynadıcı bağlandıqda tam ekrandan çıx';
+			case 'settings.exitFullscreenOnPlayerCloseDescription': return 'Video oynadıcını bağlayarkən avtomatik tam ekrandan çıx';
+			case 'settings.autoHidePerformanceOverlay': return 'Məhsuldarlıq paneli avtomatik gizlənsin';
+			case 'settings.autoHidePerformanceOverlayDescription': return 'Məhsuldarlıq panelini oynatıcı idarəetmələri ilə birlikdə gizlət';
+			case 'settings.showNavBarLabels': return 'Naviqasiya paneli yazılarını göstər';
+			case 'settings.showNavBarLabelsDescription': return 'Naviqasiya paneli ikonlarının altında mətni göstər';
+			case 'settings.startupSection': return 'Başlanğıc bölməsi';
+			case 'settings.showExploreTab': return 'Kəşf et nişanını göstər';
+			case 'settings.showExploreTabDescription': return 'Plex Discover və qoşulmuş izləmə xidmətlərindəki məzmunla Kəşf et nişanını göstər';
+			case 'settings.liveTvDefaultFavorites': return 'Canlı TV-də sevimli kanalları defolt et';
+			case 'settings.liveTvDefaultFavoritesDescription': return 'Canlı TV açıldıqda yalnız sevimli kanalları göstər';
+			case 'settings.general': return 'Ümumi';
+			case 'settings.generalDescription': return 'Dil, başlanğıc və pəncərə davranışı';
+			case 'settings.languageAndRegion': return 'Dil və Region';
+			case 'settings.startup': return 'Başlanğıc';
+			case 'settings.display': return 'Ekran';
+			case 'settings.libraryAndCards': return 'Kitabxana və kartlar';
+			case 'settings.homeScreen': return 'Ana ekran';
+			case 'settings.navigation': return 'Naviqasiya';
+			case 'settings.window': return 'Pəncərə';
+			case 'settings.liveTv': return 'Canlı TV';
+			case 'settings.player': return 'Oynadıcı';
+			case 'settings.videoAndDisplay': return 'Video və Ekran';
+			case 'settings.audio': return 'Səs';
+			case 'settings.quality': return 'Keyfiyyət';
+			case 'settings.subtitles': return 'Altyazılar';
+			case 'settings.seekAndTiming': return 'Sarğı və vaxt tənzimləməsi';
+			case 'settings.behavior': return 'Davranış';
+			case 'settings.gestures': return 'Jestlər';
+			case 'settings.gestureBrightnessSwipe': return 'Parlaqlıq sürüşdürməsi';
+			case 'settings.gestureBrightnessSwipeDescription': return 'Parlaqlığı tənzimləmək üçün sol kənarda yuxarı və ya aşağı sürüşdürün';
+			case 'settings.gestureVolumeSwipe': return 'Səs sürüşdürməsi';
+			case 'settings.gestureVolumeSwipeDescription': return 'Səsi tənzimləmək üçün sağ kənarda yuxarı və ya aşağı sürüşdürün';
+			case 'settings.gesturePinchToZoom': return 'Çimdiklə yaxınlaşdır';
+			case 'settings.gesturePinchToZoomDescription': return 'Yaxınlaşdırmaq və ya uzaqlaşdırmaq üçün videoda çimdik hərəkəti edin';
+			case 'settings.rememberBrightnessLevel': return 'Parlaqlıq səviyyəsini xatırla';
+			case 'settings.rememberBrightnessLevelDescription': return 'Oxutmanı son sürüşdürmə ilə təyin edilmiş parlaqlıqda başlat';
+			case 'settings.controls': return 'İdarəetmələr';
+			case 'settings.rememberPlayerChanges': return 'Pleyer dəyişikliklərini yadda saxla';
+			case 'settings.rememberPlayerChangesDescription': return 'Oxutma zamanı edilən dəyişikliklərin harada saxlanacağı və yenidən tətbiq ediləcəyi';
+			case 'settings.scopePlaybackSpeed': return 'Oxutma sürəti';
+			case 'settings.scopeShaderPreset': return 'Şader ön ayarı';
+			case 'settings.scopeAspectRatio': return 'Tərəf nisbəti';
+			case 'settings.scopeZoom': return 'Miqyas';
+			case 'settings.scopeSyncOffsets': return 'Audio və subtitr sinxronizasiyası';
+			case 'settings.playerScopeOff': return 'Saxlama';
+			case 'settings.playerScopeGlobal': return 'Hər yerdə';
+			case 'settings.playerScopeLibrary': return 'Kitabxana üzrə';
+			case 'settings.playerScopeTitle': return 'Serial və ya film üzrə';
+			case 'settings.exportDialogTitle': return 'Plezy tənzimləmələrini ixrac et';
+			case 'themeEditor.builtIn': return 'Daxili';
+			case 'themeEditor.presets': return 'Hazır mövzular';
+			case 'themeEditor.custom': return 'Xüsusi';
+			case 'themeEditor.customEmpty': return 'Hələ yaradılmayıb';
+			case 'themeEditor.editCustom': return 'Xüsusi mövzuya düzəliş et';
+			case 'themeEditor.editCustomDescription': return 'Bütün rəngləri özünüz seçin';
+			case 'themeEditor.locked': return 'Mövzu və ikon paketi ilə açın';
+			case 'themeEditor.savedLocked': return 'Yadda saxlanılıb — Mövzu və ikon paketi ilə açılır';
+			case 'themeEditor.title': return 'Xüsusi mövzu';
+			case 'themeEditor.startFrom': return 'Başlanğıc mövzu';
+			case 'themeEditor.startFromDescription': return 'Bütün rəngləri başqa mövzudan kopyala';
+			case 'themeEditor.colors': return 'Rənglər';
+			case 'themeEditor.preview': return 'Önizləmə';
+			case 'themeEditor.slots.bg': return 'Arxa fon';
+			case 'themeEditor.slots.surface': return 'Səth';
+			case 'themeEditor.slots.outline': return 'Kontur';
+			case 'themeEditor.slots.text': return 'Mətn';
+			case 'themeEditor.slots.textMuted': return 'Köməkçi mətn';
+			case 'themeEditor.slots.accent': return 'Vurğu';
+			case 'themeEditor.opacity': return 'Şəffaflıq';
+			case 'themeEditor.hexHint': return '#RRGGBB və ya #AARRGGBB';
+			case 'themeEditor.fromOtherThemes': return 'Digər mövzulardan';
+			case 'themeEditor.swatchLabel': return ({required Object theme, required Object color}) => '${theme}: ${color}';
+			case 'themeEditor.contrast.textOnBg': return 'Arxa fonda mətn';
+			case 'themeEditor.contrast.textOnSurface': return 'Səthdə mətn';
+			case 'themeEditor.contrast.textMutedOnBg': return 'Arxa fonda köməkçi mətn';
+			case 'themeEditor.contrast.textMutedOnSurface': return 'Səthdə köməkçi mətn';
+			case 'themeEditor.contrast.accentOnBg': return 'Arxa fonda vurğu';
+			case 'themeEditor.contrast.accentOnSurface': return 'Səthdə vurğu';
+			case 'themeEditor.contrast.labelOnAccent': return 'Vurğu üzərində düymə mətni';
+			case 'themeEditor.lowContrast': return ({required Object pair, required Object ratio, required Object minimum}) => '${pair}: ${ratio}:1, tövsiyə olunan ${minimum}:1-dən aşağı';
+			case 'themeEditor.discardTitle': return 'Dəyişikliklərdən imtina edilsin?';
+			case 'themeEditor.discardMessage': return 'Yadda saxlanmamış rəng dəyişiklikləriniz itəcək.';
+			case 'themeEditor.discard': return 'İmtina et';
+			case 'themeEditor.previewCardTitle': return ({required Object number}) => 'Seriya ${number}';
+			case 'themeEditor.previewCardSubtitle': return ({required Object minutes}) => '${minutes} dəq qaldı';
+			case 'themeEditor.previewSwitch': return 'Avtomatik oynatma';
+			case 'themeEditor.previewMutedText': return 'Köməkçi mətn belə görünür';
+			case 'search.hint': return 'Kino, serial, musiqi axtar...';
+			case 'search.tryDifferentTerm': return 'Fərqli axtarış sözü cəhd edin';
+			case 'search.searchYourMedia': return 'Mediyanızda axtarın';
+			case 'search.enterTitleActorOrKeyword': return 'Ad, aktyor və ya açar söz daxil edin';
+			case 'search.people': return 'Şəxslər';
+			case 'hotkeys.setShortcutFor': return ({required Object actionName}) => '${actionName} üçün qısayol təyin et';
+			case 'hotkeys.clearShortcut': return 'Qısayolu təmizlə';
+			case 'hotkeys.noShortcutSet': return 'Qısayol təyin edilməyib';
+			case 'hotkeys.currentShortcut': return 'Cari qısayol:';
+			case 'hotkeys.pressToRecord': return 'Qısayol yazmaq üçün seçin';
+			case 'hotkeys.recordingShortcut': return 'İndi qısayol düymələrinə basın';
+			case 'hotkeys.actions.playPause': return 'Oynat/Fasilə';
+			case 'hotkeys.actions.volumeUp': return 'Səsi artır';
+			case 'hotkeys.actions.volumeDown': return 'Səsi azalt';
+			case 'hotkeys.actions.seekForward': return ({required Object seconds}) => 'İrəli sar (${seconds}san)';
+			case 'hotkeys.actions.seekBackward': return ({required Object seconds}) => 'Geri sar (${seconds}san)';
+			case 'hotkeys.actions.fullscreenToggle': return 'Tam ekranı dəyişdir';
+			case 'hotkeys.actions.muteToggle': return 'Səsi aç/bağla';
+			case 'hotkeys.actions.subtitleToggle': return 'Altyazını aç/bağla';
+			case 'hotkeys.actions.audioTrackNext': return 'Növbəti səs zolağı';
+			case 'hotkeys.actions.subtitleTrackNext': return 'Növbəti altyazı zolağı';
+			case 'hotkeys.actions.chapterNext': return 'Növbəti hissə';
+			case 'hotkeys.actions.chapterPrevious': return 'Əvvəlki hissə';
+			case 'hotkeys.actions.episodeNext': return 'Növbəti seriya';
+			case 'hotkeys.actions.episodePrevious': return 'Əvvəlki seriya';
+			case 'hotkeys.actions.speedIncrease': return 'Sürəti artır';
+			case 'hotkeys.actions.speedDecrease': return 'Sürəti azalt';
+			case 'hotkeys.actions.speedReset': return 'Sürəti sıfırla';
+			case 'hotkeys.actions.zoomIn': return 'Yaxınlaşdır';
+			case 'hotkeys.actions.zoomOut': return 'Uzaqlaşdır';
+			case 'hotkeys.actions.zoomReset': return 'Miqyası sıfırla';
+			case 'hotkeys.actions.subSeekNext': return 'Növbəti altyazıya sar';
+			case 'hotkeys.actions.subSeekPrev': return 'Əvvəlki altyazıya sar';
+			case 'hotkeys.actions.shaderToggle': return 'Şeyderləri aç/bağla';
+			case 'hotkeys.actions.skipMarker': return 'Girişi/Titrləri ötür';
+			case 'hotkeys.actions.screenshot': return 'Ekran şəkli çək';
+			case 'fileInfo.title': return 'Fayl məlumatı';
+			case 'fileInfo.overview': return 'Ümumi baxış';
+			case 'fileInfo.video': return 'Video';
+			case 'fileInfo.audio': return 'Səs';
+			case 'fileInfo.subtitles': return 'Altyazılar';
+			case 'fileInfo.images': return 'Daxili şəkillər';
+			case 'fileInfo.dataStreams': return 'Məlumat axınları';
+			case 'fileInfo.lyrics': return 'Mahnı sözləri';
+			case 'fileInfo.file': return 'Fayl';
+			case 'fileInfo.attachments': return 'Əlavələr';
+			case 'fileInfo.delivery': return 'Çatdırılma';
+			case 'fileInfo.versionCounter': return ({required Object count, required Object index}) => '${count}-dən ${index} versiya';
+			case 'fileInfo.fileCounter': return ({required Object count, required Object index}) => '${count}-dən ${index} fayl';
+			case 'fileInfo.noStreams': return 'Server bu fayl üçün heç bir axın bildirmədi.';
+			case 'fileInfo.copyPath': return 'Yolu kopyala';
+			case 'fileInfo.pathCopied': return 'Fayl yolu kopyalandı';
+			case 'fileInfo.codec': return 'Kodek';
+			case 'fileInfo.codecTag': return 'Kodek teqi';
+			case 'fileInfo.resolution': return 'Ayırdetmə';
+			case 'fileInfo.codedResolution': return 'Kodlanmış rezolyusiya';
+			case 'fileInfo.bitrate': return 'Bit sürəti (Bitrate)';
+			case 'fileInfo.frameRate': return 'Kadr tezliyi';
+			case 'fileInfo.rotation': return 'Dönmə';
+			case 'fileInfo.comment': return 'Şərh';
+			case 'fileInfo.audioDescription': return 'Səs təsviri';
+			case 'fileInfo.headerCompression': return 'Başlıq sıxışdırması';
+			case 'fileInfo.sidecarFile': return 'Sidecar faylı';
+			case 'fileInfo.transportTimestamp': return 'Transport vaxt damğası';
+			case 'fileInfo.displayOffset': return 'Ekran ofseti';
+			case 'fileInfo.previewFailureCode': return 'Önizləmə xəta kodu';
+			case 'fileInfo.previewRetries': return 'Önizləmə cəhdləri';
+			case 'fileInfo.aspectRatio': return 'Tərəf nisbəti';
+			case 'fileInfo.pixelAspectRatio': return 'Piksel aspekt nisbəti';
+			case 'fileInfo.profile': return 'Profil';
+			case 'fileInfo.level': return 'Səviyyə';
+			case 'fileInfo.bitDepth': return 'Bit dərinliyi';
+			case 'fileInfo.pixelFormat': return 'Piksel formatı';
+			case 'fileInfo.colorSpace': return 'Rəng sahəsi';
+			case 'fileInfo.colorRange': return 'Rəng diapazonu';
+			case 'fileInfo.colorPrimaries': return 'Əsas rənglər';
+			case 'fileInfo.colorTransfer': return 'Rəng ötürməsi';
+			case 'fileInfo.chromaSubsampling': return 'Rəng alt-diskretləşdirməsi';
+			case 'fileInfo.chromaLocation': return 'Chroma mövqeyi';
+			case 'fileInfo.scanType': return 'Tarama növü';
+			case 'fileInfo.interlaced': return 'Sətirlərarası';
+			case 'fileInfo.anamorphic': return 'Anamorfik';
+			case 'fileInfo.referenceFrames': return 'İstinad kadrları';
+			case 'fileInfo.dynamicRange': return 'Dinamik diapazon';
+			case 'fileInfo.dolbyVision': return 'Dolby Vision';
+			case 'fileInfo.dolbyVisionLevel': return 'Dolby Vision səviyyəsi';
+			case 'fileInfo.dolbyVisionVersion': return 'Dolby Vision versiyası';
+			case 'fileInfo.dolbyVisionLayers': return 'Dolby Vision təbəqələri';
+			case 'fileInfo.baseLayerCompatibility': return 'Baza təbəqə uyğunluğu';
+			case 'fileInfo.avcBitstream': return 'AVC bit axını';
+			case 'fileInfo.nalLengthSize': return 'NAL uzunluq ölçüsü';
+			case 'fileInfo.scalingMatrix': return 'Xüsusi miqyaslama matrisi';
+			case 'fileInfo.streamIdentifier': return 'Axın identifikatoru';
+			case 'fileInfo.streamIndex': return 'Axın indeksi';
+			case 'fileInfo.streamId': return 'Axın ID-si';
+			case 'fileInfo.language': return 'Dil';
+			case 'fileInfo.languageCode': return 'Dil kodu';
+			case 'fileInfo.streamTitle': return 'Trek başlığı';
+			case 'fileInfo.channels': return 'Kanallar';
+			case 'fileInfo.sampleRate': return 'Diskretləşdirmə tezliyi';
+			case 'fileInfo.spatialAudio': return 'Məkan səsi';
+			case 'fileInfo.textBased': return 'Mətn əsaslı';
+			case 'fileInfo.subtitleFormat': return 'Sidecar formatı';
+			case 'fileInfo.provider': return 'Provayder';
+			case 'fileInfo.matchScore': return 'Uyğunluq balı';
+			case 'fileInfo.externalDelivery': return 'Ayrıca ötürülə bilər';
+			case 'fileInfo.sidecarPath': return 'Sidecar yolu';
+			case 'fileInfo.sourceStream': return 'Kopyalanan mənbə';
+			case 'fileInfo.temporary': return 'Müvəqqəti';
+			case 'fileInfo.timeBase': return 'Vaxt bazası';
+			case 'fileInfo.overallBitrate': return 'Ümumi bit sürəti';
+			case 'fileInfo.path': return 'Yol';
+			case 'fileInfo.fileName': return 'Fayl adı';
+			case 'fileInfo.size': return 'Həcm';
+			case 'fileInfo.totalSize': return 'Ümumi ölçü';
+			case 'fileInfo.container': return 'Konteyner';
+			case 'fileInfo.duration': return 'Müddət';
+			case 'fileInfo.previewThumbnails': return 'Önizləmə miniatürləri';
+			case 'fileInfo.previewIndex': return 'Önizləmə indeksi';
+			case 'fileInfo.packetLength': return 'Paket uzunluğu';
+			case 'fileInfo.filePresent': return 'Fayl mövcuddur';
+			case 'fileInfo.fileReadable': return 'Server tərəfindən oxuna bilir';
+			case 'fileInfo.streamPath': return 'Axın yolu';
+			case 'fileInfo.optimizedForStreaming': return 'Yayım üçün optimallaşdırılıb';
+			case 'fileInfo.has64bitOffsets': return '64-bit ofsetlər';
+			case 'fileInfo.protocol': return 'Protokol';
+			case 'fileInfo.mediaType': return 'Media növü';
+			case 'fileInfo.sourceKind': return 'Mənbə növü';
+			case 'fileInfo.optimizedVersion': return 'Optimallaşdırılmış versiya';
+			case 'fileInfo.optimizationTarget': return 'Optimallaşdırma hədəfi';
+			case 'fileInfo.deletedAt': return 'Silinib';
+			case 'fileInfo.remoteSource': return 'Uzaq mənbə';
+			case 'fileInfo.infiniteStream': return 'Sonsuz axın';
+			case 'fileInfo.directPlay': return 'Birbaşa oynatma';
+			case 'fileInfo.directStream': return 'Birbaşa axın';
+			case 'fileInfo.transcoding': return 'Yenidən kodlaşdırma';
+			case 'fileInfo.etag': return 'ETag';
+			case 'fileInfo.versionId': return 'Versiya ID-si';
+			case 'fileInfo.fileId': return 'Fayl ID-si';
+			case 'fileInfo.defaultAudioTrack': return 'Defolt səs treki';
+			case 'fileInfo.defaultSubtitleTrack': return 'Defolt altyazı treki';
+			case 'fileInfo.subtitlesOff': return 'Söndürülüb';
+			case 'fileInfo.flagDefault': return 'Defolt';
+			case 'fileInfo.flagForced': return 'Məcburi';
+			case 'fileInfo.flagSelected': return 'Seçilib';
+			case 'fileInfo.flagExternal': return 'Xarici';
+			case 'fileInfo.flagHearingImpaired': return 'Eşitmə qüsurlu üçün';
+			case 'fileInfo.flagDub': return 'Dublyaj';
+			case 'fileInfo.flagOriginal': return 'Orijinal';
+			case 'fileInfo.channelsMono': return 'Mono';
+			case 'fileInfo.dolbyVisionProfile': return ({required Object profile}) => 'Profil ${profile}';
+			case 'mediaMenu.markAsWatched': return 'Baxıldı olaraq işarələ';
+			case 'mediaMenu.markAsUnwatched': return 'Baxılmadı olaraq işarələ';
+			case 'mediaMenu.removeFromContinueWatching': return 'İzləməyə davam et-dən sil';
+			case 'mediaMenu.viewDetails': return 'Ətraflı bax';
+			case 'mediaMenu.goToSeries': return 'Seriala keç';
+			case 'mediaMenu.shufflePlay': return 'Qarışıq oynat';
+			case 'mediaMenu.shuffleNotAvailableOffline': return 'Qarışıq oynatma oflayn rejimdə əlçatan deyil';
+			case 'mediaMenu.fileInfo': return 'Fayl məlumatı';
+			case 'mediaMenu.deleteEpisodeFromServer': return 'Seriyanı serverdən sil';
+			case 'mediaMenu.deleteSeasonFromServer': return 'Mövsümü serverdən sil';
+			case 'mediaMenu.deleteShowFromServer': return 'Serialı serverdən sil';
+			case 'mediaMenu.deleteMovieFromServer': return 'Kinonu serverdən sil';
+			case 'mediaMenu.deleteEpisodeTitle': return 'Bu seriya silinsin?';
+			case 'mediaMenu.deleteSeasonTitle': return 'Bu mövsüm silinsin?';
+			case 'mediaMenu.deleteShowTitle': return 'Bu serial silinsin?';
+			case 'mediaMenu.deleteMovieTitle': return 'Bu kino silinsin?';
+			case 'mediaMenu.deleteEpisodeConfirm': return 'Seriyanı sil';
+			case 'mediaMenu.deleteSeasonConfirm': return 'Mövsümü sil';
+			case 'mediaMenu.deleteShowConfirm': return 'Serialı sil';
+			case 'mediaMenu.deleteMovieConfirm': return 'Kinonu sil';
+			case 'mediaMenu.deleteAnyway': return 'Yenə də sil';
+			case 'mediaMenu.confirmDeleteTarget': return ({required Object title}) => '${title} serverinizdən birdəfəlik silinsin?';
+			case 'mediaMenu.deleteMultipleWarning': return 'Bu bütün seriyaları və faylları əhatə edir.';
+			case 'mediaMenu.deleteEpisodeCountWarning': return ({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('az'))(n,
+				one: 'Bu, içindəki ${n} seriyanı və onun faylını siləcək.',
+				other: 'Bu, içindəki ${n} seriyanı və onların fayllarını siləcək.',
+			);
+			case 'mediaMenu.deleteMultiPartWarning': return ({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('az'))(n,
+				one: 'Bu element ${n} fayl kimi saxlanılır və o silinəcək.',
+				other: 'Bu element ${n} faylda saxlanılır və hamısı silinəcək.',
+			);
+			case 'mediaMenu.deleteSharedFileHeading': return ({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('az'))(n,
+				one: 'Eyni faylda saxlanılan ${n} başqa seriya da silinəcək:',
+				other: 'Eyni faylda saxlanılan ${n} başqa seriya da silinəcək:',
+			);
+			case 'mediaMenu.deleteScopeUnverifiedProbeFailed': return 'Plezy bunun hansı faylları siləcəyini yoxlaya bilmədi, ona görə də yuxarıda adı çəkilən elementdən daha çoxunu silə bilər. Ləğv edib təzədən cəhd edin və ya yenə də silin.';
+			case 'mediaMenu.deleteScopeUnverifiedNoFileInfo': return 'Serveriniz bu element üçün fayl təfərrüatlarını təqdim etmədi, ona görə Plezy bunun hansı faylları siləcəyini yoxlaya bilmir. Yuxarıda adı çəkilən elementdən daha çoxunu silə bilər.';
+			case 'mediaMenu.mediaDeletedSuccessfully': return 'Media elementi uğurla silindi';
+			case 'mediaMenu.mediaFailedToDelete': return 'Media elementi silinə bilmədi';
+			case 'mediaMenu.rate': return 'Qiymətləndir';
+			case 'mediaMenu.playFromBeginning': return 'Əvvəldən oynat';
+			case 'mediaMenu.playVersion': return 'Versiyanı oynat...';
+			case 'rateSheet.title': return 'Qiymətləndir';
+			case 'rateSheet.server': return 'Server';
+			case 'rateSheet.favorite': return 'Sevimli';
+			case 'rateSheet.favorited': return 'Sevimlilərə əlavə edildi';
+			case 'rateSheet.saved': return 'Yadda saxlanıldı';
+			case 'rateSheet.notAvailable': return 'Uyğunluq tapılmadı';
+			case 'rateSheet.noConnectedServices': return 'Orada qiymətləndirmək üçün Tənzimləmələrdən xidmət qoşun.';
+			case 'accessibility.mediaCardMovie': return ({required Object title}) => '${title}, kino';
+			case 'accessibility.mediaCardShow': return ({required Object title}) => '${title}, TV şou';
+			case 'accessibility.mediaCardEpisode': return ({required Object title, required Object episodeInfo}) => '${title}, ${episodeInfo}';
+			case 'accessibility.mediaCardSeason': return ({required Object title, required Object seasonInfo}) => '${title}, ${seasonInfo}';
+			case 'accessibility.mediaCardWatched': return 'baxılıb';
+			case 'accessibility.mediaCardPartiallyWatched': return ({required Object percent}) => '%${percent} baxılıb';
+			case 'accessibility.mediaCardUnwatched': return 'baxılmayıb';
+			case 'accessibility.tapToPlay': return 'Oynatmaq üçün toxunun';
+			case 'accessibility.decrease': return 'Azalt';
+			case 'accessibility.increase': return 'Artır';
+			case 'accessibility.decreaseValue': return ({required Object label}) => '${label} dəyərini azalt';
+			case 'accessibility.increaseValue': return ({required Object label}) => '${label} dəyərini artır';
+			case 'accessibility.hue': return 'Rəng çaları';
+			case 'accessibility.saturation': return 'Doyğunluq';
+			case 'accessibility.brightness': return 'Parlaqlıq';
+			case 'accessibility.hexColor': return 'Hex rəngi';
+			case 'accessibility.expandText': return 'Mətni genişləndir';
+			case 'accessibility.collapseText': return 'Mətni yığ';
+			case 'accessibility.alphabetNavigation': return 'Əlifba naviqasiyası';
+			case 'accessibility.alphabetScrollHint': return 'Hərflərə görə keçmək üçün yuxarı və ya aşağı sürüşdürün';
+			case 'accessibility.rowColumnPosition': return ({required Object row, required Object rowCount, required Object column, required Object columnCount}) => 'Sətir ${row} / ${rowCount}, sütun ${column} / ${columnCount}';
+			case 'accessibility.rowPosition': return ({required Object row, required Object rowCount}) => 'Sətir ${row} / ${rowCount}';
+			case 'accessibility.autoScrollPlay': return 'Avtomatik sürüşdürməni başlat';
+			case 'accessibility.autoScrollPause': return 'Avtomatik sürüşdürməyə fasilə ver';
+			case 'accessibility.hueShort': return 'H';
+			case 'accessibility.saturationShort': return 'S';
+			case 'accessibility.valueShort': return 'V';
+			case 'tooltips.shufflePlay': return 'Qarışıq oynat';
+			case 'tooltips.playTrailer': return 'Treyleri oynat';
+			case 'tooltips.markAsWatched': return 'Baxıldı olaraq işarələ';
+			case 'tooltips.markAsUnwatched': return 'Baxılmadı olaraq işarələ';
+			case 'audioTracks.track': return ({required Object n}) => 'Səs zolağı ${n}';
+			case 'videoControls.audioLabel': return 'Səs';
+			case 'videoControls.subtitlesLabel': return 'Altyazı';
+			case 'videoControls.addTime': return ({required Object amount, required Object unit}) => '+${amount}${unit}';
+			case 'videoControls.letterbox': return 'Geniş ekran (Letterbox)';
+			case 'videoControls.fillScreen': return 'Ekrana doldur';
+			case 'videoControls.stretch': return 'Gərmək';
+			case 'videoControls.lockRotation': return 'Dönməni kilidlə';
+			case 'videoControls.unlockRotation': return 'Dönmə kilidini aç';
+			case 'videoControls.timerActive': return 'Taymer aktivdir';
+			case 'videoControls.playbackWillPauseIn': return ({required Object duration}) => 'Oynatma ${duration} sonra fasilə olunacaq';
+			case 'videoControls.sleepTimerEndOfVideo': return 'Cari videonun sonu';
+			case 'videoControls.sleepTimerStopAtHeader': return 'Dayanma vaxtı';
+			case 'videoControls.sleepTimerDurationHeader': return 'Taymer';
+			case 'videoControls.playbackWillPauseAtEnd': return 'Oynatma bu videonun sonunda fasilə olunacaq';
+			case 'videoControls.stillWatching': return 'Hələ də baxırsınız?';
+			case 'videoControls.pausingIn': return ({required Object seconds}) => '${seconds}san sonra fasilə edilir';
+			case 'videoControls.continueWatching': return 'Davam et';
+			case 'videoControls.autoPlayNext': return 'Növbətini avtomatik oynat';
+			case 'videoControls.playNext': return 'Növbətini oynat';
+			case 'videoControls.playButton': return 'Oynat';
+			case 'videoControls.pauseButton': return 'Fasilə';
+			case 'videoControls.playbackPaused': return 'Fasilədə';
+			case 'videoControls.playbackResumed': return 'Oynadılır';
+			case 'videoControls.loadingVideo': return 'Video yüklənir';
+			case 'videoControls.showPlaybackControls': return 'Oynatma idarəetmələrini göstər';
+			case 'videoControls.hidePlaybackControls': return 'Oynatma idarəetmələrini gizlət';
+			case 'videoControls.seekBackwardButton': return ({required Object seconds}) => '${seconds} saniyə geri sar';
+			case 'videoControls.seekForwardButton': return ({required Object seconds}) => '${seconds} saniyə irəli sar';
+			case 'videoControls.previousButton': return 'Əvvəlki seriya';
+			case 'videoControls.nextButton': return 'Növbəti seriya';
+			case 'videoControls.previousChapterButton': return 'Əvvəlki hissə';
+			case 'videoControls.nextChapterButton': return 'Növbəti hissə';
+			case 'videoControls.muteButton': return 'Səsi söndür';
+			case 'videoControls.unmuteButton': return 'Səsi aç';
+			case 'videoControls.settingsButton': return 'Oynatma tənzimləmələri';
+			case 'videoControls.tracksButton': return 'Səs və Altyazılar';
+			case 'videoControls.chaptersButton': return 'Hissələr';
+			case 'videoControls.versionQualityButton': return 'Versiya və Keyfiyyət';
+			case 'videoControls.versionColumnHeader': return 'Versiya';
+			case 'videoControls.qualityColumnHeader': return 'Keyfiyyət';
+			case 'videoControls.qualityOriginal': return 'Orijinal';
+			case 'videoControls.qualityPresetLabel': return ({required Object resolution, required Object bitrate}) => '${resolution}p ${bitrate} Mbps';
+			case 'videoControls.transcodeUnavailableFallback': return 'Kod dəyişmə əlçatan deyil — orijinal keyfiyyətdə oynadılır';
+			case 'videoControls.subtitleUnavailableFallback': return 'Seçilmiş altyazı yüklənə bilmədi — altyazısız davam edilir';
+			case 'videoControls.pipButton': return 'Pəncərə daxilində pəncərə rejimi';
+			case 'videoControls.aspectRatioButton': return 'Tərəf nisbəti';
+			case 'videoControls.ambientLighting': return 'Ətraf işıqlandırması';
+			case 'videoControls.fullscreenButton': return 'Tam ekrana keç';
+			case 'videoControls.exitFullscreenButton': return 'Tam ekrandan çıx';
+			case 'videoControls.alwaysOnTopButton': return 'Həmişə üstə';
+			case 'videoControls.rotationLockButton': return 'Dönmə kilidi';
+			case 'videoControls.lockScreen': return 'Ekranı kilidlə';
+			case 'videoControls.screenLockButton': return 'Ekran kilidi';
+			case 'videoControls.timelineSlider': return 'Video zaman çubuğu';
+			case 'videoControls.volumeSlider': return 'Səs səviyyəsi';
+			case 'videoControls.endsAt': return ({required Object time}) => 'Bitiş vaxtı: ${time}';
+			case 'videoControls.pipActive': return 'Pəncərə daxilində pəncərə rejimində oynadılır';
+			case 'videoControls.pipFailed': return 'PiP rejimi başladılarkən xəta';
+			case 'videoControls.screenshotSaved': return 'Ekran şəkli yadda saxlanıldı';
+			case 'videoControls.screenshotFailed': return 'Ekran şəkli çəkilə bilmədi';
+			case 'videoControls.zoomPercent': return ({required Object percent}) => 'Miqyas %${percent}';
+			case 'videoControls.volumePercent': return ({required Object percent}) => 'Səs ${percent}%';
+			case 'videoControls.pipErrors.androidVersion': return 'Android 8.0 və ya daha yenisini tələb edir';
+			case 'videoControls.pipErrors.iosVersion': return 'iOS 15.0 və ya daha yenisini tələb edir';
+			case 'videoControls.pipErrors.permissionDisabled': return 'PiP rejimi söndürülüb. Sistem tənzimləmələrindən aktivləşdirin.';
+			case 'videoControls.pipErrors.notSupported': return 'Cihaz PiP rejimini dəstəkləmir';
+			case 'videoControls.pipErrors.voSwitchFailed': return 'PiP üçün video çıxışı dəyişdirilə bilmədi';
+			case 'videoControls.pipErrors.failed': return 'PiP rejimi başladılarkən xəta';
+			case 'videoControls.pipErrors.prepareFailed': return 'PiP rejimi hazırlana bilmədi';
+			case 'videoControls.pipErrors.unknown': return ({required Object error}) => 'Xəta baş verdi: ${error}';
+			case 'videoControls.chapters': return 'Hissələr';
+			case 'videoControls.noChaptersAvailable': return 'Hissələr əlçatan deyil';
+			case 'videoControls.queue': return 'Növbə';
+			case 'videoControls.noQueueItems': return 'Növbədə element yoxdur';
+			case 'videoControls.noAudioDevicesAvailable': return 'Səs cihazları əlçatan deyil';
+			case 'videoControls.searchSubtitles': return 'Altyazı axtar';
+			case 'videoControls.language': return 'Dil';
+			case 'videoControls.noSubtitlesFound': return 'Altyazı tapılmadı';
+			case 'videoControls.subtitleDownloaded': return 'Altyazı yükləndi';
+			case 'videoControls.subtitleDownloadedNotApplied': return 'Altyazı yükləndi, lakin seçilə bilmədi';
+			case 'videoControls.subtitleDownloadFailed': return 'Altyazı yüklənə bilmədi';
+			case 'videoControls.subtitleDownloadTimedOut': return 'Altyazı vaxtında görünmədi. Yükləmə uğursuz olmuş ola bilər';
+			case 'videoControls.searchLanguages': return 'Dillərdə axtar...';
+			case 'videoControls.skipIntro': return 'Girişi keç';
+			case 'videoControls.skipCredits': return 'Titrləri keç';
+			case 'videoControls.nextEpisode': return 'Növbəti seriya';
+			case 'videoControls.subtitleTrack': return ({required Object n}) => 'Zolaq ${n}';
+			case 'videoControls.subtitleFile': return ({required Object name}) => 'Altyazı ${name}';
+			case 'videoControls.forcedTrack': return ({required Object label}) => '${label} (Məcburi)';
+			case 'videoControls.osdSubtitlesOff': return 'Altyazı: Söndürülüb';
+			case 'videoControls.osdSubtitles': return ({required Object track}) => 'Altyazı: ${track}';
+			case 'videoControls.osdAudio': return ({required Object track}) => 'Səs: ${track}';
+			case 'messages.markedAsWatched': return 'Baxıldı olaraq işarələndi';
+			case 'messages.markedAsUnwatched': return 'Baxılmadı olaraq işarələndi';
+			case 'messages.markedAsWatchedOffline': return 'Baxıldı olaraq işarələndi (onlayn olduqda eyniləşdiriləcək)';
+			case 'messages.markedAsUnwatchedOffline': return 'Baxılmadı olaraq işarələndi (onlayn olduqda eyniləşdiriləcək)';
+			case 'messages.autoRemovedWatchedDownload': return ({required Object title}) => 'Avtomatik silindi: ${title}';
+			case 'messages.autoRemovedWatchedDownloads': return ({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('az'))(n,
+				one: 'Baxılmış ${n} yükləmə avtomatik silindi',
+				other: 'Baxılmış ${n} yükləmə avtomatik silindi',
+			);
+			case 'messages.removedFromContinueWatching': return 'İzləməyə davam et-dən silindi';
+			case 'messages.errorLoading': return ({required Object error}) => 'Xəta: ${error}';
+			case 'messages.searchPartialResults': return 'Bəzi media serverlərində axtarış aparıla bilmədi. Mövcud nəticələr göstərilir.';
+			case 'messages.streamInterrupted': return 'Yayım kəsildi. Yenidən cəhd etmək üçün oynat düyməsinə basın və ya irəli-geri çəkin.';
+			case 'messages.liveStreamInterrupted': return 'Canlı yayım kəsildi. Təzədən cəhd etmək üçün oynat düyməsinə basın.';
+			case 'messages.fileInfoNotAvailable': return 'Fayl məlumatı əlçatan deyil';
+			case 'messages.playbackAuthenticationRequired': return 'Bu elementi oynatmaq üçün media serverinə yenidən daxil olun.';
+			case 'messages.playbackServerUnavailable': return 'Media serveri əlçatan deyil. Sonra təzədən cəhd edin.';
+			case 'messages.playbackDataInvalid': return 'Server yanlış oynatma məlumatı qaytardı.';
+			case 'messages.playbackCancelled': return 'Oynatma ləğv edildi.';
+			case 'messages.playbackFailed': return 'Oynatma başladılarkən xəta.';
+			case 'messages.playbackFailedDetail': return ({required Object error}) => 'Oynatma başladıla bilmədi: ${error}';
+			case 'messages.audioOutputFailed': return 'Səs çıxışı cavab verməyi dayandırdı. TV və ya resiverin səs bağlantısını yoxlayın; başqa tətbiqlərdə də səs yoxdursa, cihazı yenidən başladın.';
+			case 'messages.mediaUnavailable': return 'Bu məzmun artıq əlçatan deyil.';
+			case 'messages.errorLoadingFileInfo': return ({required Object error}) => 'Fayl məlumatı yüklənərkən xəta: ${error}';
+			case 'messages.errorLoadingSeries': return 'Serial yüklənərkən xəta';
+			case 'messages.musicNotSupported': return 'Musiqi oynatması hələ dəstəklənmir';
+			case 'messages.noDescriptionAvailable': return 'Təsvir əlçatan deyil';
+			case 'messages.noProfilesAvailable': return 'Profil yoxdur';
+			case 'messages.contactAdminForProfiles': return 'Profil əlavə etmək üçün server inzibatçınızla əlaqə saxlayın';
+			case 'messages.unableToDetermineLibrarySection': return 'Bu element üçün kitabxana bölməsi müəyyən edilə bilmədi';
+			case 'messages.logsCleared': return 'Jurnallar təmizləndi';
+			case 'messages.logsCopied': return 'Jurnallar buferə kopyalandı';
+			case 'messages.noLogsAvailable': return 'Jurnal yoxdur';
+			case 'messages.libraryScanning': return ({required Object title}) => '"${title}" skan edilir...';
+			case 'messages.libraryScanStarted': return ({required Object title}) => '"${title}" üçün skan başladı';
+			case 'messages.libraryScanFailed': return ({required Object error}) => 'Kitabxana skan edilə bilmədi: ${error}';
+			case 'messages.metadataRefreshing': return ({required Object title}) => '"${title}" üçün meta-məlumatlar yenilənir...';
+			case 'messages.metadataRefreshStarted': return ({required Object title}) => '"${title}" üçün meta-məlumat yenilənməsi başladı';
+			case 'messages.metadataRefreshFailed': return ({required Object error}) => 'Meta-məlumatlar yenilənə bilmədi: ${error}';
+			case 'messages.logoutConfirm': return 'Çıxış etmək istədiyinizdən əminsiniz?';
+			case 'messages.noSeasonsFound': return 'Mövsüm tapılmadı';
+			case 'messages.seasonsLoadFailed': return 'Mövsümlər yüklənə bilmədi';
+			case 'messages.noEpisodesFound': return 'Birinci mövsümdə seriya tapılmadı';
+			case 'messages.noEpisodesFoundGeneral': return 'Seriya tapılmadı';
+			case 'messages.episodesLoadFailed': return 'Seriyalar yüklənə bilmədi';
+			case 'messages.noResultsFound': return 'Nəticə tapılmadı';
+			case 'messages.sleepTimerSet': return ({required Object label}) => 'Yuxu taymeri ${label} üçün təyin edildi';
+			case 'messages.noItemsAvailable': return 'Element yoxdur';
+			case 'messages.failedToCreatePlayQueueNoItems': return 'Oynatma növbəsi yaradıla bilmədi — element yoxdur';
+			case 'messages.failedPlayback': return ({required Object action, required Object error}) => '${action} uğursuz oldu: ${error}';
+			case 'messages.switchingToCompatiblePlayer': return 'Uyğun oynadıcıya keçilir...';
+			case 'messages.serverLimitTitle': return 'Oynatma uğursuz oldu';
+			case 'messages.serverLimitBody': return 'Server xətası (HTTP 500). Məhdudiyyət bu seansı rədd etdi.';
+			case 'messages.mediaUnreadableTitle': return 'Fayl əlçatan deyil';
+			case 'messages.mediaUnreadableBody': return 'Server bu elementi tapdı, lakin onun faylını oxuya bilmədi (HTTP 404). Fayl yəqin ki, köçürülüb, silinib və ya onun saxlanma yeri oflayndır. Server sahibindən faylı yoxlamasını və kitabxananı yenidən skan etməsini xahiş edin.';
+			case 'messages.serverBusyTitle': return 'Yayım əlçatan deyil';
+			case 'messages.serverBusyBody': return 'Server bu faylı yayımlamaqdan dəfələrlə imtina etdi (HTTP 503). Server yenidən başladılır və ya məşğul ola bilər, yaxud faylın yerləşdiyi yaddaş oflayn ola bilər. Bir az sonra təzədən cəhd edin — problem davam edərsə, server sahibindən serveri və faylın yerləşdiyi yaddaşı yoxlamasını istəyin.';
+			case 'messages.playbackNotAllowedTitle': return 'Oynatmaya icazə verilmir';
+			case 'messages.playbackNotAllowedBody': return 'Server bu elementi yayımlamaqdan imtina etdi (HTTP 403). Hesabınızın onu oynatmaq icazəsi olmaya bilər, yaxud server oynatmaya yalnız öz yerli şəbəkəsində icazə verə bilər.';
+			case 'messages.logsUploaded': return 'Jurnallar yükləndi';
+			case 'messages.logsUploadFailed': return 'Jurnallar yüklənə bilmədi';
+			case 'messages.logId': return 'Jurnal ID-si';
+			case 'messages.burnedSubtitlesUseMenu': return 'Altyazılar bu yayıma həkk edilib. Onları altyazı menyusundan dəyişin.';
+			case 'messages.noVideoUrl': return 'Video URL-i mövcud deyil';
+			case 'messages.playbackNoMediaSources': return 'Server oynadıla bilən media mənbəyi qaytarmadı';
+			case 'messages.playbackDataNotPrepared': return 'Məlumatları hazır olmadan oynatma başladıldı';
+			case 'messages.streamSelectionUnavailable': return 'Bu mənbə üçün yayım seçimi mövcud deyil';
+			case 'messages.streamSelectionFailed': return 'Seçilmiş yayımları tətbiq etmək olmadı';
+			case 'messages.trackSelectionNotRemembered': return 'Bu trek seçimi yalnız cari oynatmaya tətbiq olunur.';
+			case 'messages.serverUnavailableForProfile': return 'Aktiv profil üçün heç bir server mövcud deyil';
+			case 'subtitlingStyling.text': return 'Mətn';
+			case 'subtitlingStyling.border': return 'Haşiyə';
+			case 'subtitlingStyling.background': return 'Arxa fon';
+			case 'subtitlingStyling.fontSize': return 'Şrift ölçüsü';
+			case 'subtitlingStyling.textColor': return 'Mətn rəngi';
+			case 'subtitlingStyling.borderSize': return 'Haşiyə ölçüsü';
+			case 'subtitlingStyling.borderColor': return 'Haşiyə rəngi';
+			case 'subtitlingStyling.backgroundOpacity': return 'Arxa fon şəffaflığı';
+			case 'subtitlingStyling.backgroundColor': return 'Arxa fon rəngi';
+			case 'subtitlingStyling.position': return 'Mövqe';
+			case 'subtitlingStyling.assOverride': return 'ASS ləğvi';
+			case 'subtitlingStyling.overrideScale': return 'Miqyasla';
+			case 'subtitlingStyling.overrideForce': return 'Məcburi et';
+			case 'subtitlingStyling.overrideStrip': return 'Formatlaşdırmanı sil';
+			case 'subtitlingStyling.positionTop': return 'Yuxarı';
+			case 'subtitlingStyling.positionBottom': return 'Aşağı';
+			case 'subtitlingStyling.useMargins': return 'Kənar boşluqlardan istifadə et';
+			case 'subtitlingStyling.useMarginsDescription': return 'Mətn altyazılarına videodan kənar sahədə icazə ver. Üslublu altyazılar öz orijinal yerləşməsini saxlaya bilər.';
+			case 'subtitlingStyling.anchorToScreen': return 'Ekrana bərkit';
+			case 'subtitlingStyling.anchorToScreenDescription': return 'Mətn altyazılarını geniş ekranlı videonun altındakı qara zolaqlarda göstər';
+			case 'subtitlingStyling.bold': return 'Qalın';
+			case 'subtitlingStyling.italic': return 'Kursiv';
+			case 'subtitlingStyling.renderResolution': return 'Emal imkanı (Resolution)';
+			case 'subtitlingStyling.renderResolutionScreen': return 'Ekran imkanı';
+			case 'subtitlingStyling.renderResolutionVideo': return 'Video imkanı';
+			case 'mpvConfig.title': return 'mpv.conf';
+			case 'mpvConfig.description': return 'Təkmilləşdirilmiş video oynatıcı tənzimləmələri';
+			case 'mpvConfig.presets': return 'Ön ayarlar';
+			case 'mpvConfig.noPresets': return 'Yadda saxlanılmış ön ayar yoxdur';
+			case 'mpvConfig.saveAsPreset': return 'Ön ayar kimi yadda saxla...';
+			case 'mpvConfig.presetName': return 'Ön ayar adı';
+			case 'mpvConfig.presetNameHint': return 'Bu ön ayar üçün ad daxil edin';
+			case 'mpvConfig.loadPreset': return 'Yüklə';
+			case 'mpvConfig.deletePreset': return 'Sil';
+			case 'mpvConfig.presetSaved': return 'Ön ayar yadda saxlanıldı';
+			case 'mpvConfig.presetLoaded': return 'Ön ayar yükləndi';
+			case 'mpvConfig.presetDeleted': return 'Ön ayar silindi';
+			case 'mpvConfig.confirmDeletePreset': return 'Bu ön ayarı silmək istədiyinizə əminsiniz?';
+			case 'mpvConfig.configPlaceholder': return 'gpu-api=vulkan\nhwdec=auto\n# şərh';
+			case 'mpvConfig.lineHint': return 'option=value';
+			case 'mpvConfig.addLine': return 'Sətir əlavə et';
+			case 'mpvConfig.removeLine': return 'Sətiri sil';
+			case 'mpvConfig.embeddedVoHint': return 'vo, gpu-context və gpu-api Linux-da nəzərə alınmır: daxili video həmişə video müstəvisində vo=libmpv vasitəsilə göstərilir və gpu-next (ArtCNN kimi hesablama şeyderlərinə lazımdır) daxili işləyə bilməz.';
+			case 'dialog.confirmAction': return 'Əməliyyatı təsdiqlə';
+			case 'profiles.addPlezyProfile': return 'Plezy profili əlavə et';
+			case 'profiles.switchingProfile': return 'Profil dəyişdirilir…';
+			case 'profiles.deleteThisProfileTitle': return 'Bu profil silinsin?';
+			case 'profiles.deleteThisProfileMessage': return ({required Object displayName}) => '${displayName} silinəcək. Qoşulmalar təsirlənmir.';
+			case 'profiles.active': return 'Aktiv';
+			case 'profiles.manage': return 'İdarə et';
+			case 'profiles.delete': return 'Sil';
+			case 'profiles.signOut': return 'Çıxış et';
+			case 'profiles.signOutPlexTitle': return 'Plex-dən çıxılsın?';
+			case 'profiles.signOutPlexMessage': return ({required Object displayName}) => '${displayName} və bütün Plex Home istifadəçiləri silinsin? İstənilən vaxt yenidən daxil ola bilərsiniz.';
+			case 'profiles.signOutPlexDeleteDownloads': return 'Yükləmələri də sil';
+			case 'profiles.signOutPlexDeleteDownloadsDescription': return 'Əks halda onlar bu cihazda qalır və bu hesaba yenidən daxil olduqda geri qayıdır.';
+			case 'profiles.signedOutPlex': return 'Plex-dən çıxıldı.';
+			case 'profiles.signOutFailed': return 'Çıxış uğursuz oldu.';
+			case 'profiles.sectionTitle': return 'Profillər';
+			case 'profiles.summarySingle': return 'İdarə olunan istifadəçiləri və yerli kimlikləri qarışdırmaq üçün profillər əlavə edin';
+			case 'profiles.summaryMultipleWithActive': return ({required Object count, required Object activeName}) => '${count} profil · aktiv: ${activeName}';
+			case 'profiles.summaryMultiple': return ({required Object count}) => '${count} profil';
+			case 'profiles.removeConnectionTitle': return 'Qoşulma silinsin?';
+			case 'profiles.removeConnectionMessage': return ({required Object displayName, required Object connectionLabel}) => '${displayName} istifadəçisinin ${connectionLabel} giriş hüququ silinəcək. Digər profillərdə qalacaq.';
+			case 'profiles.deleteProfileTitle': return 'Profil silinsin?';
+			case 'profiles.deleteProfileMessage': return ({required Object displayName}) => '${displayName} və onun qoşulmaları silinəcək. Serverlər əlçatan qalır.';
+			case 'profiles.profileNameLabel': return 'Profil adı';
+			case 'profiles.pinProtectionLabel': return 'PIN mühafizəsi';
+			case 'profiles.pinManagedByPlex': return 'PIN Plex tərəfindən idarə olunur. plex.tv-də düzəliş edin.';
+			case 'profiles.noPinSetEditOnPlex': return 'PIN təyin edilməyib. Tələb etmək üçün plex.tv-də düzəliş edin.';
+			case 'profiles.setPin': return 'PIN təyin et';
+			case 'profiles.setPinTitle': return 'PIN təyin et';
+			case 'profiles.confirmPinTitle': return 'PIN-i təsdiqlə';
+			case 'profiles.pinSet': return 'PIN təyin edildi';
+			case 'profiles.changePin': return 'Dəyişdir';
+			case 'profiles.removePin': return 'Sil';
+			case 'profiles.connectionsLabel': return 'Qoşulmalar';
+			case 'profiles.add': return 'Əlavə et';
+			case 'profiles.deleteProfileButton': return 'Profili sil';
+			case 'profiles.noConnectionsHint': return 'Qoşulma yoxdur — bu profili istifadə etmək üçün birini əlavə edin.';
+			case 'profiles.noConnections': return 'Qoşulma yoxdur';
+			case 'profiles.plexHomeAccount': return 'Plex Ev hesabı';
+			case 'profiles.plexAccountChip': return ({required Object account}) => 'Plex hesabı: ${account}';
+			case 'profiles.plexAccountUserChip': return ({required Object account, required Object user}) => '${account} hesabı vasitəsilə ${user}';
+			case 'profiles.connectionDefault': return 'Defolt';
+			case 'profiles.connectionAs': return ({required Object displayName}) => '${displayName} olaraq';
+			case 'profiles.makeDefault': return 'Defolt et';
+			case 'profiles.removeConnection': return 'Sil';
+			case 'profiles.profileRenamed': return 'Profil adı dəyişdirildi.';
+			case 'profiles.borrowAddTo': return ({required Object displayName}) => '${displayName} profilinə əlavə et';
+			case 'profiles.borrowExplain': return 'Başqa profilin qoşulmasını istifadə edin. PIN ilə qorunan profillər PIN tələb edir.';
+			case 'profiles.borrowEmpty': return 'Hələ istifadə ediləcək bir şey yoxdur.';
+			case 'profiles.borrowEmptySubtitle': return 'Əvvəlcə başqa bir profile Plex, Jellyfin və ya Emby qoşun.';
+			case 'profiles.borrowLoadFailed': return 'Əlçatan qoşulmalar yüklənə bilmədi. Təzədən cəhd edin.';
+			case 'profiles.borrowFromProfile': return ({required Object displayName}) => '${displayName} profilindən';
+			case 'profiles.borrowConnectionBorrowed': return 'Qoşulma istifadə edildi.';
+			case 'profiles.borrowFailed': return 'Qoşulma istifadə edilə bilmədi.';
+			case 'profiles.incorrectPin': return 'Səhv PIN.';
+			case 'profiles.incorrectPinTryAgain': return 'Səhv PIN. Lütfən təzədən cəhd edin.';
+			case 'profiles.sourceProfileMissingParentAccount': return 'Mənbə profilin əsas hesabı yoxdur.';
+			case 'profiles.failedToLoadHomeUsers': return 'Plex Home istifadəçiləriniz yüklənə bilmədi. Bağlantınızı yoxlayın və yenidən cəhd edin.';
+			case 'profiles.failedToVerifyPin': return 'PIN təsdiqlənə bilmədi.';
+			case 'profiles.newProfile': return 'Yeni profil';
+			case 'profiles.profileNameHint': return 'məs. Qonaqlar, Uşaqlar, Qonaq otağı';
+			case 'profiles.pinProtectionOptional': return 'PIN mühafizəsi (istəyə bağlı)';
+			case 'profiles.pinExplain': return 'Profillər arası keçid üçün 4 rəqəmli PIN tələb olunur.';
+			case 'profiles.continueButton': return 'Davam et';
+			case 'profiles.pinsDontMatch': return 'PIN-lər uyğun gəlmir';
+			case 'profiles.tokenIdentityMismatch': return 'Plex profil tokeni gözlənilməyən serveri müəyyən etdi';
+			case 'connections.sectionTitle': return 'Qoşulmalar';
+			case 'connections.addConnection': return 'Qoşulma əlavə et';
+			case 'connections.addConnectionSubtitleNoProfile': return 'Plex ilə daxil olun və ya Jellyfin yaxud Emby serverinə qoşulun';
+			case 'connections.addConnectionSubtitleScoped': return ({required Object displayName}) => '${displayName} profilinə əlavə et: Plex, Jellyfin, Emby və ya başqa profil qoşulması';
+			case 'connections.sessionExpiredOne': return ({required Object name}) => '${name} üçün seansın vaxtı bitdi';
+			case 'connections.sessionExpiredMany': return ({required Object count}) => '${count} server üçün seansın vaxtı bitdi';
+			case 'connections.accessDeniedOne': return ({required Object name}) => '${name} bu hesaba girişi rədd etdi';
+			case 'connections.accessDeniedMany': return ({required Object count}) => '${count} server bu hesaba girişi rədd etdi';
+			case 'connections.signInAgain': return 'Yenidən daxil ol';
+			case 'connections.editMediaBrowserTitle': return ({required Object product}) => '${product} qoşulmasını düzəliş et';
+			case 'connections.editMediaBrowserIntro': return ({required Object serverName}) => '${serverName} üçün URL-lər əlavə edin və ya silin. Plezy əlçatan olan ən aşağı gecikməli URL-i istifadə edəcək.';
+			case 'accountPreferences.sectionTitle': return 'Hesab tərcihləri';
+			case 'accountPreferences.hubSubtitleSingle': return ({required Object account}) => '${account} hesabında saxlanılan səs, altyazı və kitabxana seçimləri';
+			case 'accountPreferences.hubSubtitleMultiple': return ({required Object count}) => '${count} hesabda saxlanılan səs, altyazı və kitabxana seçimləri';
+			case 'accountPreferences.pickAccount': return 'Hər hesab öz tərcihlərini saxlayır. Düzəliş etmək üçün birini seçin.';
+			case 'accountPreferences.storedOnAccount': return 'Bu seçimlər hesabın özündə saxlanılır, ona görə də ona daxil olan hər tətbiq onlardan istifadə edir — digər cihazlarınızdakı Plezy də daxil olmaqla.';
+			case 'accountPreferences.noAccounts': return 'Konfiqurasiya ediləcək hesab yoxdur';
+			case 'accountPreferences.noAccountsHint': return 'Plex-ə daxil olun və ya Jellyfin və ya Emby serverinə qoşulun; o hesabda saxlanılan tərcihlər burada görünəcək.';
+			case 'accountPreferences.unavailable': return 'Bu hesaba çatmaq olmur';
+			case 'accountPreferences.loadFailed': return 'Bu tərcihlər yüklənə bilmədi';
+			case 'accountPreferences.noPreference': return 'Tərcih yoxdur';
+			case 'accountPreferences.notSet': return 'Təyin edilməyib';
+			case 'accountPreferences.groups.audioAndSubtitles': return 'Səs və altyazılar';
+			case 'accountPreferences.groups.libraryDisplay': return 'Kitabxana';
+			case 'accountPreferences.groups.personalMedia': return 'Şəxsi media';
+			case 'accountPreferences.preferredAudioLanguage': return 'Üstünlük verilən səs dili';
+			case 'accountPreferences.autoSelectAudio': return 'Səsi dilə görə seç';
+			case 'accountPreferences.autoSelectAudioDescription': return 'Söndürüldükdə faylın defolt olaraq işarələdiyi səs treki istifadə olunur.';
+			case 'accountPreferences.preferredSubtitleLanguage': return 'Üstünlük verilən altyazı dili';
+			case 'accountPreferences.subtitleMode': return 'Altyazıları aç';
+			case 'accountPreferences.subtitleModes.none': return 'Əl ilə seçilmiş';
+			case 'accountPreferences.subtitleModes.noneDescription': return 'Altyazıları heç vaxt özbaşına açma.';
+			case 'accountPreferences.subtitleModes.defaultMode': return 'Trek bayraqlarına əməl et';
+			case 'accountPreferences.subtitleModes.defaultModeDescription': return 'Hər altyazı trekində saxlanılan defolt və məcburi bayraqları istifadə et.';
+			case 'accountPreferences.subtitleModes.always': return 'Həmişə aktivdir';
+			case 'accountPreferences.subtitleModes.alwaysDescription': return 'Üstünlük verilən dildə altyazı treki mövcuddursa, onu aç.';
+			case 'accountPreferences.subtitleModes.onlyForced': return 'Yalnız məcburi altyazılar';
+			case 'accountPreferences.subtitleModes.onlyForcedDescription': return 'Yalnız məcburi işarələnmiş trekləri yüklə.';
+			case 'accountPreferences.subtitleModes.smart': return 'Xarici səs olduqda göstərilən';
+			case 'accountPreferences.subtitleModes.smartDescription': return 'Altyazıları yalnız səs başqa dildə olduqda aç.';
+			case 'accountPreferences.subtitleAccessibility': return 'SDH altyazıları';
+			case 'accountPreferences.subtitleAccessibilityOptions.preferNonSdh': return 'SDH olmayan altyazılara üstünlük ver';
+			case 'accountPreferences.subtitleAccessibilityOptions.preferSdh': return 'SDH altyazılarına üstünlük ver';
+			case 'accountPreferences.subtitleAccessibilityOptions.onlySdh': return 'Yalnız SDH altyazıları';
+			case 'accountPreferences.subtitleAccessibilityOptions.onlyNonSdh': return 'Yalnız SDH olmayan altyazılar';
+			case 'accountPreferences.forcedSubtitles': return 'Məcburi altyazılar';
+			case 'accountPreferences.forcedSubtitleOptions.preferNonForced': return 'Məcburi olmayan altyazılara üstünlük ver';
+			case 'accountPreferences.forcedSubtitleOptions.preferForced': return 'Məcburi altyazılara üstünlük ver';
+			case 'accountPreferences.forcedSubtitleOptions.onlyForced': return 'Yalnız məcburi altyazılar';
+			case 'accountPreferences.forcedSubtitleOptions.onlyNonForced': return 'Yalnız məcburi olmayan altyazılar';
+			case 'accountPreferences.displayMissingEpisodes': return 'Çatışmayan seriyaları göstər';
+			case 'accountPreferences.displayMissingEpisodesDescription': return 'Serverin bildiyi, lakin faylı olmayan seriyaları siyahıya al.';
+			case 'accountPreferences.hidePlayedInLatest': return 'Baxılmış elementləri Son əlavə olunanlarda gizlət';
+			case 'accountPreferences.hidePlayedInLatestDescription': return 'Artıq baxdığınız elementləri serverin Son əlavə olunanlar sətirlərində göstərmə.';
+			case 'accountPreferences.displayCollectionsView': return 'Kolleksiyalar görünüşünü göstər';
+			case 'accountPreferences.displayCollectionsViewDescription': return 'Kitabxanalarınızla yanaşı serverin Kolleksiyalar görünüşünü də təklif et.';
+			case 'accountPreferences.rewatchingInNextUp': return 'Təkrar baxılan serialları Sırada saxla';
+			case 'accountPreferences.rewatchingInNextUpDescription': return 'Bir serialı bitirdikdən sonra yenidən başlasanız, Sırada serialı atmaq əvəzinə təkrar baxışı izləyir.';
+			case 'accountPreferences.watchedIndicator': return 'Baxıldı göstəriciləri';
+			case 'accountPreferences.watchedIndicatorOptions.none': return 'Heç vaxt';
+			case 'accountPreferences.watchedIndicatorOptions.moviesAndShows': return 'Kinolar və TV şoular';
+			case 'accountPreferences.watchedIndicatorOptions.movies': return 'Yalnız kinolar';
+			case 'accountPreferences.watchedIndicatorOptions.shows': return 'Yalnız TV şoular';
+			case 'accountPreferences.mediaReviewsVisibility': return 'Reytinq və rəylər';
+			case 'accountPreferences.mediaReviewsOptions.usersAndCritics': return 'İstifadəçilər və tənqidçilər';
+			case 'accountPreferences.mediaReviewsOptions.usersOnly': return 'Yalnız istifadəçilər';
+			case 'accountPreferences.mediaReviewsOptions.criticsOnly': return 'Yalnız tənqidçilər';
+			case 'accountPreferences.mediaReviewsOptions.nobody': return 'Gizlədilib';
+			case 'discover.title': return 'Kəşf et';
+			case 'discover.noContentAvailable': return 'Məzmun əlçatan deyil';
+			case 'discover.addMediaToLibraries': return 'Kitabxanalarınıza bir az media əlavə edin';
+			case 'discover.continueWatching': return 'İzləməyə davam et';
+			case 'discover.continueWatchingIn': return ({required Object library}) => '${library} daxilində İzləməyə davam et';
+			case 'discover.nextUp': return 'Sırada';
+			case 'discover.nextUpIn': return ({required Object library}) => '${library} daxilində Sırada';
+			case 'discover.recentlyAdded': return 'Son əlavə olunanlar';
+			case 'discover.recentlyAddedIn': return ({required Object library}) => '${library} daxilində Son əlavə olunanlar';
+			case 'discover.latestAlbumsIn': return ({required Object library}) => '${library} daxilində Son albomlar';
+			case 'discover.recentlyPlayedIn': return ({required Object library}) => '${library} daxilində Son oynadılanlar';
+			case 'discover.mostPlayedIn': return ({required Object library}) => '${library} daxilində Ən çox oynadılanlar';
+			case 'discover.playEpisode': return ({required Object season, required Object episode}) => 'M${season}S${episode}';
+			case 'discover.overview': return 'İcmal';
+			case 'discover.cast': return 'Aktyorlar';
+			case 'discover.extras': return 'Treylerlər və Əlavələr';
+			case 'discover.studio': return 'Studiya';
+			case 'discover.rating': return 'Reytinq';
+			case 'discover.director': return 'Rejissor';
+			case 'discover.directors': return 'Rejissorlar';
+			case 'discover.movie': return 'Kino';
+			case 'discover.tvShow': return 'TV Şou';
+			case 'discover.minutesLeft': return ({required Object minutes}) => '${minutes} dəq qaldı';
+			case 'discover.moreLikeThis': return 'Buna bənzərlər';
+			case 'discover.titleCount': return ({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('az'))(n,
+				one: '${n} başlıq',
+				other: '${n} başlıq',
+			);
+			case 'discover.person.born': return 'Doğum tarixi';
+			case 'discover.person.died': return 'Vəfat tarixi';
+			case 'discover.person.birthplace': return 'Doğum yeri';
+			case 'discover.person.dateWithAge': return ({required Object date, required Object age}) => '${date} (${age} yaş)';
+			case 'discover.person.dateWithAgeAtDeath': return ({required Object date, required Object age}) => '${date} (${age} yaşında)';
+			case 'errors.searchFailed': return ({required Object error}) => 'Axtarış uğursuz oldu: ${error}';
+			case 'errors.searchUnavailable': return 'Axtarış heç bir media serverinə çata bilmədi.';
+			case 'errors.connectionTimeout': return ({required Object context}) => '${context} yüklənərkən vaxt bitdi';
+			case 'errors.connectionFailed': return 'Media serverinə qoşulmaq olmur';
+			case 'errors.unableToLoad': return ({required Object context}) => '${context} yüklənə bilmədi. Lütfən təzədən cəhd edin.';
+			case 'errors.noClientAvailable': return 'Əlçatan klient yoxdur';
+			case 'errors.pleaseEnterToken': return 'Lütfən token daxil edin';
+			case 'errors.invalidToken': return 'Yanlış token';
+			case 'errors.failedToVerifyToken': return ({required Object error}) => 'Token təsdiqlənə bilmədi: ${error}';
+			case 'errors.failedToSwitchProfile': return ({required Object displayName}) => '${displayName} profilinə keçilə bilmədi';
+			case 'errors.failedToDeleteProfile': return ({required Object displayName}) => '${displayName} profili silinə bilmədi';
+			case 'errors.failedToRate': return 'Reytinq yenilənə bilmədi';
+			case 'errors.reasonTimedOut': return 'bağlantının vaxtı bitdi';
+			case 'errors.reasonUnreachable': return 'serverə çatmaq mümkün olmadı';
+			case 'errors.reasonRefused': return 'server sorğunu rədd etdi';
+			case 'errors.reasonNotFound': return 'element artıq serverdə yoxdur';
+			case 'errors.reasonServerError': return 'server xəta bildirdi';
+			case 'errors.reasonCancelled': return 'sorğu ləğv edildi';
+			case 'errors.reasonUnexpected': return 'gözlənilməz xəta baş verdi';
+			case 'libraries.title': return 'Kitabxanalar';
+			case 'libraries.fallbackTitle': return 'Kitabxana';
+			case 'libraries.scanLibraryFiles': return 'Kitabxana fayllarını skan et';
+			case 'libraries.scanLibrary': return 'Kitabxananı skan et';
+			case 'libraries.analyze': return 'Analiz et';
+			case 'libraries.analyzeLibrary': return 'Kitabxananı analiz et';
+			case 'libraries.refreshMetadata': return 'Meta-məlumatları yenilə';
+			case 'libraries.emptyTrash': return 'Zibil qutusunu təmizlə';
+			case 'libraries.emptyingTrash': return ({required Object title}) => '"${title}" üçün zibil qutusu təmizlənir...';
+			case 'libraries.trashEmptied': return ({required Object title}) => '"${title}" üçün zibil qutusu təmizləndi';
+			case 'libraries.failedToEmptyTrash': return ({required Object error}) => 'Zibil qutusu təmizlənə bilmədi: ${error}';
+			case 'libraries.analyzing': return ({required Object title}) => '"${title}" analiz edilir...';
+			case 'libraries.analysisStarted': return ({required Object title}) => '"${title}" üçün analiz başladı';
+			case 'libraries.failedToAnalyze': return ({required Object error}) => 'Kitabxana analiz edilə bilmədi: ${error}';
+			case 'libraries.noLibrariesFound': return 'Kitabxana tapılmadı';
+			case 'libraries.allLibrariesHidden': return 'Bütün kitabxanalar gizlədilib';
+			case 'libraries.hiddenLibrariesCount': return ({required Object count}) => 'Gizli kitabxanalar (${count})';
+			case 'libraries.thisLibraryIsEmpty': return 'Bu kitabxana boşdur';
+			case 'libraries.noItemsMatchFilters': return 'Filtrlərə uyğun element tapılmadı';
+			case 'libraries.resetFilters': return 'Filtrləri sıfırla';
+			case 'libraries.all': return 'Hamısı';
+			case 'libraries.clearAll': return 'Hamısını təmizlə';
+			case 'libraries.scanLibraryConfirm': return ({required Object title}) => '"${title}" kitabxanasını skan etmək istədiyinizdən əminsiniz?';
+			case 'libraries.analyzeLibraryConfirm': return ({required Object title}) => '"${title}" kitabxanasını analiz etmək istədiyinizdən əminsiniz?';
+			case 'libraries.refreshMetadataConfirm': return ({required Object title}) => '"${title}" üçün meta-məlumatları yeniləmək istədiyinizdən əminsiniz?';
+			case 'libraries.emptyTrashConfirm': return ({required Object title}) => '"${title}" üçün zibil qutusunu təmizləmək istədiyinizdən əminsiniz?';
+			case 'libraries.manageLibraries': return 'Kitabxanaları idarə et';
+			case 'libraries.sort': return 'Sırala';
+			case 'libraries.sortBy': return 'Sıralama meyarı';
+			case 'libraries.filters': return 'Filtrlər';
+			case 'libraries.confirmActionMessage': return 'Bu əməliyyatı yerinə yetirmək istədiyinizdən əminsiniz?';
+			case 'libraries.showLibrary': return 'Kitabxananı göstər';
+			case 'libraries.hideLibrary': return 'Kitabxananı gizlət';
+			case 'libraries.libraryOptions': return 'Kitabxana seçimləri';
+			case 'libraries.content': return 'kitabxana məzmunu';
+			case 'libraries.selectLibrary': return 'Kitabxana seç';
+			case 'libraries.filtersWithCount': return ({required Object count}) => 'Filtrlər (${count})';
+			case 'libraries.noRecommendations': return 'Tövsiyə yoxdur';
+			case 'libraries.noCollections': return 'Bu kitabxanada kolleksiya yoxdur';
+			case 'libraries.noFoldersFound': return 'Qovluq tapılmadı';
+			case 'libraries.folders': return 'qovluqlar';
+			case 'libraries.tabs.recommended': return 'Tövsiyə olunanlar';
+			case 'libraries.tabs.browse': return 'Baxış';
+			case 'libraries.tabs.collections': return 'Kolleksiyalar';
+			case 'libraries.tabs.playlists': return 'Oynatma siyahıları';
+			case 'libraries.groupings.title': return 'Qruplaşdırma';
+			case 'libraries.groupings.all': return 'Hamısı';
+			case 'libraries.groupings.movies': return 'Kinolar';
+			case 'libraries.groupings.shows': return 'TV Şoular';
+			case 'libraries.groupings.seasons': return 'Mövsümlər';
+			case 'libraries.groupings.episodes': return 'Seriyalar';
+			case 'libraries.groupings.artists': return 'Müğənnilər/Müəlliflər';
+			case 'libraries.groupings.albums': return 'Albomlar';
+			case 'libraries.groupings.tracks': return 'Mahnılar';
+			case 'libraries.groupings.folders': return 'Qovluqlar';
+			case 'libraries.filterCategories.genre': return 'Janr';
+			case 'libraries.filterCategories.year': return 'İl';
+			case 'libraries.filterCategories.contentRating': return 'Məzmun reytinqi';
+			case 'libraries.filterCategories.tag': return 'Teq';
+			case 'libraries.filterCategories.unwatched': return 'Baxılmayıb';
+			case 'libraries.filterCategories.unplayed': return 'Oynadılmayıb';
+			case 'libraries.filterCategories.favorites': return 'Sevimlilər';
+			case 'libraries.filterCategories.filePath': return 'Fayl yolu';
+			case 'libraries.sortLabels.title': return 'Ad';
+			case 'libraries.sortLabels.dateAdded': return 'Əlavə olunma tarixi';
+			case 'libraries.sortLabels.releaseDate': return 'Buraxılış tarixi';
+			case 'libraries.sortLabels.rating': return 'Reytinq';
+			case 'libraries.sortLabels.communityRating': return 'İcma reytinqi';
+			case 'libraries.sortLabels.criticRating': return 'Tənqidçi reytinqi';
+			case 'libraries.sortLabels.userRating': return 'İstifadəçi reytinqi';
+			case 'libraries.sortLabels.datePlayed': return 'Oynadılma tarixi';
+			case 'libraries.sortLabels.playCount': return 'Oynadılma sayı';
+			case 'libraries.sortLabels.productionYear': return 'İstehsal ili';
+			case 'libraries.sortLabels.runtime': return 'Müddət';
+			case 'libraries.sortLabels.officialRating': return 'Rəsmi reytinq';
+			case 'libraries.sortLabels.premiereDate': return 'Premyera tarixi';
+			case 'libraries.sortLabels.startDate': return 'Başlanğıc tarixi';
+			case 'libraries.sortLabels.airTime': return 'Yayımlanma vaxtı';
+			case 'libraries.sortLabels.studio': return 'Studiya';
+			case 'libraries.sortLabels.random': return 'Təsadüfi';
+			case 'libraries.sortLabels.dateShared': return 'Paylaşılma tarixi';
+			case 'libraries.sortLabels.latestEpisodeAirDate': return 'Son seriya yayın tarixi';
+			case 'libraries.sortLabels.lastEpisodeDateAdded': return 'Əlavə olunan son seriya tarixi';
+			case 'libraries.sortLabels.dateDownloaded': return 'Yüklənmə tarixi';
+			case 'libraries.sortLabels.size': return 'Həcm';
+			case 'libraries.sortLabels.library': return 'Kitabxana';
+			case 'libraries.advancedFilters.include': return 'Daxil et';
+			case 'libraries.advancedFilters.exclude': return 'Xaric et';
+			case 'libraries.advancedFilters.any': return 'İstənilən';
+			case 'libraries.advancedFilters.yes': return 'Bəli';
+			case 'libraries.advancedFilters.no': return 'Xeyr';
+			case 'libraries.advancedFilters.not': return ({required Object value}) => '${value} deyil';
+			case 'libraries.advancedFilters.valueCount': return ({required Object count}) => '${count} seçilib';
+			case 'libraries.advancedFilters.valueCountExcluded': return ({required Object count}) => '${count} xaric edilib';
+			case 'libraries.advancedFilters.searchValues': return 'Dəyərlərdə axtar';
+			case 'libraries.advancedFilters.noValues': return 'Dəyər yoxdur';
+			case 'libraries.advancedFilters.matchContains': return 'Ehtiva edir';
+			case 'libraries.advancedFilters.matchNotContains': return 'Ehtiva etmir';
+			case 'libraries.advancedFilters.matchIs': return 'Bərabərdir';
+			case 'libraries.advancedFilters.matchIsNot': return 'Bərabər deyil';
+			case 'libraries.advancedFilters.matchBeginsWith': return 'İlə başlayır';
+			case 'libraries.advancedFilters.matchEndsWith': return 'İlə bitir';
+			case 'libraries.advancedFilters.textHint': return 'Uyğunluq üçün yazın';
+			case 'libraries.advancedFilters.from': return 'Başlanğıc';
+			case 'libraries.advancedFilters.to': return 'Son';
+			case 'libraries.advancedFilters.range': return ({required Object from, required Object to}) => '${from} – ${to}';
+			case 'libraries.advancedFilters.atLeast': return ({required Object value}) => '${value} və yuxarı';
+			case 'libraries.advancedFilters.atMost': return ({required Object value}) => '${value} və aşağı';
+			case 'libraries.advancedFilters.dateLastDays': return ({required Object count}) => 'Son ${count} gün';
+			case 'libraries.advancedFilters.dateLastYear': return 'Son bir il';
+			case 'libraries.advancedFilters.dateOlderThanDays': return ({required Object count}) => '${count} gündən köhnə';
+			case 'libraries.advancedFilters.dateOlderThanYear': return 'Bir ildən köhnə';
+			case 'about.title': return 'Haqqında';
+			case 'about.openSourceLicenses': return 'Açıq mənbə lisenziyaları';
+			case 'about.versionLabel': return ({required Object version}) => 'Versiya ${version}';
+			case 'about.appDescription': return 'Flutter üçün gözəl bir Plex, Jellyfin və Emby klienti';
+			case 'about.viewLicensesDescription': return 'Üçüncü tərəf kitabxanalarının lisenziyalarına baxın';
+			case 'serverSelection.noServersFoundForAccount': return ({required Object username, required Object email}) => '${username} (${email}) üçün server tapılmadı';
+			case 'serverSelection.failedToLoadServers': return ({required Object error}) => 'Serverlər yüklənə bilmədi: ${error}';
+			case 'serverSelection.noValidServers': return 'Bu hesabda istifadəyə yararlı server tapılmadı';
+			case 'hubDetail.title': return 'Başlıq';
+			case 'hubDetail.releaseYear': return 'Buraxılış ili';
+			case 'hubDetail.dateAdded': return 'Əlavə olunma tarixi';
+			case 'hubDetail.rating': return 'Reytinq';
+			case 'hubDetail.noItemsFound': return 'Element tapılmadı';
+			case 'logs.clearLogs': return 'Jurnalları təmizlə';
+			case 'logs.copyLogs': return 'Jurnalları kopyala';
+			case 'logs.uploadLogs': return 'Jurnalları yüklə';
+			case 'startup.failedTitle': return 'Plezy başlaya bilmədi';
+			case 'startup.failedBody': return 'Başlatma zamanı nəsə səhv getdi. Aşağıdakı təfərrüatlar nəyin uğursuz olduğunu göstərir.';
+			case 'startup.failedBodyRepairable': return 'Plezy-nin saxlanmış tənzimləmə faylı zədələnib və Plezy başlamazdan əvvəl yenidən qurulmalıdır. Təzədən cəhd etmək kömək etməyəcək — Yaddaşı təmir et seçin.';
+			case 'startup.phaseLabel': return 'Addım';
+			case 'startup.showDetails': return 'Təfərrüatları göstər';
+			case 'startup.hideDetails': return 'Təfərrüatları gizlət';
+			case 'startup.copyDetails': return 'Təfərrüatları kopyala';
+			case 'startup.detailsCopied': return 'Təfərrüatlar buferə kopyalandı';
+			case 'startup.uploadDetails': return 'Təfərrüatları yüklə';
+			case 'startup.repairStorage': return 'Yaddaşı təmir et';
+			case 'startup.repairTitle': return 'Saxlanmış məlumatlar təmir edilsin?';
+			case 'startup.repairBodyCommon': return 'Plezy-nin tənzimləmə faylı zədələnib və oxuna bilmir. Təmir bütün tənzimləmələri defolt vəziyyətinə sıfırlayır.';
+			case 'startup.repairBodyOneCredential': return 'Bir saxlanmış daxil olma məlumatı zədələnib və oxuna bilmir. Təmir yalnız onu silir; digər tənzimləmələrinizə toxunulmur.';
+			case 'startup.repairBodySignInsKept': return 'Serverləriniz və profilləriniz daxil olmuş vəziyyətdə qalmalıdır.';
+			case 'startup.repairBodySignInsLost': return 'Saxlanmış daxil olmalarınızı qoruyan açar bu fayldan bərpa edilə bilmir, ona görə də hər serverə və profilə yenidən daxil olmalı olacaqsınız. Media serverinizdə heç nəyə təsir olunmur.';
+			case 'startup.repairBodySessionsUncertain': return 'İzləyicilər (MAL, AniList, Simkl, Trakt) və Seerr ayrıca saxlanılır və qalıb-qalmayacaqları bəlli deyil. Plezy sizə nəyi saxladığını dəqiq bildirəcək.';
+			case 'startup.repairConfirm': return 'Təmir et';
+			case 'startup.repairSucceeded': return 'Yaddaş təmir edildi';
+			case 'startup.repairNeedsRestart': return 'Yaddaş təmir edildi — yenidən başlatma tələb olunur';
+			case 'startup.restartRequiredBody': return 'Məlumatlarınız təmir edildi, lakin Plezy ondan istifadə etmək üçün yenidən başlamalıdır. Plezy-ni bağlayın və yenidən açın.';
+			case 'startup.quitPlezy': return 'Plezy-dən çıx';
+			case 'startup.repairFailed': return 'Təmir uğursuz oldu';
+			case 'startup.repairKeptSignIns': return 'Serverləriniz və profilləriniz hələ də daxil olub.';
+			case 'startup.repairLostSignIns': return 'Saxlanmış daxil olmalarınızı qoruyan açar bərpa edilə bilmədi. Hər serverə və profilə yenidən daxil olmalı olacaqsınız.';
+			case 'startup.repairLostSessions': return 'Ən azı bir izləyici və ya Seerr əlaqəsi itirildi və yenidən qoşulmalıdır.';
+			case 'startup.backupTitle': return 'Zədələnmiş faylın nüsxəsi saxlanıldı';
+			case 'startup.backupWarning': return 'O, daxil olma məlumatlarınızı ehtiva edir. Onu yükləməyin və ya paylaşmayın.';
+			case 'startup.deleteBackup': return 'Nüsxəni sil';
+			case 'startup.backupDeleted': return 'Nüsxə silindi.';
+			case 'startup.previousFailureTitle': return 'Plezy son dəfə başlaya bilmədi';
+			case 'licenses.relatedPackages': return 'Əlaqəli paketlər';
+			case 'licenses.license': return 'Lisenziya';
+			case 'licenses.licenseNumber': return ({required Object number}) => 'Lisenziya ${number}';
+			case 'licenses.licensesCount': return ({required Object count}) => '${count} lisenziya';
+			case 'navigation.libraries': return 'Kitabxanalar';
+			case 'navigation.downloads': return 'Yükləmələr';
+			case 'navigation.liveTv': return 'Canlı TV';
+			case 'navigation.explore': return 'Kəşf et';
+			case 'explore.title': return 'Kəşf et';
+			case 'explore.selectSource': return 'Mənbə seçin';
+			case 'explore.rows.watchlist': return 'İzləmə siyahısı';
+			case 'explore.rows.recommendedMovies': return 'Tövsiyə olunan kinolar';
+			case 'explore.rows.recommendedShows': return 'Tövsiyə olunan seriallar';
+			case 'explore.rows.trendingMovies': return 'Trend kinolar';
+			case 'explore.rows.trendingShows': return 'Trend seriallar';
+			case 'explore.rows.popularMovies': return 'Məşhur kinolar';
+			case 'explore.rows.popularShows': return 'Məşhur seriallar';
+			case 'explore.rows.trendingAnime': return 'Trend animelər';
+			case 'explore.rows.suggestedAnime': return 'Tövsiyə olunan animelər';
+			case 'explore.rows.airingAnime': return 'Ən yaxşı yayımlanan animelər';
+			case 'explore.rows.popularAnime': return 'Ən məşhur animelər';
+			case 'explore.rows.trending': return 'Trendlər';
+			case 'explore.rows.upcomingMovies': return 'Gələcək kinolar';
+			case 'explore.rows.upcomingShows': return 'Gələcək seriallar';
+			case 'explore.status.airing': return 'Yayımlanır';
+			case 'explore.status.ended': return 'Bitdi';
+			case 'explore.status.canceled': return 'Ləğv edildi';
+			case 'explore.status.upcoming': return 'Gələcək';
+			case 'explore.episodeCount': return ({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('az'))(n,
+				one: '${n} seriya',
+				other: '${n} seriya',
+			);
+			case 'explore.cast': return 'Aktyorlar';
+			case 'explore.characters': return 'Personajlar';
+			case 'explore.addToWatchlist': return 'İzləmə siyahısına əlavə et';
+			case 'explore.removeFromWatchlist': return 'İzləmə siyahısından sil';
+			case 'explore.addedToWatchlist': return 'Baxış siyahısına əlavə edildi';
+			case 'explore.removedFromWatchlist': return 'Baxış siyahısından silindi';
+			case 'explore.watchlistUpdateFailed': return 'İzləmə siyahısı yenilənə bilmədi';
+			case 'explore.watchlistNoMatch': return 'Bu elementi heç bir baxış siyahısı ilə uyğunlaşdırmaq olmadı';
+			case 'explore.notInLibrary': return 'Kitabxananızda yoxdur';
+			case 'explore.inTheseLibraries': return 'Bu kitabxanalarda var';
+			case 'explore.checkingLibrary': return 'Kitabxananız yoxlanılır...';
+			case 'explore.libraryCheckFailed': return ({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('az'))(n,
+				one: '${n} serveri yoxlamaq olmadı',
+				other: '${n} serveri yoxlamaq olmadı',
+			);
+			case 'explore.emptyTitle': return 'Hələlik burada heç nə yoxdur';
+			case 'explore.emptyMessage': return ({required Object source}) => '${source} mənbəsindən olan sətirlər burada görünəcək.';
+			case 'explore.searchHint': return ({required Object source}) => '${source} daxilində axtar';
+			case 'explore.searchEmpty': return ({required Object query}) => '"${query}" üçün nəticə tapılmadı';
+			case 'explore.searchPrompt': return ({required Object source}) => '${source} vasitəsilə kino və seriallar axtarın.';
+			case 'explore.searchFailed': return 'Axtarış uğursuz oldu. Bağlantınızı yoxlayın və yenidən cəhd edin.';
+			case 'explore.badge.rankPopular': return ({required Object n}) => '#${n} populyar';
+			case 'explore.badge.rankAiring': return ({required Object n}) => '#${n} yayımlanır';
+			case 'explore.badge.rankRated': return ({required Object n}) => '#${n} qiymətləndirilib';
+			case 'explore.badge.rankTrending': return ({required Object n}) => '#${n} trenddə';
+			case 'explore.badge.rankSeasonal': return ({required Object season, required Object n}) => '${season} üçün #${n}';
+			case 'explore.badge.watchingNow': return ({required Object n}) => '${n} izləyir';
+			case 'explore.badge.available': return 'Əlçatandır';
+			case 'explore.badge.partiallyAvailable': return 'Hissəvi əlçatandır';
+			case 'explore.badge.availableIn4k': return '4K əlçatandır';
+			case 'explore.badge.requested': return 'Sorğu göndərildi';
+			case 'explore.badge.pendingApproval': return 'Təsdiq gözlənilir';
+			case 'explore.badge.processing': return 'Emal edilir';
+			case 'explore.badge.declined': return 'Rədd edildi';
+			case 'explore.badge.requestFailed': return 'Sorğu uğursuz oldu';
+			case 'explore.badge.requested4k': return '4K sorğu göndərildi';
+			case 'explore.badge.seasonsAvailable': return ({required Object available, required Object total}) => '${available}/${total} mövsüm';
+			case 'explore.badge.nextEpisodeIn': return ({required Object episode, required Object duration}) => 'Ep ${episode} ${duration} sonra';
+			case 'explore.badge.nextAiringIn': return ({required Object duration}) => 'Növbəti ${duration} sonra';
+			case 'explore.badge.episodesShort': return ({required Object n}) => '${n} ep';
+			case 'explore.badge.minutesPerEpisode': return ({required Object n}) => '${n} dəq/ep';
+			case 'explore.badge.adult': return '18+';
+			case 'explore.stats.listed': return ({required Object n}) => '${n} siyahıya alınıb';
+			case 'explore.stats.viewersDay': return ({required Object n}) => 'Bu gün ${n} izlədi';
+			case 'explore.stats.viewersWeek': return ({required Object n}) => 'Bu həftə ${n} izlədi';
+			case 'explore.stats.viewersMonth': return ({required Object n}) => 'Bu ay ${n} izlədi';
+			case 'explore.stats.viewersYear': return ({required Object n}) => 'Bu il ${n} izlədi';
+			case 'explore.stats.viewersAllTime': return ({required Object n}) => '${n} izləyici';
+			case 'explore.stats.planning': return ({required Object n}) => '${n} izləməyi planlaşdırır';
+			case 'explore.stats.favorited': return ({required Object n}) => '${n} favorit';
+			case 'explore.stats.dropRate': return ({required Object percent}) => '${percent} izləməyi dayandırdı';
+			case 'explore.stats.comments': return ({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('az'))(n,
+				one: '${n} şərh',
+				other: '${n} şərh',
+			);
+			case 'explore.stats.votes': return ({required Object n}) => '${n} səs';
+			case 'explore.stats.watching': return ({required Object n}) => '${n} izləyir';
+			case 'explore.stats.completed': return ({required Object n}) => '${n} tamamladı';
+			case 'explore.stats.onHold': return ({required Object n}) => '${n} fasilədə';
+			case 'explore.stats.dropped': return ({required Object n}) => '${n} izləməyi dayandırdı';
+			case 'explore.season.winter': return 'Qış';
+			case 'explore.season.spring': return 'Yaz';
+			case 'explore.season.summer': return 'Yay';
+			case 'explore.season.fall': return 'Payız';
+			case 'explore.season.withYear': return ({required Object season, required Object year}) => '${season} ${year}';
+			case 'explore.format.tv': return 'TV';
+			case 'explore.format.tvShort': return 'Qısa TV';
+			case 'explore.format.movie': return 'Kino';
+			case 'explore.format.special': return 'Xüsusi buraxılış';
+			case 'explore.format.ova': return 'OVA';
+			case 'explore.format.ona': return 'ONA';
+			case 'explore.format.music': return 'Musiqi';
+			case 'explore.format.other': return 'Digər';
+			case 'explore.sourceMaterial.original': return 'Orijinal';
+			case 'explore.sourceMaterial.manga': return 'Manga';
+			case 'explore.sourceMaterial.lightNovel': return 'Light novel';
+			case 'explore.sourceMaterial.novel': return 'Roman';
+			case 'explore.sourceMaterial.visualNovel': return 'Vizual roman';
+			case 'explore.sourceMaterial.game': return 'Oyun';
+			case 'explore.sourceMaterial.webComic': return 'Veb komiks';
+			case 'explore.sourceMaterial.musicRelease': return 'Musiqi';
+			case 'explore.sourceMaterial.otherMedia': return 'Digər';
+			case 'explore.creditRole.actor': return 'Aktyor';
+			case 'explore.creditRole.director': return 'Rejissor';
+			case 'explore.creditRole.writer': return 'Ssenarist';
+			case 'explore.creditRole.producer': return 'Prodüser';
+			case 'explore.creditRole.creator': return 'Yaradıcı';
+			case 'explore.creditRole.composer': return 'Bəstəkar';
+			case 'explore.relation.prequel': return 'Prikvel';
+			case 'explore.relation.sequel': return 'Sikvel';
+			case 'explore.relation.sideStory': return 'Yan hekayə';
+			case 'explore.relation.spinOff': return 'Spin-off';
+			case 'explore.relation.alternativeVersion': return 'Alternativ versiya';
+			case 'explore.relation.summary': return 'Xülasə';
+			case 'explore.relation.parentStory': return 'Əsas hekayə';
+			case 'explore.relation.adaptation': return 'Adaptasiya';
+			case 'explore.relation.other': return 'Əlaqəli';
+			case 'explore.broadcast': return ({required Object day, required Object time}) => '${day} saat ${time}-da yayımlanır';
+			case 'explore.broadcastWithZone': return ({required Object day, required Object time, required Object timezone}) => '${day} saat ${time} (${timezone}) yayımlanır';
+			case 'explore.detail.originalTitle': return 'Orijinal başlıq';
+			case 'explore.detail.alsoKnownAs': return 'Digər adları';
+			case 'explore.detail.studios': return 'Studiyalar';
+			case 'explore.detail.country': return 'Ölkə';
+			case 'explore.detail.language': return 'Dil';
+			case 'explore.detail.released': return 'Buraxılıb';
+			case 'explore.detail.physicalRelease': return 'Diskdə';
+			case 'explore.detail.ended': return 'Bitib';
+			case 'explore.detail.addedOn': return ({required Object date}) => '${date} əlavə edildi';
+			case 'explore.detail.yourRating': return 'Sizin qiymətləndirməniz';
+			case 'explore.detail.budget': return 'Büdcə';
+			case 'explore.detail.revenue': return 'Kassa gəliri';
+			case 'explore.detail.contentAdvisory': return 'Yaş tövsiyəsi';
+			case 'explore.detail.tags': return 'Teqlər';
+			case 'explore.detail.revealSpoilerTags': return 'Spoyler teqlərini göstər';
+			case 'explore.detail.links': return 'Keçidlər';
+			case 'explore.detail.watchOn': return 'İzlə';
+			case 'explore.detail.watchTrailer': return 'Treyleri izlə';
+			case 'explore.detail.openOn': return ({required Object site}) => '${site} saytında aç';
+			case 'explore.detail.trailerUnavailable': return 'Bu cihazda treyler açıla bilmədi';
+			case 'explore.detail.linkUnavailable': return 'Bu cihazda bu keçid açıla bilmədi';
+			case 'explore.detail.crew': return 'Heyət';
+			case 'explore.detail.ratings': return 'Reytinq';
+			case 'explore.detail.schedule': return 'Cədvəl';
+			case 'explore.detail.recommendedByUsers': return ({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('az'))(n,
+				one: '${n} istifadəçi tövsiyə edir',
+				other: '${n} istifadəçi tövsiyə edir',
+			);
+			case 'explore.detail.recommendedBy': return ({required Object who}) => '${who} tövsiyə edir';
+			case 'explore.detail.favoritedBy': return ({required Object who}) => '${who} favorit edib';
+			case 'explore.detail.unairedEpisodes': return ({required Object n}) => '${n} hələ yayımlanmayıb';
+			case 'explore.detail.recommendedByPercent': return ({required Object percent}) => 'İzləyicilərin ${percent}-i tövsiyə edir';
+			case 'explore.detail.relatedTitles': return 'Əlaqəli başlıqlar';
+			case 'explore.detail.background': return 'Arxa fon';
+			case 'explore.totalResults': return ({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('az'))(n,
+				one: '${n} nəticə',
+				other: '${n} nəticə',
+			);
+			case 'liveTv.title': return 'Canlı TV';
+			case 'liveTv.guide': return 'Bələdçi';
+			case 'liveTv.noChannels': return 'Əlçatan kanal yoxdur';
+			case 'liveTv.noDvr': return 'Serverdə DVR tənzimlənməyib';
+			case 'liveTv.serverUnavailable': return 'Canlı TV serveri əlçatan deyil.';
+			case 'liveTv.serverNotConnected': return 'Canlı TV serverinə qoşulmayıb.';
+			case 'liveTv.noPrograms': return 'Proqram məlumatı yoxdur';
+			case 'liveTv.liveStreamFailed': return 'Canlı yayım uğursuz oldu';
+			case 'liveTv.unknownProgram': return 'Bilinməyən proqram';
+			case 'liveTv.unknownHub': return 'Məlum deyil';
+			case 'liveTv.unknownError': return 'Bilinməyən xəta';
+			case 'liveTv.channelNumber': return ({required Object number}) => 'Kanal ${number}';
+			case 'liveTv.unknownChannel': return 'Bilinməyən kanal';
+			case 'liveTv.live': return 'CANLI';
+			case 'liveTv.reloadGuide': return 'Bələdçini yenilə';
+			case 'liveTv.searchGuide': return 'Bələdçidə axtar';
+			case 'liveTv.searchHint': return 'Kanal və proqram axtar';
+			case 'liveTv.searchNoResults': return ({required Object query}) => '"${query}" üçün uyğunluq tapılmadı';
+			case 'liveTv.channelsSection': return 'Kanallar';
+			case 'liveTv.programsSection': return 'Proqramlar';
+			case 'liveTv.now': return 'İndi';
+			case 'liveTv.today': return 'Bu gün';
+			case 'liveTv.tomorrow': return 'Sabah';
+			case 'liveTv.midnight': return 'Gecə yarısı';
+			case 'liveTv.overnight': return 'Gecə boyu';
+			case 'liveTv.morning': return 'Səhər';
+			case 'liveTv.daytime': return 'Gündüz';
+			case 'liveTv.evening': return 'Axşam';
+			case 'liveTv.lateNight': return 'Gecə vaxtı';
+			case 'liveTv.whatsOn': return 'İndi nə var?';
+			case 'liveTv.watchChannel': return 'Kanala bax';
+			case 'liveTv.favorites': return 'Sevimlilər';
+			case 'liveTv.reorderFavorites': return 'Sevimliləri yenidən sırala';
+			case 'liveTv.noFavoriteChannels': return 'Sevimli kanal yoxdur';
+			case 'liveTv.noFavoriteChannelsHint': return 'Bütün kanalları göstərin, sonra kanalı sevimlilərə əlavə etmək üçün üzərinə uzun basın.';
+			case 'liveTv.showAllChannels': return 'Bütün kanalları göstər';
+			case 'liveTv.favoritesLoadFailed': return 'Sevimlilər yüklənə bilmədi. Bağlantınızı yoxlayın və yenidən cəhd edin.';
+			case 'liveTv.favoritesUpdateFailed': return 'Sevimlilər yenilənə bilmədi.';
+			case 'liveTv.joinSession': return 'Davam edən seansa qoşul';
+			case 'liveTv.watchFromStart': return ({required Object minutes}) => 'Əvvəldən bax (${minutes} dəq əvvəl)';
+			case 'liveTv.watchLive': return 'Canlı bax';
+			case 'liveTv.goToLive': return 'Canlı yayıma keç';
+			case 'liveTv.record': return 'Yaz';
+			case 'liveTv.recordEpisode': return 'Seriyanı yaz';
+			case 'liveTv.recordSeries': return 'Serialı yaz';
+			case 'liveTv.recordOptions': return 'Yazma seçimləri';
+			case 'liveTv.saveTo': return 'Buraya saxla';
+			case 'liveTv.recordings': return 'Yazılmışlar';
+			case 'liveTv.scheduledRecordings': return 'Planlaşdırılmışlar';
+			case 'liveTv.recordingRules': return 'Yazma qaydaları';
+			case 'liveTv.noScheduledRecordings': return 'Yazılacaq heç nə planlaşdırılmayıb';
+			case 'liveTv.manageRecording': return 'Yazmanı idarə et';
+			case 'liveTv.cancelRecording': return 'Yazmanı ləğv et';
+			case 'liveTv.cancelRecordingTitle': return 'Bu yazma ləğv edilsin?';
+			case 'liveTv.cancelRecordingMessage': return ({required Object title}) => '${title} artıq yazılmayacaq.';
+			case 'liveTv.deleteRule': return 'Qaydanı sil';
+			case 'liveTv.deleteRuleTitle': return 'Yazma qaydası silinsin?';
+			case 'liveTv.deleteRuleMessage': return ({required Object title}) => '${title} serialının gələcək seriyaları yazılmayacaq.';
+			case 'liveTv.recordingScheduled': return 'Yazma planlaşdırıldı';
+			case 'liveTv.alreadyScheduled': return 'Bu proqram artıq planlaşdırılıb';
+			case 'liveTv.dvrAdminRequired': return 'DVR tənzimləmələri inzibatçı hesabı tələb edir';
+			case 'liveTv.recordingFailed': return 'Yazma planlaşdırıla bilmədi';
+			case 'liveTv.recordingTargetMissing': return 'Yazma kitabxanası müəyyən edilə bilmədi';
+			case 'liveTv.recordNotAvailable': return 'Bu proqram üçün yazma əlçatan deyil';
+			case 'liveTv.recordingCancelled': return 'Yazma ləğv edildi';
+			case 'liveTv.recordingRuleDeleted': return 'Yazma qaydası silindi';
+			case 'liveTv.processRecordingRules': return 'Qaydaları yenidən qiymətləndir';
+			case 'liveTv.recordingInProgress': return 'İndi yazılır';
+			case 'liveTv.recordingsCount': return ({required Object count}) => '${count} planlaşdırılıb';
+			case 'liveTv.editRule': return 'Qaydanı dəyişdir';
+			case 'liveTv.editRuleAction': return 'Düzəliş et';
+			case 'liveTv.recordingRuleUpdated': return 'Yazma qaydası yeniləndi';
+			case 'liveTv.guideReloadRequested': return 'Bələdçi yenilənməsi tələb olundu';
+			case 'liveTv.guideReloadFailed': return 'Bələdçi yenilənmədi';
+			case 'liveTv.rulesProcessRequested': return 'Qaydaların yenidən qiymətləndirilməsi tələb olundu';
+			case 'liveTv.rulesProcessFailed': return 'Yazı qaydaları yenidən qiymətləndirilmədi';
+			case 'liveTv.recordShow': return 'Şounu yaz';
+			case 'liveTv.recordSettings.startEarly': return 'Erkən başla (saniyə)';
+			case 'liveTv.recordSettings.endLate': return 'Gec bitir (saniyə)';
+			case 'liveTv.recordSettings.newOnly': return 'Yalnız yeni epizodlar';
+			case 'liveTv.recordSettings.anyChannel': return 'İstənilən kanalda yaz';
+			case 'liveTv.recordSettings.anyTime': return 'İstənilən vaxt yaz';
+			case 'liveTv.recordSettings.skipInLibrary': return 'Kitabxanada artıq olan epizodları ötür';
+			case 'liveTv.recordSettings.keepUpTo': return 'Saxlanılacaq epizodlar';
+			case 'liveTv.recordSettings.keepUpToHint': return '0 bütün epizodları saxlayır';
+			case 'liveTv.startingInMinutes': return ({required Object minutes}) => '${minutes} dəq sonra başlayır';
+			case 'liveTv.dayAtTime': return ({required Object day, required Object time}) => '${day}, saat ${time}';
+			case 'liveTv.invalidPlaybackData': return ({required Object product}) => '${product} etibarsız Canlı TV oynatma məlumatı qaytardı';
+			case 'liveTv.failedToStartChannel': return 'Canlı kanalı başlatmaq olmadı';
+			case 'liveTv.failedToBuildStreamUrl': return 'Yayım URL-i yaratmaq olmadı';
+			case 'liveTv.playbackStartFailed': return ({required Object reason}) => 'Kanal başladıla bilmədi: ${reason}';
+			case 'liveTv.channelSwitchFailed': return ({required Object reason}) => 'Kanal dəyişdirilə bilmədi: ${reason}';
+			case 'collections.title': return 'Kolleksiyalar';
+			case 'collections.collection': return 'Kolleksiya';
+			case 'collections.empty': return 'Kolleksiya boşdur';
+			case 'collections.deleteCollection': return 'Kolleksiyanı sil';
+			case 'collections.deleteConfirm': return ({required Object title}) => '"${title}" silinsin? Bu əməliyyat geri qaytarıla bilməz.';
+			case 'collections.deleted': return 'Kolleksiya silindi';
+			case 'collections.deleteFailed': return 'Kolleksiya silinə bilmədi';
+			case 'collections.deleteFailedWithError': return ({required Object error}) => 'Kolleksiya silinə bilmədi: ${error}';
+			case 'collections.selectCollection': return 'Kolleksiya seç';
+			case 'collections.collectionName': return 'Kolleksiya adı';
+			case 'collections.enterCollectionName': return 'Kolleksiya adını daxil edin';
+			case 'collections.addedToCollection': return 'Kolleksiyaya əlavə edildi';
+			case 'collections.errorAddingToCollection': return 'Kolleksiyaya əlavə edilə bilmədi';
+			case 'collections.created': return 'Kolleksiya yaradıldı';
+			case 'collections.removeFromCollection': return 'Kolleksiyadan sil';
+			case 'collections.removeFromCollectionConfirm': return ({required Object title}) => '"${title}" bu kolleksiyadan silinsin?';
+			case 'collections.removedFromCollection': return 'Kolleksiyadan silindi';
+			case 'collections.removeFromCollectionFailed': return 'Kolleksiyadan silinə bilmədi';
+			case 'collections.removeFromCollectionError': return ({required Object error}) => 'Kolleksiyadan silinərkən xəta: ${error}';
+			case 'collections.searchCollections': return 'Kolleksiyalarda axtar...';
+			case 'playlists.title': return 'Oynatma siyahıları';
+			case 'playlists.playlist': return 'Oynatma siyahısı';
+			case 'playlists.noPlaylists': return 'Oynatma siyahısı tapılmadı';
+			case 'playlists.create': return 'Oynatma siyahısı yarat';
+			case 'playlists.playlistName': return 'Oynatma siyahısı adı';
+			case 'playlists.enterPlaylistName': return 'Oynatma siyahısı adını daxil edin';
+			case 'playlists.delete': return 'Oynatma siyahısını sil';
+			case 'playlists.removeItem': return 'Oynatma siyahısından sil';
+			case 'playlists.smartPlaylist': return 'Ağıllı oynatma siyahısı';
+			case 'playlists.itemCount': return ({required Object count}) => '${count} element';
+			case 'playlists.oneItem': return '1 element';
+			case 'playlists.emptyPlaylist': return 'Bu oynatma siyahısı boşdur';
+			case 'playlists.deleteConfirm': return 'Oynatma siyahısı silinsin?';
+			case 'playlists.deleteMessage': return ({required Object name}) => '"${name}" siyahısını silmək istədiyinizdən əminsiniz?';
+			case 'playlists.created': return 'Oynatma siyahısı yaradıldı';
+			case 'playlists.deleted': return 'Oynatma siyahısı silindi';
+			case 'playlists.itemAdded': return 'Oynatma siyahısına əlavə edildi';
+			case 'playlists.itemRemoved': return 'Oynatma siyahısından silindi';
+			case 'playlists.selectPlaylist': return 'Oynatma siyahısı seç';
+			case 'playlists.searchPlaylists': return 'Oynatma siyahılarında axtar...';
+			case 'playlists.errorCreating': return 'Oynatma siyahısı yaradıla bilmədi';
+			case 'playlists.errorDeleting': return 'Oynatma siyahısı silinə bilmədi';
+			case 'playlists.errorLoading': return 'Oynatma siyahıları yüklənə bilmədi';
+			case 'playlists.errorAdding': return 'Oynatma siyahısına əlavə edilə bilmədi';
+			case 'playlists.errorReordering': return 'Element yenidən sıralana bilmədi';
+			case 'playlists.errorRemoving': return 'Oynatma siyahısından silinə bilmədi';
+			case 'music.goToAlbum': return 'Alboma keç';
+			case 'music.goToArtist': return 'İfaçıya keç';
+			case 'music.instantMix': return 'Anında qarışıq';
+			case 'music.playNext': return 'Növbətini oynat';
+			case 'music.addToQueue': return 'Növbəyə əlavə et';
+			case 'music.discNumber': return ({required Object n}) => 'Disk ${n}';
+			case 'music.trackCount': return ({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('az'))(n,
+				one: '${n} mahnı',
+				other: '${n} mahnı',
+			);
+			case 'music.nowPlaying': return 'İndi oynadılır';
+			case 'music.playingFrom': return ({required Object title}) => '${title} mənbəsindən oynadılır';
+			case 'music.queue': return 'Növbə';
+			case 'music.clearQueue': return 'Növbəni təmizlə';
+			case 'music.lyrics': return 'Mahnı sözləri';
+			case 'music.noLyrics': return 'Mahnı sözləri yoxdur';
+			case 'music.sleepTimer': return 'Yuxu taymeri';
+			case 'music.sleepTimerEndOfTrack': return 'Mahnının sonu';
+			case 'music.sleepTimerMinutes': return ({required Object n}) => '${n} dəqiqə';
+			case 'music.stopPlayback': return 'Oynatmanı saxla';
+			case 'music.previousTrack': return 'Əvvəlki mahnı';
+			case 'music.nextTrack': return 'Növbəti mahnı';
+			case 'music.repeat': return 'Təkrarla';
+			case 'music.repeatAll': return 'Hamısını təkrarla';
+			case 'music.repeatOne': return 'Birini təkrarla';
+			case 'music.instantMixNoServer': return 'Ani miks üçün heç bir server mövcud deyil';
+			case 'music.instantMixFailed': return 'Anında qarışıq yüklənə bilmədi';
+			case 'music.instantMixEmpty': return 'Anında qarışıq heç bir mahnı qaytarmadı';
+			case 'music.noAudioUrl': return ({required Object track}) => '${track} üçün səs URL-i mövcud deyil';
+			case 'music.discography.singlesAndEps': return 'Single-lar və EP-lər';
+			case 'music.discography.live': return 'Canlı';
+			case 'music.discography.compilations': return 'Kompilyasiyalar';
+			case 'watchTogether.title': return 'Birlikdə İzlə';
+			case 'watchTogether.description': return 'Dostlarınız və ailənizlə eyni vaxtda baxın';
+			case 'watchTogether.createRoom': return 'Otaq yarat';
+			case 'watchTogether.creatingRoom': return 'Otaq yaradılır...';
+			case 'watchTogether.joinRoom': return 'Otağa qoşul';
+			case 'watchTogether.joiningRoom': return 'Otağa qoşulunur...';
+			case 'watchTogether.connecting': return 'Qoşulunur...';
+			case 'watchTogether.relayPublic': return 'Otaqlar ictimai Open Watch Party relelərindən istifadə edir.';
+			case 'watchTogether.relayCustom': return ({required Object url}) => 'Otaqlar ${url} ünvanındakı relenizdən istifadə edir.';
+			case 'watchTogether.recentRooms': return 'Son otaqlar';
+			case 'watchTogether.roomActions': return 'Otaq əməliyyatları';
+			case 'watchTogether.renameRoom': return 'Otağın adını dəyişdir';
+			case 'watchTogether.removeRoom': return 'Sil';
+			case 'watchTogether.enterRoomCode': return 'Təşkilatçının verdiyi 6 simvollu kodu daxil edin.';
+			case 'watchTogether.roomCode': return 'Otaq kodu';
+			case 'watchTogether.paste': return 'Yapışdır';
+			case 'watchTogether.noCodeInClipboard': return 'Buferdə otaq kodu yoxdur';
+			case 'watchTogether.copyCode': return 'Kodu kopyala';
+			case 'watchTogether.codeCopied': return 'Otaq kodu kopyalandı';
+			case 'watchTogether.shareInvite': return 'Dəvəti paylaş';
+			case 'watchTogether.inviteCopied': return 'Dəvət kopyalandı. Onu mesaja yapışdırın.';
+			case 'watchTogether.inviteMessage': return ({required Object code}) => 'Plezy-də Birlikdə İzlə otağıma qoşul: Birlikdə İzlə bölməsini aç, "Otağa qoşul" düyməsinə bas və ${code} kodunu daxil et.';
+			case 'watchTogether.openSessionControls': return 'Birlikdə İzlə seans idarəetmələrini aç';
+			case 'watchTogether.reconnecting': return 'Yenidən qoşulunur...';
+			case 'watchTogether.reconnectingDescription': return 'Əlaqə kəsildi. Otağa avtomatik olaraq yenidən qoşulacaqsınız.';
+			case 'watchTogether.connected': return 'Qoşulub';
+			case 'watchTogether.disconnected': return 'Əlaqə kəsilib';
+			case 'watchTogether.youAreHost': return 'Təşkilatçı sizsiniz';
+			case 'watchTogether.hostedBy': return ({required Object name}) => 'Təşkilatçı: ${name}';
+			case 'watchTogether.hostControlsPlayback': return 'Oynatmanı təşkilatçı idarə edir';
+			case 'watchTogether.anyoneCanControl': return 'Oynatmanı hər kəs idarə edə bilər';
+			case 'watchTogether.roomLocked': return 'Otaq kilidlənib';
+			case 'watchTogether.nowPlaying': return 'İndi oynadılır';
+			case 'watchTogether.nothingPlaying': return 'Heç nə oynadılmır';
+			case 'watchTogether.nothingPlayingHost': return 'Otaqla paylaşmaq üçün istənilən kitabxanadan nəsə oynadın.';
+			case 'watchTogether.nothingPlayingGuest': return 'Təşkilatçı nəsə oynatdıqda, burada açılacaq.';
+			case 'watchTogether.notShareable': return 'Bu videonun kataloqda uyğunluğu yoxdur, ona görə də onu yalnız eyni serverə çıxışı olanlar oynada bilər.';
+			case 'watchTogether.searching': return 'Bu video kitabxanalarınızda axtarılır...';
+			case 'watchTogether.yourCopy': return 'Sizin nüsxəniz';
+			case 'watchTogether.sharingYourCopy': return 'Nüsxənizi paylaşırsınız';
+			case 'watchTogether.playingOtherLength': return ({required Object difference}) => 'Nüsxəniz oynadılır (${difference})';
+			case 'watchTogether.mismatchTitle': return 'Nüsxənizin uzunluğu fərqlidir';
+			case 'watchTogether.mismatchDescription': return ({required Object difference}) => 'Ən yaxın nüsxəniz otaqdakı videodan ${difference}. Bu, başqa montaj və ya versiya ola bilər.';
+			case 'watchTogether.playAnyway': return 'Yenə də oynat';
+			case 'watchTogether.chooseAnotherCopy': return 'Başqa nüsxə seç';
+			case 'watchTogether.dontPlay': return 'Oynatma';
+			case 'watchTogether.unavailableTitle': return 'Bu video sizdə yoxdur';
+			case 'watchTogether.unavailableDescription': return 'Plezy onu kitabxanalarınızda tapa bilmədi. Nüsxəni özünüz seçin və ya yenidən axtarın.';
+			case 'watchTogether.chooseCopy': return 'Nüsxə seç';
+			case 'watchTogether.searchAgain': return 'Yenidən axtar';
+			case 'watchTogether.noCandidates': return 'Kitabxanalarınızda nüsxə tapılmadı.';
+			case 'watchTogether.choiceFailed': return 'Bu nüsxəni otaq üçün oynatmaq mümkün olmadı';
+			case 'watchTogether.lengthLonger': return ({required Object duration}) => '${duration} daha uzun';
+			case 'watchTogether.lengthShorter': return ({required Object duration}) => '${duration} daha qısa';
+			case 'watchTogether.lengthSame': return 'Eyni uzunluq';
+			case 'watchTogether.lengthUnknown': return 'Uzunluq məlum deyil';
+			case 'watchTogether.joinCurrentPlayback': return 'Cari oynatmaya qoşul';
+			case 'watchTogether.joinCurrentPlaybackDescription': return 'Təşkilatçının indi baxdığı hissəyə keçin';
+			case 'watchTogether.stopMedia': return 'Videonu hamı üçün dayandır';
+			case 'watchTogether.syncOffset': return 'Sinxronizasiya ofseti';
+			case 'watchTogether.syncOffsetDescription': return 'Videonuz otaqdan qabaqda və ya geridə qalırsa, onu sürüşdürün.';
+			case 'watchTogether.offsetHint': return ({required Object difference}) => 'Nüsxəniz otaqdakı videodan ${difference}.';
+			case 'watchTogether.applyDifference': return ({required Object offset}) => '${offset} tətbiq et';
+			case 'watchTogether.offsetMinusSecond': return '-1 san';
+			case 'watchTogether.offsetMinusTenth': return '-100 ms';
+			case 'watchTogether.offsetPlusTenth': return '+100 ms';
+			case 'watchTogether.offsetPlusSecond': return '+1 san';
+			case 'watchTogether.participants': return 'İştirakçılar';
+			case 'watchTogether.participantCount': return ({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('az'))(n,
+				one: '${n} iştirakçı',
+				other: '${n} iştirakçı',
+			);
+			case 'watchTogether.hostBadge': return 'TƏŞKİLATÇI';
+			case 'watchTogether.nameYou': return ({required Object name}) => '${name} (Siz)';
+			case 'watchTogether.playerIdle': return 'Gözləmədə';
+			case 'watchTogether.playerLoading': return 'Yüklənir';
+			case 'watchTogether.playerReady': return 'Hazırdır';
+			case 'watchTogether.playerBuffering': return 'Buferlənir';
+			case 'watchTogether.matchSearching': return 'Axtarır';
+			case 'watchTogether.matchMatched': return 'Video var';
+			case 'watchTogether.matchMismatched': return 'Fərqli uzunluq';
+			case 'watchTogether.matchUnavailable': return 'Video yoxdur';
+			case 'watchTogether.participantOffset': return ({required Object offset}) => 'Ofset ${offset}';
+			case 'watchTogether.makeHost': return 'Təşkilatçı təyin et';
+			case 'watchTogether.makeHostQuestion': return 'Təşkilatçı köçürülsün?';
+			case 'watchTogether.makeHostConfirm': return ({required Object name}) => '${name} oynatmanı idarə edəcək və seansı hər kəs üçün aparacaq.';
+			case 'watchTogether.transfer': return 'Köçür';
+			case 'watchTogether.removeParticipant': return 'Otaqdan çıxar';
+			case 'watchTogether.removeParticipantQuestion': return ({required Object name}) => '${name} çıxarılsın?';
+			case 'watchTogether.removeParticipantConfirm': return ({required Object name}) => '${name} otağı tərk edəcək. Otağı kilidləməsəniz, kodla yenidən qoşula bilər.';
+			case 'watchTogether.remove': return 'Çıxar';
+			case 'watchTogether.roomSettings': return 'Otaq tənzimləmələri';
+			case 'watchTogether.letEveryoneControl': return 'Hamıya oynatmanı idarə etməyə icazə ver';
+			case 'watchTogether.lockRoom': return 'Otağı kilidlə';
+			case 'watchTogether.lockRoomDescription': return 'Heç kim yeni qoşula bilməz';
+			case 'watchTogether.leaveRoom': return 'Otağı tərk et';
+			case 'watchTogether.leaveRoomQuestion': return 'Otaq tərk edilsin?';
+			case 'watchTogether.leaveRoomConfirm': return 'Otaq kodu ilə yenidən qoşula bilərsiniz.';
+			case 'watchTogether.leave': return 'Çıx';
+			case 'watchTogether.endRoom': return 'Otağı bağla';
+			case 'watchTogether.endRoomQuestion': return 'Otaq bağlansın?';
+			case 'watchTogether.endRoomConfirm': return 'Bu, otağı hamı üçün bağlayır.';
+			case 'watchTogether.end': return 'Bitir';
+			case 'watchTogether.playBlockedTitle': return 'Oynatma başlamadı';
+			case 'watchTogether.playBlockedDescription': return 'Otaqla birlikdə baxmağa başlamaq üçün oynat düyməsinə basın.';
+			case 'watchTogether.notices.pressedPlay': return ({required Object name}) => '${name} oynat düyməsinə basdı';
+			case 'watchTogether.notices.playbackStarted': return 'Oynatma başladı';
+			case 'watchTogether.notices.paused': return ({required Object name}) => '${name} fasilə etdi';
+			case 'watchTogether.notices.playbackPaused': return 'Oynatma fasilə edildi';
+			case 'watchTogether.notices.jumpedTo': return ({required Object name, required Object position}) => '${name} ${position} anına keçdi';
+			case 'watchTogether.notices.roomJumpedTo': return ({required Object position}) => '${position} anına keçildi';
+			case 'watchTogether.notices.changedSpeed': return ({required Object name, required Object speed}) => '${name} sürəti ${speed} olaraq təyin etdi';
+			case 'watchTogether.notices.speedChanged': return ({required Object speed}) => 'Sürət ${speed} olaraq təyin edildi';
+			case 'watchTogether.notices.startedMedia': return ({required Object name, required Object title}) => '${name} oynatmağa başladı: ${title}';
+			case 'watchTogether.notices.mediaStarted': return ({required Object title}) => 'İndi oynadılır: ${title}';
+			case 'watchTogether.notices.stoppedMedia': return ({required Object name}) => '${name} videonu dayandırdı';
+			case 'watchTogether.notices.mediaStopped': return 'Video dayandı';
+			case 'watchTogether.notices.waitingFor': return ({required Object name}) => '${name} gözlənilir...';
+			case 'watchTogether.notices.waitingForSomeone': return 'Kiminsə yetişməsi gözlənilir...';
+			case 'watchTogether.notices.finished': return 'Bitdi';
+			case 'watchTogether.notices.hostChangedTo': return ({required Object name}) => '${name} indi təşkilatçıdır';
+			case 'watchTogether.notices.youAreNowHost': return 'İndi təşkilatçı sizsiniz';
+			case 'watchTogether.notices.joined': return ({required Object name}) => '${name} qoşuldu';
+			case 'watchTogether.notices.left': return ({required Object name}) => '${name} ayrıldı';
+			case 'watchTogether.notices.controlRefused': return 'Oynatmanı yalnız təşkilatçı idarə edə bilər';
+			case 'watchTogether.notices.searchFailed': return 'Bəzi serverlərdə otağın videosunu axtarmaq mümkün olmadı';
+			case 'watchTogether.notices.playBlocked': return 'Başlamaq üçün oynat düyməsinə basın';
+			case 'watchTogether.notices.shareFailed': return 'Bu videonu otaqla paylaşmaq mümkün olmadı';
+			case 'watchTogether.notices.downloadNotShared': return 'Serverləri oflayn olduğu müddətdə yükləmələr otaqla paylaşılmır';
+			case 'watchTogether.notices.openFailed': return 'Otağın videosunu açmaq mümkün olmadı';
+			case 'watchTogether.ended.ended': return 'Təşkilatçı otağı bağladı';
+			case 'watchTogether.ended.kicked': return 'Siz otaqdan çıxarıldınız';
+			case 'watchTogether.ended.expired': return 'Otağın vaxtı bitdi';
+			case 'watchTogether.ended.replaced': return 'Bu otağa başqa cihazda qoşuldunuz';
+			case 'watchTogether.ended.lost': return 'Otaqla əlaqə kəsildi';
+			case 'watchTogether.errors.invalidCode': return 'Bu, otaq kodu deyil. Kodlar 0, 1, I, L və ya O olmadan 6 hərf və rəqəmdən ibarətdir.';
+			case 'watchTogether.errors.roomNotFound': return 'Bu kodla otaq yoxdur. O, bağlanmış ola bilər.';
+			case 'watchTogether.errors.roomFull': return 'Bu otaq doludur.';
+			case 'watchTogether.errors.roomLocked': return 'Təşkilatçı bu otağı kilidləyib.';
+			case 'watchTogether.errors.relayFull': return 'Birlikdə İzlə hazırda məşğuldur. Sonra yenidən cəhd edin.';
+			case 'watchTogether.errors.unreachable': return 'Birlikdə İzlə relesinə qoşulmaq mümkün olmadı. Bağlantınızı yoxlayın.';
+			case 'watchTogether.errors.rateLimited': return 'Həddindən çox cəhd. Bir az gözləyib yenidən cəhd edin.';
+			case 'watchTogether.errors.clientBlocked': return 'Plezy-nin bu versiyası releni istifadə edə bilmir. Tətbiqi yeniləyin.';
+			case 'watchTogether.errors.forbidden': return 'Bunu yalnız təşkilatçı edə bilər.';
+			case 'watchTogether.errors.notInRoom': return 'Siz otaqda deyilsiniz.';
+			case 'watchTogether.errors.alreadyInRoom': return 'Siz artıq otaqdasınız.';
+			case 'watchTogether.errors.resumeFailed': return 'Otağa yenidən qoşulmaq mümkün olmadı.';
+			case 'watchTogether.errors.unsupported': return 'Rele bunu dəstəkləmir.';
+			case 'watchTogether.errors.generic': return 'Nəsə səhv getdi. Yenidən cəhd edin.';
+			case 'watchTogether.untitledEpisode': return ({required Object number}) => 'Seriya ${number}';
+			case 'downloads.title': return 'Yükləmələr';
+			case 'downloads.manage': return 'İdarə et';
+			case 'downloads.tvShows': return 'TV Şoular';
+			case 'downloads.movies': return 'Kinolar';
+			case 'downloads.music': return 'Musiqi';
+			case 'downloads.tracksQueued': return ({required Object count}) => 'Yükləmə üçün ${count} mahnı növbəyə alındı';
+			case 'downloads.noDownloads': return 'Hələlik yükləmə yoxdur';
+			case 'downloads.noDownloadsDescription': return 'Yüklənmiş məzmun oflayn baxış üçün burada görünəcək';
+			case 'downloads.downloadNow': return 'Yüklə';
+			case 'downloads.deleteDownload': return 'Yükləməni sil';
+			case 'downloads.retryDownload': return 'Yükləməni təzədən cəhd et';
+			case 'downloads.downloadQueued': return 'Yükləmə növbəyə alındı';
+			case 'downloads.downloadResumed': return 'Yükləmə davam etdirildi';
+			case 'downloads.serverErrorBitrate': return 'Server xətası: fayl sürət limitini aşa bilər';
+			case 'downloads.storageFull': return 'Boş yaddaşı qorumaq üçün yükləmələr dayandırıldı. Yer boşaldın və ya başqa yükləmə yeri seçin, sonra yenidən cəhd edin.';
+			case 'downloads.storageUnavailable': return 'Boş yaddaşı yoxlamaq mümkün olmadığı üçün yükləmələr dayandırıldı. Yükləmə yerini yoxlayın, sonra təzədən cəhd edin.';
+			case 'downloads.episodesQueued': return ({required Object count}) => 'Yükləmə üçün ${count} seriya növbəyə alındı';
+			case 'downloads.downloadDeleted': return 'Yükləmə silindi';
+			case 'downloads.deleteConfirm': return ({required Object title}) => '"${title}" bu cihazdan silinsin?';
+			case 'downloads.deleteCollectionDownloads': return 'Yükləmələri sil';
+			case 'downloads.deleteCollectionDownloadsConfirm': return ({required Object title}) => '"${title}" daxilindəki bütün yükləmələr bu cihazdan silinsin?';
+			case 'downloads.collectionDownloadsDeleted': return 'Yükləmələr silindi';
+			case 'downloads.cancelledDownloadTitle': return 'Ləğv edilmiş yükləmə';
+			case 'downloads.cancelledDownloadMessage': return 'Bu yükləmə ləğv edildi. Nə etmək istərdiniz?';
+			case 'downloads.allEpisodesAlreadyDownloaded': return 'Bütün seriyalar artıq yüklənib';
+			case 'downloads.resumeDownload': return 'Yükləməni davam etdir';
+			case 'downloads.cancelledDownload': return 'Ləğv edilmiş yükləmə';
+			case 'downloads.syncingFile': return ({required Object file, required Object status}) => '${file} (${status} eyniləşdirilir)';
+			case 'downloads.downloadedFileClickToComplete': return ({required Object file}) => 'Yükləndi ${file} - Tamamlamaq üçün toxunun';
+			case 'downloads.partialDownloadClickToComplete': return 'Hissəvi yükləndi - Tamamlamaq üçün toxunun';
+			case 'downloads.deleting': return 'Silinir...';
+			case 'downloads.deletingWithProgress': return ({required Object title, required Object current, required Object total}) => '${title} silinir... (${current} / ${total})';
+			case 'downloads.queuedTooltip': return 'Növbədədir';
+			case 'downloads.queuedFilesTooltip': return ({required Object files}) => 'Növbəyə alınan fayllar: ${files}';
+			case 'downloads.downloadingTooltip': return 'Yüklənir...';
+			case 'downloads.downloadingFilesTooltip': return ({required Object files}) => 'Yüklənən fayllar: ${files}';
+			case 'downloads.noDownloadsTree': return 'Yükləmə yoxdur';
+			case 'downloads.pauseAll': return 'Hamısını fasilə et';
+			case 'downloads.resumeAll': return 'Hamısını davam etdir';
+			case 'downloads.retryAll': return 'Hamısını təzədən cəhd et';
+			case 'downloads.retryFailed': return 'Uğursuz yükləmələri təzədən cəhd et';
+			case 'downloads.deleteAll': return 'Hamısını sil';
+			case 'downloads.selectVersion': return 'Versiya seç';
+			case 'downloads.allEpisodes': return 'Bütün seriyalar';
+			case 'downloads.unwatchedOnly': return 'Yalnız baxılmayanlar';
+			case 'downloads.nextNUnwatched': return ({required Object count}) => 'Növbəti ${count} baxılmayan';
+			case 'downloads.customAmount': return 'Xüsusi miqdar...';
+			case 'downloads.includeSpecials': return 'Xüsusi seriyaları daxil et';
+			case 'downloads.howManyEpisodes': return 'Neçə seriya?';
+			case 'downloads.invalidEpisodeCount': return 'Düzgün seriya sayı daxil edin.';
+			case 'downloads.keepSynced': return 'Eyniləşdirilmiş saxla';
+			case 'downloads.downloadOnce': return 'Bir dəfə yüklə';
+			case 'downloads.keepNUnwatched': return ({required Object count}) => '${count} baxılmayan seriyanı saxla';
+			case 'downloads.editSyncRule': return 'Eyniləşdirmə qaydasını dəyişdir';
+			case 'downloads.removeSyncRule': return 'Eyniləşdirmə qaydasını sil';
+			case 'downloads.removeSyncRuleConfirm': return ({required Object title}) => '"${title}" eyniləşdirməsi dayandırılsın? Yüklənmiş seriyalar saxlanılacaq.';
+			case 'downloads.removeListSyncRuleConfirm': return ({required Object title}) => '"${title}" eyniləşdirməsi dayandırılsın?';
+			case 'downloads.deleteSyncRuleDownloads': return 'Əlaqəli yükləmələri də sil';
+			case 'downloads.deleteSyncRuleDownloadsDescription': return 'Başqa eyniləşdirmə qaydası və ya profil tərəfindən istifadə olunan yükləmələr saxlanılacaq.';
+			case 'downloads.syncRuleCreated': return ({required Object count}) => 'Eyniləşdirmə qaydası yaradıldı — ${count} baxılmayan seriya saxlanılır';
+			case 'downloads.syncRuleUpdated': return 'Eyniləşdirmə qaydası yeniləndi';
+			case 'downloads.syncRuleRemoved': return 'Eyniləşdirmə qaydası silindi';
+			case 'downloads.syncRuleAndDownloadsRemoved': return 'Eyniləşdirmə qaydası və əlaqəli yükləmələr silindi';
+			case 'downloads.syncRuleCleanupBusy': return 'Eyniləşdirmə qaydaları hazırda yenilənir. Bir azdan təzədən cəhd edin.';
+			case 'downloads.syncRuleCleanupUnavailable': return 'Əlaqəli yükləmələr təhlükəsiz şəkildə müəyyən edilə bilmədi. Serverə yenidən qoşulub cəhd edin və ya qaydanı yükləmələri silmədən silin.';
+			case 'downloads.syncedNewEpisodes': return ({required Object title, required Object count}) => '${title} üçün ${count} yeni seriya eyniləşdirildi';
+			case 'downloads.activeSyncRules': return 'Eyniləşdirmə qaydaları';
+			case 'downloads.noSyncRules': return 'Eyniləşdirmə qaydası yoxdur';
+			case 'downloads.manageSyncRule': return 'Eyniləşdirməni idarə et';
+			case 'downloads.editEpisodeCount': return 'Seriya sayı';
+			case 'downloads.editSyncFilter': return 'Eyniləşdirmə filtri';
+			case 'downloads.syncAllItems': return 'Bütün elementlər eyniləşdirilir';
+			case 'downloads.syncUnwatchedItems': return 'Baxılmayan elementlər eyniləşdirilir';
+			case 'downloads.syncRuleServerContext': return ({required Object server, required Object status}) => 'Server: ${server} • ${status}';
+			case 'downloads.syncRuleAvailable': return 'Əlçatandır';
+			case 'downloads.syncRuleOffline': return 'Oflayn';
+			case 'downloads.syncRuleSignInRequired': return 'Daxil olmaq tələb olunur';
+			case 'downloads.syncRuleAccessDenied': return 'Giriş rədd edildi';
+			case 'downloads.syncRuleNotAvailableForProfile': return 'Cari profil üçün əlçatan deyil';
+			case 'downloads.syncRuleUnknownServer': return 'Bilinməyən server';
+			case 'downloads.syncRuleListCreated': return 'Eyniləşdirmə qaydası yaradıldı';
+			case 'downloads.backgroundWarning.bannerBlocked': return 'Tətbiqdən çıxdıqda yükləmələr dayanacaq';
+			case 'downloads.backgroundWarning.bannerDegraded': return 'Arxa fonda yükləmələr məhdudlaşdırıla bilər';
+			case 'downloads.backgroundWarning.bannerAction': return 'Ətraflı';
+			case 'downloads.backgroundWarning.sheetTitle': return 'Arxa fonda yükləmələr bloklanıb';
+			case 'downloads.backgroundWarning.sheetTitleDegraded': return 'Arxa fonda yükləmələr məhdudlaşdırıla bilər';
+			case 'downloads.backgroundWarning.sheetIntro': return 'Android Plezy-nin arxa fonda etibarlı şəkildə yükləməsinə mane olur.';
+			case 'downloads.backgroundWarning.sheetIntroDegraded': return 'Cihazınız Plezy-nin arxa fonda nə vaxt yükləyə biləcəyini məhdudlaşdırır.';
+			case 'downloads.backgroundWarning.reasonBackgroundRestricted': return 'Plezy-nin arxa fon istifadəsi məhdudlaşdırılıb. Batareya və ya arxa fon istifadəsini "Məhdudiyyətsiz" edin.';
+			case 'downloads.backgroundWarning.reasonStandbyRestricted': return 'Android Plezy-ni məhdud gözləmə rejiminə salıb. Batareya istifadəsini "Məhdudiyyətsiz" edin.';
+			case 'downloads.backgroundWarning.reasonDownloadChannelBlocked': return 'Yükləmə bildirişləri söndürülüb, ona görə gedişat və idarəetmələr əlçatan olmaya bilər.';
+			case 'downloads.backgroundWarning.reasonNotificationsDisabled': return 'Bildirişlər söndürülüb. Android 13 və daha yeni versiyalarda uzun arxa fon yükləmələri üçün onlar tələb olunur.';
+			case 'downloads.backgroundWarning.reasonDataSaver': return 'Data Saver aktivdir və bu, mobil internetdə arxa fon yükləmələrini bloklayır. Wi-Fi ilə yükləmələr işləməlidir.';
+			case 'downloads.backgroundWarning.reasonOemUnknown': return 'Plezy arxa fonda olarkən yükləmələr dəfələrlə dayandı. Plezy-nin batareya və ya arxa fon istifadəsi tənzimləmələrini yoxlayın.';
+			case 'downloads.backgroundWarning.openSettings': return 'Tənzimləmələri aç';
+			case 'downloads.backgroundWarning.stillNotWorking': return 'Cihaza özəl kömək';
+			case 'downloads.backgroundWarning.stillNotWorkingDescription': return 'Cihazınız üçün addımlara baxın və ya problem davam edərsə Tənzimləmələr › Jurnallara bax bölməsindən jurnal göndərin.';
+			case 'downloads.backgroundWarning.dialogTitle': return 'Yükləmələr tamamlanmaya bilər';
+			case 'downloads.backgroundWarning.dialogDownloadAnyway': return 'Yenə də yüklə';
+			case 'downloads.backgroundWarning.dialogFixFirst': return 'Əvvəlcə bunu düzəlt';
+			case 'downloads.backgroundWarning.statusTile': return 'Arxa fonda yükləmələr';
+			case 'downloads.backgroundWarning.statusOk': return 'Arxa fonda işləməyə icazə verilir';
+			case 'downloads.backgroundWarning.statusBlocked': return 'Sistem tənzimləmələri ilə bloklanıb';
+			case 'downloads.backgroundWarning.statusDegraded': return 'Sistem tənzimləmələri ilə məhdudlaşdırılıb';
+			case 'downloads.backgroundWarning.statusUnknown': return 'Hələ yoxlanılmayıb';
+			case 'downloads.backgroundWarning.settingsUnavailable': return 'Bu cihazda sistem tənzimləmələri açıla bilmədi';
+			case 'downloads.backgroundWarning.linkUnavailable': return 'Bu cihazda dontkillmyapp.com açıla bilmədi';
+			case 'downloads.options': return 'Yükləmə seçimləri';
+			case 'downloads.groupings.library': return 'Kitabxana';
+			case 'downloads.groupings.collections': return 'Kolleksiyalar';
+			case 'downloads.unknownLibrary': return 'Məlum olmayan kitabxana';
+			case 'downloads.unknownShow': return 'Məlum olmayan serial';
+			case 'downloads.unknownSeason': return 'Məlum olmayan mövsüm';
+			case 'downloads.unknownAlbum': return 'Məlum olmayan albom';
+			case 'downloads.completedOfTotal': return ({required Object completed, required Object total}) => '${completed}/${total} tamamlandı';
+			case 'downloads.errorFileNotFound': return 'Fayl tapılmadı (404)';
+			case 'downloads.errorDownloadNotAllowed': return 'Server yükləməyə icazə vermir (403)';
+			case 'downloads.errorDownloadFailed': return 'Yükləmə uğursuz oldu';
+			case 'downloads.errorDownloadFailedWithReason': return ({required Object reason}) => 'Yükləmə uğursuz oldu: ${reason}';
+			case 'downloads.errorHttpStatus': return ({required Object status}) => 'Yükləmə uğursuz oldu (HTTP ${status})';
+			case 'downloads.errorPostProcessing': return ({required Object reason}) => 'Sonrakı emal uğursuz oldu: ${reason}';
+			case 'downloads.reasonFileNotSaved': return 'fayl bu cihazda saxlanıla bilmədi';
+			case 'downloads.reasonCannotResume': return 'yarımçıq yükləməni davam etdirmək mümkün olmadı';
+			case 'downloads.reasonDeviceStorageFull': return 'bu cihazda yer qalmayıb';
+			case 'downloads.notificationDownloading': return 'Yüklənir...';
+			case 'downloads.notificationComplete': return 'Yükləmə tamamlandı';
+			case 'downloads.notificationPaused': return 'Yükləmə dayandırıldı';
+			case 'shaders.title': return 'Şeyderlər';
+			case 'shaders.noShaderDescription': return 'Video təkmilləşdirməsi yoxdur';
+			case 'shaders.nvscalerDescription': return 'Daha kəskin video üçün NVIDIA miqyaslaması';
+			case 'shaders.artcnnVariantNeutral': return 'Neytral';
+			case 'shaders.artcnnVariantDenoise': return 'Küyün aradan qaldırılması';
+			case 'shaders.artcnnVariantDenoiseSharpen': return 'Küyün aradan qaldırılması + Kəskinləşdirmə';
+			case 'shaders.qualityFast': return 'Sürətli';
+			case 'shaders.qualityHQ': return 'Yüksək keyfiyyət';
+			case 'shaders.mode': return 'Rejim';
+			case 'shaders.importShader': return 'Şeyder idxal et';
+			case 'shaders.customShaderDescription': return 'Xüsusi GLSL şeyderi';
+			case 'shaders.shaderImported': return 'Şeyder idxal edildi';
+			case 'shaders.shaderImportFailed': return 'Şeyder idxal edilə bilmədi';
+			case 'shaders.deleteShader': return 'Şeyderi sil';
+			case 'shaders.deleteShaderConfirm': return ({required Object name}) => '"${name}" silinsin?';
+			case 'companionRemote.title': return 'Köməkçi pult';
+			case 'companionRemote.connectedTo': return ({required Object name}) => '${name} cihazına qoşuldu';
+			case 'companionRemote.unknownDevice': return 'Bilinməyən cihaz';
+			case 'companionRemote.session.startingServer': return 'Pult serveri başladılır...';
+			case 'companionRemote.session.hostAddress': return 'Əsas cihaz ünvanı';
+			case 'companionRemote.session.connected': return 'Qoşuldu';
+			case 'companionRemote.session.serverRunning': return 'Pult serveri aktivdir';
+			case 'companionRemote.session.serverStopped': return 'Pult serveri dayandırıldı';
+			case 'companionRemote.session.serverRunningDescription': return 'Şəbəkənizdəki mobil cihazlar qoşula bilər';
+			case 'companionRemote.session.serverStoppedDescription': return 'Mobil cihazların qoşulmasına icazə vermək üçün serveri başladın';
+			case 'companionRemote.session.usePhoneToControl': return 'Bu tətbiqi idarə etmək üçün mobil cihazınızı istifadə edin';
+			case 'companionRemote.session.startServer': return 'Serveri başlat';
+			case 'companionRemote.session.stopServer': return 'Serveri dayandır';
+			case 'companionRemote.session.minimize': return 'Yığ';
+			case 'companionRemote.session.manualAddressHint': return 'Əl ilə bağlantı ünvanı:';
+			case 'companionRemote.pairing.discoveryDescription': return 'Eyni Plex hesabına sahib Plezy cihazları burada görünür';
+			case 'companionRemote.pairing.hostAddressHint': return '192.168.1.100:48632';
+			case 'companionRemote.pairing.connecting': return 'Qoşulunur...';
+			case 'companionRemote.pairing.searchingForDevices': return 'Cihazlar axtarılır...';
+			case 'companionRemote.pairing.noDevicesFound': return 'Şəbəkənizdə cihaz tapılmadı';
+			case 'companionRemote.pairing.noDevicesHint': return 'Masaüstündə Plezy-ni açın və eyni Wi-Fi-dan istifadə edin';
+			case 'companionRemote.pairing.availableDevices': return 'Əlçatan cihazlar';
+			case 'companionRemote.pairing.manualConnection': return 'Əl ilə qoşulma';
+			case 'companionRemote.pairing.cryptoInitFailed': return 'Təhlükəsiz qoşulma başladılarkən xəta. Əvvəlcə Plex-ə daxil olun.';
+			case 'companionRemote.pairing.validationHostRequired': return 'Lütfən əsas cihaz ünvanını daxil edin';
+			case 'companionRemote.pairing.validationHostFormat': return 'Format IP:port şəklində olmalıdır';
+			case 'companionRemote.pairing.connectionTimedOut': return 'Qoşulma vaxtı bitdi. Hər iki cihazda eyni şəbəkədən istifadə edin.';
+			case 'companionRemote.pairing.sessionNotFound': return 'Cihaz tapılmadı.';
+			case 'companionRemote.pairing.authFailed': return 'Kimlik doğrulanması uğursuz oldu.';
+			case 'companionRemote.pairing.failedToConnect': return ({required Object error}) => 'Qoşulma uğursuz oldu: ${error}';
+			case 'companionRemote.remote.disconnectConfirm': return 'Pult seansından ayrılmaq istəyirsiniz?';
+			case 'companionRemote.remote.reconnecting': return 'Yenidən qoşulunur...';
+			case 'companionRemote.remote.attemptOf': return ({required Object current}) => 'Cəhd ${current} / 5';
+			case 'companionRemote.remote.retryNow': return 'İndi təzədən cəhd et';
+			case 'companionRemote.remote.tabRemote': return 'Pult';
+			case 'companionRemote.remote.tabPlay': return 'Oynat';
+			case 'companionRemote.remote.tabMore': return 'Daha çox';
+			case 'companionRemote.remote.menu': return 'Menyu';
+			case 'companionRemote.remote.tabNavigation': return 'Naviqasiya';
+			case 'companionRemote.remote.tabDiscover': return 'Kəşf et';
+			case 'companionRemote.remote.tabLibraries': return 'Kitabxanalar';
+			case 'companionRemote.remote.tabSearch': return 'Axtar';
+			case 'companionRemote.remote.tabDownloads': return 'Yükləmələr';
+			case 'companionRemote.remote.tabSettings': return 'Tənzimləmələr';
+			case 'companionRemote.remote.previous': return 'Əvvəlki';
+			case 'companionRemote.remote.playPause': return 'Oynat/Fasilə';
+			case 'companionRemote.remote.next': return 'Növbəti';
+			case 'companionRemote.remote.seekBack': return 'Geri sar';
+			case 'companionRemote.remote.stop': return 'Saxla';
+			case 'companionRemote.remote.seekForward': return 'İrəli sar';
+			case 'companionRemote.remote.volume': return 'Səs';
+			case 'companionRemote.remote.volumeDown': return 'Azalt';
+			case 'companionRemote.remote.volumeUp': return 'Artır';
+			case 'companionRemote.remote.fullscreen': return 'Tam ekran';
+			case 'companionRemote.remote.subtitles': return 'Altyazılar';
+			case 'companionRemote.remote.audio': return 'Səs';
+			case 'companionRemote.remote.searchHint': return 'Masaüstündə axtar...';
+			case 'companionRemote.errors.noNetworkInterface': return 'Şəbəkə interfeysi tapılmadı';
+			case 'companionRemote.errors.authenticationFailed': return 'Kimlik doğrulanması uğursuz oldu';
+			case 'companionRemote.errors.serverStartFailed': return ({required Object error}) => 'Pult serveri başladıla bilmədi: ${error}';
+			case 'companionRemote.errors.commandFailed': return ({required Object error}) => 'Pult əmri göndərilə bilmədi: ${error}';
+			case 'companionRemote.errors.joinTimedOut': return 'Seansa qoşulma vaxtı bitdi';
+			case 'companionRemote.errors.failedToConnectAnyAddress': return 'Heç bir ünvana qoşuluna bilmədi';
+			case 'companionRemote.errors.connectionLostAfterAttempts': return ({required Object attempts}) => '${attempts} cəhddən sonra əlaqə kəsildi';
+			case 'companionRemote.errors.connectionLost': return 'Əlaqə kəsildi';
+			case 'companionRemote.closedBeforeAuth': return 'Bağlantı autentifikasiyadan əvvəl bağlandı';
+			case 'videoSettings.playbackSpeed': return 'Oynatma sürəti';
+			case 'videoSettings.normalSpeed': return 'Normal';
+			case 'videoSettings.sleepTimerActive': return ({required Object duration}) => 'Aktivdir (${duration})';
+			case 'videoSettings.zoom': return 'Miqyas';
+			case 'videoSettings.sleepTimer': return 'Yuxu taymeri';
+			case 'videoSettings.audioSync': return 'Səs sinxronizasiyası';
+			case 'videoSettings.subtitleSync': return 'Altyazı sinxronizasiyası';
+			case 'videoSettings.hdr': return 'HDR';
+			case 'videoSettings.hdrUnsupported': return 'HDR burada əlçatan deyil — bu masaüstü kompozitoru və ya video çıxışı onu ötürə bilmir.';
+			case 'videoSettings.hdrToneMapping': return 'HDR ton uyğunlaşdırması';
+			case 'videoSettings.hdrToneMappingCompositor': return 'Kompozitor';
+			case 'videoSettings.hdrToneMappingCompositorDescription': return 'Mənbənin HDR metaməlumatlarını dəyişmədən ötür və ton uyğunlaşdırmasını masaüstü kompozitoruna həvalə et.';
+			case 'videoSettings.hdrToneMappingPlayer': return 'Oynadıcı';
+			case 'videoSettings.hdrToneMappingPlayerDescription': return 'Oynadıcıda tonları ekranın pik parlaqlığına uyğunlaşdır, sonra nəticəni kompozitora bildir.';
+			case 'videoSettings.hdrToneMappingFailed': return 'HDR ton uyğunlaşdırmasını dəyişmək olmadı — əvvəlki rejim hələ də aktivdir.';
+			case 'videoSettings.audioOutput': return 'Səs çıxışı';
+			case 'videoSettings.performanceOverlay': return 'Məhsuldarlıq paneli';
+			case 'videoSettings.audioOutputDolbyAtmos': return 'Dolby Atmos';
+			case 'videoSettings.audioOutputDolbyAudio': return 'Dolby Audio';
+			case 'videoSettings.audioOutputSurround': return 'Əhatəli səs';
+			case 'videoSettings.audioOutputSpatial': return 'Məkan səsi';
+			case 'videoSettings.audioOutputStereo': return 'Stereo';
+			case 'videoSettings.audioNormalization': return 'Səsin gurluğunu normallaşdır';
+			case 'videoSettings.audioNormalizationDisablesPassthrough': return 'Səsi PCM-ə dekodlayır; bu aktivkən birbaşa ötürmə söndürülür';
+			case 'performanceOverlay.color': return 'Rəng';
+			case 'performanceOverlay.performance': return 'Məhsuldarlıq';
+			case 'performanceOverlay.buffer': return 'Bufer';
+			case 'performanceOverlay.app': return 'Tətbiq';
+			case 'performanceOverlay.decoder': return 'Çözücü';
+			case 'performanceOverlay.rawDecoder': return 'Xam çözücü';
+			case 'performanceOverlay.tunneling': return 'Tünelləmə';
+			case 'performanceOverlay.passthrough': return 'Birbaşa ötürmə';
+			case 'performanceOverlay.aspect': return 'Nisbət';
+			case 'performanceOverlay.rotation': return 'Dönmə';
+			case 'performanceOverlay.dvSource': return 'DV mənbəyi';
+			case 'performanceOverlay.dvPath': return 'DV yolu';
+			case 'performanceOverlay.dvRouteDecoder': return 'Dolby Vision çözücüsü';
+			case 'performanceOverlay.dvRouteDecoderP81': return 'Dolby Vision çözücüsü (P7→8.1)';
+			case 'performanceOverlay.dvRouteBaseLayer': return 'Baza təbəqə';
+			case 'performanceOverlay.dvRouteBaseLayerHdr10': return 'HDR10 baza təbəqə';
+			case 'performanceOverlay.dvRouteBaseLayerHlg': return 'HLG baza təbəqə';
+			case 'performanceOverlay.dvRouteBaseLayerSdr': return 'SDR baza təbəqə';
+			case 'performanceOverlay.dvRouteReshaped': return 'RPU ilə yenidən formalaşdırılıb (gpu-next)';
+			case 'performanceOverlay.p7Conversion': return 'P7 çevrilməsi';
+			case 'performanceOverlay.sampleRate': return 'Diskretləşdirmə tezliyi';
+			case 'performanceOverlay.pixelFormat': return 'Piksel formatı';
+			case 'performanceOverlay.hwFormat': return 'HW formatı';
+			case 'performanceOverlay.matrix': return 'Matrisa';
+			case 'performanceOverlay.primaries': return 'Əsas rənglər';
+			case 'performanceOverlay.transfer': return 'Ötürmə';
+			case 'performanceOverlay.renderFps': return 'Emal FPS-i';
+			case 'performanceOverlay.displayFps': return 'Ekran FPS-i';
+			case 'performanceOverlay.avSync': return 'A/V Eyniləşdirilməsi';
+			case 'performanceOverlay.dropped': return 'İtirilmiş kadrlar';
+			case 'performanceOverlay.dvRpus': return 'DV RPU-ları';
+			case 'performanceOverlay.dvRpuAverage': return 'DV RPU Ort.';
+			case 'performanceOverlay.dvSampleAverage': return 'DV Nümunə Ort.';
+			case 'performanceOverlay.maxLuma': return 'Maks Luma';
+			case 'performanceOverlay.minLuma': return 'Min Luma';
+			case 'performanceOverlay.maxCll': return 'MaxCLL';
+			case 'performanceOverlay.maxFall': return 'MaxFALL';
+			case 'performanceOverlay.cacheUsed': return 'İstifadə olunan keş';
+			case 'performanceOverlay.cacheLimit': return 'Keş limiti';
+			case 'performanceOverlay.speed': return 'Sürət';
+			case 'performanceOverlay.player': return 'Oynadıcı';
+			case 'performanceOverlay.memory': return 'Yaddaş';
+			case 'performanceOverlay.uiFps': return 'Arayüz (UI) FPS-i';
+			case 'performanceOverlay.fps': return 'FPS';
+			case 'performanceOverlay.decoderAndroidHw': return 'Android HW';
+			case 'performanceOverlay.decoderNvidiaHw': return 'NVIDIA HW';
+			case 'performanceOverlay.decoderQualcommHw': return 'Qualcomm HW';
+			case 'performanceOverlay.decoderMediatekHw': return 'MediaTek HW';
+			case 'performanceOverlay.decoderExynosHw': return 'Exynos HW';
+			case 'performanceOverlay.decoderSoftware': return 'Proqram təminatı';
+			case 'performanceOverlay.decoderHardware': return 'Aparat təminatı';
+			case 'performanceOverlay.tunnelingActive': return 'Aktiv';
+			case 'performanceOverlay.dvRpuFailed': return ({required Object converted, required Object failures}) => '${converted} (${failures} uğursuz)';
+			case 'externalPlayer.title': return 'Xarici oynadıcı';
+			case 'externalPlayer.useExternalPlayer': return 'Xarici oynadıcı istifadə et';
+			case 'externalPlayer.useExternalPlayerDescription': return 'Videoları başqa tətbiqdə açın';
+			case 'externalPlayer.selectPlayer': return 'Oynadıcı seç';
+			case 'externalPlayer.customPlayers': return 'Xüsusi oynadıcılar';
+			case 'externalPlayer.systemDefault': return 'Sistem defoltu';
+			case 'externalPlayer.addCustomPlayer': return 'Xüsusi oynadıcı əlavə et';
+			case 'externalPlayer.playerName': return 'Oynadıcı adı';
+			case 'externalPlayer.playerNameHint': return 'Mənim oynadıcım';
+			case 'externalPlayer.playerCommand': return 'Əmr';
+			case 'externalPlayer.playerPackage': return 'Paket adı';
+			case 'externalPlayer.playerUrlScheme': return 'URL sxemi';
+			case 'externalPlayer.off': return 'Söndürülüb';
+			case 'externalPlayer.launchFailed': return 'Xarici oynadıcı açıla bilmədi';
+			case 'externalPlayer.appNotInstalled': return ({required Object name}) => '${name} quraşdırılmayıb';
+			case 'externalPlayer.playInExternalPlayer': return 'Xarici oynadıcıda oynat';
+			case 'metadataEdit.editMetadata': return 'Düzəliş et...';
+			case 'metadataEdit.screenTitle': return 'Meta-məlumatlara düzəliş et';
+			case 'metadataEdit.basicInfo': return 'Əsas məlumatlar';
+			case 'metadataEdit.artwork': return 'Şəkillər/Posterlər';
+			case 'metadataEdit.advancedSettings': return 'Təkmilləşdirilmiş tənzimləmələr';
+			case 'metadataEdit.title': return 'Başlıq';
+			case 'metadataEdit.sortTitle': return 'Sıralama başlığı';
+			case 'metadataEdit.originalTitle': return 'Orijinal başlıq';
+			case 'metadataEdit.releaseDate': return 'Buraxılış tarixi';
+			case 'metadataEdit.contentRating': return 'Məzmun reytinqi';
+			case 'metadataEdit.studio': return 'Studiya';
+			case 'metadataEdit.tagline': return 'Deviz/Slogan';
+			case 'metadataEdit.summary': return 'Məzmun/Xülasə';
+			case 'metadataEdit.poster': return 'Poster';
+			case 'metadataEdit.background': return 'Arxa fon';
+			case 'metadataEdit.logo': return 'Loqo';
+			case 'metadataEdit.squareArt': return 'Kvadrat şəkil';
+			case 'metadataEdit.selectPoster': return 'Poster seç';
+			case 'metadataEdit.selectBackground': return 'Arxa fon seç';
+			case 'metadataEdit.selectLogo': return 'Loqo seç';
+			case 'metadataEdit.selectSquareArt': return 'Kvadrat şəkil seç';
+			case 'metadataEdit.fromUrl': return 'URL-dən';
+			case 'metadataEdit.uploadFile': return 'Fayl yüklə';
+			case 'metadataEdit.enterImageUrl': return 'Şəkil URL-i daxil edin';
+			case 'metadataEdit.imageUrl': return 'Şəkil URL-i';
+			case 'metadataEdit.metadataUpdated': return 'Meta-məlumatlar yeniləndi';
+			case 'metadataEdit.metadataUpdateFailed': return 'Meta-məlumatlar yenilənə bilmədi';
+			case 'metadataEdit.artworkUpdated': return 'Şəkillər yeniləndi';
+			case 'metadataEdit.artworkUpdateFailed': return 'Şəkillər yenilənə bilmədi';
+			case 'metadataEdit.noArtworkAvailable': return 'Şəkil əlçatan deyil';
+			case 'metadataEdit.artworkOption': return ({required Object index}) => 'Şəkil seçimi ${index}';
+			case 'metadataEdit.selectedArtworkOption': return ({required Object index}) => 'Şəkil seçimi ${index}, seçildi';
+			case 'metadataEdit.notSet': return 'Təyin edilməyib';
+			case 'metadataEdit.libraryDefault': return 'Kitabxana defoltu';
+			case 'metadataEdit.accountDefault': return 'Hesab defoltu';
+			case 'metadataEdit.seriesDefault': return 'Serial defoltu';
+			case 'metadataEdit.episodeSorting': return 'Seriya sıralaması';
+			case 'metadataEdit.oldestFirst': return 'Əvvəlcə ən köhnə';
+			case 'metadataEdit.newestFirst': return 'Əvvəlcə ən yeni';
+			case 'metadataEdit.keep': return 'Saxla';
+			case 'metadataEdit.allEpisodes': return 'Bütün seriyalar';
+			case 'metadataEdit.latestEpisodes': return ({required Object count}) => 'Ən son ${count} seriya';
+			case 'metadataEdit.latestEpisode': return 'Ən son seriya';
+			case 'metadataEdit.episodesAddedPastDays': return ({required Object count}) => 'Son ${count} gündə əlavə olunan seriyalar';
+			case 'metadataEdit.deleteAfterPlaying': return 'Oynatdıqdan sonra seriyaları sil';
+			case 'metadataEdit.never': return 'Heç vaxt';
+			case 'metadataEdit.afterADay': return 'Bir gün sonra';
+			case 'metadataEdit.afterAWeek': return 'Bir həftə sonra';
+			case 'metadataEdit.afterAMonth': return 'Bir ay sonra';
+			case 'metadataEdit.onNextRefresh': return 'Növbəti yenilənmədə';
+			case 'metadataEdit.seasons': return 'Mövsümlər';
+			case 'metadataEdit.show': return 'Göstər';
+			case 'metadataEdit.hide': return 'Gizlət';
+			case 'metadataEdit.episodeOrdering': return 'Seriya ardıcıllığı';
+			case 'metadataEdit.tmdbAiring': return 'The Movie Database (Yayımlanma)';
+			case 'metadataEdit.tvdbAiring': return 'TheTVDB (Yayımlanma)';
+			case 'metadataEdit.tvdbAbsolute': return 'TheTVDB (Mütləq)';
+			case 'metadataEdit.metadataLanguage': return 'Meta-məlumat dili';
+			case 'metadataEdit.useOriginalTitle': return 'Orijinal başlığı istifadə et';
+			case 'metadataEdit.preferredAudioLanguage': return 'Üstünlük verilən səs dili';
+			case 'metadataEdit.preferredSubtitleLanguage': return 'Üstünlük verilən altyazı dili';
+			case 'metadataEdit.subtitleMode': return 'Avtomatik altyazı seçim rejimi';
+			case 'metadataEdit.manuallySelected': return 'Əl ilə seçilmiş';
+			case 'metadataEdit.shownWithForeignAudio': return 'Xarici səs olduqda göstərilən';
+			case 'metadataEdit.alwaysEnabled': return 'Həmişə aktivdir';
+			case 'metadataEdit.tags': return 'Teqlər';
+			case 'metadataEdit.addTag': return 'Teq əlavə et';
+			case 'metadataEdit.genre': return 'Janr';
+			case 'metadataEdit.director': return 'Rejissor';
+			case 'metadataEdit.writer': return 'Ssenarist';
+			case 'metadataEdit.producer': return 'Prodüser';
+			case 'metadataEdit.country': return 'Ölkə';
+			case 'metadataEdit.collection': return 'Kolleksiya';
+			case 'metadataEdit.label': return 'Etiket';
+			case 'metadataEdit.quickTag': return 'Sürətli etiket...';
+			case 'matchScreen.match': return 'Uyğunlaşdır...';
+			case 'matchScreen.fixMatch': return 'Uyğunluğu düzəlt...';
+			case 'matchScreen.unmatch': return 'Uyğunluğu ləğv et';
+			case 'matchScreen.unmatchConfirm': return 'Bu uyğunluq təmizlənsin? Yenidən uyğunlaşdırılana qədər Plex onu uyğunlaşdırılmamış sayacaq.';
+			case 'matchScreen.unmatchSuccess': return 'Element uyğunluğu ləğv edildi';
+			case 'matchScreen.unmatchFailed': return 'Uyğunluq ləğv edilə bilmədi';
+			case 'matchScreen.matchApplied': return 'Uyğunluq tətbiq edildi';
+			case 'matchScreen.matchFailed': return 'Uyğunluq tətbiq edilə bilmədi';
+			case 'matchScreen.titleHint': return 'Ad';
+			case 'matchScreen.yearHint': return 'İl';
+			case 'matchScreen.search': return 'Axtar';
+			case 'matchScreen.noMatchesFound': return 'Uyğunluq tapılmadı';
+			case 'serverTasks.title': return 'Server tapşırıqları';
+			case 'serverTasks.failedToLoad': return 'Tapşırıqlar yüklənə bilmədi';
+			case 'serverTasks.noTasks': return 'İcra olunan tapşırıq yoxdur';
+			case 'trakt.title': return 'Trakt';
+			case 'trakt.connected': return 'Qoşuldu';
+			case 'trakt.connectedAs': return ({required Object username}) => '@${username} olaraq qoşuldu';
+			case 'trakt.disconnectConfirm': return 'Trakt hesabı ayırılsın?';
+			case 'trakt.disconnectConfirmBody': return 'Plezy Trakt-a məlumat göndərməyi dayandıracaq.';
+			case 'trakt.scrobble': return 'Real vaxt rejimində izləmə';
+			case 'trakt.scrobbleDescription': return 'Oynatma zamanı Trakt-a məlumat göndər.';
+			case 'trakt.watchedSync': return 'Baxış statusunu eyniləşdir';
+			case 'trakt.watchedSyncDescription': return 'Plezy-də baxıldı işarələdikdə Trakt-da da işarələnsin.';
+			case 'seerr.title': return 'Seerr';
+			case 'seerr.connectTitle': return 'Seerr qoş';
+			case 'seerr.serverUrl': return 'Server URL-i';
+			case 'seerr.serverUrlHelper': return 'Seerr ünvanınız';
+			case 'seerr.checkServer': return 'Davam et';
+			case 'seerr.signInWithJellyfin': return 'Jellyfin ilə daxil ol';
+			case 'seerr.signInWithEmby': return 'Emby ilə daxil ol';
+			case 'seerr.signInWithLocal': return 'Yerli hesab istifadə et';
+			case 'seerr.email': return 'E-poçt';
+			case 'seerr.noSignInMethods': return 'Bu Seerr dəstəklənən daxil olma üsulu təklif etmir.';
+			case 'seerr.instance': return 'Nüsxə';
+			case 'seerr.disconnectConfirm': return 'Seerr ayırılsın?';
+			case 'seerr.disconnectConfirmBody': return 'Plezy bu Seerr serverini unudacaq. İstənilən vaxt yenidən qoşula bilərsiniz.';
+			case 'seerr.request': return 'Sorğu göndər';
+			case 'seerr.request4k': return '4K sorğu göndər';
+			case 'seerr.seasons': return 'Mövsümlər';
+			case 'seerr.allSeasons': return 'Bütün mövsümlər';
+			case 'seerr.advancedOptions': return 'Təkmilləşdirilmiş';
+			case 'seerr.destinationServer': return 'Hədəf server';
+			case 'seerr.qualityProfile': return 'Keyfiyyət profili';
+			case 'seerr.rootFolder': return 'Kök qovluq';
+			case 'seerr.languageProfile': return 'Dil profili';
+			case 'seerr.tags': return 'Teqlər';
+			case 'seerr.noTags': return 'Teq yoxdur';
+			case 'seerr.defaultOption': return ({required Object name}) => '${name} (Defolt)';
+			case 'seerr.animeNote': return 'Bu serial animedir.';
+			case 'seerr.requestSubmitted': return 'Sorğu göndərildi';
+			case 'seerr.requestFailed': return ({required Object error}) => 'Sorğu uğursuz oldu: ${error}';
+			case 'seerr.requestsLoadFailed': return 'Seçimlər yüklənə bilmədi';
+			case 'seerr.nothingToRequest': return 'Hər şey artıq var və ya sorğu göndərilib.';
+			case 'seerr.statusAvailable': return 'Əlçatandır';
+			case 'seerr.statusPartiallyAvailable': return 'Hissəvi əlçatandır';
+			case 'seerr.statusRequested': return 'Sorğu göndərildi';
+			case 'seerr.statusProcessing': return 'Emal edilir';
+			case 'seerr.statusBlocklisted': return 'Bloklanmış';
+			case 'seerr.couldNotReach': return ({required Object url, required Object error}) => '${url} ünvanına çatmaq olmadı: ${error}';
+			case 'seerr.noInstanceAtUrl': return ({required Object url, required Object status}) => '${url} ünvanında Seerr instansiyası yoxdur (HTTP ${status})';
+			case 'seerr.behindAuthProxy': return 'Seerr əvəzinə autentifikasiya edən tərs proksi (SSO və ya HTTP auth) cavab verdi. Plezy onun vasitəsilə daxil ola bilmir: bu tətbiq üçün Seerr-in /api/v1 yolunun proksini yan keçməsinə icazə verin və ya Seerr-ə birbaşa çatan ünvan istifadə edin.';
+			case 'seerr.invalidUrl': return 'https://seerr.example.com kimi server ünvanı daxil edin';
+			case 'seerr.quickConnectUnsupported': return 'Bu Seerr nüsxəsi Sürətli Qoşulmanı dəstəkləmir. Seerr 3.4 və ya daha yeni versiya tələb olunur.';
+			case 'seerr.notInitialized': return 'Bu Seerr instansiyasının ilkin quraşdırılması tamamlanmayıb';
+			case 'seerr.noPlexTokenForReauth': return 'Yenidən daxil olmaq üçün Plex tokeni mövcud deyil';
+			case 'seerr.noStoredCredentials': return 'Yenidən daxil olmaq üçün yadda saxlanmış giriş məlumatları mövcud deyil';
+			case 'seerr.signInRejected': return 'Daxil olma rədd edildi';
+			case 'seerr.noSessionCookie': return 'Seerr sessiya kukisi yaratmadı';
+			case 'seerr.freshCookieRejected': return 'Seerr yeni sessiya kukisini rədd etdi';
+			case 'seerr.noUserInformation': return 'Seerr istifadəçi məlumatlarını qaytarmadı';
+			case 'seerr.sessionRejectedAfterReauth': return 'Yenidən daxil olduqdan sonra sessiya rədd edildi';
+			case 'seerr.permissionDenied': return 'Seerr bu əməliyyatı rədd etdi: hesabınızda artıq tələb olunan icazə yoxdur';
+			case 'seerr.permissionRevoked': return 'Bunu sorğulamaq üçün artıq icazəniz yoxdur';
+			case 'services.title': return 'Xidmətlər';
+			case 'services.hubSubtitle': return 'İzləmə tərəqqisini eyniləşdirin və yeni başlıqlar sorğulayın.';
+			case 'services.integrations': return 'İnteqrasiyalar';
+			case 'services.notConnected': return 'Qoşulmayıb';
+			case 'services.connectedAs': return ({required Object username}) => '@${username} olaraq qoşuldu';
+			case 'services.scrobble': return 'Tərəqqini avtomatik izlə';
+			case 'services.scrobbleDescription': return 'Bir epizodu və ya filmi bitirdikdə siyahınızı yeniləyin.';
+			case 'services.disconnectConfirm': return ({required Object service}) => '${service} ayırılsın?';
+			case 'services.disconnectConfirmBody': return ({required Object service}) => 'Plezy ${service} yeniləməyi dayandıracaq. İstənilən vaxt yenidən qoşula bilərsiniz.';
+			case 'services.connectFailed': return ({required Object service}) => '${service} qoşula bilmədi. Təzədən cəhd edin.';
+			case 'services.names.mal': return 'MyAnimeList';
+			case 'services.names.anilist': return 'AniList';
+			case 'services.names.simkl': return 'Simkl';
+			case 'services.names.seerr': return 'Seerr';
+			case 'services.names.mdblist': return 'MDBList';
+			case 'services.simklReconnect.title': return 'Simkl-ə yenidən qoşul';
+			case 'services.simklReconnect.subtitle': return 'Simkl bu bağlantının istifadə etdiyi daxil olma üsulunu ləğv edir. Yenidən qoşulduqda Plezy-ni təsdiqləmək üçün simkl.com açılır — Plezy parolunuzu heç vaxt görmür. Baxış tarixçəniz Simkl-də qalır.';
+			case 'services.deviceCode.title': return ({required Object service}) => 'Plezy-ni ${service} üzərində aktivləşdirin';
+			case 'services.deviceCode.instructions': return 'QR kodunu skan edin və ya aşağıdakı ünvana keçib bu kodu daxil edin:';
+			case 'services.deviceCode.openToActivate': return ({required Object service}) => 'Aktivləşdirmək üçün ${service} açın';
+			case 'services.deviceCode.copyCode': return 'Aktivləşdirmə kodunu kopyala';
+			case 'services.deviceCode.waitingForAuthorization': return 'Səlahiyyət gözlənilir…';
+			case 'services.deviceCode.codeCopied': return 'Kod kopyalandı';
+			case 'services.oauthProxy.title': return ({required Object service}) => '${service} xidmətinə daxil olun';
+			case 'services.oauthProxy.body': return 'Bu QR kodu skan edin və ya URL-i açın.';
+			case 'services.oauthProxy.openToSignIn': return ({required Object service}) => 'Daxil olmaq üçün ${service} açın';
+			case 'services.pendingAuth.copyUrl': return 'Daxil olma URL-ini kopyala';
+			case 'services.pendingAuth.urlCopied': return 'URL kopyalandı';
+			case 'services.libraryFilter.title': return 'Kitabxana filtri';
+			case 'services.libraryFilter.subtitleAllSyncing': return 'Bütün kitabxanalar eyniləşdirilir';
+			case 'services.libraryFilter.subtitleNoneSyncing': return 'Heç nə eyniləşdirilmir';
+			case 'services.libraryFilter.subtitleBlocked': return ({required Object count}) => '${count} bloklandı';
+			case 'services.libraryFilter.subtitleAllowed': return ({required Object count}) => '${count} icazə verildi';
+			case 'services.libraryFilter.mode': return 'Filtr rejimi';
+			case 'services.libraryFilter.modeBlacklist': return 'Qara siyahı';
+			case 'services.libraryFilter.modeWhitelist': return 'Ağ siyahı';
+			case 'services.libraryFilter.modeHintBlacklist': return 'Aşağıda seçilənlərdən başqa bütün kitabxanaları eyniləşdir.';
+			case 'services.libraryFilter.modeHintWhitelist': return 'Yalnız aşağıda seçilən kitabxanaları eyniləşdir.';
+			case 'services.libraryFilter.libraries': return 'Kitabxanalar';
+			case 'services.libraryFilter.noLibraries': return 'Kitabxana yoxdur';
+			case 'addServer.addMediaBrowserTitle': return ({required Object product}) => '${product} serveri əlavə et';
+			case 'addServer.serverUrls': return 'Server URL-ləri';
+			case 'addServer.serverUrlsHelper': return 'Vergüllə ayrılmış bir neçə URL-ə icazə verilir.';
+			case 'addServer.findServer': return 'Server tap';
+			case 'addServer.searchingLocalMediaBrowserServers': return ({required Object product}) => 'Yerli ${product} serverləri axtarılır...';
+			case 'addServer.localMediaBrowserServers': return ({required Object product}) => 'Yerli ${product} serverləri';
+			case 'addServer.username': return 'İstifadəçi adı';
+			case 'addServer.password': return 'Şifrə';
+			case 'addServer.signIn': return 'Daxil ol';
+			case 'addServer.change': return 'Dəyişdir';
+			case 'addServer.required': return 'Tələb olunur';
+			case 'addServer.couldNotReachServer': return ({required Object error}) => 'Serverə çatmaq olmadı: ${error}';
+			case 'addServer.signInFailed': return ({required Object error}) => 'Daxil olma uğursuz oldu: ${error}';
+			case 'addServer.quickConnectFailed': return ({required Object error}) => 'Sürətli Qoşulma uğursuz oldu: ${error}';
+			case 'addServer.addPlexTitle': return 'Plex ilə daxil ol';
+			case 'addServer.pinExpired': return 'PIN-in vaxtı bitdi. Lütfən təzədən cəhd edin.';
+			case 'addServer.failedToRegisterAccount': return ({required Object error}) => 'Hesab qeydiyyatı uğursuz oldu: ${error}';
+			case 'addServer.enterMediaBrowserUrlError': return ({required Object product}) => '${product} server URL-inizi daxil edin';
+			case 'addServer.addConnectionTitle': return 'Qoşulma əlavə et';
+			case 'addServer.addConnectionTitleScoped': return ({required Object name}) => '${name} profilinə əlavə et';
+			case 'addServer.signInWithPlexCard': return 'Plex ilə daxil ol';
+			case 'addServer.signInWithPlexCardSubtitle': return 'Bu cihazı səlahiyyətləndirin. Paylaşılan serverlər əlavə olunur.';
+			case 'addServer.signInWithPlexCardSubtitleScoped': return 'Plex hesabını səlahiyyətləndirin. Home istifadəçiləri profillərə çevrilir.';
+			case 'addServer.connectToMediaBrowserCard': return ({required Object product}) => '${product}-a qoşul';
+			case 'addServer.connectToMediaBrowserCardSubtitle': return 'Server URL-inizi, istifadəçi adınızı və şifrənizi daxil edin.';
+			case 'addServer.connectToMediaBrowserCardSubtitleScoped': return ({required Object product, required Object name}) => '${product} serverinizə daxil olun. ${name} ilə əlaqələndirilir.';
+			case 'addServer.borrowFromAnotherProfile': return 'Başqa profildən götür';
+			case 'addServer.borrowFromAnotherProfileSubtitle': return 'Başqa profilin qoşulmasını yenidən istifadə edin. PIN ilə qorunan profillər PIN tələb edir.';
+			case 'addServer.invalidCredentials': return 'İstifadəçi adı və ya şifrə yanlışdır';
+			case 'addServer.authResponseNotJson': return 'Autentifikasiya cavabı etibarlı JSON deyildi';
+			case 'addServer.authResponseIncomplete': return 'Serverin giriş cavabı natamam idi';
+			case 'addServer.quickConnectRejected': return 'Quick Connect server tərəfindən rədd edildi';
+			case 'addServer.quickConnectNotJson': return 'Quick Connect cavabı etibarlı JSON deyildi';
+			case 'addServer.quickConnectMissingFields': return 'Quick Connect cavabında kod və ya məxfi açar yoxdur';
+			case 'addServer.quickConnectPollRejected': return 'Quick Connect sorğulaması server tərəfindən rədd edildi';
+			case 'addServer.serverTimedOut': return 'Server vaxtında cavab vermədi';
+			case 'addServer.responseNotJson': return 'Server cavabı etibarlı JSON deyildi';
+			case 'addServer.responseMissingIdentity': return ({required Object product}) => 'Cavabda ID və ya server adı yoxdur — bu, ${product} serveridir?';
+			case 'addServer.probeFailed': return ({required Object error}) => 'Serverə çatmaq olmadı: ${error}';
+			case 'addServer.enterAtLeastOneUrl': return ({required Object product}) => 'Ən azı bir ${product} server URL-i daxil edin';
+			case 'addServer.noReachableServer': return ({required Object product}) => 'Əlçatan ${product} serveri tapılmadı';
+			case 'addServer.urlsPointToDifferentServers': return ({required Object product}) => 'Bu URL-lər fərqli ${product} serverlərinə aiddir';
+			case 'addServer.urlDoesNotMatchServer': return ({required Object product}) => 'Bu URL ${product} serverinə uyğun gəlmir';
+			case 'addServer.redirectUnsupported': return 'Server dəstəklənməyən URL-ə yönləndirdi';
+			case 'addServer.redirectDifferentHost': return ({required Object product}) => 'Server başqa hosta yönləndirdi. Son ${product} URL-ni birbaşa daxil edin.';
+			case 'addServer.redirectInsecure': return 'Server HTTPS-dən təhlükəsiz olmayan URL-ə yönləndirdi';
+			case 'addServer.redirectUnsupportedEnterFinal': return ({required Object product}) => 'Server dəstəklənməyən URL-ə yönləndirdi. Son ${product} URL-ni birbaşa daxil edin.';
+			default: return null;
+		}
 	}
 }
+
