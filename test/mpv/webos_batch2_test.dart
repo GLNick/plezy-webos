@@ -115,7 +115,7 @@ void main() {
       expect(pickedEp3?.id, 'ger_full');
     });
 
-    test('WebosDirectStreamFallbackRegistry persists unseekable keys in writable override dir', () async {
+    test('WebosDirectStreamFallbackRegistry resets legacy unversioned/v1 cache on load and persists v2 entries', () async {
       final tempDir = await Directory.systemTemp.createTemp('webos_mkv_cache_test_');
       final registry = WebosDirectStreamFallbackRegistry.instance;
       addTearDown(() async {
@@ -127,8 +127,23 @@ void main() {
       });
 
       WebosDirectStreamFallbackRegistry.debugStorageDirOverride = tempDir.path;
-      registry.debugReset();
+      final persistedFile = File('${tempDir.path}/webos_unseekable_mkvs.json');
 
+      // 1. Legacy unversioned JSON array (`[...]`) from pre-v2 builds is discarded once on load.
+      persistedFile.writeAsStringSync(jsonEncode(['poisoned_s1e7', 'poisoned_s1e8']));
+      registry.debugReset(reloadFromDisk: true);
+      expect(registry.isKnownUnseekable('poisoned_s1e7'), isFalse);
+      expect(registry.isKnownUnseekable('poisoned_s1e8'), isFalse);
+      final upgradedAfterList = jsonDecode(persistedFile.readAsStringSync()) as Map<String, dynamic>;
+      expect(upgradedAfterList['version'], WebosDirectStreamFallbackRegistry.kUnseekableCacheSchemaVersion);
+      expect(upgradedAfterList['keys'], isEmpty);
+
+      // 2. Legacy schema v1 map (`{"version": 1, "keys": [...]}`) is also discarded on load.
+      persistedFile.writeAsStringSync(jsonEncode({'version': 1, 'keys': ['poisoned_v1']}));
+      registry.debugReset(reloadFromDisk: true);
+      expect(registry.isKnownUnseekable('poisoned_v1'), isFalse);
+
+      // 3. New v2 unseekable entries persist and reload across restarts.
       registry.registerActiveSession(
         ratingKey: '998877',
         rawMkvUrl: 'http://example.local/video.mkv',
@@ -137,8 +152,10 @@ void main() {
       );
       registry.markActiveSessionUnseekable();
 
-      final persistedFile = File('${tempDir.path}/webos_unseekable_mkvs.json');
       expect(persistedFile.existsSync(), isTrue);
+      final savedV2 = jsonDecode(persistedFile.readAsStringSync()) as Map<String, dynamic>;
+      expect(savedV2['version'], 2);
+      expect(savedV2['keys'], ['998877']);
 
       registry.debugReset(reloadFromDisk: true);
       expect(registry.isKnownUnseekable('998877'), isTrue);

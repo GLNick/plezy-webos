@@ -361,10 +361,14 @@ void main() {
       WebosSubtitlePreferenceStore.instance.debugReset();
 
       final fakePlatform = _FakeVideoPlayerPlatform();
-      final webosPlayer = PlayerWebos(platformOverride: fakePlatform);
+      final webosPlayer = PlayerWebos(
+        platformOverride: fakePlatform,
+        seekVerifyPollIntervalOverride: const Duration(milliseconds: 15),
+      );
       addTearDown(() async {
         await webosPlayer.dispose();
         await fakePlatform.disposeAll();
+        PlayerWebos.debugSeekVerifyPollIntervalOverride = null;
         WebosDirectStreamFallbackRegistry.debugStorageDirOverride = null;
         WebosDirectStreamFallbackRegistry.instance.debugReset();
         WebosSubtitlePreferenceStore.debugStorageDirOverride = null;
@@ -401,7 +405,8 @@ void main() {
       expect(fakePlatform.createdDataSources, hasLength(1));
       expect(webosPlayer.textureId, 1);
 
-      // Case C: Genuine unseekable MKV where 10s -> 90s ignores seek and stays stuck at 10.4s -> hot-swaps!
+      // Case C: Genuine Cue-less unseekable MKV where 10s -> 90s ignores seek and stays stuck at 10.4s
+      // across the full verification window -> hot-swaps AND marks unseekable!
       webosPlayer.handlePropertyChange('time-pos', 10.0);
       fakePlatform.currentPosition = const Duration(seconds: 10);
       fakePlatform.onSeekTo = (texId, pos) async {
@@ -412,7 +417,162 @@ void main() {
       expect(fakePlatform.createdDataSources.last.formatHint, VideoFormat.hls);
       expect(fakePlatform.createdDataSources.last.uri, 'http://example.local/start.m3u8');
       expect(webosPlayer.textureId, 2);
+      expect(WebosDirectStreamFallbackRegistry.instance.isKnownUnseekable('rk_gop_snap'), isTrue);
     });
+
+    test(
+      'Remote MKV seek advancing after ~800ms (>440ms) or during NDL buffering stays in Direct Play, '
+      'and timeout on verified-Cues MKV does not blacklist _unseekableKeys while 702 still does',
+      () async {
+        final tempDir = await Directory.systemTemp.createTemp('webos_remote_seek_window_');
+        WebosDirectStreamFallbackRegistry.debugStorageDirOverride = tempDir.path;
+        WebosDirectStreamFallbackRegistry.instance.debugReset();
+        WebosSubtitlePreferenceStore.debugStorageDirOverride = tempDir.path;
+        WebosSubtitlePreferenceStore.instance.debugReset();
+
+        final fakePlatform = _FakeVideoPlayerPlatform();
+        addTearDown(() async {
+          await fakePlatform.disposeAll();
+          PlayerWebos.debugSeekVerifyPollIntervalOverride = null;
+          WebosDirectStreamFallbackRegistry.debugStorageDirOverride = null;
+          WebosDirectStreamFallbackRegistry.instance.debugReset();
+          WebosSubtitlePreferenceStore.debugStorageDirOverride = null;
+          WebosSubtitlePreferenceStore.instance.debugReset();
+          if (await tempDir.exists()) await tempDir.delete(recursive: true);
+        });
+
+        // 1. Real wall-clock (~820ms > legacy 440ms, using default 150ms poll interval while playing):
+        //    getPosition() stays at 10s for 820ms while fetching remote MKV cluster,
+        //    then lands at 198s -> stays in Direct Play, NOT marked unseekable!
+        WebosDirectStreamFallbackRegistry.instance.registerActiveSession(
+          ratingKey: 'rk_dark_summoner_ep7',
+          rawMkvUrl: 'http://remote.plex.local/library/parts/707/file.mkv',
+          headers: null,
+          buildDirectStreamUrl: () async => 'http://remote.plex.local/start.m3u8',
+        );
+        WebosDirectStreamFallbackRegistry.instance.debugMarkVerifiedCues('rk_dark_summoner_ep7');
+
+        final realTimerPlayer = PlayerWebos(platformOverride: fakePlatform);
+        addTearDown(realTimerPlayer.dispose);
+
+        await realTimerPlayer.open(
+          Media('http://remote.plex.local/library/parts/707/file.mkv', start: const Duration(seconds: 10)),
+        );
+        fakePlatform.emitEvent(
+          1,
+          VideoEvent(eventType: VideoEventType.initialized, duration: const Duration(minutes: 24)),
+        );
+        await Future<void>.delayed(Duration.zero);
+
+        final seekWatch = Stopwatch();
+        realTimerPlayer.handlePropertyChange('time-pos', 10.0);
+        fakePlatform.currentPosition = const Duration(seconds: 10);
+        fakePlatform.onSeekTo = (texId, pos) async {
+          seekWatch
+            ..reset()
+            ..start();
+        };
+        fakePlatform.onGetPosition = (texId) async {
+          if (seekWatch.elapsedMilliseconds < 820) {
+            return const Duration(seconds: 10);
+          }
+          fakePlatform.currentPosition = const Duration(seconds: 198);
+          return fakePlatform.currentPosition;
+        };
+
+        await realTimerPlayer.seek(const Duration(seconds: 200));
+        expect(seekWatch.elapsedMilliseconds, greaterThanOrEqualTo(820));
+        expect(seekWatch.elapsedMilliseconds, lessThan(2000)); // Broke immediately once landed!
+        expect(fakePlatform.createdDataSources, hasLength(1));
+        expect(realTimerPlayer.textureId, 1);
+        expect(WebosDirectStreamFallbackRegistry.instance.isKnownUnseekable('rk_dark_summoner_ep7'), isFalse);
+        await realTimerPlayer.stop();
+
+        // 2. Active NDL buffering (`bufferingStart` -> `bufferingEnd`) extends grace past 17 base polls
+        //    (lands on poll 22 of 27 max) without false hot-swap!
+        final fastPlayer = PlayerWebos(
+          platformOverride: fakePlatform,
+          seekVerifyPollIntervalOverride: const Duration(milliseconds: 10),
+        );
+        addTearDown(fastPlayer.dispose);
+        WebosDirectStreamFallbackRegistry.instance.registerActiveSession(
+          ratingKey: 'rk_buffering_grace',
+          rawMkvUrl: 'http://remote.plex.local/library/parts/708/file.mkv',
+          headers: null,
+          buildDirectStreamUrl: () async => 'http://remote.plex.local/start.m3u8',
+        );
+        WebosDirectStreamFallbackRegistry.instance.debugMarkVerifiedCues('rk_buffering_grace');
+
+        await fastPlayer.open(
+          Media('http://remote.plex.local/library/parts/708/file.mkv', start: const Duration(seconds: 10)),
+          play: false,
+        );
+        final fastTexId = fastPlayer.textureId!;
+        fakePlatform.emitEvent(
+          fastTexId,
+          VideoEvent(eventType: VideoEventType.initialized, duration: const Duration(minutes: 24)),
+        );
+        await Future<void>.delayed(Duration.zero);
+
+        final dataSourcesBeforeBufferSeek = fakePlatform.createdDataSources.length;
+        int bufPolls = 0;
+        fastPlayer.handlePropertyChange('time-pos', 10.0);
+        fakePlatform.onSeekTo = (texId, pos) async {
+          bufPolls = 0;
+          fakePlatform.emitEvent(texId, VideoEvent(eventType: VideoEventType.bufferingStart));
+        };
+        fakePlatform.onGetPosition = (texId) async {
+          bufPolls++;
+          if (bufPolls < 22) {
+            return const Duration(seconds: 10);
+          }
+          fakePlatform.emitEvent(texId, VideoEvent(eventType: VideoEventType.bufferingEnd));
+          return const Duration(seconds: 300);
+        };
+
+        await fastPlayer.seek(const Duration(seconds: 300));
+        expect(bufPolls, 22);
+        expect(fakePlatform.createdDataSources, hasLength(dataSourcesBeforeBufferSeek));
+        expect(WebosDirectStreamFallbackRegistry.instance.isKnownUnseekable('rk_buffering_grace'), isFalse);
+
+        // 3. Pure playhead-stuck timeout on an MKV WITH verified Cues recovers via Direct Stream hot-swap
+        //    with `markUnseekable: false` (does NOT permanently poison `_unseekableKeys`!).
+        fastPlayer.handlePropertyChange('time-pos', 10.0);
+        fakePlatform.onSeekTo = (texId, pos) async {};
+        fakePlatform.onGetPosition = (texId) async => const Duration(seconds: 10);
+        await fastPlayer.seek(const Duration(seconds: 400));
+        expect(fakePlatform.createdDataSources, hasLength(dataSourcesBeforeBufferSeek + 1));
+        expect(fakePlatform.createdDataSources.last.formatHint, VideoFormat.hls);
+        expect(WebosDirectStreamFallbackRegistry.instance.isKnownUnseekable('rk_buffering_grace'), isFalse);
+
+        // 4. Explicit NDL 702 error on a broken-Cues MKV STILL hot-swaps AND persists `markUnseekable: true`!
+        WebosDirectStreamFallbackRegistry.instance.registerActiveSession(
+          ratingKey: 'rk_explicit_702',
+          rawMkvUrl: 'http://remote.plex.local/library/parts/709/broken.mkv',
+          headers: null,
+          buildDirectStreamUrl: () async => 'http://remote.plex.local/start_709.m3u8',
+        );
+        WebosDirectStreamFallbackRegistry.instance.debugMarkVerifiedCues('rk_explicit_702');
+        await fastPlayer.open(
+          const Media('http://remote.plex.local/library/parts/709/broken.mkv'),
+          play: false,
+        );
+        final brokenTexId = fastPlayer.textureId!;
+        fakePlatform.emitEvent(
+          brokenTexId,
+          VideoEvent(eventType: VideoEventType.initialized, duration: const Duration(minutes: 24)),
+        );
+        await Future<void>.delayed(Duration.zero);
+
+        fastPlayer.handlePropertyChange('time-pos', 10.0);
+        fakePlatform.onSeekTo = (texId, pos) async {
+          fakePlatform._events[texId]?.addError(PlatformException(code: '702', message: '702 seek failed'));
+        };
+        await fastPlayer.seek(const Duration(seconds: 180));
+        expect(fakePlatform.createdDataSources.last.uri, 'http://remote.plex.local/start_709.m3u8');
+        expect(WebosDirectStreamFallbackRegistry.instance.isKnownUnseekable('rk_explicit_702'), isTrue);
+      },
+    );
   });
 
   group('Issue 2 — Browser-like Back stack, OverlaySheet priority, and Exit confirmation dialog', () {

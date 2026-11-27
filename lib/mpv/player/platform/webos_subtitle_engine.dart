@@ -241,7 +241,10 @@ class WebosDirectStreamFallbackRegistry {
   @visibleForTesting
   static String? debugStorageDirOverride;
 
+  static const int kUnseekableCacheSchemaVersion = 2;
+
   final Set<String> _unseekableKeys = {};
+  final Set<String> _verifiedSeekableKeys = {};
   String? activeRatingKey;
   String? lastRawMkvUrl;
   Map<String, String>? lastHeaders;
@@ -311,15 +314,30 @@ class WebosDirectStreamFallbackRegistry {
   void _loadFromDisk() {
     try {
       var file = _cacheFile;
+      bool isLegacyFallbackPath = false;
       if (!file.existsSync() && debugStorageDirOverride == null) {
         final legacyFile = File('$_kLegacyWebosAppdataDir/webos_unseekable_mkvs.json');
-        if (legacyFile.existsSync()) file = legacyFile;
+        if (legacyFile.existsSync()) {
+          file = legacyFile;
+          isLegacyFallbackPath = true;
+        }
       }
       if (file.existsSync()) {
         final raw = jsonDecode(file.readAsStringSync());
-        if (raw is List) {
-          for (final item in raw) {
-            if (item is String && item.isNotEmpty) _unseekableKeys.add(item);
+        if (raw is Map && raw['version'] == kUnseekableCacheSchemaVersion) {
+          final keys = raw['keys'];
+          if (keys is List) {
+            for (final item in keys) {
+              if (item is String && item.isNotEmpty) _unseekableKeys.add(item);
+            }
+          }
+        } else {
+          appLogger.i(
+            '[WebOS-DirectStream] Resetting legacy pre-v$kUnseekableCacheSchemaVersion '
+            'unseekable MKV cache (${file.path})',
+          );
+          if (!isLegacyFallbackPath) {
+            _saveToDisk();
           }
         }
       }
@@ -330,13 +348,19 @@ class WebosDirectStreamFallbackRegistry {
     try {
       final file = _cacheFile;
       file.parent.createSync(recursive: true);
-      file.writeAsStringSync(jsonEncode(_unseekableKeys.toList()));
+      file.writeAsStringSync(
+        jsonEncode(<String, Object>{
+          'version': kUnseekableCacheSchemaVersion,
+          'keys': _unseekableKeys.toList(),
+        }),
+      );
     } catch (_) {}
   }
 
   @visibleForTesting
   void debugReset({bool reloadFromDisk = false}) {
     _unseekableKeys.clear();
+    _verifiedSeekableKeys.clear();
     activeRatingKey = null;
     lastRawMkvUrl = null;
     lastHeaders = null;
@@ -408,9 +432,18 @@ class WebosDirectStreamFallbackRegistry {
     return _unseekableKeys.contains(ratingKey);
   }
 
+  bool get activeSessionHasVerifiedCues =>
+      activeRatingKey != null && activeRatingKey!.isNotEmpty && _verifiedSeekableKeys.contains(activeRatingKey);
+
+  @visibleForTesting
+  void debugMarkVerifiedCues(String ratingKey) {
+    if (ratingKey.isNotEmpty) _verifiedSeekableKeys.add(ratingKey);
+  }
+
   void markActiveSessionUnseekable() {
     final key = activeRatingKey;
     if (key != null && key.isNotEmpty) {
+      _verifiedSeekableKeys.remove(key);
       if (_unseekableKeys.add(key)) {
         appLogger.i('[WebOS-DirectStream] Marked ratingKey=$key as unseekable MKV in persistent cache');
         _saveToDisk();
@@ -722,6 +755,9 @@ class WebosDirectStreamFallbackRegistry {
           markActiveSessionUnseekable();
           return (forceDirectStream: true, canDemuxMkvSubtitles: true);
         }
+      }
+      if (ratingKey.isNotEmpty) {
+        _verifiedSeekableKeys.add(ratingKey);
       }
       return (forceDirectStream: false, canDemuxMkvSubtitles: true);
     } catch (e) {
@@ -3694,6 +3730,7 @@ class WebosMkvSubtitleExtractor {
   Completer<void>? _activeStreamCompleter;
 
   bool _headersInitialized = false;
+  bool _hasParsedCuesElement = false;
   final Set<String> _prefetchedMarkerKeys = {};
   int _prefetchGeneration = 0;
   int _prefetchRequestCount = 0;
@@ -3842,6 +3879,7 @@ class WebosMkvSubtitleExtractor {
   int debugEffectivePositionMs() => _effectivePositionMs();
 
   bool get headersInitialized => _headersInitialized;
+  bool get hasParsedCues => _hasParsedCuesElement;
   String? get lastErrorCode => _lastErrorCode;
   int get maxBufferedTimeMs => _maxBufferedTimeMs;
   int packetsDeliveredForTrack(int? trackNum) =>
@@ -5230,6 +5268,9 @@ class WebosMkvSubtitleExtractor {
         }
       }
       p = bEnd;
+    }
+    if (_cuePoints.isNotEmpty) {
+      _hasParsedCuesElement = true;
     }
     _cuePoints.sort((a, b) => a.timeMs.compareTo(b.timeMs));
   }

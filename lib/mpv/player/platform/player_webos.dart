@@ -89,6 +89,16 @@ class PlayerWebos extends PlayerBase {
   static const _dummyEventChannel = EventChannel('com.plezy/webos_player_noop/events');
   static const _auxWebosChannel = MethodChannel('videoplayer_webos');
 
+  /// Default poll interval and counts for remote Direct Play MKV seek verification:
+  /// `17 * 150ms = 2.55s` base window (up from legacy 440ms), extending up to
+  /// `27 * 150ms = 4.05s` while NDL_media reports active network buffering.
+  static const Duration kDefaultSeekVerifyPollInterval = Duration(milliseconds: 150);
+  static const int kDefaultSeekVerifyBasePolls = 17;
+  static const int kDefaultSeekVerifyMaxBufferingPolls = 27;
+
+  @visibleForTesting
+  static Duration? debugSeekVerifyPollIntervalOverride;
+
   final bool audioOnly;
   int? _textureId;
   StreamSubscription<VideoEvent>? _videoEventSub;
@@ -120,6 +130,7 @@ class PlayerWebos extends PlayerBase {
   String? _selectedSubTrackId;
   bool _isCurrentStreamHls = false;
   bool _isHotSwapping = false;
+  bool _isBuffering = false;
   bool _saw702Error = false;
   bool _posQueryInFlight = false;
   bool _disposing = false;
@@ -360,6 +371,7 @@ class PlayerWebos extends PlayerBase {
   final bool? _useWebosLibassOverride;
   bool _userLibassEnabled;
   final WebosLibassBackendFactory? _libassBackendFactoryOverride;
+  final Duration? _seekVerifyPollIntervalOverride;
 
   @visibleForTesting
   int get debugLibassBackendSpawnCount => _debugLibassBackendSpawnCount;
@@ -399,6 +411,7 @@ class PlayerWebos extends PlayerBase {
     @visibleForTesting bool? libassEnabledOverride,
     @visibleForTesting bool? useWebosLibassOverride,
     @visibleForTesting WebosLibassBackendFactory? libassBackendFactoryOverride,
+    @visibleForTesting Duration? seekVerifyPollIntervalOverride,
   })  : subtitleStyleNotifier =
             ValueNotifier<WebosSubtitleStyleConfig>(_initialSubtitleStyleFromSettings()),
         _platformOverride = platformOverride,
@@ -412,7 +425,8 @@ class PlayerWebos extends PlayerBase {
             (SettingsService.instanceOrNull?.read(SettingsService.subtitleFontSize) ?? 38).toDouble(),
         _subAssOverrideMode =
             SettingsService.instanceOrNull?.read(SettingsService.subAssOverride).name ?? 'no',
-        _libassBackendFactoryOverride = libassBackendFactoryOverride;
+        _libassBackendFactoryOverride = libassBackendFactoryOverride,
+        _seekVerifyPollIntervalOverride = seekVerifyPollIntervalOverride;
 
   PlayerWebos.audio()
       : audioOnly = true,
@@ -424,7 +438,8 @@ class PlayerWebos extends PlayerBase {
         _subUseMargins = true,
         _subFontSize = 38.0,
         _subAssOverrideMode = 'no',
-        _libassBackendFactoryOverride = null;
+        _libassBackendFactoryOverride = null,
+        _seekVerifyPollIntervalOverride = null;
 
   bool get _effectiveLibassEnabled => _libassEnabled && _userLibassEnabled && !audioOnly;
 
@@ -893,6 +908,7 @@ class PlayerWebos extends PlayerBase {
     _lastSeekAt = null;
     _seekVerificationActive = false;
     _seekToInFlightCount = 0;
+    _isBuffering = false;
     _videoReadyForSubtitles = false;
     _emittedFileLoadedForSource = false;
     _currentSourceIsLive = isLive;
@@ -1070,10 +1086,12 @@ class PlayerWebos extends PlayerBase {
               break;
 
             case VideoEventType.bufferingStart:
+              _isBuffering = true;
               handlePropertyChange('paused-for-cache', true, sourceId: sourceId);
               break;
 
             case VideoEventType.bufferingEnd:
+              _isBuffering = false;
               handlePropertyChange('paused-for-cache', false, sourceId: sourceId);
               break;
 
@@ -1646,6 +1664,7 @@ class PlayerWebos extends PlayerBase {
     _seekGeneration++;
     _seekVerificationActive = false;
     _seekToInFlightCount = 0;
+    _isBuffering = false;
     _lastSeekTargetMs = null;
     _lastSeekAt = null;
     WebosSubtitleClock.instance.setPlaying(false);
@@ -1951,6 +1970,7 @@ class PlayerWebos extends PlayerBase {
       _mkvExtractor?.notifySeek(targetPosMs);
 
       _stopPositionTimer();
+      _isBuffering = false;
       final eventSub = _videoEventSub;
       _videoEventSub = null;
       await eventSub?.cancel();
@@ -2016,9 +2036,11 @@ class PlayerWebos extends PlayerBase {
               _refreshActiveSubtitleCues();
               break;
             case VideoEventType.bufferingStart:
+              _isBuffering = true;
               handlePropertyChange('paused-for-cache', true, sourceId: sourceId);
               break;
             case VideoEventType.bufferingEnd:
+              _isBuffering = false;
               handlePropertyChange('paused-for-cache', false, sourceId: sourceId);
               break;
             case VideoEventType.bufferingUpdate:
@@ -2134,25 +2156,32 @@ class PlayerWebos extends PlayerBase {
       _mkvExtractor?.notifySeek(targetMs);
       _saw702Error = false;
       _seekVerificationActive = true;
-      bool seekFailed = false;
+      bool explicitSeekException = false;
+      bool playheadStuckTimeout = false;
       try {
         _seekToInFlightCount++;
         try {
           await _webosPlatform.seekTo(texId, target);
         } catch (e) {
           appLogger.w('[WebOS-NDL] seekTo(${targetMs}ms) threw exception: $e');
-          seekFailed = true;
+          explicitSeekException = true;
         } finally {
           if (_seekToInFlightCount > 0) _seekToInFlightCount--;
         }
 
         // Normal hardware decoders snap backward up to one GOP (~2-8 s) to the nearest
         // preceding keyframe; allow up to 10 s backward snap-back without treating it
-        // as an unseekable MKV. Error 702 and seekTo exceptions still hot-swap immediately.
+        // as an unseekable MKV. Remote internet MKVs may need ~0.5-2.5 s (or up to ~4 s
+        // while actively buffering) before `getPosition()` advances; breaking immediately
+        // on the first poll that lands keeps local seeks instant.
         if (!_isCurrentStreamHls && (targetMs - preSeekMs).abs() > 10000) {
-          if (!seekFailed && !_saw702Error) {
-            for (int i = 0; i < 4; i++) {
-              await Future<void>.delayed(const Duration(milliseconds: 110));
+          if (!explicitSeekException && !_saw702Error) {
+            final pollInterval = _seekVerifyPollIntervalOverride ??
+                debugSeekVerifyPollIntervalOverride ??
+                kDefaultSeekVerifyPollInterval;
+            int maxPolls = kDefaultSeekVerifyBasePolls;
+            for (int i = 0; i < maxPolls; i++) {
+              await Future<void>.delayed(pollInterval);
               if (_isClosed ||
                   _currentSourceId != sourceId ||
                   _seekGeneration != seekGen ||
@@ -2161,24 +2190,28 @@ class PlayerWebos extends PlayerBase {
                   _isHotSwapping) {
                 break;
               }
+              if ((_isBuffering || state.buffering) && maxPolls < kDefaultSeekVerifyMaxBufferingPolls) {
+                maxPolls = (i + 8).clamp(maxPolls, kDefaultSeekVerifyMaxBufferingPolls);
+              }
               try {
                 final cur = await _webosPlatform.getPosition(texId);
                 final curMs = cur.inMilliseconds;
                 if (curMs >= targetMs - 10000 && curMs <= targetMs + 4500) {
                   break; // Seek landed (allowing preceding-keyframe snap-back).
                 }
-                if (i == 3 && (curMs - preSeekMs).abs() < 2000) {
+                if (i == maxPolls - 1 && (curMs - preSeekMs).abs() < 2000) {
                   appLogger.w('[WebOS-NDL] Playhead stuck at ${curMs}ms after seekTo(${targetMs}ms) on MKV');
-                  seekFailed = true;
+                  playheadStuckTimeout = true;
                 }
               } catch (posErr) {
                 appLogger.w('[WebOS-NDL] getPosition($texId) failed during seek verify: $posErr');
-                seekFailed = true;
+                explicitSeekException = true;
                 break;
               }
             }
           }
         }
+        final bool seekFailed = explicitSeekException || playheadStuckTimeout;
         if ((seekFailed || _saw702Error) &&
             !_isClosed &&
             _currentSourceId == sourceId &&
@@ -2186,8 +2219,19 @@ class PlayerWebos extends PlayerBase {
             _textureId == texId &&
             !_isCurrentStreamHls &&
             !_isHotSwapping) {
-          appLogger.i('[WebOS-NDL] Unseekable MKV detected during seek; hot-swapping to Direct Stream at ${targetMs}ms');
-          await _hotSwapToDirectStream(targetMs);
+          final bool hasVerifiedCues = (_mkvExtractor?.hasParsedCues ?? false) ||
+              WebosDirectStreamFallbackRegistry.instance.activeSessionHasVerifiedCues;
+          final bool pureTimeoutOnIndexedMkv =
+              playheadStuckTimeout && !explicitSeekException && !_saw702Error && hasVerifiedCues;
+          appLogger.i(
+            '[WebOS-NDL] Unseekable/stalled MKV detected during seek '
+            '(702=$_saw702Error, exc=$explicitSeekException, stuck=$playheadStuckTimeout, '
+            'verifiedCues=$hasVerifiedCues); hot-swapping to Direct Stream at ${targetMs}ms',
+          );
+          await _hotSwapToDirectStream(
+            targetMs,
+            markUnseekable: !pureTimeoutOnIndexedMkv,
+          );
         }
         _refreshActiveSubtitleCues();
       } finally {
